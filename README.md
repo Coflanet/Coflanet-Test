@@ -1,2 +1,2 @@
-# coflanet-app
-coflanet flutter mobile app
+# Coflanet App
+Coflanet flutter mobile app
