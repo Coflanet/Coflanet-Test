@@ -1,11 +1,32 @@
 part of 'app_pages.dart';
 
+/// App route constants
 abstract class Routes {
   Routes._();
 
+  // === Core Routes ===
   static const splash = '/';
-  static const app = '/app';
   static const home = '/home';
+
+  // === Auth Routes ===
+  static const signIn = '/login/sign-in';
+
+  // === Onboarding Routes ===
+  static const surveyIntro = '/onboarding/survey-intro';
+  static const survey = '/onboarding/survey';  // With :step parameter
+  static const surveyAnalyzing = '/onboarding/survey-analyzing';
+  static const surveyComplete = '/onboarding/survey-complete';
+  static const surveyResult = '/onboarding/survey-result';
+  static const onboardingComplete = '/onboarding/complete';
+
+  // === Coffee Routes ===
+  static const coffeeMain = '/coffee';
+  static const handDrip = '/coffee/hand-drip';
+  static const espresso = '/coffee/espresso';
+  static const coffeeSettings = '/coffee/settings';
+
+  // === Other Routes (Legacy - kept for compatibility) ===
+  static const app = '/app';
   static const market = '/market';
   static const search = '/search';
   static const inbox = '/inbox';
@@ -17,27 +38,21 @@ abstract class Routes {
   static const profile = '/profile';
   static const profileEdit = '/profile/profile-edit';
 
-  //product related
+  // Product related
   static const product = '/product';
   static const productDetail = '/product/product-detail';
   static const submitReview = '/product/submit-review';
   static const viewedTogether = '/product/viewed-together';
   static const recommendedProduct = '/product/recommend-product';
 
-  ///home tabs first
+  // Home tabs
   static const homeMain = '/home/main';
-
-  ///home tabs second
   static const homeSecond = '/home/special-price';
   static const collection = '/home/special-price/collection';
-
-  ///home tabs third
   static const homeThird = '/home/best';
-
-  ///home tabs fourth
   static const homefourth = '/home/new';
 
-  ///pages in home tab main
+  // Home menu items
   static const homeFrequentPurchase = '/home/main/frequent-purchase';
   static const overnightDelivery = '/home/main/overnight-delivery';
   static const popularProduct = '/home/main/popular-product';
@@ -50,12 +65,11 @@ abstract class Routes {
   static const bannerDetail = '/home/main/banner-detail';
   static const preordermain = '/home/main/preorder-main';
 
-  ///pages in market tab
-  static const marketCategory = '/market/market-category';  // Not Used
-  static const thirdCategory = '/market/third-category';    // Not Used
-
-  static const marketSecondCategory = '/market/second-category';  // 마켓 상단 카테고리 메뉴
-  static const marketPopularCategory = '/market/market-popular_category';   // third-category
+  // Market
+  static const marketCategory = '/market/market-category';
+  static const thirdCategory = '/market/third-category';
+  static const marketSecondCategory = '/market/second-category';
+  static const marketPopularCategory = '/market/market-popular_category';
   static const marketMainCategory = '/market/market-main-category';
   static const onedayDelivery = '/market/oneday-delivery';
   static const categoryRank = '/market/category-rank';
@@ -67,14 +81,14 @@ abstract class Routes {
   static const directFruits = '/market/direct-fruits';
   static const reviewVerified = '/market/review-verified';
 
-  ///pages in search tab
-  static const searchThirdCategory = '/search/third-category';  // 검색 카테고리
+  // Search
+  static const searchThirdCategory = '/search/third-category';
 
-  //pages in inbox
+  // Inbox
   static const notiDelete = '/inbox/noti-delete';
   static const talkDelete = '/inbox/talk-delete';
 
-  ///pages in mypage
+  // MyPage
   static const mySetting = '/mypage/setting';
   static const couponList = '/mypage/coupon-list';
   static const faqList = '/mypage/faq-list';
@@ -88,7 +102,7 @@ abstract class Routes {
   static const alarmEdit = '/mypage/setting/alarm-edit';
   static const passwordChange = '/mypage/setting/password-change';
 
-  ///pages related order
+  // Order
   static const cancelStep = '/order/cancel/cancel-step';
   static const cancelSubmit = '/order/cancel/cancel-submit';
   static const cancelComplete = '/order/cancel/cancel-complete';
@@ -96,21 +110,19 @@ abstract class Routes {
   static const payment = '/order/payment';
   static const orderComplete = '/order/order-complete';
 
-  ///pages related search-keyword
+  // Search keyword
   static const searchResult = '/search-keyword/search-result';
 
-  ///pages related address
+  // Address
   static const manageAddress = '/address/manage-address';
   static const addAddress = '/address/add-address';
 
-  // tae: COMP_로그인
-  ///pages related login
-  static const signIn = '/login/sign-in';
+  // Login
   static const emailSignUp = '/login/email-sign-up';
   static const emailSignIn = '/login/email-sign-in';
   static const chagePwd = '/login/change-password';
 
-  ///pages related toss payments api
-  static const payment_success = '/toss/success';
-  static const payment_fail = '/toss/fail';
+  // Toss payments
+  static const paymentSuccess = '/toss/success';
+  static const paymentFail = '/toss/fail';
 }
