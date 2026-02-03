@@ -1,29 +1,17 @@
-import 'dart:convert';
-
-import 'package:flutter_svg/flutter_svg.dart';
-import 'package:fluttertoast/fluttertoast.dart';
-import 'package:http/http.dart' as http;
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:get/get.dart';
-import 'package:image_picker/image_picker.dart';
 import 'package:intl/intl.dart';
 import 'package:coflanet/constants/color_constant.dart';
 import 'package:coflanet/constants/enums.dart';
 import 'package:coflanet/constants/style_constant.dart';
-import 'package:coflanet/controllers/item_filter/item_filter_controller.dart';
 import 'package:coflanet/routes/app_pages.dart';
+
+/// Base URL for API calls
+const String baseUrl = 'https://api.coflanet-dev.com';
 
 class AppUtil {
   static const String baseUrlScheme = 'https';
   static const String baseUrlHost = 'api.coflanet-dev.com';
-  static const String baseUrl = 'https://api.coflanet-dev.com';
-
-  // static const COGNITO_CLIENT_ID = '477a7be9c12a4ba6921b3b24ae082a49';
-  // static const COGNITO_POOL_ID = 'ap-northeast-2_RBfujFfAY';
-  // static const COGNITO_POOL_URL = 'coflanet-customer-dev.auth.ap-northeast-2';
-  // static const CLIENT_SECRET =
-  //     '1r7n03jpdplb4d4tes67hnvmb2hf5l56nt3f7dapsej66ad173jh';
 
   static void showPopup({title = 'New Page', content}) {
     Get.defaultDialog(
@@ -31,31 +19,27 @@ class AppUtil {
         content: Text(content),
         confirmTextColor: Colors.white,
         onConfirm: () => Get.offAllNamed(Routes.app),
-        buttonColor: AppColor.subColor);
+        buttonColor: AppColor.primaryNormal);
   }
 
   static void underConstructionPopup() {
     Get.defaultDialog(
         title: '안내',
-        titleStyle: AppTextStyles.SYS_subhead.copyWith(
-            color: AppColor.fillSecondaryColor),
+        titleStyle: AppTextStyles.headline2Bold.copyWith(
+            color: AppColor.labelNormal),
         content: const Text('준비중 입니다.'),
         textConfirm: '확인',
         confirmTextColor: Colors.white,
         onConfirm: Get.back,
-        buttonColor: AppColor.subColor);
+        buttonColor: AppColor.primaryNormal);
   }
 
   static void showModalBottom({
     required BuildContext context,
-    ItemFilterController? controller,
     double? height,
     Widget? page,
-    bool? isCategory,
-    bool? isPrice,
-    bool? isSort,
   }) {
-    Future future = showModalBottomSheet(
+    showModalBottomSheet(
         context: context,
         isScrollControlled: true,
         shape: const RoundedRectangleBorder(
@@ -72,51 +56,17 @@ class AppUtil {
                 child: page),
           );
         });
-    if (isSort == true) {
-      future.then((value) => controller?.onSortTap(sortType: value));
-    } else if (isCategory == true) {
-      future.then(
-          (value) => controller?.onCategoryTap(selectedCategories: value));
-    } else if (isPrice == true) {
-      future.then((value) => controller?.onPriceTap(selectedPrices: value));
-    }
-  }
-
-  static void showShareModalBottom({
-    required BuildContext context,
-    required VoidCallback firebaseCallback,
-    required VoidCallback kakaoCallback,
-  }) {
-    Future future = showModalBottomSheet(
-        context: context,
-        builder: (context) {
-          return Column(
-            mainAxisSize: MainAxisSize.min,
-            children: <Widget>[
-              ListTile(
-                leading: const Icon(Icons.link),
-                title: const Text('링크로 공유하기'),
-                onTap: () => firebaseCallback(),
-              ),
-              ListTile(
-                leading: SvgPicture.asset('assets/images/ic_20_kakao.svg'),
-                title: const Text('카카오 공유하기'),
-                onTap: () => kakaoCallback(),
-              ),
-            ],
-          );
-        });
   }
 
   static void showToast(String msg) {
-    Fluttertoast.showToast(
-        msg: msg,
-        toastLength: Toast.LENGTH_SHORT,
-        gravity: ToastGravity.BOTTOM,
-        timeInSecForIosWeb: 1,
-        backgroundColor: Colors.red,
-        textColor: Colors.white,
-        fontSize: 16.0);
+    Get.snackbar(
+      '',
+      msg,
+      snackPosition: SnackPosition.BOTTOM,
+      backgroundColor: Colors.red,
+      colorText: Colors.white,
+      duration: const Duration(seconds: 2),
+    );
   }
 
   // change datetime type from '2023-09-18T14:46:09.360527Z' to '2023.09.18'
@@ -229,7 +179,6 @@ class AppUtil {
         return 7 / 100 * 6;
       case ProductOrderDetailStatus.DELIVERED:
         return 7 / 100 * 7;
-
       case ProductOrderDetailStatus.PURCHASE_DECIDED:
         return 0.0;
       case ProductOrderDetailStatus.CANCELED:
@@ -279,70 +228,6 @@ class AppUtil {
     }
 
     return zoneName;
-  }
-
-  static Future<XFile?> pickImage() async {
-    try {
-      XFile? result = await ImagePicker().pickImage(
-        source: ImageSource.gallery,
-        imageQuality: 100,
-      );
-      if (result != null) {
-        XFile image = XFile(result.path);
-        return image;
-      }
-    } on PlatformException catch (e) {
-      print('Error while picking gallery image: $e');
-    }
-    return null;
-  }
-
-  static Future<List<XFile>> pickImages() async {
-    try {
-      List<XFile>? result = await ImagePicker().pickMultiImage(
-        imageQuality: 80,
-      );
-      if (result.isNotEmpty) {
-        List<XFile> images = result.map((e) => XFile(e.path)).toList();
-        return images;
-      }
-    } on PlatformException catch (e) {
-      print('Error picking gallery image: $e');
-    }
-    return <XFile>[];
-  }
-
-  // 이미지 업로드
-  static Future<List> uploadFile(List<dynamic> imageBytes,
-      {required String authToken}) async {
-    try {
-      final url = Uri.parse('${AppUtil.baseUrl}/api/v1/customer/files');
-
-      // Create a multipart request
-      var request = http.MultipartRequest('POST', url);
-      request.headers['Authorization'] =
-          'Bearer ${authToken.replaceAll('"', '')}';
-      for (var i = 0; i < imageBytes.length; i++) {
-        var fileBytes = await imageBytes[i].readAsBytes();
-        request.files.add(http.MultipartFile.fromBytes(
-          'file',
-          fileBytes,
-          filename: imageBytes[i].name,
-        ));
-      }
-      var response = await request.send();
-      if (response.statusCode == 201) {
-        var code = await response.stream.bytesToString();
-        List decodeCode =
-            json.decode(code).map((e) => e['code'].toString()).toList();
-        return decodeCode;
-      } else {
-        throw Exception('Failed to upload product images');
-      }
-    } catch (e) {
-      print('Error uploading product images: $e');
-      rethrow;
-    }
   }
 
   // Connection closed before full header was received 이슈 대응

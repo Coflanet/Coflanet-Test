@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
 
 class AppTextStyles {
-  // Font Family
+  // Font Family - Using system fonts as fallback until custom fonts are added
   static const String _fontFamily = 'Pretendard';
   static const String _monospaceFontFamily = 'PretendardMono'; // 숫자-고정폭용
+
+  // Note: When fonts are not available, Flutter falls back to system fonts
 
   // ===== DISPLAY STYLES =====
   static const TextStyle display1Bold = TextStyle(
