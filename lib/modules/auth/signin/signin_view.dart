@@ -2,7 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:coflanet/constants/color_constant.dart';
 import 'package:coflanet/constants/style_constant.dart';
+import 'package:coflanet/constants/radius_constant.dart';
 import 'package:coflanet/modules/auth/signin/signin_controller.dart';
+import 'package:coflanet/routes/app_pages.dart';
 import 'package:coflanet/widgets/buttons/social_button.dart';
 
 class SignInView extends GetView<SignInController> {
@@ -43,17 +45,17 @@ class SignInView extends GetView<SignInController> {
   Widget _buildHeader() {
     return Column(
       children: [
-        // Logo placeholder
+        // Logo placeholder - TODO: Replace with actual coplanet_logo asset
         Container(
-          width: 100,
-          height: 100,
+          width: 80,
+          height: 80,
           decoration: BoxDecoration(
             color: AppColor.primaryLight,
-            borderRadius: BorderRadius.circular(20),
+            borderRadius: AppRadius.xlBorder,
           ),
           child: Icon(
-            Icons.coffee,
-            size: 48,
+            Icons.all_inclusive_rounded,
+            size: 40,
             color: AppColor.primaryNormal,
           ),
         ),
@@ -66,50 +68,45 @@ class SignInView extends GetView<SignInController> {
             height: 1.4,
           ),
         ),
-        const SizedBox(height: 12),
-        Text(
-          '소셜 로그인으로 간편하게 시작하세요',
-          style: AppTextStyles.body2NormalRegular.copyWith(
-            color: AppColor.labelAlternative,
-          ),
-        ),
       ],
     );
   }
 
   Widget _buildSocialButtons() {
-    return Obx(() => Column(
-          children: [
-            // Kakao Login
-            SocialButton(
-              type: SocialButtonType.kakao,
-              onPressed: controller.isLoading
-                  ? null
-                  : () => controller.signInWithSocial(SocialLoginType.kakao),
-              isLoading: controller.isLoading,
-            ),
-            const SizedBox(height: 12),
+    return Obx(
+      () => Column(
+        children: [
+          // Kakao Login
+          SocialButton(
+            type: SocialButtonType.kakao,
+            onPressed: controller.isLoading
+                ? null
+                : () => controller.signInWithSocial(SocialLoginType.kakao),
+            isLoading: controller.isLoading,
+          ),
+          const SizedBox(height: 12),
 
-            // Naver Login
-            SocialButton(
-              type: SocialButtonType.naver,
-              onPressed: controller.isLoading
-                  ? null
-                  : () => controller.signInWithSocial(SocialLoginType.naver),
-              isLoading: controller.isLoading,
-            ),
-            const SizedBox(height: 12),
+          // Naver Login
+          SocialButton(
+            type: SocialButtonType.naver,
+            onPressed: controller.isLoading
+                ? null
+                : () => controller.signInWithSocial(SocialLoginType.naver),
+            isLoading: controller.isLoading,
+          ),
+          const SizedBox(height: 12),
 
-            // Apple Login
-            SocialButton(
-              type: SocialButtonType.apple,
-              onPressed: controller.isLoading
-                  ? null
-                  : () => controller.signInWithSocial(SocialLoginType.apple),
-              isLoading: controller.isLoading,
-            ),
-          ],
-        ));
+          // Apple Login
+          SocialButton(
+            type: SocialButtonType.apple,
+            onPressed: controller.isLoading
+                ? null
+                : () => controller.signInWithSocial(SocialLoginType.apple),
+            isLoading: controller.isLoading,
+          ),
+        ],
+      ),
+    );
   }
 
   Widget _buildGuestLogin() {
@@ -117,9 +114,7 @@ class SignInView extends GetView<SignInController> {
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
         TextButton(
-          onPressed: () {
-            // TODO: Navigate to sign up
-          },
+          onPressed: () => Get.toNamed(Routes.emailSignUp),
           child: Text(
             '회원가입',
             style: AppTextStyles.label1NormalMedium.copyWith(
