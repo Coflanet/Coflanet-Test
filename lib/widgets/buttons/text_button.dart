@@ -1,62 +1,48 @@
 import 'package:flutter/material.dart';
 import 'package:coflanet/constants/color_constant.dart';
 import 'package:coflanet/constants/style_constant.dart';
-import 'package:coflanet/constants/radius_constant.dart';
 import 'package:coflanet/constants/spacing_constant.dart';
 import 'package:coflanet/widgets/buttons/primary_button.dart';
 
-/// Secondary outlined button (Outlined type in Figma)
+/// Text button without background (Text type in Figma)
 ///
 /// Usage:
 /// ```dart
-/// SecondaryButton(
-///   text: '취소',
+/// AppTextButton(
+///   text: '자세히 보기',
 ///   onPressed: () {},
 /// )
 ///
-/// // With size
-/// SecondaryButton(
-///   text: '작은 버튼',
-///   size: ButtonSize.sm,
+/// // With underline
+/// AppTextButton(
+///   text: '링크',
 ///   onPressed: () {},
+///   underline: true,
 /// )
 /// ```
-class SecondaryButton extends StatelessWidget {
+class AppTextButton extends StatelessWidget {
   final String text;
   final VoidCallback? onPressed;
   final bool isLoading;
   final bool isEnabled;
-  final double? width;
   final ButtonSize size;
   final IconData? icon;
   final bool iconAfterText;
+  final bool underline;
+  final Color? color;
 
-  const SecondaryButton({
+  const AppTextButton({
     super.key,
     required this.text,
     this.onPressed,
     this.isLoading = false,
     this.isEnabled = true,
-    this.width,
     this.size = ButtonSize.lg,
     this.icon,
     this.iconAfterText = false,
+    this.underline = false,
+    this.color,
   });
-
-  double get _height {
-    switch (size) {
-      case ButtonSize.xl:
-        return 56;
-      case ButtonSize.lg:
-        return 52;
-      case ButtonSize.md:
-        return 48;
-      case ButtonSize.sm:
-        return 40;
-      case ButtonSize.xs:
-        return 32;
-    }
-  }
 
   TextStyle get _textStyle {
     switch (size) {
@@ -104,28 +90,28 @@ class SecondaryButton extends StatelessWidget {
     switch (size) {
       case ButtonSize.xl:
         return EdgeInsets.symmetric(
-          horizontal: AppSpacing.space20,
-          vertical: AppSpacing.space16,
-        );
-      case ButtonSize.lg:
-        return EdgeInsets.symmetric(
-          horizontal: AppSpacing.space16,
-          vertical: AppSpacing.space14,
-        );
-      case ButtonSize.md:
-        return EdgeInsets.symmetric(
-          horizontal: AppSpacing.space16,
-          vertical: AppSpacing.space12,
-        );
-      case ButtonSize.sm:
-        return EdgeInsets.symmetric(
           horizontal: AppSpacing.space12,
           vertical: AppSpacing.space8,
         );
-      case ButtonSize.xs:
+      case ButtonSize.lg:
         return EdgeInsets.symmetric(
           horizontal: AppSpacing.space10,
           vertical: AppSpacing.space6,
+        );
+      case ButtonSize.md:
+        return EdgeInsets.symmetric(
+          horizontal: AppSpacing.space8,
+          vertical: AppSpacing.space4,
+        );
+      case ButtonSize.sm:
+        return EdgeInsets.symmetric(
+          horizontal: AppSpacing.space6,
+          vertical: AppSpacing.space2,
+        );
+      case ButtonSize.xs:
+        return EdgeInsets.symmetric(
+          horizontal: AppSpacing.space4,
+          vertical: AppSpacing.space2,
         );
     }
   }
@@ -133,48 +119,45 @@ class SecondaryButton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final enabled = isEnabled && !isLoading && onPressed != null;
+    final textColor = enabled
+        ? (color ?? AppColor.primaryNormal)
+        : AppColor.labelDisable;
 
-    return SizedBox(
-      width: width ?? double.infinity,
-      height: _height,
-      child: OutlinedButton(
-        onPressed: enabled ? onPressed : null,
-        style: OutlinedButton.styleFrom(
-          foregroundColor: enabled
-              ? AppColor.labelNormal
-              : AppColor.labelDisable,
-          padding: _padding,
-          side: BorderSide(
-            color: enabled
-                ? AppColor.lineNormalNormal
-                : AppColor.lineNormalAlternative,
-          ),
-          shape: RoundedRectangleBorder(borderRadius: AppRadius.buttonBorder),
-        ),
-        child: isLoading
-            ? SizedBox(
-                width: _loadingSize,
-                height: _loadingSize,
-                child: CircularProgressIndicator(
-                  strokeWidth: 2,
-                  valueColor: AlwaysStoppedAnimation<Color>(
-                    AppColor.labelNormal,
-                  ),
-                ),
-              )
-            : _buildContent(),
+    return TextButton(
+      onPressed: enabled ? onPressed : null,
+      style: TextButton.styleFrom(
+        foregroundColor: textColor,
+        padding: _padding,
+        minimumSize: Size.zero,
+        tapTargetSize: MaterialTapTargetSize.shrinkWrap,
       ),
+      child: isLoading
+          ? SizedBox(
+              width: _loadingSize,
+              height: _loadingSize,
+              child: CircularProgressIndicator(
+                strokeWidth: 2,
+                valueColor: AlwaysStoppedAnimation<Color>(textColor),
+              ),
+            )
+          : _buildContent(textColor),
     );
   }
 
-  Widget _buildContent() {
+  Widget _buildContent(Color textColor) {
+    final style = _textStyle.copyWith(
+      color: textColor,
+      decoration: underline ? TextDecoration.underline : null,
+      decorationColor: textColor,
+    );
+
     if (icon == null) {
-      return Text(text, style: _textStyle);
+      return Text(text, style: style);
     }
 
-    final iconWidget = Icon(icon, size: _iconSize);
-    final textWidget = Text(text, style: _textStyle);
-    final gap = SizedBox(width: AppSpacing.space8);
+    final iconWidget = Icon(icon, size: _iconSize, color: textColor);
+    final textWidget = Text(text, style: style);
+    final gap = SizedBox(width: AppSpacing.space4);
 
     return Row(
       mainAxisAlignment: MainAxisAlignment.center,

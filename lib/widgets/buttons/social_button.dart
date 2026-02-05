@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:coflanet/constants/style_constant.dart';
+import 'package:coflanet/constants/radius_constant.dart';
 
 enum SocialButtonType { kakao, naver, apple }
 
@@ -27,10 +28,8 @@ class SocialButton extends StatelessWidget {
           foregroundColor: _foregroundColor,
           elevation: 0,
           shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(12),
-            side: type == SocialButtonType.apple
-                ? const BorderSide(color: Colors.black, width: 1)
-                : BorderSide.none,
+            borderRadius: AppRadius.lgBorder,
+            side: BorderSide.none,
           ),
         ),
         child: isLoading
@@ -66,7 +65,7 @@ class SocialButton extends StatelessWidget {
       case SocialButtonType.naver:
         return const Color(0xFF03C75A);
       case SocialButtonType.apple:
-        return Colors.white;
+        return Colors.black;
     }
   }
 
@@ -77,18 +76,18 @@ class SocialButton extends StatelessWidget {
       case SocialButtonType.naver:
         return Colors.white;
       case SocialButtonType.apple:
-        return Colors.black;
+        return Colors.white;
     }
   }
 
   String get _buttonText {
     switch (type) {
       case SocialButtonType.kakao:
-        return '카카오로 시작하기';
+        return '카카오로 3초만에 시작하기';
       case SocialButtonType.naver:
-        return '네이버로 시작하기';
+        return '네이버로 로그인';
       case SocialButtonType.apple:
-        return 'Apple로 시작하기';
+        return 'Apple로 로그인';
     }
   }
 
@@ -99,7 +98,7 @@ class SocialButton extends StatelessWidget {
       case SocialButtonType.naver:
         return const _NaverIcon();
       case SocialButtonType.apple:
-        return const Icon(Icons.apple, size: 24, color: Colors.black);
+        return const Icon(Icons.apple, size: 24, color: Colors.white);
     }
   }
 }
@@ -117,11 +116,7 @@ class _KakaoIcon extends StatelessWidget {
         shape: BoxShape.circle,
       ),
       child: const Center(
-        child: Icon(
-          Icons.chat_bubble,
-          size: 12,
-          color: Color(0xFFFEE500),
-        ),
+        child: Icon(Icons.chat_bubble, size: 12, color: Color(0xFFFEE500)),
       ),
     );
   }
@@ -137,7 +132,7 @@ class _NaverIcon extends StatelessWidget {
       height: 20,
       decoration: BoxDecoration(
         color: Colors.white,
-        borderRadius: BorderRadius.circular(4),
+        borderRadius: AppRadius.xsBorder,
       ),
       child: const Center(
         child: Text(

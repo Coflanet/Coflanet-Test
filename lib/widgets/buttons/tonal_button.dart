@@ -3,49 +3,18 @@ import 'package:coflanet/constants/color_constant.dart';
 import 'package:coflanet/constants/style_constant.dart';
 import 'package:coflanet/constants/radius_constant.dart';
 import 'package:coflanet/constants/spacing_constant.dart';
+import 'package:coflanet/widgets/buttons/primary_button.dart';
 
-/// Button size variants matching Figma design system
-enum ButtonSize {
-  /// Extra Large: height 56px, text headline1Bold
-  xl,
-
-  /// Large: height 52px, text headline1Bold (default)
-  lg,
-
-  /// Medium: height 48px, text headline2Bold
-  md,
-
-  /// Small: height 40px, text label1NormalBold
-  sm,
-
-  /// Extra Small: height 32px, text label2Bold
-  xs,
-}
-
-/// Primary filled button (Solid type in Figma)
+/// Tonal button with light background (Tonal type in Figma)
 ///
 /// Usage:
 /// ```dart
-/// PrimaryButton(
-///   text: '확인',
-///   onPressed: () {},
-/// )
-///
-/// // With size
-/// PrimaryButton(
-///   text: '작은 버튼',
-///   size: ButtonSize.sm,
-///   onPressed: () {},
-/// )
-///
-/// // With icon
-/// PrimaryButton(
-///   text: '저장',
-///   icon: Icons.save,
+/// TonalButton(
+///   text: '더보기',
 ///   onPressed: () {},
 /// )
 /// ```
-class PrimaryButton extends StatelessWidget {
+class TonalButton extends StatelessWidget {
   final String text;
   final VoidCallback? onPressed;
   final bool isLoading;
@@ -55,7 +24,7 @@ class PrimaryButton extends StatelessWidget {
   final IconData? icon;
   final bool iconAfterText;
 
-  const PrimaryButton({
+  const TonalButton({
     super.key,
     required this.text,
     this.onPressed,
@@ -165,9 +134,11 @@ class PrimaryButton extends StatelessWidget {
         onPressed: enabled ? onPressed : null,
         style: ElevatedButton.styleFrom(
           backgroundColor: enabled
-              ? AppColor.primaryNormal
+              ? AppColor.primaryLight
               : AppColor.interactionDisable,
-          foregroundColor: AppColor.staticLabelWhiteStrong,
+          foregroundColor: enabled
+              ? AppColor.primaryNormal
+              : AppColor.labelDisable,
           elevation: 0,
           padding: _padding,
           shape: RoundedRectangleBorder(borderRadius: AppRadius.buttonBorder),
@@ -181,22 +152,24 @@ class PrimaryButton extends StatelessWidget {
                 child: CircularProgressIndicator(
                   strokeWidth: 2,
                   valueColor: AlwaysStoppedAnimation<Color>(
-                    AppColor.staticLabelWhiteStrong,
+                    AppColor.primaryNormal,
                   ),
                 ),
               )
-            : _buildContent(),
+            : _buildContent(enabled),
       ),
     );
   }
 
-  Widget _buildContent() {
+  Widget _buildContent(bool enabled) {
+    final color = enabled ? AppColor.primaryNormal : AppColor.labelDisable;
+
     if (icon == null) {
-      return Text(text, style: _textStyle);
+      return Text(text, style: _textStyle.copyWith(color: color));
     }
 
-    final iconWidget = Icon(icon, size: _iconSize);
-    final textWidget = Text(text, style: _textStyle);
+    final iconWidget = Icon(icon, size: _iconSize, color: color);
+    final textWidget = Text(text, style: _textStyle.copyWith(color: color));
     final gap = SizedBox(width: AppSpacing.space8);
 
     return Row(
