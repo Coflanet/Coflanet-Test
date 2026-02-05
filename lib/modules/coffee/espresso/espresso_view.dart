@@ -2,7 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:coflanet/constants/color_constant.dart';
 import 'package:coflanet/constants/style_constant.dart';
+import 'package:coflanet/constants/radius_constant.dart';
 import 'package:coflanet/modules/coffee/coffee_controller.dart';
+import 'package:coflanet/routes/app_pages.dart';
 import 'package:coflanet/widgets/buttons/primary_button.dart';
 
 class EspressoView extends GetView<CoffeeController> {
@@ -85,11 +87,9 @@ class EspressoView extends GetView<CoffeeController> {
               PrimaryButton(
                 text: '추출 시작',
                 onPressed: () {
-                  Get.snackbar(
-                    '추출 시작',
-                    '에스프레소 추출을 시작합니다',
-                    backgroundColor: AppColor.primaryNormal,
-                    colorText: Colors.white,
+                  Get.toNamed(
+                    Routes.timerActive,
+                    arguments: {'type': 'espresso'},
                   );
                 },
               ),
@@ -105,12 +105,9 @@ class EspressoView extends GetView<CoffeeController> {
       padding: const EdgeInsets.all(20),
       decoration: BoxDecoration(
         gradient: LinearGradient(
-          colors: [
-            AppColor.colorGlobalViolet50,
-            AppColor.colorGlobalViolet60,
-          ],
+          colors: [AppColor.colorGlobalViolet50, AppColor.colorGlobalViolet60],
         ),
-        borderRadius: BorderRadius.circular(16),
+        borderRadius: AppRadius.xlBorder,
       ),
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -129,14 +126,14 @@ class EspressoView extends GetView<CoffeeController> {
         Text(
           value,
           style: AppTextStyles.heading1Bold.copyWith(
-            color: Colors.white,
+            color: AppColor.staticLabelWhiteStrong,
           ),
         ),
         const SizedBox(height: 4),
         Text(
           label,
           style: AppTextStyles.caption1Regular.copyWith(
-            color: Colors.white.withOpacity(0.8),
+            color: AppColor.staticLabelWhiteStrong.withOpacity(0.8),
           ),
         ),
       ],
@@ -156,7 +153,7 @@ class EspressoView extends GetView<CoffeeController> {
         color: isSelected
             ? AppColor.primaryLight
             : AppColor.backgroundNormalNormal,
-        borderRadius: BorderRadius.circular(12),
+        borderRadius: AppRadius.lgBorder,
         border: Border.all(
           color: isSelected
               ? AppColor.primaryNormal
@@ -193,10 +190,7 @@ class EspressoView extends GetView<CoffeeController> {
             ),
           ),
           if (isSelected)
-            Icon(
-              Icons.check_circle,
-              color: AppColor.primaryNormal,
-            ),
+            Icon(Icons.check_circle, color: AppColor.primaryNormal),
         ],
       ),
     );

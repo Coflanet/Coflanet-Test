@@ -2,7 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:coflanet/constants/color_constant.dart';
 import 'package:coflanet/constants/style_constant.dart';
+import 'package:coflanet/constants/radius_constant.dart';
 import 'package:coflanet/modules/coffee/coffee_controller.dart';
+import 'package:coflanet/routes/app_pages.dart';
 import 'package:coflanet/widgets/buttons/primary_button.dart';
 
 class HandDripView extends GetView<CoffeeController> {
@@ -62,15 +64,11 @@ class HandDripView extends GetView<CoffeeController> {
 
               PrimaryButton(
                 text: '타이머 시작',
-                onPressed: () {
-                  // TODO: Start timer
-                  Get.snackbar(
-                    '타이머 시작',
-                    '4분 타이머가 시작되었습니다',
-                    backgroundColor: AppColor.primaryNormal,
-                    colorText: Colors.white,
-                  );
-                },
+                icon: Icons.play_arrow,
+                onPressed: () => Get.toNamed(
+                  Routes.timerActive,
+                  arguments: {'type': 'handDrip'},
+                ),
               ),
             ],
           ),
@@ -80,54 +78,60 @@ class HandDripView extends GetView<CoffeeController> {
   }
 
   Widget _buildRecipeCard() {
-    return Obx(() => Container(
-          padding: const EdgeInsets.all(20),
-          decoration: BoxDecoration(
-            gradient: LinearGradient(
-              colors: [
-                AppColor.colorGlobalOrange50,
-                AppColor.colorGlobalOrange60,
-              ],
-            ),
-            borderRadius: BorderRadius.circular(16),
-          ),
-          child: Column(
-            children: [
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  _buildRecipeItem(
-                    label: '잔 수',
-                    value: '${controller.cupsCount}잔',
-                  ),
-                  _buildRecipeItem(
-                    label: '원두',
-                    value: '${controller.coffeeAmount}g',
-                  ),
-                  _buildRecipeItem(
-                    label: '물',
-                    value: '${controller.waterAmount}ml',
-                  ),
-                ],
-              ),
-              const SizedBox(height: 16),
-              Row(
-                children: [
-                  Icon(Icons.info_outline, color: Colors.white, size: 16),
-                  const SizedBox(width: 8),
-                  Expanded(
-                    child: Text(
-                      '${controller.strengthLabel} 농도로 설정되어 있어요',
-                      style: AppTextStyles.caption1Regular.copyWith(
-                        color: Colors.white.withOpacity(0.9),
-                      ),
-                    ),
-                  ),
-                ],
-              ),
+    return Obx(
+      () => Container(
+        padding: const EdgeInsets.all(20),
+        decoration: BoxDecoration(
+          gradient: LinearGradient(
+            colors: [
+              AppColor.colorGlobalOrange50,
+              AppColor.colorGlobalOrange60,
             ],
           ),
-        ));
+          borderRadius: AppRadius.xlBorder,
+        ),
+        child: Column(
+          children: [
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                _buildRecipeItem(
+                  label: '잔 수',
+                  value: '${controller.cupsCount}잔',
+                ),
+                _buildRecipeItem(
+                  label: '원두',
+                  value: '${controller.coffeeAmount}g',
+                ),
+                _buildRecipeItem(
+                  label: '물',
+                  value: '${controller.waterAmount}ml',
+                ),
+              ],
+            ),
+            const SizedBox(height: 16),
+            Row(
+              children: [
+                Icon(
+                  Icons.info_outline,
+                  color: AppColor.staticLabelWhiteStrong,
+                  size: 16,
+                ),
+                const SizedBox(width: 8),
+                Expanded(
+                  child: Text(
+                    '${controller.strengthLabel} 농도로 설정되어 있어요',
+                    style: AppTextStyles.caption1Regular.copyWith(
+                      color: AppColor.staticLabelWhiteStrong.withOpacity(0.9),
+                    ),
+                  ),
+                ),
+              ],
+            ),
+          ],
+        ),
+      ),
+    );
   }
 
   Widget _buildRecipeItem({required String label, required String value}) {
@@ -136,14 +140,14 @@ class HandDripView extends GetView<CoffeeController> {
         Text(
           value,
           style: AppTextStyles.heading1Bold.copyWith(
-            color: Colors.white,
+            color: AppColor.staticLabelWhiteStrong,
           ),
         ),
         const SizedBox(height: 4),
         Text(
           label,
           style: AppTextStyles.caption1Regular.copyWith(
-            color: Colors.white.withOpacity(0.8),
+            color: AppColor.staticLabelWhiteStrong.withOpacity(0.8),
           ),
         ),
       ],
@@ -161,7 +165,7 @@ class HandDripView extends GetView<CoffeeController> {
             height: 32,
             decoration: BoxDecoration(
               color: AppColor.primaryLight,
-              borderRadius: BorderRadius.circular(16),
+              borderRadius: AppRadius.xlBorder,
             ),
             child: Center(
               child: Text(

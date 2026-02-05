@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:coflanet/constants/color_constant.dart';
 import 'package:coflanet/constants/style_constant.dart';
+import 'package:coflanet/constants/radius_constant.dart';
 import 'package:coflanet/modules/coffee/coffee_controller.dart';
 
 class CoffeeMainView extends GetView<CoffeeController> {
@@ -79,11 +80,8 @@ class CoffeeMainView extends GetView<CoffeeController> {
         padding: const EdgeInsets.all(24),
         decoration: BoxDecoration(
           color: color.withOpacity(0.1),
-          borderRadius: BorderRadius.circular(16),
-          border: Border.all(
-            color: color.withOpacity(0.3),
-            width: 1,
-          ),
+          borderRadius: AppRadius.xlBorder,
+          border: Border.all(color: color.withOpacity(0.3), width: 1),
         ),
         child: Row(
           children: [
@@ -92,7 +90,7 @@ class CoffeeMainView extends GetView<CoffeeController> {
               height: 64,
               decoration: BoxDecoration(
                 color: color.withOpacity(0.2),
-                borderRadius: BorderRadius.circular(32),
+                borderRadius: AppRadius.roundBorder,
               ),
               child: Icon(icon, color: color, size: 32),
             ),
