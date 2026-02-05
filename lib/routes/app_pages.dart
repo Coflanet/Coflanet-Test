@@ -7,6 +7,8 @@ import 'package:coflanet/modules/splash/splash_binding.dart';
 // Modules - Auth
 import 'package:coflanet/modules/auth/signin/signin_view.dart';
 import 'package:coflanet/modules/auth/signin/signin_binding.dart';
+import 'package:coflanet/modules/auth/signup/signup_view.dart';
+import 'package:coflanet/modules/auth/signup/signup_binding.dart';
 
 // Modules - Onboarding
 import 'package:coflanet/modules/onboarding/survey_binding.dart';
@@ -26,6 +28,22 @@ import 'package:coflanet/modules/coffee/main/coffee_main_view.dart';
 import 'package:coflanet/modules/coffee/hand_drip/hand_drip_view.dart';
 import 'package:coflanet/modules/coffee/espresso/espresso_view.dart';
 import 'package:coflanet/modules/coffee/settings/coffee_settings_view.dart';
+import 'package:coflanet/modules/coffee/settings/coffee_setting_detail_view.dart';
+import 'package:coflanet/modules/coffee/timer/coffee_timer_binding.dart';
+import 'package:coflanet/modules/coffee/timer/coffee_timer_view.dart';
+import 'package:coflanet/modules/coffee/timer/timer_complete_view.dart';
+
+// Modules - Matching
+import 'package:coflanet/modules/matching/matching_binding.dart';
+import 'package:coflanet/modules/matching/matching_result_view.dart';
+
+// Modules - Profile
+import 'package:coflanet/modules/profile/my_taste_binding.dart';
+import 'package:coflanet/modules/profile/my_taste_view.dart';
+
+// Modules - Planet
+import 'package:coflanet/modules/planet/my_planet_binding.dart';
+import 'package:coflanet/modules/planet/my_planet_view.dart';
 
 part 'app_routes.dart';
 
@@ -48,6 +66,12 @@ class AppPages {
       name: Routes.signIn,
       page: () => const SignInView(),
       binding: SignInBinding(),
+      transition: Transition.cupertino,
+    ),
+    GetPage(
+      name: Routes.emailSignUp,
+      page: () => const SignUpView(),
+      binding: SignUpBinding(),
       transition: Transition.cupertino,
     ),
 
@@ -114,6 +138,48 @@ class AppPages {
       name: Routes.coffeeSettings,
       page: () => const CoffeeSettingsView(),
       binding: CoffeeBinding(),
+      transition: Transition.cupertino,
+    ),
+    GetPage(
+      name: Routes.coffeeSettingDetail,
+      page: () => const CoffeeSettingDetailView(),
+      binding: CoffeeBinding(),
+      transition: Transition.cupertino,
+    ),
+    GetPage(
+      name: Routes.timerActive,
+      page: () => const CoffeeTimerView(),
+      binding: CoffeeTimerBinding(),
+      transition: Transition.cupertino,
+    ),
+    GetPage(
+      name: Routes.timerComplete,
+      page: () => const TimerCompleteView(),
+      binding: CoffeeTimerBinding(),
+      transition: Transition.fade,
+    ),
+
+    // === Matching ===
+    GetPage(
+      name: Routes.matchingResult,
+      page: () => const MatchingResultView(),
+      binding: MatchingBinding(),
+      transition: Transition.cupertino,
+    ),
+
+    // === Profile ===
+    GetPage(
+      name: Routes.myTaste,
+      page: () => const MyTasteView(),
+      binding: MyTasteBinding(),
+      transition: Transition.cupertino,
+    ),
+
+    // === Planet ===
+    GetPage(
+      name: Routes.myPlanet,
+      page: () => const MyPlanetView(),
+      binding: MyPlanetBinding(),
       transition: Transition.cupertino,
     ),
   ];
