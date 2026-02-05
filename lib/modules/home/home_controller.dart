@@ -32,6 +32,16 @@ class HomeController extends BaseController {
     Get.toNamed(Routes.coffeeMain);
   }
 
+  /// Navigate to my taste screen
+  void navigateToMyTaste() {
+    Get.toNamed(Routes.myTaste);
+  }
+
+  /// Navigate to my planet screen
+  void navigateToMyPlanet() {
+    Get.toNamed(Routes.myPlanet);
+  }
+
   /// Logout
   Future<void> logout() async {
     await _storage.clearAll();

@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:coflanet/constants/color_constant.dart';
 import 'package:coflanet/constants/style_constant.dart';
+import 'package:coflanet/constants/radius_constant.dart';
 import 'package:coflanet/modules/home/home_controller.dart';
 
 class HomeView extends GetView<HomeController> {
@@ -15,29 +16,19 @@ class HomeView extends GetView<HomeController> {
         child: CustomScrollView(
           slivers: [
             // App bar
-            SliverToBoxAdapter(
-              child: _buildAppBar(),
-            ),
+            SliverToBoxAdapter(child: _buildAppBar()),
 
             // Welcome section
-            SliverToBoxAdapter(
-              child: _buildWelcomeSection(),
-            ),
+            SliverToBoxAdapter(child: _buildWelcomeSection()),
 
             // Quick actions
-            SliverToBoxAdapter(
-              child: _buildQuickActions(),
-            ),
+            SliverToBoxAdapter(child: _buildQuickActions()),
 
             // Feature cards
-            SliverToBoxAdapter(
-              child: _buildFeatureCards(),
-            ),
+            SliverToBoxAdapter(child: _buildFeatureCards()),
 
             // Bottom padding
-            const SliverToBoxAdapter(
-              child: SizedBox(height: 40),
-            ),
+            const SliverToBoxAdapter(child: SizedBox(height: 40)),
           ],
         ),
       ),
@@ -55,11 +46,11 @@ class HomeView extends GetView<HomeController> {
             height: 40,
             decoration: BoxDecoration(
               color: AppColor.primaryNormal,
-              borderRadius: BorderRadius.circular(10),
+              borderRadius: AppRadius.lgBorder,
             ),
-            child: const Icon(
+            child: Icon(
               Icons.coffee,
-              color: Colors.white,
+              color: AppColor.staticLabelWhiteStrong,
               size: 24,
             ),
           ),
@@ -72,10 +63,7 @@ class HomeView extends GetView<HomeController> {
           ),
           const Spacer(),
           IconButton(
-            icon: Icon(
-              Icons.logout,
-              color: AppColor.labelAlternative,
-            ),
+            icon: Icon(Icons.logout, color: AppColor.labelAlternative),
             onPressed: () => controller.logout(),
           ),
         ],
@@ -110,26 +98,45 @@ class HomeView extends GetView<HomeController> {
   Widget _buildQuickActions() {
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 24),
-      child: Row(
+      child: Column(
         children: [
-          Expanded(
-            child: _buildActionCard(
-              icon: Icons.coffee,
-              label: '커피 마시기',
-              color: AppColor.primaryNormal,
-              onTap: () => controller.navigateToCoffee(),
-            ),
+          Row(
+            children: [
+              Expanded(
+                child: _buildActionCard(
+                  icon: Icons.coffee,
+                  label: '커피 마시기',
+                  color: AppColor.primaryNormal,
+                  onTap: () => controller.navigateToCoffee(),
+                ),
+              ),
+              const SizedBox(width: 12),
+              Expanded(
+                child: _buildActionCard(
+                  icon: Icons.favorite_outline,
+                  label: '내 취향',
+                  color: AppColor.accentForegroundPink,
+                  onTap: () => controller.navigateToMyTaste(),
+                ),
+              ),
+            ],
           ),
-          const SizedBox(width: 12),
-          Expanded(
-            child: _buildActionCard(
-              icon: Icons.favorite_outline,
-              label: '내 취향',
-              color: AppColor.accentForegroundPink,
-              onTap: () {
-                // TODO: Navigate to profile/preferences
-              },
-            ),
+          const SizedBox(height: 12),
+          Row(
+            children: [
+              Expanded(
+                child: _buildActionCard(
+                  icon: Icons.public_rounded,
+                  label: '나의 행성',
+                  color: AppColor.colorGlobalCyan50,
+                  onTap: () => controller.navigateToMyPlanet(),
+                ),
+              ),
+              const SizedBox(width: 12),
+              const Expanded(
+                child: SizedBox(),
+              ), // Placeholder for future action
+            ],
           ),
         ],
       ),
@@ -148,7 +155,7 @@ class HomeView extends GetView<HomeController> {
         padding: const EdgeInsets.all(20),
         decoration: BoxDecoration(
           color: color.withOpacity(0.1),
-          borderRadius: BorderRadius.circular(16),
+          borderRadius: AppRadius.xlBorder,
         ),
         child: Column(
           children: [
@@ -156,9 +163,7 @@ class HomeView extends GetView<HomeController> {
             const SizedBox(height: 12),
             Text(
               label,
-              style: AppTextStyles.body1NormalMedium.copyWith(
-                color: color,
-              ),
+              style: AppTextStyles.body1NormalMedium.copyWith(color: color),
             ),
           ],
         ),
@@ -227,7 +232,7 @@ class HomeView extends GetView<HomeController> {
         padding: const EdgeInsets.all(20),
         decoration: BoxDecoration(
           gradient: gradient,
-          borderRadius: BorderRadius.circular(16),
+          borderRadius: AppRadius.xlBorder,
         ),
         child: Row(
           children: [
@@ -238,14 +243,14 @@ class HomeView extends GetView<HomeController> {
                   Text(
                     title,
                     style: AppTextStyles.headline1Bold.copyWith(
-                      color: Colors.white,
+                      color: AppColor.staticLabelWhiteStrong,
                     ),
                   ),
                   const SizedBox(height: 4),
                   Text(
                     description,
                     style: AppTextStyles.body2NormalRegular.copyWith(
-                      color: Colors.white.withOpacity(0.9),
+                      color: AppColor.staticLabelWhiteStrong.withOpacity(0.9),
                     ),
                   ),
                 ],
@@ -255,10 +260,14 @@ class HomeView extends GetView<HomeController> {
               width: 60,
               height: 60,
               decoration: BoxDecoration(
-                color: Colors.white.withOpacity(0.2),
-                borderRadius: BorderRadius.circular(30),
+                color: AppColor.staticLabelWhiteStrong.withOpacity(0.2),
+                borderRadius: AppRadius.roundBorder,
               ),
-              child: Icon(icon, color: Colors.white, size: 32),
+              child: Icon(
+                icon,
+                color: AppColor.staticLabelWhiteStrong,
+                size: 32,
+              ),
             ),
           ],
         ),
