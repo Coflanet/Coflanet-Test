@@ -35,21 +35,13 @@ class DummySurveyData {
           label: '단맛',
           description: '카라멜, 초콜릿 같은 달콤한 맛',
         ),
-        SurveyOptionModel(
-          id: 'bitter',
-          label: '쓴맛',
-          description: '진하고 깊은 맛',
-        ),
+        SurveyOptionModel(id: 'bitter', label: '쓴맛', description: '진하고 깊은 맛'),
         SurveyOptionModel(
           id: 'nutty',
           label: '고소함',
           description: '견과류 같은 고소한 맛',
         ),
-        SurveyOptionModel(
-          id: 'balance',
-          label: '밸런스',
-          description: '균형 잡힌 맛',
-        ),
+        SurveyOptionModel(id: 'balance', label: '밸런스', description: '균형 잡힌 맛'),
       ],
     ),
 
@@ -144,11 +136,11 @@ class DummySurveyData {
     String coffeeType;
     String description;
     TasteProfileModel tasteProfile;
+    List<FlavorDescriptionModel> flavorDescriptions;
 
     if (tastePref.contains('acidic')) {
       coffeeType = '산미파';
-      description = '밝고 과일향이 풍부한 커피를 즐기시는 당신!\n'
-          '에티오피아, 케냐 같은 아프리카 원두를 추천드려요.';
+      description = '진하고 깊은 풍미를 좋아하네요 😊';
       tasteProfile = const TasteProfileModel(
         acidity: 90,
         sweetness: 60,
@@ -156,10 +148,31 @@ class DummySurveyData {
         body: 40,
         aroma: 80,
       );
+      flavorDescriptions = const [
+        FlavorDescriptionModel(
+          name: '과일향',
+          emoji: '🍊',
+          description: '시트러스, 베리류의 밝고 상큼한 향미가 느껴지는 커피를 선호해요',
+        ),
+        FlavorDescriptionModel(
+          name: '꽃향',
+          emoji: '🌸',
+          description: '자스민, 라벤더 같은 은은한 플로럴 노트를 즐겨요',
+        ),
+        FlavorDescriptionModel(
+          name: '견과류/초콜릿향',
+          emoji: '🍫',
+          description: '아몬드, 헤이즐넛, 다크초콜릿의 고소하고 달콤한 풍미',
+        ),
+        FlavorDescriptionModel(
+          name: '로스팅향',
+          emoji: '🔥',
+          description: '캐러멜, 토스트 같은 따뜻하고 깊은 로스팅 향미',
+        ),
+      ];
     } else if (tastePref.contains('bitter')) {
       coffeeType = '진한맛파';
-      description = '깊고 진한 커피를 즐기시는 당신!\n'
-          '수마트라, 브라질 같은 진한 원두를 추천드려요.';
+      description = '진하고 깊은 풍미를 좋아하네요 😊';
       tasteProfile = const TasteProfileModel(
         acidity: 30,
         sweetness: 40,
@@ -167,10 +180,31 @@ class DummySurveyData {
         body: 85,
         aroma: 60,
       );
+      flavorDescriptions = const [
+        FlavorDescriptionModel(
+          name: '로스팅향',
+          emoji: '🔥',
+          description: '진하게 볶아낸 깊고 스모키한 향미를 좋아해요',
+        ),
+        FlavorDescriptionModel(
+          name: '견과류/초콜릿향',
+          emoji: '🍫',
+          description: '다크초콜릿, 카카오의 깊고 묵직한 풍미',
+        ),
+        FlavorDescriptionModel(
+          name: '스파이시향',
+          emoji: '🌶️',
+          description: '후추, 시나몬 같은 향신료의 자극적인 느낌',
+        ),
+        FlavorDescriptionModel(
+          name: '우디향',
+          emoji: '🌲',
+          description: '오크, 삼나무 같은 나무의 따뜻하고 건조한 향',
+        ),
+      ];
     } else if (tastePref.contains('sweet')) {
       coffeeType = '달달파';
-      description = '달콤하고 부드러운 커피를 즐기시는 당신!\n'
-          '콜롬비아, 과테말라 원두를 추천드려요.';
+      description = '달콤하고 부드러운 커피를 즐기시네요 😊';
       tasteProfile = const TasteProfileModel(
         acidity: 40,
         sweetness: 85,
@@ -178,10 +212,31 @@ class DummySurveyData {
         body: 60,
         aroma: 70,
       );
+      flavorDescriptions = const [
+        FlavorDescriptionModel(
+          name: '캐러멜향',
+          emoji: '🍯',
+          description: '달콤한 캐러멜, 토피, 꿀 같은 부드러운 단맛 향미',
+        ),
+        FlavorDescriptionModel(
+          name: '견과류향',
+          emoji: '🥜',
+          description: '아몬드, 헤이즐넛의 고소하면서도 달콤한 풍미',
+        ),
+        FlavorDescriptionModel(
+          name: '과일향',
+          emoji: '🍒',
+          description: '체리, 자두 같은 달콤한 과일의 잘 익은 향미',
+        ),
+        FlavorDescriptionModel(
+          name: '바닐라향',
+          emoji: '🍦',
+          description: '바닐라, 크림 같은 부드럽고 포근한 향',
+        ),
+      ];
     } else {
       coffeeType = '밸런스파';
-      description = '균형 잡힌 맛을 즐기시는 당신!\n'
-          '다양한 블렌드 커피를 추천드려요.';
+      description = '균형 잡힌 맛을 즐기시네요 😊';
       tasteProfile = const TasteProfileModel(
         acidity: 60,
         sweetness: 60,
@@ -189,12 +244,35 @@ class DummySurveyData {
         body: 60,
         aroma: 60,
       );
+      flavorDescriptions = const [
+        FlavorDescriptionModel(
+          name: '과일향',
+          emoji: '🍊',
+          description: '적당한 산미와 함께 느껴지는 과일의 밝은 향',
+        ),
+        FlavorDescriptionModel(
+          name: '견과류/초콜릿향',
+          emoji: '🍫',
+          description: '밀크초콜릿, 아몬드의 편안하고 고소한 풍미',
+        ),
+        FlavorDescriptionModel(
+          name: '캐러멜향',
+          emoji: '🍯',
+          description: '캐러멜의 부드러운 달콤함이 은은하게 감도는 맛',
+        ),
+        FlavorDescriptionModel(
+          name: '꽃향',
+          emoji: '🌼',
+          description: '살짝 느껴지는 플로럴 노트가 복합미를 더해요',
+        ),
+      ];
     }
 
     return SurveyResultModel(
       coffeeType: coffeeType,
       coffeeTypeDescription: description,
       tasteProfile: tasteProfile,
+      flavorDescriptions: flavorDescriptions,
       recommendations: [
         CoffeeRecommendationModel(
           id: '1',
@@ -202,6 +280,10 @@ class DummySurveyData {
           origin: '에티오피아',
           roastLevel: '라이트',
           description: '꽃향과 시트러스 노트가 특징',
+          originalPrice: 18000,
+          discountPrice: 14400,
+          discountPercent: 20,
+          weight: '200g',
           tasteProfile: const TasteProfileModel(
             acidity: 85,
             sweetness: 70,
@@ -216,6 +298,10 @@ class DummySurveyData {
           origin: '콜롬비아',
           roastLevel: '미디엄',
           description: '견과류와 카라멜 향이 특징',
+          originalPrice: 16000,
+          discountPrice: 12800,
+          discountPercent: 20,
+          weight: '200g',
           tasteProfile: const TasteProfileModel(
             acidity: 55,
             sweetness: 75,
@@ -230,6 +316,10 @@ class DummySurveyData {
           origin: '과테말라',
           roastLevel: '미디엄',
           description: '초콜릿과 스파이시한 향이 특징',
+          originalPrice: 17000,
+          discountPrice: 13600,
+          discountPercent: 20,
+          weight: '200g',
           tasteProfile: const TasteProfileModel(
             acidity: 50,
             sweetness: 65,
