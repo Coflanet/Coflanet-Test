@@ -4,6 +4,7 @@ import 'package:get/get.dart';
 import 'package:coflanet/app_binding.dart';
 import 'package:coflanet/routes/app_pages.dart';
 import 'package:coflanet/core/theme/app_theme.dart';
+import 'package:coflanet/core/theme/theme_controller.dart';
 import 'package:coflanet/core/storage/local_storage.dart';
 import 'package:coflanet/constants/color_constant.dart';
 
@@ -42,7 +43,7 @@ class CoflanetApp extends StatelessWidget {
       debugShowCheckedModeBanner: false,
       theme: AppTheme.light,
       darkTheme: AppTheme.dark,
-      themeMode: ThemeMode.light,
+      themeMode: ThemeMode.system,
       initialBinding: AppBinding(),
       initialRoute: AppPages.initial,
       getPages: AppPages.routes,

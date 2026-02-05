@@ -45,11 +45,11 @@ dev_dependencies:
 flutter:
   uses-material-design: true
 
-  # Assets will be added when images are available
-  # assets:
-  #   - assets/images/
-  #   - assets/icons/
-  #   - assets/fonts/
+  # Assets
+  assets:
+    - assets/images/
+    - assets/icons/
+    - assets/fonts/
 
   # Fonts - uncomment when font files are added
   # fonts:

@@ -1,6 +1,7 @@
 import 'package:get/get.dart';
 import 'package:coflanet/core/storage/local_storage.dart';
 import 'package:coflanet/core/network/api_client.dart';
+import 'package:coflanet/core/theme/theme_controller.dart';
 
 /// Global app bindings for dependency injection
 class AppBinding extends Bindings {
@@ -9,6 +10,7 @@ class AppBinding extends Bindings {
     // Core services
     Get.put<LocalStorage>(LocalStorage(), permanent: true);
     Get.put<ApiClient>(ApiClient(), permanent: true);
+    Get.put<ThemeController>(ThemeController(), permanent: true);
 
     // Initialize API client
     Get.find<ApiClient>().init();
