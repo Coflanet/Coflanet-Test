@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:coflanet/constants/color_constant.dart';
+import 'package:coflanet/constants/radius_constant.dart';
 import 'package:coflanet/constants/style_constant.dart';
 
 class SurveyCheckboxItem extends StatelessWidget {
@@ -26,10 +27,8 @@ class SurveyCheckboxItem extends StatelessWidget {
         duration: const Duration(milliseconds: 200),
         padding: const EdgeInsets.all(16),
         decoration: BoxDecoration(
-          color: isSelected
-              ? AppColor.primaryLight
-              : AppColor.backgroundNormalNormal,
-          borderRadius: BorderRadius.circular(12),
+          color: isSelected ? AppColor.primaryNormal : Colors.transparent,
+          borderRadius: AppRadius.lgBorder,
           border: Border.all(
             color: isSelected
                 ? AppColor.primaryNormal
@@ -41,10 +40,7 @@ class SurveyCheckboxItem extends StatelessWidget {
           children: [
             // Icon
             if (icon != null) ...[
-              Text(
-                icon!,
-                style: const TextStyle(fontSize: 24),
-              ),
+              Text(icon!, style: const TextStyle(fontSize: 24)),
               const SizedBox(width: 12),
             ],
 
@@ -80,10 +76,8 @@ class SurveyCheckboxItem extends StatelessWidget {
               width: 24,
               height: 24,
               decoration: BoxDecoration(
-                color: isSelected
-                    ? AppColor.primaryNormal
-                    : Colors.transparent,
-                borderRadius: BorderRadius.circular(12),
+                color: isSelected ? AppColor.primaryNormal : Colors.transparent,
+                borderRadius: AppRadius.lgBorder,
                 border: Border.all(
                   color: isSelected
                       ? AppColor.primaryNormal
@@ -92,10 +86,10 @@ class SurveyCheckboxItem extends StatelessWidget {
                 ),
               ),
               child: isSelected
-                  ? const Icon(
+                  ? Icon(
                       Icons.check,
                       size: 16,
-                      color: Colors.white,
+                      color: AppColor.staticLabelWhiteStrong,
                     )
                   : null,
             ),

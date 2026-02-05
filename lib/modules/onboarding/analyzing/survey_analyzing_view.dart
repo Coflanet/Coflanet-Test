@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:coflanet/constants/color_constant.dart';
+import 'package:coflanet/constants/radius_constant.dart';
 import 'package:coflanet/constants/style_constant.dart';
 import 'package:coflanet/modules/onboarding/survey_controller.dart';
 
@@ -15,72 +16,69 @@ class SurveyAnalyzingView extends GetView<SurveyController> {
     });
 
     return Scaffold(
-      backgroundColor: AppColor.primaryNormal,
+      backgroundColor: AppColor.backgroundNormalNormal,
+      appBar: AppBar(
+        backgroundColor: Colors.transparent,
+        elevation: 0,
+        leading: const SizedBox.shrink(), // No back button during analysis
+      ),
       body: Center(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            // Loading animation
-            SizedBox(
-              width: 100,
-              height: 100,
-              child: Stack(
-                alignment: Alignment.center,
-                children: [
-                  // Outer ring
-                  SizedBox(
-                    width: 100,
-                    height: 100,
-                    child: CircularProgressIndicator(
-                      strokeWidth: 3,
-                      valueColor: AlwaysStoppedAnimation<Color>(
-                        Colors.white.withOpacity(0.3),
+        child: Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 24),
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              // Chart illustration placeholder (Figma: Thumbnail/_Resource/Ratio)
+              // TODO: Replace with actual onboarding_analyzing.png asset
+              Container(
+                width: double.infinity,
+                height: 240,
+                decoration: BoxDecoration(
+                  color: AppColor.componentFillNormal,
+                  borderRadius: AppRadius.xlBorder,
+                ),
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    // Chart icon matching Figma's minimalist line illustration
+                    Icon(
+                      Icons.show_chart_rounded,
+                      size: 64,
+                      color: AppColor.labelAssistive,
+                    ),
+                    const SizedBox(height: 8),
+                    // Subtle loading indicator
+                    SizedBox(
+                      width: 120,
+                      child: LinearProgressIndicator(
+                        backgroundColor: AppColor.lineNormalAlternative,
+                        valueColor: AlwaysStoppedAnimation<Color>(
+                          AppColor.primaryNormal,
+                        ),
                       ),
                     ),
-                  ),
-                  // Inner icon
-                  Container(
-                    width: 60,
-                    height: 60,
-                    decoration: BoxDecoration(
-                      color: Colors.white.withOpacity(0.2),
-                      borderRadius: BorderRadius.circular(30),
-                    ),
-                    child: const Icon(
-                      Icons.coffee,
-                      size: 32,
-                      color: Colors.white,
-                    ),
-                  ),
-                ],
+                  ],
+                ),
               ),
-            ),
 
-            const SizedBox(height: 40),
+              const SizedBox(height: 48),
 
-            Text(
-              '${controller.userName}님의\n취향을 분석하고 있어요',
-              textAlign: TextAlign.center,
-              style: AppTextStyles.heading1Bold.copyWith(
-                color: Colors.white,
-                height: 1.4,
+              // Analysis text
+              Text(
+                '${controller.userName}님의 취향을\n분석하고 있어요.',
+                textAlign: TextAlign.center,
+                style: AppTextStyles.heading1Bold.copyWith(
+                  color: AppColor.labelNormal,
+                  height: 1.4,
+                ),
               ),
-            ),
 
-            const SizedBox(height: 16),
+              const SizedBox(height: 60),
 
-            Text(
-              '잠시만 기다려 주세요...',
-              style: AppTextStyles.body2NormalRegular.copyWith(
-                color: Colors.white.withOpacity(0.8),
-              ),
-            ),
-
-            const SizedBox(height: 60),
-
-            // Loading dots animation
-            const _LoadingDots(),
-          ],
+              // Loading dots animation
+              const _LoadingDots(),
+            ],
+          ),
         ),
       ),
     );
@@ -130,7 +128,7 @@ class _LoadingDotsState extends State<_LoadingDots>
               width: 8,
               height: 8,
               decoration: BoxDecoration(
-                color: Colors.white.withOpacity(opacity),
+                color: AppColor.primaryNormal.withOpacity(opacity),
                 shape: BoxShape.circle,
               ),
             );

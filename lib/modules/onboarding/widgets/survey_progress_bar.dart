@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:coflanet/constants/color_constant.dart';
+import 'package:coflanet/constants/radius_constant.dart';
 import 'package:coflanet/constants/style_constant.dart';
 
 class SurveyProgressBar extends StatelessWidget {
@@ -37,10 +38,7 @@ class SurveyProgressBar extends StatelessWidget {
 class SurveyProgressIndicator extends StatelessWidget {
   final double progress;
 
-  const SurveyProgressIndicator({
-    super.key,
-    required this.progress,
-  });
+  const SurveyProgressIndicator({super.key, required this.progress});
 
   @override
   Widget build(BuildContext context) {
@@ -48,7 +46,7 @@ class SurveyProgressIndicator extends StatelessWidget {
       height: 4,
       decoration: BoxDecoration(
         color: AppColor.lineNormalAlternative,
-        borderRadius: BorderRadius.circular(2),
+        borderRadius: AppRadius.xxsBorder,
       ),
       child: LayoutBuilder(
         builder: (context, constraints) {
@@ -59,7 +57,7 @@ class SurveyProgressIndicator extends StatelessWidget {
                 width: constraints.maxWidth * progress,
                 decoration: BoxDecoration(
                   color: AppColor.primaryNormal,
-                  borderRadius: BorderRadius.circular(2),
+                  borderRadius: AppRadius.xxsBorder,
                 ),
               ),
             ],

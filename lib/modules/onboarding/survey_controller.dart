@@ -30,6 +30,11 @@ class SurveyController extends BaseController {
   final Rxn<SurveyResultModel> _surveyResult = Rxn<SurveyResultModel>();
   SurveyResultModel? get surveyResult => _surveyResult.value;
 
+  // Selected bean IDs on result screen
+  final _selectedBeanIds = <String>{}.obs;
+  Set<String> get selectedBeanIds => _selectedBeanIds;
+  int get selectedBeanCount => _selectedBeanIds.length;
+
   // Check if current question has selection
   bool get hasSelection {
     return _answers[_currentStep.value]?.isNotEmpty ?? false;
@@ -45,7 +50,9 @@ class SurveyController extends BaseController {
 
     if (question.allowMultiple) {
       // Toggle selection for multiple choice
-      final currentSelections = List<String>.from(_answers[_currentStep.value] ?? []);
+      final currentSelections = List<String>.from(
+        _answers[_currentStep.value] ?? [],
+      );
       if (currentSelections.contains(optionId)) {
         currentSelections.remove(optionId);
       } else {
@@ -115,7 +122,22 @@ class SurveyController extends BaseController {
 
   /// View result
   void viewResult() {
+    _selectedBeanIds.clear();
     Get.offNamed(Routes.surveyResult);
+  }
+
+  /// Toggle bean selection on result screen
+  void toggleBeanSelection(String beanId) {
+    if (_selectedBeanIds.contains(beanId)) {
+      _selectedBeanIds.remove(beanId);
+    } else {
+      _selectedBeanIds.add(beanId);
+    }
+  }
+
+  /// Check if a bean is selected
+  bool isBeanSelected(String beanId) {
+    return _selectedBeanIds.contains(beanId);
   }
 
   /// Complete onboarding and go to home
