@@ -5,6 +5,7 @@ import 'package:coflanet/app_binding.dart';
 import 'package:coflanet/routes/app_pages.dart';
 import 'package:coflanet/core/theme/app_theme.dart';
 import 'package:coflanet/core/storage/local_storage.dart';
+import 'package:coflanet/constants/color_constant.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -20,10 +21,10 @@ void main() async {
 
   // Set system UI overlay style
   SystemChrome.setSystemUIOverlayStyle(
-    const SystemUiOverlayStyle(
+    SystemUiOverlayStyle(
       statusBarColor: Colors.transparent,
       statusBarIconBrightness: Brightness.dark,
-      systemNavigationBarColor: Colors.white,
+      systemNavigationBarColor: AppColor.staticLabelWhiteStrong,
       systemNavigationBarIconBrightness: Brightness.dark,
     ),
   );
@@ -50,9 +51,9 @@ class CoflanetApp extends StatelessWidget {
       fallbackLocale: const Locale('ko', 'KR'),
       builder: (context, child) {
         return MediaQuery(
-          data: MediaQuery.of(context).copyWith(
-            textScaler: const TextScaler.linear(1.0),
-          ),
+          data: MediaQuery.of(
+            context,
+          ).copyWith(textScaler: const TextScaler.linear(1.0)),
           child: child!,
         );
       },
