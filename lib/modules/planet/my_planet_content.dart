@@ -131,7 +131,7 @@ class MyPlanetContent extends GetView<MyPlanetController> {
 
   Widget _buildMascotPlaceholder() {
     return Image.asset(
-      AssetPath.onboardingComplete,
+      AssetPath.charFront,
       width: 180,
       height: 180,
       fit: BoxFit.contain,
