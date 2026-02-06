@@ -42,18 +42,11 @@ class SelectCoffeeContent extends GetView<SelectCoffeeController> {
   Widget _buildHeader() {
     return Obx(() {
       return Padding(
-        padding: const EdgeInsets.fromLTRB(20, 16, 20, 16),
+        padding: const EdgeInsets.fromLTRB(20, 8, 20, 16),
         child: Row(
+          mainAxisAlignment: MainAxisAlignment.end,
           children: [
-            // Title
-            Text(
-              controller.isEditing ? '원두 편집' : '원두',
-              style: AppTextStyles.heading1Bold.copyWith(
-                color: AppColor.colorGlobalCommon100, // White on black bg
-              ),
-            ),
-            const Spacer(),
-            // Edit button
+            // Edit button (title moved to AppBar)
             GestureDetector(
               onTap: controller.toggleEditMode,
               child: Container(
