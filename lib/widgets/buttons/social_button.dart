@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/flutter_svg.dart';
+import 'package:coflanet/constants/asset_constant.dart';
 import 'package:coflanet/constants/style_constant.dart';
 import 'package:coflanet/constants/radius_constant.dart';
 
@@ -94,11 +96,16 @@ class SocialButton extends StatelessWidget {
   Widget _buildIcon() {
     switch (type) {
       case SocialButtonType.kakao:
-        return const _KakaoIcon();
+        return SvgPicture.asset(AssetPath.iconKakao, width: 24, height: 24);
       case SocialButtonType.naver:
-        return const _NaverIcon();
+        return SvgPicture.asset(AssetPath.iconNaver, width: 24, height: 24);
       case SocialButtonType.apple:
-        return const Icon(Icons.apple, size: 24, color: Colors.white);
+        return SvgPicture.asset(
+          AssetPath.iconApple,
+          width: 24,
+          height: 24,
+          colorFilter: const ColorFilter.mode(Colors.white, BlendMode.srcIn),
+        );
     }
   }
 }
@@ -108,17 +115,7 @@ class _KakaoIcon extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      width: 20,
-      height: 20,
-      decoration: const BoxDecoration(
-        color: Color(0xFF191919),
-        shape: BoxShape.circle,
-      ),
-      child: const Center(
-        child: Icon(Icons.chat_bubble, size: 12, color: Color(0xFFFEE500)),
-      ),
-    );
+    return SvgPicture.asset(AssetPath.iconKakao, width: 20, height: 20);
   }
 }
 
@@ -127,23 +124,6 @@ class _NaverIcon extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      width: 20,
-      height: 20,
-      decoration: BoxDecoration(
-        color: Colors.white,
-        borderRadius: AppRadius.xsBorder,
-      ),
-      child: const Center(
-        child: Text(
-          'N',
-          style: TextStyle(
-            color: Color(0xFF03C75A),
-            fontSize: 14,
-            fontWeight: FontWeight.w900,
-          ),
-        ),
-      ),
-    );
+    return SvgPicture.asset(AssetPath.iconNaver, width: 20, height: 20);
   }
 }

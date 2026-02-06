@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:coflanet/constants/color_constant.dart';
 import 'package:coflanet/constants/style_constant.dart';
 import 'package:coflanet/constants/radius_constant.dart';
@@ -266,23 +267,33 @@ class AppImageCard extends StatelessWidget {
         borderRadius: BorderRadius.vertical(
           top: Radius.circular(AppRadius.card),
         ),
-        child: Image.network(
-          imageUrl!,
+        child: CachedNetworkImage(
+          imageUrl: imageUrl!,
           height: imageHeight,
           width: double.infinity,
           fit: imageFit,
-          errorBuilder: (context, error, stackTrace) {
-            return Container(
-              height: imageHeight,
-              width: double.infinity,
-              color: AppColor.componentFillNormal,
-              child: Icon(
-                Icons.broken_image_outlined,
-                color: AppColor.labelAlternative,
-                size: 32,
+          placeholder: (context, url) => Container(
+            height: imageHeight,
+            width: double.infinity,
+            color: AppColor.componentFillNormal,
+            child: const Center(
+              child: SizedBox(
+                width: 24,
+                height: 24,
+                child: CircularProgressIndicator(strokeWidth: 2),
               ),
-            );
-          },
+            ),
+          ),
+          errorWidget: (context, url, error) => Container(
+            height: imageHeight,
+            width: double.infinity,
+            color: AppColor.componentFillNormal,
+            child: Icon(
+              Icons.broken_image_outlined,
+              color: AppColor.labelAlternative,
+              size: 32,
+            ),
+          ),
         ),
       );
     } else {

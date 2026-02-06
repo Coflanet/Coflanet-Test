@@ -1,13 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
+import 'package:coflanet/constants/asset_constant.dart';
 import 'package:coflanet/constants/color_constant.dart';
 import 'package:coflanet/constants/radius_constant.dart';
 import 'package:coflanet/constants/style_constant.dart';
 import 'package:coflanet/modules/coffee/coffee_controller.dart';
-import 'package:coflanet/widgets/buttons/primary_button.dart';
 import 'package:coflanet/widgets/modals/input_modal.dart';
 import 'package:coflanet/widgets/modals/time_picker_modal.dart';
+import 'package:coflanet/widgets/navigation/app_bottom_bar.dart';
 
 /// Detail screen for adjusting a single recipe parameter (RS-03 ~ RS-05).
 ///
@@ -127,10 +129,18 @@ class CoffeeSettingDetailView extends GetView<CoffeeController> {
     return Scaffold(
       backgroundColor: AppColor.backgroundNormalNormal,
       appBar: AppBar(
-        backgroundColor: Colors.transparent,
+        backgroundColor: AppColor.transparent,
         elevation: 0,
         leading: IconButton(
-          icon: Icon(Icons.arrow_back_ios, color: AppColor.labelNormal),
+          icon: SvgPicture.asset(
+            AssetPath.iconArrowBack,
+            width: 24,
+            height: 24,
+            colorFilter: ColorFilter.mode(
+              AppColor.labelNormal,
+              BlendMode.srcIn,
+            ),
+          ),
           onPressed: () => Get.back(),
         ),
         title: Text(
@@ -346,15 +356,10 @@ class CoffeeSettingDetailView extends GetView<CoffeeController> {
   }
 
   Widget _buildBottomBar() {
-    return Container(
+    return AppBottomBar.primaryButton(
+      text: '저장',
+      onPressed: () => Get.back(),
       padding: const EdgeInsets.all(24),
-      decoration: BoxDecoration(
-        color: AppColor.backgroundNormalNormal,
-        boxShadow: AppShadows.shadowBlackHeavyBottom,
-      ),
-      child: SafeArea(
-        child: PrimaryButton(text: '저장', onPressed: () => Get.back()),
-      ),
     );
   }
 

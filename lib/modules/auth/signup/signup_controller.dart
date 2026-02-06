@@ -117,10 +117,11 @@ class SignUpController extends BaseController {
       await _storage.saveUserId(
         'user_${DateTime.now().millisecondsSinceEpoch}',
       );
-      await _storage.saveUserName(email.value.split('@').first);
+      final userName = email.value.split('@').first;
+      await _storage.saveUserName(userName);
 
-      // Navigate to survey intro for onboarding
-      Get.offAllNamed(Routes.surveyIntro);
+      // Navigate to sign up complete page
+      Get.offNamed(Routes.signUpComplete, arguments: {'userName': userName});
     });
   }
 

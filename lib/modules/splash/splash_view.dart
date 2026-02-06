@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
+import 'package:coflanet/constants/asset_constant.dart';
 import 'package:coflanet/constants/color_constant.dart';
 import 'package:coflanet/constants/style_constant.dart';
 import 'package:coflanet/constants/radius_constant.dart';
@@ -17,7 +18,7 @@ class SplashView extends GetView<SplashController> {
     // Set status bar to light (white icons) for dark background
     SystemChrome.setSystemUIOverlayStyle(
       const SystemUiOverlayStyle(
-        statusBarColor: Colors.transparent,
+        statusBarColor: AppColor.transparent,
         statusBarIconBrightness: Brightness.light,
       ),
     );
@@ -40,19 +41,23 @@ class SplashView extends GetView<SplashController> {
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              // Logo - TODO: Replace with actual logo_splash.png when assets are configured
-              // Image.asset(AssetPath.logoSplash, width: 120, height: 120)
-              Container(
-                width: 100,
-                height: 100,
-                decoration: BoxDecoration(
-                  color: AppColor.staticLabelWhiteStrong.withOpacity(0.15),
-                  borderRadius: AppRadius.fullBorder,
-                ),
-                child: Icon(
-                  Icons.all_inclusive_rounded,
-                  size: 56,
-                  color: AppColor.staticLabelWhiteStrong,
+              // Logo - Using actual logo_splash.png asset
+              Image.asset(
+                AssetPath.logoSplash,
+                width: 120,
+                height: 120,
+                errorBuilder: (context, error, stackTrace) => Container(
+                  width: 100,
+                  height: 100,
+                  decoration: BoxDecoration(
+                    color: AppColor.staticLabelWhiteStrong.withOpacity(0.15),
+                    borderRadius: AppRadius.fullBorder,
+                  ),
+                  child: Icon(
+                    Icons.all_inclusive_rounded,
+                    size: 56,
+                    color: AppColor.staticLabelWhiteStrong,
+                  ),
                 ),
               ),
               const SizedBox(height: 20),

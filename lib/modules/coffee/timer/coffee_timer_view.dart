@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
+import 'package:coflanet/constants/asset_constant.dart';
 import 'package:coflanet/constants/color_constant.dart';
 import 'package:coflanet/constants/style_constant.dart';
 import 'package:coflanet/constants/radius_constant.dart';
@@ -72,7 +74,12 @@ class CoffeeTimerView extends GetView<CoffeeTimerController> {
       elevation: 0,
       scrolledUnderElevation: 0,
       leading: IconButton(
-        icon: Icon(Icons.close, color: AppColor.labelNormal, size: 24),
+        icon: SvgPicture.asset(
+          AssetPath.iconClose,
+          width: 24,
+          height: 24,
+          colorFilter: ColorFilter.mode(AppColor.labelNormal, BlendMode.srcIn),
+        ),
         onPressed: () => _showStopConfirmation(),
       ),
       title: Obx(() {
@@ -165,20 +172,8 @@ class CoffeeTimerView extends GetView<CoffeeTimerController> {
           textAlign: TextAlign.center,
         ),
         const SizedBox(height: 36),
-        // Emoji illustration placeholder
-        Container(
-          width: 120,
-          height: 120,
-          decoration: BoxDecoration(
-            color: AppColor.primaryLight,
-            shape: BoxShape.circle,
-          ),
-          alignment: Alignment.center,
-          child: Text(
-            step.illustrationEmoji ?? '☕',
-            style: const TextStyle(fontSize: 48),
-          ),
-        ),
+        // Step illustration
+        _buildStepIllustration(step),
         const SizedBox(height: 36),
         // Action text with highlighted keywords
         if (step.actionText != null) _buildActionText(step.actionText!),
@@ -317,6 +312,57 @@ class CoffeeTimerView extends GetView<CoffeeTimerController> {
         textAlign: TextAlign.center,
         text: TextSpan(children: spans),
       ),
+    );
+  }
+
+  // ─── Step Illustration (real images for preparation steps) ───
+
+  Widget _buildStepIllustration(dynamic step) {
+    final assetPath = _getIllustrationAsset(step.title);
+
+    if (assetPath != null) {
+      // Use real illustration image
+      return ClipRRect(
+        borderRadius: AppRadius.xxlBorder,
+        child: Image.asset(
+          assetPath,
+          width: 200,
+          height: 200,
+          fit: BoxFit.contain,
+          errorBuilder: (context, error, stackTrace) {
+            // Fallback to emoji if image fails to load
+            return _buildEmojiPlaceholder(step.illustrationEmoji ?? '☕');
+          },
+        ),
+      );
+    }
+
+    // Fallback to emoji placeholder
+    return _buildEmojiPlaceholder(step.illustrationEmoji ?? '☕');
+  }
+
+  String? _getIllustrationAsset(String stepTitle) {
+    // Map step titles to illustration assets
+    switch (stepTitle) {
+      case '원두 분쇄':
+        return AssetPath.timerStepGrinder;
+      case '예열하기':
+        return AssetPath.timerStepPourover;
+      default:
+        return null;
+    }
+  }
+
+  Widget _buildEmojiPlaceholder(String emoji) {
+    return Container(
+      width: 120,
+      height: 120,
+      decoration: BoxDecoration(
+        color: AppColor.primaryLight,
+        shape: BoxShape.circle,
+      ),
+      alignment: Alignment.center,
+      child: Text(emoji, style: AppTextStyles.emojiLarge),
     );
   }
 

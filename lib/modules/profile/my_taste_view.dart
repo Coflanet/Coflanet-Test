@@ -1,6 +1,8 @@
 import 'dart:math' as math;
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
+import 'package:coflanet/constants/asset_constant.dart';
 import 'package:coflanet/constants/color_constant.dart';
 import 'package:coflanet/constants/style_constant.dart';
 import 'package:coflanet/constants/radius_constant.dart';
@@ -50,10 +52,11 @@ class MyTasteView extends GetView<MyTasteController> {
       backgroundColor: AppColor.backgroundNormalNormal,
       elevation: 0,
       leading: IconButton(
-        icon: Icon(
-          Icons.arrow_back_ios_new_rounded,
-          color: AppColor.labelNormal,
-          size: 20,
+        icon: SvgPicture.asset(
+          AssetPath.iconArrowBack,
+          width: 24,
+          height: 24,
+          colorFilter: ColorFilter.mode(AppColor.labelNormal, BlendMode.srcIn),
         ),
         onPressed: () => controller.goBack(),
       ),

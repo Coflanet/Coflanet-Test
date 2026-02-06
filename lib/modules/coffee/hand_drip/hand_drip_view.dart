@@ -1,11 +1,14 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
+import 'package:coflanet/constants/asset_constant.dart';
 import 'package:coflanet/constants/color_constant.dart';
 import 'package:coflanet/constants/style_constant.dart';
 import 'package:coflanet/constants/radius_constant.dart';
 import 'package:coflanet/modules/coffee/coffee_controller.dart';
 import 'package:coflanet/routes/app_pages.dart';
 import 'package:coflanet/widgets/buttons/primary_button.dart';
+import 'package:coflanet/widgets/cards/recipe_card.dart';
 
 class HandDripView extends GetView<CoffeeController> {
   const HandDripView({super.key});
@@ -15,10 +18,18 @@ class HandDripView extends GetView<CoffeeController> {
     return Scaffold(
       backgroundColor: AppColor.backgroundNormalNormal,
       appBar: AppBar(
-        backgroundColor: Colors.transparent,
+        backgroundColor: AppColor.transparent,
         elevation: 0,
         leading: IconButton(
-          icon: Icon(Icons.arrow_back_ios, color: AppColor.labelNormal),
+          icon: SvgPicture.asset(
+            AssetPath.iconArrowBack,
+            width: 24,
+            height: 24,
+            colorFilter: ColorFilter.mode(
+              AppColor.labelNormal,
+              BlendMode.srcIn,
+            ),
+          ),
           onPressed: () => Get.back(),
         ),
         title: Text(
@@ -29,7 +40,15 @@ class HandDripView extends GetView<CoffeeController> {
         ),
         actions: [
           IconButton(
-            icon: Icon(Icons.settings, color: AppColor.labelAlternative),
+            icon: SvgPicture.asset(
+              AssetPath.iconSettings,
+              width: 24,
+              height: 24,
+              colorFilter: ColorFilter.mode(
+                AppColor.labelAlternative,
+                BlendMode.srcIn,
+              ),
+            ),
             onPressed: () => controller.goToSettings(),
           ),
         ],
@@ -79,78 +98,14 @@ class HandDripView extends GetView<CoffeeController> {
 
   Widget _buildRecipeCard() {
     return Obx(
-      () => Container(
-        padding: const EdgeInsets.all(20),
-        decoration: BoxDecoration(
-          gradient: LinearGradient(
-            colors: [
-              AppColor.colorGlobalOrange50,
-              AppColor.colorGlobalOrange60,
-            ],
-          ),
-          borderRadius: AppRadius.xlBorder,
-        ),
-        child: Column(
-          children: [
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                _buildRecipeItem(
-                  label: '잔 수',
-                  value: '${controller.cupsCount}잔',
-                ),
-                _buildRecipeItem(
-                  label: '원두',
-                  value: '${controller.coffeeAmount}g',
-                ),
-                _buildRecipeItem(
-                  label: '물',
-                  value: '${controller.waterAmount}ml',
-                ),
-              ],
-            ),
-            const SizedBox(height: 16),
-            Row(
-              children: [
-                Icon(
-                  Icons.info_outline,
-                  color: AppColor.staticLabelWhiteStrong,
-                  size: 16,
-                ),
-                const SizedBox(width: 8),
-                Expanded(
-                  child: Text(
-                    '${controller.strengthLabel} 농도로 설정되어 있어요',
-                    style: AppTextStyles.caption1Regular.copyWith(
-                      color: AppColor.staticLabelWhiteStrong.withOpacity(0.9),
-                    ),
-                  ),
-                ),
-              ],
-            ),
-          ],
-        ),
+      () => RecipeCard.handDrip(
+        items: [
+          RecipeItem(label: '잔 수', value: '${controller.cupsCount}잔'),
+          RecipeItem(label: '원두', value: '${controller.coffeeAmount}g'),
+          RecipeItem(label: '물', value: '${controller.waterAmount}ml'),
+        ],
+        infoText: '${controller.strengthLabel} 농도로 설정되어 있어요',
       ),
-    );
-  }
-
-  Widget _buildRecipeItem({required String label, required String value}) {
-    return Column(
-      children: [
-        Text(
-          value,
-          style: AppTextStyles.heading1Bold.copyWith(
-            color: AppColor.staticLabelWhiteStrong,
-          ),
-        ),
-        const SizedBox(height: 4),
-        Text(
-          label,
-          style: AppTextStyles.caption1Regular.copyWith(
-            color: AppColor.staticLabelWhiteStrong.withOpacity(0.8),
-          ),
-        ),
-      ],
     );
   }
 

@@ -215,32 +215,25 @@ class _SelectionModalState extends State<SelectionModal>
         margin: const EdgeInsets.symmetric(vertical: 4),
         padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 14),
         decoration: BoxDecoration(
+          // Figma: 선택됨 = 흰색 배경, 미선택 = 연한 회색 배경
           color: isSelected
-              ? AppColor.primaryNormal.withValues(alpha: 0.08)
-              : AppColor.componentFillAlternative,
-          borderRadius: AppRadius.buttonBorder,
+              ? AppColor.backgroundNormalNormal
+              : AppColor.componentFillNormal,
+          borderRadius: AppRadius.xxxlBorder, // pill 형태
           border: Border.all(
-            color: isSelected
-                ? AppColor.primaryNormal.withValues(alpha: 0.3)
-                : Colors.transparent,
-            width: 1.5,
+            // Figma: 선택됨 = Violet 테두리 2px, 미선택 = 테두리 없음
+            color: isSelected ? AppColor.primaryNormal : Colors.transparent,
+            width: 2,
           ),
         ),
-        child: Row(
-          children: [
-            _buildSelectionIndicator(isSelected),
-            const SizedBox(width: 12),
-            Expanded(
-              child: Text(
-                label,
-                style: AppTextStyles.body1NormalMedium.copyWith(
-                  color: isSelected
-                      ? AppColor.primaryNormal
-                      : AppColor.labelNormal,
-                ),
-              ),
+        child: Center(
+          child: Text(
+            label,
+            // Figma: 선택됨 = Violet 텍스트, 미선택 = 검정 텍스트
+            style: AppTextStyles.body1NormalMedium.copyWith(
+              color: isSelected ? AppColor.primaryNormal : AppColor.labelNormal,
             ),
-          ],
+          ),
         ),
       ),
     );

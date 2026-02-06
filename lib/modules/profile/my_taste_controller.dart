@@ -1,24 +1,19 @@
 import 'package:get/get.dart';
 import 'package:coflanet/core/base/base_controller.dart';
-import 'package:coflanet/core/storage/local_storage.dart';
+import 'package:coflanet/core/services/survey_service.dart';
 import 'package:coflanet/data/models/survey_result_model.dart';
 import 'package:coflanet/routes/app_pages.dart';
 
 class MyTasteController extends BaseController {
-  final LocalStorage _storage = Get.find<LocalStorage>();
+  final SurveyService _surveyService = Get.find<SurveyService>();
 
-  // Survey result
-  final Rxn<SurveyResultModel> _surveyResult = Rxn<SurveyResultModel>();
-  SurveyResultModel? get surveyResult => _surveyResult.value;
-
-  // User name
-  String get userName => _storage.getUserName() ?? '사용자';
-
-  // Has result
-  bool get hasResult => _surveyResult.value != null;
+  // Delegate to SurveyService
+  SurveyResultModel? get surveyResult => _surveyService.surveyResult;
+  String get userName => _surveyService.userName;
+  bool get hasResult => _surveyService.hasResult;
 
   // Taste profile for chart
-  TasteProfileModel? get tasteProfile => _surveyResult.value?.tasteProfile;
+  TasteProfileModel? get tasteProfile => surveyResult?.tasteProfile;
 
   // Max value for chart normalization
   int get maxTasteValue {
@@ -38,13 +33,10 @@ class MyTasteController extends BaseController {
     _loadSurveyResult();
   }
 
-  /// Load survey result from local storage
+  /// Load survey result via service
   Future<void> _loadSurveyResult() async {
     await executeWithLoading(() async {
-      final resultJson = _storage.getSurveyResult();
-      if (resultJson != null) {
-        _surveyResult.value = SurveyResultModel.fromJson(resultJson);
-      }
+      await _surveyService.loadSurveyResult();
     });
   }
 

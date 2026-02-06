@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:coflanet/constants/asset_constant.dart';
 import 'package:coflanet/constants/color_constant.dart';
 import 'package:coflanet/constants/style_constant.dart';
 import 'package:coflanet/constants/radius_constant.dart';
@@ -45,18 +46,27 @@ class SignInView extends GetView<SignInController> {
   Widget _buildHeader() {
     return Column(
       children: [
-        // Logo placeholder - TODO: Replace with actual coplanet_logo asset
-        Container(
-          width: 80,
-          height: 80,
-          decoration: BoxDecoration(
-            color: AppColor.primaryLight,
-            borderRadius: AppRadius.xlBorder,
-          ),
-          child: Icon(
-            Icons.all_inclusive_rounded,
-            size: 40,
-            color: AppColor.primaryNormal,
+        // Logo
+        ClipRRect(
+          borderRadius: AppRadius.xlBorder,
+          child: Image.asset(
+            AssetPath.logoMain,
+            width: 80,
+            height: 80,
+            fit: BoxFit.cover,
+            errorBuilder: (context, error, stackTrace) => Container(
+              width: 80,
+              height: 80,
+              decoration: BoxDecoration(
+                color: AppColor.primaryLight,
+                borderRadius: AppRadius.xlBorder,
+              ),
+              child: Icon(
+                Icons.all_inclusive_rounded,
+                size: 40,
+                color: AppColor.primaryNormal,
+              ),
+            ),
           ),
         ),
         const SizedBox(height: 32),

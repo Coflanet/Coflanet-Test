@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
+import 'package:coflanet/constants/asset_constant.dart';
 import 'package:coflanet/constants/color_constant.dart';
 import 'package:coflanet/constants/style_constant.dart';
 import 'package:coflanet/constants/radius_constant.dart';
@@ -41,17 +43,30 @@ class HomeView extends GetView<HomeController> {
       child: Row(
         children: [
           // Logo
-          Container(
-            width: 40,
-            height: 40,
-            decoration: BoxDecoration(
-              color: AppColor.primaryNormal,
-              borderRadius: AppRadius.lgBorder,
-            ),
-            child: Icon(
-              Icons.coffee,
-              color: AppColor.staticLabelWhiteStrong,
-              size: 24,
+          ClipRRect(
+            borderRadius: AppRadius.lgBorder,
+            child: Image.asset(
+              AssetPath.logoMain,
+              width: 40,
+              height: 40,
+              fit: BoxFit.cover,
+              errorBuilder: (context, error, stackTrace) => Container(
+                width: 40,
+                height: 40,
+                decoration: BoxDecoration(
+                  color: AppColor.primaryNormal,
+                  borderRadius: AppRadius.lgBorder,
+                ),
+                child: SvgPicture.asset(
+                  AssetPath.iconCoffee,
+                  width: 24,
+                  height: 24,
+                  colorFilter: ColorFilter.mode(
+                    AppColor.staticLabelWhiteStrong,
+                    BlendMode.srcIn,
+                  ),
+                ),
+              ),
             ),
           ),
           const SizedBox(width: 12),

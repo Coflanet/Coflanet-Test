@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
+import 'package:coflanet/constants/asset_constant.dart';
 import 'package:coflanet/constants/color_constant.dart';
 import 'package:coflanet/constants/style_constant.dart';
 import 'package:coflanet/constants/radius_constant.dart';
@@ -17,14 +19,18 @@ class TimerCompleteView extends GetView<CoffeeTimerController> {
     return Scaffold(
       backgroundColor: AppColor.backgroundNormalNormal,
       appBar: AppBar(
-        backgroundColor: Colors.transparent,
+        backgroundColor: AppColor.transparent,
         elevation: 0,
         scrolledUnderElevation: 0,
         leading: IconButton(
-          icon: Icon(
-            Icons.arrow_back_ios_new,
-            color: AppColor.labelNormal,
-            size: 20,
+          icon: SvgPicture.asset(
+            AssetPath.iconClose, // Close icon - navigates to Home
+            width: 24,
+            height: 24,
+            colorFilter: ColorFilter.mode(
+              AppColor.labelNormal,
+              BlendMode.srcIn,
+            ),
           ),
           onPressed: controller.goToHome,
         ),
@@ -85,7 +91,7 @@ class TimerCompleteView extends GetView<CoffeeTimerController> {
           color: AppColor.primaryLight,
         ),
         child: const Center(
-          child: Text('\u2615', style: TextStyle(fontSize: 48)),
+          child: Text('\u2615', style: AppTextStyles.emojiLarge),
         ),
       ),
     );
@@ -186,7 +192,7 @@ class TimerCompleteView extends GetView<CoffeeTimerController> {
           child: Row(
             mainAxisSize: MainAxisSize.min,
             children: [
-              Text(tag.emoji, style: const TextStyle(fontSize: 16)),
+              Text(tag.emoji, style: AppTextStyles.emojiSmall),
               const SizedBox(width: 6),
               Text(
                 tag.name,

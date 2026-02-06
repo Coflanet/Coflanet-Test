@@ -1,11 +1,16 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
+import 'package:coflanet/constants/asset_constant.dart';
 import 'package:coflanet/constants/color_constant.dart';
 import 'package:coflanet/constants/style_constant.dart';
 import 'package:coflanet/constants/radius_constant.dart';
 import 'package:coflanet/modules/coffee/coffee_controller.dart';
 import 'package:coflanet/routes/app_pages.dart';
 import 'package:coflanet/widgets/buttons/primary_button.dart';
+import 'package:coflanet/widgets/cards/recipe_card.dart';
+
+// Import Routes for espresso settings navigation
 
 class EspressoView extends GetView<CoffeeController> {
   const EspressoView({super.key});
@@ -15,10 +20,18 @@ class EspressoView extends GetView<CoffeeController> {
     return Scaffold(
       backgroundColor: AppColor.backgroundNormalNormal,
       appBar: AppBar(
-        backgroundColor: Colors.transparent,
+        backgroundColor: AppColor.transparent,
         elevation: 0,
         leading: IconButton(
-          icon: Icon(Icons.arrow_back_ios, color: AppColor.labelNormal),
+          icon: SvgPicture.asset(
+            AssetPath.iconArrowBack,
+            width: 24,
+            height: 24,
+            colorFilter: ColorFilter.mode(
+              AppColor.labelNormal,
+              BlendMode.srcIn,
+            ),
+          ),
           onPressed: () => Get.back(),
         ),
         title: Text(
@@ -29,8 +42,16 @@ class EspressoView extends GetView<CoffeeController> {
         ),
         actions: [
           IconButton(
-            icon: Icon(Icons.settings, color: AppColor.labelAlternative),
-            onPressed: () => controller.goToSettings(),
+            icon: SvgPicture.asset(
+              AssetPath.iconSettings,
+              width: 24,
+              height: 24,
+              colorFilter: ColorFilter.mode(
+                AppColor.labelAlternative,
+                BlendMode.srcIn,
+              ),
+            ),
+            onPressed: () => Get.toNamed(Routes.espressoSettings),
           ),
         ],
       ),
@@ -101,41 +122,11 @@ class EspressoView extends GetView<CoffeeController> {
   }
 
   Widget _buildRecipeCard() {
-    return Container(
-      padding: const EdgeInsets.all(20),
-      decoration: BoxDecoration(
-        gradient: LinearGradient(
-          colors: [AppColor.colorGlobalViolet50, AppColor.colorGlobalViolet60],
-        ),
-        borderRadius: AppRadius.xlBorder,
-      ),
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-        children: [
-          _buildRecipeItem(label: '원두', value: '18g'),
-          _buildRecipeItem(label: '물온도', value: '93°C'),
-          _buildRecipeItem(label: '추출시간', value: '25초'),
-        ],
-      ),
-    );
-  }
-
-  Widget _buildRecipeItem({required String label, required String value}) {
-    return Column(
-      children: [
-        Text(
-          value,
-          style: AppTextStyles.heading1Bold.copyWith(
-            color: AppColor.staticLabelWhiteStrong,
-          ),
-        ),
-        const SizedBox(height: 4),
-        Text(
-          label,
-          style: AppTextStyles.caption1Regular.copyWith(
-            color: AppColor.staticLabelWhiteStrong.withOpacity(0.8),
-          ),
-        ),
+    return RecipeCard.espresso(
+      items: const [
+        RecipeItem(label: '원두', value: '18g'),
+        RecipeItem(label: '물온도', value: '93°C'),
+        RecipeItem(label: '추출시간', value: '25초'),
       ],
     );
   }
