@@ -126,10 +126,11 @@ class CoffeeSettingDetailView extends GetView<CoffeeController> {
   Widget build(BuildContext context) {
     final cfg = _config;
 
+    // Fixed per Figma CSS: Recipe Setting Detail uses #000000 background
     return Scaffold(
-      backgroundColor: AppColor.backgroundNormalNormal,
+      backgroundColor: AppColor.colorGlobalCommon0, // #000000 black
       appBar: AppBar(
-        backgroundColor: AppColor.transparent,
+        backgroundColor: AppColor.colorGlobalCommon0,
         elevation: 0,
         leading: IconButton(
           icon: SvgPicture.asset(
@@ -137,7 +138,7 @@ class CoffeeSettingDetailView extends GetView<CoffeeController> {
             width: 24,
             height: 24,
             colorFilter: ColorFilter.mode(
-              AppColor.labelNormal,
+              AppColor.colorGlobalCommon100, // White icon on black bg
               BlendMode.srcIn,
             ),
           ),
@@ -146,7 +147,7 @@ class CoffeeSettingDetailView extends GetView<CoffeeController> {
         title: Text(
           cfg.title,
           style: AppTextStyles.headline1Bold.copyWith(
-            color: AppColor.labelNormal,
+            color: AppColor.colorGlobalCommon100, // White text on black bg
           ),
         ),
       ),
@@ -206,8 +207,8 @@ class CoffeeSettingDetailView extends GetView<CoffeeController> {
           begin: Alignment.topLeft,
           end: Alignment.bottomRight,
           colors: [
-            AppColor.primaryLight,
-            AppColor.primaryLight.withOpacity(0.5),
+            AppColor.primaryNormal.withOpacity(0.3),
+            AppColor.primaryNormal.withOpacity(0.15),
           ],
         ),
         borderRadius: AppRadius.xxxlBorder,
@@ -229,14 +230,14 @@ class CoffeeSettingDetailView extends GetView<CoffeeController> {
           Text(
             displayText,
             style: AppTextStyles.display2Bold.copyWith(
-              color: AppColor.labelNormal,
+              color: AppColor.colorGlobalCommon100, // White on black bg
             ),
           ),
           const SizedBox(height: 8),
           Text(
             cfg.title,
             style: AppTextStyles.body1NormalRegular.copyWith(
-              color: AppColor.labelAlternative,
+              color: AppColor.colorGlobalCoolNeutral60, // Light gray on black
             ),
           ),
         ],
@@ -253,7 +254,8 @@ class CoffeeSettingDetailView extends GetView<CoffeeController> {
           SliderTheme(
             data: SliderTheme.of(Get.context!).copyWith(
               activeTrackColor: AppColor.primaryNormal,
-              inactiveTrackColor: AppColor.lineNormalAlternative,
+              inactiveTrackColor:
+                  AppColor.colorGlobalCoolNeutral25, // Dark track
               thumbColor: AppColor.primaryNormal,
               overlayColor: AppColor.primaryNormal.withOpacity(0.15),
               trackHeight: 6,
@@ -277,7 +279,8 @@ class CoffeeSettingDetailView extends GetView<CoffeeController> {
                     ? _formatSeconds(cfg.min)
                     : '${cfg.min}${cfg.unit}',
                 style: AppTextStyles.caption1Regular.copyWith(
-                  color: AppColor.labelAssistive,
+                  color:
+                      AppColor.colorGlobalCoolNeutral60, // Light gray on black
                 ),
               ),
               Text(
@@ -285,7 +288,8 @@ class CoffeeSettingDetailView extends GetView<CoffeeController> {
                     ? _formatSeconds(cfg.max)
                     : '${cfg.max}${cfg.unit}',
                 style: AppTextStyles.caption1Regular.copyWith(
-                  color: AppColor.labelAssistive,
+                  color:
+                      AppColor.colorGlobalCoolNeutral60, // Light gray on black
                 ),
               ),
             ],
@@ -302,9 +306,12 @@ class CoffeeSettingDetailView extends GetView<CoffeeController> {
         width: double.infinity,
         padding: const EdgeInsets.symmetric(vertical: 14),
         decoration: BoxDecoration(
-          color: AppColor.componentFillNormal,
+          color: AppColor.colorGlobalCoolNeutral15, // Dark button bg
           borderRadius: AppRadius.lgBorder,
-          border: Border.all(color: AppColor.lineNormalAlternative, width: 1),
+          border: Border.all(
+            color: AppColor.colorGlobalCoolNeutral25,
+            width: 1,
+          ), // Dark border
         ),
         child: Row(
           mainAxisAlignment: MainAxisAlignment.center,
@@ -335,18 +342,22 @@ class CoffeeSettingDetailView extends GetView<CoffeeController> {
     return Container(
       padding: const EdgeInsets.all(16),
       decoration: BoxDecoration(
-        color: AppColor.backgroundNormalAlternative,
+        color: AppColor.colorGlobalCoolNeutral15, // Dark hint bg
         borderRadius: AppRadius.lgBorder,
       ),
       child: Row(
         children: [
-          Icon(Icons.info_outline, color: AppColor.labelAssistive, size: 18),
+          Icon(
+            Icons.info_outline,
+            color: AppColor.colorGlobalCoolNeutral50,
+            size: 18,
+          ), // Gray icon
           const SizedBox(width: 10),
           Expanded(
             child: Text(
               '설정 가능 범위: $range',
               style: AppTextStyles.label1NormalRegular.copyWith(
-                color: AppColor.labelAlternative,
+                color: AppColor.colorGlobalCoolNeutral60, // Light gray text
               ),
             ),
           ),

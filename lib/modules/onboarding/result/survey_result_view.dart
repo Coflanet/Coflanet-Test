@@ -19,11 +19,12 @@ class SurveyResultView extends GetView<SurveyController> {
   Widget build(BuildContext context) {
     final result = controller.surveyResult;
 
+    // Fixed per Figma CSS: Survey Result uses #000000 background
     return Scaffold(
-      backgroundColor: AppColor.backgroundNormalNormal,
+      backgroundColor: AppColor.colorGlobalCommon0, // #000000 black
       appBar: AppBar(
-        backgroundColor: AppColor.backgroundNormalNormal,
-        surfaceTintColor: AppColor.backgroundNormalNormal,
+        backgroundColor: AppColor.colorGlobalCommon0,
+        surfaceTintColor: AppColor.colorGlobalCommon0,
         elevation: 0,
         scrolledUnderElevation: 0,
         leading: IconButton(
@@ -32,7 +33,7 @@ class SurveyResultView extends GetView<SurveyController> {
             width: 20,
             height: 20,
             colorFilter: ColorFilter.mode(
-              AppColor.labelNormal,
+              AppColor.colorGlobalCommon100, // White icon on black bg
               BlendMode.srcIn,
             ),
           ),
@@ -42,7 +43,7 @@ class SurveyResultView extends GetView<SurveyController> {
         title: Text(
           '나의 커피 취향',
           style: AppTextStyles.headline1Bold.copyWith(
-            color: AppColor.labelNormal,
+            color: AppColor.colorGlobalCommon100, // White text on black bg
           ),
         ),
       ),
@@ -61,7 +62,10 @@ class SurveyResultView extends GetView<SurveyController> {
           SliverToBoxAdapter(
             child: Padding(
               padding: const EdgeInsets.symmetric(horizontal: 20),
-              child: Divider(height: 1, color: AppColor.lineNormalAlternative),
+              child: Divider(
+                height: 1,
+                color: AppColor.colorGlobalCoolNeutral25,
+              ),
             ),
           ),
 
@@ -159,7 +163,7 @@ class SurveyResultView extends GetView<SurveyController> {
           Text(
             '나의 맛 프로필',
             style: AppTextStyles.headline1Bold.copyWith(
-              color: AppColor.labelNormal,
+              color: AppColor.colorGlobalCommon100, // White on black bg
             ),
           ),
           const SizedBox(height: 24),
@@ -200,7 +204,7 @@ class SurveyResultView extends GetView<SurveyController> {
         Text(
           item.label,
           style: AppTextStyles.caption1Medium.copyWith(
-            color: AppColor.labelAlternative,
+            color: AppColor.colorGlobalCoolNeutral60, // Light gray on black bg
           ),
         ),
         const SizedBox(height: 8),
@@ -213,7 +217,7 @@ class SurveyResultView extends GetView<SurveyController> {
         Text(
           levelText,
           style: AppTextStyles.label2Medium.copyWith(
-            color: AppColor.labelNormal,
+            color: AppColor.colorGlobalCommon100, // White on black bg
           ),
         ),
       ],
@@ -236,7 +240,7 @@ class SurveyResultView extends GetView<SurveyController> {
           Text(
             '이런 맛을 좋아해요',
             style: AppTextStyles.headline1Bold.copyWith(
-              color: AppColor.labelNormal,
+              color: AppColor.colorGlobalCommon100, // White on black bg
             ),
           ),
           const SizedBox(height: 20),
@@ -284,14 +288,15 @@ class SurveyResultView extends GetView<SurveyController> {
                 Text(
                   desc.name,
                   style: AppTextStyles.label1NormalBold.copyWith(
-                    color: AppColor.labelNormal,
+                    color: AppColor.colorGlobalCommon100, // White on black bg
                   ),
                 ),
                 const SizedBox(height: 2),
                 Text(
                   desc.description,
                   style: AppTextStyles.caption1Regular.copyWith(
-                    color: AppColor.labelAlternative,
+                    color: AppColor
+                        .colorGlobalCoolNeutral60, // Light gray on black bg
                   ),
                 ),
               ],
@@ -318,7 +323,7 @@ class SurveyResultView extends GetView<SurveyController> {
           Text(
             '추천 원두',
             style: AppTextStyles.headline1Bold.copyWith(
-              color: AppColor.labelNormal,
+              color: AppColor.colorGlobalCommon100, // White on black bg
             ),
           ),
           const SizedBox(height: 16),
@@ -341,12 +346,12 @@ class SurveyResultView extends GetView<SurveyController> {
           duration: const Duration(milliseconds: 180),
           margin: const EdgeInsets.only(bottom: 16),
           decoration: BoxDecoration(
-            color: AppColor.backgroundNormalNormal,
+            color: AppColor.colorGlobalCoolNeutral15, // Dark card on black bg
             borderRadius: AppRadius.lgBorder,
             border: Border.all(
               color: isSelected
                   ? AppColor.primaryNormal
-                  : AppColor.lineNormalNeutral,
+                  : AppColor.colorGlobalCoolNeutral25,
               width: isSelected ? 1.5 : 1,
             ),
             boxShadow: isSelected ? AppShadows.shadowPrimaryNormalList : null,
@@ -364,13 +369,14 @@ class SurveyResultView extends GetView<SurveyController> {
                       width: 80,
                       height: 100,
                       decoration: BoxDecoration(
-                        color: AppColor.backgroundNormalAlternative,
+                        color: AppColor
+                            .colorGlobalCoolNeutral20, // Darker placeholder on dark card
                         borderRadius: AppRadius.mdBorder,
                       ),
                       alignment: Alignment.center,
                       child: Icon(
                         Icons.coffee_rounded,
-                        color: AppColor.labelAssistive,
+                        color: AppColor.colorGlobalCoolNeutral50,
                         size: 32,
                       ),
                     ),
@@ -385,7 +391,8 @@ class SurveyResultView extends GetView<SurveyController> {
                           Text(
                             rec.name,
                             style: AppTextStyles.headline2Bold.copyWith(
-                              color: AppColor.labelNormal,
+                              color: AppColor
+                                  .colorGlobalCommon100, // White on dark card
                             ),
                             maxLines: 1,
                             overflow: TextOverflow.ellipsis,
@@ -461,13 +468,13 @@ class SurveyResultView extends GetView<SurveyController> {
     return Container(
       padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 3),
       decoration: BoxDecoration(
-        color: AppColor.componentFillNormal,
+        color: AppColor.colorGlobalCoolNeutral25, // Dark badge on dark card
         borderRadius: AppRadius.xsBorder,
       ),
       child: Text(
         text,
         style: AppTextStyles.caption1Medium.copyWith(
-          color: AppColor.labelAlternative,
+          color: AppColor.colorGlobalCoolNeutral70, // Light gray text
         ),
       ),
     );
@@ -500,7 +507,7 @@ class SurveyResultView extends GetView<SurveyController> {
         Text(
           _formatPrice(rec.discountPrice!),
           style: AppTextStyles.headline2Bold.copyWith(
-            color: AppColor.labelNormal,
+            color: AppColor.colorGlobalCommon100, // White on dark card
           ),
         ),
         const SizedBox(width: 6),
@@ -510,7 +517,7 @@ class SurveyResultView extends GetView<SurveyController> {
           Text(
             _formatPrice(rec.originalPrice!),
             style: AppTextStyles.caption1Regular.copyWith(
-              color: AppColor.labelAssistive,
+              color: AppColor.colorGlobalCoolNeutral50,
               decoration: TextDecoration.lineThrough,
             ),
           ),
@@ -582,8 +589,7 @@ class SurveyResultView extends GetView<SurveyController> {
     return Container(
       padding: const EdgeInsets.fromLTRB(20, 12, 20, 12),
       decoration: BoxDecoration(
-        color: AppColor.backgroundNormalNormal,
-        boxShadow: AppShadows.shadowBlackHeavyBottom,
+        color: AppColor.colorGlobalCommon0, // Black bg
       ),
       child: SafeArea(
         child: Obx(() {

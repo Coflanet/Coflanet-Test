@@ -17,10 +17,11 @@ class CoffeeSettingsView extends GetView<CoffeeController> {
 
   @override
   Widget build(BuildContext context) {
+    // Fixed per Figma CSS: Recipe Setting uses #000000 background
     return Scaffold(
-      backgroundColor: AppColor.backgroundNormalNormal,
+      backgroundColor: AppColor.colorGlobalCommon0, // #000000 black
       appBar: AppBar(
-        backgroundColor: AppColor.transparent,
+        backgroundColor: AppColor.colorGlobalCommon0,
         elevation: 0,
         leading: IconButton(
           icon: SvgPicture.asset(
@@ -28,7 +29,7 @@ class CoffeeSettingsView extends GetView<CoffeeController> {
             width: 24,
             height: 24,
             colorFilter: ColorFilter.mode(
-              AppColor.labelNormal,
+              AppColor.colorGlobalCommon100, // White icon on black bg
               BlendMode.srcIn,
             ),
           ),
@@ -37,7 +38,7 @@ class CoffeeSettingsView extends GetView<CoffeeController> {
         title: Text(
           '상세 설정',
           style: AppTextStyles.headline1Bold.copyWith(
-            color: AppColor.labelNormal,
+            color: AppColor.colorGlobalCommon100, // White text on black bg
           ),
         ),
       ),
@@ -85,7 +86,7 @@ class CoffeeSettingsView extends GetView<CoffeeController> {
         Text(
           '잔 수',
           style: AppTextStyles.headline1Bold.copyWith(
-            color: AppColor.labelNormal,
+            color: AppColor.colorGlobalCommon100, // White on black bg
           ),
         ),
         const SizedBox(height: 16),
@@ -102,7 +103,7 @@ class CoffeeSettingsView extends GetView<CoffeeController> {
                   child: Text(
                     '${controller.cupsCount}잔',
                     style: AppTextStyles.title2Bold.copyWith(
-                      color: AppColor.labelNormal,
+                      color: AppColor.colorGlobalCommon100, // White on black bg
                     ),
                   ),
                 ),
@@ -130,12 +131,16 @@ class CoffeeSettingsView extends GetView<CoffeeController> {
         width: 48,
         height: 48,
         decoration: BoxDecoration(
-          color: enabled ? AppColor.primaryLight : AppColor.componentFillNormal,
+          color: enabled
+              ? AppColor.primaryNormal.withOpacity(0.2)
+              : AppColor.colorGlobalCoolNeutral15, // Dark bg for disabled
           borderRadius: AppRadius.xxxlBorder,
         ),
         child: Icon(
           icon,
-          color: enabled ? AppColor.primaryNormal : AppColor.labelDisable,
+          color: enabled
+              ? AppColor.primaryNormal
+              : AppColor.colorGlobalCoolNeutral50, // Gray for disabled
         ),
       ),
     );
@@ -151,7 +156,7 @@ class CoffeeSettingsView extends GetView<CoffeeController> {
             Text(
               '진하기',
               style: AppTextStyles.headline1Bold.copyWith(
-                color: AppColor.labelNormal,
+                color: AppColor.colorGlobalCommon100, // White on black bg
               ),
             ),
             Obx(
@@ -169,7 +174,8 @@ class CoffeeSettingsView extends GetView<CoffeeController> {
           () => SliderTheme(
             data: SliderTheme.of(Get.context!).copyWith(
               activeTrackColor: AppColor.primaryNormal,
-              inactiveTrackColor: AppColor.lineNormalAlternative,
+              inactiveTrackColor:
+                  AppColor.colorGlobalCoolNeutral25, // Dark track
               thumbColor: AppColor.primaryNormal,
               overlayColor: AppColor.primaryNormal.withOpacity(0.2),
               trackHeight: 8,
@@ -189,13 +195,13 @@ class CoffeeSettingsView extends GetView<CoffeeController> {
             Text(
               '연하게',
               style: AppTextStyles.caption1Regular.copyWith(
-                color: AppColor.labelAssistive,
+                color: AppColor.colorGlobalCoolNeutral60, // Light gray on black
               ),
             ),
             Text(
               '진하게',
               style: AppTextStyles.caption1Regular.copyWith(
-                color: AppColor.labelAssistive,
+                color: AppColor.colorGlobalCoolNeutral60, // Light gray on black
               ),
             ),
           ],
@@ -211,7 +217,7 @@ class CoffeeSettingsView extends GetView<CoffeeController> {
         Text(
           '레시피 세부 설정',
           style: AppTextStyles.headline1Bold.copyWith(
-            color: AppColor.labelNormal,
+            color: AppColor.colorGlobalCommon100, // White on black bg
           ),
         ),
         const SizedBox(height: 16),
@@ -348,7 +354,7 @@ class CoffeeSettingsView extends GetView<CoffeeController> {
       () => Container(
         padding: const EdgeInsets.all(20),
         decoration: BoxDecoration(
-          color: AppColor.backgroundNormalAlternative,
+          color: AppColor.colorGlobalCoolNeutral15, // Dark card bg
           borderRadius: AppRadius.xlBorder,
         ),
         child: Column(
@@ -357,7 +363,7 @@ class CoffeeSettingsView extends GetView<CoffeeController> {
             Text(
               '레시피 요약',
               style: AppTextStyles.headline2Bold.copyWith(
-                color: AppColor.labelNormal,
+                color: AppColor.colorGlobalCommon100, // White on dark card
               ),
             ),
             const SizedBox(height: 16),
@@ -380,13 +386,13 @@ class CoffeeSettingsView extends GetView<CoffeeController> {
           Text(
             label,
             style: AppTextStyles.body2NormalRegular.copyWith(
-              color: AppColor.labelAlternative,
+              color: AppColor.colorGlobalCoolNeutral60, // Light gray label
             ),
           ),
           Text(
             value,
             style: AppTextStyles.body2NormalMedium.copyWith(
-              color: AppColor.labelNormal,
+              color: AppColor.colorGlobalCommon100, // White value
             ),
           ),
         ],
@@ -480,9 +486,12 @@ class _RecipeParameterCardState extends State<_RecipeParameterCard>
         child: Container(
           padding: const EdgeInsets.all(16),
           decoration: BoxDecoration(
-            color: AppColor.backgroundNormalAlternative,
+            color: AppColor.colorGlobalCoolNeutral15, // Dark card bg
             borderRadius: AppRadius.xlBorder,
-            border: Border.all(color: AppColor.lineNormalAlternative, width: 1),
+            border: Border.all(
+              color: AppColor.colorGlobalCoolNeutral25,
+              width: 1,
+            ), // Dark border
           ),
           child: Row(
             children: [
@@ -495,8 +504,8 @@ class _RecipeParameterCardState extends State<_RecipeParameterCard>
                     begin: Alignment.topLeft,
                     end: Alignment.bottomRight,
                     colors: [
-                      AppColor.primaryLight,
-                      AppColor.primaryLight.withOpacity(0.6),
+                      AppColor.primaryNormal.withOpacity(0.3),
+                      AppColor.primaryNormal.withOpacity(0.15),
                     ],
                   ),
                   borderRadius: AppRadius.lgBorder,
@@ -516,14 +525,15 @@ class _RecipeParameterCardState extends State<_RecipeParameterCard>
                     Text(
                       widget.title,
                       style: AppTextStyles.body2NormalRegular.copyWith(
-                        color: AppColor.labelAlternative,
+                        color: AppColor
+                            .colorGlobalCoolNeutral60, // Light gray title
                       ),
                     ),
                     const SizedBox(height: 2),
                     Text(
                       widget.value,
                       style: AppTextStyles.headline2Bold.copyWith(
-                        color: AppColor.labelNormal,
+                        color: AppColor.colorGlobalCommon100, // White value
                       ),
                     ),
                   ],
@@ -534,12 +544,13 @@ class _RecipeParameterCardState extends State<_RecipeParameterCard>
                 width: 32,
                 height: 32,
                 decoration: BoxDecoration(
-                  color: AppColor.componentFillNormal,
+                  color: AppColor.colorGlobalCoolNeutral20, // Dark chevron bg
                   borderRadius: AppRadius.mdBorder,
                 ),
                 child: Icon(
                   Icons.chevron_right,
-                  color: AppColor.labelAssistive,
+                  color:
+                      AppColor.colorGlobalCoolNeutral60, // Light gray chevron
                   size: 20,
                 ),
               ),

@@ -3,7 +3,7 @@ import 'package:get/get.dart';
 import 'package:coflanet/constants/color_constant.dart';
 import 'package:coflanet/constants/style_constant.dart';
 import 'package:coflanet/modules/shell/main_shell_controller.dart';
-import 'package:coflanet/modules/coffee/main/coffee_main_content.dart';
+import 'package:coflanet/modules/coffee/select/select_coffee_content.dart';
 import 'package:coflanet/modules/extraction/extraction_list_view.dart';
 import 'package:coflanet/modules/tasting/tasting_notes_view.dart';
 import 'package:coflanet/modules/planet/my_planet_content.dart';
@@ -21,7 +21,7 @@ class MainShellView extends GetView<MainShellController> {
         body: IndexedStack(
           index: controller.currentTabIndex.value,
           children: const [
-            CoffeeMainContent(), // Tab 0: 원두
+            SelectCoffeeContent(), // Tab 0: 원두 (Select Coffee Section SC-01)
             ExtractionListView(), // Tab 1: 추출 목록
             TastingNotesView(), // Tab 2: 시음 기록
             MyPlanetContent(), // Tab 3: My 행성
