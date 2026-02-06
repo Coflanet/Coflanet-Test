@@ -42,38 +42,31 @@ class HomeView extends GetView<HomeController> {
       padding: const EdgeInsets.fromLTRB(24, 16, 24, 0),
       child: Row(
         children: [
-          // Logo
-          ClipRRect(
-            borderRadius: AppRadius.lgBorder,
-            child: Image.asset(
-              AssetPath.logoMain,
-              width: 40,
-              height: 40,
-              fit: BoxFit.cover,
-              errorBuilder: (context, error, stackTrace) => Container(
-                width: 40,
-                height: 40,
-                decoration: BoxDecoration(
-                  color: AppColor.primaryNormal,
-                  borderRadius: AppRadius.lgBorder,
-                ),
-                child: SvgPicture.asset(
-                  AssetPath.iconCoffee,
-                  width: 24,
-                  height: 24,
-                  colorFilter: ColorFilter.mode(
-                    AppColor.staticLabelWhiteStrong,
-                    BlendMode.srcIn,
-                  ),
-                ),
+          // Logo Symbol (Primary color for white background)
+          Image.asset(
+            AssetPath.logoSymbolPrimary,
+            width: 32,
+            height: 32,
+            fit: BoxFit.contain,
+            errorBuilder: (context, error, stackTrace) => Container(
+              width: 32,
+              height: 32,
+              decoration: BoxDecoration(
+                color: AppColor.primaryNormal,
+                borderRadius: AppRadius.smBorder,
+              ),
+              child: Icon(
+                Icons.coffee,
+                size: 20,
+                color: AppColor.staticLabelWhiteStrong,
               ),
             ),
           ),
-          const SizedBox(width: 12),
+          const SizedBox(width: 8),
           Text(
             'Coflanet',
             style: AppTextStyles.headline1Bold.copyWith(
-              color: AppColor.labelNormal,
+              color: AppColor.primaryNormal,
             ),
           ),
           const Spacer(),
