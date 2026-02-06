@@ -6,25 +6,56 @@ class AssetPath {
   static const String _images = 'assets/images';
   static const String _icons = 'assets/icons';
 
-  // === Logo ===
+  // === Logo - Main (Full with text) ===
   static const String logoMain = '$_images/logo_main.png';
   static const String logoSplash = '$_images/logo_splash.png';
   static const String logoWhite = '$_images/logo_white.png';
   static const String logoDark = '$_images/logo_dark.png';
 
+  // === Logo - Horizontal (Symbol + Text) ===
+  static const String logoHorizontalPrimary =
+      '$_images/logo_horizontal_primary.png';
+  static const String logoHorizontalWhite =
+      '$_images/logo_horizontal_white.png';
+  static const String logoHorizontalBlack =
+      '$_images/logo_horizontal_black.png';
+  static const String logoHorizontalPrimarySvg =
+      '$_images/logo_horizontal_primary.svg';
+  static const String logoHorizontalWhiteSvg =
+      '$_images/logo_horizontal_white.svg';
+  static const String logoHorizontalBlackSvg =
+      '$_images/logo_horizontal_black.svg';
+
+  // === Logo - Symbol Only (Icon mark) ===
+  static const String logoSymbolPrimary = '$_images/logo_symbol_primary.png';
+  static const String logoSymbolWhite = '$_images/logo_symbol_white.png';
+  static const String logoSymbolBlack = '$_images/logo_symbol_black.png';
+  static const String logoSymbolPrimarySvg = '$_images/logo_symbol_primary.svg';
+  static const String logoSymbolWhiteSvg = '$_images/logo_symbol_white.svg';
+  static const String logoSymbolBlackSvg = '$_images/logo_symbol_black.svg';
+
+  // === Cpay Logo (Payment Feature) ===
+  static const String cpayLogoPrimary = '$_images/cpay_logo_primary.png';
+  static const String cpayLogoMuted = '$_images/cpay_logo_muted.png';
+  static const String cpayLogoBlack = '$_images/cpay_logo_black.png';
+  static const String cpayLogoPrimarySvg = '$_images/cpay_logo_primary.svg';
+  static const String cpayLogoMutedSvg = '$_images/cpay_logo_muted.svg';
+  static const String cpayLogoBlackSvg = '$_images/cpay_logo_black.svg';
+
   // === Onboarding ===
   static const String onboardingWelcome = '$_images/onboarding_welcome.png';
-  static const String onboardingComplete = '$_images/onboarding_complete.png';
-  static const String onboardingAnalyzing = '$_images/onboarding_analyzing.png';
 
   // === Signup Completion ===
   static const String completionClappingHands =
       '$_images/completion_clapping_hands.png';
 
-  // === Mascot ===
-  static const String mascotGift = '$_images/mascot_gift.png';
-  static const String mascotDrink = '$_images/mascot_drink.png';
-  static const String mascotFront = '$_images/mascot_front.png';
+  // === Character Illustrations (Primary mascot assets from Figma) ===
+  static const String charFront = '$_images/char_front.png';
+  static const String charTop = '$_images/char_top.png';
+  static const String charBottom = '$_images/char_bottom.png';
+  static const String charSide = '$_images/char_side.png';
+  static const String charGift = '$_images/char_gift.png';
+  static const String charDrinkCoffee = '$_images/char_drink_coffee.png';
 
   // === Aroma/Flavor Icons ===
   static const String aromaFruit = '$_images/aroma_fruit.png';
