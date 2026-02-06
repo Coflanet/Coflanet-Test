@@ -46,14 +46,14 @@ class SurveyCompleteView extends GetView<SurveyController> {
                 children: [
                   const Spacer(flex: 1),
 
-                  // Mascot illustration - using onboarding_complete.png asset
+                  // Mascot illustration - astronaut bunny with gift
                   ClipRRect(
                     borderRadius: AppRadius.fullBorder,
                     child: Image.asset(
-                      AssetPath.onboardingComplete,
+                      AssetPath.charGift,
                       width: 200,
                       height: 200,
-                      fit: BoxFit.cover,
+                      fit: BoxFit.contain,
                       errorBuilder: (context, error, stackTrace) => Container(
                         width: 200,
                         height: 200,

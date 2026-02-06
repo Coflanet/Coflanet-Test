@@ -29,14 +29,14 @@ class SurveyAnalyzingView extends GetView<SurveyController> {
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              // Chart illustration - using onboarding_analyzing.png asset
+              // Character illustration - astronaut bunny drinking coffee
               ClipRRect(
                 borderRadius: AppRadius.xlBorder,
                 child: Image.asset(
-                  AssetPath.onboardingAnalyzing,
+                  AssetPath.charDrinkCoffee,
                   width: double.infinity,
                   height: 240,
-                  fit: BoxFit.cover,
+                  fit: BoxFit.contain,
                   errorBuilder: (context, error, stackTrace) => Container(
                     width: double.infinity,
                     height: 240,
