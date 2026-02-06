@@ -79,11 +79,17 @@ class CoffeeMainView extends GetView<CoffeeController> {
     return GestureDetector(
       onTap: () => controller.selectType(type),
       child: Container(
-        padding: const EdgeInsets.all(24),
+        padding: const EdgeInsets.all(16),
         decoration: BoxDecoration(
-          color: color.withValues(alpha: 0.1),
+          color: AppColor.backgroundNormalNormal,
           borderRadius: AppRadius.xlBorder,
-          border: Border.all(color: color.withValues(alpha: 0.3), width: 1),
+          boxShadow: [
+            BoxShadow(
+              color: AppColor.labelNormal.withOpacity(0.08),
+              blurRadius: 8,
+              offset: const Offset(0, 2),
+            ),
+          ],
         ),
         child: Row(
           children: [
@@ -92,11 +98,11 @@ class CoffeeMainView extends GetView<CoffeeController> {
               width: 64,
               height: 64,
               decoration: BoxDecoration(
-                color: color.withValues(alpha: 0.2),
-                borderRadius: AppRadius.roundBorder,
+                color: color.withOpacity(0.1),
+                borderRadius: AppRadius.mdBorder,
               ),
               child: ClipRRect(
-                borderRadius: AppRadius.roundBorder,
+                borderRadius: AppRadius.mdBorder,
                 child: Image.asset(
                   imagePath,
                   width: 64,

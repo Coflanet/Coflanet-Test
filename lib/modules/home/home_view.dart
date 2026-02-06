@@ -204,13 +204,9 @@ class HomeView extends GetView<HomeController> {
           _buildFeatureCard(
             title: '핸드드립',
             description: '직접 내리는 커피의 즐거움',
-            icon: Icons.local_cafe,
-            gradient: LinearGradient(
-              colors: [
-                AppColor.colorGlobalOrange50,
-                AppColor.colorGlobalOrange70,
-              ],
-            ),
+            imagePath: AssetPath.coffeeHandDrip,
+            fallbackIcon: Icons.local_cafe,
+            accentColor: AppColor.colorGlobalOrange50,
             onTap: () => Get.toNamed('/coffee/hand-drip'),
           ),
 
@@ -220,13 +216,9 @@ class HomeView extends GetView<HomeController> {
           _buildFeatureCard(
             title: '에스프레소',
             description: '진한 한 잔의 풍미',
-            icon: Icons.coffee_maker,
-            gradient: LinearGradient(
-              colors: [
-                AppColor.colorGlobalViolet50,
-                AppColor.colorGlobalViolet70,
-              ],
-            ),
+            imagePath: AssetPath.coffeeEspresso,
+            fallbackIcon: Icons.coffee_maker,
+            accentColor: AppColor.colorGlobalViolet50,
             onTap: () => Get.toNamed('/coffee/espresso'),
           ),
         ],
@@ -237,20 +229,50 @@ class HomeView extends GetView<HomeController> {
   Widget _buildFeatureCard({
     required String title,
     required String description,
-    required IconData icon,
-    required Gradient gradient,
+    required String imagePath,
+    required IconData fallbackIcon,
+    required Color accentColor,
     required VoidCallback onTap,
   }) {
     return GestureDetector(
       onTap: onTap,
       child: Container(
-        padding: const EdgeInsets.all(20),
+        padding: const EdgeInsets.all(16),
         decoration: BoxDecoration(
-          gradient: gradient,
+          color: AppColor.backgroundNormalNormal,
           borderRadius: AppRadius.xlBorder,
+          boxShadow: [
+            BoxShadow(
+              color: AppColor.labelNormal.withOpacity(0.08),
+              blurRadius: 8,
+              offset: const Offset(0, 2),
+            ),
+          ],
         ),
         child: Row(
           children: [
+            // Coffee image thumbnail
+            Container(
+              width: 64,
+              height: 64,
+              decoration: BoxDecoration(
+                color: accentColor.withOpacity(0.1),
+                borderRadius: AppRadius.mdBorder,
+              ),
+              child: ClipRRect(
+                borderRadius: AppRadius.mdBorder,
+                child: Image.asset(
+                  imagePath,
+                  width: 64,
+                  height: 64,
+                  fit: BoxFit.cover,
+                  errorBuilder: (context, error, stackTrace) =>
+                      Icon(fallbackIcon, color: accentColor, size: 32),
+                ),
+              ),
+            ),
+            const SizedBox(width: 16),
+            // Text content
             Expanded(
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
@@ -258,30 +280,27 @@ class HomeView extends GetView<HomeController> {
                   Text(
                     title,
                     style: AppTextStyles.headline1Bold.copyWith(
-                      color: AppColor.staticLabelWhiteStrong,
+                      color: AppColor.labelNormal,
                     ),
                   ),
                   const SizedBox(height: 4),
                   Text(
                     description,
                     style: AppTextStyles.body2NormalRegular.copyWith(
-                      color: AppColor.staticLabelWhiteStrong.withOpacity(0.9),
+                      color: AppColor.labelAlternative,
                     ),
                   ),
                 ],
               ),
             ),
-            Container(
-              width: 60,
-              height: 60,
-              decoration: BoxDecoration(
-                color: AppColor.staticLabelWhiteStrong.withOpacity(0.2),
-                borderRadius: AppRadius.roundBorder,
-              ),
-              child: Icon(
-                icon,
-                color: AppColor.staticLabelWhiteStrong,
-                size: 32,
+            // Arrow icon
+            SvgPicture.asset(
+              AssetPath.iconArrowForward,
+              width: 20,
+              height: 20,
+              colorFilter: ColorFilter.mode(
+                AppColor.labelAssistive,
+                BlendMode.srcIn,
               ),
             ),
           ],
