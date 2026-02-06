@@ -1,11 +1,16 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
+import 'package:coflanet/constants/asset_constant.dart';
 import 'package:coflanet/constants/color_constant.dart';
 import 'package:coflanet/constants/style_constant.dart';
 import 'package:coflanet/constants/radius_constant.dart';
 import 'package:coflanet/data/models/survey_result_model.dart';
 import 'package:coflanet/modules/onboarding/survey_controller.dart';
 import 'package:coflanet/widgets/buttons/primary_button.dart';
+// AppCircularTasteIndicator replaced with simple emoji-based indicator
+import 'package:coflanet/widgets/gauge/app_animated_taste_bar.dart';
+import 'package:coflanet/widgets/forms/app_round_checkbox.dart';
 
 class SurveyResultView extends GetView<SurveyController> {
   const SurveyResultView({super.key});
@@ -22,10 +27,14 @@ class SurveyResultView extends GetView<SurveyController> {
         elevation: 0,
         scrolledUnderElevation: 0,
         leading: IconButton(
-          icon: Icon(
-            Icons.arrow_back_ios_new,
-            color: AppColor.labelNormal,
-            size: 20,
+          icon: SvgPicture.asset(
+            AssetPath.iconClose, // Close icon - navigates to Home
+            width: 20,
+            height: 20,
+            colorFilter: ColorFilter.mode(
+              AppColor.labelNormal,
+              BlendMode.srcIn,
+            ),
           ),
           onPressed: () => controller.completeOnboarding(),
         ),
@@ -58,6 +67,9 @@ class SurveyResultView extends GetView<SurveyController> {
 
           // ── Recommended coffee beans ──
           SliverToBoxAdapter(child: _buildRecommendationsSection(result)),
+
+          // ── Bottom action links ──
+          SliverToBoxAdapter(child: _buildBottomLinks()),
 
           // Bottom spacing so content clears the CTA bar
           const SliverToBoxAdapter(child: SizedBox(height: 120)),
@@ -163,49 +175,45 @@ class SurveyResultView extends GetView<SurveyController> {
   }
 
   Widget _buildCircularTasteItem(_TasteItem item) {
+    // Determine emoji and level text based on value
+    // Value >= 70 → 👍 좋음
+    // Value >= 40 → 😐 보통
+    // Value < 40 → 👎 싫음
+    final String emoji;
+    final String levelText;
+
+    if (item.value >= 70) {
+      emoji = '👍';
+      levelText = '좋음';
+    } else if (item.value >= 40) {
+      emoji = '😐';
+      levelText = '보통';
+    } else {
+      emoji = '👎';
+      levelText = '싫음';
+    }
+
     return Column(
       mainAxisSize: MainAxisSize.min,
       children: [
-        // Emoji
-        Text(item.emoji, style: const TextStyle(fontSize: 24)),
-        const SizedBox(height: 10),
-
-        // Circular indicator
-        SizedBox(
-          width: 56,
-          height: 56,
-          child: Stack(
-            alignment: Alignment.center,
-            children: [
-              SizedBox(
-                width: 56,
-                height: 56,
-                child: CircularProgressIndicator(
-                  value: item.value / 100,
-                  strokeWidth: 5,
-                  strokeCap: StrokeCap.round,
-                  backgroundColor: AppColor.lineNormalAlternative,
-                  valueColor: AlwaysStoppedAnimation<Color>(
-                    AppColor.primaryNormal,
-                  ),
-                ),
-              ),
-              Text(
-                '${item.value}',
-                style: AppTextStyles.label1NormalBold.copyWith(
-                  color: AppColor.labelNormal,
-                ),
-              ),
-            ],
-          ),
-        ),
-        const SizedBox(height: 10),
-
         // Label
         Text(
           item.label,
           style: AppTextStyles.caption1Medium.copyWith(
             color: AppColor.labelAlternative,
+          ),
+        ),
+        const SizedBox(height: 8),
+
+        // Emoji indicator
+        Text(emoji, style: AppTextStyles.emojiLarge.copyWith(fontSize: 28)),
+        const SizedBox(height: 6),
+
+        // Level text
+        Text(
+          levelText,
+          style: AppTextStyles.label2Medium.copyWith(
+            color: AppColor.labelNormal,
           ),
         ),
       ],
@@ -244,7 +252,7 @@ class SurveyResultView extends GetView<SurveyController> {
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          // Emoji icon inside purple circle
+          // Aroma icon inside purple circle
           Container(
             width: 44,
             height: 44,
@@ -253,7 +261,18 @@ class SurveyResultView extends GetView<SurveyController> {
               shape: BoxShape.circle,
             ),
             alignment: Alignment.center,
-            child: Text(desc.emoji, style: const TextStyle(fontSize: 20)),
+            child: ClipOval(
+              child: _getAromaImage(desc.name) != null
+                  ? Image.asset(
+                      _getAromaImage(desc.name)!,
+                      width: 36,
+                      height: 36,
+                      fit: BoxFit.cover,
+                      errorBuilder: (context, error, stackTrace) =>
+                          Text(desc.emoji, style: AppTextStyles.emojiMedium),
+                    )
+                  : Text(desc.emoji, style: AppTextStyles.emojiMedium),
+            ),
           ),
           const SizedBox(width: 12),
 
@@ -310,6 +329,9 @@ class SurveyResultView extends GetView<SurveyController> {
   }
 
   Widget _buildRecommendationCard(CoffeeRecommendationModel rec) {
+    // Generate deterministic match percentage based on rec id (20-95%)
+    final matchPercent = 20 + (rec.id.hashCode.abs() % 76);
+
     return Obx(() {
       final isSelected = controller.isBeanSelected(rec.id);
 
@@ -318,7 +340,6 @@ class SurveyResultView extends GetView<SurveyController> {
         child: AnimatedContainer(
           duration: const Duration(milliseconds: 180),
           margin: const EdgeInsets.only(bottom: 16),
-          padding: const EdgeInsets.all(16),
           decoration: BoxDecoration(
             color: AppColor.backgroundNormalNormal,
             borderRadius: AppRadius.lgBorder,
@@ -330,65 +351,105 @@ class SurveyResultView extends GetView<SurveyController> {
             ),
             boxShadow: isSelected ? AppShadows.shadowPrimaryNormalList : null,
           ),
-          child: Row(
-            crossAxisAlignment: CrossAxisAlignment.start,
+          child: Stack(
             children: [
-              // ── Coffee bag placeholder image ──
-              Container(
-                width: 80,
-                height: 100,
-                decoration: BoxDecoration(
-                  color: AppColor.backgroundNormalAlternative,
-                  borderRadius: AppRadius.mdBorder,
-                ),
-                alignment: Alignment.center,
-                child: Icon(
-                  Icons.coffee_rounded,
-                  color: AppColor.labelAssistive,
-                  size: 32,
-                ),
-              ),
-              const SizedBox(width: 14),
-
-              // ── Info column ──
-              Expanded(
-                child: Column(
+              // Main content with padding
+              Padding(
+                padding: const EdgeInsets.all(16),
+                child: Row(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    // Bean name
-                    Text(
-                      rec.name,
-                      style: AppTextStyles.headline2Bold.copyWith(
-                        color: AppColor.labelNormal,
+                    // ── Coffee bag placeholder image ──
+                    Container(
+                      width: 80,
+                      height: 100,
+                      decoration: BoxDecoration(
+                        color: AppColor.backgroundNormalAlternative,
+                        borderRadius: AppRadius.mdBorder,
                       ),
-                      maxLines: 1,
-                      overflow: TextOverflow.ellipsis,
+                      alignment: Alignment.center,
+                      child: Icon(
+                        Icons.coffee_rounded,
+                        color: AppColor.labelAssistive,
+                        size: 32,
+                      ),
                     ),
-                    const SizedBox(height: 6),
+                    const SizedBox(width: 14),
 
-                    // Origin + Roast badges
-                    Row(
-                      children: [
-                        _buildBadge(rec.origin),
-                        const SizedBox(width: 6),
-                        _buildBadge(rec.roastLevel),
-                      ],
+                    // ── Info column ──
+                    Expanded(
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          // Bean name
+                          Text(
+                            rec.name,
+                            style: AppTextStyles.headline2Bold.copyWith(
+                              color: AppColor.labelNormal,
+                            ),
+                            maxLines: 1,
+                            overflow: TextOverflow.ellipsis,
+                          ),
+                          const SizedBox(height: 6),
+
+                          // Origin + Roast badges
+                          Row(
+                            children: [
+                              _buildBadge(rec.origin),
+                              const SizedBox(width: 6),
+                              _buildBadge(rec.roastLevel),
+                            ],
+                          ),
+                          const SizedBox(height: 10),
+
+                          // Price row
+                          _buildPriceRow(rec),
+                          const SizedBox(height: 12),
+
+                          // Mini taste bars
+                          _buildMiniTasteBars(rec.tasteProfile),
+                        ],
+                      ),
                     ),
-                    const SizedBox(height: 10),
+                    const SizedBox(width: 8),
 
-                    // Price row
-                    _buildPriceRow(rec),
-                    const SizedBox(height: 12),
-
-                    // Mini taste bars
-                    _buildMiniTasteBars(rec.tasteProfile),
+                    // ── Round checkbox ──
+                    _buildRoundCheckbox(isSelected),
                   ],
                 ),
               ),
-              const SizedBox(width: 8),
 
-              // ── Round checkbox ──
-              _buildRoundCheckbox(isSelected),
+              // ── Match percentage badge (top-left) ──
+              Positioned(
+                top: 0,
+                left: 0,
+                child: Container(
+                  padding: const EdgeInsets.symmetric(
+                    horizontal: 10,
+                    vertical: 5,
+                  ),
+                  decoration: BoxDecoration(
+                    gradient: LinearGradient(
+                      begin: Alignment.topLeft,
+                      end: Alignment.bottomRight,
+                      colors: [
+                        AppColor.colorGlobalPink60,
+                        AppColor.primaryNormal,
+                      ],
+                    ),
+                    borderRadius: BorderRadius.only(
+                      topLeft: Radius.circular(AppRadius.lg - 1),
+                      bottomRight: Radius.circular(AppRadius.md),
+                    ),
+                  ),
+                  child: Text(
+                    '일치율 $matchPercent%',
+                    style: AppTextStyles.caption1Bold.copyWith(
+                      color: AppColor.staticLabelWhiteStrong,
+                    ),
+                  ),
+                ),
+              ),
             ],
           ),
         ),
@@ -458,74 +519,63 @@ class SurveyResultView extends GetView<SurveyController> {
   }
 
   Widget _buildMiniTasteBars(TasteProfileModel profile) {
-    final bars = [
-      ('산미', profile.acidity),
-      ('바디', profile.body),
-      ('단맛', profile.sweetness),
-      ('쓴맛', profile.bitterness),
-    ];
-
     return Column(
-      children: bars.map((item) {
-        return Padding(
-          padding: const EdgeInsets.only(bottom: 4),
-          child: Row(
-            children: [
-              SizedBox(
-                width: 28,
-                child: Text(
-                  item.$1,
-                  style: AppTextStyles.caption2Medium.copyWith(
-                    color: AppColor.labelAssistive,
-                  ),
-                ),
-              ),
-              const SizedBox(width: 6),
-              Expanded(
-                child: SizedBox(
-                  height: 4,
-                  child: ClipRRect(
-                    borderRadius: AppRadius.xxsBorder,
-                    child: LinearProgressIndicator(
-                      value: item.$2 / 100,
-                      backgroundColor: AppColor.lineNormalAlternative,
-                      valueColor: AlwaysStoppedAnimation<Color>(
-                        AppColor.primaryNormal,
-                      ),
-                    ),
-                  ),
-                ),
-              ),
-            ],
-          ),
-        );
-      }).toList(),
+      children: [
+        AppMiniTasteBar(label: '산미', value: profile.acidity),
+        AppMiniTasteBar(label: '바디', value: profile.body),
+        AppMiniTasteBar(label: '단맛', value: profile.sweetness),
+        AppMiniTasteBar(label: '쓴맛', value: profile.bitterness),
+      ],
     );
   }
 
   Widget _buildRoundCheckbox(bool isSelected) {
-    return AnimatedContainer(
-      duration: const Duration(milliseconds: 160),
-      width: 24,
-      height: 24,
-      decoration: BoxDecoration(
-        color: isSelected ? AppColor.primaryNormal : Colors.transparent,
-        shape: BoxShape.circle,
-        border: Border.all(
-          color: isSelected
-              ? AppColor.primaryNormal
-              : AppColor.lineNormalNormal,
-          width: 2,
-        ),
+    return AppRoundCheckbox(isSelected: isSelected);
+  }
+
+  // ─────────────────────────────────────────────────────────────────────────
+  // 5. Bottom action links
+  // ─────────────────────────────────────────────────────────────────────────
+
+  Widget _buildBottomLinks() {
+    return Padding(
+      padding: const EdgeInsets.fromLTRB(20, 16, 20, 0),
+      child: Column(
+        children: [
+          // "추천 원두 더 보기" link
+          TextButton(
+            onPressed: () {
+              // TODO: Navigate to full recommendation list
+            },
+            child: Text(
+              '추천 원두 더 보기',
+              style: AppTextStyles.body2NormalMedium.copyWith(
+                color: AppColor.primaryNormal,
+              ),
+            ),
+          ),
+          const SizedBox(height: 4),
+
+          // "취향 설문 다시하기" link (muted)
+          TextButton(
+            onPressed: () {
+              // Navigate back to survey start
+              controller.startSurvey();
+            },
+            child: Text(
+              '취향 설문 다시하기',
+              style: AppTextStyles.body2NormalRegular.copyWith(
+                color: AppColor.labelAssistive,
+              ),
+            ),
+          ),
+        ],
       ),
-      child: isSelected
-          ? Icon(Icons.check, size: 14, color: AppColor.staticLabelWhiteStrong)
-          : null,
     );
   }
 
   // ─────────────────────────────────────────────────────────────────────────
-  // 5. Bottom CTA bar
+  // 6. Bottom CTA bar
   // ─────────────────────────────────────────────────────────────────────────
 
   Widget _buildBottomCTA() {
@@ -539,7 +589,7 @@ class SurveyResultView extends GetView<SurveyController> {
         child: Obx(() {
           final count = controller.selectedBeanCount;
           return PrimaryButton(
-            text: '총 ${count}개 원두 신청 추가',
+            text: '총 $count개 원두 신청 추가',
             isEnabled: count > 0,
             onPressed: count > 0 ? () => controller.completeOnboarding() : null,
           );
@@ -551,6 +601,20 @@ class SurveyResultView extends GetView<SurveyController> {
   // ─────────────────────────────────────────────────────────────────────────
   // Helpers
   // ─────────────────────────────────────────────────────────────────────────
+
+  /// Maps flavor names to aroma asset paths
+  String? _getAromaImage(String flavorName) {
+    if (flavorName.contains('과일')) {
+      return AssetPath.aromaFruit;
+    } else if (flavorName.contains('꽃')) {
+      return AssetPath.aromaFlower;
+    } else if (flavorName.contains('견과류') || flavorName.contains('초콜릿')) {
+      return AssetPath.aromaNutChoco;
+    } else if (flavorName.contains('로스팅')) {
+      return AssetPath.aromaRoasting;
+    }
+    return null;
+  }
 
   String _formatPrice(int price) {
     final str = price.toString();

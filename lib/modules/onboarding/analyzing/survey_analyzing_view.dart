@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:coflanet/constants/asset_constant.dart';
 import 'package:coflanet/constants/color_constant.dart';
 import 'package:coflanet/constants/radius_constant.dart';
 import 'package:coflanet/constants/style_constant.dart';
@@ -18,7 +19,7 @@ class SurveyAnalyzingView extends GetView<SurveyController> {
     return Scaffold(
       backgroundColor: AppColor.backgroundNormalNormal,
       appBar: AppBar(
-        backgroundColor: Colors.transparent,
+        backgroundColor: AppColor.transparent,
         elevation: 0,
         leading: const SizedBox.shrink(), // No back button during analysis
       ),
@@ -28,36 +29,42 @@ class SurveyAnalyzingView extends GetView<SurveyController> {
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              // Chart illustration placeholder (Figma: Thumbnail/_Resource/Ratio)
-              // TODO: Replace with actual onboarding_analyzing.png asset
-              Container(
-                width: double.infinity,
-                height: 240,
-                decoration: BoxDecoration(
-                  color: AppColor.componentFillNormal,
-                  borderRadius: AppRadius.xlBorder,
-                ),
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    // Chart icon matching Figma's minimalist line illustration
-                    Icon(
-                      Icons.show_chart_rounded,
-                      size: 64,
-                      color: AppColor.labelAssistive,
+              // Chart illustration - using onboarding_analyzing.png asset
+              ClipRRect(
+                borderRadius: AppRadius.xlBorder,
+                child: Image.asset(
+                  AssetPath.onboardingAnalyzing,
+                  width: double.infinity,
+                  height: 240,
+                  fit: BoxFit.cover,
+                  errorBuilder: (context, error, stackTrace) => Container(
+                    width: double.infinity,
+                    height: 240,
+                    decoration: BoxDecoration(
+                      color: AppColor.componentFillNormal,
+                      borderRadius: AppRadius.xlBorder,
                     ),
-                    const SizedBox(height: 8),
-                    // Subtle loading indicator
-                    SizedBox(
-                      width: 120,
-                      child: LinearProgressIndicator(
-                        backgroundColor: AppColor.lineNormalAlternative,
-                        valueColor: AlwaysStoppedAnimation<Color>(
-                          AppColor.primaryNormal,
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        Icon(
+                          Icons.show_chart_rounded,
+                          size: 64,
+                          color: AppColor.labelAssistive,
                         ),
-                      ),
+                        const SizedBox(height: 8),
+                        SizedBox(
+                          width: 120,
+                          child: LinearProgressIndicator(
+                            backgroundColor: AppColor.lineNormalAlternative,
+                            valueColor: AlwaysStoppedAnimation<Color>(
+                              AppColor.primaryNormal,
+                            ),
+                          ),
+                        ),
+                      ],
                     ),
-                  ],
+                  ),
                 ),
               ),
 

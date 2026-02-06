@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
+import 'package:coflanet/constants/asset_constant.dart';
 import 'package:coflanet/constants/color_constant.dart';
 import 'package:coflanet/constants/radius_constant.dart';
 import 'package:coflanet/constants/style_constant.dart';
@@ -14,17 +16,20 @@ class SurveyCompleteView extends GetView<SurveyController> {
     return Scaffold(
       backgroundColor: AppColor.backgroundNormalNormal,
       appBar: AppBar(
-        backgroundColor: Colors.transparent,
+        backgroundColor: AppColor.transparent,
         elevation: 0,
-        leading: IconButton(
-          icon: Icon(Icons.arrow_back_ios, color: AppColor.labelNormal),
-          onPressed: () => Get.back(),
-        ),
+        leading:
+            const SizedBox.shrink(), // No back button - arrived via offNamed
         actions: [
           IconButton(
-            icon: Icon(
-              Icons.settings_outlined,
-              color: AppColor.labelAlternative,
+            icon: SvgPicture.asset(
+              AssetPath.iconSettings,
+              width: 24,
+              height: 24,
+              colorFilter: ColorFilter.mode(
+                AppColor.labelAlternative,
+                BlendMode.srcIn,
+              ),
             ),
             onPressed: () {
               // TODO: Navigate to settings
@@ -41,31 +46,39 @@ class SurveyCompleteView extends GetView<SurveyController> {
                 children: [
                   const Spacer(flex: 1),
 
-                  // Mascot illustration placeholder
-                  // TODO: Replace with actual onboarding_complete.png (purple rabbit mascot)
-                  Container(
-                    width: 200,
-                    height: 200,
-                    decoration: BoxDecoration(
-                      color: AppColor.primaryLight,
-                      borderRadius: AppRadius.fullBorder,
-                    ),
-                    child: Column(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        Icon(
-                          Icons.card_giftcard_rounded,
-                          size: 64,
-                          color: AppColor.primaryNormal,
+                  // Mascot illustration - using onboarding_complete.png asset
+                  ClipRRect(
+                    borderRadius: AppRadius.fullBorder,
+                    child: Image.asset(
+                      AssetPath.onboardingComplete,
+                      width: 200,
+                      height: 200,
+                      fit: BoxFit.cover,
+                      errorBuilder: (context, error, stackTrace) => Container(
+                        width: 200,
+                        height: 200,
+                        decoration: BoxDecoration(
+                          color: AppColor.primaryLight,
+                          borderRadius: AppRadius.fullBorder,
                         ),
-                        const SizedBox(height: 8),
-                        Text(
-                          'Mascot',
-                          style: AppTextStyles.caption1Regular.copyWith(
-                            color: AppColor.primaryNormal,
-                          ),
+                        child: Column(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            Icon(
+                              Icons.card_giftcard_rounded,
+                              size: 64,
+                              color: AppColor.primaryNormal,
+                            ),
+                            const SizedBox(height: 8),
+                            Text(
+                              'Mascot',
+                              style: AppTextStyles.caption1Regular.copyWith(
+                                color: AppColor.primaryNormal,
+                              ),
+                            ),
+                          ],
                         ),
-                      ],
+                      ),
                     ),
                   ),
 

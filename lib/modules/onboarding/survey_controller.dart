@@ -10,10 +10,10 @@ class SurveyController extends BaseController {
   final LocalStorage _storage = Get.find<LocalStorage>();
 
   // Survey state
-  final _currentStep = 1.obs;
+  final _currentStep = 0.obs;
   int get currentStep => _currentStep.value;
 
-  final _totalSteps = 6;
+  final _totalSteps = 7;
   int get totalSteps => _totalSteps;
 
   // Selected answers (step -> list of selected option IDs)
@@ -22,8 +22,8 @@ class SurveyController extends BaseController {
 
   // Current question
   SurveyQuestionModel? get currentQuestion {
-    if (_currentStep.value > DummySurveyData.questions.length) return null;
-    return DummySurveyData.questions[_currentStep.value - 1];
+    if (_currentStep.value >= DummySurveyData.questions.length) return null;
+    return DummySurveyData.questions[_currentStep.value];
   }
 
   // Survey result
@@ -40,8 +40,8 @@ class SurveyController extends BaseController {
     return _answers[_currentStep.value]?.isNotEmpty ?? false;
   }
 
-  // Progress percentage
-  double get progress => _currentStep.value / _totalSteps;
+  // Progress percentage (step 0-6, so (step+1)/7 for 0-based)
+  double get progress => (_currentStep.value + 1) / _totalSteps;
 
   /// Select an option
   void selectOption(String optionId) {
@@ -72,7 +72,7 @@ class SurveyController extends BaseController {
 
   /// Go to next question
   void nextQuestion() {
-    if (_currentStep.value < _totalSteps) {
+    if (_currentStep.value < _totalSteps - 1) {
       _currentStep.value++;
       Get.toNamed('${Routes.survey}/${_currentStep.value}');
     } else {
@@ -83,7 +83,7 @@ class SurveyController extends BaseController {
 
   /// Go to previous question
   void previousQuestion() {
-    if (_currentStep.value > 1) {
+    if (_currentStep.value > 0) {
       _currentStep.value--;
       Get.back();
     } else {
@@ -97,11 +97,11 @@ class SurveyController extends BaseController {
     Get.toNamed('${Routes.survey}/$step');
   }
 
-  /// Start survey from step 1
+  /// Start survey from step 0 (survey reason)
   void startSurvey() {
-    _currentStep.value = 1;
+    _currentStep.value = 0;
     _answers.clear();
-    Get.toNamed('${Routes.survey}/1');
+    Get.toNamed('${Routes.survey}/0');
   }
 
   /// Analyze answers and generate result

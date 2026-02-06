@@ -1,10 +1,14 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
+import 'package:coflanet/constants/asset_constant.dart';
 import 'package:coflanet/constants/color_constant.dart';
 import 'package:coflanet/constants/style_constant.dart';
 import 'package:coflanet/constants/radius_constant.dart';
 import 'package:coflanet/modules/matching/matching_controller.dart';
 import 'package:coflanet/widgets/buttons/primary_button.dart';
+import 'package:coflanet/widgets/navigation/app_bottom_bar.dart';
+import 'package:coflanet/widgets/gauge/app_animated_taste_bar.dart';
 
 class MatchingResultView extends GetView<MatchingController> {
   const MatchingResultView({super.key});
@@ -27,7 +31,7 @@ class MatchingResultView extends GetView<MatchingController> {
           slivers: [
             // App bar with back button
             SliverAppBar(
-              backgroundColor: Colors.transparent,
+              backgroundColor: AppColor.transparent,
               elevation: 0,
               leading: IconButton(
                 icon: Container(
@@ -37,10 +41,14 @@ class MatchingResultView extends GetView<MatchingController> {
                     borderRadius: AppRadius.lgBorder,
                     boxShadow: AppShadows.shadowBlackNormal,
                   ),
-                  child: Icon(
-                    Icons.arrow_back_ios_new_rounded,
-                    color: AppColor.labelNormal,
-                    size: 18,
+                  child: SvgPicture.asset(
+                    AssetPath.iconArrowBack,
+                    width: 24,
+                    height: 24,
+                    colorFilter: ColorFilter.mode(
+                      AppColor.labelNormal,
+                      BlendMode.srcIn,
+                    ),
                   ),
                 ),
                 onPressed: () => controller.goBack(),
@@ -274,112 +282,31 @@ class MatchingResultView extends GetView<MatchingController> {
           const SizedBox(height: 24),
 
           // Taste bars with animation
-          _buildAnimatedTasteBar(
-            '산미',
-            profile.acidity,
-            AppColor.colorGlobalYellow50,
+          AppAnimatedTasteBar(
+            label: '산미',
+            value: profile.acidity,
+            color: AppColor.colorGlobalYellow50,
           ),
-          _buildAnimatedTasteBar(
-            '단맛',
-            profile.sweetness,
-            AppColor.colorGlobalPink50,
+          AppAnimatedTasteBar(
+            label: '단맛',
+            value: profile.sweetness,
+            color: AppColor.colorGlobalPink50,
           ),
-          _buildAnimatedTasteBar(
-            '쓴맛',
-            profile.bitterness,
-            AppColor.colorGlobalOrange50,
+          AppAnimatedTasteBar(
+            label: '쓴맛',
+            value: profile.bitterness,
+            color: AppColor.colorGlobalOrange50,
           ),
-          _buildAnimatedTasteBar(
-            '바디감',
-            profile.body,
-            AppColor.colorGlobalViolet50,
+          AppAnimatedTasteBar(
+            label: '바디감',
+            value: profile.body,
+            color: AppColor.colorGlobalViolet50,
           ),
-          _buildAnimatedTasteBar(
-            '향',
-            profile.aroma,
-            AppColor.colorGlobalGreen50,
+          AppAnimatedTasteBar(
+            label: '향',
+            value: profile.aroma,
+            color: AppColor.colorGlobalGreen50,
             isLast: true,
-          ),
-        ],
-      ),
-    );
-  }
-
-  Widget _buildAnimatedTasteBar(
-    String label,
-    int value,
-    Color color, {
-    bool isLast = false,
-  }) {
-    return Padding(
-      padding: EdgeInsets.only(bottom: isLast ? 0 : 20),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              Text(
-                label,
-                style: AppTextStyles.label1NormalMedium.copyWith(
-                  color: AppColor.labelNormal,
-                ),
-              ),
-              Container(
-                padding: const EdgeInsets.symmetric(
-                  horizontal: 10,
-                  vertical: 4,
-                ),
-                decoration: BoxDecoration(
-                  color: AppColor.staticLabelWhiteStrong.withOpacity(0.2),
-                  borderRadius: AppRadius.xxlBorder,
-                ),
-                child: Text(
-                  '$value',
-                  style: AppTextStyles.label1NormalBold.copyWith(color: color),
-                ),
-              ),
-            ],
-          ),
-          const SizedBox(height: 10),
-          Stack(
-            children: [
-              // Background bar
-              Container(
-                height: 10,
-                decoration: BoxDecoration(
-                  color: AppColor.lineNormalAlternative,
-                  borderRadius: AppRadius.smBorder,
-                ),
-              ),
-              // Value bar with gradient
-              TweenAnimationBuilder<double>(
-                tween: Tween(begin: 0, end: value / 100),
-                duration: const Duration(milliseconds: 800),
-                curve: Curves.easeOutCubic,
-                builder: (context, animValue, child) {
-                  return FractionallySizedBox(
-                    widthFactor: animValue,
-                    child: Container(
-                      height: 10,
-                      decoration: BoxDecoration(
-                        gradient: LinearGradient(
-                          colors: [color.withOpacity(0.7), color],
-                        ),
-                        borderRadius: AppRadius.smBorder,
-                        boxShadow: [
-                          BoxShadow(
-                            color: color.withOpacity(0.3),
-                            blurRadius: 8,
-                            offset: const Offset(0, 2),
-                          ),
-                        ],
-                      ),
-                    ),
-                  );
-                },
-              ),
-            ],
           ),
         ],
       ),
@@ -433,7 +360,10 @@ class MatchingResultView extends GetView<MatchingController> {
             itemCount: recommendations.length,
             itemBuilder: (context, index) {
               final rec = recommendations[index];
-              return _buildRecommendationCard(rec, index);
+              return KeyedSubtree(
+                key: ValueKey(rec.id),
+                child: _buildRecommendationCard(rec, index),
+              );
             },
           ),
         ),
@@ -548,48 +478,11 @@ class MatchingResultView extends GetView<MatchingController> {
   }
 
   Widget _buildBottomBar() {
-    return Container(
-      padding: const EdgeInsets.fromLTRB(20, 16, 20, 32),
-      decoration: BoxDecoration(
-        color: AppColor.backgroundNormalNormal,
-        boxShadow: AppShadows.shadowBlackHeavyBottom,
-        borderRadius: AppRadius.top(AppRadius.xxxl),
-      ),
-      child: SafeArea(
-        child: Row(
-          children: [
-            // Secondary button
-            Expanded(
-              child: GestureDetector(
-                onTap: () => controller.retakeSurvey(),
-                child: Container(
-                  height: 52,
-                  decoration: BoxDecoration(
-                    color: AppColor.componentFillNormal,
-                    borderRadius: AppRadius.lgBorder,
-                  ),
-                  child: Center(
-                    child: Text(
-                      '다시 테스트하기',
-                      style: AppTextStyles.headline2Medium.copyWith(
-                        color: AppColor.labelNormal,
-                      ),
-                    ),
-                  ),
-                ),
-              ),
-            ),
-            const SizedBox(width: 12),
-            // Primary button
-            Expanded(
-              child: PrimaryButton(
-                text: '홈으로',
-                onPressed: () => controller.goBack(),
-              ),
-            ),
-          ],
-        ),
-      ),
+    return AppBottomBar.twoButtons(
+      secondaryText: '다시 테스트하기',
+      onSecondary: () => controller.retakeSurvey(),
+      primaryText: '홈으로',
+      onPrimary: () => controller.goBack(),
     );
   }
 }
