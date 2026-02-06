@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
+import 'package:coflanet/constants/asset_constant.dart';
 import 'package:coflanet/constants/color_constant.dart';
 import 'package:coflanet/constants/style_constant.dart';
 import 'package:coflanet/modules/shell/main_shell_controller.dart';
@@ -11,6 +13,22 @@ import 'package:coflanet/modules/planet/my_planet_content.dart';
 class MainShellView extends GetView<MainShellController> {
   const MainShellView({super.key});
 
+  /// Tab titles for AppBar (index 0 is dynamic based on edit mode)
+  String _getTabTitle(int index) {
+    switch (index) {
+      case 0:
+        return '원두';
+      case 1:
+        return '추출 목록';
+      case 2:
+        return '시음 기록';
+      case 3:
+        return 'My 행성';
+      default:
+        return '';
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     // Fixed theme per Figma CSS: Shell screens use #000000 background + #FFFFFF bottom nav
@@ -18,6 +36,31 @@ class MainShellView extends GetView<MainShellController> {
       return Scaffold(
         backgroundColor:
             AppColor.colorGlobalCommon0, // #000000 pure black (fixed)
+        appBar: AppBar(
+          backgroundColor: AppColor.colorGlobalCommon0,
+          surfaceTintColor: AppColor.colorGlobalCommon0,
+          elevation: 0,
+          scrolledUnderElevation: 0,
+          leading: IconButton(
+            icon: SvgPicture.asset(
+              AssetPath.iconArrowBack,
+              width: 24,
+              height: 24,
+              colorFilter: ColorFilter.mode(
+                AppColor.colorGlobalCommon100,
+                BlendMode.srcIn,
+              ),
+            ),
+            onPressed: () => Get.back(),
+          ),
+          centerTitle: true,
+          title: Text(
+            _getTabTitle(controller.currentTabIndex.value),
+            style: AppTextStyles.headline1Bold.copyWith(
+              color: AppColor.colorGlobalCommon100,
+            ),
+          ),
+        ),
         body: IndexedStack(
           index: controller.currentTabIndex.value,
           children: const [
