@@ -169,62 +169,86 @@ Recipe Step06 → Recipe Step Complete
 | `/profile/my-taste` | profile/my_taste/ | - | 구현 완료 (Figma 미포함) |
 | `/matching/result` | matching/ | - | 구현 완료 (Figma 미포함) |
 
-### New Screens from Figma (신규 화면 - 추가 구현 필요)
+### New Screens from Figma (✅ 모두 구현 완료)
 
-| Figma Frame | 구현 필요 위치 | 설명 |
-|-------------|---------------|------|
-| Recipe Setting_Detail (x3) | coffee/settings/ | 레시피 상세 설정 화면 |
-| Select Coffee Section | coffee/ (새 화면) | 커피 원두 선택 화면 |
-| Select Coffee Section_Editing | coffee/ (새 화면) | 커피 원두 선택 편집 모드 |
-| Selection Modal01~03 | widgets/modals/ | 농도/잔수 등 선택 모달 |
-| Input Modal01~04 | widgets/modals/ | 다양한 입력 모달 |
-| Time Picker | widgets/modals/ | 시간 선택 피커 |
-| Alert/Alert | widgets/modals/ | 범용 알림 다이얼로그 |
-| Recipe Close Alert | coffee/timer/ | 타이머 종료 확인 알림 |
-| 에스프레소 머신 추출 설정 카드 | coffee/espresso/ (새 화면) | 에스프레소 머신 설정 플로우 |
+| Figma Frame | 구현 위치 | 상태 |
+|-------------|----------|:----:|
+| Recipe Setting_Detail (x3) | `coffee/settings/coffee_setting_detail_view.dart` | ✅ |
+| Select Coffee Section | `coffee/select/select_coffee_view.dart` | ✅ |
+| Select Coffee Section_Editing | `coffee/select/select_coffee_view.dart` (isEditing) | ✅ |
+| Selection Modal01~03 | `widgets/modals/selection_modal.dart` | ✅ |
+| Input Modal01~04 | `widgets/modals/input_modal.dart` | ✅ |
+| Time Picker | `widgets/modals/time_picker_modal.dart` | ✅ |
+| Alert/Alert | `widgets/modals/confirm_modal.dart` | ✅ |
+| Recipe Close Alert | `coffee/timer/coffee_timer_view.dart` | ✅ |
+| 에스프레소 머신 추출 설정 카드 | `coffee/espresso/espresso_settings_view.dart` | ✅ |
 
 ---
 
 ## 7. Required Assets (필요 에셋)
 
-> `pubspec.yaml`의 assets 섹션이 아직 주석 처리됨 - 에셋 준비 후 활성화 필요
+> Last Updated: 2025-02-06
 
-### 7.1 Images (이미지)
+### 7.1 Images - 실제 에셋 (Real Assets)
 
-| Asset Path | Description | Source | Status |
-|------------|-------------|--------|--------|
-| `assets/images/logo_main.png` | 메인 로고 | Figma | **필요** |
-| `assets/images/logo_white.png` | 흰색 로고 | Figma | **필요** |
-| `assets/images/logo_splash.png` | 스플래시 로고 | Figma | **필요** |
-| `assets/images/onboarding_welcome.png` | 온보딩 환영 이미지 | Figma | **필요** |
-| `assets/images/onboarding_complete.png` | 온보딩 완료 이미지 | Figma | **필요** |
-| `assets/images/onboarding_analyzing.png` | 분석 중 이미지 | Figma | **필요** |
-| `assets/images/survey_result_bg.png` | 설문 결과 배경 | Figma | **필요** |
-| `assets/images/coffee_type_acidic.png` | 산미 커피 타입 이미지 | Figma | **필요** |
-| `assets/images/coffee_type_balance.png` | 밸런스 커피 타입 이미지 | Figma | **필요** |
-| `assets/images/coffee_type_bitter.png` | 쓴맛 커피 타입 이미지 | Figma | **필요** |
-| `assets/images/coffee_type_sweet.png` | 단맛 커피 타입 이미지 | Figma | **필요** |
-| `assets/images/coffee_hand_drip.png` | 핸드드립 이미지 | Figma | **필요** |
-| `assets/images/coffee_espresso.png` | 에스프레소 이미지 | Figma | **필요** |
-| `assets/images/coffee_mokapot.png` | 모카포트 이미지 | Figma | **필요** |
+| Asset Path | Description | Size | Status |
+|------------|-------------|------|--------|
+| `assets/images/logo_main.png` | 메인 로고 | 12KB | ✅ 완료 |
+| `assets/images/logo_splash.png` | 스플래시 로고 | 12KB | ✅ 완료 |
+| `assets/images/onboarding_complete.png` | 우주 토끼 마스코트 (3D) | 270KB | ✅ 완료 |
+| `assets/images/onboarding_analyzing.png` | 분석 중 애니메이션 이미지 | 31KB | ✅ 완료 |
+| `assets/images/timer_step01_grinder.png` | 타이머 Step1 그라인더 일러스트 (3D) | 403KB | ✅ 완료 |
+| `assets/images/timer_step02_pourover.png` | 타이머 Step2 드리퍼 일러스트 (3D) | 290KB | ✅ 완료 |
+| `assets/images/timer_complete.png` | 타이머 완료 커피컵 일러스트 | 109KB | ✅ 완료 |
+
+### 7.2 Images - 플레이스홀더 (Figma Export 필요)
+
+> ⚠️ 다음 파일들은 현재 placeholder (1~4KB)입니다. Figma에서 실제 이미지 export 필요
+
+| Asset Path | Description | Current Size | Figma Source | 사용처 |
+|------------|-------------|--------------|--------------|--------|
+| `assets/images/onboarding_welcome.png` | 설문 시작 환영 이미지 | 1.4KB | 🎨 Illustration | survey_intro_view |
+| `assets/images/coffee_hand_drip.png` | 핸드드립 방식 이미지 | 846B | 🎨 Illustration | coffee_main_view |
+| `assets/images/coffee_espresso.png` | 에스프레소 방식 이미지 | 823B | 🎨 Illustration | coffee_main_view |
+| `assets/images/coffee_mokapot.png` | 모카포트 방식 이미지 | 810B | 🎨 Illustration | (미사용) |
+| `assets/images/coffee_type_acidic.png` | 산미파 커피 타입 | 1.2KB | 🎨 Illustration | (미사용) |
+| `assets/images/coffee_type_balance.png` | 밸런스파 커피 타입 | 1.2KB | 🎨 Illustration | (미사용) |
+| `assets/images/coffee_type_bitter.png` | 진한맛파 커피 타입 | 1.2KB | 🎨 Illustration | (미사용) |
+| `assets/images/coffee_type_sweet.png` | 달달파 커피 타입 | 1.2KB | 🎨 Illustration | (미사용) |
+| `assets/images/survey_result_bg.png` | 설문 결과 배경 | 3.8KB | 📚 Library | (미사용) |
+| `assets/images/logo_white.png` | 흰색 로고 | 1.7KB | 📚 Library | (미사용) |
+
+### 7.3 Figma Export 가이드
+
+**📚 Library 파일**: https://www.figma.com/design/q7yBPcHrid1CGQqFWEPwnR/📚-Library
+- 로고, 배경 이미지, UI 컴포넌트
+
+**🎨 Illustration 파일**: https://www.figma.com/design/rqpzbu9sumDuiwVTN3vLGy/🎨-Illustration
+- 3D 일러스트레이션 (커피 기구, 마스코트 등)
+- 커피 타입별 이미지
+
+**Export 설정**:
+- Format: PNG
+- Scale: 3x (@3x for iOS/Android)
+- 배경: Transparent (투명)
 
 ### 7.2 Icons (아이콘 - SVG)
 
 | Asset Path | Description | Status |
 |------------|-------------|--------|
-| `assets/icons/ic_arrow_back.svg` | 뒤로 가기 화살표 | **필요** |
-| `assets/icons/ic_arrow_forward.svg` | 앞으로 가기 화살표 | **필요** |
-| `assets/icons/ic_close.svg` | 닫기 (X) | **필요** |
-| `assets/icons/ic_check.svg` | 체크마크 | **필요** |
-| `assets/icons/ic_check_circle.svg` | 원형 체크마크 | **필요** |
-| `assets/icons/ic_home.svg` | 홈 아이콘 | **필요** |
-| `assets/icons/ic_coffee.svg` | 커피 아이콘 | **필요** |
-| `assets/icons/ic_profile.svg` | 프로필 아이콘 | **필요** |
-| `assets/icons/ic_settings.svg` | 설정 아이콘 | **필요** |
-| `assets/icons/ic_timer.svg` | 타이머 아이콘 | **필요** |
-| `assets/icons/ic_kakao.svg` | 카카오 로그인 | **필요** |
-| `assets/icons/ic_naver.svg` | 네이버 로그인 | **필요** |
-| `assets/icons/ic_apple.svg` | Apple 로그인 | **필요** |
+| `assets/icons/ic_arrow_back.svg` | 뒤로 가기 화살표 | ✅ 완료 |
+| `assets/icons/ic_arrow_forward.svg` | 앞으로 가기 화살표 | ✅ 완료 |
+| `assets/icons/ic_close.svg` | 닫기 (X) | ✅ 완료 |
+| `assets/icons/ic_check.svg` | 체크마크 | ✅ 완료 |
+| `assets/icons/ic_check_circle.svg` | 원형 체크마크 | ✅ 완료 |
+| `assets/icons/ic_home.svg` | 홈 아이콘 | ✅ 완료 |
+| `assets/icons/ic_coffee.svg` | 커피 아이콘 | ✅ 완료 |
+| `assets/icons/ic_profile.svg` | 프로필 아이콘 | ✅ 완료 |
+| `assets/icons/ic_settings.svg` | 설정 아이콘 | ✅ 완료 |
+| `assets/icons/ic_timer.svg` | 타이머 아이콘 | ✅ 완료 |
+| `assets/icons/ic_kakao.svg` | 카카오 로그인 | ✅ 완료 |
+| `assets/icons/ic_naver.svg` | 네이버 로그인 | ✅ 완료 |
+| `assets/icons/ic_apple.svg` | Apple 로그인 | ✅ 완료 |
 
 ---
 
@@ -274,4 +298,16 @@ Select Coffee Section → (편집 모드 진입) → Select Coffee Section_Editi
 - 기본 앱 흐름(Sign In, Survey, Home 등)은 이미 구현 완료 상태
 - MASTER 페이지는 주로 **커피 레시피 관련 상세 화면**과 **모달 컴포넌트**에 집중
 - "✅ 추후 업데이트 목록" 페이지에 향후 추가 예정 화면이 있을 수 있음
-- 모든 에셋(이미지/아이콘)이 아직 준비되지 않아 Figma에서 export 필요
+
+### 에셋 현황 (2025-02-06 업데이트)
+
+**✅ 실제 적용 완료:**
+- 타이머 스텝 일러스트레이션 (Step 1 그라인더, Step 2 드리퍼)
+- 마스코트 이미지 (My Planet 화면)
+- 로고 이미지 (스플래시, 로그인, 홈)
+
+**⚠️ Figma Export 필요:**
+- 커피 추출 방식 이미지 (핸드드립, 에스프레소, 모카포트)
+- 커피 타입 이미지 (산미파, 밸런스파, 진한맛파, 달달파)
+- 설문 환영 이미지
+- 배경 이미지

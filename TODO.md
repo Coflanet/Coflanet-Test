@@ -1,3 +1,296 @@
+# Coflanet App TODO
+
+## Asset Tasks
+
+### High Priority - 플레이스홀더 이미지 교체 필요
+
+Figma에서 실제 에셋을 export하여 교체해야 합니다.
+
+#### 온보딩 이미지 (assets/images/)
+- [ ] `onboarding_welcome.png` - 현재 보라색 사각형 플레이스홀더
+- [ ] `onboarding_complete.png` - 현재 보라색 사각형 플레이스홀더
+- [ ] `onboarding_analyzing.png` - 현재 보라색 사각형 플레이스홀더
+
+#### 커피 추출 방식 이미지 (assets/images/)
+- [ ] `coffee_hand_drip.png` - 현재 단순 기하학적 모양 (846 bytes)
+- [ ] `coffee_espresso.png` - 현재 단순 기하학적 모양 (823 bytes)
+- [ ] `coffee_mokapot.png` - 현재 단순 기하학적 모양 (810 bytes)
+
+#### 배경 이미지 (assets/images/)
+- [ ] `survey_result_bg.png` - 현재 단색 배경 (그라데이션/패턴 필요)
+
+#### 커피 타입 이미지 (assets/images/)
+- [ ] `coffee_type_acidic.png` - 현재 단순 오렌지 컵 아이콘 (1.2KB)
+- [ ] `coffee_type_balance.png` - 현재 단순 아이콘 (1.2KB)
+- [ ] `coffee_type_bitter.png` - 현재 단순 아이콘 (1.2KB)
+- [ ] `coffee_type_sweet.png` - 현재 단순 아이콘 (1.2KB)
+
+#### 로고 이미지 (assets/images/) - 선택사항
+- [ ] `logo_main.png` - 현재 저해상도 (1.8KB), 고해상도 버전 필요시 교체
+- [ ] `logo_white.png` - 현재 저해상도 (1.8KB), 고해상도 버전 필요시 교체
+
+### Medium Priority - 새 아이콘 추가
+
+#### 탭바/네비게이션 아이콘 (assets/icons/)
+- [ ] `ic_play.svg` - 타이머 재생 버튼
+- [ ] `ic_pause.svg` - 타이머 일시정지 버튼
+- [ ] `ic_plus.svg` - 추가 버튼
+- [ ] `ic_list.svg` - 목록 아이콘 (추출 목록용)
+- [ ] `ic_clock.svg` - 시계/타이머 아이콘
+
+#### Figma Library Node IDs (export시 사용)
+```
+ic_coffee: 2411:24135
+ic_home: 2411:23598
+ic_profile: 2411:23751
+ic_settings: 2411:24581
+ic_play: 2411:24560
+ic_pause: 2411:24553
+ic_clock: 2411:24690
+ic_plus: 2411:23886
+ic_list: 2411:24422
+ic_arrow_back: 2411:22915
+ic_arrow_forward: 2411:22964
+ic_close: 2411:23248
+ic_check: 2411:23141
+ic_check_circle: 2411:23174
+ic_naver: 2411:24501
+ic_kakao: 2411:24824
+ic_apple: 2411:24788
+```
+
+### Low Priority - 폰트 번들링
+
+- [ ] Pretendard 폰트 파일 추가 (`assets/fonts/`)
+  - Pretendard-Regular.otf (400)
+  - Pretendard-Medium.otf (500)
+  - Pretendard-SemiBold.otf (600)
+  - Pretendard-Bold.otf (700)
+- [ ] `pubspec.yaml`에서 폰트 설정 주석 해제
+
+### Asset Export 방법
+
+#### 방법 1: Figma 수동 Export (권장)
+
+Figma API rate limit (약 4일 대기 필요)으로 인해 수동 export를 권장합니다:
+
+1. **Figma 열기**: https://www.figma.com/design/q7yBPcHrid1CGQqFWEPwnR/
+2. **Icon 페이지로 이동**: 🔘 Icon 페이지
+3. **아이콘 선택 후 Export**:
+   - 우측 패널 하단 "Export" 섹션
+   - Format: SVG 선택
+   - Export 클릭
+
+**필요한 아이콘 (우선순위):**
+- play, pause (타이머용)
+- plus (추가 버튼)
+- list (목록)
+- clock (시계)
+
+4. **이미지 Export**: POC 파일에서 필요한 이미지 export
+   - https://www.figma.com/design/EkpVnNrqyq9Agpy4aymv0j/
+   - 온보딩 일러스트
+   - 커피 추출 방식 일러스트
+
+#### 방법 2: API 스크립트 (rate limit 해제 후)
+
+약 4일 후 (retry-after: ~96시간) 스크립트 실행 가능:
+```bash
+./scripts/fetch_figma_assets.sh
+```
+
+### Figma 파일 정보
+- **Library (아이콘/컴포넌트)**: https://www.figma.com/design/q7yBPcHrid1CGQqFWEPwnR/
+- **POC (메인 디자인)**: https://www.figma.com/design/EkpVnNrqyq9Agpy4aymv0j/
+
+### 현재 상태 요약
+
+| 카테고리 | 파일 수 | 상태 | 비고 |
+|----------|---------|------|------|
+| 기본 아이콘 | 13개 | ✅ 구현됨 | SVG, stroke 스타일 |
+| 추가 필요 아이콘 | 5개 | ❌ 미구현 | play, pause, plus, list, clock |
+| 로고 | 3개 | ⚠️ 저해상도 | SVG는 정상, PNG 개선 필요 |
+| 온보딩 이미지 | 3개 | ❌ 플레이스홀더 | Figma export 필요 |
+| 커피 추출 이미지 | 3개 | ❌ 플레이스홀더 | Figma export 필요 |
+| 커피 타입 이미지 | 4개 | ⚠️ 단순 아이콘 | 개선 권장 |
+| 배경 이미지 | 1개 | ❌ 플레이스홀더 | Figma export 필요 |
+| 폰트 | 4개 | ❌ 미포함 | Pretendard 필요 |
+
+**총 미완료 에셋: 이미지 13개 + 아이콘 5개 + 폰트 4개 = 22개**
+
+---
+
+# Widget Library Improvements (Figma 디자인 라이브러리 기반)
+
+## 분석 결과 요약
+
+**전체 평가: 85/100** - 잘 구현됨
+
+### ✅ 잘 구현된 부분
+| 영역 | Figma 페이지 | 코드 파일 | 상태 |
+|------|-------------|----------|------|
+| Colors | 🎨 Colors | `color_constant.dart` | ✅ 완벽 |
+| Typography | 🔠 Typography | `style_constant.dart` | ✅ 완벽 |
+| Spacing | 📐 Space | `spacing_constant.dart` | ✅ 완벽 |
+| Radius | Foundation | `radius_constant.dart` | ✅ 완벽 |
+| Shadows | 💅 Decorate | `style_constant.dart` | ✅ 완벽 |
+| Buttons | ⏹️ Button | `widgets/buttons/` | ✅ 완벽 |
+| Chips | 🍪 Chip | `widgets/chips/` | ✅ 완벽 |
+| Feedback | 🪞 Feedback | `widgets/feedback/` | ✅ 완벽 |
+| Forms | ☑️ Selection/Input | `widgets/forms/` | ✅ 완벽 |
+
+---
+
+## High Priority - 필수 위젯 추가
+
+Figma 디자인 라이브러리에 정의되어 있으나 코드에 미구현된 컴포넌트들
+
+### Progress Indicators (⏳ Progress Indicators 페이지)
+- [ ] `widgets/indicators/app_linear_progress.dart` - 선형 진행 표시기
+  - Props: `value`, `color`, `backgroundColor`, `height`
+  - AppColor.primaryNormal 사용
+- [ ] `widgets/indicators/app_circular_progress.dart` - 원형 로딩 스피너
+  - Props: `size`, `strokeWidth`, `color`
+  - 기존 CircularProgressIndicator 래핑
+- [ ] `widgets/indicators/app_step_indicator.dart` - 단계 표시기
+  - Props: `totalSteps`, `currentStep`, `completedColor`, `activeColor`
+  - 온보딩 서베이에서 사용 중인 코드 추출하여 위젯화
+
+### Navigation (🧭 Navigation 페이지)
+- [ ] `widgets/navigation/app_bottom_nav.dart` - 하단 네비게이션 바
+  - Props: `items`, `currentIndex`, `onTap`
+  - AppColor, AppTextStyles 적용
+- [ ] `widgets/navigation/app_app_bar.dart` - 앱 바
+  - Props: `title`, `leading`, `actions`, `centerTitle`
+  - 백 버튼, 타이틀 스타일 표준화
+
+### Divider (➗ Divider 페이지)
+- [ ] `widgets/divider/app_divider.dart` - 구분선
+  - Props: `thickness`, `color`, `indent`, `endIndent`
+  - AppColor.lineNormalNormal 기본값
+
+---
+
+## Medium Priority - 권장 위젯 추가
+
+### Gauge (🌡️ Gauge 페이지)
+- [ ] `widgets/gauge/app_preference_gauge.dart` - 선호도 게이지
+  - Props: `value` (1-5), `labels`, `colors`
+  - 맛 설문에서 사용 가능
+  - 그라데이션 배경 (빨강 → 노랑 → 초록)
+
+### Tab Bar (📑 Tab 페이지)
+- [ ] `widgets/navigation/app_tab_bar.dart` - 탭 바
+  - Props: `tabs`, `controller`, `indicatorColor`
+  - AppColor.primaryNormal 인디케이터
+
+### Indicators (💡 Indicators 페이지)
+- [ ] `widgets/indicators/app_dot_indicator.dart` - 점 인디케이터
+  - Props: `count`, `activeIndex`, `activeColor`
+  - 페이지 인디케이터용
+- [ ] `widgets/indicators/app_status_indicator.dart` - 상태 인디케이터
+  - Props: `status` (success/warning/error/info)
+  - AppColor.status* 색상 사용
+
+---
+
+## Low Priority - 선택적 위젯 추가
+
+### Scroll (🖱️ Scroll 페이지)
+- [ ] `widgets/scroll/app_scroll_indicator.dart` - 커스텀 스크롤바
+  - 디자인 시스템 색상 적용
+
+### Ratio (📏 Ratio 페이지)
+- [ ] `widgets/containers/app_aspect_ratio.dart` - 비율 컨테이너
+  - 이미지 비율 프리셋 (1:1, 4:3, 16:9)
+
+### Pagination (🔢 Pagination 페이지)
+- [ ] `widgets/navigation/app_pagination.dart` - 페이지네이션
+  - Props: `currentPage`, `totalPages`, `onPageChanged`
+
+---
+
+## 구현 가이드라인
+
+### 필수 규칙
+1. **색상**: 반드시 `AppColor.*` 사용 (하드코딩 금지)
+2. **텍스트 스타일**: 반드시 `AppTextStyles.*` 사용
+3. **스페이싱**: `AppSpacing.*` 또는 `AppRadius.*` 사용
+4. **Props 문서화**: 각 위젯에 dartdoc 주석 필수
+
+### 파일 구조 예시
+```dart
+// widgets/indicators/app_linear_progress.dart
+import 'package:flutter/material.dart';
+import 'package:coflanet/constants/color_constant.dart';
+import 'package:coflanet/constants/spacing_constant.dart';
+import 'package:coflanet/constants/radius_constant.dart';
+
+/// 선형 진행 표시기
+///
+/// Usage:
+/// ```dart
+/// AppLinearProgress(
+///   value: 0.7,
+///   height: 8,
+/// )
+/// ```
+class AppLinearProgress extends StatelessWidget {
+  final double value;
+  final double height;
+  final Color? color;
+  final Color? backgroundColor;
+
+  const AppLinearProgress({
+    super.key,
+    required this.value,
+    this.height = 4,
+    this.color,
+    this.backgroundColor,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return ClipRRect(
+      borderRadius: AppRadius.fullBorder,
+      child: LinearProgressIndicator(
+        value: value,
+        minHeight: height,
+        valueColor: AlwaysStoppedAnimation(color ?? AppColor.primaryNormal),
+        backgroundColor: backgroundColor ?? AppColor.componentFillNormal,
+      ),
+    );
+  }
+}
+```
+
+---
+
+## 체크리스트
+
+### High Priority
+- [ ] AppLinearProgress 구현
+- [ ] AppCircularProgress 구현
+- [ ] AppStepIndicator 구현
+- [ ] AppBottomNav 구현
+- [ ] AppAppBar 구현
+- [ ] AppDivider 구현
+
+### Medium Priority
+- [ ] AppPreferenceGauge 구현
+- [ ] AppTabBar 구현
+- [ ] AppDotIndicator 구현
+- [ ] AppStatusIndicator 구현
+
+### Low Priority
+- [ ] AppScrollIndicator 구현
+- [ ] AppAspectRatio 구현
+- [ ] AppPagination 구현
+
+**총 미구현 위젯: High 6개 + Medium 4개 + Low 3개 = 13개**
+
+---
+
 # Social Login SDK Integration Guide
 
 ## Overview
