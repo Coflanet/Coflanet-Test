@@ -81,6 +81,7 @@ class TasteProfileModel {
   final int bitterness;
   final int body;
   final int aroma;
+  final int balance; // 밸런스 (추가)
 
   const TasteProfileModel({
     required this.acidity,
@@ -88,6 +89,7 @@ class TasteProfileModel {
     required this.bitterness,
     required this.body,
     required this.aroma,
+    this.balance = 50, // 기본값 50
   });
 
   factory TasteProfileModel.fromJson(Map<String, dynamic> json) {
@@ -97,6 +99,7 @@ class TasteProfileModel {
       bitterness: json['bitterness'] as int,
       body: json['body'] as int,
       aroma: json['aroma'] as int,
+      balance: json['balance'] as int? ?? 50,
     );
   }
 
@@ -107,6 +110,7 @@ class TasteProfileModel {
       'bitterness': bitterness,
       'body': body,
       'aroma': aroma,
+      'balance': balance,
     };
   }
 }
@@ -124,6 +128,9 @@ class CoffeeRecommendationModel {
   final int? discountPercent;
   final String? weight;
   final TasteProfileModel tasteProfile;
+  final int matchPercent; // 일치율 (추가)
+  final List<String> flavorTags; // 맛 태그 (추가)
+  final String? purchaseUrl; // 판매 링크 (추가)
 
   const CoffeeRecommendationModel({
     required this.id,
@@ -137,6 +144,9 @@ class CoffeeRecommendationModel {
     this.discountPercent,
     this.weight,
     required this.tasteProfile,
+    this.matchPercent = 50, // 기본값 50%
+    this.flavorTags = const [],
+    this.purchaseUrl,
   });
 
   factory CoffeeRecommendationModel.fromJson(Map<String, dynamic> json) {
@@ -154,6 +164,13 @@ class CoffeeRecommendationModel {
       tasteProfile: TasteProfileModel.fromJson(
         json['tasteProfile'] as Map<String, dynamic>,
       ),
+      matchPercent: json['matchPercent'] as int? ?? 50,
+      flavorTags:
+          (json['flavorTags'] as List<dynamic>?)
+              ?.map((e) => e as String)
+              .toList() ??
+          [],
+      purchaseUrl: json['purchaseUrl'] as String?,
     );
   }
 
@@ -170,6 +187,9 @@ class CoffeeRecommendationModel {
       if (discountPercent != null) 'discountPercent': discountPercent,
       if (weight != null) 'weight': weight,
       'tasteProfile': tasteProfile.toJson(),
+      'matchPercent': matchPercent,
+      'flavorTags': flavorTags,
+      if (purchaseUrl != null) 'purchaseUrl': purchaseUrl,
     };
   }
 }

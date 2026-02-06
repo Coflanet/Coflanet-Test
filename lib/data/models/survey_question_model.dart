@@ -1,3 +1,11 @@
+/// 질문 유형 enum
+enum SurveyQuestionType {
+  checkbox, // 기본 체크박스 (텍스트만)
+  checkboxWithIcon, // 이모지 + 설명 포함 체크박스
+  rating, // 👎😐👍 레이팅 스타일
+  imageGrid, // 이미지 그리드 선택
+}
+
 /// Model for survey questions
 class SurveyQuestionModel {
   final int step;
@@ -5,6 +13,7 @@ class SurveyQuestionModel {
   final String description;
   final List<SurveyOptionModel> options;
   final bool allowMultiple;
+  final SurveyQuestionType questionType; // 질문 유형 (추가)
 
   const SurveyQuestionModel({
     required this.step,
@@ -12,6 +21,7 @@ class SurveyQuestionModel {
     required this.description,
     required this.options,
     this.allowMultiple = false,
+    this.questionType = SurveyQuestionType.checkboxWithIcon, // 기본값
   });
 
   factory SurveyQuestionModel.fromJson(Map<String, dynamic> json) {
@@ -23,6 +33,10 @@ class SurveyQuestionModel {
           .map((e) => SurveyOptionModel.fromJson(e as Map<String, dynamic>))
           .toList(),
       allowMultiple: json['allowMultiple'] as bool? ?? false,
+      questionType: SurveyQuestionType.values.firstWhere(
+        (e) => e.name == json['questionType'],
+        orElse: () => SurveyQuestionType.checkboxWithIcon,
+      ),
     );
   }
 
@@ -33,6 +47,7 @@ class SurveyQuestionModel {
       'description': description,
       'options': options.map((e) => e.toJson()).toList(),
       'allowMultiple': allowMultiple,
+      'questionType': questionType.name,
     };
   }
 }

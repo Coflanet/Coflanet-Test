@@ -116,6 +116,10 @@ class LocalStorage {
     return read<Map<String, dynamic>>(keySurveyResult);
   }
 
+  Future<void> clearSurveyResult() async {
+    await remove(keySurveyResult);
+  }
+
   // === Theme ===
 
   Future<void> setDarkMode(bool isDark) async {
