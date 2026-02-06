@@ -38,38 +38,25 @@ class SplashView extends GetView<SplashController> {
           ),
         ),
         child: Center(
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              // Logo - Using actual logo_splash.png asset
-              Image.asset(
-                AssetPath.logoSplash,
-                width: 120,
-                height: 120,
-                errorBuilder: (context, error, stackTrace) => Container(
-                  width: 100,
-                  height: 100,
-                  decoration: BoxDecoration(
-                    color: AppColor.staticLabelWhiteStrong.withOpacity(0.15),
-                    borderRadius: AppRadius.fullBorder,
-                  ),
-                  child: Icon(
-                    Icons.all_inclusive_rounded,
-                    size: 56,
-                    color: AppColor.staticLabelWhiteStrong,
-                  ),
-                ),
+          // Logo - Using logo_splash.png which already contains icon + "Coflanet" text
+          child: Image.asset(
+            AssetPath.logoSplash,
+            width: 200,
+            height: 200,
+            fit: BoxFit.contain,
+            errorBuilder: (context, error, stackTrace) => Container(
+              width: 120,
+              height: 120,
+              decoration: BoxDecoration(
+                color: AppColor.staticLabelWhiteStrong.withOpacity(0.15),
+                borderRadius: AppRadius.fullBorder,
               ),
-              const SizedBox(height: 20),
-              Text(
-                'Coflanet',
-                style: AppTextStyles.title2Bold.copyWith(
-                  color: AppColor.staticLabelWhiteStrong,
-                  letterSpacing: 1.5,
-                  fontStyle: FontStyle.italic,
-                ),
+              child: Icon(
+                Icons.all_inclusive_rounded,
+                size: 64,
+                color: AppColor.staticLabelWhiteStrong,
               ),
-            ],
+            ),
           ),
         ),
       ),
