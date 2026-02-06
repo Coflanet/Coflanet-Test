@@ -17,7 +17,6 @@ abstract class Routes {
   static const surveyAnalyzing = '/onboarding/survey-analyzing';
   static const surveyComplete = '/onboarding/survey-complete';
   static const surveyResult = '/onboarding/survey-result';
-  static const onboardingComplete = '/onboarding/complete';
 
   // === Matching Routes ===
   static const matchingResult = '/matching/result';
@@ -28,15 +27,21 @@ abstract class Routes {
   // === Planet Routes ===
   static const myPlanet = '/my-planet';
 
+  // === Shell Routes ===
+  static const mainShell = '/main-shell';
+
   // === Coffee Routes ===
   static const coffeeMain = '/coffee';
   static const handDrip = '/coffee/hand-drip';
   static const espresso = '/coffee/espresso';
+  static const espressoSettings = '/coffee/espresso/settings';
   static const coffeeSettings = '/coffee/settings';
   static const coffeeSettingDetail = '/coffee/settings/detail';
+  static const selectCoffee = '/coffee/select';
   static const timerActive = '/coffee/timer';
   static const timerComplete = '/coffee/timer/complete';
 
   // === Auth (Additional) ===
   static const emailSignUp = '/login/email-sign-up';
+  static const signUpComplete = '/login/sign-up-complete';
 }

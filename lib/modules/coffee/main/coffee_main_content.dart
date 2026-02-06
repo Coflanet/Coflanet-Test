@@ -6,63 +6,68 @@ import 'package:coflanet/constants/color_constant.dart';
 import 'package:coflanet/constants/style_constant.dart';
 import 'package:coflanet/constants/radius_constant.dart';
 import 'package:coflanet/modules/coffee/coffee_controller.dart';
+import 'package:coflanet/core/services/survey_service.dart';
 
-class CoffeeMainView extends GetView<CoffeeController> {
-  const CoffeeMainView({super.key});
+/// Content widget for Coffee Main screen (without Scaffold/AppBar)
+/// Used inside MainShellView's IndexedStack
+class CoffeeMainContent extends GetView<CoffeeController> {
+  const CoffeeMainContent({super.key});
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      backgroundColor: AppColor.backgroundNormalNormal,
-      appBar: AppBar(
-        backgroundColor: AppColor.transparent,
-        elevation: 0,
-        automaticallyImplyLeading: false,
-        title: Text(
-          '커피 마시기',
-          style: AppTextStyles.headline1Bold.copyWith(
-            color: AppColor.labelNormal,
-          ),
-        ),
-      ),
-      body: SafeArea(
-        child: Padding(
-          padding: const EdgeInsets.all(24),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Text(
-                '어떤 방식으로\n커피를 즐기시겠어요?',
-                style: AppTextStyles.heading1Bold.copyWith(
-                  color: AppColor.labelNormal,
-                  height: 1.4,
-                ),
+    // Dynamic theme based on taste profile state
+    final surveyService = Get.find<SurveyService>();
+    final isFilled = surveyService.hasResult;
+    final headerTextColor = isFilled
+        ? AppColor
+              .colorGlobalCommon100 // White text on black bg
+        : AppColor.labelNormal; // Black text on light bg
+
+    return SafeArea(
+      child: Padding(
+        padding: const EdgeInsets.all(24),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            // Header
+            Text(
+              '커피 마시기',
+              style: AppTextStyles.heading1Bold.copyWith(
+                color: headerTextColor,
               ),
-
-              const SizedBox(height: 32),
-
-              // Coffee type cards
-              _buildCoffeeTypeCard(
-                type: CoffeeType.handDrip,
-                title: '핸드드립',
-                description: '직접 손으로 내리는 커피',
-                imagePath: AssetPath.coffeeHandDrip,
-                fallbackIcon: Icons.local_cafe,
-                color: AppColor.colorGlobalOrange50,
+            ),
+            const SizedBox(height: 8),
+            Text(
+              '어떤 방식으로\n커피를 즐기시겠어요?',
+              style: AppTextStyles.title2Bold.copyWith(
+                color: headerTextColor,
+                height: 1.4,
               ),
+            ),
 
-              const SizedBox(height: 16),
+            const SizedBox(height: 32),
 
-              _buildCoffeeTypeCard(
-                type: CoffeeType.espresso,
-                title: '에스프레소 머신',
-                description: '기계로 추출하는 진한 커피',
-                imagePath: AssetPath.coffeeEspresso,
-                fallbackIcon: Icons.coffee_maker,
-                color: AppColor.colorGlobalViolet50,
-              ),
-            ],
-          ),
+            // Coffee type cards
+            _buildCoffeeTypeCard(
+              type: CoffeeType.handDrip,
+              title: '핸드드립',
+              description: '직접 손으로 내리는 커피',
+              imagePath: AssetPath.coffeeHandDrip,
+              fallbackIcon: Icons.local_cafe,
+              color: AppColor.colorGlobalOrange50,
+            ),
+
+            const SizedBox(height: 16),
+
+            _buildCoffeeTypeCard(
+              type: CoffeeType.espresso,
+              title: '에스프레소 머신',
+              description: '기계로 추출하는 진한 커피',
+              imagePath: AssetPath.coffeeEspresso,
+              fallbackIcon: Icons.coffee_maker,
+              color: AppColor.colorGlobalViolet50,
+            ),
+          ],
         ),
       ),
     );

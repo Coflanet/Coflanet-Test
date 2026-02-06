@@ -6,61 +6,66 @@ import 'package:coflanet/constants/radius_constant.dart';
 import 'package:coflanet/constants/style_constant.dart';
 import 'package:coflanet/modules/planet/my_planet_controller.dart';
 
-class MyPlanetView extends GetView<MyPlanetController> {
-  const MyPlanetView({super.key});
+/// Content widget for My Planet screen (without Scaffold/bottom nav)
+/// Used inside MainShellView's IndexedStack
+class MyPlanetContent extends GetView<MyPlanetController> {
+  const MyPlanetContent({super.key});
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      backgroundColor: AppColor.colorGlobalCoolNeutral10,
-      body: SafeArea(
-        bottom: false,
-        child: Obx(() {
-          if (controller.isLoading) {
-            return const Center(
-              child: CircularProgressIndicator(
-                color: AppColor.colorGlobalViolet50,
-              ),
-            );
-          }
-          return SingleChildScrollView(
-            physics: const BouncingScrollPhysics(),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                const SizedBox(height: 16),
-                // Header - User name
-                _buildHeader(),
-                const SizedBox(height: 24),
-                // Main content: empty or filled
-                if (controller.hasTasteProfile)
-                  _buildFilledContent()
-                else
-                  _buildEmptyContent(),
-                const SizedBox(height: 24),
-                // Bottom section: logout + withdraw
-                _buildBottomActions(),
-                const SizedBox(height: 24),
-              ],
+    return SafeArea(
+      bottom: false,
+      child: Obx(() {
+        if (controller.isLoading) {
+          return const Center(
+            child: CircularProgressIndicator(
+              color: AppColor.colorGlobalViolet50,
             ),
           );
-        }),
-      ),
+        }
+        return SingleChildScrollView(
+          physics: const BouncingScrollPhysics(),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              const SizedBox(height: 16),
+              // Header - User name
+              _buildHeader(),
+              const SizedBox(height: 24),
+              // Main content: empty or filled
+              if (controller.hasTasteProfile)
+                _buildFilledContent()
+              else
+                _buildEmptyContent(),
+              const SizedBox(height: 24),
+              // Bottom section: logout + withdraw
+              _buildBottomActions(),
+              const SizedBox(height: 24),
+            ],
+          ),
+        );
+      }),
     );
   }
 
   // ==================== HEADER ====================
 
   Widget _buildHeader() {
+    // Filled state (black bg): White text
+    // Empty state (light bg): Black text
+    final isFilled = controller.hasTasteProfile;
+    final textColor = isFilled
+        ? AppColor
+              .colorGlobalCommon100 // White
+        : AppColor.labelNormal; // Black
+
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 20),
       child: Row(
         children: [
           Text(
             controller.userName,
-            style: AppTextStyles.heading1Bold.copyWith(
-              color: AppColor.colorGlobalCommon100,
-            ),
+            style: AppTextStyles.heading1Bold.copyWith(color: textColor),
           ),
           const Spacer(),
           // Debug toggle
@@ -80,26 +85,23 @@ class MyPlanetView extends GetView<MyPlanetController> {
   // ==================== EMPTY STATE ====================
 
   Widget _buildEmptyContent() {
+    // Empty state uses light theme: white card on light gray background
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 20),
       child: Container(
         width: double.infinity,
         padding: const EdgeInsets.symmetric(vertical: 48, horizontal: 24),
         decoration: BoxDecoration(
-          color: AppColor.colorGlobalCoolNeutral15,
+          color: AppColor.colorGlobalCommon100, // White card
           borderRadius: AppRadius.xxlBorder,
-          border: Border.all(
-            color: AppColor.colorGlobalCoolNeutral22,
-            width: 1,
-          ),
         ),
         child: Column(
           children: [
-            // Headline
+            // Headline - black text on white card
             Text(
               '내 커피 취향을\n찾아볼까요?',
               style: AppTextStyles.title2Bold.copyWith(
-                color: AppColor.colorGlobalCommon100,
+                color: AppColor.labelNormal, // Black text
               ),
               textAlign: TextAlign.center,
             ),
@@ -107,20 +109,20 @@ class MyPlanetView extends GetView<MyPlanetController> {
             // Mascot placeholder
             _buildMascotPlaceholder(),
             const SizedBox(height: 32),
-            // CTA Button
+            // CTA Button - secondary style (light gray bg + violet text)
             GestureDetector(
               onTap: () => controller.goToSurvey(),
               child: Container(
                 width: double.infinity,
                 padding: const EdgeInsets.symmetric(vertical: 16),
                 decoration: BoxDecoration(
-                  color: AppColor.colorGlobalViolet50,
+                  color: AppColor.componentFillNormal, // Light gray
                   borderRadius: AppRadius.lgPlusBorder,
                 ),
                 child: Text(
                   '취향 설문 하기',
                   style: AppTextStyles.headline1Bold.copyWith(
-                    color: AppColor.colorGlobalCommon100,
+                    color: AppColor.primaryNormal, // Violet text
                   ),
                   textAlign: TextAlign.center,
                 ),
@@ -363,18 +365,23 @@ class MyPlanetView extends GetView<MyPlanetController> {
   // ==================== BOTTOM ACTIONS ====================
 
   Widget _buildBottomActions() {
+    // Both states use white card background
+    // Filled: 로그아웃=black, 회원탈퇴=red
+    // Empty: 로그아웃=black, 회원탈퇴=violet
+    final isFilled = controller.hasTasteProfile;
+    final withdrawColor = isFilled
+        ? AppColor
+              .colorGlobalRed50 // Red for filled state
+        : AppColor.primaryNormal; // Violet for empty state
+
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 20),
       child: Container(
         width: double.infinity,
         padding: const EdgeInsets.symmetric(vertical: 20, horizontal: 20),
         decoration: BoxDecoration(
-          color: AppColor.colorGlobalCoolNeutral15,
+          color: AppColor.colorGlobalCommon100, // White card
           borderRadius: AppRadius.xxlBorder,
-          border: Border.all(
-            color: AppColor.colorGlobalCoolNeutral22,
-            width: 1,
-          ),
         ),
         child: Row(
           children: [
@@ -383,7 +390,7 @@ class MyPlanetView extends GetView<MyPlanetController> {
               child: Text(
                 '로그아웃',
                 style: AppTextStyles.body2NormalMedium.copyWith(
-                  color: AppColor.colorGlobalCoolNeutral70,
+                  color: AppColor.labelNormal, // Black
                 ),
               ),
             ),
@@ -391,14 +398,14 @@ class MyPlanetView extends GetView<MyPlanetController> {
               width: 1,
               height: 16,
               margin: const EdgeInsets.symmetric(horizontal: 16),
-              color: AppColor.colorGlobalCoolNeutral30,
+              color: AppColor.lineSolidNormal,
             ),
             GestureDetector(
               onTap: () => controller.withdrawAccount(),
               child: Text(
                 '회원탈퇴',
                 style: AppTextStyles.body2NormalMedium.copyWith(
-                  color: AppColor.colorGlobalRed50,
+                  color: withdrawColor,
                 ),
               ),
             ),

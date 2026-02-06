@@ -9,6 +9,7 @@ import 'package:coflanet/modules/auth/signin/signin_view.dart';
 import 'package:coflanet/modules/auth/signin/signin_binding.dart';
 import 'package:coflanet/modules/auth/signup/signup_view.dart';
 import 'package:coflanet/modules/auth/signup/signup_binding.dart';
+import 'package:coflanet/modules/auth/signup/signup_complete_view.dart';
 
 // Modules - Onboarding
 import 'package:coflanet/modules/onboarding/survey_binding.dart';
@@ -27,11 +28,15 @@ import 'package:coflanet/modules/coffee/coffee_binding.dart';
 import 'package:coflanet/modules/coffee/main/coffee_main_view.dart';
 import 'package:coflanet/modules/coffee/hand_drip/hand_drip_view.dart';
 import 'package:coflanet/modules/coffee/espresso/espresso_view.dart';
+import 'package:coflanet/modules/coffee/espresso/espresso_settings_view.dart';
+import 'package:coflanet/modules/coffee/espresso/espresso_settings_binding.dart';
 import 'package:coflanet/modules/coffee/settings/coffee_settings_view.dart';
 import 'package:coflanet/modules/coffee/settings/coffee_setting_detail_view.dart';
 import 'package:coflanet/modules/coffee/timer/coffee_timer_binding.dart';
 import 'package:coflanet/modules/coffee/timer/coffee_timer_view.dart';
 import 'package:coflanet/modules/coffee/timer/timer_complete_view.dart';
+import 'package:coflanet/modules/coffee/select/select_coffee_view.dart';
+import 'package:coflanet/modules/coffee/select/select_coffee_binding.dart';
 
 // Modules - Matching
 import 'package:coflanet/modules/matching/matching_binding.dart';
@@ -44,6 +49,10 @@ import 'package:coflanet/modules/profile/my_taste_view.dart';
 // Modules - Planet
 import 'package:coflanet/modules/planet/my_planet_binding.dart';
 import 'package:coflanet/modules/planet/my_planet_view.dart';
+
+// Modules - Shell
+import 'package:coflanet/modules/shell/main_shell_binding.dart';
+import 'package:coflanet/modules/shell/main_shell_view.dart';
 
 part 'app_routes.dart';
 
@@ -73,6 +82,11 @@ class AppPages {
       page: () => const SignUpView(),
       binding: SignUpBinding(),
       transition: Transition.cupertino,
+    ),
+    GetPage(
+      name: Routes.signUpComplete,
+      page: () => const SignUpCompleteView(),
+      transition: Transition.fade,
     ),
 
     // === Onboarding ===
@@ -135,6 +149,12 @@ class AppPages {
       transition: Transition.cupertino,
     ),
     GetPage(
+      name: Routes.espressoSettings,
+      page: () => const EspressoSettingsView(),
+      binding: EspressoSettingsBinding(),
+      transition: Transition.cupertino,
+    ),
+    GetPage(
       name: Routes.coffeeSettings,
       page: () => const CoffeeSettingsView(),
       binding: CoffeeBinding(),
@@ -144,6 +164,12 @@ class AppPages {
       name: Routes.coffeeSettingDetail,
       page: () => const CoffeeSettingDetailView(),
       binding: CoffeeBinding(),
+      transition: Transition.cupertino,
+    ),
+    GetPage(
+      name: Routes.selectCoffee,
+      page: () => const SelectCoffeeView(),
+      binding: SelectCoffeeBinding(),
       transition: Transition.cupertino,
     ),
     GetPage(
@@ -181,6 +207,14 @@ class AppPages {
       page: () => const MyPlanetView(),
       binding: MyPlanetBinding(),
       transition: Transition.cupertino,
+    ),
+
+    // === Shell ===
+    GetPage(
+      name: Routes.mainShell,
+      page: () => const MainShellView(),
+      binding: MainShellBinding(),
+      transition: Transition.fadeIn,
     ),
   ];
 }

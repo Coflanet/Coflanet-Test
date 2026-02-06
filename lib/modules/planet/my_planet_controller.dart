@@ -1,5 +1,6 @@
 import 'package:get/get.dart';
 import 'package:coflanet/core/base/base_controller.dart';
+import 'package:coflanet/core/services/survey_service.dart';
 import 'package:coflanet/core/storage/local_storage.dart';
 import 'package:coflanet/data/models/survey_result_model.dart';
 import 'package:coflanet/routes/app_pages.dart';
@@ -47,21 +48,17 @@ class SavedRecipe {
 }
 
 class MyPlanetController extends BaseController {
+  final SurveyService _surveyService = Get.find<SurveyService>();
   final LocalStorage _storage = Get.find<LocalStorage>();
 
   // Saved recipes list (kept for backward compatibility)
   final RxList<SavedRecipe> _savedRecipes = <SavedRecipe>[].obs;
   List<SavedRecipe> get savedRecipes => _savedRecipes;
 
-  // Survey result
-  final Rxn<SurveyResultModel> _surveyResult = Rxn<SurveyResultModel>();
-  SurveyResultModel? get surveyResult => _surveyResult.value;
-
-  // Has taste profile (survey completed)
-  bool get hasTasteProfile => _surveyResult.value != null;
-
-  // User name
-  String get userName => _storage.getUserName() ?? '사용자';
+  // Delegate to SurveyService
+  SurveyResultModel? get surveyResult => _surveyService.surveyResult;
+  bool get hasTasteProfile => _surveyService.hasResult;
+  String get userName => _surveyService.userName;
 
   // Has saved recipes (backward compat)
   bool get hasRecipes => _savedRecipes.isNotEmpty;
@@ -71,7 +68,7 @@ class MyPlanetController extends BaseController {
 
   // Taste preferences derived from survey result
   List<TastePreference> get tastePreferences {
-    final profile = _surveyResult.value?.tasteProfile;
+    final profile = surveyResult?.tasteProfile;
     if (profile == null) return [];
 
     return [
@@ -106,41 +103,37 @@ class MyPlanetController extends BaseController {
     FlavorDescription(title: '로스팅 향', description: '구운 곡물, 시리얼 같은 구수한 향'),
   ];
 
-  // Bottom nav index
-  final RxInt currentTabIndex = 3.obs;
-
   @override
   void onInit() {
     super.onInit();
     _loadTasteProfile();
   }
 
-  /// Load taste profile from local storage
+  /// Load taste profile via SurveyService
   Future<void> _loadTasteProfile() async {
     await executeWithLoading(() async {
-      final resultJson = _storage.getSurveyResult();
-      if (resultJson != null) {
-        _surveyResult.value = SurveyResultModel.fromJson(resultJson);
-      }
+      await _surveyService.loadSurveyResult();
     });
   }
 
   /// Toggle demo data for testing
-  void toggleDemoData() {
+  Future<void> toggleDemoData() async {
     if (hasTasteProfile) {
-      _surveyResult.value = null;
+      await _surveyService.clearSurveyResult();
     } else {
-      _surveyResult.value = const SurveyResultModel(
-        coffeeType: '과일향 애호가',
-        coffeeTypeDescription: '산미와 과일향을 즐기는 타입',
-        tasteProfile: TasteProfileModel(
-          acidity: 80,
-          sweetness: 50,
-          bitterness: 30,
-          body: 50,
-          aroma: 70,
+      await _surveyService.saveSurveyResult(
+        const SurveyResultModel(
+          coffeeType: '과일향 애호가',
+          coffeeTypeDescription: '산미와 과일향을 즐기는 타입',
+          tasteProfile: TasteProfileModel(
+            acidity: 80,
+            sweetness: 50,
+            bitterness: 30,
+            body: 50,
+            aroma: 70,
+          ),
+          recommendations: [],
         ),
-        recommendations: [],
       );
     }
   }
@@ -169,25 +162,6 @@ class MyPlanetController extends BaseController {
       '회원탈퇴 기능은 준비 중입니다.',
       snackPosition: SnackPosition.BOTTOM,
     );
-  }
-
-  /// Handle bottom nav tap
-  void onTabTapped(int index) {
-    currentTabIndex.value = index;
-    switch (index) {
-      case 0:
-        Get.offAllNamed(Routes.coffeeMain);
-        break;
-      case 1:
-        // 추출 목록 - placeholder
-        break;
-      case 2:
-        // 시음 기록 - placeholder
-        break;
-      case 3:
-        // My 행성 - current page
-        break;
-    }
   }
 
   // Kept for backward compatibility

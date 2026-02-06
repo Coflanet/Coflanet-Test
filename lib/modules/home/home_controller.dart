@@ -27,9 +27,9 @@ class HomeController extends BaseController {
     });
   }
 
-  /// Navigate to coffee menu
+  /// Navigate to coffee menu (via main shell)
   void navigateToCoffee() {
-    Get.toNamed(Routes.coffeeMain);
+    Get.toNamed(Routes.mainShell, arguments: {'initialTab': 0});
   }
 
   /// Navigate to my taste screen
@@ -37,9 +37,14 @@ class HomeController extends BaseController {
     Get.toNamed(Routes.myTaste);
   }
 
-  /// Navigate to my planet screen
+  /// Navigate to my planet screen (via main shell)
   void navigateToMyPlanet() {
-    Get.toNamed(Routes.myPlanet);
+    Get.toNamed(Routes.mainShell, arguments: {'initialTab': 3});
+  }
+
+  /// Navigate to main shell
+  void navigateToMainShell({int initialTab = 0}) {
+    Get.toNamed(Routes.mainShell, arguments: {'initialTab': initialTab});
   }
 
   /// Logout
