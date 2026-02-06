@@ -475,6 +475,22 @@ class AppTextStyles {
     fontSize: 11.0,
     height: 1.3,
   );
+
+  // ===== EMOJI STYLES =====
+  /// Emoji text style - 16px (small tags, labels)
+  static const TextStyle emojiSmall = TextStyle(fontSize: 16.0);
+
+  /// Emoji text style - 20px (inline emoji)
+  static const TextStyle emojiMedium = TextStyle(fontSize: 20.0);
+
+  /// Emoji text style - 24px (default emoji size)
+  static const TextStyle emojiNormal = TextStyle(fontSize: 24.0);
+
+  /// Emoji text style - 48px (large illustrations)
+  static const TextStyle emojiLarge = TextStyle(fontSize: 48.0);
+
+  /// Emoji text style - 80px (hero illustrations)
+  static const TextStyle emojiXLarge = TextStyle(fontSize: 80.0);
 }
 
 class AppShadows {

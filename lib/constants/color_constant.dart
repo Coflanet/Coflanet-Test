@@ -7,11 +7,16 @@ class AppColor {
   static const Color colorGlobalCommon100 = Color(0xFFFFFFFF);
   static const Color colorGlobalCommon0 = Color(0xFF000000);
 
+  /// Transparent color - use instead of Colors.transparent
+  static const Color transparent = Color(0x00000000);
+
   // Neutral Colors
   static const Color colorGlobalNeutral99 = Color(0xFFF7F7F7);
   static const Color colorGlobalNeutral95 = Color(0xFFDCDCDC);
   static const Color colorGlobalNeutral90 = Color(0xFFC4C4C4);
-  static const Color colorGlobalNeutral80 = Color(0xFF9B9B9B);  // Fixed from JSON
+  static const Color colorGlobalNeutral80 = Color(
+    0xFF9B9B9B,
+  ); // Fixed from JSON
   static const Color colorGlobalNeutral70 = Color(0xFF9B9B9B);
   static const Color colorGlobalNeutral60 = Color(0xFF8A8A8A);
   static const Color colorGlobalNeutral50 = Color(0xFF737373);
@@ -96,7 +101,7 @@ class AppColor {
   static const Color colorGlobalOrange60 = Color(0xFFFFA938);
   static const Color colorGlobalOrange50 = Color(0xFFFF9200);
   static const Color colorGlobalOrange40 = Color(0xFFD47800);
-  static const Color colorGlobalOrange39 = Color(0xFFD17600);  // Hidden token
+  static const Color colorGlobalOrange39 = Color(0xFFD17600); // Hidden token
   static const Color colorGlobalOrange30 = Color(0xFF9C5800);
   static const Color colorGlobalOrange20 = Color(0xFF663A00);
   static const Color colorGlobalOrange10 = Color(0xFF361E00);
@@ -123,7 +128,7 @@ class AppColor {
   static const Color colorGlobalLime60 = Color(0xFF6BE016);
   static const Color colorGlobalLime50 = Color(0xFF58CF04);
   static const Color colorGlobalLime40 = Color(0xFF48AD00);
-  static const Color colorGlobalLime37 = Color(0xFF429E00);  // Hidden token
+  static const Color colorGlobalLime37 = Color(0xFF429E00); // Hidden token
   static const Color colorGlobalLime30 = Color(0xFF347D00);
   static const Color colorGlobalLime20 = Color(0xFF225200);
   static const Color colorGlobalLime10 = Color(0xFF112900);
@@ -177,7 +182,7 @@ class AppColor {
   static const Color colorGlobalPink70 = Color(0xFFFF94ED);
   static const Color colorGlobalPink60 = Color(0xFFFA73E3);
   static const Color colorGlobalPink50 = Color(0xFFF553DA);
-  static const Color colorGlobalPink46 = Color(0xFFE846CD);  // Hidden token
+  static const Color colorGlobalPink46 = Color(0xFFE846CD); // Hidden token
   static const Color colorGlobalPink40 = Color(0xFFD331B8);
   static const Color colorGlobalPink30 = Color(0xFFA81690);
   static const Color colorGlobalPink20 = Color(0xFF730560);
@@ -213,7 +218,8 @@ class AppColor {
   static Color get labelNormal => colorGlobalCoolNeutral10;
   static Color get labelStrong => colorGlobalCommon0;
   static Color get labelNeutral => const Color(0xFF2E2F33).withOpacity(0.88);
-  static Color get labelAlternative => const Color(0xFF37383C).withOpacity(0.61);
+  static Color get labelAlternative =>
+      const Color(0xFF37383C).withOpacity(0.61);
   static Color get labelAssistive => const Color(0xFF37383C).withOpacity(0.35);
   static Color get labelDisable => const Color(0xFF37383C).withOpacity(0.16);
 
@@ -222,16 +228,21 @@ class AppColor {
   static Color get backgroundNormalAlternative => colorGlobalCoolNeutral99;
   static Color get backgroundElevatedNormal => colorGlobalCommon100;
   static Color get backgroundElevatedAlternative => colorGlobalCoolNeutral99;
-  static Color get backgroundOpacity75 => const Color(0xFFFFFFFF).withOpacity(0.75);
+  static Color get backgroundOpacity75 =>
+      const Color(0xFFFFFFFF).withOpacity(0.75);
 
   // Interaction Colors
   static Color get interactionInactive => colorGlobalCoolNeutral70;
-  static Color get interactionDisable => const Color(0xFFF4F4F5).withOpacity(0.5);
+  static Color get interactionDisable =>
+      const Color(0xFFF4F4F5).withOpacity(0.5);
 
   // Line Colors
-  static Color get lineNormalNormal => const Color(0xFF70737C).withOpacity(0.22);
-  static Color get lineNormalNeutral => const Color(0xFF70737C).withOpacity(0.16);
-  static Color get lineNormalAlternative => const Color(0xFF70737C).withOpacity(0.08);
+  static Color get lineNormalNormal =>
+      const Color(0xFF70737C).withOpacity(0.22);
+  static Color get lineNormalNeutral =>
+      const Color(0xFF70737C).withOpacity(0.16);
+  static Color get lineNormalAlternative =>
+      const Color(0xFF70737C).withOpacity(0.08);
   static Color get lineSolidNormal => colorGlobalCoolNeutral96;
   static Color get lineSolidNeutral => colorGlobalCoolNeutral97;
   static Color get lineSolidAlternative => colorGlobalCoolNeutral98;
@@ -270,33 +281,64 @@ class AppColor {
   static Color get inverseBackground => colorGlobalCoolNeutral15;
   static Color get inverseLabelNormal => colorGlobalCoolNeutral99;
   static Color get inverseLabelStrong => colorGlobalCommon100;
-  static Color get inverseLabelNeutral => const Color(0xFFC2C4C8).withOpacity(0.88);
-  static Color get inverseLabelAlternative => const Color(0xFFAEB0B6).withOpacity(0.61);
-  static Color get inverseLabelAssistive => const Color(0xFFAEB0B6).withOpacity(0.35);
-  static Color get inverseLabelDisable => const Color(0xFF989BA2).withOpacity(0.16);
+  static Color get inverseLabelNeutral =>
+      const Color(0xFFC2C4C8).withOpacity(0.88);
+  static Color get inverseLabelAlternative =>
+      const Color(0xFFAEB0B6).withOpacity(0.61);
+  static Color get inverseLabelAssistive =>
+      const Color(0xFFAEB0B6).withOpacity(0.35);
+  static Color get inverseLabelDisable =>
+      const Color(0xFF989BA2).withOpacity(0.16);
 
   // Static Label Colors (Black)
   static Color get staticLabelBlackNormal => colorGlobalCoolNeutral10;
   static Color get staticLabelBlackStrong => colorGlobalCommon0;
-  static Color get staticLabelBlackNeutral => const Color(0xFF2E2F33).withOpacity(0.88);
-  static Color get staticLabelBlackAlternative => const Color(0xFF37383C).withOpacity(0.61);
-  static Color get staticLabelBlackAssistive => const Color(0xFF37383C).withOpacity(0.35);
-  static Color get staticLabelBlackDisable => const Color(0xFF37383C).withOpacity(0.16);
+  static Color get staticLabelBlackNeutral =>
+      const Color(0xFF2E2F33).withOpacity(0.88);
+  static Color get staticLabelBlackAlternative =>
+      const Color(0xFF37383C).withOpacity(0.61);
+  static Color get staticLabelBlackAssistive =>
+      const Color(0xFF37383C).withOpacity(0.35);
+  static Color get staticLabelBlackDisable =>
+      const Color(0xFF37383C).withOpacity(0.16);
 
   // Static Label Colors (White)
   static Color get staticLabelWhiteNormal => colorGlobalCoolNeutral99;
   static Color get staticLabelWhiteStrong => colorGlobalCommon100;
-  static Color get staticLabelWhiteNeutral => const Color(0xFFC2C4C8).withOpacity(0.88);
-  static Color get staticLabelWhiteAlternative => const Color(0xFFAEB0B6).withOpacity(0.61);
-  static Color get staticLabelWhiteAssistive => const Color(0xFFAEB0B6).withOpacity(0.35);
-  static Color get staticLabelWhiteDisable => const Color(0xFF989BA2).withOpacity(0.16);
+  static Color get staticLabelWhiteNeutral =>
+      const Color(0xFFC2C4C8).withOpacity(0.88);
+  static Color get staticLabelWhiteAlternative =>
+      const Color(0xFFAEB0B6).withOpacity(0.61);
+  static Color get staticLabelWhiteAssistive =>
+      const Color(0xFFAEB0B6).withOpacity(0.35);
+  static Color get staticLabelWhiteDisable =>
+      const Color(0xFF989BA2).withOpacity(0.16);
 
   // Component Colors
-  static Color get componentFillNormal => const Color(0xFF70737C).withOpacity(0.08);
-  static Color get componentFillStrong => const Color(0xFF70737C).withOpacity(0.16);
-  static Color get componentFillAlternative => const Color(0xFF70737C).withOpacity(0.05);
-  static Color get componentFillScroll => const Color(0xFF4D4D4D).withOpacity(0.6);
-  static Color get componentMaterialDimmer => const Color(0xFF171719).withOpacity(0.52);
+  static Color get componentFillNormal =>
+      const Color(0xFF70737C).withOpacity(0.08);
+  static Color get componentFillStrong =>
+      const Color(0xFF70737C).withOpacity(0.16);
+  static Color get componentFillAlternative =>
+      const Color(0xFF70737C).withOpacity(0.05);
+  static Color get componentFillScroll =>
+      const Color(0xFF4D4D4D).withOpacity(0.6);
+  static Color get componentMaterialDimmer =>
+      const Color(0xFF171719).withOpacity(0.52);
+
+  // ===== SOCIAL LOGIN COLORS =====
+
+  /// Kakao yellow - official brand color
+  static const Color socialKakao = Color(0xFFFEE500);
+
+  /// Naver green - official brand color
+  static const Color socialNaver = Color(0xFF03C75A);
+
+  /// Apple black - official brand color
+  static const Color socialApple = Color(0xFF000000);
+
+  /// Apple white - for dark mode
+  static const Color socialAppleWhite = Color(0xFFFFFFFF);
 
   // ===== DARK MODE SUPPORT =====
 
@@ -312,24 +354,33 @@ class AppColor {
   static Color get darkBackgroundNormalAlternative => colorGlobalCoolNeutral5;
   static Color get darkBackgroundElevatedNormal => colorGlobalCoolNeutral17;
   static Color get darkBackgroundElevatedAlternative => colorGlobalCoolNeutral7;
-  static Color get darkBackgroundOpacity75 => const Color(0xFF000000).withOpacity(0.75);
+  static Color get darkBackgroundOpacity75 =>
+      const Color(0xFF000000).withOpacity(0.75);
 
   // Dark Mode Label Colors
   static Color get darkLabelNormal => colorGlobalCoolNeutral99;
   static Color get darkLabelStrong => colorGlobalCommon100;
-  static Color get darkLabelNeutral => const Color(0xFFC2C4C8).withOpacity(0.88);
-  static Color get darkLabelAlternative => const Color(0xFFAEB0B6).withOpacity(0.61);
-  static Color get darkLabelAssistive => const Color(0xFFAEB0B6).withOpacity(0.28);
-  static Color get darkLabelDisable => const Color(0xFF989BA2).withOpacity(0.16);
+  static Color get darkLabelNeutral =>
+      const Color(0xFFC2C4C8).withOpacity(0.88);
+  static Color get darkLabelAlternative =>
+      const Color(0xFFAEB0B6).withOpacity(0.61);
+  static Color get darkLabelAssistive =>
+      const Color(0xFFAEB0B6).withOpacity(0.28);
+  static Color get darkLabelDisable =>
+      const Color(0xFF989BA2).withOpacity(0.16);
 
   // Dark Mode Interaction Colors
   static Color get darkInteractionInactive => colorGlobalCoolNeutral40;
-  static Color get darkInteractionDisable => const Color(0xFF2E2F33).withOpacity(0.5);
+  static Color get darkInteractionDisable =>
+      const Color(0xFF2E2F33).withOpacity(0.5);
 
   // Dark Mode Line Colors
-  static Color get darkLineNormalNormal => const Color(0xFF70737C).withOpacity(0.32);
-  static Color get darkLineNormalNeutral => const Color(0xFF70737C).withOpacity(0.28);
-  static Color get darkLineNormalAlternative => const Color(0xFF70737C).withOpacity(0.22);
+  static Color get darkLineNormalNormal =>
+      const Color(0xFF70737C).withOpacity(0.32);
+  static Color get darkLineNormalNeutral =>
+      const Color(0xFF70737C).withOpacity(0.28);
+  static Color get darkLineNormalAlternative =>
+      const Color(0xFF70737C).withOpacity(0.22);
   static Color get darkLineSolidNormal => colorGlobalCoolNeutral25;
   static Color get darkLineSolidNeutral => colorGlobalCoolNeutral23;
   static Color get darkLineSolidAlternative => colorGlobalCoolNeutral22;
@@ -341,11 +392,16 @@ class AppColor {
   static Color get darkStatusNegative => colorGlobalRed60;
 
   // Dark Mode Component Colors
-  static Color get darkComponentFillNormal => const Color(0xFF70737C).withOpacity(0.22);
-  static Color get darkComponentFillStrong => const Color(0xFF70737C).withOpacity(0.28);
-  static Color get darkComponentFillAlternative => const Color(0xFF70737C).withOpacity(0.12);
-  static Color get darkComponentFillScroll => const Color(0xFF3E3E3E).withOpacity(0.6);
-  static Color get darkComponentMaterialDimmer => const Color(0xFF171719).withOpacity(0.74);
+  static Color get darkComponentFillNormal =>
+      const Color(0xFF70737C).withOpacity(0.22);
+  static Color get darkComponentFillStrong =>
+      const Color(0xFF70737C).withOpacity(0.28);
+  static Color get darkComponentFillAlternative =>
+      const Color(0xFF70737C).withOpacity(0.12);
+  static Color get darkComponentFillScroll =>
+      const Color(0xFF3E3E3E).withOpacity(0.6);
+  static Color get darkComponentMaterialDimmer =>
+      const Color(0xFF171719).withOpacity(0.74);
 
   // Helper method to apply opacity to any color
   static Color withOpacity(Color color, double opacity) {
@@ -382,8 +438,10 @@ class AppGradients {
     colors: [Color(0XFFFF758C), Color(0XFFFF7EB3)],
   );
 
-  static Gradient gradientLinear(
-      {required Color beginColor, required Color endColor}) {
+  static Gradient gradientLinear({
+    required Color beginColor,
+    required Color endColor,
+  }) {
     return LinearGradient(
       begin: Alignment.topLeft,
       end: Alignment.bottomRight,
@@ -481,15 +539,7 @@ class AppGradients {
 
   // INNER
   static const List<BoxShadow> innerShadows = [
-    BoxShadow(
-      color: Colors.black,
-      offset: Offset(-2, -2),
-      blurRadius: 10,
-    ),
-    BoxShadow(
-      color: Colors.grey,
-      offset: Offset(2, 2),
-      blurRadius: 10,
-    ),
+    BoxShadow(color: Colors.black, offset: Offset(-2, -2), blurRadius: 10),
+    BoxShadow(color: Colors.grey, offset: Offset(2, 2), blurRadius: 10),
   ];
 }

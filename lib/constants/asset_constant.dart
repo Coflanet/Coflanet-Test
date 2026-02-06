@@ -8,25 +8,39 @@ class AssetPath {
 
   // === Logo ===
   static const String logoMain = '$_images/logo_main.png';
-  static const String logoWhite = '$_images/logo_white.png';
   static const String logoSplash = '$_images/logo_splash.png';
+  static const String logoWhite = '$_images/logo_white.png';
+  static const String logoDark = '$_images/logo_dark.png';
 
   // === Onboarding ===
   static const String onboardingWelcome = '$_images/onboarding_welcome.png';
   static const String onboardingComplete = '$_images/onboarding_complete.png';
   static const String onboardingAnalyzing = '$_images/onboarding_analyzing.png';
 
-  // === Survey Result ===
-  static const String surveyResultBg = '$_images/survey_result_bg.png';
-  static const String coffeeTypeAcidic = '$_images/coffee_type_acidic.png';
-  static const String coffeeTypeBalance = '$_images/coffee_type_balance.png';
-  static const String coffeeTypeBitter = '$_images/coffee_type_bitter.png';
-  static const String coffeeTypeSweet = '$_images/coffee_type_sweet.png';
+  // === Signup Completion ===
+  static const String completionClappingHands =
+      '$_images/completion_clapping_hands.png';
+
+  // === Mascot ===
+  static const String mascotGift = '$_images/mascot_gift.png';
+  static const String mascotDrink = '$_images/mascot_drink.png';
+  static const String mascotFront = '$_images/mascot_front.png';
+
+  // === Aroma/Flavor Icons ===
+  static const String aromaFruit = '$_images/aroma_fruit.png';
+  static const String aromaFlower = '$_images/aroma_flower.png';
+  static const String aromaNutChoco = '$_images/aroma_nut_choco.png';
+  static const String aromaRoasting = '$_images/aroma_roasting.png';
 
   // === Coffee ===
   static const String coffeeHandDrip = '$_images/coffee_hand_drip.png';
   static const String coffeeEspresso = '$_images/coffee_espresso.png';
-  static const String coffeeMokapot = '$_images/coffee_mokapot.png';
+  static const String coffeeDraft = '$_images/coffee_draft.png';
+
+  // === Timer Step Illustrations ===
+  static const String timerStepGrinder = '$_images/timer_step01_grinder.png';
+  static const String timerStepPourover = '$_images/timer_step02_pourover.png';
+  static const String timerComplete = '$_images/timer_complete.png';
 
   // === Icons ===
   static const String iconArrowBack = '$_icons/ic_arrow_back.svg';
@@ -44,10 +58,4 @@ class AssetPath {
   static const String iconKakao = '$_icons/ic_kakao.svg';
   static const String iconNaver = '$_icons/ic_naver.svg';
   static const String iconApple = '$_icons/ic_apple.svg';
-
-  // === Collection Images (Legacy) ===
-  static const String imgCollectionBuyAgain = '$_images/collection_buy_again.png';
 }
-
-// Legacy export for backward compatibility
-const String imgCollectionBuyAgain = AssetPath.imgCollectionBuyAgain;
