@@ -13,18 +13,11 @@ class MainShellView extends GetView<MainShellController> {
 
   @override
   Widget build(BuildContext context) {
+    // Fixed theme per Figma CSS: Shell screens use #000000 background + #FFFFFF bottom nav
     return Obx(() {
-      // Dynamic theme based on taste profile state
-      // Filled (hasTasteProfile=true): Black bg + White bottom nav
-      // Empty (hasTasteProfile=false): Light gray bg + Dark bottom nav
-      final isFilled = controller.hasTasteProfile;
-      final bgColor = isFilled
-          ? AppColor
-                .colorGlobalCommon0 // #000000 pure black
-          : AppColor.colorGlobalCoolNeutral99; // #F7F7F8 light gray
-
       return Scaffold(
-        backgroundColor: bgColor,
+        backgroundColor:
+            AppColor.colorGlobalCommon0, // #000000 pure black (fixed)
         body: IndexedStack(
           index: controller.currentTabIndex.value,
           children: const [
@@ -34,26 +27,16 @@ class MainShellView extends GetView<MainShellController> {
             MyPlanetContent(), // Tab 3: My 행성
           ],
         ),
-        bottomNavigationBar: _buildBottomTabBar(isFilled),
+        bottomNavigationBar: _buildBottomTabBar(),
       );
     });
   }
 
-  Widget _buildBottomTabBar(bool isFilled) {
-    // Filled: White bottom nav (#FFFFFF)
-    // Empty: Dark bottom nav (#1C1C1E)
-    final navBgColor = isFilled
-        ? AppColor
-              .colorGlobalCommon100 // #FFFFFF white
-        : AppColor.colorGlobalCoolNeutral15; // #1B1C1E dark
-    final borderColor = isFilled
-        ? AppColor
-              .colorGlobalCoolNeutral95 // light border for white nav
-        : AppColor.colorGlobalCoolNeutral22; // dark border for dark nav
-    final unselectedColor = isFilled
-        ? AppColor
-              .colorGlobalCoolNeutral50 // gray on white
-        : AppColor.colorGlobalCoolNeutral50; // gray on dark
+  Widget _buildBottomTabBar() {
+    // Fixed per Figma CSS: White bottom nav (#FFFFFF) with light border
+    const navBgColor = AppColor.colorGlobalCommon100; // #FFFFFF white
+    const borderColor = AppColor.colorGlobalCoolNeutral95; // light border
+    const unselectedColor = AppColor.colorGlobalCoolNeutral50; // gray
 
     return Obx(
       () => Container(

@@ -231,6 +231,9 @@ class AppColor {
   static Color get backgroundOpacity75 =>
       const Color(0xFFFFFFFF).withOpacity(0.75);
 
+  /// Timer background - #333333 per Figma CSS for 레시피 타이머 screen
+  static const Color backgroundTimer = Color(0xFF333333);
+
   // Interaction Colors
   static Color get interactionInactive => colorGlobalCoolNeutral70;
   static Color get interactionDisable =>

@@ -6,7 +6,6 @@ import 'package:coflanet/constants/color_constant.dart';
 import 'package:coflanet/constants/style_constant.dart';
 import 'package:coflanet/constants/radius_constant.dart';
 import 'package:coflanet/modules/coffee/coffee_controller.dart';
-import 'package:coflanet/core/services/survey_service.dart';
 
 /// Content widget for Coffee Main screen (without Scaffold/AppBar)
 /// Used inside MainShellView's IndexedStack
@@ -15,13 +14,9 @@ class CoffeeMainContent extends GetView<CoffeeController> {
 
   @override
   Widget build(BuildContext context) {
-    // Dynamic theme based on taste profile state
-    final surveyService = Get.find<SurveyService>();
-    final isFilled = surveyService.hasResult;
-    final headerTextColor = isFilled
-        ? AppColor
-              .colorGlobalCommon100 // White text on black bg
-        : AppColor.labelNormal; // Black text on light bg
+    // Fixed theme per Figma CSS: Shell screens use black bg, white text
+    const headerTextColor =
+        AppColor.colorGlobalCommon100; // White text on black bg
 
     return SafeArea(
       child: Padding(

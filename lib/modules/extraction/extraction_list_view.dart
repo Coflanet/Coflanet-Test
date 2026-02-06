@@ -3,20 +3,14 @@ import 'package:get/get.dart';
 import 'package:coflanet/constants/color_constant.dart';
 import 'package:coflanet/constants/style_constant.dart';
 import 'package:coflanet/modules/extraction/extraction_list_controller.dart';
-import 'package:coflanet/core/services/survey_service.dart';
 
 class ExtractionListView extends GetView<ExtractionListController> {
   const ExtractionListView({super.key});
 
   @override
   Widget build(BuildContext context) {
-    // Dynamic theme based on taste profile state
-    final surveyService = Get.find<SurveyService>();
-    final isFilled = surveyService.hasResult;
-    final titleColor = isFilled
-        ? AppColor
-              .colorGlobalCommon100 // White on black
-        : AppColor.labelNormal; // Black on light
+    // Fixed per Figma CSS: Shell screens use black bg, white text
+    const titleColor = AppColor.colorGlobalCommon100; // White text on black bg
 
     return SafeArea(
       child: Center(

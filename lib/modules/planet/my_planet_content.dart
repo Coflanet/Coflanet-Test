@@ -51,13 +51,8 @@ class MyPlanetContent extends GetView<MyPlanetController> {
   // ==================== HEADER ====================
 
   Widget _buildHeader() {
-    // Filled state (black bg): White text
-    // Empty state (light bg): Black text
-    final isFilled = controller.hasTasteProfile;
-    final textColor = isFilled
-        ? AppColor
-              .colorGlobalCommon100 // White
-        : AppColor.labelNormal; // Black
+    // Fixed per Figma CSS: Shell screens use black bg, white text
+    const textColor = AppColor.colorGlobalCommon100; // White text on black bg
 
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 20),
