@@ -9,7 +9,6 @@ import 'package:coflanet/data/models/survey_question_model.dart';
 import 'package:coflanet/modules/onboarding/survey_controller.dart';
 import 'package:coflanet/modules/onboarding/widgets/survey_progress_bar.dart';
 import 'package:coflanet/modules/onboarding/widgets/survey_checkbox_item.dart';
-import 'package:coflanet/modules/onboarding/widgets/survey_rating_item.dart';
 import 'package:coflanet/widgets/buttons/primary_button.dart';
 
 class SurveyQuestionView extends GetView<SurveyController> {
@@ -23,6 +22,17 @@ class SurveyQuestionView extends GetView<SurveyController> {
       body: SafeArea(
         child: Column(
           children: [
+            // Progress bar below AppBar
+            Obx(
+              () => Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 24),
+                child: SurveyProgressIndicator(
+                  progress:
+                      (controller.currentStep + 1) / controller.totalSteps,
+                ),
+              ),
+            ),
+            const SizedBox(height: 8),
             Expanded(
               child: SingleChildScrollView(
                 padding: const EdgeInsets.symmetric(horizontal: 24),
@@ -89,9 +99,11 @@ class SurveyQuestionView extends GetView<SurveyController> {
           const SizedBox(height: 8),
         ],
 
-        // Question text
+        // Question text (prepend userName for multiRating questions)
         Text(
-          question.question,
+          question.questionType == SurveyQuestionType.multiRating
+              ? '${controller.userName}${question.question}'
+              : question.question,
           style: AppTextStyles.heading1Bold.copyWith(
             color: AppColor.labelNormal,
           ),
@@ -126,9 +138,7 @@ class SurveyQuestionView extends GetView<SurveyController> {
       ),
       child: Obx(() {
         String buttonText;
-        if (controller.currentStep == 0) {
-          buttonText = '원두 취향 찾으러 가기';
-        } else if (controller.currentStep < controller.totalSteps - 1) {
+        if (controller.currentStep < controller.totalSteps - 1) {
           buttonText = '다음';
         } else {
           buttonText = '완료';
@@ -188,26 +198,41 @@ class SurveyQuestionView extends GetView<SurveyController> {
         );
 
       case SurveyQuestionType.rating:
-        // Rating style (👎😐👍)
-        return SurveyRatingItem(
-          label: question.question,
-          selectedValue: _getSelectedRatingValue(),
-          onValueChanged: (value) {
-            // Map rating value to option id
-            final optionId = switch (value) {
-              -1 => 'dislike',
-              0 => 'neutral',
-              1 => 'like',
-              _ => 'neutral',
-            };
-            controller.selectOption(optionId);
-          },
-        );
+        // Check if question has 3 options (기본 맛 취향) or 2 options (특성 향미 취향)
+        if (question.options.length == 3) {
+          return _buildTernaryRating(question); // 싫어요/보통/좋아요
+        } else {
+          return _buildBinaryRating(question); // 싫어요/좋아요
+        }
 
       case SurveyQuestionType.imageGrid:
         // Image grid for equipment selection
         return _buildImageGrid(question);
+
+      case SurveyQuestionType.multiRating:
+        // Multiple rating items on one screen
+        return _buildMultiRating(question);
     }
+  }
+
+  /// Build multi-rating items for taste/aroma preferences
+  Widget _buildMultiRating(SurveyQuestionModel question) {
+    final items = question.multiRatingItems;
+    if (items == null || items.isEmpty) return const SizedBox();
+
+    return Column(
+      children: items.map((item) {
+        return Padding(
+          padding: const EdgeInsets.only(bottom: 16),
+          child: _MultiRatingItemWidget(
+            item: item,
+            selectedValue: controller.getMultiRating(item.id),
+            onValueChanged: (value) =>
+                controller.setMultiRating(item.id, value),
+          ),
+        );
+      }).toList(),
+    );
   }
 
   /// Get selected rating value from current answers
@@ -221,6 +246,220 @@ class SurveyQuestionView extends GetView<SurveyController> {
       'like' => 1,
       _ => null,
     };
+  }
+
+  /// Build ternary rating (싫어요/보통/좋아요 - 3 options for 기본 맛 취향)
+  Widget _buildTernaryRating(SurveyQuestionModel question) {
+    final selectedValue = _getSelectedRatingValue();
+
+    return Row(
+      children: [
+        // 싫어요 (Dislike) - RED
+        Expanded(
+          child: GestureDetector(
+            onTap: () => controller.selectOption('dislike'),
+            child: AnimatedContainer(
+              duration: const Duration(milliseconds: 200),
+              padding: const EdgeInsets.symmetric(vertical: 20),
+              decoration: BoxDecoration(
+                color: selectedValue == -1
+                    ? AppColor.colorGlobalRed50
+                    : AppColor.colorGlobalRed95,
+                borderRadius: AppRadius.lgBorder,
+                border: Border.all(
+                  color: selectedValue == -1
+                      ? AppColor.colorGlobalRed40
+                      : AppColor.colorGlobalRed90,
+                  width: 2,
+                ),
+              ),
+              child: Column(
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  Text('👎', style: const TextStyle(fontSize: 36)),
+                  const SizedBox(height: 8),
+                  Text(
+                    '싫어요',
+                    style: AppTextStyles.body1NormalBold.copyWith(
+                      color: selectedValue == -1
+                          ? AppColor.colorGlobalCommon100
+                          : AppColor.colorGlobalRed50,
+                    ),
+                  ),
+                ],
+              ),
+            ),
+          ),
+        ),
+
+        const SizedBox(width: 12),
+
+        // 보통 (Neutral) - GRAY
+        Expanded(
+          child: GestureDetector(
+            onTap: () => controller.selectOption('neutral'),
+            child: AnimatedContainer(
+              duration: const Duration(milliseconds: 200),
+              padding: const EdgeInsets.symmetric(vertical: 20),
+              decoration: BoxDecoration(
+                color: selectedValue == 0
+                    ? AppColor.labelAssistive
+                    : AppColor.componentFillNormal,
+                borderRadius: AppRadius.lgBorder,
+                border: Border.all(
+                  color: selectedValue == 0
+                      ? AppColor.labelNormal
+                      : AppColor.lineNormalNeutral,
+                  width: 2,
+                ),
+              ),
+              child: Column(
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  Text('😐', style: const TextStyle(fontSize: 36)),
+                  const SizedBox(height: 8),
+                  Text(
+                    '보통',
+                    style: AppTextStyles.body1NormalBold.copyWith(
+                      color: selectedValue == 0
+                          ? AppColor.colorGlobalCommon100
+                          : AppColor.labelNormal,
+                    ),
+                  ),
+                ],
+              ),
+            ),
+          ),
+        ),
+
+        const SizedBox(width: 12),
+
+        // 좋아요 (Like) - BLUE
+        Expanded(
+          child: GestureDetector(
+            onTap: () => controller.selectOption('like'),
+            child: AnimatedContainer(
+              duration: const Duration(milliseconds: 200),
+              padding: const EdgeInsets.symmetric(vertical: 20),
+              decoration: BoxDecoration(
+                color: selectedValue == 1
+                    ? AppColor.colorGlobalBlue50
+                    : AppColor.colorGlobalBlue95,
+                borderRadius: AppRadius.lgBorder,
+                border: Border.all(
+                  color: selectedValue == 1
+                      ? AppColor.colorGlobalBlue40
+                      : AppColor.colorGlobalBlue90,
+                  width: 2,
+                ),
+              ),
+              child: Column(
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  Text('👍', style: const TextStyle(fontSize: 36)),
+                  const SizedBox(height: 8),
+                  Text(
+                    '좋아요',
+                    style: AppTextStyles.body1NormalBold.copyWith(
+                      color: selectedValue == 1
+                          ? AppColor.colorGlobalCommon100
+                          : AppColor.colorGlobalBlue50,
+                    ),
+                  ),
+                ],
+              ),
+            ),
+          ),
+        ),
+      ],
+    );
+  }
+
+  /// Build binary rating (싫어요/좋아요 with Red/Blue colors - for 특성 향미 취향)
+  Widget _buildBinaryRating(SurveyQuestionModel question) {
+    final selectedValue = _getSelectedRatingValue();
+
+    return Row(
+      children: [
+        // 싫어요 (Dislike) - RED
+        Expanded(
+          child: GestureDetector(
+            onTap: () => controller.selectOption('dislike'),
+            child: AnimatedContainer(
+              duration: const Duration(milliseconds: 200),
+              padding: const EdgeInsets.symmetric(vertical: 24),
+              decoration: BoxDecoration(
+                color: selectedValue == -1
+                    ? AppColor.colorGlobalRed50
+                    : AppColor.colorGlobalRed95,
+                borderRadius: AppRadius.lgBorder,
+                border: Border.all(
+                  color: selectedValue == -1
+                      ? AppColor.colorGlobalRed40
+                      : AppColor.colorGlobalRed90,
+                  width: 2,
+                ),
+              ),
+              child: Column(
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  Text('👎', style: const TextStyle(fontSize: 48)),
+                  const SizedBox(height: 12),
+                  Text(
+                    '싫어요',
+                    style: AppTextStyles.headline1Bold.copyWith(
+                      color: selectedValue == -1
+                          ? AppColor.colorGlobalCommon100
+                          : AppColor.colorGlobalRed50,
+                    ),
+                  ),
+                ],
+              ),
+            ),
+          ),
+        ),
+
+        const SizedBox(width: 16),
+
+        // 좋아요 (Like) - BLUE
+        Expanded(
+          child: GestureDetector(
+            onTap: () => controller.selectOption('like'),
+            child: AnimatedContainer(
+              duration: const Duration(milliseconds: 200),
+              padding: const EdgeInsets.symmetric(vertical: 24),
+              decoration: BoxDecoration(
+                color: selectedValue == 1
+                    ? AppColor.colorGlobalBlue50
+                    : AppColor.colorGlobalBlue95,
+                borderRadius: AppRadius.lgBorder,
+                border: Border.all(
+                  color: selectedValue == 1
+                      ? AppColor.colorGlobalBlue40
+                      : AppColor.colorGlobalBlue90,
+                  width: 2,
+                ),
+              ),
+              child: Column(
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  Text('👍', style: const TextStyle(fontSize: 48)),
+                  const SizedBox(height: 12),
+                  Text(
+                    '좋아요',
+                    style: AppTextStyles.headline1Bold.copyWith(
+                      color: selectedValue == 1
+                          ? AppColor.colorGlobalCommon100
+                          : AppColor.colorGlobalBlue50,
+                    ),
+                  ),
+                ],
+              ),
+            ),
+          ),
+        ),
+      ],
+    );
   }
 
   /// Build image grid for equipment selection (2 columns)
@@ -284,6 +523,146 @@ class SurveyQuestionView extends GetView<SurveyController> {
           ),
         );
       }).toList(),
+    );
+  }
+}
+
+/// Widget for a single multi-rating item in the survey
+/// Displays question, description, and rating buttons
+class _MultiRatingItemWidget extends StatelessWidget {
+  final MultiRatingItem item;
+  final int? selectedValue; // -1: dislike, 0: neutral, 1: like
+  final ValueChanged<int> onValueChanged;
+
+  const _MultiRatingItemWidget({
+    required this.item,
+    required this.selectedValue,
+    required this.onValueChanged,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      padding: const EdgeInsets.all(16),
+      decoration: BoxDecoration(
+        color: AppColor.backgroundNormalNormal,
+        borderRadius: AppRadius.lgBorder,
+        border: Border.all(color: AppColor.lineNormalNeutral, width: 1),
+      ),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          // Question text
+          Text(
+            item.question,
+            style: AppTextStyles.body1NormalMedium.copyWith(
+              color: AppColor.labelNormal,
+            ),
+          ),
+          const SizedBox(height: 4),
+
+          // Description text
+          if (item.description.isNotEmpty) ...[
+            Text(
+              item.description,
+              style: AppTextStyles.caption1Regular.copyWith(
+                color: AppColor.labelAlternative,
+              ),
+            ),
+            const SizedBox(height: 12),
+          ],
+
+          // Rating buttons row
+          Row(
+            children: [
+              // Dislike button
+              Expanded(
+                child: _RatingButton(
+                  emoji: '👎',
+                  label: '싫어요',
+                  isSelected: selectedValue == -1,
+                  onTap: () => onValueChanged(-1),
+                ),
+              ),
+
+              // Neutral button (only if hasNeutral is true)
+              if (item.hasNeutral) ...[
+                const SizedBox(width: 8),
+                Expanded(
+                  child: _RatingButton(
+                    emoji: '😐',
+                    label: '보통',
+                    isSelected: selectedValue == 0,
+                    onTap: () => onValueChanged(0),
+                  ),
+                ),
+              ],
+
+              // Like button
+              const SizedBox(width: 8),
+              Expanded(
+                child: _RatingButton(
+                  emoji: '👍',
+                  label: '좋아요',
+                  isSelected: selectedValue == 1,
+                  onTap: () => onValueChanged(1),
+                ),
+              ),
+            ],
+          ),
+        ],
+      ),
+    );
+  }
+}
+
+/// Individual rating button for multi-rating items
+class _RatingButton extends StatelessWidget {
+  final String emoji;
+  final String label;
+  final bool isSelected;
+  final VoidCallback onTap;
+
+  const _RatingButton({
+    required this.emoji,
+    required this.label,
+    required this.isSelected,
+    required this.onTap,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return GestureDetector(
+      onTap: onTap,
+      child: AnimatedContainer(
+        duration: const Duration(milliseconds: 150),
+        padding: const EdgeInsets.symmetric(vertical: 12, horizontal: 8),
+        decoration: BoxDecoration(
+          color: isSelected
+              ? AppColor.primaryLight
+              : AppColor.componentFillNormal,
+          borderRadius: AppRadius.mdBorder,
+          border: Border.all(
+            color: isSelected ? AppColor.primaryNormal : AppColor.transparent,
+            width: isSelected ? 1.5 : 1,
+          ),
+        ),
+        child: Column(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            Text(emoji, style: const TextStyle(fontSize: 24)),
+            const SizedBox(height: 4),
+            Text(
+              label,
+              style: AppTextStyles.caption1Medium.copyWith(
+                color: isSelected
+                    ? AppColor.primaryNormal
+                    : AppColor.labelNormal,
+              ),
+            ),
+          ],
+        ),
+      ),
     );
   }
 }

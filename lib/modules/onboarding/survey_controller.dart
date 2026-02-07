@@ -13,12 +13,17 @@ class SurveyController extends BaseController {
   final _currentStep = 0.obs;
   int get currentStep => _currentStep.value;
 
-  final _totalSteps = 7;
+  final _totalSteps = 4; // 4 steps: equipment, skill level, taste, aroma
   int get totalSteps => _totalSteps;
 
   // Selected answers (step -> list of selected option IDs)
   final _answers = <int, List<String>>{}.obs;
   Map<int, List<String>> get answers => _answers;
+
+  // Multi-rating answers (step -> {item_id -> rating_value})
+  // rating_value: -1 = dislike, 0 = neutral, 1 = like
+  final _multiRatingAnswers = <int, Map<String, int>>{}.obs;
+  Map<int, Map<String, int>> get multiRatingAnswers => _multiRatingAnswers;
 
   // Current question
   SurveyQuestionModel? get currentQuestion {
@@ -37,6 +42,20 @@ class SurveyController extends BaseController {
 
   // Check if current question has selection
   bool get hasSelection {
+    final question = currentQuestion;
+    if (question == null) return false;
+
+    // For multiRating, all items must have a selection
+    if (question.questionType == SurveyQuestionType.multiRating) {
+      final items = question.multiRatingItems;
+      if (items == null || items.isEmpty) return false;
+      final ratings = _multiRatingAnswers[_currentStep.value];
+      if (ratings == null) return false;
+      // Check if all items have been rated
+      return items.every((item) => ratings.containsKey(item.id));
+    }
+
+    // For other types, check if at least one option is selected
     return _answers[_currentStep.value]?.isNotEmpty ?? false;
   }
 
@@ -70,6 +89,20 @@ class SurveyController extends BaseController {
     return _answers[_currentStep.value]?.contains(optionId) ?? false;
   }
 
+  /// Set rating for a multi-rating item
+  void setMultiRating(String itemId, int value) {
+    final currentRatings = Map<String, int>.from(
+      _multiRatingAnswers[_currentStep.value] ?? {},
+    );
+    currentRatings[itemId] = value;
+    _multiRatingAnswers[_currentStep.value] = currentRatings;
+  }
+
+  /// Get rating for a multi-rating item
+  int? getMultiRating(String itemId) {
+    return _multiRatingAnswers[_currentStep.value]?[itemId];
+  }
+
   /// Go to next question
   void nextQuestion() {
     if (_currentStep.value < _totalSteps - 1) {
@@ -97,10 +130,11 @@ class SurveyController extends BaseController {
     Get.toNamed('${Routes.survey}/$step');
   }
 
-  /// Start survey from step 0 (survey reason)
+  /// Start survey from step 0 (equipment selection)
   void startSurvey() {
     _currentStep.value = 0;
     _answers.clear();
+    _multiRatingAnswers.clear();
     Get.toNamed('${Routes.survey}/0');
   }
 

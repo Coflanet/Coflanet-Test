@@ -44,13 +44,13 @@ class SurveyIntroView extends GetView<SurveyController> {
 
                     // Header text
                     Text(
-                      '${controller.userName}님께',
+                      '${controller.userName}님의 취향을',
                       style: AppTextStyles.heading1Bold.copyWith(
                         color: AppColor.labelNormal,
                       ),
                     ),
                     Text(
-                      '커피 경험 질문을 드릴게요!',
+                      '찾으러 가볼까요?',
                       style: AppTextStyles.heading1Bold.copyWith(
                         color: AppColor.labelNormal,
                       ),
