@@ -39,13 +39,20 @@ class SplashController extends BaseController {
     }
   }
 
+  // [DEV] Set to true to always go to survey intro for testing
+  static const bool _devForceOnboarding = false;
+  // [DEV] Set to true to reset login state (starts from SignIn)
+  static const bool _devForceSignIn = false;
+
   void _navigateToNextScreen() {
-    final isLoggedIn = _storage.isLoggedIn;
-    final isOnboardingComplete = _storage.isOnboardingComplete;
+    final isLoggedIn = _devForceSignIn ? false : _storage.isLoggedIn;
+    final isOnboardingComplete = _devForceOnboarding
+        ? false
+        : _storage.isOnboardingComplete;
 
     debugPrint('[SplashController] isLoggedIn: $isLoggedIn');
     debugPrint(
-      '[SplashController] isOnboardingComplete: $isOnboardingComplete',
+      '[SplashController] isOnboardingComplete: $isOnboardingComplete (devForce: $_devForceOnboarding)',
     );
 
     if (!isLoggedIn) {
