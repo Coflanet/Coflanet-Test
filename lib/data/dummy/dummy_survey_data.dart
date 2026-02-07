@@ -1,88 +1,32 @@
 import 'package:coflanet/data/models/survey_question_model.dart';
 import 'package:coflanet/data/models/survey_result_model.dart';
 
-/// Dummy survey questions
+/// Dummy survey questions - 10 steps matching Figma flow (one question per screen)
 class DummySurveyData {
   static const List<SurveyQuestionModel> questions = [
-    // Q0: 커플래닛을 찾게 된 이유 (10-survey-reason) - 텍스트만, 아이콘 없음
+    // Step 0: 커피 추출 방식 선택 (imageGrid - 2 columns, 중복 선택 가능)
     SurveyQuestionModel(
       step: 0,
-      question: '커플래닛을 찾게 된 이유를 알려주세요.',
+      question: '어떤 기구로 커피를 마시나요?',
       description: '중복 선택 가능해요.',
       allowMultiple: true,
-      questionType: SurveyQuestionType.checkbox, // 텍스트만
+      questionType: SurveyQuestionType.imageGrid,
       options: [
-        SurveyOptionModel(id: 'find_taste', label: '커피 취향을 찾고 싶어요.'),
-        SurveyOptionModel(
-          id: 'subscribe_bean',
-          label: '좋아하는 원두를 편하게 구독하고 싶어요.',
-        ),
-        SurveyOptionModel(id: 'try_various', label: '다양한 원두를 시도해보고 싶어요.'),
-        SurveyOptionModel(id: 'communicate', label: '사람들과 커피에 대해 소통하고 싶어요.'),
-        SurveyOptionModel(id: 'get_info', label: '커피에 대한 정보를 알고싶어요.'),
+        SurveyOptionModel(id: 'espresso', label: '에스프레소 머신'),
+        SurveyOptionModel(id: 'auto', label: '자동 커피머신'),
+        SurveyOptionModel(id: 'handdrip', label: '핸드드립'),
+        SurveyOptionModel(id: 'capsule', label: '캡슐 머신'),
+        SurveyOptionModel(id: 'coldbrew', label: '콜드브루'),
+        SurveyOptionModel(id: 'unknown', label: '잘 모르겠어요'),
       ],
     ),
 
-    // Q1: 커피를 마시는 이유 - 이모지 + 라벨
+    // Step 1: 커피 숙련도 (checkboxWithIcon - single select)
     SurveyQuestionModel(
       step: 1,
-      question: '커피를 마시는 주된 이유가 무엇인가요?',
-      description: '가장 큰 이유를 선택해 주세요',
-      questionType: SurveyQuestionType.checkboxWithIcon,
-      options: [
-        SurveyOptionModel(id: 'taste', label: '맛있어서', icon: '😋'),
-        SurveyOptionModel(id: 'caffeine', label: '각성 효과', icon: '⚡'),
-        SurveyOptionModel(id: 'habit', label: '습관', icon: '🔄'),
-        SurveyOptionModel(id: 'mood', label: '분위기', icon: '☕'),
-        SurveyOptionModel(id: 'health', label: '건강', icon: '💪'),
-      ],
-    ),
-
-    // Q2: 맛 선호도
-    SurveyQuestionModel(
-      step: 2,
-      question: '어떤 맛을 선호하시나요?',
-      description: '선호하는 맛을 모두 선택해 주세요',
-      allowMultiple: true,
-      options: [
-        SurveyOptionModel(
-          id: 'acidic',
-          label: '산미',
-          description: '과일 같은 상큼한 맛',
-        ),
-        SurveyOptionModel(
-          id: 'sweet',
-          label: '단맛',
-          description: '카라멜, 초콜릿 같은 달콤한 맛',
-        ),
-        SurveyOptionModel(id: 'bitter', label: '쓴맛', description: '진하고 깊은 맛'),
-        SurveyOptionModel(
-          id: 'nutty',
-          label: '고소함',
-          description: '견과류 같은 고소한 맛',
-        ),
-        SurveyOptionModel(id: 'balance', label: '밸런스', description: '균형 잡힌 맛'),
-      ],
-    ),
-
-    // Q3: 과일 향 - 레이팅 스타일 (👎😐👍)
-    SurveyQuestionModel(
-      step: 3,
-      question: '산미가 있는 커피 어떠세요?',
-      description: '산미는 과일의 상큼함과 유사한 긍정적인 신맛이에요',
-      questionType: SurveyQuestionType.rating,
-      options: [
-        SurveyOptionModel(id: 'dislike', label: '싫어요', icon: '👎'),
-        SurveyOptionModel(id: 'neutral', label: '보통', icon: '😐'),
-        SurveyOptionModel(id: 'like', label: '좋아요', icon: '👍'),
-      ],
-    ),
-
-    // Q4: 커피 숙련도 - 이모지 + 설명 (스토리보드 매칭)
-    SurveyQuestionModel(
-      step: 4,
       question: '커피와 얼마나 친하신가요?',
-      description: '중복 선택 가능해요.',
+      description: '',
+      allowMultiple: false,
       questionType: SurveyQuestionType.checkboxWithIcon,
       options: [
         SurveyOptionModel(
@@ -107,38 +51,118 @@ class DummySurveyData {
           id: 'expert',
           label: '전문가',
           icon: '😎',
-          description: '커피 추출이 직업이에요',
+          description: '레시피를 조절하며 즐겨요',
         ),
       ],
     ),
 
-    // Q5: 커피 추출 방식 - 이미지 그리드 (스토리보드 05-survey-02)
+    // ========== 기본 맛 취향 (Step 2-5) ==========
+    // Step 2: 산미
     SurveyQuestionModel(
-      step: 5,
-      question: '어떤 기구로 커피를 마시나요?',
-      description: '중복 선택 가능해요.',
-      allowMultiple: true,
-      questionType: SurveyQuestionType.imageGrid,
+      step: 2,
+      question: '산미가 있는 커피 어떠세요?',
+      description: '산미는 과일의 상큼함과 유사한 긍정적인 신맛이에요',
+      questionType: SurveyQuestionType.rating,
+      category: '기본 맛 취향',
       options: [
-        SurveyOptionModel(id: 'espresso', label: '에스프레소 머신'),
-        SurveyOptionModel(id: 'auto', label: '자동 커피머신'),
-        SurveyOptionModel(id: 'handdrip', label: '핸드드립'),
-        SurveyOptionModel(id: 'capsule', label: '캡슐 머신'),
-        SurveyOptionModel(id: 'coldbrew', label: '콜드브루'),
+        SurveyOptionModel(id: 'dislike', label: '싫어요'),
+        SurveyOptionModel(id: 'neutral', label: '보통'),
+        SurveyOptionModel(id: 'like', label: '좋아요'),
       ],
     ),
 
-    // Q6: 음용 시간대 - 이모지 + 라벨
+    // Step 3: 바디감
+    SurveyQuestionModel(
+      step: 3,
+      question: '바디감이 있는 커피 어떠세요?',
+      description: '입안에서 무게감 있게 느껴지는 묵직한 느낌이에요',
+      questionType: SurveyQuestionType.rating,
+      category: '기본 맛 취향',
+      options: [
+        SurveyOptionModel(id: 'dislike', label: '싫어요'),
+        SurveyOptionModel(id: 'neutral', label: '보통'),
+        SurveyOptionModel(id: 'like', label: '좋아요'),
+      ],
+    ),
+
+    // Step 4: 단맛
+    SurveyQuestionModel(
+      step: 4,
+      question: '단맛이 나는 커피 어떠세요?',
+      description: '설탕 없이도 달콤하게 느껴지는 자연스러운 단맛이에요',
+      questionType: SurveyQuestionType.rating,
+      category: '기본 맛 취향',
+      options: [
+        SurveyOptionModel(id: 'dislike', label: '싫어요'),
+        SurveyOptionModel(id: 'neutral', label: '보통'),
+        SurveyOptionModel(id: 'like', label: '좋아요'),
+      ],
+    ),
+
+    // Step 5: 쓴맛
+    SurveyQuestionModel(
+      step: 5,
+      question: '쓴맛이 있는 커피 어떠세요?',
+      description: '진한 에스프레소처럼 씁쓸하고 깊은 맛이에요',
+      questionType: SurveyQuestionType.rating,
+      category: '기본 맛 취향',
+      options: [
+        SurveyOptionModel(id: 'dislike', label: '싫어요'),
+        SurveyOptionModel(id: 'neutral', label: '보통'),
+        SurveyOptionModel(id: 'like', label: '좋아요'),
+      ],
+    ),
+
+    // ========== 특성 향미 취향 (Step 6-9) ==========
+    // Step 6: 과일향
     SurveyQuestionModel(
       step: 6,
-      question: '커피를 주로 마시는 시간대는?',
-      description: '',
-      questionType: SurveyQuestionType.checkboxWithIcon,
+      question: '커피에서 나는 과일 향 좋아하시나요?',
+      description: '베리, 사과, 감귤 같은 상큼한 향이에요',
+      questionType: SurveyQuestionType.rating,
+      category: '특성 향미 취향',
       options: [
-        SurveyOptionModel(id: 'morning', label: '아침', icon: '🌅'),
-        SurveyOptionModel(id: 'afternoon', label: '오후', icon: '☀️'),
-        SurveyOptionModel(id: 'evening', label: '저녁', icon: '🌙'),
-        SurveyOptionModel(id: 'anytime', label: '상관없음', icon: '🕐'),
+        SurveyOptionModel(id: 'dislike', label: '싫어요'),
+        SurveyOptionModel(id: 'like', label: '좋아요'),
+      ],
+    ),
+
+    // Step 7: 꽃향
+    SurveyQuestionModel(
+      step: 7,
+      question: '커피에서 나는 꽃 향 좋아하시나요?',
+      description: '자스민이나 장미처럼 은은하고 화사한 향이에요',
+      questionType: SurveyQuestionType.rating,
+      category: '특성 향미 취향',
+      options: [
+        SurveyOptionModel(id: 'dislike', label: '싫어요'),
+        SurveyOptionModel(id: 'like', label: '좋아요'),
+      ],
+    ),
+
+    // Step 8: 견과류/초콜릿향
+    SurveyQuestionModel(
+      step: 8,
+      question: '커피에서 나는 견과류/초콜릿 향 좋아하시나요?',
+      description: '고소한 견과나 다크초콜릿 같은 향이에요',
+      questionType: SurveyQuestionType.rating,
+      category: '특성 향미 취향',
+      options: [
+        SurveyOptionModel(id: 'dislike', label: '싫어요'),
+        SurveyOptionModel(id: 'like', label: '좋아요'),
+      ],
+    ),
+
+    // Step 9: 로스팅향
+    SurveyQuestionModel(
+      step: 9,
+      question: '커피에서 나는 로스팅 향 좋아하시나요?',
+      description: '구운 곡물, 시리얼 같은 구수한 향이에요',
+      questionType: SurveyQuestionType.rating,
+      category: '특성 향미 취향',
+      options: [
+        SurveyOptionModel(id: 'dislike', label: '싫어요'),
+        SurveyOptionModel(id: 'like', label: '좋아요'),
       ],
     ),
   ];
