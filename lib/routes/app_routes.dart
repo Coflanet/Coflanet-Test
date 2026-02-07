@@ -14,6 +14,8 @@ abstract class Routes {
 
   // === Onboarding Routes ===
   static const surveyIntro = '/onboarding/survey-intro';
+  static const surveySectionIntro =
+      '/onboarding/survey-section'; // With :section parameter
   static const survey = '/onboarding/survey'; // With :step parameter
   static const surveyAnalyzing = '/onboarding/survey-analyzing';
   static const surveyComplete = '/onboarding/survey-complete';

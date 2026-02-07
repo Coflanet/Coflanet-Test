@@ -59,10 +59,13 @@ class SurveyQuestionView extends GetView<SurveyController> {
         ),
         onPressed: () => controller.previousQuestion(),
       ),
+      centerTitle: true,
       title: Obx(
-        () => SurveyProgressBar(
-          current: controller.currentStep + 1,
-          total: controller.totalSteps,
+        () => Text(
+          controller.currentStepTitle,
+          style: AppTextStyles.headline2Bold.copyWith(
+            color: AppColor.labelNormal,
+          ),
         ),
       ),
       actions: [
@@ -88,22 +91,9 @@ class SurveyQuestionView extends GetView<SurveyController> {
       children: [
         const SizedBox(height: 24),
 
-        // Question number (skip for step 0 - survey reason)
-        if (question.step > 0) ...[
-          Text(
-            'Q${question.step}',
-            style: AppTextStyles.label1NormalBold.copyWith(
-              color: AppColor.primaryNormal,
-            ),
-          ),
-          const SizedBox(height: 8),
-        ],
-
-        // Question text (prepend userName for multiRating questions)
+        // Question text
         Text(
-          question.questionType == SurveyQuestionType.multiRating
-              ? '${controller.userName}${question.question}'
-              : question.question,
+          question.question,
           style: AppTextStyles.heading1Bold.copyWith(
             color: AppColor.labelNormal,
           ),
@@ -463,66 +453,92 @@ class SurveyQuestionView extends GetView<SurveyController> {
   }
 
   /// Build image grid for equipment selection (2 columns)
+  /// Per Figma: Grid shows 5 equipment options, "잘 모르겠어요" is a separate link below
   Widget _buildImageGrid(SurveyQuestionModel question) {
-    return GridView.count(
-      crossAxisCount: 2,
-      shrinkWrap: true,
-      physics: const NeverScrollableScrollPhysics(),
-      mainAxisSpacing: 12,
-      crossAxisSpacing: 12,
-      childAspectRatio: 1.2,
-      children: question.options.map((option) {
-        final isSelected = controller.isOptionSelected(option.id);
-        return GestureDetector(
-          onTap: () => controller.selectOption(option.id),
-          child: AnimatedContainer(
-            duration: const Duration(milliseconds: 200),
-            decoration: BoxDecoration(
-              color: isSelected
-                  ? AppColor.primaryLight
-                  : AppColor.componentFillNormal,
-              borderRadius: AppRadius.lgBorder,
-              border: Border.all(
-                color: isSelected
-                    ? AppColor.primaryNormal
-                    : AppColor.transparent,
-                width: isSelected ? 2 : 1,
+    final isUnknownSelected = controller.isOptionSelected('unknown');
+
+    return Column(
+      children: [
+        // Equipment grid (5 options)
+        GridView.count(
+          crossAxisCount: 2,
+          shrinkWrap: true,
+          physics: const NeverScrollableScrollPhysics(),
+          mainAxisSpacing: 12,
+          crossAxisSpacing: 12,
+          childAspectRatio: 1.2,
+          children: question.options.map((option) {
+            final isSelected = controller.isOptionSelected(option.id);
+            return GestureDetector(
+              onTap: () => controller.selectOption(option.id),
+              child: AnimatedContainer(
+                duration: const Duration(milliseconds: 200),
+                decoration: BoxDecoration(
+                  color: isSelected
+                      ? AppColor.primaryLight
+                      : AppColor.componentFillNormal,
+                  borderRadius: AppRadius.lgBorder,
+                  border: Border.all(
+                    color: isSelected
+                        ? AppColor.primaryNormal
+                        : AppColor.transparent,
+                    width: isSelected ? 2 : 1,
+                  ),
+                ),
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    // Placeholder for equipment image
+                    Container(
+                      width: 48,
+                      height: 48,
+                      decoration: BoxDecoration(
+                        color: AppColor.backgroundNormalAlternative,
+                        borderRadius: AppRadius.mdBorder,
+                      ),
+                      child: Icon(
+                        Icons.coffee_rounded,
+                        color: isSelected
+                            ? AppColor.primaryNormal
+                            : AppColor.labelAssistive,
+                        size: 24,
+                      ),
+                    ),
+                    const SizedBox(height: 8),
+                    Text(
+                      option.label,
+                      style: AppTextStyles.label1NormalMedium.copyWith(
+                        color: isSelected
+                            ? AppColor.primaryNormal
+                            : AppColor.labelNormal,
+                      ),
+                      textAlign: TextAlign.center,
+                    ),
+                  ],
+                ),
               ),
-            ),
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                // Placeholder for equipment image
-                Container(
-                  width: 48,
-                  height: 48,
-                  decoration: BoxDecoration(
-                    color: AppColor.backgroundNormalAlternative,
-                    borderRadius: AppRadius.mdBorder,
-                  ),
-                  child: Icon(
-                    Icons.coffee_rounded,
-                    color: isSelected
-                        ? AppColor.primaryNormal
-                        : AppColor.labelAssistive,
-                    size: 24,
-                  ),
-                ),
-                const SizedBox(height: 8),
-                Text(
-                  option.label,
-                  style: AppTextStyles.label1NormalMedium.copyWith(
-                    color: isSelected
-                        ? AppColor.primaryNormal
-                        : AppColor.labelNormal,
-                  ),
-                  textAlign: TextAlign.center,
-                ),
-              ],
+            );
+          }).toList(),
+        ),
+
+        // "잘 모르겠어요" link below the grid (per Figma)
+        const SizedBox(height: 20),
+        GestureDetector(
+          onTap: () => controller.selectOption('unknown'),
+          child: Text(
+            '잘 모르겠어요',
+            style: AppTextStyles.body2NormalMedium.copyWith(
+              color: isUnknownSelected
+                  ? AppColor.primaryNormal
+                  : AppColor.labelAssistive,
+              decoration: TextDecoration.underline,
+              decorationColor: isUnknownSelected
+                  ? AppColor.primaryNormal
+                  : AppColor.labelAssistive,
             ),
           ),
-        );
-      }).toList(),
+        ),
+      ],
     );
   }
 }

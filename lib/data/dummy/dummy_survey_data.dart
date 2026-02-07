@@ -17,7 +17,7 @@ class DummySurveyData {
         SurveyOptionModel(id: 'handdrip', label: '핸드드립'),
         SurveyOptionModel(id: 'capsule', label: '캡슐 머신'),
         SurveyOptionModel(id: 'coldbrew', label: '콜드브루'),
-        SurveyOptionModel(id: 'unknown', label: '잘 모르겠어요'),
+        // Note: "잘 모르겠어요" is rendered separately below the grid per Figma
       ],
     ),
 

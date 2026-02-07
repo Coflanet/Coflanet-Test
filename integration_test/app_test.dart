@@ -89,7 +89,7 @@ void main() {
       // Look for "취향" text which should be on survey intro
       await tester.pumpAndSettle();
 
-      // Find and tap the CTA button
+      // Find and tap the CTA button ("취향 찾으러 가기")
       final ctaButtons = find.byType(ElevatedButton);
       if (ctaButtons.evaluate().isNotEmpty) {
         await tester.tap(ctaButtons.first);
@@ -98,16 +98,38 @@ void main() {
       }
 
       // ============================================
+      // 4.5. SECTION 1 INTRO SCREEN
+      // ============================================
+      debugPrint('📱 TEST 4.5: Section 1 Intro');
+      await tester.pumpAndSettle();
+
+      // Find and tap the "다음" button
+      final section1Buttons = find.byType(ElevatedButton);
+      if (section1Buttons.evaluate().isNotEmpty) {
+        await tester.tap(section1Buttons.first);
+        await tester.pumpAndSettle(const Duration(seconds: 1));
+        debugPrint('✅ PASS: Section 1 Intro "다음" tapped');
+      }
+
+      // ============================================
       // 5. SURVEY QUESTIONS (10 STEPS)
       // Step 0: 커피 추출 방식 (imageGrid)
       // Step 1: 커피 숙련도 (checkboxWithIcon)
-      // Step 2-9: 맛 취향 rating (싫어요/좋아요)
+      // -> Section 2 Intro before Step 2
+      // Step 2-5: 기본 맛 취향 rating
+      // -> Section 3 Intro before Step 6
+      // Step 6-9: 특성 향미 취향 rating
       // ============================================
-      debugPrint('📱 TEST 5: Survey Questions (10 steps)');
+      debugPrint('📱 TEST 5: Survey Questions (10 steps with Section Intros)');
 
       for (int step = 0; step < 10; step++) {
         debugPrint('   Step $step...');
         await tester.pumpAndSettle();
+
+        // Check if this is a Section Intro screen (before steps 2 and 6)
+        // Section Intro screens don't have survey options, just the "다음" button
+        final currentRoute = Get.currentRoute;
+        debugPrint('   Current route: $currentRoute');
 
         // Find survey options (they are typically InkWell or GestureDetector)
         final options = find.byType(InkWell);
@@ -130,6 +152,23 @@ void main() {
             await tester.pumpAndSettle(const Duration(seconds: 1));
           } catch (e) {
             debugPrint('   Could not tap next: $e');
+          }
+        }
+
+        // After steps 1 and 5, we get Section Intro screens - tap through them
+        if (step == 1 || step == 5) {
+          debugPrint('   -> Section Intro screen expected');
+          await tester.pumpAndSettle(const Duration(seconds: 1));
+
+          final sectionIntroButtons = find.byType(ElevatedButton);
+          if (sectionIntroButtons.evaluate().isNotEmpty) {
+            try {
+              await tester.tap(sectionIntroButtons.first);
+              await tester.pumpAndSettle(const Duration(seconds: 1));
+              debugPrint('   ✅ Section Intro "다음" tapped');
+            } catch (e) {
+              debugPrint('   Could not tap section intro next: $e');
+            }
           }
         }
 
