@@ -20,7 +20,7 @@ class CoffeeTimerView extends GetView<CoffeeTimerController> {
         if (!didPop) _showStopConfirmation();
       },
       child: Scaffold(
-        backgroundColor: AppColor.backgroundTimer, // #333333 per Figma CSS
+        backgroundColor: AppColor.backgroundNormalNormal, // White per Figma
         appBar: _buildAppBar(),
         body: SafeArea(
           top: false,
@@ -69,18 +69,18 @@ class CoffeeTimerView extends GetView<CoffeeTimerController> {
   // ─── App Bar ───
 
   PreferredSizeWidget _buildAppBar() {
-    // Timer uses dark background (#333333), so use white text/icons
+    // White background, dark text/icons
     return AppBar(
-      backgroundColor: AppColor.backgroundTimer, // #333333 per Figma CSS
+      backgroundColor: AppColor.backgroundNormalNormal,
       elevation: 0,
       scrolledUnderElevation: 0,
       leading: IconButton(
         icon: SvgPicture.asset(
-          AssetPath.iconClose,
+          AssetPath.iconArrowBack,
           width: 24,
           height: 24,
           colorFilter: ColorFilter.mode(
-            AppColor.colorGlobalCommon100, // White icon on dark bg
+            AppColor.labelNormal, // Dark icon on white bg
             BlendMode.srcIn,
           ),
         ),
@@ -93,7 +93,7 @@ class CoffeeTimerView extends GetView<CoffeeTimerController> {
               ? 'Step ${step.stepNumber}. ${step.title}'
               : controller.recipe?.name ?? '타이머',
           style: AppTextStyles.headline2Bold.copyWith(
-            color: AppColor.colorGlobalCommon100, // White text on dark bg
+            color: AppColor.labelNormal, // Dark text on white bg
           ),
         );
       }),
@@ -104,7 +104,6 @@ class CoffeeTimerView extends GetView<CoffeeTimerController> {
   // ─── Step Dot Indicator ───
 
   Widget _buildStepDotIndicator() {
-    // Timer uses dark background, dots styled for dark theme
     return Obx(() {
       final total = controller.totalSteps;
       final current = controller.currentStepIndex;
@@ -128,7 +127,7 @@ class CoffeeTimerView extends GetView<CoffeeTimerController> {
                 color: (isActive || isPast)
                     ? AppColor.primaryNormal
                     : AppColor
-                          .colorGlobalCoolNeutral40, // Dark gray for inactive
+                          .colorGlobalCoolNeutral80, // Light gray for inactive
               ),
             ),
           );
@@ -140,18 +139,17 @@ class CoffeeTimerView extends GetView<CoffeeTimerController> {
   // ─── Info Bar (Total water | time pill) ───
 
   Widget _buildInfoBar() {
-    // Timer uses dark background, info bar styled for dark theme
     return Obx(() {
       return Container(
         padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 6),
         decoration: BoxDecoration(
-          color: AppColor.colorGlobalCoolNeutral25, // Dark pill on dark bg
+          color: AppColor.backgroundNormalAlternative, // Light gray pill
           borderRadius: AppRadius.xxlBorder,
         ),
         child: Text(
           '${controller.totalWaterLabel} | ${controller.totalTimeLabel}',
           style: AppTextStyles.caption1Medium.copyWith(
-            color: AppColor.colorGlobalCoolNeutral70, // Light gray text
+            color: AppColor.labelAlternative, // Dark gray text
           ),
         ),
       );
@@ -161,14 +159,13 @@ class CoffeeTimerView extends GetView<CoffeeTimerController> {
   // ─── Preparation Step Content ───
 
   Widget _buildPreparationContent(dynamic step) {
-    // Timer uses dark background (#333333), so use white/light text
     return Column(
       children: [
         // Title
         Text(
           step.title,
           style: AppTextStyles.title2Bold.copyWith(
-            color: AppColor.colorGlobalCommon100, // White on dark bg
+            color: AppColor.labelNormal, // Dark on white bg
           ),
           textAlign: TextAlign.center,
         ),
@@ -177,7 +174,7 @@ class CoffeeTimerView extends GetView<CoffeeTimerController> {
         Text(
           step.description,
           style: AppTextStyles.body2NormalRegular.copyWith(
-            color: AppColor.colorGlobalCoolNeutral70, // Light gray on dark bg
+            color: AppColor.labelAlternative, // Gray on white bg
           ),
           textAlign: TextAlign.center,
         ),
@@ -194,14 +191,13 @@ class CoffeeTimerView extends GetView<CoffeeTimerController> {
   // ─── Timed Step Content (Brewing / Waiting) ───
 
   Widget _buildTimedContent(dynamic step) {
-    // Timer uses dark background (#333333), so use white/light text
     return Column(
       children: [
         // Title
         Text(
           step.title,
           style: AppTextStyles.title2Bold.copyWith(
-            color: AppColor.colorGlobalCommon100, // White on dark bg
+            color: AppColor.labelNormal, // Dark on white bg
           ),
           textAlign: TextAlign.center,
         ),
@@ -210,7 +206,7 @@ class CoffeeTimerView extends GetView<CoffeeTimerController> {
         Text(
           step.description,
           style: AppTextStyles.body2NormalRegular.copyWith(
-            color: AppColor.colorGlobalCoolNeutral70, // Light gray on dark bg
+            color: AppColor.labelAlternative, // Gray on white bg
           ),
           textAlign: TextAlign.center,
         ),
@@ -220,7 +216,7 @@ class CoffeeTimerView extends GetView<CoffeeTimerController> {
           () => Text(
             controller.stepDurationString,
             style: AppTextStyles.caption1Medium.copyWith(
-              color: AppColor.colorGlobalCoolNeutral60, // Light gray on dark bg
+              color: AppColor.labelAssistive, // Light gray
             ),
           ),
         ),
@@ -230,6 +226,8 @@ class CoffeeTimerView extends GetView<CoffeeTimerController> {
           () => CircularTimer(
             progress: controller.stepProgress,
             progressColor: AppColor.primaryNormal,
+            backgroundColor:
+                AppColor.colorGlobalCoolNeutral90, // Light gray track
             size: 240,
             strokeWidth: 10,
             child: Column(
@@ -238,7 +236,7 @@ class CoffeeTimerView extends GetView<CoffeeTimerController> {
                 Text(
                   controller.remainingTimeString,
                   style: AppTextStyles.display2Bold.copyWith(
-                    color: AppColor.colorGlobalCommon100, // White on dark bg
+                    color: AppColor.labelNormal, // Dark on white bg
                     fontFeatures: [const FontFeature.tabularFigures()],
                   ),
                 ),
@@ -246,8 +244,7 @@ class CoffeeTimerView extends GetView<CoffeeTimerController> {
                 Text(
                   '남은 시간',
                   style: AppTextStyles.caption1Regular.copyWith(
-                    color: AppColor
-                        .colorGlobalCoolNeutral60, // Light gray on dark bg
+                    color: AppColor.labelAssistive, // Light gray
                   ),
                 ),
               ],
@@ -267,8 +264,7 @@ class CoffeeTimerView extends GetView<CoffeeTimerController> {
 
   Widget _buildActionText(String text) {
     // Highlight patterns: numbers followed by g, ml, 초, 번, etc.
-    // Timer uses dark background, so use white/light text
-    final regex = RegExp(r'(\d+\s*(?:g|ml|초|번|회|분))');
+    final regex = RegExp(r'(\d+\s*(?:g|ml|초|번|회|분|μm))');
     final spans = <TextSpan>[];
     int lastEnd = 0;
 
@@ -278,7 +274,7 @@ class CoffeeTimerView extends GetView<CoffeeTimerController> {
           TextSpan(
             text: text.substring(lastEnd, match.start),
             style: AppTextStyles.body1NormalMedium.copyWith(
-              color: AppColor.colorGlobalCommon100, // White on dark bg
+              color: AppColor.labelNormal, // Dark text
             ),
           ),
         );
@@ -287,7 +283,7 @@ class CoffeeTimerView extends GetView<CoffeeTimerController> {
         TextSpan(
           text: match.group(0),
           style: AppTextStyles.body1NormalBold.copyWith(
-            color: AppColor.primaryNormal, // Violet highlight stays
+            color: AppColor.primaryNormal, // Violet highlight
           ),
         ),
       );
@@ -298,7 +294,7 @@ class CoffeeTimerView extends GetView<CoffeeTimerController> {
         TextSpan(
           text: text.substring(lastEnd),
           style: AppTextStyles.body1NormalMedium.copyWith(
-            color: AppColor.colorGlobalCommon100, // White on dark bg
+            color: AppColor.labelNormal, // Dark text
           ),
         ),
       );
@@ -310,7 +306,7 @@ class CoffeeTimerView extends GetView<CoffeeTimerController> {
         TextSpan(
           text: text,
           style: AppTextStyles.body1NormalMedium.copyWith(
-            color: AppColor.colorGlobalCommon100, // White on dark bg
+            color: AppColor.labelNormal, // Dark text
           ),
         ),
       );
@@ -320,7 +316,7 @@ class CoffeeTimerView extends GetView<CoffeeTimerController> {
       width: double.infinity,
       padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 14),
       decoration: BoxDecoration(
-        color: AppColor.colorGlobalCoolNeutral25, // Dark card on dark bg
+        color: AppColor.backgroundNormalAlternative, // Light gray card
         borderRadius: AppRadius.lgBorder,
       ),
       child: RichText(
@@ -337,18 +333,15 @@ class CoffeeTimerView extends GetView<CoffeeTimerController> {
 
     if (assetPath != null) {
       // Use real illustration image
-      return ClipRRect(
-        borderRadius: AppRadius.xxlBorder,
-        child: Image.asset(
-          assetPath,
-          width: 200,
-          height: 200,
-          fit: BoxFit.contain,
-          errorBuilder: (context, error, stackTrace) {
-            // Fallback to emoji if image fails to load
-            return _buildEmojiPlaceholder(step.illustrationEmoji ?? '☕');
-          },
-        ),
+      return Image.asset(
+        assetPath,
+        width: 280,
+        height: 280,
+        fit: BoxFit.contain,
+        errorBuilder: (context, error, stackTrace) {
+          // Fallback to emoji if image fails to load
+          return _buildEmojiPlaceholder(step.illustrationEmoji ?? '☕');
+        },
       );
     }
 
@@ -382,11 +375,10 @@ class CoffeeTimerView extends GetView<CoffeeTimerController> {
   }
 
   Widget _buildWaterAmountChip(int waterAmount) {
-    // Timer uses dark background, use darker card
     return Container(
       padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 10),
       decoration: BoxDecoration(
-        color: AppColor.colorGlobalCoolNeutral25, // Dark card on dark bg
+        color: AppColor.backgroundNormalAlternative, // Light gray card
         borderRadius: AppRadius.lgBorder,
       ),
       child: Row(
@@ -422,7 +414,7 @@ class CoffeeTimerView extends GetView<CoffeeTimerController> {
         return Container(
           padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
           decoration: BoxDecoration(
-            color: AppColor.inverseBackground,
+            color: AppColor.labelNormal,
             borderRadius: AppRadius.lgBorder,
             boxShadow: AppShadows.shadowBlackEmphasize,
           ),
@@ -430,7 +422,7 @@ class CoffeeTimerView extends GetView<CoffeeTimerController> {
             children: [
               Icon(
                 Icons.access_time_rounded,
-                color: AppColor.inverseLabelNormal,
+                color: AppColor.staticLabelWhiteStrong,
                 size: 20,
               ),
               const SizedBox(width: 10),
@@ -438,7 +430,7 @@ class CoffeeTimerView extends GetView<CoffeeTimerController> {
                 child: Text(
                   '${controller.preCountdownSeconds}초 뒤에 $nextName이 시작됩니다',
                   style: AppTextStyles.label1NormalMedium.copyWith(
-                    color: AppColor.inverseLabelNormal,
+                    color: AppColor.staticLabelWhiteStrong,
                   ),
                 ),
               ),
@@ -456,11 +448,10 @@ class CoffeeTimerView extends GetView<CoffeeTimerController> {
       final step = controller.currentStep;
       if (step == null) return const SizedBox();
 
-      // Timer uses dark background, bottom nav matches
       return Container(
         padding: const EdgeInsets.fromLTRB(24, 12, 24, 16),
         decoration: BoxDecoration(
-          color: AppColor.backgroundTimer, // #333333 per Figma CSS
+          color: AppColor.backgroundNormalNormal, // White
         ),
         child: step.isPreparation
             ? _buildPrepNavigationButtons()
@@ -470,7 +461,6 @@ class CoffeeTimerView extends GetView<CoffeeTimerController> {
   }
 
   Widget _buildPrepNavigationButtons() {
-    // Timer uses dark background, buttons styled for dark theme
     return Obx(() {
       return Row(
         children: [
@@ -485,21 +475,21 @@ class CoffeeTimerView extends GetView<CoffeeTimerController> {
                 style: OutlinedButton.styleFrom(
                   side: BorderSide(
                     color: controller.isFirstStep
-                        ? AppColor.colorGlobalCoolNeutral40
-                        : AppColor.colorGlobalCoolNeutral60,
+                        ? AppColor.lineNormalNormal
+                        : AppColor.lineNormalAlternative,
                   ),
                   shape: RoundedRectangleBorder(
                     borderRadius: AppRadius.lgBorder,
                   ),
-                  foregroundColor: AppColor.colorGlobalCommon100,
-                  disabledForegroundColor: AppColor.colorGlobalCoolNeutral50,
+                  foregroundColor: AppColor.labelNormal,
+                  disabledForegroundColor: AppColor.labelDisable,
                 ),
                 child: Text(
                   '이전',
                   style: AppTextStyles.body1NormalMedium.copyWith(
                     color: controller.isFirstStep
-                        ? AppColor.colorGlobalCoolNeutral50
-                        : AppColor.colorGlobalCommon100,
+                        ? AppColor.labelDisable
+                        : AppColor.labelNormal,
                   ),
                 ),
               ),
@@ -536,7 +526,6 @@ class CoffeeTimerView extends GetView<CoffeeTimerController> {
   }
 
   Widget _buildTimedNavigationButtons() {
-    // Timer uses dark background, buttons styled for dark theme
     return Obx(() {
       final state = controller.state;
       final isRunning = state == TimerState.running;
@@ -556,21 +545,21 @@ class CoffeeTimerView extends GetView<CoffeeTimerController> {
                 style: OutlinedButton.styleFrom(
                   side: BorderSide(
                     color: controller.isFirstStep
-                        ? AppColor.colorGlobalCoolNeutral40
-                        : AppColor.colorGlobalCoolNeutral60,
+                        ? AppColor.lineNormalNormal
+                        : AppColor.lineNormalAlternative,
                   ),
                   shape: RoundedRectangleBorder(
                     borderRadius: AppRadius.lgBorder,
                   ),
-                  foregroundColor: AppColor.colorGlobalCommon100,
-                  disabledForegroundColor: AppColor.colorGlobalCoolNeutral50,
+                  foregroundColor: AppColor.labelNormal,
+                  disabledForegroundColor: AppColor.labelDisable,
                 ),
                 child: Text(
                   '이전',
                   style: AppTextStyles.body1NormalMedium.copyWith(
                     color: controller.isFirstStep
-                        ? AppColor.colorGlobalCoolNeutral50
-                        : AppColor.colorGlobalCommon100,
+                        ? AppColor.labelDisable
+                        : AppColor.labelNormal,
                   ),
                 ),
               ),
