@@ -31,10 +31,12 @@ class SignInController extends BaseController {
           break;
       }
 
-      await _storage.saveUserId('user_${DateTime.now().millisecondsSinceEpoch}');
+      await _storage.saveUserId(
+        'user_${DateTime.now().millisecondsSinceEpoch}',
+      );
 
-      // Navigate to survey intro for onboarding
-      Get.offAllNamed(Routes.surveyIntro);
+      // Navigate to profile setup for name input
+      Get.offAllNamed(Routes.profileSetup);
     });
   }
 
@@ -46,10 +48,12 @@ class SignInController extends BaseController {
       // Save guest token
       await _storage.saveAccessToken('guest_token');
       await _storage.saveUserName('게스트');
-      await _storage.saveUserId('guest_${DateTime.now().millisecondsSinceEpoch}');
+      await _storage.saveUserId(
+        'guest_${DateTime.now().millisecondsSinceEpoch}',
+      );
 
-      // Navigate to survey intro
-      Get.offAllNamed(Routes.surveyIntro);
+      // Navigate to profile setup for name input
+      Get.offAllNamed(Routes.profileSetup);
     });
   }
 }
