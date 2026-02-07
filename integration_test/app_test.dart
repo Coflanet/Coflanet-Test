@@ -59,9 +59,32 @@ void main() {
       }
 
       // ============================================
-      // 3. SURVEY INTRO SCREEN
+      // 3. PROFILE SETUP SCREEN (Name Input)
       // ============================================
-      debugPrint('📱 TEST 3: Survey Intro');
+      debugPrint('📱 TEST 3: Profile Setup (Name Input)');
+
+      await tester.pumpAndSettle();
+
+      // Find TextField for name input
+      final textFields = find.byType(TextField);
+      if (textFields.evaluate().isNotEmpty) {
+        await tester.enterText(textFields.first, '테스트유저');
+        await tester.pumpAndSettle();
+        debugPrint('   Name entered: 테스트유저');
+      }
+
+      // Find and tap the continue button
+      final profileButtons = find.byType(ElevatedButton);
+      if (profileButtons.evaluate().isNotEmpty) {
+        await tester.tap(profileButtons.first);
+        await tester.pumpAndSettle(const Duration(seconds: 1));
+        debugPrint('✅ PASS: Profile Setup completed');
+      }
+
+      // ============================================
+      // 4. SURVEY INTRO SCREEN
+      // ============================================
+      debugPrint('📱 TEST 4: Survey Intro');
 
       // Look for "취향" text which should be on survey intro
       await tester.pumpAndSettle();
@@ -75,11 +98,14 @@ void main() {
       }
 
       // ============================================
-      // 4. SURVEY QUESTIONS (6 STEPS)
+      // 5. SURVEY QUESTIONS (10 STEPS)
+      // Step 0: 커피 추출 방식 (imageGrid)
+      // Step 1: 커피 숙련도 (checkboxWithIcon)
+      // Step 2-9: 맛 취향 rating (싫어요/좋아요)
       // ============================================
-      debugPrint('📱 TEST 4: Survey Questions (6 steps)');
+      debugPrint('📱 TEST 5: Survey Questions (10 steps)');
 
-      for (int step = 1; step <= 6; step++) {
+      for (int step = 0; step < 10; step++) {
         debugPrint('   Step $step...');
         await tester.pumpAndSettle();
 
@@ -111,16 +137,16 @@ void main() {
       }
 
       // ============================================
-      // 5. SURVEY ANALYZING
+      // 6. SURVEY ANALYZING
       // ============================================
-      debugPrint('📱 TEST 5: Survey Analyzing');
+      debugPrint('📱 TEST 6: Survey Analyzing');
       await tester.pumpAndSettle(const Duration(seconds: 3));
       debugPrint('✅ PASS: Survey Analyzing shown');
 
       // ============================================
-      // 6. SURVEY COMPLETE
+      // 7. SURVEY COMPLETE
       // ============================================
-      debugPrint('📱 TEST 6: Survey Complete');
+      debugPrint('📱 TEST 7: Survey Complete');
       await tester.pumpAndSettle(const Duration(seconds: 2));
 
       // Tap continue/result button
@@ -132,9 +158,9 @@ void main() {
       debugPrint('✅ PASS: Survey Complete shown');
 
       // ============================================
-      // 7. SURVEY RESULT
+      // 8. SURVEY RESULT
       // ============================================
-      debugPrint('📱 TEST 7: Survey Result');
+      debugPrint('📱 TEST 8: Survey Result');
       await tester.pumpAndSettle();
 
       // Tap home/continue button
@@ -146,9 +172,9 @@ void main() {
       debugPrint('✅ PASS: Survey Result shown');
 
       // ============================================
-      // 8. HOME SCREEN
+      // 9. HOME SCREEN
       // ============================================
-      debugPrint('📱 TEST 8: Home Screen');
+      debugPrint('📱 TEST 9: Home Screen');
 
       // Navigate to home directly to ensure we're there
       Get.offAllNamed(Routes.home);
@@ -160,9 +186,9 @@ void main() {
       debugPrint('✅ PASS: Home Screen loaded');
 
       // ============================================
-      // 9. HAND DRIP SCREEN
+      // 10. HAND DRIP SCREEN
       // ============================================
-      debugPrint('📱 TEST 9: Hand Drip Recipe');
+      debugPrint('📱 TEST 10: Hand Drip Recipe');
 
       Get.toNamed(Routes.handDrip);
       await tester.pumpAndSettle();
@@ -180,9 +206,9 @@ void main() {
       debugPrint('✅ PASS: Hand Drip Screen loaded');
 
       // ============================================
-      // 10. TIMER SCREEN
+      // 11. TIMER SCREEN
       // ============================================
-      debugPrint('📱 TEST 10: Timer Screen');
+      debugPrint('📱 TEST 11: Timer Screen');
 
       // Check if we navigated to timer or navigate directly
       Get.toNamed(Routes.timerActive, arguments: {'type': 'handDrip'});
@@ -220,9 +246,9 @@ void main() {
       debugPrint('✅ PASS: Timer Screen works');
 
       // ============================================
-      // 11. TIMER COMPLETE
+      // 12. TIMER COMPLETE
       // ============================================
-      debugPrint('📱 TEST 11: Timer Complete');
+      debugPrint('📱 TEST 12: Timer Complete');
 
       Get.toNamed(Routes.timerComplete);
       await tester.pumpAndSettle();
@@ -231,9 +257,9 @@ void main() {
       debugPrint('✅ PASS: Timer Complete Screen loaded');
 
       // ============================================
-      // 12. ESPRESSO SCREEN
+      // 13. ESPRESSO SCREEN
       // ============================================
-      debugPrint('📱 TEST 12: Espresso Recipe');
+      debugPrint('📱 TEST 13: Espresso Recipe');
 
       Get.offAllNamed(Routes.home);
       await tester.pumpAndSettle();
@@ -244,9 +270,9 @@ void main() {
       debugPrint('✅ PASS: Espresso Screen loaded');
 
       // ============================================
-      // 13. MY PLANET SCREEN
+      // 14. MY PLANET SCREEN
       // ============================================
-      debugPrint('📱 TEST 13: My Planet');
+      debugPrint('📱 TEST 14: My Planet');
 
       Get.toNamed(Routes.myPlanet);
       await tester.pumpAndSettle();
@@ -255,9 +281,9 @@ void main() {
       debugPrint('✅ PASS: My Planet Screen loaded');
 
       // ============================================
-      // 14. MY TASTE SCREEN
+      // 15. MY TASTE SCREEN
       // ============================================
-      debugPrint('📱 TEST 14: My Taste');
+      debugPrint('📱 TEST 15: My Taste');
 
       Get.toNamed(Routes.myTaste);
       await tester.pumpAndSettle();
@@ -266,9 +292,9 @@ void main() {
       debugPrint('✅ PASS: My Taste Screen loaded');
 
       // ============================================
-      // 15. COFFEE SETTINGS SCREEN
+      // 16. COFFEE SETTINGS SCREEN
       // ============================================
-      debugPrint('📱 TEST 15: Coffee Settings');
+      debugPrint('📱 TEST 16: Coffee Settings');
 
       Get.toNamed(Routes.coffeeSettings);
       await tester.pumpAndSettle();
@@ -285,9 +311,9 @@ void main() {
       debugPrint('✅ PASS: Coffee Settings Screen loaded');
 
       // ============================================
-      // 16. SELECT COFFEE SCREEN
+      // 17. SELECT COFFEE SCREEN
       // ============================================
-      debugPrint('📱 TEST 16: Select Coffee');
+      debugPrint('📱 TEST 17: Select Coffee');
 
       Get.toNamed(Routes.selectCoffee);
       await tester.pumpAndSettle();
@@ -313,9 +339,9 @@ void main() {
       debugPrint('✅ PASS: Select Coffee Screen loaded');
 
       // ============================================
-      // 17. BACK NAVIGATION TEST
+      // 18. BACK NAVIGATION TEST
       // ============================================
-      debugPrint('📱 TEST 17: Back Navigation');
+      debugPrint('📱 TEST 18: Back Navigation');
 
       Get.offAllNamed(Routes.home);
       await tester.pumpAndSettle();
@@ -342,9 +368,9 @@ void main() {
       debugPrint('✅ PASS: Back Navigation works');
 
       // ============================================
-      // 18. MATCHING RESULT SCREEN
+      // 19. MATCHING RESULT SCREEN
       // ============================================
-      debugPrint('📱 TEST 18: Matching Result');
+      debugPrint('📱 TEST 19: Matching Result');
 
       Get.toNamed(Routes.matchingResult);
       await tester.pumpAndSettle();
@@ -353,9 +379,9 @@ void main() {
       debugPrint('✅ PASS: Matching Result Screen loaded');
 
       // ============================================
-      // 19. COFFEE MAIN SCREEN
+      // 20. COFFEE MAIN SCREEN
       // ============================================
-      debugPrint('📱 TEST 19: Coffee Main');
+      debugPrint('📱 TEST 20: Coffee Main');
 
       Get.toNamed(Routes.coffeeMain);
       await tester.pumpAndSettle();
@@ -370,11 +396,12 @@ void main() {
       debugPrint('═══════════════════════════════════════════');
       debugPrint('🎉 ALL E2E TESTS PASSED!');
       debugPrint('═══════════════════════════════════════════');
-      debugPrint('Screens Tested: 19');
+      debugPrint('Screens Tested: 20');
       debugPrint('- Splash ✓');
       debugPrint('- SignIn ✓');
+      debugPrint('- Profile Setup (Name Input) ✓');
       debugPrint('- Survey Intro ✓');
-      debugPrint('- Survey Questions (6 steps) ✓');
+      debugPrint('- Survey Questions (10 steps) ✓');
       debugPrint('- Survey Analyzing ✓');
       debugPrint('- Survey Complete ✓');
       debugPrint('- Survey Result ✓');
@@ -387,6 +414,7 @@ void main() {
       debugPrint('- My Taste ✓');
       debugPrint('- Coffee Settings ✓');
       debugPrint('- Select Coffee ✓');
+      debugPrint('- Back Navigation ✓');
       debugPrint('- Matching Result ✓');
       debugPrint('- Coffee Main ✓');
       debugPrint('═══════════════════════════════════════════');
