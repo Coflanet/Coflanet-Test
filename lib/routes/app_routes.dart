@@ -10,6 +10,7 @@ abstract class Routes {
 
   // === Auth Routes ===
   static const signIn = '/login/sign-in';
+  static const profileSetup = '/login/profile-setup';
 
   // === Onboarding Routes ===
   static const surveyIntro = '/onboarding/survey-intro';
