@@ -78,7 +78,7 @@ class SurveyResultView extends GetView<SurveyController> {
   }
 
   // ─────────────────────────────────────────────────────────────────────────
-  // 1. Purple banner - Gradient profile result card
+  // 1. Purple banner - Gradient profile result card (Left-aligned per Figma)
   // ─────────────────────────────────────────────────────────────────────────
 
   Widget _buildBannerSection(SurveyResultModel? result) {
@@ -86,42 +86,44 @@ class SurveyResultView extends GetView<SurveyController> {
       margin: const EdgeInsets.fromLTRB(20, 8, 20, 0),
       padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 28),
       decoration: BoxDecoration(
-        color: AppColor.primaryNormal, // Solid purple as per Figma
+        gradient: const LinearGradient(
+          begin: Alignment.topLeft,
+          end: Alignment.bottomRight,
+          colors: [
+            Color(0xFF7D5EF7), // Violet 60
+            Color(0xFF6541F2), // Violet 50 (primary)
+          ],
+        ),
         borderRadius: AppRadius.xlBorder,
         boxShadow: AppShadows.shadowPrimaryStrong,
       ),
       child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start, // Left-aligned per Figma
         children: [
-          // Pill badge — "{userName}님은"
-          Container(
-            padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 6),
-            decoration: BoxDecoration(
-              color: AppColor.staticLabelWhiteStrong.withValues(alpha: 0.18),
-              borderRadius: AppRadius.fullBorder,
-            ),
-            child: Text(
-              '${controller.userName}님은',
-              style: AppTextStyles.label2Medium.copyWith(
-                color: AppColor.staticLabelWhiteStrong,
-              ),
+          // User name line — small text with transparency (per Figma 12-14px)
+          Text(
+            '${controller.userName}님은',
+            style: AppTextStyles.caption1Medium.copyWith(
+              color: AppColor.staticLabelWhiteStrong.withValues(alpha: 0.8),
             ),
           ),
-          const SizedBox(height: 16),
+          const SizedBox(height: 8),
 
-          // Title — coffeeTypeDescription with inline emoji (Figma style)
+          // Main headline — bold 20-24px with emoji (per Figma)
           Text.rich(
             TextSpan(
               children: [
                 TextSpan(
                   text: result?.coffeeTypeDescription ?? '',
-                  style: AppTextStyles.title2Bold.copyWith(
+                  style: AppTextStyles.heading1Bold.copyWith(
                     color: AppColor.staticLabelWhiteStrong,
+                    height: 1.4,
                   ),
                 ),
-                const TextSpan(text: ' ☕', style: TextStyle(fontSize: 24)),
+                const TextSpan(text: ' ☕', style: TextStyle(fontSize: 22)),
               ],
             ),
-            textAlign: TextAlign.center,
+            textAlign: TextAlign.left,
           ),
         ],
       ),
@@ -129,7 +131,7 @@ class SurveyResultView extends GetView<SurveyController> {
   }
 
   // ─────────────────────────────────────────────────────────────────────────
-  // 2. Taste profile grid (4 columns) - Light theme cards
+  // 2. Taste profile grid (4 individual tiles) - Per Figma design
   // ─────────────────────────────────────────────────────────────────────────
 
   Widget _buildTasteProfileGrid(SurveyResultModel? result) {
@@ -143,37 +145,22 @@ class SurveyResultView extends GetView<SurveyController> {
       _TasteItem(emoji: '', label: '쓴맛', value: profile.bitterness),
     ];
 
-    // No section title per Figma - grid appears directly below banner
+    // Per Figma: 4 individual tiles in horizontal row with 8-12px gap
     return Padding(
       padding: const EdgeInsets.fromLTRB(20, 20, 20, 20),
-      child: Container(
-        padding: const EdgeInsets.symmetric(vertical: 16),
-        decoration: BoxDecoration(
-          color: AppColor.backgroundNormalNormal,
-          borderRadius: AppRadius.lgBorder,
-          border: Border.all(color: AppColor.lineNormalNeutral),
-        ),
-        child: IntrinsicHeight(
-          child: Row(
-            children: [
-              for (int i = 0; i < items.length; i++) ...[
-                Expanded(child: _buildTextOnlyTasteItem(items[i])),
-                if (i < items.length - 1)
-                  VerticalDivider(
-                    width: 1,
-                    thickness: 1,
-                    color: AppColor.lineNormalNeutral,
-                  ),
-              ],
-            ],
-          ),
-        ),
+      child: Row(
+        children: [
+          for (int i = 0; i < items.length; i++) ...[
+            Expanded(child: _buildTasteProfileTile(items[i])),
+            if (i < items.length - 1) const SizedBox(width: 8),
+          ],
+        ],
       ),
     );
   }
 
-  /// Figma style: Text-only taste item (no emoji circles)
-  Widget _buildTextOnlyTasteItem(_TasteItem item) {
+  /// Individual taste profile tile with gradient background (per Figma)
+  Widget _buildTasteProfileTile(_TasteItem item) {
     // Determine level text based on value
     // Value >= 70 → 좋음
     // Value >= 40 → 보통
@@ -186,30 +173,45 @@ class SurveyResultView extends GetView<SurveyController> {
       levelColor = AppColor.statusPositive;
     } else if (item.value >= 40) {
       levelText = '보통';
-      levelColor = AppColor.labelAlternative;
+      levelColor = AppColor.labelNormal;
     } else {
       levelText = '싫음';
       levelColor = AppColor.statusNegative;
     }
 
-    return Column(
-      mainAxisSize: MainAxisSize.min,
-      mainAxisAlignment: MainAxisAlignment.center,
-      children: [
-        // Label
-        Text(
-          item.label,
-          style: AppTextStyles.caption1Medium.copyWith(
-            color: AppColor.labelAlternative,
+    return Container(
+      padding: const EdgeInsets.symmetric(vertical: 16, horizontal: 8),
+      decoration: BoxDecoration(
+        gradient: LinearGradient(
+          begin: Alignment.topCenter,
+          end: Alignment.bottomCenter,
+          colors: [
+            AppColor.backgroundNormalNormal,
+            AppColor.primaryLight.withValues(alpha: 0.3),
+          ],
+        ),
+        borderRadius: AppRadius.lgBorder,
+        border: Border.all(color: AppColor.lineNormalNeutral),
+      ),
+      child: Column(
+        mainAxisSize: MainAxisSize.min,
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          // Label (top)
+          Text(
+            item.label,
+            style: AppTextStyles.caption1Medium.copyWith(
+              color: AppColor.labelAlternative,
+            ),
           ),
-        ),
-        const SizedBox(height: 8),
-        // Level text with color
-        Text(
-          levelText,
-          style: AppTextStyles.body1NormalBold.copyWith(color: levelColor),
-        ),
-      ],
+          const SizedBox(height: 8),
+          // Level text (bottom) with color
+          Text(
+            levelText,
+            style: AppTextStyles.body1NormalBold.copyWith(color: levelColor),
+          ),
+        ],
+      ),
     );
   }
 
@@ -388,14 +390,21 @@ class SurveyResultView extends GetView<SurveyController> {
                           ),
                         ),
                         const SizedBox(width: 8),
-                        // Match percentage badge (right side per Figma)
+                        // Match percentage badge with gradient (per Figma)
                         Container(
                           padding: const EdgeInsets.symmetric(
                             horizontal: 10,
                             vertical: 4,
                           ),
                           decoration: BoxDecoration(
-                            color: AppColor.primaryNormal,
+                            gradient: const LinearGradient(
+                              begin: Alignment.centerLeft,
+                              end: Alignment.centerRight,
+                              colors: [
+                                Color(0xFF6541F2), // Violet primary
+                                Color(0xFFFF6B6B), // Coral/pink
+                              ],
+                            ),
                             borderRadius: AppRadius.fullBorder,
                           ),
                           child: Text(
@@ -481,6 +490,7 @@ class SurveyResultView extends GetView<SurveyController> {
   }
 
   /// Mini taste bars with numeric values (0-5 scale) per Figma design
+  /// Uses dark gray bars instead of purple (per Figma analysis)
   Widget _buildMiniTasteBarsWithValues(TasteProfileModel profile) {
     // Convert 0-100 scale to 0-5 scale
     double toFiveScale(int value) => (value / 20).clamp(0.0, 5.0);
@@ -518,8 +528,9 @@ class SurveyResultView extends GetView<SurveyController> {
                     child: LinearProgressIndicator(
                       value: item.$2 / 100,
                       backgroundColor: AppColor.lineNormalAlternative,
+                      // Dark gray bars per Figma (not purple)
                       valueColor: AlwaysStoppedAnimation<Color>(
-                        AppColor.primaryNormal,
+                        AppColor.colorGlobalNeutral30, // Dark gray
                       ),
                     ),
                   ),
