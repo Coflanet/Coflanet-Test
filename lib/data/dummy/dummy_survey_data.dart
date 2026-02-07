@@ -179,7 +179,7 @@ class DummySurveyData {
 
     if (tastePref.contains('acidic')) {
       coffeeType = '산미파';
-      description = '진하고 깊은 풍미를 좋아하네요 😊';
+      description = '진하고 깊은 풍미를';
       tasteProfile = const TasteProfileModel(
         acidity: 90,
         sweetness: 60,
@@ -211,7 +211,7 @@ class DummySurveyData {
       ];
     } else if (tastePref.contains('bitter')) {
       coffeeType = '진한맛파';
-      description = '진하고 깊은 풍미를 좋아하네요 😊';
+      description = '진하고 깊은 풍미를';
       tasteProfile = const TasteProfileModel(
         acidity: 30,
         sweetness: 40,
@@ -243,7 +243,7 @@ class DummySurveyData {
       ];
     } else if (tastePref.contains('sweet')) {
       coffeeType = '달달파';
-      description = '달콤하고 부드러운 커피를 즐기시네요 😊';
+      description = '달콤하고 부드러운 커피를';
       tasteProfile = const TasteProfileModel(
         acidity: 40,
         sweetness: 85,
@@ -275,7 +275,7 @@ class DummySurveyData {
       ];
     } else {
       coffeeType = '밸런스파';
-      description = '균형 잡힌 맛을 즐기시네요 😊';
+      description = '균형 잡힌 맛을';
       tasteProfile = const TasteProfileModel(
         acidity: 60,
         sweetness: 60,
@@ -316,6 +316,7 @@ class DummySurveyData {
         CoffeeRecommendationModel(
           id: '1',
           name: '에티오피아 예가체프',
+          manufacturer: '커피랩',
           origin: '에티오피아',
           roastLevel: '라이트',
           description: '꽃향과 시트러스 노트가 특징',
@@ -337,6 +338,7 @@ class DummySurveyData {
         CoffeeRecommendationModel(
           id: '2',
           name: '콜롬비아 수프리모',
+          manufacturer: '빈브라더스',
           origin: '콜롬비아',
           roastLevel: '미디엄',
           description: '견과류와 카라멜 향이 특징',
@@ -358,6 +360,7 @@ class DummySurveyData {
         CoffeeRecommendationModel(
           id: '3',
           name: '과테말라 안티구아',
+          manufacturer: '로스팅하우스',
           origin: '과테말라',
           roastLevel: '미디엄',
           description: '초콜릿과 스파이시한 향이 특징',
@@ -379,6 +382,7 @@ class DummySurveyData {
         CoffeeRecommendationModel(
           id: '4',
           name: '케냐 AA',
+          manufacturer: '프릳츠커피',
           origin: '케냐',
           roastLevel: '라이트',
           description: '와인 같은 산미와 블랙커런트 향이 특징',
@@ -400,6 +404,7 @@ class DummySurveyData {
         CoffeeRecommendationModel(
           id: '5',
           name: '브라질 산토스',
+          manufacturer: '테라로사',
           origin: '브라질',
           roastLevel: '미디엄',
           description: '부드럽고 고소한 견과류 풍미',
@@ -421,6 +426,7 @@ class DummySurveyData {
         CoffeeRecommendationModel(
           id: '6',
           name: '인도네시아 만델링',
+          manufacturer: '모모스커피',
           origin: '인도네시아',
           roastLevel: '다크',
           description: '묵직한 바디감과 허브 향이 특징',

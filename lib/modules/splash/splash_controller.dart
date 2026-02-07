@@ -43,8 +43,17 @@ class SplashController extends BaseController {
   static const bool _devForceOnboarding = false;
   // [DEV] Set to true to reset login state (starts from SignIn)
   static const bool _devForceSignIn = false;
+  // [DEV] Set to true to go directly to survey result for testing
+  static const bool _devForceSurveyResult = false;
 
   void _navigateToNextScreen() {
+    // [DEV] Direct navigation to survey result for UI testing
+    if (_devForceSurveyResult) {
+      debugPrint('[SplashController] DEV: Forcing SurveyResult');
+      _safeNavigate(Routes.surveyResult);
+      return;
+    }
+
     final isLoggedIn = _devForceSignIn ? false : _storage.isLoggedIn;
     final isOnboardingComplete = _devForceOnboarding
         ? false

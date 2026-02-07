@@ -119,6 +119,7 @@ class TasteProfileModel {
 class CoffeeRecommendationModel {
   final String id;
   final String name;
+  final String? manufacturer; // 제조사 (추가)
   final String origin;
   final String roastLevel;
   final String description;
@@ -135,6 +136,7 @@ class CoffeeRecommendationModel {
   const CoffeeRecommendationModel({
     required this.id,
     required this.name,
+    this.manufacturer,
     required this.origin,
     required this.roastLevel,
     required this.description,
@@ -153,6 +155,7 @@ class CoffeeRecommendationModel {
     return CoffeeRecommendationModel(
       id: json['id'] as String,
       name: json['name'] as String,
+      manufacturer: json['manufacturer'] as String?,
       origin: json['origin'] as String,
       roastLevel: json['roastLevel'] as String,
       description: json['description'] as String,
@@ -178,6 +181,7 @@ class CoffeeRecommendationModel {
     return {
       'id': id,
       'name': name,
+      if (manufacturer != null) 'manufacturer': manufacturer,
       'origin': origin,
       'roastLevel': roastLevel,
       'description': description,

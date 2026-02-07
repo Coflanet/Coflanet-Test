@@ -203,13 +203,13 @@ class SurveyController extends BaseController {
     Get.toNamed('${Routes.survey}/$step');
   }
 
-  /// Start survey - navigate to Section 1 Intro first
+  /// Start survey - navigate directly to step 0 (Section 1 Intro is now in SurveyIntro)
   void startSurvey() {
     _currentStep.value = 0;
     _answers.clear();
     _multiRatingAnswers.clear();
-    // Navigate to Section 1 Intro instead of directly to step 0
-    Get.toNamed('${Routes.surveySectionIntro}/1');
+    // Go directly to first question (skip Section 1 Intro as SurveyIntro already serves this purpose)
+    Get.toNamed('${Routes.survey}/0');
   }
 
   /// Analyze answers and generate result
