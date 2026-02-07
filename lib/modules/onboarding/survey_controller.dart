@@ -9,6 +9,15 @@ import 'package:coflanet/routes/app_pages.dart';
 class SurveyController extends BaseController {
   final LocalStorage _storage = Get.find<LocalStorage>();
 
+  @override
+  void onInit() {
+    super.onInit();
+    // Initialize with dummy result if null (for direct navigation testing)
+    if (_surveyResult.value == null) {
+      _surveyResult.value = DummySurveyData.generateResult({});
+    }
+  }
+
   // Survey state
   final _currentStep = 0.obs;
   int get currentStep => _currentStep.value;

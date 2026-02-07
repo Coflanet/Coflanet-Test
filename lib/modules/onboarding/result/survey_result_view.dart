@@ -8,7 +8,6 @@ import 'package:coflanet/constants/radius_constant.dart';
 import 'package:coflanet/data/models/survey_result_model.dart';
 import 'package:coflanet/modules/onboarding/survey_controller.dart';
 import 'package:coflanet/widgets/buttons/primary_button.dart';
-import 'package:coflanet/widgets/forms/app_round_checkbox.dart';
 
 class SurveyResultView extends GetView<SurveyController> {
   const SurveyResultView({super.key});
@@ -336,8 +335,14 @@ class SurveyResultView extends GetView<SurveyController> {
     );
   }
 
+  /// Figma-exact recommendation card layout:
+  /// Top: Checkbox (left) + Badge (right)
+  /// Below: Bean Name
+  /// Below: Price
+  /// Below: Image (left) + Taste Bars (right)
+  /// Below: Flavor Tags
+  /// Bottom: Purchase Link
   Widget _buildRecommendationCard(CoffeeRecommendationModel rec) {
-    // Use matchPercent from model, fallback to deterministic calculation
     final matchPercent = rec.matchPercent > 0
         ? rec.matchPercent
         : 20 + (rec.id.hashCode.abs() % 76);
@@ -353,120 +358,97 @@ class SurveyResultView extends GetView<SurveyController> {
           padding: const EdgeInsets.all(16),
           decoration: BoxDecoration(
             color: AppColor.backgroundNormalNormal,
-            borderRadius: AppRadius.lgBorder,
+            borderRadius: BorderRadius.circular(12),
             border: Border.all(
               color: isSelected
                   ? AppColor.primaryNormal
                   : AppColor.lineNormalNeutral,
               width: isSelected ? 2 : 1,
             ),
-            boxShadow: isSelected
-                ? AppShadows.shadowPrimaryStrong
-                : AppShadows.shadowBlackEmphasize,
+            boxShadow: AppShadows.shadowBlackEmphasize,
           ),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              // ── Top row: Checkbox + Name + Match Badge ──
+              // ── Row 1: Checkbox (left) + Match Badge (right) ──
               Row(
-                crossAxisAlignment: CrossAxisAlignment.start,
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  // Checkbox (top-left per Figma)
-                  _buildRoundCheckbox(isSelected),
-                  const SizedBox(width: 12),
-                  // Name and match badge
-                  Expanded(
-                    child: Row(
-                      crossAxisAlignment: CrossAxisAlignment.center,
-                      children: [
-                        Expanded(
-                          child: Text(
-                            rec.name,
-                            style: AppTextStyles.headline2Bold.copyWith(
-                              color: AppColor.labelNormal,
-                            ),
-                            maxLines: 1,
-                            overflow: TextOverflow.ellipsis,
-                          ),
-                        ),
-                        const SizedBox(width: 8),
-                        // Match percentage badge with gradient (per Figma)
-                        Container(
-                          padding: const EdgeInsets.symmetric(
-                            horizontal: 10,
-                            vertical: 4,
-                          ),
-                          decoration: BoxDecoration(
-                            gradient: const LinearGradient(
-                              begin: Alignment.centerLeft,
-                              end: Alignment.centerRight,
-                              colors: [
-                                Color(0xFF6541F2), // Violet primary
-                                Color(0xFFFF6B6B), // Coral/pink
-                              ],
-                            ),
-                            borderRadius: AppRadius.fullBorder,
-                          ),
-                          child: Text(
-                            '일치율 $matchPercent%',
-                            style: AppTextStyles.caption2Bold.copyWith(
-                              color: AppColor.staticLabelWhiteStrong,
-                            ),
-                          ),
-                        ),
-                      ],
+                  // Rounded square checkbox (Figma: 24x24, 6px radius)
+                  _buildSquareCheckbox(isSelected),
+                  // Match percentage badge - Solid purple (Figma)
+                  Container(
+                    padding: const EdgeInsets.symmetric(
+                      horizontal: 8,
+                      vertical: 4,
+                    ),
+                    decoration: BoxDecoration(
+                      color: AppColor.primaryNormal, // Solid purple
+                      borderRadius: BorderRadius.circular(10),
+                    ),
+                    child: Text(
+                      '일치율 $matchPercent%',
+                      style: AppTextStyles.caption2Bold.copyWith(
+                        color: AppColor.staticLabelWhiteStrong,
+                        fontSize: 10,
+                      ),
                     ),
                   ),
                 ],
               ),
               const SizedBox(height: 12),
 
-              // ── Main content row: Image + Info ──
+              // ── Row 2: Bean Name ──
+              Text(
+                rec.name,
+                style: AppTextStyles.label1NormalBold.copyWith(
+                  color: AppColor.labelNormal,
+                  fontWeight: FontWeight.w600,
+                ),
+                maxLines: 1,
+                overflow: TextOverflow.ellipsis,
+              ),
+              const SizedBox(height: 4),
+
+              // ── Row 3: Price ──
+              _buildPriceRow(rec),
+              const SizedBox(height: 12),
+
+              // ── Row 4: Image (left) + Taste Bars (right) ──
               Row(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  // Coffee bag placeholder image
+                  // Coffee bag image (Figma: 48x64 portrait)
                   Container(
-                    width: 64,
-                    height: 80,
+                    width: 48,
+                    height: 64,
                     decoration: BoxDecoration(
                       color: AppColor.backgroundNormalAlternative,
-                      borderRadius: AppRadius.mdBorder,
-                      border: Border.all(color: AppColor.lineNormalNeutral),
+                      borderRadius: BorderRadius.circular(4),
                     ),
                     alignment: Alignment.center,
                     child: Icon(
                       Icons.coffee_rounded,
                       color: AppColor.labelAssistive,
-                      size: 28,
+                      size: 24,
                     ),
                   ),
-                  const SizedBox(width: 14),
+                  const SizedBox(width: 12),
 
-                  // Info column
+                  // Taste bars (Figma: 5 rows, purple fill)
                   Expanded(
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        // Price (simplified per Figma)
-                        _buildPriceRow(rec),
-                        const SizedBox(height: 10),
-
-                        // Mini taste bars with numeric values
-                        _buildMiniTasteBarsWithValues(rec.tasteProfile),
-                      ],
-                    ),
+                    child: _buildMiniTasteBarsWithValues(rec.tasteProfile),
                   ),
                 ],
               ),
 
-              // Flavor tags
+              // ── Row 5: Flavor Tags ──
               if (rec.flavorTags.isNotEmpty) ...[
                 const SizedBox(height: 12),
                 _buildFlavorTags(rec.flavorTags),
               ],
 
-              // Purchase link (centered per Figma)
+              // ── Row 6: Purchase Link (centered, underlined) ──
               const SizedBox(height: 12),
               Center(child: _buildPurchaseLink()),
             ],
@@ -474,6 +456,26 @@ class SurveyResultView extends GetView<SurveyController> {
         ),
       );
     });
+  }
+
+  /// Rounded square checkbox (Figma: 24x24, 6px radius)
+  Widget _buildSquareCheckbox(bool isSelected) {
+    return Container(
+      width: 24,
+      height: 24,
+      decoration: BoxDecoration(
+        color: isSelected
+            ? AppColor.primaryNormal
+            : AppColor.backgroundNormalNormal,
+        borderRadius: BorderRadius.circular(6),
+        border: isSelected
+            ? null
+            : Border.all(color: AppColor.lineNormalNeutral, width: 1.5),
+      ),
+      child: isSelected
+          ? Icon(Icons.check, size: 16, color: AppColor.staticLabelWhiteStrong)
+          : null,
+    );
   }
 
   Widget _buildPriceRow(CoffeeRecommendationModel rec) {
@@ -490,7 +492,7 @@ class SurveyResultView extends GetView<SurveyController> {
   }
 
   /// Mini taste bars with numeric values (0-5 scale) per Figma design
-  /// Uses dark gray bars instead of purple (per Figma analysis)
+  /// Uses purple bars (Primary Violet) per Figma
   Widget _buildMiniTasteBarsWithValues(TasteProfileModel profile) {
     // Convert 0-100 scale to 0-5 scale
     double toFiveScale(int value) => (value / 20).clamp(0.0, 5.0);
@@ -510,40 +512,44 @@ class SurveyResultView extends GetView<SurveyController> {
           padding: const EdgeInsets.only(bottom: 4),
           child: Row(
             children: [
+              // Label (Figma: 36px width, 11px, gray)
               SizedBox(
-                width: 40,
+                width: 36,
                 child: Text(
                   item.$1,
                   style: AppTextStyles.caption2Medium.copyWith(
                     color: AppColor.labelAssistive,
+                    fontSize: 11,
                   ),
                 ),
               ),
-              const SizedBox(width: 6),
+              const SizedBox(width: 8),
+              // Progress bar (Figma: 6px height, rounded, purple fill)
               Expanded(
                 child: SizedBox(
-                  height: 4,
+                  height: 6,
                   child: ClipRRect(
-                    borderRadius: AppRadius.xxsBorder,
+                    borderRadius: BorderRadius.circular(3),
                     child: LinearProgressIndicator(
                       value: item.$2 / 100,
                       backgroundColor: AppColor.lineNormalAlternative,
-                      // Dark gray bars per Figma (not purple)
+                      // Purple bars per Figma
                       valueColor: AlwaysStoppedAnimation<Color>(
-                        AppColor.colorGlobalNeutral30, // Dark gray
+                        AppColor.primaryNormal,
                       ),
                     ),
                   ),
                 ),
               ),
               const SizedBox(width: 8),
-              // Numeric value (0-5 scale)
+              // Numeric value (Figma: 11px, gray)
               SizedBox(
                 width: 24,
                 child: Text(
                   fiveScaleValue.toStringAsFixed(1),
                   style: AppTextStyles.caption2Medium.copyWith(
-                    color: AppColor.labelNormal,
+                    color: AppColor.labelAssistive,
+                    fontSize: 11,
                   ),
                   textAlign: TextAlign.right,
                 ),
@@ -555,6 +561,7 @@ class SurveyResultView extends GetView<SurveyController> {
     );
   }
 
+  /// Flavor tags per Figma: Light gray (#F5F5F5) background, dark text
   Widget _buildFlavorTags(List<String> tags) {
     return Wrap(
       spacing: 6,
@@ -562,15 +569,16 @@ class SurveyResultView extends GetView<SurveyController> {
       children: tags
           .map(
             (tag) => Container(
-              padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 4),
+              padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 6),
               decoration: BoxDecoration(
-                color: AppColor.primaryLight,
-                borderRadius: AppRadius.fullBorder,
+                color: const Color(0xFFF5F5F5), // Light gray per Figma
+                borderRadius: BorderRadius.circular(13), // Pill shape
               ),
               child: Text(
                 tag,
                 style: AppTextStyles.caption2Medium.copyWith(
-                  color: AppColor.primaryNormal,
+                  color: AppColor.labelNormal, // Dark text per Figma
+                  fontSize: 11,
                 ),
               ),
             ),
@@ -579,27 +587,17 @@ class SurveyResultView extends GetView<SurveyController> {
     );
   }
 
+  /// Purchase link per Figma: Underlined, violet, 13px SemiBold
   Widget _buildPurchaseLink() {
-    return Row(
-      children: [
-        Text(
-          '판매링크 바로가기',
-          style: AppTextStyles.caption1Medium.copyWith(
-            color: AppColor.primaryNormal,
-          ),
-        ),
-        const SizedBox(width: 4),
-        Icon(
-          Icons.arrow_forward_ios_rounded,
-          size: 12,
-          color: AppColor.primaryNormal,
-        ),
-      ],
+    return Text(
+      '판매링크 바로가기',
+      style: AppTextStyles.label2Medium.copyWith(
+        color: AppColor.primaryNormal,
+        fontWeight: FontWeight.w600,
+        decoration: TextDecoration.underline,
+        decorationColor: AppColor.primaryNormal,
+      ),
     );
-  }
-
-  Widget _buildRoundCheckbox(bool isSelected) {
-    return AppRoundCheckbox(isSelected: isSelected);
   }
 
   // ─────────────────────────────────────────────────────────────────────────
