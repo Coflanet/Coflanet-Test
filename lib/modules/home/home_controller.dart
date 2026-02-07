@@ -52,4 +52,10 @@ class HomeController extends BaseController {
     await _storage.clearAll();
     Get.offAllNamed(Routes.signIn);
   }
+
+  /// [DEV] Reset onboarding to test survey flow
+  Future<void> devResetOnboarding() async {
+    await _storage.setOnboardingComplete(false);
+    Get.offAllNamed(Routes.surveyIntro);
+  }
 }

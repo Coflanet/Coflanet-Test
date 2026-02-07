@@ -70,9 +70,13 @@ class HomeView extends GetView<HomeController> {
             ),
           ),
           const Spacer(),
-          IconButton(
-            icon: Icon(Icons.logout, color: AppColor.labelAlternative),
-            onPressed: () => controller.logout(),
+          // Long press to reset onboarding (DEV only)
+          GestureDetector(
+            onLongPress: () => controller.devResetOnboarding(),
+            child: IconButton(
+              icon: Icon(Icons.logout, color: AppColor.labelAlternative),
+              onPressed: () => controller.logout(),
+            ),
           ),
         ],
       ),
