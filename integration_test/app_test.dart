@@ -216,7 +216,7 @@ void main() {
       debugPrint('📱 TEST 9: Home Screen');
 
       // Navigate to home directly to ensure we're there
-      Get.offAllNamed(Routes.home);
+      Get.offAllNamed(Routes.mainShell);
       await tester.pumpAndSettle(const Duration(seconds: 1));
 
       // Verify home screen elements
@@ -300,7 +300,7 @@ void main() {
       // ============================================
       debugPrint('📱 TEST 13: Espresso Recipe');
 
-      Get.offAllNamed(Routes.home);
+      Get.offAllNamed(Routes.mainShell);
       await tester.pumpAndSettle();
       Get.toNamed(Routes.espresso);
       await tester.pumpAndSettle();
@@ -382,7 +382,7 @@ void main() {
       // ============================================
       debugPrint('📱 TEST 18: Back Navigation');
 
-      Get.offAllNamed(Routes.home);
+      Get.offAllNamed(Routes.mainShell);
       await tester.pumpAndSettle();
       Get.toNamed(Routes.handDrip);
       await tester.pumpAndSettle();

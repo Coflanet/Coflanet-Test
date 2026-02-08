@@ -6,7 +6,6 @@ abstract class Routes {
 
   // === Core Routes ===
   static const splash = '/';
-  static const home = '/home';
 
   // === Auth Routes ===
   static const signIn = '/login/sign-in';
@@ -43,6 +42,10 @@ abstract class Routes {
   static const selectCoffee = '/coffee/select';
   static const timerActive = '/coffee/timer';
   static const timerComplete = '/coffee/timer/complete';
+
+  // === Bean Routes ===
+  static const beanDetail = '/coffee/bean/detail';
+  static const beanEdit = '/coffee/bean/edit';
 
   // === Auth (Additional) ===
   static const emailSignUp = '/login/email-sign-up';

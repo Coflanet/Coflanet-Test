@@ -109,21 +109,3 @@ class SocialButton extends StatelessWidget {
     }
   }
 }
-
-class _KakaoIcon extends StatelessWidget {
-  const _KakaoIcon();
-
-  @override
-  Widget build(BuildContext context) {
-    return SvgPicture.asset(AssetPath.iconKakao, width: 20, height: 20);
-  }
-}
-
-class _NaverIcon extends StatelessWidget {
-  const _NaverIcon();
-
-  @override
-  Widget build(BuildContext context) {
-    return SvgPicture.asset(AssetPath.iconNaver, width: 20, height: 20);
-  }
-}

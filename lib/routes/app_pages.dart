@@ -22,10 +22,6 @@ import 'package:coflanet/modules/onboarding/analyzing/survey_analyzing_view.dart
 import 'package:coflanet/modules/onboarding/complete/survey_complete_view.dart';
 import 'package:coflanet/modules/onboarding/result/survey_result_view.dart';
 
-// Modules - Home
-import 'package:coflanet/modules/home/home_view.dart';
-import 'package:coflanet/modules/home/home_binding.dart';
-
 // Modules - Coffee
 import 'package:coflanet/modules/coffee/coffee_binding.dart';
 import 'package:coflanet/modules/coffee/main/coffee_main_view.dart';
@@ -40,6 +36,8 @@ import 'package:coflanet/modules/coffee/timer/coffee_timer_view.dart';
 import 'package:coflanet/modules/coffee/timer/timer_complete_view.dart';
 import 'package:coflanet/modules/coffee/select/select_coffee_view.dart';
 import 'package:coflanet/modules/coffee/select/select_coffee_binding.dart';
+import 'package:coflanet/modules/coffee/bean/bean_detail_view.dart';
+import 'package:coflanet/modules/coffee/bean/bean_edit_view.dart';
 
 // Modules - Matching
 import 'package:coflanet/modules/matching/matching_binding.dart';
@@ -136,14 +134,6 @@ class AppPages {
       transition: Transition.cupertino,
     ),
 
-    // === Home ===
-    GetPage(
-      name: Routes.home,
-      page: () => const HomeView(),
-      binding: HomeBinding(),
-      transition: Transition.fadeIn,
-    ),
-
     // === Coffee ===
     GetPage(
       name: Routes.coffeeMain,
@@ -185,6 +175,18 @@ class AppPages {
       name: Routes.selectCoffee,
       page: () => const SelectCoffeeView(),
       binding: SelectCoffeeBinding(),
+      transition: Transition.cupertino,
+    ),
+    GetPage(
+      name: Routes.beanDetail,
+      page: () => const BeanDetailView(),
+      binding: CoffeeBinding(),
+      transition: Transition.cupertino,
+    ),
+    GetPage(
+      name: Routes.beanEdit,
+      page: () => const BeanEditView(),
+      binding: CoffeeBinding(),
       transition: Transition.cupertino,
     ),
     GetPage(

@@ -9,6 +9,7 @@ import 'package:coflanet/data/models/coffee_item_model.dart';
 import 'package:coflanet/modules/coffee/select/select_coffee_controller.dart';
 import 'package:coflanet/widgets/feedback/app_empty_state.dart';
 import 'package:coflanet/widgets/navigation/app_bottom_bar.dart';
+import 'package:coflanet/routes/app_pages.dart';
 
 /// Select Coffee Section (SC-01, SC-02)
 /// 커피 원두/레시피 선택 화면 (보기 모드 / 편집 모드)
@@ -29,7 +30,8 @@ class SelectCoffeeView extends GetView<SelectCoffeeController> {
                   return const Center(child: CircularProgressIndicator());
                 }
 
-                return controller.coffeeItems.isEmpty
+                return controller.visibleCoffeeItems.isEmpty &&
+                        controller.hiddenCoffeeItems.isEmpty
                     ? _buildEmptyState()
                     : _buildCoffeeList();
               }),
@@ -121,72 +123,208 @@ class SelectCoffeeView extends GetView<SelectCoffeeController> {
 
   Widget _buildCoffeeList() {
     return Obx(() {
-      final items = controller.coffeeItems;
+      final visibleItems = controller.visibleCoffeeItems;
+      final hiddenItems = controller.hiddenCoffeeItems;
       final isEditing = controller.isEditing;
+      final showHidden = controller.showHiddenBeans;
 
-      return Container(
-        margin: const EdgeInsets.all(16),
-        decoration: BoxDecoration(
-          color: isEditing
-              ? AppColor.backgroundNormalAlternative
-              : AppColor.transparent,
-          borderRadius: AppRadius.xlBorder,
-        ),
+      return SingleChildScrollView(
+        padding: const EdgeInsets.all(16),
         child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Expanded(
-              child: ReorderableListView.builder(
-                padding: EdgeInsets.all(isEditing ? 12 : 4),
-                itemCount: items.length,
-                buildDefaultDragHandles: false,
-                onReorder: controller.reorderItems,
-                itemBuilder: (context, index) {
-                  final item = items[index];
-                  return _CoffeeCard(
-                    key: ValueKey(item.id),
-                    item: item,
-                    isEditing: isEditing,
-                    isSelected: isEditing
-                        ? controller.isSelectedForEdit(item.id)
-                        : controller.selectedId == item.id,
-                    onTap: isEditing
-                        ? () => controller.toggleEditSelection(item.id)
-                        : () => controller.selectCoffee(item.id),
-                    onDelete: () => controller.deleteCoffee(item.id),
-                    index: index,
-                  );
-                },
-              ),
-            ),
-            // Add button at the bottom (only in editing mode)
-            if (isEditing)
-              Padding(
-                padding: const EdgeInsets.only(bottom: 12),
-                child: GestureDetector(
-                  onTap: controller.addNewCoffee,
-                  child: Container(
-                    width: 48,
-                    height: 48,
-                    decoration: BoxDecoration(
-                      color: AppColor.backgroundNormalNormal,
-                      shape: BoxShape.circle,
-                      border: Border.all(
-                        color: AppColor.lineNormalNeutral,
-                        width: 1,
+            // Visible coffee items section
+            if (visibleItems.isNotEmpty) ...[
+              Container(
+                decoration: BoxDecoration(
+                  color: isEditing
+                      ? AppColor.backgroundNormalAlternative
+                      : AppColor.transparent,
+                  borderRadius: AppRadius.xlBorder,
+                ),
+                child: Column(
+                  children: [
+                    ...visibleItems.asMap().entries.map((entry) {
+                      final index = entry.key;
+                      final item = entry.value;
+                      return _CoffeeCard(
+                        key: ValueKey(item.id),
+                        item: item,
+                        isEditing: isEditing,
+                        isSelected: isEditing
+                            ? controller.isSelectedForEdit(item.id)
+                            : controller.selectedId == item.id,
+                        onTap: isEditing
+                            ? () => controller.toggleEditSelection(item.id)
+                            : () => controller.selectCoffee(item.id),
+                        onDelete: () => controller.deleteCoffee(item.id),
+                        onHide: () => controller.hideCoffee(item.id),
+                        onDetail: isEditing
+                            ? null
+                            : () => Get.toNamed(
+                                Routes.beanDetail,
+                                arguments: {'bean': item},
+                              ),
+                        index: index,
+                        showHideOption: isEditing,
+                      );
+                    }),
+                    // Add button at the bottom (only in editing mode)
+                    if (isEditing)
+                      Padding(
+                        padding: const EdgeInsets.only(bottom: 12, top: 4),
+                        child: GestureDetector(
+                          onTap: controller.addNewCoffee,
+                          child: Container(
+                            width: 48,
+                            height: 48,
+                            decoration: BoxDecoration(
+                              color: AppColor.backgroundNormalNormal,
+                              shape: BoxShape.circle,
+                              border: Border.all(
+                                color: AppColor.lineNormalNeutral,
+                                width: 1,
+                              ),
+                            ),
+                            child: Icon(
+                              Icons.add,
+                              color: AppColor.labelAlternative,
+                              size: 24,
+                            ),
+                          ),
+                        ),
                       ),
-                    ),
-                    child: Icon(
-                      Icons.add,
-                      color: AppColor.labelAlternative,
-                      size: 24,
+                  ],
+                ),
+              ),
+            ] else if (!isEditing) ...[
+              // Show empty state for visible items
+              Container(
+                padding: const EdgeInsets.symmetric(vertical: 40),
+                child: Center(
+                  child: Text(
+                    '표시할 커피가 없습니다',
+                    style: AppTextStyles.body1NormalMedium.copyWith(
+                      color: AppColor.labelAssistive,
                     ),
                   ),
                 ),
               ),
+            ],
+
+            // Hidden beans section
+            if (hiddenItems.isNotEmpty) ...[
+              const SizedBox(height: 24),
+              _buildHiddenBeansSection(hiddenItems, showHidden),
+            ],
           ],
         ),
       );
     });
+  }
+
+  Widget _buildHiddenBeansSection(
+    List<CoffeeItem> hiddenItems,
+    bool isExpanded,
+  ) {
+    return Container(
+      decoration: BoxDecoration(
+        color: AppColor.backgroundNormalAlternative,
+        borderRadius: AppRadius.lgBorder,
+      ),
+      child: Column(
+        children: [
+          // Header
+          GestureDetector(
+            onTap: controller.toggleHiddenBeansSection,
+            behavior: HitTestBehavior.opaque,
+            child: Padding(
+              padding: const EdgeInsets.all(16),
+              child: Row(
+                children: [
+                  Icon(
+                    Icons.visibility_off_outlined,
+                    color: AppColor.labelAssistive,
+                    size: 20,
+                  ),
+                  const SizedBox(width: 8),
+                  Expanded(
+                    child: Text(
+                      '숨겨진 원두 (${hiddenItems.length})',
+                      style: AppTextStyles.body1NormalMedium.copyWith(
+                        color: AppColor.labelAlternative,
+                      ),
+                    ),
+                  ),
+                  AnimatedRotation(
+                    turns: isExpanded ? 0.5 : 0,
+                    duration: const Duration(milliseconds: 200),
+                    child: Icon(
+                      Icons.keyboard_arrow_down,
+                      color: AppColor.labelAssistive,
+                      size: 24,
+                    ),
+                  ),
+                ],
+              ),
+            ),
+          ),
+          // Hidden items list
+          AnimatedCrossFade(
+            firstChild: const SizedBox.shrink(),
+            secondChild: Column(
+              children: [
+                Divider(height: 1, color: AppColor.lineNormalNeutral),
+                Padding(
+                  padding: const EdgeInsets.all(12),
+                  child: Column(
+                    children: hiddenItems
+                        .map(
+                          (item) => _HiddenCoffeeCard(
+                            item: item,
+                            onRestore: () => controller.unhideCoffee(item.id),
+                            onDelete: () => controller.deleteCoffee(item.id),
+                          ),
+                        )
+                        .toList(),
+                  ),
+                ),
+                // Restore all button
+                Padding(
+                  padding: const EdgeInsets.fromLTRB(12, 0, 12, 12),
+                  child: GestureDetector(
+                    onTap: controller.restoreAllHiddenItems,
+                    child: Container(
+                      width: double.infinity,
+                      padding: const EdgeInsets.symmetric(vertical: 12),
+                      decoration: BoxDecoration(
+                        border: Border.all(
+                          color: AppColor.lineNormalNeutral,
+                          width: 1,
+                        ),
+                        borderRadius: AppRadius.mdBorder,
+                      ),
+                      child: Center(
+                        child: Text(
+                          '전체 복원',
+                          style: AppTextStyles.body2NormalMedium.copyWith(
+                            color: AppColor.labelAlternative,
+                          ),
+                        ),
+                      ),
+                    ),
+                  ),
+                ),
+              ],
+            ),
+            crossFadeState: isExpanded
+                ? CrossFadeState.showSecond
+                : CrossFadeState.showFirst,
+            duration: const Duration(milliseconds: 200),
+          ),
+        ],
+      ),
+    );
   }
 
   Widget _buildBottomBar() {
@@ -280,7 +418,10 @@ class _CoffeeCard extends StatelessWidget {
   final bool isSelected;
   final VoidCallback onTap;
   final VoidCallback onDelete;
+  final VoidCallback? onHide;
+  final VoidCallback? onDetail;
   final int index;
+  final bool showHideOption;
 
   const _CoffeeCard({
     super.key,
@@ -289,7 +430,10 @@ class _CoffeeCard extends StatelessWidget {
     required this.isSelected,
     required this.onTap,
     required this.onDelete,
+    this.onHide,
+    this.onDetail,
     required this.index,
+    this.showHideOption = false,
   });
 
   @override
@@ -328,6 +472,20 @@ class _CoffeeCard extends StatelessWidget {
               const SizedBox(width: 16),
               // Coffee info
               _buildCoffeeInfo(),
+              // Detail button
+              if (onDetail != null)
+                GestureDetector(
+                  onTap: onDetail,
+                  behavior: HitTestBehavior.opaque,
+                  child: Padding(
+                    padding: const EdgeInsets.all(8),
+                    child: Icon(
+                      Icons.chevron_right,
+                      color: AppColor.labelAssistive,
+                      size: 24,
+                    ),
+                  ),
+                ),
               // Selection indicator
               _buildSelectionIndicator(),
             ],
@@ -491,6 +649,108 @@ class _CoffeeCard extends StatelessWidget {
       child: isSelected
           ? Icon(Icons.check, size: 16, color: AppColor.staticLabelWhiteStrong)
           : null,
+    );
+  }
+}
+
+/// Hidden coffee card with restore/delete options
+class _HiddenCoffeeCard extends StatelessWidget {
+  final CoffeeItem item;
+  final VoidCallback onRestore;
+  final VoidCallback onDelete;
+
+  const _HiddenCoffeeCard({
+    required this.item,
+    required this.onRestore,
+    required this.onDelete,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return Padding(
+      padding: const EdgeInsets.only(bottom: 8),
+      child: Container(
+        padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 10),
+        decoration: BoxDecoration(
+          color: AppColor.backgroundNormalNormal.withOpacity(0.5),
+          borderRadius: AppRadius.lgBorder,
+        ),
+        child: Row(
+          children: [
+            // Coffee thumbnail (faded)
+            Container(
+              width: 40,
+              height: 40,
+              decoration: BoxDecoration(
+                color: AppColor.backgroundNormalAlternative,
+                borderRadius: AppRadius.mdBorder,
+              ),
+              child: Center(
+                child: Icon(
+                  Icons.coffee,
+                  color: item.color.withOpacity(0.5),
+                  size: 20,
+                ),
+              ),
+            ),
+            const SizedBox(width: 12),
+            // Coffee info
+            Expanded(
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  if (item.brand != null)
+                    Text(
+                      item.brand!,
+                      style: AppTextStyles.caption1Regular.copyWith(
+                        color: AppColor.labelAssistive,
+                      ),
+                    ),
+                  Text(
+                    item.name,
+                    style: AppTextStyles.body2NormalMedium.copyWith(
+                      color: AppColor.labelAlternative,
+                    ),
+                    maxLines: 1,
+                    overflow: TextOverflow.ellipsis,
+                  ),
+                ],
+              ),
+            ),
+            // Restore button
+            GestureDetector(
+              onTap: onRestore,
+              child: Container(
+                padding: const EdgeInsets.symmetric(
+                  horizontal: 12,
+                  vertical: 6,
+                ),
+                decoration: BoxDecoration(
+                  color: AppColor.primaryNormal.withOpacity(0.1),
+                  borderRadius: AppRadius.smBorder,
+                ),
+                child: Text(
+                  '복원',
+                  style: AppTextStyles.caption1Medium.copyWith(
+                    color: AppColor.primaryNormal,
+                  ),
+                ),
+              ),
+            ),
+            const SizedBox(width: 8),
+            // Delete button
+            GestureDetector(
+              onTap: onDelete,
+              child: Icon(
+                Icons.close,
+                color: AppColor.labelAssistive,
+                size: 20,
+              ),
+            ),
+          ],
+        ),
+      ),
     );
   }
 }

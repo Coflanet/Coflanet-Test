@@ -9,6 +9,7 @@ import 'package:coflanet/constants/style_constant.dart';
 import 'package:coflanet/modules/coffee/coffee_controller.dart';
 import 'package:coflanet/widgets/modals/input_modal.dart';
 import 'package:coflanet/widgets/modals/time_picker_modal.dart';
+import 'package:coflanet/widgets/modals/grind_size_modal.dart';
 import 'package:coflanet/widgets/navigation/app_bottom_bar.dart';
 
 /// Detail screen for adjusting a single recipe parameter (RS-03 ~ RS-05).
@@ -86,6 +87,22 @@ class CoffeeSettingDetailView extends GetView<CoffeeController> {
           modalHint: '예: 250',
           modalValidator: _rangeValidator(100, 400, 'ml'),
           onModalResult: (v) => controller.updateWaterAmount(v),
+        );
+      case 'grindSize':
+        return _ParamConfig(
+          title: '분쇄도',
+          unit: 'μm',
+          icon: Icons.grain,
+          min: 200,
+          max: 1600,
+          getValue: () => controller.grindSize,
+          onSliderChanged: (v) => controller.updateGrindSize(v),
+          isGrindSize: true,
+          modalTitle: '분쇄도 설정',
+          modalMessage: '추출 방식에 따라 굵기를 조절해보세요',
+          modalHint: '예: 1000',
+          modalValidator: _rangeValidator(200, 1600, 'μm'),
+          onModalResult: (v) => controller.updateGrindSize(v),
         );
       default:
         return _ParamConfig(
@@ -388,6 +405,17 @@ class CoffeeSettingDetailView extends GetView<CoffeeController> {
       if (result != null) {
         cfg.onModalResult(result.inSeconds);
       }
+    } else if (cfg.isGrindSize) {
+      final result = await GrindSizeModal.show(
+        title: cfg.modalTitle,
+        message: cfg.modalMessage,
+        initialValue: cfg.getValue(),
+        min: cfg.min,
+        max: cfg.max,
+      );
+      if (result != null) {
+        cfg.onModalResult(result);
+      }
     } else {
       final result = await InputModal.show(
         title: cfg.modalTitle,
@@ -424,6 +452,7 @@ class _ParamConfig {
   final int Function() getValue;
   final void Function(int) onSliderChanged;
   final bool isTimePicker;
+  final bool isGrindSize;
   final String modalTitle;
   final String? modalMessage;
   final String? modalHint;
@@ -439,6 +468,7 @@ class _ParamConfig {
     required this.getValue,
     required this.onSliderChanged,
     this.isTimePicker = false,
+    this.isGrindSize = false,
     required this.modalTitle,
     this.modalMessage,
     this.modalHint,

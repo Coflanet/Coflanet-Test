@@ -11,6 +11,18 @@ class SelectCoffeeController extends BaseController {
   final _coffeeItems = <CoffeeItem>[].obs;
   List<CoffeeItem> get coffeeItems => _coffeeItems;
 
+  // Visible (non-hidden) coffee items
+  List<CoffeeItem> get visibleCoffeeItems =>
+      _coffeeItems.where((item) => !item.isHidden).toList();
+
+  // Hidden coffee items
+  List<CoffeeItem> get hiddenCoffeeItems =>
+      _coffeeItems.where((item) => item.isHidden).toList();
+
+  // Whether to show hidden beans section
+  final _showHiddenBeans = false.obs;
+  bool get showHiddenBeans => _showHiddenBeans.value;
+
   // Currently selected coffee ID (for normal mode)
   final _selectedId = Rxn<String>();
   String? get selectedId => _selectedId.value;
@@ -79,9 +91,56 @@ class SelectCoffeeController extends BaseController {
     // Update normal selection if needed
     if (_selectedId.value != null &&
         !_coffeeItems.any((item) => item.id == _selectedId.value)) {
-      _selectedId.value = _coffeeItems.isNotEmpty
-          ? _coffeeItems.first.id
+      _selectedId.value = visibleCoffeeItems.isNotEmpty
+          ? visibleCoffeeItems.first.id
           : null;
+    }
+  }
+
+  /// Toggle visibility of hidden beans section
+  void toggleHiddenBeansSection() {
+    _showHiddenBeans.value = !_showHiddenBeans.value;
+  }
+
+  /// Hide a coffee item (move to hidden section)
+  void hideCoffee(String id) {
+    final index = _coffeeItems.indexWhere((item) => item.id == id);
+    if (index != -1) {
+      final item = _coffeeItems[index];
+      _coffeeItems[index] = item.copyWith(isHidden: true);
+
+      // Update selection if hidden item was selected
+      if (_selectedId.value == id) {
+        _selectedId.value = visibleCoffeeItems.isNotEmpty
+            ? visibleCoffeeItems.first.id
+            : null;
+      }
+    }
+  }
+
+  /// Unhide a coffee item (restore from hidden section)
+  void unhideCoffee(String id) {
+    final index = _coffeeItems.indexWhere((item) => item.id == id);
+    if (index != -1) {
+      final item = _coffeeItems[index];
+      _coffeeItems[index] = item.copyWith(isHidden: false);
+    }
+  }
+
+  /// Hide all selected items in edit mode
+  void hideSelectedItems() {
+    for (final id in _selectedIdsForEdit.toList()) {
+      hideCoffee(id);
+    }
+    _selectedIdsForEdit.clear();
+  }
+
+  /// Restore all hidden items
+  void restoreAllHiddenItems() {
+    for (int i = 0; i < _coffeeItems.length; i++) {
+      if (_coffeeItems[i].isHidden) {
+        _coffeeItems[i] = _coffeeItems[i].copyWith(isHidden: false);
+      }
     }
   }
 

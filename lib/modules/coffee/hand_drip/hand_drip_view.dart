@@ -9,6 +9,7 @@ import 'package:coflanet/modules/coffee/coffee_controller.dart';
 import 'package:coflanet/routes/app_pages.dart';
 import 'package:coflanet/widgets/buttons/primary_button.dart';
 import 'package:coflanet/widgets/cards/recipe_card.dart';
+import 'package:coflanet/widgets/checklist/equipment_checklist.dart';
 
 class HandDripView extends GetView<CoffeeController> {
   const HandDripView({super.key});
@@ -64,6 +65,11 @@ class HandDripView extends GetView<CoffeeController> {
 
               const SizedBox(height: 24),
 
+              // Equipment checklist
+              _buildEquipmentChecklist(),
+
+              const SizedBox(height: 24),
+
               // Steps
               Text(
                 '추출 단계',
@@ -106,6 +112,16 @@ class HandDripView extends GetView<CoffeeController> {
         ],
         infoText: '${controller.strengthLabel} 농도로 설정되어 있어요',
       ),
+    );
+  }
+
+  Widget _buildEquipmentChecklist() {
+    return InteractiveEquipmentChecklist(
+      items: DefaultEquipment.handDrip,
+      title: '준비물',
+      autoCheckRequired: true,
+      showChangeButton: false,
+      compact: true,
     );
   }
 

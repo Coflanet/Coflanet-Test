@@ -1,4 +1,4 @@
-import 'package:flutter/widgets.dart';
+import 'package:flutter/foundation.dart';
 import 'package:get/get.dart';
 import 'package:coflanet/core/base/base_controller.dart';
 import 'package:coflanet/core/storage/local_storage.dart';
@@ -11,29 +11,22 @@ class SplashController extends BaseController {
   @override
   void onInit() {
     super.onInit();
-    debugPrint('[SplashController] onInit called');
     _initializeApp();
-  }
-
-  @override
-  void onReady() {
-    super.onReady();
-    debugPrint('[SplashController] onReady called');
   }
 
   Future<void> _initializeApp() async {
     try {
-      debugPrint('[SplashController] _initializeApp started');
-
       // Wait for 2 seconds to show splash screen
       await Future.delayed(const Duration(seconds: 2));
-      debugPrint('[SplashController] Delay completed, navigating...');
 
       // Navigate based on login and onboarding status
       _navigateToNextScreen();
     } catch (e, stackTrace) {
-      debugPrint('[SplashController] Error: $e');
-      debugPrint('[SplashController] StackTrace: $stackTrace');
+      // Keep error logging for debugging critical issues
+      if (kDebugMode) {
+        debugPrint('[SplashController] Error: $e');
+        debugPrint('[SplashController] StackTrace: $stackTrace');
+      }
       // Fallback: go to sign in on error
       _safeNavigate(Routes.signIn);
     }
@@ -45,11 +38,18 @@ class SplashController extends BaseController {
   static const bool _devForceSignIn = false;
   // [DEV] Set to true to go directly to survey result for testing
   static const bool _devForceSurveyResult = false;
+  // [DEV] Set to true to go directly to MainShell for UI testing
+  static const bool _devForceMainShell = false;
 
   void _navigateToNextScreen() {
+    // [DEV] Direct navigation to MainShell for UI testing
+    if (_devForceMainShell) {
+      Get.offAllNamed(Routes.mainShell, arguments: {'initialTab': 0});
+      return;
+    }
+
     // [DEV] Direct navigation to survey result for UI testing
     if (_devForceSurveyResult) {
-      debugPrint('[SplashController] DEV: Forcing SurveyResult');
       _safeNavigate(Routes.surveyResult);
       return;
     }
@@ -59,29 +59,20 @@ class SplashController extends BaseController {
         ? false
         : _storage.isOnboardingComplete;
 
-    debugPrint('[SplashController] isLoggedIn: $isLoggedIn');
-    debugPrint(
-      '[SplashController] isOnboardingComplete: $isOnboardingComplete (devForce: $_devForceOnboarding)',
-    );
-
     if (!isLoggedIn) {
       // Not logged in -> go to sign in
-      debugPrint('[SplashController] Navigating to SignIn');
       _safeNavigate(Routes.signIn);
     } else if (!isOnboardingComplete) {
       // Logged in but onboarding not complete -> go to survey intro
-      debugPrint('[SplashController] Navigating to SurveyIntro');
       _safeNavigate(Routes.surveyIntro);
     } else {
-      // Logged in and onboarding complete -> go to home
-      debugPrint('[SplashController] Navigating to Home');
-      _safeNavigate(Routes.home);
+      // Logged in and onboarding complete -> go to main shell (원두 탭)
+      // Per Figma: MainShell (Select Coffee Section) is the Home
+      Get.offAllNamed(Routes.mainShell, arguments: {'initialTab': 0});
     }
   }
 
   void _safeNavigate(String route) {
-    // Navigate directly - the 2 second delay ensures the UI is ready
-    debugPrint('[SplashController] Executing navigation to: $route');
     Get.offAllNamed(route);
   }
 }

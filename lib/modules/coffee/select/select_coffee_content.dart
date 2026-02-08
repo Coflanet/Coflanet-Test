@@ -8,70 +8,32 @@ import 'package:coflanet/modules/coffee/select/select_coffee_controller.dart';
 import 'package:coflanet/routes/app_pages.dart';
 
 /// Select Coffee Content (SC-01, SC-02) - For Shell Tab 0 "원두"
-/// Black background with white/light text per Figma CSS
+/// Black background with accordion-style coffee cards per Figma design
 class SelectCoffeeContent extends GetView<SelectCoffeeController> {
   const SelectCoffeeContent({super.key});
 
   @override
   Widget build(BuildContext context) {
-    return SafeArea(
-      bottom: false,
-      child: Column(
-        children: [
-          _buildHeader(),
-          Expanded(
-            child: Obx(() {
-              if (controller.isLoading) {
-                return Center(
-                  child: CircularProgressIndicator(
-                    color: AppColor.primaryNormal,
-                  ),
-                );
-              }
+    // No Scaffold - MainShellView provides the scaffold
+    // No SafeArea - MainShellView handles safe areas
+    // SizedBox.expand ensures Container fills all available space
+    // Background color: Figma #F4F4F5
+    return SizedBox.expand(
+      child: Container(
+        color: AppColor.colorGlobalCoolNeutral98, // Figma: #F4F4F5
+        child: Obx(() {
+          if (controller.isLoading) {
+            return Center(
+              child: CircularProgressIndicator(color: AppColor.primaryNormal),
+            );
+          }
 
-              return controller.coffeeItems.isEmpty
-                  ? _buildEmptyState()
-                  : _buildCoffeeList();
-            }),
-          ),
-        ],
+          return controller.coffeeItems.isEmpty
+              ? _buildEmptyState()
+              : _buildCoffeeList();
+        }),
       ),
     );
-  }
-
-  Widget _buildHeader() {
-    return Obx(() {
-      return Padding(
-        padding: const EdgeInsets.fromLTRB(20, 8, 20, 16),
-        child: Row(
-          mainAxisAlignment: MainAxisAlignment.end,
-          children: [
-            // Edit button (title moved to AppBar)
-            GestureDetector(
-              onTap: controller.toggleEditMode,
-              child: Container(
-                padding: const EdgeInsets.symmetric(
-                  horizontal: 12,
-                  vertical: 6,
-                ),
-                decoration: BoxDecoration(
-                  color: AppColor.colorGlobalCoolNeutral20,
-                  borderRadius: AppRadius.lgBorder,
-                ),
-                child: Text(
-                  controller.isEditing ? '완료' : '편집',
-                  style: AppTextStyles.label1NormalMedium.copyWith(
-                    color: controller.isEditing
-                        ? AppColor.primaryNormal
-                        : AppColor.colorGlobalCommon100,
-                  ),
-                ),
-              ),
-            ),
-          ],
-        ),
-      );
-    });
   }
 
   Widget _buildEmptyState() {
@@ -85,27 +47,28 @@ class SelectCoffeeContent extends GetView<SelectCoffeeController> {
               width: 80,
               height: 80,
               decoration: BoxDecoration(
-                color: AppColor.colorGlobalCoolNeutral20,
+                color: AppColor
+                    .colorGlobalCoolNeutral95, // Light gray for light bg
                 shape: BoxShape.circle,
               ),
               child: Icon(
                 Icons.coffee_outlined,
                 size: 40,
-                color: AppColor.colorGlobalCoolNeutral60,
+                color: AppColor.colorGlobalCoolNeutral50,
               ),
             ),
             const SizedBox(height: 24),
             Text(
               '저장된 원두가 없어요',
               style: AppTextStyles.title2Bold.copyWith(
-                color: AppColor.colorGlobalCommon100,
+                color: AppColor.colorGlobalCommon0, // Black text for light bg
               ),
             ),
             const SizedBox(height: 8),
             Text(
               '자주 마시는 원두를 추가해보세요',
               style: AppTextStyles.body1NormalRegular.copyWith(
-                color: AppColor.colorGlobalCoolNeutral60,
+                color: AppColor.colorGlobalCoolNeutral50,
               ),
             ),
             const SizedBox(height: 24),
@@ -123,7 +86,8 @@ class SelectCoffeeContent extends GetView<SelectCoffeeController> {
                 child: Text(
                   '원두 추가하기',
                   style: AppTextStyles.headline2Bold.copyWith(
-                    color: AppColor.colorGlobalCommon100,
+                    color:
+                        AppColor.colorGlobalCommon100, // White text on purple
                   ),
                 ),
               ),
@@ -143,24 +107,65 @@ class SelectCoffeeContent extends GetView<SelectCoffeeController> {
         children: [
           Expanded(
             child: ListView.builder(
-              padding: const EdgeInsets.symmetric(horizontal: 20),
-              itemCount:
-                  items.length + (isEditing ? 1 : 0), // +1 for add button
+              padding: const EdgeInsets.fromLTRB(20, 0, 20, 24),
+              // +1 for the add button at the end
+              itemCount: items.length + 1,
               itemBuilder: (context, index) {
-                if (isEditing && index == items.length) {
-                  return _buildAddButton();
+                // Last item: Add button (different style for normal vs edit mode)
+                if (index == items.length) {
+                  return _buildListAddButton(isEditing);
                 }
+
                 final item = items[index];
-                return _CoffeeCard(
+                final isSelected = controller.isSelectedForEdit(item.id);
+
+                // In edit mode: [Checkbox] [Card] [DragHandle] layout
+                if (isEditing) {
+                  return Padding(
+                    padding: const EdgeInsets.only(bottom: 12),
+                    child: Row(
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      children: [
+                        // Checkbox OUTSIDE card (left)
+                        GestureDetector(
+                          onTap: () => controller.toggleEditSelection(item.id),
+                          child: _buildEditCheckbox(isSelected),
+                        ),
+                        const SizedBox(width: 12),
+                        // Card (without internal checkbox/drag handle)
+                        Expanded(
+                          child: _CoffeeAccordionCard(
+                            item: item,
+                            isEditing: true,
+                            isSelected: isSelected,
+                            initiallyExpanded: false,
+                            onTap: () =>
+                                controller.toggleEditSelection(item.id),
+                            onDetailPressed: () => _onDetailPressed(item),
+                            onRecipePressed: () => _onRecipePressed(item),
+                          ),
+                        ),
+                        const SizedBox(width: 12),
+                        // Drag handle OUTSIDE card (right)
+                        Icon(
+                          Icons.drag_handle,
+                          color: AppColor.colorGlobalCoolNeutral50,
+                          size: 24,
+                        ),
+                      ],
+                    ),
+                  );
+                }
+
+                // Normal mode: just the card
+                return _CoffeeAccordionCard(
                   item: item,
-                  isEditing: isEditing,
-                  isSelected: isEditing
-                      ? controller.isSelectedForEdit(item.id)
-                      : controller.selectedId == item.id,
-                  onTap: isEditing
-                      ? () => controller.toggleEditSelection(item.id)
-                      : () => _onCoffeeTap(item),
-                  index: index,
+                  isEditing: false,
+                  isSelected: false,
+                  initiallyExpanded: index == 0,
+                  onTap: null,
+                  onDetailPressed: () => _onDetailPressed(item),
+                  onRecipePressed: () => _onRecipePressed(item),
                 );
               },
             ),
@@ -172,228 +177,147 @@ class SelectCoffeeContent extends GetView<SelectCoffeeController> {
     });
   }
 
-  void _onCoffeeTap(CoffeeItem item) {
+  /// Add button at the end of the list
+  /// Normal mode: Gray filled circular button with inset shadow (음각 효과)
+  /// Edit mode: Gray outline circular button with inset shadow (음각 효과)
+  Widget _buildListAddButton(bool isEditing) {
+    return Padding(
+      padding: const EdgeInsets.symmetric(vertical: 16),
+      child: Center(
+        child: GestureDetector(
+          onTap: controller.addNewCoffee,
+          child: isEditing
+              ? _buildEditModeAddButton()
+              : _buildNormalModeAddButton(),
+        ),
+      ),
+    );
+  }
+
+  /// Normal mode add button with inset shadow effect (음각)
+  /// Figma: Recessed/pressed appearance with inner shadow
+  Widget _buildNormalModeAddButton() {
+    return Container(
+      width: 56,
+      height: 56,
+      decoration: BoxDecoration(
+        shape: BoxShape.circle,
+        // Base color - light gray
+        color: const Color(0xFFE8E8E8),
+        // Outer subtle shadow for depth
+        boxShadow: [
+          // Light shadow on bottom-right (simulates light source from top-left)
+          BoxShadow(
+            color: AppColor.colorGlobalCommon100.withValues(alpha: 0.8),
+            blurRadius: 4,
+            offset: const Offset(2, 2),
+          ),
+          // Dark shadow on top-left (simulates depth/recess)
+          BoxShadow(
+            color: const Color(0xFF000000).withValues(alpha: 0.15),
+            blurRadius: 4,
+            offset: const Offset(-2, -2),
+          ),
+        ],
+      ),
+      child: Container(
+        decoration: BoxDecoration(
+          shape: BoxShape.circle,
+          // Inner gradient to simulate inset effect
+          gradient: RadialGradient(
+            center: Alignment.center,
+            radius: 0.8,
+            colors: [
+              const Color(0xFFE8E8E8), // Center - base color
+              const Color(0xFFD8D8D8), // Edge - slightly darker
+            ],
+            stops: const [0.6, 1.0],
+          ),
+          // Inner shadow simulation with border
+          border: Border.all(
+            color: const Color(0xFFCCCCCC).withValues(alpha: 0.5),
+            width: 1,
+          ),
+        ),
+        child: const Icon(Icons.add, color: Color(0xFF4A4A4A), size: 24),
+      ),
+    );
+  }
+
+  /// Edit mode add button with inset shadow effect (음각)
+  /// Figma: Outline style with recessed appearance
+  Widget _buildEditModeAddButton() {
+    return Container(
+      width: 56,
+      height: 56,
+      decoration: BoxDecoration(
+        shape: BoxShape.circle,
+        // Slightly darker than background for inset effect
+        color: const Color(0xFFEAEAEA),
+        // Inset shadow simulation
+        boxShadow: [
+          // Inner shadow effect (top-left dark)
+          BoxShadow(
+            color: const Color(0xFF000000).withValues(alpha: 0.08),
+            blurRadius: 3,
+            offset: const Offset(-1, -1),
+            spreadRadius: -1,
+          ),
+          // Bottom-right light for contrast
+          BoxShadow(
+            color: AppColor.colorGlobalCommon100.withValues(alpha: 0.9),
+            blurRadius: 3,
+            offset: const Offset(1, 1),
+            spreadRadius: -1,
+          ),
+        ],
+      ),
+      child: Container(
+        margin: const EdgeInsets.all(2),
+        decoration: BoxDecoration(
+          shape: BoxShape.circle,
+          // Inner gradient for recessed look
+          gradient: RadialGradient(
+            center: Alignment.center,
+            radius: 0.85,
+            colors: [
+              const Color(0xFFF0F0F0), // Center - lighter
+              const Color(0xFFE0E0E0), // Edge - darker (inset effect)
+            ],
+            stops: const [0.5, 1.0],
+          ),
+          border: Border.all(
+            color: AppColor.colorGlobalCoolNeutral50.withValues(alpha: 0.3),
+            width: 1,
+          ),
+        ),
+        child: Icon(
+          Icons.add,
+          color: AppColor.colorGlobalCoolNeutral50,
+          size: 24,
+        ),
+      ),
+    );
+  }
+
+  void _onDetailPressed(CoffeeItem item) {
+    Get.toNamed(Routes.beanDetail, arguments: {'coffeeId': item.id});
+  }
+
+  void _onRecipePressed(CoffeeItem item) {
     controller.selectCoffee(item.id);
-    // Navigate to Recipe Setting
     Get.toNamed(Routes.coffeeSettings, arguments: {'coffeeId': item.id});
   }
 
-  Widget _buildAddButton() {
-    return Padding(
-      padding: const EdgeInsets.symmetric(vertical: 8),
-      child: GestureDetector(
-        onTap: controller.addNewCoffee,
-        child: Container(
-          padding: const EdgeInsets.all(16),
-          decoration: BoxDecoration(
-            color: AppColor.colorGlobalCoolNeutral20,
-            borderRadius: AppRadius.xlBorder,
-            border: Border.all(
-              color: AppColor.colorGlobalCoolNeutral30,
-              width: 1,
-              style: BorderStyle.solid,
-            ),
-          ),
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              Icon(
-                Icons.add,
-                color: AppColor.colorGlobalCoolNeutral60,
-                size: 22,
-              ),
-              const SizedBox(width: 8),
-              Text(
-                '원두 추가',
-                style: AppTextStyles.headline2Bold.copyWith(
-                  color: AppColor.colorGlobalCoolNeutral60,
-                ),
-              ),
-            ],
-          ),
-        ),
-      ),
-    );
-  }
-
-  Widget _buildEditingBottomBar() {
-    return Obx(() {
-      return Container(
-        padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 16),
-        decoration: BoxDecoration(
-          color: AppColor.colorGlobalCoolNeutral15,
-          border: Border(
-            top: BorderSide(
-              color: AppColor.colorGlobalCoolNeutral25,
-              width: 0.5,
-            ),
-          ),
-        ),
-        child: SafeArea(
-          top: false,
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              // Share button
-              GestureDetector(
-                onTap: controller.selectedEditCount > 0
-                    ? controller.shareSelectedItems
-                    : null,
-                child: Container(
-                  width: 44,
-                  height: 44,
-                  decoration: BoxDecoration(
-                    color: AppColor.colorGlobalCoolNeutral20,
-                    shape: BoxShape.circle,
-                  ),
-                  child: Icon(
-                    Icons.ios_share,
-                    color: controller.selectedEditCount > 0
-                        ? AppColor.colorGlobalCommon100
-                        : AppColor.colorGlobalCoolNeutral50,
-                    size: 22,
-                  ),
-                ),
-              ),
-              // Selection count
-              Text(
-                '${controller.selectedEditCount}개 선택됨',
-                style: AppTextStyles.body1NormalMedium.copyWith(
-                  color: AppColor.colorGlobalCommon100,
-                ),
-              ),
-              // Delete button
-              GestureDetector(
-                onTap: controller.selectedEditCount > 0
-                    ? controller.deleteSelectedItems
-                    : null,
-                child: Container(
-                  width: 44,
-                  height: 44,
-                  decoration: BoxDecoration(
-                    color: AppColor.colorGlobalCoolNeutral20,
-                    shape: BoxShape.circle,
-                  ),
-                  child: Icon(
-                    Icons.delete_outline,
-                    color: controller.selectedEditCount > 0
-                        ? AppColor.statusNegative
-                        : AppColor.colorGlobalCoolNeutral50,
-                    size: 22,
-                  ),
-                ),
-              ),
-            ],
-          ),
-        ),
-      );
-    });
-  }
-}
-
-/// Coffee card for black background
-class _CoffeeCard extends StatelessWidget {
-  final CoffeeItem item;
-  final bool isEditing;
-  final bool isSelected;
-  final VoidCallback onTap;
-  final int index;
-
-  const _CoffeeCard({
-    required this.item,
-    required this.isEditing,
-    required this.isSelected,
-    required this.onTap,
-    required this.index,
-  });
-
-  @override
-  Widget build(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.only(bottom: 12),
-      child: GestureDetector(
-        onTap: onTap,
-        child: AnimatedContainer(
-          duration: const Duration(milliseconds: 200),
-          padding: const EdgeInsets.all(16),
-          decoration: BoxDecoration(
-            color: isSelected
-                ? AppColor.primaryNormal.withOpacity(0.15)
-                : AppColor.colorGlobalCoolNeutral15,
-            borderRadius: AppRadius.xlBorder,
-            border: Border.all(
-              color: isSelected
-                  ? AppColor.primaryNormal
-                  : AppColor.colorGlobalCoolNeutral25,
-              width: isSelected ? 2 : 1,
-            ),
-          ),
-          child: Row(
-            children: [
-              // Checkbox in edit mode
-              if (isEditing) ...[_buildCheckbox(), const SizedBox(width: 12)],
-              // Coffee icon
-              Container(
-                width: 56,
-                height: 56,
-                decoration: BoxDecoration(
-                  gradient: LinearGradient(
-                    begin: Alignment.topLeft,
-                    end: Alignment.bottomRight,
-                    colors: [
-                      item.color.withOpacity(0.3),
-                      item.color.withOpacity(0.15),
-                    ],
-                  ),
-                  borderRadius: AppRadius.lgBorder,
-                ),
-                child: Icon(Icons.coffee, color: item.color, size: 28),
-              ),
-              const SizedBox(width: 16),
-              // Coffee info
-              Expanded(
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Text(
-                      item.name,
-                      style: AppTextStyles.headline2Bold.copyWith(
-                        color: AppColor.colorGlobalCommon100,
-                      ),
-                    ),
-                    const SizedBox(height: 4),
-                    Text(
-                      item.description,
-                      style: AppTextStyles.body2NormalRegular.copyWith(
-                        color: AppColor.colorGlobalCoolNeutral60,
-                      ),
-                      maxLines: 1,
-                      overflow: TextOverflow.ellipsis,
-                    ),
-                  ],
-                ),
-              ),
-              // Arrow indicator (non-edit mode)
-              if (!isEditing)
-                Icon(
-                  Icons.chevron_right,
-                  color: AppColor.colorGlobalCoolNeutral50,
-                  size: 24,
-                ),
-            ],
-          ),
-        ),
-      ),
-    );
-  }
-
-  Widget _buildCheckbox() {
+  /// Edit mode checkbox - OUTSIDE card, left side
+  /// Figma: Rounded square, 24x24, 6px radius
+  Widget _buildEditCheckbox(bool isSelected) {
     return AnimatedContainer(
       duration: const Duration(milliseconds: 150),
       width: 24,
       height: 24,
       decoration: BoxDecoration(
-        shape: BoxShape.circle,
+        borderRadius: BorderRadius.circular(6), // Rounded square
         color: isSelected ? AppColor.primaryNormal : AppColor.transparent,
         border: Border.all(
           color: isSelected
@@ -405,6 +329,594 @@ class _CoffeeCard extends StatelessWidget {
       child: isSelected
           ? Icon(Icons.check, size: 16, color: AppColor.colorGlobalCommon100)
           : null,
+    );
+  }
+
+  /// Edit mode bottom bar - Figma: Light gray background, dark icons/text
+  Widget _buildEditingBottomBar() {
+    return Obx(() {
+      final hasSelection = controller.selectedEditCount > 0;
+
+      return Container(
+        padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 16),
+        decoration: BoxDecoration(
+          color: AppColor.colorGlobalCoolNeutral98, // Figma: #F4F4F5
+          boxShadow: [
+            BoxShadow(
+              color: const Color(0xFF000000).withValues(alpha: 0.08),
+              blurRadius: 8,
+              offset: const Offset(0, -2),
+            ),
+          ],
+        ),
+        child: SafeArea(
+          top: false,
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              // Share button - Figma: light gray circle with dark icon
+              GestureDetector(
+                onTap: hasSelection ? controller.shareSelectedItems : null,
+                child: Container(
+                  width: 44,
+                  height: 44,
+                  decoration: BoxDecoration(
+                    color: AppColor.colorGlobalCommon100, // White circle
+                    shape: BoxShape.circle,
+                    boxShadow: [
+                      BoxShadow(
+                        color: const Color(0xFF000000).withValues(alpha: 0.06),
+                        blurRadius: 4,
+                        offset: const Offset(0, 1),
+                      ),
+                    ],
+                  ),
+                  child: Icon(
+                    Icons.ios_share,
+                    color: hasSelection
+                        ? AppColor
+                              .colorGlobalCoolNeutral10 // Dark
+                        : AppColor.colorGlobalCoolNeutral50, // Muted
+                    size: 20,
+                  ),
+                ),
+              ),
+              // Selection count - dark text
+              Text(
+                '${controller.selectedEditCount}개 선택됨',
+                style: AppTextStyles.body1NormalMedium.copyWith(
+                  color: AppColor.colorGlobalCoolNeutral10, // Dark text
+                ),
+              ),
+              // Delete button - Figma: dark circle with white trash icon
+              GestureDetector(
+                onTap: hasSelection ? controller.deleteSelectedItems : null,
+                child: Container(
+                  width: 44,
+                  height: 44,
+                  decoration: BoxDecoration(
+                    color: hasSelection
+                        ? AppColor
+                              .colorGlobalCoolNeutral10 // Dark when active
+                        : AppColor.colorGlobalCommon100, // White when inactive
+                    shape: BoxShape.circle,
+                    boxShadow: [
+                      BoxShadow(
+                        color: const Color(0xFF000000).withValues(alpha: 0.06),
+                        blurRadius: 4,
+                        offset: const Offset(0, 1),
+                      ),
+                    ],
+                  ),
+                  child: Icon(
+                    Icons.delete_outline,
+                    color: hasSelection
+                        ? AppColor
+                              .colorGlobalCommon100 // White icon on dark
+                        : AppColor.colorGlobalCoolNeutral50, // Muted
+                    size: 20,
+                  ),
+                ),
+              ),
+            ],
+          ),
+        ),
+      );
+    });
+  }
+}
+
+/// Accordion-style Coffee Card with expand/collapse functionality
+class _CoffeeAccordionCard extends StatefulWidget {
+  final CoffeeItem item;
+  final bool isEditing;
+  final bool isSelected;
+  final bool initiallyExpanded;
+  final VoidCallback? onTap;
+  final VoidCallback onDetailPressed;
+  final VoidCallback onRecipePressed;
+
+  const _CoffeeAccordionCard({
+    required this.item,
+    required this.isEditing,
+    required this.isSelected,
+    required this.initiallyExpanded,
+    this.onTap,
+    required this.onDetailPressed,
+    required this.onRecipePressed,
+  });
+
+  @override
+  State<_CoffeeAccordionCard> createState() => _CoffeeAccordionCardState();
+}
+
+class _CoffeeAccordionCardState extends State<_CoffeeAccordionCard>
+    with SingleTickerProviderStateMixin {
+  late bool _isExpanded;
+  late AnimationController _controller;
+  late Animation<double> _heightFactor;
+  late Animation<double> _iconTurns;
+
+  @override
+  void initState() {
+    super.initState();
+    // In edit mode, cards should start collapsed
+    _isExpanded = widget.isEditing ? false : widget.initiallyExpanded;
+    _controller = AnimationController(
+      duration: const Duration(milliseconds: 300),
+      vsync: this,
+    );
+    _heightFactor = _controller.drive(CurveTween(curve: Curves.easeInOut));
+    _iconTurns = _controller.drive(
+      Tween<double>(
+        begin: 0.0,
+        end: 0.5,
+      ).chain(CurveTween(curve: Curves.easeInOut)),
+    );
+
+    if (_isExpanded) {
+      _controller.value = 1.0;
+    }
+  }
+
+  @override
+  void didUpdateWidget(_CoffeeAccordionCard oldWidget) {
+    super.didUpdateWidget(oldWidget);
+    // Collapse all cards when entering edit mode
+    if (widget.isEditing && !oldWidget.isEditing && _isExpanded) {
+      _isExpanded = false;
+      _controller.reverse();
+    }
+  }
+
+  @override
+  void dispose() {
+    _controller.dispose();
+    super.dispose();
+  }
+
+  void _handleTap() {
+    if (widget.isEditing) {
+      widget.onTap?.call();
+    } else {
+      setState(() {
+        _isExpanded = !_isExpanded;
+        if (_isExpanded) {
+          _controller.forward();
+        } else {
+          _controller.reverse();
+        }
+      });
+    }
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Padding(
+      padding: const EdgeInsets.only(bottom: 12),
+      child: AnimatedContainer(
+        duration: const Duration(milliseconds: 200),
+        decoration: BoxDecoration(
+          color: AppColor.colorGlobalCommon100, // Always white card
+          borderRadius: BorderRadius.circular(
+            20,
+          ), // Figma: 12-16px, slightly more rounded
+          border: widget.isSelected
+              ? Border.all(color: AppColor.primaryNormal, width: 2)
+              : null,
+          boxShadow: [
+            // Subtle shadow for all cards
+            BoxShadow(
+              color: const Color(0xFF000000).withValues(alpha: 0.06),
+              blurRadius: 8,
+              offset: const Offset(0, 2),
+            ),
+          ],
+        ),
+        child: Column(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            // Header (always visible)
+            _buildHeader(),
+            // Expandable content
+            ClipRect(
+              child: AnimatedBuilder(
+                animation: _controller,
+                builder: (context, child) {
+                  return Align(
+                    heightFactor: _heightFactor.value,
+                    alignment: Alignment.topCenter,
+                    child: child,
+                  );
+                },
+                child: _buildExpandedContent(),
+              ),
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+
+  /// Header row - Figma: List/Coffee List/Accordion > List
+  /// Padding: 20px 16px, gap: 16px, height: ~110px
+  /// Note: In edit mode, checkbox and drag handle are OUTSIDE the card (in parent list)
+  Widget _buildHeader() {
+    // Figma: brand text color rgba(55, 56, 60, 0.61) = #37383C @ 61%
+    final subtitleColor = const Color(0xFF37383C).withValues(alpha: 0.61);
+    // Figma: coffee name color #171719
+    const textColor = AppColor.colorGlobalCoolNeutral10;
+
+    return GestureDetector(
+      onTap: _handleTap,
+      behavior: HitTestBehavior.opaque,
+      child: Padding(
+        padding: const EdgeInsets.symmetric(
+          horizontal: 20, // Figma: 16-20px horizontal
+          vertical: 20, // Figma: increased for ~110px card height
+        ),
+        child: Row(
+          children: [
+            // Thumbnail - Figma: 64x64, border-radius 12px
+            Container(
+              width: 64,
+              height: 64,
+              decoration: BoxDecoration(
+                gradient: LinearGradient(
+                  begin: Alignment.topLeft,
+                  end: Alignment.bottomRight,
+                  colors: [
+                    widget.item.color.withValues(alpha: 0.3),
+                    widget.item.color.withValues(alpha: 0.15),
+                  ],
+                ),
+                borderRadius: BorderRadius.circular(12), // Figma: 8-12px
+              ),
+              child: Icon(Icons.coffee, color: widget.item.color, size: 32),
+            ),
+            const SizedBox(width: 16), // Figma: gap 16px
+            // Text section
+            Expanded(
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  if (widget.item.brand != null) ...[
+                    // Figma: 12-14px, gray color
+                    Text(
+                      widget.item.brand!,
+                      style: AppTextStyles.label1NormalMedium.copyWith(
+                        color: subtitleColor,
+                        letterSpacing: 0.0145,
+                      ),
+                    ),
+                    const SizedBox(height: 6), // Figma: gap 6px
+                  ],
+                  // Figma: 16px, semi-bold, dark color
+                  Text(
+                    widget.item.name,
+                    style: AppTextStyles.body1NormalBold.copyWith(
+                      color: textColor,
+                      letterSpacing: 0.0096,
+                    ),
+                    maxLines: 1,
+                    overflow: TextOverflow.ellipsis,
+                  ),
+                ],
+              ),
+            ),
+            // Chevron icon (only in normal mode - not in edit mode)
+            // In edit mode, drag handle is OUTSIDE the card
+            if (!widget.isEditing)
+              RotationTransition(
+                turns: _iconTurns,
+                child: Icon(
+                  Icons.keyboard_arrow_down,
+                  color: const Color(0xFF2E2F33).withValues(alpha: 0.88),
+                  size: 24,
+                ),
+              ),
+          ],
+        ),
+      ),
+    );
+  }
+
+  /// Expanded Content - Figma: Contents section
+  /// Padding: 0px 16px, gap: 16px between sections
+  Widget _buildExpandedContent() {
+    return Container(
+      padding: const EdgeInsets.fromLTRB(16, 0, 16, 16),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          // Taste Profile Section
+          _buildTasteProfileSection(),
+          // Divider - Figma: Basic/Divider, 1px, rgba(112, 115, 124, 0.08)
+          Padding(
+            padding: const EdgeInsets.symmetric(vertical: 16),
+            child: Container(
+              height: 1,
+              color: const Color(0xFF70737C).withValues(alpha: 0.08),
+            ),
+          ),
+          // Flavor Tags Section
+          if (widget.item.allFlavorTags.isNotEmpty) ...[
+            _buildFlavorTagsSection(),
+            const SizedBox(height: 16),
+          ],
+          // Action Buttons
+          _buildActionButtons(),
+        ],
+      ),
+    );
+  }
+
+  /// Taste Profile Section - Figma: Coffee Profile/Attributes
+  /// Padding: 16px 24px 24px, gap: 20px, radius: 24px
+  /// Background: rgba(112, 115, 124, 0.08)
+  Widget _buildTasteProfileSection() {
+    final profile = widget.item.flavorProfile;
+    if (profile == null) {
+      return const SizedBox.shrink();
+    }
+
+    return Container(
+      padding: const EdgeInsets.fromLTRB(
+        24,
+        16,
+        24,
+        24,
+      ), // Figma: 16px 24px 24px
+      decoration: BoxDecoration(
+        color: const Color(
+          0xFF70737C,
+        ).withValues(alpha: 0.08), // Figma: rgba(112, 115, 124, 0.08)
+        borderRadius: BorderRadius.circular(24), // Figma: 24px radius
+      ),
+      child: Column(
+        children: [
+          _TasteProgressBar(label: '산미', value: profile.acidity),
+          const SizedBox(height: 20), // Figma: gap 20px
+          _TasteProgressBar(label: '바디감', value: profile.body),
+          const SizedBox(height: 20),
+          _TasteProgressBar(label: '단맛', value: profile.sweetness),
+          const SizedBox(height: 20),
+          _TasteProgressBar(label: '쓴맛', value: profile.bitterness),
+          const SizedBox(height: 20),
+          _TasteProgressBar(label: '밸런스', value: profile.balance),
+        ],
+      ),
+    );
+  }
+
+  /// Flavor Tags Section - Figma: Coffee Profile/Flavor Notes
+  /// Chip: Chip/Action, padding 6px 8px, radius 99px (pill)
+  /// Background: rgba(112, 115, 124, 0.08), text: #171719
+  Widget _buildFlavorTagsSection() {
+    return Wrap(
+      spacing: 4, // Figma: gap 4px
+      runSpacing: 4,
+      children: widget.item.allFlavorTags.map((tag) {
+        return Container(
+          padding: const EdgeInsets.symmetric(
+            horizontal: 8, // Figma: 8px horizontal
+            vertical: 6, // Figma: 6px vertical
+          ),
+          decoration: BoxDecoration(
+            color: const Color(
+              0xFF70737C,
+            ).withValues(alpha: 0.08), // Figma: rgba(112, 115, 124, 0.08)
+            borderRadius: AppRadius.fullBorder, // 99px pill
+          ),
+          child: Text(
+            tag,
+            style: AppTextStyles.label1NormalMedium.copyWith(
+              color: AppColor.colorGlobalCoolNeutral10, // #171719
+              letterSpacing: 0.0145,
+            ),
+          ),
+        );
+      }).toList(),
+    );
+  }
+
+  /// Action Buttons - Figma: Button List
+  /// Height: 40px, radius: 99px (pill), gap: 4px
+  /// Gray button: rgba(112, 115, 124, 0.08), text #171719
+  /// Primary button: #6541F2, text #FFFFFF
+  Widget _buildActionButtons() {
+    return Row(
+      children: [
+        // Secondary Button - 원두 상세 (Figma: Button/Solid/Gray)
+        Expanded(
+          child: GestureDetector(
+            onTap: widget.onDetailPressed,
+            child: Container(
+              height: 40, // Figma: 40px
+              padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 9),
+              decoration: BoxDecoration(
+                color: const Color(
+                  0xFF70737C,
+                ).withValues(alpha: 0.08), // Figma gray
+                borderRadius: AppRadius.fullBorder, // 99px pill
+              ),
+              child: Center(
+                child: Text(
+                  '원두 상세', // Figma label
+                  style: AppTextStyles.body2NormalBold.copyWith(
+                    color: AppColor.colorGlobalCoolNeutral10, // #171719
+                    letterSpacing: 0.0096,
+                  ),
+                ),
+              ),
+            ),
+          ),
+        ),
+        const SizedBox(width: 4), // Figma: gap 4px
+        // Primary Button - 레시피 실행 (Figma: Button/Solid/Primary)
+        Expanded(
+          child: GestureDetector(
+            onTap: widget.onRecipePressed,
+            child: Container(
+              height: 40, // Figma: 40px
+              padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 9),
+              decoration: BoxDecoration(
+                color: AppColor.colorGlobalViolet50, // #6541F2
+                borderRadius: AppRadius.fullBorder, // 99px pill
+              ),
+              child: Center(
+                child: Text(
+                  '레시피 실행', // Figma label
+                  style: AppTextStyles.body2NormalBold.copyWith(
+                    color: AppColor.colorGlobalCommon100, // #FFFFFF
+                    letterSpacing: 0.0096,
+                  ),
+                ),
+              ),
+            ),
+          ),
+        ),
+      ],
+    );
+  }
+}
+
+/// Taste Profile Progress Bar Widget - Figma: Coffee Profile/Attributes/Resource/Gauge
+/// Label width: 40px, indicator with 6 segments and dividers
+/// Fill color: #9E86FC (Violet70), Score color: rgba(55, 56, 60, 0.61)
+class _TasteProgressBar extends StatelessWidget {
+  final String label;
+  final double value;
+
+  /// Maximum value for the progress bar (default: 5.0)
+  static const double _maxValue = 5.0;
+  static const int _segmentCount = 6; // 0~1, 1~2, 2~3, 3~4, 4~5, 5+
+
+  const _TasteProgressBar({required this.label, required this.value});
+
+  @override
+  Widget build(BuildContext context) {
+    final clampedValue = value.clamp(0.0, _maxValue);
+    // Calculate how many segments to fill (out of 6)
+    final filledSegments = (clampedValue / _maxValue * _segmentCount).ceil();
+
+    return Row(
+      children: [
+        // Label - Figma: width 40px, Label 1/Normal - Medium, #171719
+        SizedBox(
+          width: 40,
+          child: Text(
+            label,
+            style: AppTextStyles.label1NormalMedium.copyWith(
+              color: AppColor.colorGlobalCoolNeutral10, // #171719
+              letterSpacing: 0.0145,
+            ),
+          ),
+        ),
+        const SizedBox(width: 12), // Figma: gap 12px
+        // Progress bar with segments - Figma: 156px width, 8px height
+        Expanded(
+          child: Container(
+            height: 8,
+            decoration: BoxDecoration(
+              color: const Color(
+                0xFF70737C,
+              ).withValues(alpha: 0.12), // Figma: rgba(112, 115, 124, 0.12)
+              borderRadius: AppRadius.fullBorder,
+            ),
+            child: LayoutBuilder(
+              builder: (context, constraints) {
+                return Stack(
+                  children: [
+                    // Filled segments
+                    Row(
+                      children: List.generate(_segmentCount, (index) {
+                        final isFilled = index < filledSegments;
+                        final isFirst = index == 0;
+                        final isLast = index == _segmentCount - 1;
+
+                        return Expanded(
+                          child: Container(
+                            decoration: BoxDecoration(
+                              color: isFilled
+                                  ? AppColor
+                                        .colorGlobalViolet70 // #9E86FC per Figma
+                                  : AppColor.transparent,
+                              borderRadius: BorderRadius.horizontal(
+                                left: isFirst
+                                    ? const Radius.circular(99)
+                                    : Radius.zero,
+                                right: isLast
+                                    ? const Radius.circular(99)
+                                    : Radius.zero,
+                              ),
+                            ),
+                          ),
+                        );
+                      }),
+                    ),
+                    // Dividers between segments
+                    Row(
+                      children:
+                          List.generate(_segmentCount - 1, (index) {
+                            return Expanded(
+                              child: Align(
+                                alignment: Alignment.centerRight,
+                                child: Container(
+                                  width: 1,
+                                  height: 8,
+                                  color: const Color(
+                                    0xFF70737C,
+                                  ).withValues(alpha: 0.16), // Figma divider
+                                ),
+                              ),
+                            );
+                          })..add(
+                            const Expanded(child: SizedBox()),
+                          ), // Last segment has no divider
+                    ),
+                  ],
+                );
+              },
+            ),
+          ),
+        ),
+        const SizedBox(width: 12), // Figma: gap after indicator
+        // Score - Figma: width 28px, Label 1/Normal - Regular, rgba(55, 56, 60, 0.61)
+        SizedBox(
+          width: 28,
+          child: Text(
+            clampedValue.toStringAsFixed(1),
+            style: AppTextStyles.label1NormalRegular.copyWith(
+              color: const Color(0xFF37383C).withValues(alpha: 0.61),
+              letterSpacing: 0.0145,
+              fontFeatures: const [FontFeature.tabularFigures()],
+            ),
+            textAlign: TextAlign.right,
+          ),
+        ),
+      ],
     );
   }
 }

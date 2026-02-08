@@ -3,7 +3,6 @@ import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 import 'package:coflanet/constants/asset_constant.dart';
 import 'package:coflanet/constants/color_constant.dart';
-import 'package:coflanet/constants/style_constant.dart';
 import 'package:coflanet/constants/radius_constant.dart';
 import 'package:coflanet/modules/splash/splash_controller.dart';
 

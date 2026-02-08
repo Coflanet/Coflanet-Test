@@ -248,7 +248,8 @@ class SurveyController extends BaseController {
     return _selectedBeanIds.contains(beanId);
   }
 
-  /// Complete onboarding and go to home
+  /// Complete onboarding and go to main shell (Select Coffee Section)
+  /// Per Figma: Survey Result → MainShell Tab 0 (원두)
   Future<void> completeOnboarding() async {
     await _storage.setOnboardingComplete(true);
 
@@ -257,7 +258,13 @@ class SurveyController extends BaseController {
       await _storage.saveSurveyResult(_surveyResult.value!.toJson());
     }
 
-    Get.offAllNamed(Routes.home);
+    // Save selected bean IDs for MainShell to load
+    if (_selectedBeanIds.isNotEmpty) {
+      await _storage.write('selected_bean_ids', _selectedBeanIds.toList());
+    }
+
+    // Navigate to MainShell Tab 0 (원두) per Figma design
+    Get.offAllNamed(Routes.mainShell, arguments: {'initialTab': 0});
   }
 
   /// Get user name from storage

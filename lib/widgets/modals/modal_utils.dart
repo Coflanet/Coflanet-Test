@@ -5,6 +5,9 @@ import 'selection_modal.dart';
 import 'input_modal.dart';
 import 'time_picker_modal.dart';
 import 'confirm_modal.dart';
+import 'unsaved_changes_modal.dart';
+import 'equipment_selection_modal.dart';
+import 'grind_size_modal.dart';
 
 /// Utility class providing convenient static methods for showing modals.
 ///
@@ -233,6 +236,84 @@ class ModalUtils {
       isDestructive: true,
       barrierDismissible: barrierDismissible,
       icon: icon,
+    );
+  }
+
+  /// Shows an unsaved changes warning modal.
+  ///
+  /// Returns [UnsavedChangesResult.continueEditing] if user wants to continue,
+  /// [UnsavedChangesResult.discardAndExit] if user wants to discard and exit.
+  /// Returns null if dismissed (when barrierDismissible is true).
+  ///
+  /// Typical usage with PopScope:
+  /// ```dart
+  /// PopScope(
+  ///   canPop: false,
+  ///   onPopInvokedWithResult: (didPop, result) async {
+  ///     if (didPop) return;
+  ///     if (!hasUnsavedChanges) {
+  ///       Navigator.of(context).pop();
+  ///       return;
+  ///     }
+  ///     final result = await ModalUtils.showUnsavedChanges();
+  ///     if (result == UnsavedChangesResult.discardAndExit) {
+  ///       Navigator.of(context).pop();
+  ///     }
+  ///   },
+  ///   child: ...
+  /// )
+  /// ```
+  static Future<UnsavedChangesResult?> showUnsavedChanges({
+    String? title,
+    String? message,
+    String? continueText,
+    String? exitText,
+    bool barrierDismissible = false,
+  }) {
+    return UnsavedChangesModal.show(
+      title: title,
+      message: message,
+      continueText: continueText,
+      exitText: exitText,
+      barrierDismissible: barrierDismissible,
+    );
+  }
+
+  /// Shows an equipment selection modal for choosing coffee brewing equipment.
+  ///
+  /// Returns the selected [CoffeeEquipment], or null if cancelled.
+  static Future<CoffeeEquipment?> showEquipmentSelection({
+    CoffeeEquipment? selectedEquipment,
+    List<CoffeeEquipment>? availableEquipments,
+    String? title,
+    bool barrierDismissible = true,
+  }) {
+    return EquipmentSelectionModal.show(
+      selectedEquipment: selectedEquipment,
+      availableEquipments: availableEquipments,
+      title: title,
+      barrierDismissible: barrierDismissible,
+    );
+  }
+
+  /// Shows a grind size input modal with preset buttons.
+  ///
+  /// Returns the selected grind size in μm, or null if cancelled.
+  static Future<int?> showGrindSize({
+    int? initialValue,
+    String? title,
+    String? message,
+    int min = 200,
+    int max = 1600,
+    bool barrierDismissible = true,
+  }) {
+    return GrindSizeModal.show(
+      initialValue: initialValue,
+      title: title,
+      message: message,
+      min: min,
+      max: max,
+      barrierDismissible: barrierDismissible,
     );
   }
 }

@@ -300,10 +300,10 @@ class CoffeeTimerController extends BaseController {
     _initCurrentStep();
   }
 
-  /// Go to home
+  /// Go to main shell (원두 탭)
   void goToHome() {
     _timer?.cancel();
-    Get.offAllNamed(Routes.home);
+    Get.offAllNamed(Routes.mainShell, arguments: {'initialTab': 0});
   }
 
   // ─── Formatting helpers ───

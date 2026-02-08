@@ -198,7 +198,7 @@ void main() {
       debugPrint('========================================');
 
       // Navigate to home directly
-      Get.offAllNamed(Routes.home);
+      Get.offAllNamed(Routes.mainShell);
       await tester.pumpAndSettle(const Duration(seconds: 1));
       expect(find.byType(Scaffold), findsWidgets);
 
@@ -348,7 +348,7 @@ void main() {
       debugPrint('TEST 11: Espresso Screen');
       debugPrint('========================================');
 
-      Get.offAllNamed(Routes.home);
+      Get.offAllNamed(Routes.mainShell);
       await tester.pumpAndSettle();
       Get.toNamed(Routes.espresso);
       await tester.pumpAndSettle();
@@ -523,7 +523,7 @@ void main() {
       debugPrint('========================================');
 
       // Home -> Hand Drip -> Back
-      Get.offAllNamed(Routes.home);
+      Get.offAllNamed(Routes.mainShell);
       await tester.pumpAndSettle();
       Get.toNamed(Routes.handDrip);
       await tester.pumpAndSettle();

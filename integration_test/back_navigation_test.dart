@@ -269,7 +269,7 @@ void main() {
         debugPrint('   ⚠️ Complete removed from stack');
 
         // Result -> offAllNamed to Home (CLEARS ALL)
-        Get.offAllNamed(Routes.home);
+        Get.offAllNamed(Routes.mainShell);
         await tester.pumpAndSettle();
         debugPrint('6. Home - Stack: [home]');
         debugPrint('   ✓ Entire stack cleared (intentional)');
@@ -278,7 +278,7 @@ void main() {
         debugPrint('CONCLUSION: offNamed breaks expected back behavior');
         debugPrint('${'=' * 60}\n');
 
-        expect(Get.currentRoute, Routes.home);
+        expect(Get.currentRoute, Routes.mainShell);
       },
     );
   });

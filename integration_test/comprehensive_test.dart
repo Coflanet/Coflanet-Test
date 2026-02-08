@@ -185,7 +185,7 @@ void main() {
 
       // ── TEST 15: Home Screen ──
       debugPrint('\n📱 TEST 15/22: Home Screen');
-      Get.offAllNamed(Routes.home);
+      Get.offAllNamed(Routes.mainShell);
       await tester.pumpAndSettle();
 
       expect(find.byType(Scaffold), findsWidgets);

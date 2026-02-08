@@ -17,7 +17,7 @@ class AppUtil {
       title: title,
       content: Text(content),
       confirmTextColor: AppColor.staticLabelWhiteStrong,
-      onConfirm: () => Get.offAllNamed(Routes.home),
+      onConfirm: () => Get.offAllNamed(Routes.mainShell),
       buttonColor: AppColor.primaryNormal,
     );
   }

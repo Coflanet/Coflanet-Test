@@ -9,10 +9,10 @@ class CoffeeController extends BaseController {
   final _selectedType = Rxn<CoffeeType>();
   CoffeeType? get selectedType => _selectedType.value;
 
-  // Cups count
+  // Cups count (1-6 per Figma design)
   final _cupsCount = 1.obs;
   int get cupsCount => _cupsCount.value;
-  set cupsCount(int value) => _cupsCount.value = value.clamp(1, 4);
+  set cupsCount(int value) => _cupsCount.value = value.clamp(1, 6);
 
   // Strength (0-100)
   final _strength = 50.obs;
@@ -39,6 +39,12 @@ class CoffeeController extends BaseController {
   final _customWaterAmount = Rxn<int>();
   int? get customWaterAmount => _customWaterAmount.value;
   set customWaterAmount(int? value) => _customWaterAmount.value = value;
+
+  // Grind size in μm (microns)
+  // Hand drip: 800-1200μm (medium), Espresso: 200-400μm (fine)
+  final _grindSize = 1000.obs;
+  int get grindSize => _grindSize.value;
+  set grindSize(int value) => _grindSize.value = value.clamp(200, 1600);
 
   // Water amount in ml
   int get waterAmount {
@@ -82,11 +88,13 @@ class CoffeeController extends BaseController {
       case CoffeeType.handDrip:
         _waterTemperature.value = 92;
         _extractionTime.value = 180; // 3 minutes
+        _grindSize.value = 1000; // Medium grind for hand drip
         Get.toNamed(Routes.handDrip);
         break;
       case CoffeeType.espresso:
         _waterTemperature.value = 93;
         _extractionTime.value = 25; // 25 seconds
+        _grindSize.value = 300; // Fine grind for espresso
         Get.toNamed(Routes.espresso);
         break;
     }
@@ -100,7 +108,7 @@ class CoffeeController extends BaseController {
 
   /// Increment cups
   void incrementCups() {
-    if (_cupsCount.value < 4) {
+    if (_cupsCount.value < 6) {
       _cupsCount.value++;
     }
   }
@@ -110,6 +118,11 @@ class CoffeeController extends BaseController {
     if (_cupsCount.value > 1) {
       _cupsCount.value--;
     }
+  }
+
+  /// Set cups count directly
+  void setCups(int cups) {
+    cupsCount = cups;
   }
 
   /// Update bean (coffee) amount directly
@@ -130,6 +143,25 @@ class CoffeeController extends BaseController {
   /// Update water amount directly
   void updateWaterAmount(int ml) {
     customWaterAmount = ml.clamp(100, 400);
+  }
+
+  /// Update grind size directly (in μm)
+  void updateGrindSize(int microns) {
+    grindSize = microns.clamp(200, 1600);
+  }
+
+  /// Get grind size formatted with unit
+  String get grindSizeFormatted => '${grindSize}μm';
+
+  /// Get grind size label based on current value
+  String get grindSizeLabel {
+    if (grindSize < 400) return '에스프레소 (곱게)';
+    if (grindSize < 600) return '모카포트';
+    if (grindSize < 800) return '에어로프레스';
+    if (grindSize < 1000) return '푸어오버 (중간)';
+    if (grindSize < 1200) return '드립 (중간)';
+    if (grindSize < 1400) return '프렌치프레스';
+    return '콜드브루 (굵게)';
   }
 
   /// Get strength label

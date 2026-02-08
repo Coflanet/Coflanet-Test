@@ -8,10 +8,12 @@ import 'package:coflanet/modules/tasting/tasting_notes_controller.dart';
 class MainShellBinding extends Bindings {
   @override
   void dependencies() {
-    Get.lazyPut<MainShellController>(() => MainShellController());
-    Get.lazyPut<SelectCoffeeController>(() => SelectCoffeeController());
-    Get.lazyPut<MyPlanetController>(() => MyPlanetController());
-    Get.lazyPut<ExtractionListController>(() => ExtractionListController());
-    Get.lazyPut<TastingNotesController>(() => TastingNotesController());
+    // Use put instead of lazyPut to ensure controllers are initialized immediately
+    // This prevents race conditions when accessing controllers in the view
+    Get.put<MainShellController>(MainShellController());
+    Get.put<SelectCoffeeController>(SelectCoffeeController());
+    Get.put<MyPlanetController>(MyPlanetController());
+    Get.put<ExtractionListController>(ExtractionListController());
+    Get.put<TastingNotesController>(TastingNotesController());
   }
 }

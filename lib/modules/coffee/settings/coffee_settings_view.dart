@@ -1,280 +1,487 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
-import 'package:coflanet/constants/asset_constant.dart';
 import 'package:coflanet/constants/color_constant.dart';
-import 'package:coflanet/constants/radius_constant.dart';
 import 'package:coflanet/constants/style_constant.dart';
 import 'package:coflanet/modules/coffee/coffee_controller.dart';
 import 'package:coflanet/routes/app_pages.dart';
 import 'package:coflanet/widgets/modals/input_modal.dart';
+import 'package:coflanet/widgets/modals/selection_modal.dart';
 import 'package:coflanet/widgets/modals/time_picker_modal.dart';
-import 'package:coflanet/widgets/navigation/app_bottom_bar.dart';
+
+/// Recipe step data model
+class RecipeStep {
+  final int number;
+  final String title;
+  final String description;
+
+  const RecipeStep({
+    required this.number,
+    required this.title,
+    required this.description,
+  });
+}
+
+/// Dummy recipe steps data
+const List<RecipeStep> _dummyRecipeSteps = [
+  RecipeStep(number: 1, title: '원두 분쇄', description: '분쇄도: 800~1,000μm'),
+  RecipeStep(number: 2, title: '예열', description: '서버와 드리퍼 예열'),
+  RecipeStep(number: 3, title: '뜸 들이기', description: '물 30g 30초간 뜸'),
+  RecipeStep(number: 4, title: '1차 추출', description: '100g 추출'),
+  RecipeStep(number: 5, title: '2차 추출', description: '70g 마무리 추출'),
+  RecipeStep(number: 6, title: '추출 완료', description: '드리퍼 제거하고 서버를 섞기'),
+];
+
+/// Figma-aligned colors for Recipe Settings screen
+class _SettingsColors {
+  // Background
+  static const Color background = Color(0xFF000000);
+
+  // Card backgrounds
+  static const Color cardDark = Color(0xFF1C1C1E);
+  static const Color cardLight = Color(0xFFFFFFFF);
+  static const Color surfaceLight = Color(0xFFF5F5F7);
+
+  // Primary
+  static Color get primary => AppColor.primaryNormal;
+  static const Color primaryLight = Color(0xFFEDE9FE);
+
+  // Text
+  static const Color textPrimary = Color(0xFFFFFFFF);
+  static const Color textSecondary = Color(0xFF8E8E93);
+  static const Color textDark = Color(0xFF000000);
+
+  // Buttons
+  static const Color buttonSecondary = Color(0xFF2C2C2E);
+  static const Color buttonTertiary = Color(0xFFE5E5EA);
+}
 
 class CoffeeSettingsView extends GetView<CoffeeController> {
   const CoffeeSettingsView({super.key});
 
   @override
   Widget build(BuildContext context) {
-    // Fixed per Figma CSS: Recipe Setting uses #000000 background
     return Scaffold(
-      backgroundColor: AppColor.colorGlobalCommon0, // #000000 black
-      appBar: AppBar(
-        backgroundColor: AppColor.colorGlobalCommon0,
-        elevation: 0,
-        leading: IconButton(
-          icon: SvgPicture.asset(
-            AssetPath.iconArrowBack,
-            width: 24,
-            height: 24,
-            colorFilter: ColorFilter.mode(
-              AppColor.colorGlobalCommon100, // White icon on black bg
-              BlendMode.srcIn,
-            ),
-          ),
-          onPressed: () => Get.back(),
-        ),
-        title: Text(
-          '상세 설정',
-          style: AppTextStyles.headline1Bold.copyWith(
-            color: AppColor.colorGlobalCommon100, // White text on black bg
-          ),
-        ),
-      ),
+      backgroundColor: _SettingsColors.background,
       body: SafeArea(
         child: Column(
           children: [
+            _buildAppBar(),
             Expanded(
               child: SingleChildScrollView(
-                padding: const EdgeInsets.all(24),
+                padding: const EdgeInsets.symmetric(horizontal: 20),
                 child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    // Cups selector
-                    _buildCupsSelector(),
-
-                    const SizedBox(height: 32),
-
-                    // Strength slider
-                    _buildStrengthSlider(),
-
-                    const SizedBox(height: 32),
-
-                    // Recipe parameter cards
-                    _buildRecipeParameters(),
-
-                    const SizedBox(height: 32),
-
-                    // Recipe summary
-                    _buildRecipeSummary(),
+                    const SizedBox(height: 16),
+                    _buildCoffeeBeanCard(),
+                    const SizedBox(height: 16),
+                    _buildBrewingSettingsCard(),
+                    const SizedBox(height: 16),
+                    _buildRecipeStepsCard(),
+                    const SizedBox(height: 24),
                   ],
                 ),
               ),
             ),
-            _buildBottomBar(),
+            _buildBottomCTA(),
           ],
         ),
       ),
     );
   }
 
-  Widget _buildCupsSelector() {
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        Text(
-          '잔 수',
-          style: AppTextStyles.headline1Bold.copyWith(
-            color: AppColor.colorGlobalCommon100, // White on black bg
+  /// AppBar with circular back button, centered title, and edit pill button
+  Widget _buildAppBar() {
+    return Container(
+      height: 56,
+      padding: const EdgeInsets.symmetric(horizontal: 16),
+      child: Row(
+        children: [
+          // Back button - circular dark
+          _CircularIconButton(
+            icon: Icons.arrow_back_ios_new,
+            onTap: () => Get.back(),
           ),
-        ),
-        const SizedBox(height: 16),
-        Obx(
-          () => Row(
-            children: [
-              _buildCupsButton(
-                onPressed: controller.decrementCups,
-                icon: Icons.remove,
-                enabled: controller.cupsCount > 1,
+          // Centered title
+          Expanded(
+            child: Text(
+              '레시피',
+              style: AppTextStyles.headline1Bold.copyWith(
+                color: _SettingsColors.textPrimary,
               ),
-              Expanded(
-                child: Center(
-                  child: Text(
-                    '${controller.cupsCount}잔',
-                    style: AppTextStyles.title2Bold.copyWith(
-                      color: AppColor.colorGlobalCommon100, // White on black bg
+              textAlign: TextAlign.center,
+            ),
+          ),
+          // Edit button - pill
+          _PillButton(
+            text: '편집',
+            onTap: () {
+              // TODO: Edit mode
+            },
+          ),
+        ],
+      ),
+    );
+  }
+
+  /// Coffee bean info card - white background
+  Widget _buildCoffeeBeanCard() {
+    return Container(
+      padding: const EdgeInsets.all(16),
+      decoration: BoxDecoration(
+        color: _SettingsColors.cardLight,
+        borderRadius: BorderRadius.circular(16),
+      ),
+      child: Row(
+        children: [
+          // Thumbnail
+          Container(
+            width: 64,
+            height: 64,
+            decoration: BoxDecoration(
+              color: _SettingsColors.surfaceLight,
+              borderRadius: BorderRadius.circular(12),
+            ),
+            child: Center(
+              child: Icon(
+                Icons.coffee,
+                size: 32,
+                color: _SettingsColors.textSecondary,
+              ),
+            ),
+          ),
+          const SizedBox(width: 16),
+          // Bean info
+          Expanded(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text(
+                  '스타벅스',
+                  style: AppTextStyles.label2Regular.copyWith(
+                    color: _SettingsColors.textSecondary,
+                  ),
+                ),
+                const SizedBox(height: 4),
+                Text(
+                  '에티오피아 예가체프',
+                  style: AppTextStyles.headline2Bold.copyWith(
+                    color: _SettingsColors.textDark,
+                  ),
+                ),
+              ],
+            ),
+          ),
+          // Chevron
+          Icon(
+            Icons.chevron_right,
+            color: _SettingsColors.textSecondary,
+            size: 24,
+          ),
+        ],
+      ),
+    );
+  }
+
+  /// Brewing settings card - dark background with sections
+  Widget _buildBrewingSettingsCard() {
+    return Container(
+      decoration: BoxDecoration(
+        color: _SettingsColors.cardDark,
+        borderRadius: BorderRadius.circular(20),
+      ),
+      child: Column(
+        children: [
+          // Extraction device section
+          _buildExtractionDeviceSection(),
+          // Selection pills row
+          Padding(
+            padding: const EdgeInsets.all(16),
+            child: _buildSelectionPillsRow(),
+          ),
+          // Parameters grid
+          _buildParametersGrid(),
+        ],
+      ),
+    );
+  }
+
+  /// Extraction device section with light background
+  Widget _buildExtractionDeviceSection() {
+    return Container(
+      margin: const EdgeInsets.all(12),
+      padding: const EdgeInsets.all(16),
+      decoration: BoxDecoration(
+        color: _SettingsColors.surfaceLight,
+        borderRadius: BorderRadius.circular(16),
+      ),
+      child: Row(
+        children: [
+          Expanded(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text(
+                  '추출 기기',
+                  style: AppTextStyles.label2Regular.copyWith(
+                    color: _SettingsColors.textSecondary,
+                  ),
+                ),
+                const SizedBox(height: 4),
+                Obx(
+                  () => Text(
+                    controller.selectedType == CoffeeType.espresso
+                        ? '에스프레소'
+                        : '핸드드립',
+                    style: AppTextStyles.headline2Bold.copyWith(
+                      color: _SettingsColors.textDark,
                     ),
                   ),
                 ),
+              ],
+            ),
+          ),
+          // Change button
+          GestureDetector(
+            onTap: _showDeviceSelectionModal,
+            child: Container(
+              padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 8),
+              decoration: BoxDecoration(
+                color: _SettingsColors.buttonTertiary,
+                borderRadius: BorderRadius.circular(100),
               ),
-              _buildCupsButton(
-                onPressed: controller.incrementCups,
-                icon: Icons.add,
-                enabled: controller.cupsCount < 4,
+              child: Text(
+                '변경하기',
+                style: AppTextStyles.label2Medium.copyWith(
+                  color: _SettingsColors.textDark,
+                ),
               ),
-            ],
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+
+  /// Selection pills row for cups and strength
+  Widget _buildSelectionPillsRow() {
+    return Row(
+      children: [
+        // Cups pill
+        Expanded(
+          child: Obx(
+            () => _SelectionPill(
+              label: '잔수',
+              value: '${controller.cupsCount}잔',
+              onTap: _showCupsSelectionModal,
+            ),
+          ),
+        ),
+        const SizedBox(width: 12),
+        // Strength pill
+        Expanded(
+          child: Obx(
+            () => _SelectionPill(
+              label: '진하기',
+              value: _getStrengthDisplayLabel(),
+              onTap: _showStrengthSelectionModal,
+            ),
           ),
         ),
       ],
     );
   }
 
-  Widget _buildCupsButton({
-    required VoidCallback onPressed,
-    required IconData icon,
-    required bool enabled,
-  }) {
-    return GestureDetector(
-      onTap: enabled ? onPressed : null,
-      child: Container(
-        width: 48,
-        height: 48,
-        decoration: BoxDecoration(
-          color: enabled
-              ? AppColor.primaryNormal.withOpacity(0.2)
-              : AppColor.colorGlobalCoolNeutral15, // Dark bg for disabled
-          borderRadius: AppRadius.xxxlBorder,
-        ),
-        child: Icon(
-          icon,
-          color: enabled
-              ? AppColor.primaryNormal
-              : AppColor.colorGlobalCoolNeutral50, // Gray for disabled
+  String _getStrengthDisplayLabel() {
+    if (controller.strength < 33) return '가벼운 맛';
+    if (controller.strength < 66) return '보통';
+    return '진한 맛';
+  }
+
+  /// Parameters grid with 4 items
+  Widget _buildParametersGrid() {
+    return Container(
+      margin: const EdgeInsets.fromLTRB(12, 0, 12, 12),
+      padding: const EdgeInsets.all(16),
+      decoration: BoxDecoration(
+        color: _SettingsColors.surfaceLight,
+        borderRadius: BorderRadius.circular(16),
+      ),
+      child: Obx(
+        () => Row(
+          children: [
+            Expanded(
+              child: _ParameterItem(
+                label: '원두',
+                value: '${controller.coffeeAmount}g',
+                onTap: _showCoffeeAmountModal,
+              ),
+            ),
+            _buildVerticalDivider(),
+            Expanded(
+              child: _ParameterItem(
+                label: '물 온도',
+                value: '${controller.waterTemperature}°C',
+                onTap: _showWaterTemperatureModal,
+              ),
+            ),
+            _buildVerticalDivider(),
+            Expanded(
+              child: _ParameterItem(
+                label: '추출 시간',
+                value: controller.extractionTimeFormatted,
+                onTap: _showExtractionTimeModal,
+              ),
+            ),
+            _buildVerticalDivider(),
+            Expanded(
+              child: _ParameterItem(
+                label: '물의 양',
+                value: '${controller.waterAmount}ml',
+                onTap: _showWaterAmountModal,
+              ),
+            ),
+          ],
         ),
       ),
     );
   }
 
-  Widget _buildStrengthSlider() {
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        Row(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          children: [
-            Text(
-              '진하기',
-              style: AppTextStyles.headline1Bold.copyWith(
-                color: AppColor.colorGlobalCommon100, // White on black bg
-              ),
-            ),
-            Obx(
-              () => Text(
-                controller.strengthLabel,
-                style: AppTextStyles.body1NormalMedium.copyWith(
-                  color: AppColor.primaryNormal,
-                ),
-              ),
-            ),
-          ],
-        ),
-        const SizedBox(height: 16),
-        Obx(
-          () => SliderTheme(
-            data: SliderTheme.of(Get.context!).copyWith(
-              activeTrackColor: AppColor.primaryNormal,
-              inactiveTrackColor:
-                  AppColor.colorGlobalCoolNeutral25, // Dark track
-              thumbColor: AppColor.primaryNormal,
-              overlayColor: AppColor.primaryNormal.withOpacity(0.2),
-              trackHeight: 8,
-              thumbShape: const RoundSliderThumbShape(enabledThumbRadius: 14),
-            ),
-            child: Slider(
-              value: controller.strength.toDouble(),
-              min: 0,
-              max: 100,
-              onChanged: (value) => controller.strength = value.round(),
-            ),
-          ),
-        ),
-        Row(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          children: [
-            Text(
-              '연하게',
-              style: AppTextStyles.caption1Regular.copyWith(
-                color: AppColor.colorGlobalCoolNeutral60, // Light gray on black
-              ),
-            ),
-            Text(
-              '진하게',
-              style: AppTextStyles.caption1Regular.copyWith(
-                color: AppColor.colorGlobalCoolNeutral60, // Light gray on black
-              ),
-            ),
-          ],
-        ),
-      ],
+  Widget _buildVerticalDivider() {
+    return Container(
+      width: 1,
+      height: 40,
+      color: _SettingsColors.buttonTertiary,
     );
   }
 
-  Widget _buildRecipeParameters() {
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        Text(
-          '레시피 세부 설정',
-          style: AppTextStyles.headline1Bold.copyWith(
-            color: AppColor.colorGlobalCommon100, // White on black bg
+  /// Recipe steps card - dark background
+  Widget _buildRecipeStepsCard() {
+    return Container(
+      padding: const EdgeInsets.all(20),
+      decoration: BoxDecoration(
+        color: _SettingsColors.cardDark,
+        borderRadius: BorderRadius.circular(20),
+      ),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Text(
+            '레시피 단계',
+            style: AppTextStyles.headline1Bold.copyWith(
+              color: _SettingsColors.textPrimary,
+            ),
           ),
-        ),
-        const SizedBox(height: 16),
-        Obx(
-          () => Column(
-            children: [
-              _RecipeParameterCard(
-                icon: Icons.coffee_outlined,
-                title: '원두량',
-                value: '${controller.coffeeAmount}g',
-                onTap: () => Get.toNamed(
-                  Routes.coffeeSettingDetail,
-                  arguments: {'param': 'beanAmount'},
-                ),
-              ),
-              const SizedBox(height: 12),
-              _RecipeParameterCard(
-                icon: Icons.thermostat_outlined,
-                title: '물 온도',
-                value: '${controller.waterTemperature}°C',
-                onTap: () => Get.toNamed(
-                  Routes.coffeeSettingDetail,
-                  arguments: {'param': 'waterTemperature'},
-                ),
-              ),
-              const SizedBox(height: 12),
-              _RecipeParameterCard(
-                icon: Icons.timer_outlined,
-                title: '추출 시간',
-                value: controller.extractionTimeFormatted,
-                onTap: () => Get.toNamed(
-                  Routes.coffeeSettingDetail,
-                  arguments: {'param': 'extractionTime'},
-                ),
-              ),
-              const SizedBox(height: 12),
-              _RecipeParameterCard(
-                icon: Icons.water_drop_outlined,
-                title: '물 양',
-                value: '${controller.waterAmount}ml',
-                onTap: () => Get.toNamed(
-                  Routes.coffeeSettingDetail,
-                  arguments: {'param': 'waterAmount'},
-                ),
-              ),
-            ],
-          ),
-        ),
-      ],
+          const SizedBox(height: 20),
+          ..._dummyRecipeSteps.map((step) => _RecipeStepItem(step: step)),
+        ],
+      ),
     );
+  }
+
+  /// Bottom CTA button
+  Widget _buildBottomCTA() {
+    return Container(
+      padding: const EdgeInsets.fromLTRB(20, 12, 20, 20),
+      child: SizedBox(
+        width: double.infinity,
+        height: 56,
+        child: ElevatedButton(
+          onPressed: () => Get.toNamed(Routes.timerActive),
+          style: ElevatedButton.styleFrom(
+            backgroundColor: _SettingsColors.primary,
+            foregroundColor: _SettingsColors.textPrimary,
+            elevation: 0,
+            shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(16),
+            ),
+          ),
+          child: Text(
+            '원두 레시피 시작',
+            style: AppTextStyles.headline1Bold.copyWith(
+              color: _SettingsColors.textPrimary,
+            ),
+          ),
+        ),
+      ),
+    );
+  }
+
+  // ===== Modal Handlers =====
+
+  void _showDeviceSelectionModal() async {
+    final options = ['핸드드립', '에스프레소'];
+    final currentIndex = controller.selectedType == CoffeeType.espresso ? 1 : 0;
+
+    final result = await SelectionModal.show(
+      title: '추출 기기 선택',
+      options: options,
+      selectedIndex: currentIndex,
+    );
+
+    if (result != null && result is int) {
+      // Don't navigate, just update the type visually
+      if (result == 0 && controller.selectedType != CoffeeType.handDrip) {
+        controller.waterTemperature = 92;
+        controller.extractionTime = 180;
+      } else if (result == 1 &&
+          controller.selectedType != CoffeeType.espresso) {
+        controller.waterTemperature = 93;
+        controller.extractionTime = 25;
+      }
+    }
+  }
+
+  void _showCupsSelectionModal() async {
+    final options = List.generate(6, (i) => '${i + 1}잔');
+    final result = await SelectionModal.show(
+      title: '잔수 선택',
+      options: options,
+      selectedIndex: controller.cupsCount - 1,
+    );
+
+    if (result != null && result is int) {
+      controller.cupsCount = result + 1;
+    }
+  }
+
+  void _showStrengthSelectionModal() async {
+    final options = ['가벼운 맛', '보통', '진한 맛'];
+    int currentIndex;
+    if (controller.strength < 33) {
+      currentIndex = 0;
+    } else if (controller.strength < 66) {
+      currentIndex = 1;
+    } else {
+      currentIndex = 2;
+    }
+
+    final result = await SelectionModal.show(
+      title: '진하기 선택',
+      options: options,
+      selectedIndex: currentIndex,
+    );
+
+    if (result != null && result is int) {
+      switch (result) {
+        case 0:
+          controller.strength = 16;
+          break;
+        case 1:
+          controller.strength = 50;
+          break;
+        case 2:
+          controller.strength = 83;
+          break;
+      }
+    }
   }
 
   Future<void> _showCoffeeAmountModal() async {
     final result = await InputModal.show(
       title: '원두량 설정',
       message: '원두량을 그램 단위로 입력하세요',
-      hint: '예: 15',
+      hint: '예: 18',
       initialValue: controller.coffeeAmount.toString(),
       keyboardType: TextInputType.number,
       inputFormatters: [FilteringTextInputFormatter.digitsOnly],
@@ -296,7 +503,7 @@ class CoffeeSettingsView extends GetView<CoffeeController> {
     final result = await InputModal.show(
       title: '물 온도 설정',
       message: '물 온도를 섭씨 단위로 입력하세요',
-      hint: '예: 92',
+      hint: '예: 93',
       initialValue: controller.waterTemperature.toString(),
       keyboardType: TextInputType.number,
       inputFormatters: [FilteringTextInputFormatter.digitsOnly],
@@ -331,7 +538,7 @@ class CoffeeSettingsView extends GetView<CoffeeController> {
     final result = await InputModal.show(
       title: '물 양 설정',
       message: '물 양을 ml 단위로 입력하세요',
-      hint: '예: 250',
+      hint: '예: 210',
       initialValue: controller.waterAmount.toString(),
       keyboardType: TextInputType.number,
       inputFormatters: [FilteringTextInputFormatter.digitsOnly],
@@ -348,215 +555,212 @@ class CoffeeSettingsView extends GetView<CoffeeController> {
       controller.customWaterAmount = int.parse(result);
     }
   }
+}
 
-  Widget _buildRecipeSummary() {
-    return Obx(
-      () => Container(
-        padding: const EdgeInsets.all(20),
-        decoration: BoxDecoration(
-          color: AppColor.colorGlobalCoolNeutral15, // Dark card bg
-          borderRadius: AppRadius.xlBorder,
+/// Circular icon button for AppBar
+class _CircularIconButton extends StatelessWidget {
+  final IconData icon;
+  final VoidCallback onTap;
+
+  const _CircularIconButton({required this.icon, required this.onTap});
+
+  @override
+  Widget build(BuildContext context) {
+    return GestureDetector(
+      onTap: onTap,
+      child: Container(
+        width: 40,
+        height: 40,
+        decoration: const BoxDecoration(
+          color: _SettingsColors.buttonSecondary,
+          shape: BoxShape.circle,
         ),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Text(
-              '레시피 요약',
-              style: AppTextStyles.headline2Bold.copyWith(
-                color: AppColor.colorGlobalCommon100, // White on dark card
-              ),
-            ),
-            const SizedBox(height: 16),
-            _buildSummaryRow('잔 수', '${controller.cupsCount}잔'),
-            _buildSummaryRow('원두량', '${controller.coffeeAmount}g'),
-            _buildSummaryRow('물', '${controller.waterAmount}ml'),
-            _buildSummaryRow('농도', controller.strengthLabel),
-          ],
-        ),
+        child: Icon(icon, color: _SettingsColors.textPrimary, size: 18),
       ),
-    );
-  }
-
-  Widget _buildSummaryRow(String label, String value) {
-    return Padding(
-      padding: const EdgeInsets.only(bottom: 12),
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-        children: [
-          Text(
-            label,
-            style: AppTextStyles.body2NormalRegular.copyWith(
-              color: AppColor.colorGlobalCoolNeutral60, // Light gray label
-            ),
-          ),
-          Text(
-            value,
-            style: AppTextStyles.body2NormalMedium.copyWith(
-              color: AppColor.colorGlobalCommon100, // White value
-            ),
-          ),
-        ],
-      ),
-    );
-  }
-
-  Widget _buildBottomBar() {
-    return AppBottomBar.primaryButton(
-      text: '설정 완료',
-      onPressed: () => Get.back(),
-      padding: const EdgeInsets.all(24),
     );
   }
 }
 
-/// A beautiful tappable card for recipe parameters with smooth press animations
-class _RecipeParameterCard extends StatefulWidget {
-  final IconData icon;
-  final String title;
+/// Pill button for AppBar
+class _PillButton extends StatelessWidget {
+  final String text;
+  final VoidCallback onTap;
+
+  const _PillButton({required this.text, required this.onTap});
+
+  @override
+  Widget build(BuildContext context) {
+    return GestureDetector(
+      onTap: onTap,
+      child: Container(
+        padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+        decoration: BoxDecoration(
+          color: _SettingsColors.buttonSecondary,
+          borderRadius: BorderRadius.circular(100),
+        ),
+        child: Text(
+          text,
+          style: AppTextStyles.label2Medium.copyWith(
+            color: _SettingsColors.textPrimary,
+          ),
+        ),
+      ),
+    );
+  }
+}
+
+/// Selection pill with violet background
+class _SelectionPill extends StatelessWidget {
+  final String label;
   final String value;
   final VoidCallback onTap;
 
-  const _RecipeParameterCard({
-    required this.icon,
-    required this.title,
+  const _SelectionPill({
+    required this.label,
     required this.value,
     required this.onTap,
   });
 
   @override
-  State<_RecipeParameterCard> createState() => _RecipeParameterCardState();
+  Widget build(BuildContext context) {
+    return GestureDetector(
+      onTap: onTap,
+      child: Container(
+        padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 14),
+        decoration: BoxDecoration(
+          color: _SettingsColors.primaryLight,
+          borderRadius: BorderRadius.circular(16),
+        ),
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [
+            Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text(
+                  label,
+                  style: AppTextStyles.caption1Regular.copyWith(
+                    color: _SettingsColors.primary,
+                  ),
+                ),
+                const SizedBox(height: 2),
+                Text(
+                  value,
+                  style: AppTextStyles.headline2Bold.copyWith(
+                    color: _SettingsColors.primary,
+                  ),
+                ),
+              ],
+            ),
+            Icon(
+              Icons.keyboard_arrow_down,
+              color: _SettingsColors.primary,
+              size: 24,
+            ),
+          ],
+        ),
+      ),
+    );
+  }
 }
 
-class _RecipeParameterCardState extends State<_RecipeParameterCard>
-    with SingleTickerProviderStateMixin {
-  late AnimationController _animationController;
-  late Animation<double> _scaleAnimation;
-  late Animation<double> _opacityAnimation;
+/// Parameter item in grid
+class _ParameterItem extends StatelessWidget {
+  final String label;
+  final String value;
+  final VoidCallback onTap;
 
-  @override
-  void initState() {
-    super.initState();
-    _animationController = AnimationController(
-      vsync: this,
-      duration: const Duration(milliseconds: 100),
-    );
-
-    _scaleAnimation = Tween<double>(begin: 1.0, end: 0.98).animate(
-      CurvedAnimation(parent: _animationController, curve: Curves.easeInOut),
-    );
-
-    _opacityAnimation = Tween<double>(begin: 1.0, end: 0.7).animate(
-      CurvedAnimation(parent: _animationController, curve: Curves.easeInOut),
-    );
-  }
-
-  @override
-  void dispose() {
-    _animationController.dispose();
-    super.dispose();
-  }
-
-  void _onTapDown(TapDownDetails details) {
-    _animationController.forward();
-  }
-
-  void _onTapUp(TapUpDetails details) {
-    _animationController.reverse();
-  }
-
-  void _onTapCancel() {
-    _animationController.reverse();
-  }
+  const _ParameterItem({
+    required this.label,
+    required this.value,
+    required this.onTap,
+  });
 
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
-      onTapDown: _onTapDown,
-      onTapUp: _onTapUp,
-      onTapCancel: _onTapCancel,
-      onTap: widget.onTap,
-      child: AnimatedBuilder(
-        animation: _animationController,
-        builder: (context, child) {
-          return Transform.scale(
-            scale: _scaleAnimation.value,
-            child: Opacity(opacity: _opacityAnimation.value, child: child),
-          );
-        },
-        child: Container(
-          padding: const EdgeInsets.all(16),
-          decoration: BoxDecoration(
-            color: AppColor.colorGlobalCoolNeutral15, // Dark card bg
-            borderRadius: AppRadius.xlBorder,
-            border: Border.all(
-              color: AppColor.colorGlobalCoolNeutral25,
-              width: 1,
-            ), // Dark border
-          ),
-          child: Row(
-            children: [
-              // Icon container with subtle gradient background
-              Container(
-                width: 44,
-                height: 44,
-                decoration: BoxDecoration(
-                  gradient: LinearGradient(
-                    begin: Alignment.topLeft,
-                    end: Alignment.bottomRight,
-                    colors: [
-                      AppColor.primaryNormal.withOpacity(0.3),
-                      AppColor.primaryNormal.withOpacity(0.15),
-                    ],
-                  ),
-                  borderRadius: AppRadius.lgBorder,
-                ),
-                child: Icon(
-                  widget.icon,
-                  color: AppColor.primaryNormal,
-                  size: 22,
-                ),
+      onTap: onTap,
+      child: Padding(
+        padding: const EdgeInsets.symmetric(horizontal: 4),
+        child: Column(
+          children: [
+            Text(
+              label,
+              style: AppTextStyles.caption1Regular.copyWith(
+                color: _SettingsColors.textSecondary,
               ),
-              const SizedBox(width: 16),
-              // Title and value
-              Expanded(
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Text(
-                      widget.title,
-                      style: AppTextStyles.body2NormalRegular.copyWith(
-                        color: AppColor
-                            .colorGlobalCoolNeutral60, // Light gray title
-                      ),
-                    ),
-                    const SizedBox(height: 2),
-                    Text(
-                      widget.value,
-                      style: AppTextStyles.headline2Bold.copyWith(
-                        color: AppColor.colorGlobalCommon100, // White value
-                      ),
-                    ),
-                  ],
-                ),
+              textAlign: TextAlign.center,
+            ),
+            const SizedBox(height: 6),
+            Text(
+              value,
+              style: AppTextStyles.body2NormalBold.copyWith(
+                color: _SettingsColors.textDark,
               ),
-              // Chevron icon
-              Container(
-                width: 32,
-                height: 32,
-                decoration: BoxDecoration(
-                  color: AppColor.colorGlobalCoolNeutral20, // Dark chevron bg
-                  borderRadius: AppRadius.mdBorder,
-                ),
-                child: Icon(
-                  Icons.chevron_right,
-                  color:
-                      AppColor.colorGlobalCoolNeutral60, // Light gray chevron
-                  size: 20,
-                ),
-              ),
-            ],
-          ),
+              textAlign: TextAlign.center,
+            ),
+          ],
         ),
+      ),
+    );
+  }
+}
+
+/// Recipe step item with number badge
+class _RecipeStepItem extends StatelessWidget {
+  final RecipeStep step;
+
+  const _RecipeStepItem({required this.step});
+
+  @override
+  Widget build(BuildContext context) {
+    final isLast = step.number == 6;
+
+    return Padding(
+      padding: EdgeInsets.only(bottom: isLast ? 0 : 16),
+      child: Row(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          // Number badge
+          Container(
+            width: 28,
+            height: 28,
+            decoration: BoxDecoration(
+              color: _SettingsColors.primary,
+              shape: BoxShape.circle,
+            ),
+            child: Center(
+              child: Text(
+                '${step.number}',
+                style: AppTextStyles.label2Bold.copyWith(
+                  color: _SettingsColors.textPrimary,
+                ),
+              ),
+            ),
+          ),
+          const SizedBox(width: 14),
+          // Step content
+          Expanded(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text(
+                  step.title,
+                  style: AppTextStyles.body2NormalMedium.copyWith(
+                    color: _SettingsColors.textPrimary,
+                  ),
+                ),
+                const SizedBox(height: 2),
+                Text(
+                  step.description,
+                  style: AppTextStyles.label1NormalRegular.copyWith(
+                    color: _SettingsColors.textSecondary,
+                  ),
+                ),
+              ],
+            ),
+          ),
+        ],
       ),
     );
   }

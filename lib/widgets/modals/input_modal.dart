@@ -5,16 +5,24 @@ import 'package:coflanet/constants/color_constant.dart';
 import 'package:coflanet/constants/style_constant.dart';
 import 'package:coflanet/constants/radius_constant.dart';
 
-/// A modal for text/number input with validation support.
+/// A bottom sheet modal for text/number input with quick select chips.
+///
+/// Redesigned as per Figma Bottom Sheet spec:
+/// - Drag handle at top
+/// - Title + subtitle section
+/// - Pill-shaped input with suffix unit display
+/// - Quick select chips grid (2 rows x 4 cols)
+/// - Full-width confirm button
 ///
 /// Usage:
 /// ```dart
 /// final result = await InputModal.show(
-///   title: '값 입력',
-///   hint: '숫자를 입력하세요',
-///   initialValue: '10',
+///   title: '원두를 얼마나 사용할까요?',
+///   message: '일반적으로 1잔에 15g 정도 사용해요',
+///   initialValue: '15',
+///   suffix: 'g',
+///   quickSelectOptions: ['10g', '12g', '15g', '18g', '20g', '22g', '25g', '30g'],
 ///   keyboardType: TextInputType.number,
-///   validator: (value) => value.isEmpty ? '값을 입력하세요' : null,
 /// );
 /// ```
 class InputModal extends StatefulWidget {
@@ -22,6 +30,7 @@ class InputModal extends StatefulWidget {
   final String? message;
   final String? hint;
   final String? initialValue;
+  final String? suffix;
   final TextInputType keyboardType;
   final String? Function(String?)? validator;
   final int? maxLength;
@@ -30,6 +39,7 @@ class InputModal extends StatefulWidget {
   final String? cancelText;
   final bool barrierDismissible;
   final List<TextInputFormatter>? inputFormatters;
+  final List<String>? quickSelectOptions;
 
   const InputModal({
     super.key,
@@ -37,6 +47,7 @@ class InputModal extends StatefulWidget {
     this.message,
     this.hint,
     this.initialValue,
+    this.suffix,
     this.keyboardType = TextInputType.text,
     this.validator,
     this.maxLength,
@@ -45,15 +56,17 @@ class InputModal extends StatefulWidget {
     this.cancelText,
     this.barrierDismissible = true,
     this.inputFormatters,
+    this.quickSelectOptions,
   });
 
   /// Shows the input modal and returns the entered value.
-  /// Returns null if cancelled.
+  /// Returns null if cancelled or dismissed.
   static Future<String?> show({
     required String title,
     String? message,
     String? hint,
     String? initialValue,
+    String? suffix,
     TextInputType keyboardType = TextInputType.text,
     String? Function(String?)? validator,
     int? maxLength,
@@ -62,13 +75,15 @@ class InputModal extends StatefulWidget {
     String? cancelText,
     bool barrierDismissible = true,
     List<TextInputFormatter>? inputFormatters,
+    List<String>? quickSelectOptions,
   }) async {
-    return Get.dialog<String?>(
+    return Get.bottomSheet<String?>(
       InputModal(
         title: title,
         message: message,
         hint: hint,
         initialValue: initialValue,
+        suffix: suffix,
         keyboardType: keyboardType,
         validator: validator,
         maxLength: maxLength,
@@ -77,8 +92,11 @@ class InputModal extends StatefulWidget {
         cancelText: cancelText,
         barrierDismissible: barrierDismissible,
         inputFormatters: inputFormatters,
+        quickSelectOptions: quickSelectOptions,
       ),
-      barrierDismissible: barrierDismissible,
+      isScrollControlled: true,
+      isDismissible: barrierDismissible,
+      enableDrag: true,
       barrierColor: AppColor.componentMaterialDimmer,
     );
   }
@@ -87,14 +105,11 @@ class InputModal extends StatefulWidget {
   State<InputModal> createState() => _InputModalState();
 }
 
-class _InputModalState extends State<InputModal>
-    with SingleTickerProviderStateMixin {
+class _InputModalState extends State<InputModal> {
   late TextEditingController _controller;
   late FocusNode _focusNode;
   String? _errorText;
-  late AnimationController _animationController;
-  late Animation<double> _scaleAnimation;
-  late Animation<double> _fadeAnimation;
+  int? _selectedChipIndex;
 
   @override
   void initState() {
@@ -102,22 +117,18 @@ class _InputModalState extends State<InputModal>
     _controller = TextEditingController(text: widget.initialValue);
     _focusNode = FocusNode();
 
-    _animationController = AnimationController(
-      vsync: this,
-      duration: const Duration(milliseconds: 250),
-    );
+    // Find matching quick select option if initial value exists
+    if (widget.initialValue != null && widget.quickSelectOptions != null) {
+      final initialWithSuffix = '${widget.initialValue}${widget.suffix ?? ''}';
+      final index = widget.quickSelectOptions!.indexOf(initialWithSuffix);
+      if (index >= 0) {
+        _selectedChipIndex = index;
+      }
+    }
 
-    _scaleAnimation = Tween<double>(begin: 0.9, end: 1.0).animate(
-      CurvedAnimation(parent: _animationController, curve: Curves.easeOutCubic),
-    );
+    _focusNode.addListener(() => setState(() {}));
 
-    _fadeAnimation = Tween<double>(begin: 0.0, end: 1.0).animate(
-      CurvedAnimation(parent: _animationController, curve: Curves.easeOut),
-    );
-
-    _animationController.forward();
-
-    // Auto-focus the text field
+    // Auto-focus the text field after a short delay
     WidgetsBinding.instance.addPostFrameCallback((_) {
       _focusNode.requestFocus();
     });
@@ -127,7 +138,6 @@ class _InputModalState extends State<InputModal>
   void dispose() {
     _controller.dispose();
     _focusNode.dispose();
-    _animationController.dispose();
     super.dispose();
   }
 
@@ -147,124 +157,210 @@ class _InputModalState extends State<InputModal>
     Get.back(result: value);
   }
 
-  void _onCancel() {
-    Get.back(result: null);
-  }
-
   void _onTextChanged(String value) {
     if (_errorText != null) {
       setState(() {
         _errorText = null;
       });
     }
+
+    // Update selected chip if value matches
+    if (widget.quickSelectOptions != null) {
+      final valueWithSuffix = '$value${widget.suffix ?? ''}';
+      final index = widget.quickSelectOptions!.indexOf(valueWithSuffix);
+      setState(() {
+        _selectedChipIndex = index >= 0 ? index : null;
+      });
+    }
+  }
+
+  void _onChipSelected(int index, String chipValue) {
+    // Extract numeric value from chip (e.g., "15g" -> "15")
+    String numericValue = chipValue;
+    if (widget.suffix != null && chipValue.endsWith(widget.suffix!)) {
+      numericValue = chipValue.substring(
+        0,
+        chipValue.length - widget.suffix!.length,
+      );
+    }
+
+    setState(() {
+      _selectedChipIndex = index;
+      _controller.text = numericValue;
+      _controller.selection = TextSelection.fromPosition(
+        TextPosition(offset: numericValue.length),
+      );
+      _errorText = null;
+    });
+  }
+
+  void _onClear() {
+    setState(() {
+      _controller.clear();
+      _selectedChipIndex = null;
+      _errorText = null;
+    });
+    _focusNode.requestFocus();
   }
 
   @override
   Widget build(BuildContext context) {
-    return FadeTransition(
-      opacity: _fadeAnimation,
-      child: ScaleTransition(
-        scale: _scaleAnimation,
-        child: Center(
-          child: SingleChildScrollView(
-            child: Container(
-              width: MediaQuery.of(context).size.width - 48,
-              margin: EdgeInsets.only(
-                bottom: MediaQuery.of(context).viewInsets.bottom,
-              ),
-              decoration: BoxDecoration(
-                color: AppColor.backgroundElevatedNormal,
-                borderRadius: AppRadius.modalBorder,
-                boxShadow: AppShadows.shadowBlackHeavy,
-              ),
-              child: Column(
-                mainAxisSize: MainAxisSize.min,
-                children: [
-                  _buildHeader(),
-                  if (widget.message != null) _buildMessage(),
-                  _buildTextField(),
-                  _buildActions(),
-                ],
-              ),
-            ),
+    final bottomPadding = MediaQuery.of(context).viewInsets.bottom;
+
+    return Container(
+      decoration: BoxDecoration(
+        color: AppColor.backgroundElevatedNormal,
+        borderRadius: AppRadius.top(AppRadius.xxxl),
+      ),
+      child: SafeArea(
+        top: false,
+        child: Padding(
+          padding: EdgeInsets.only(bottom: bottomPadding),
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              _buildDragHandle(),
+              _buildTitleSection(),
+              _buildInputField(),
+              if (widget.quickSelectOptions != null &&
+                  widget.quickSelectOptions!.isNotEmpty)
+                _buildQuickSelectChips(),
+              _buildConfirmButton(),
+              const SizedBox(height: 8),
+            ],
           ),
         ),
       ),
     );
   }
 
-  Widget _buildHeader() {
+  Widget _buildDragHandle() {
     return Container(
-      padding: const EdgeInsets.fromLTRB(24, 24, 24, 8),
-      child: Text(
-        widget.title,
-        style: AppTextStyles.heading1Bold.copyWith(color: AppColor.labelNormal),
-        textAlign: TextAlign.center,
+      margin: const EdgeInsets.only(top: 12, bottom: 8),
+      width: 40,
+      height: 4,
+      decoration: BoxDecoration(
+        color: AppColor.lineSolidNormal,
+        borderRadius: AppRadius.fullBorder,
       ),
     );
   }
 
-  Widget _buildMessage() {
+  Widget _buildTitleSection() {
     return Padding(
-      padding: const EdgeInsets.fromLTRB(24, 0, 24, 8),
-      child: Text(
-        widget.message!,
-        style: AppTextStyles.body2NormalRegular.copyWith(
-          color: AppColor.labelAlternative,
-        ),
-        textAlign: TextAlign.center,
+      padding: const EdgeInsets.fromLTRB(24, 8, 24, 16),
+      child: Column(
+        children: [
+          Text(
+            widget.title,
+            style: AppTextStyles.heading2Bold.copyWith(
+              color: AppColor.labelNormal,
+            ),
+            textAlign: TextAlign.center,
+          ),
+          if (widget.message != null) ...[
+            const SizedBox(height: 6),
+            Text(
+              widget.message!,
+              style: AppTextStyles.label1NormalRegular.copyWith(
+                color: AppColor.labelAlternative,
+              ),
+              textAlign: TextAlign.center,
+            ),
+          ],
+        ],
       ),
     );
   }
 
-  Widget _buildTextField() {
+  Widget _buildInputField() {
+    final bool hasFocus = _focusNode.hasFocus;
+    final bool hasError = _errorText != null;
+    final bool hasValue = _controller.text.isNotEmpty;
+
     return Padding(
-      padding: const EdgeInsets.fromLTRB(20, 12, 20, 8),
+      padding: const EdgeInsets.fromLTRB(24, 0, 24, 16),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Container(
+            height: 56,
             decoration: BoxDecoration(
               color: AppColor.componentFillNormal,
-              borderRadius: AppRadius.buttonBorder,
+              borderRadius: AppRadius.fullBorder,
               border: Border.all(
-                color: _errorText != null
+                color: hasError
                     ? AppColor.statusNegative
-                    : _focusNode.hasFocus
+                    : hasFocus
                     ? AppColor.primaryNormal
-                    : Colors.transparent,
-                width: 1.5,
+                    : AppColor.transparent,
+                width: 2,
               ),
             ),
-            child: TextField(
-              controller: _controller,
-              focusNode: _focusNode,
-              keyboardType: widget.keyboardType,
-              maxLength: widget.maxLength,
-              maxLines: widget.maxLines,
-              inputFormatters: widget.inputFormatters,
-              onChanged: _onTextChanged,
-              onSubmitted: (_) => _onConfirm(),
-              style: AppTextStyles.body1NormalMedium.copyWith(
-                color: AppColor.labelNormal,
-              ),
-              decoration: InputDecoration(
-                hintText: widget.hint,
-                hintStyle: AppTextStyles.body1NormalRegular.copyWith(
-                  color: AppColor.labelAssistive,
+            child: Row(
+              children: [
+                Expanded(
+                  child: TextField(
+                    controller: _controller,
+                    focusNode: _focusNode,
+                    keyboardType: widget.keyboardType,
+                    maxLength: widget.maxLength,
+                    maxLines: widget.maxLines,
+                    inputFormatters: widget.inputFormatters,
+                    onChanged: _onTextChanged,
+                    onSubmitted: (_) => _onConfirm(),
+                    textAlign: TextAlign.center,
+                    style: AppTextStyles.title3Bold.copyWith(
+                      color: AppColor.labelNormal,
+                    ),
+                    decoration: InputDecoration(
+                      hintText: widget.hint,
+                      hintStyle: AppTextStyles.title3Medium.copyWith(
+                        color: AppColor.labelAssistive,
+                      ),
+                      border: InputBorder.none,
+                      contentPadding: EdgeInsets.only(
+                        left: hasValue ? 48 : 16,
+                        right: 16,
+                      ),
+                      counterText: '',
+                    ),
+                  ),
                 ),
-                border: InputBorder.none,
-                contentPadding: const EdgeInsets.symmetric(
-                  horizontal: 16,
-                  vertical: 14,
-                ),
-                counterText: '',
-              ),
+                if (widget.suffix != null && hasValue)
+                  Padding(
+                    padding: const EdgeInsets.only(right: 8),
+                    child: Text(
+                      widget.suffix!,
+                      style: AppTextStyles.title3Bold.copyWith(
+                        color: AppColor.labelNormal,
+                      ),
+                    ),
+                  ),
+                if (hasValue)
+                  GestureDetector(
+                    onTap: _onClear,
+                    child: Container(
+                      margin: const EdgeInsets.only(right: 16),
+                      width: 24,
+                      height: 24,
+                      decoration: BoxDecoration(
+                        color: AppColor.componentFillStrong,
+                        shape: BoxShape.circle,
+                      ),
+                      child: Icon(
+                        Icons.close,
+                        size: 14,
+                        color: AppColor.labelAlternative,
+                      ),
+                    ),
+                  ),
+              ],
             ),
           ),
-          if (_errorText != null)
+          if (hasError)
             Padding(
-              padding: const EdgeInsets.only(top: 8, left: 4),
+              padding: const EdgeInsets.only(top: 8, left: 16),
               child: Row(
                 children: [
                   Icon(
@@ -287,71 +383,109 @@ class _InputModalState extends State<InputModal>
     );
   }
 
-  Widget _buildActions() {
-    return Container(
-      padding: const EdgeInsets.fromLTRB(16, 12, 16, 20),
-      child: Row(
-        children: [
-          Expanded(
-            child: _ActionButton(
-              text: widget.cancelText ?? '취소',
-              onPressed: _onCancel,
-              isPrimary: false,
+  Widget _buildQuickSelectChips() {
+    final options = widget.quickSelectOptions!;
+    // Split into rows of 4
+    final int rowCount = (options.length / 4).ceil();
+
+    return Padding(
+      padding: const EdgeInsets.fromLTRB(24, 0, 24, 20),
+      child: Column(
+        children: List.generate(rowCount, (rowIndex) {
+          final startIdx = rowIndex * 4;
+          final endIdx = (startIdx + 4).clamp(0, options.length);
+          final rowItems = options.sublist(startIdx, endIdx);
+
+          return Padding(
+            padding: EdgeInsets.only(bottom: rowIndex < rowCount - 1 ? 8 : 0),
+            child: Row(
+              children: List.generate(rowItems.length, (colIndex) {
+                final globalIndex = startIdx + colIndex;
+                final isSelected = _selectedChipIndex == globalIndex;
+
+                return Expanded(
+                  child: Padding(
+                    padding: EdgeInsets.only(
+                      right: colIndex < rowItems.length - 1 ? 8 : 0,
+                    ),
+                    child: _QuickSelectChip(
+                      label: rowItems[colIndex],
+                      isSelected: isSelected,
+                      onTap: () =>
+                          _onChipSelected(globalIndex, rowItems[colIndex]),
+                    ),
+                  ),
+                );
+              }),
+            ),
+          );
+        }),
+      ),
+    );
+  }
+
+  Widget _buildConfirmButton() {
+    return Padding(
+      padding: const EdgeInsets.fromLTRB(24, 0, 24, 16),
+      child: SizedBox(
+        width: double.infinity,
+        height: 56,
+        child: ElevatedButton(
+          onPressed: _onConfirm,
+          style: ElevatedButton.styleFrom(
+            backgroundColor: AppColor.primaryNormal,
+            foregroundColor: AppColor.staticLabelWhiteStrong,
+            elevation: 0,
+            shape: RoundedRectangleBorder(borderRadius: AppRadius.fullBorder),
+          ),
+          child: Text(
+            widget.confirmText ?? '확인',
+            style: AppTextStyles.headline1Bold.copyWith(
+              color: AppColor.staticLabelWhiteStrong,
             ),
           ),
-          const SizedBox(width: 12),
-          Expanded(
-            child: _ActionButton(
-              text: widget.confirmText ?? '확인',
-              onPressed: _onConfirm,
-              isPrimary: true,
-            ),
-          ),
-        ],
+        ),
       ),
     );
   }
 }
 
-class _ActionButton extends StatelessWidget {
-  final String text;
-  final VoidCallback onPressed;
-  final bool isPrimary;
+class _QuickSelectChip extends StatelessWidget {
+  final String label;
+  final bool isSelected;
+  final VoidCallback onTap;
 
-  const _ActionButton({
-    required this.text,
-    required this.onPressed,
-    required this.isPrimary,
+  const _QuickSelectChip({
+    required this.label,
+    required this.isSelected,
+    required this.onTap,
   });
 
   @override
   Widget build(BuildContext context) {
-    if (isPrimary) {
-      return SizedBox(
-        height: 48,
-        child: ElevatedButton(
-          onPressed: onPressed,
-          style: ElevatedButton.styleFrom(
-            backgroundColor: AppColor.primaryNormal,
-            foregroundColor: AppColor.staticLabelWhiteStrong,
-            elevation: 0,
-            shape: RoundedRectangleBorder(borderRadius: AppRadius.buttonBorder),
+    return GestureDetector(
+      onTap: onTap,
+      child: AnimatedContainer(
+        duration: const Duration(milliseconds: 150),
+        height: 44,
+        decoration: BoxDecoration(
+          color: AppColor.componentFillNormal,
+          borderRadius: AppRadius.xxxlBorder,
+          border: Border.all(
+            color: isSelected ? AppColor.primaryNormal : AppColor.transparent,
+            width: 1.5,
           ),
-          child: Text(text, style: AppTextStyles.headline2Bold),
         ),
-      );
-    }
-
-    return SizedBox(
-      height: 48,
-      child: OutlinedButton(
-        onPressed: onPressed,
-        style: OutlinedButton.styleFrom(
-          foregroundColor: AppColor.labelNormal,
-          side: BorderSide(color: AppColor.lineNormalNormal),
-          shape: RoundedRectangleBorder(borderRadius: AppRadius.buttonBorder),
+        child: Center(
+          child: Text(
+            label,
+            style: AppTextStyles.body2NormalMedium.copyWith(
+              color: isSelected
+                  ? AppColor.primaryNormal
+                  : AppColor.labelAlternative,
+            ),
+          ),
         ),
-        child: Text(text, style: AppTextStyles.headline2Bold),
       ),
     );
   }
