@@ -48,5 +48,10 @@ app.*.map.json
 .sisyphus/
 
 # Screenshots (large binary files)
-*.png
 screenshots/
+
+# Root-level PNG screenshots (development only)
+/*.png
+
+# Allow assets/images PNGs (actual app assets)
+!assets/images/*.png
