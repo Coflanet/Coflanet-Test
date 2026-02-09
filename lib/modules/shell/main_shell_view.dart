@@ -179,13 +179,11 @@ class MainShellView extends GetView<MainShellController> {
       padding: const EdgeInsets.symmetric(horizontal: 16),
       child: Row(
         children: [
-          // Leading: Back button in edit mode, empty otherwise
-          if (currentIndex == 0 && isEditMode)
-            _buildBackButton()
-          else
-            const SizedBox(width: 40),
+          // Leading: Back button in edit mode only
+          // Figma: In normal mode, title is flush left (no spacer)
+          if (currentIndex == 0 && isEditMode) _buildBackButton(),
 
-          // Title - Centered in edit mode, Left aligned in normal mode
+          // Title - Centered in edit mode, Left aligned (flush) in normal mode
           Expanded(
             child: isEditMode
                 ? Center(
@@ -354,12 +352,12 @@ class MainShellView extends GetView<MainShellController> {
             // Icon
             Icon(icon, size: 22, color: iconColor),
             const SizedBox(height: 2),
-            // Label
+            // Label - Figma: Caption 2/Medium, 11px, 500 weight, letter-spacing 0.0311em
             Text(
               tab.label,
-              style: AppTextStyles.caption2Regular.copyWith(
+              style: AppTextStyles.caption2Medium.copyWith(
                 color: labelColor,
-                fontSize: 10,
+                letterSpacing: 0.0311 * 11, // 0.0311em at 11px
               ),
             ),
           ],

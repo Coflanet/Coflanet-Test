@@ -332,63 +332,51 @@ class SelectCoffeeContent extends GetView<SelectCoffeeController> {
     );
   }
 
-  /// Edit mode bottom bar - Figma: Light gray background, dark icons/text
+  /// Edit mode bottom bar - Figma: Black background, white icons/text
+  /// Reference: node-id=1163-57325
   Widget _buildEditingBottomBar() {
     return Obx(() {
       final hasSelection = controller.selectedEditCount > 0;
 
       return Container(
         padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 16),
-        decoration: BoxDecoration(
-          color: AppColor.colorGlobalCoolNeutral98, // Figma: #F4F4F5
-          boxShadow: [
-            BoxShadow(
-              color: const Color(0xFF000000).withValues(alpha: 0.08),
-              blurRadius: 8,
-              offset: const Offset(0, -2),
-            ),
-          ],
+        decoration: const BoxDecoration(
+          // Figma: Black background for edit mode bottom bar
+          color: AppColor.colorGlobalCommon0, // Pure black #000000
         ),
         child: SafeArea(
           top: false,
           child: Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              // Share button - Figma: light gray circle with dark icon
+              // Share button - Figma: dark circle with light icon
               GestureDetector(
                 onTap: hasSelection ? controller.shareSelectedItems : null,
                 child: Container(
                   width: 44,
                   height: 44,
                   decoration: BoxDecoration(
-                    color: AppColor.colorGlobalCommon100, // White circle
+                    color: const Color(0xFF2C2C2E), // Dark gray circle
                     shape: BoxShape.circle,
-                    boxShadow: [
-                      BoxShadow(
-                        color: const Color(0xFF000000).withValues(alpha: 0.06),
-                        blurRadius: 4,
-                        offset: const Offset(0, 1),
-                      ),
-                    ],
                   ),
                   child: Icon(
                     Icons.ios_share,
                     color: hasSelection
                         ? AppColor
-                              .colorGlobalCoolNeutral10 // Dark
-                        : AppColor.colorGlobalCoolNeutral50, // Muted
+                              .colorGlobalCommon100 // White
+                        : AppColor.colorGlobalCoolNeutral50, // Muted gray
                     size: 20,
                   ),
                 ),
               ),
-              // Selection count - dark text
+              // Selection count - white text on black background
               Text(
                 '${controller.selectedEditCount}개 선택됨',
                 style: AppTextStyles.body1NormalMedium.copyWith(
-                  color: AppColor.colorGlobalCoolNeutral10, // Dark text
+                  color: AppColor.colorGlobalCommon100, // White text
                 ),
               ),
-              // Delete button - Figma: dark circle with white trash icon
+              // Delete button - Figma: dark circle with light icon
               GestureDetector(
                 onTap: hasSelection ? controller.deleteSelectedItems : null,
                 child: Container(
@@ -397,23 +385,13 @@ class SelectCoffeeContent extends GetView<SelectCoffeeController> {
                   decoration: BoxDecoration(
                     color: hasSelection
                         ? AppColor
-                              .colorGlobalCoolNeutral10 // Dark when active
-                        : AppColor.colorGlobalCommon100, // White when inactive
+                              .statusNegative // Red when active
+                        : const Color(0xFF2C2C2E), // Dark gray when inactive
                     shape: BoxShape.circle,
-                    boxShadow: [
-                      BoxShadow(
-                        color: const Color(0xFF000000).withValues(alpha: 0.06),
-                        blurRadius: 4,
-                        offset: const Offset(0, 1),
-                      ),
-                    ],
                   ),
                   child: Icon(
                     Icons.delete_outline,
-                    color: hasSelection
-                        ? AppColor
-                              .colorGlobalCommon100 // White icon on dark
-                        : AppColor.colorGlobalCoolNeutral50, // Muted
+                    color: AppColor.colorGlobalCommon100, // White icon
                     size: 20,
                   ),
                 ),
