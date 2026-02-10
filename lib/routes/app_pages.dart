@@ -15,6 +15,10 @@ import 'package:coflanet/modules/auth/profile_setup/profile_setup_binding.dart';
 
 // Modules - Onboarding
 import 'package:coflanet/modules/onboarding/survey_binding.dart';
+import 'package:coflanet/modules/onboarding/reason/survey_reason_view.dart';
+import 'package:coflanet/modules/onboarding/reason/survey_reason_binding.dart';
+import 'package:coflanet/modules/onboarding/welcome/survey_welcome_view.dart';
+import 'package:coflanet/modules/onboarding/index/survey_index_view.dart';
 import 'package:coflanet/modules/onboarding/intro/survey_intro_view.dart';
 import 'package:coflanet/modules/onboarding/section_intro/survey_section_intro_view.dart';
 import 'package:coflanet/modules/onboarding/question/survey_question_view.dart';
@@ -38,6 +42,7 @@ import 'package:coflanet/modules/coffee/select/select_coffee_view.dart';
 import 'package:coflanet/modules/coffee/select/select_coffee_binding.dart';
 import 'package:coflanet/modules/coffee/bean/bean_detail_view.dart';
 import 'package:coflanet/modules/coffee/bean/bean_edit_view.dart';
+import 'package:coflanet/modules/coffee/settings/recipe_edit_view.dart';
 
 // Modules - Matching
 import 'package:coflanet/modules/matching/matching_binding.dart';
@@ -97,6 +102,23 @@ class AppPages {
     ),
 
     // === Onboarding ===
+    GetPage(
+      name: Routes.surveyReason,
+      page: () => const SurveyReasonView(),
+      binding: SurveyReasonBinding(),
+      transition: Transition.cupertino,
+    ),
+    GetPage(
+      name: Routes.surveyWelcome,
+      page: () => const SurveyWelcomeView(),
+      transition: Transition.cupertino,
+    ),
+    GetPage(
+      name: Routes.surveyIndex,
+      page: () => const SurveyIndexView(),
+      binding: SurveyBinding(),
+      transition: Transition.cupertino,
+    ),
     GetPage(
       name: Routes.surveyIntro,
       page: () => const SurveyIntroView(),
@@ -186,6 +208,12 @@ class AppPages {
     GetPage(
       name: Routes.beanEdit,
       page: () => const BeanEditView(),
+      binding: CoffeeBinding(),
+      transition: Transition.cupertino,
+    ),
+    GetPage(
+      name: Routes.recipeEdit,
+      page: () => const RecipeEditView(),
       binding: CoffeeBinding(),
       transition: Transition.cupertino,
     ),

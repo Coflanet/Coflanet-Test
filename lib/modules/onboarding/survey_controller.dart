@@ -118,11 +118,26 @@ class SurveyController extends BaseController {
     return _answers[_currentStep.value]?.isNotEmpty ?? false;
   }
 
+  /// Check if current question should auto-advance after selection
+  /// Auto-advance: single selection questions (not multiRating, not allowMultiple)
+  bool get shouldAutoAdvance {
+    final question = currentQuestion;
+    if (question == null) return false;
+
+    // Don't auto-advance for multiple selection or multiRating
+    if (question.allowMultiple) return false;
+    if (question.questionType == SurveyQuestionType.multiRating) return false;
+
+    return true;
+  }
+
   // Progress percentage based on total steps
   double get progress => (_currentStep.value + 1) / totalSteps;
 
   /// Select an option
-  void selectOption(String optionId) {
+  /// Section 2-3 (steps 2-9): auto-advance after selection (no button)
+  /// Section 1 (steps 0-1): user must tap button to proceed
+  void selectOption(String optionId, {bool autoAdvance = false}) {
     final question = currentQuestion;
     if (question == null) return;
 
@@ -140,6 +155,13 @@ class SurveyController extends BaseController {
     } else {
       // Single selection
       _answers[_currentStep.value] = [optionId];
+
+      // Section 2-3 (steps 2-9): auto-advance after selection
+      if (_currentStep.value >= 2) {
+        Future.delayed(const Duration(milliseconds: 300), () {
+          nextQuestion();
+        });
+      }
     }
   }
 

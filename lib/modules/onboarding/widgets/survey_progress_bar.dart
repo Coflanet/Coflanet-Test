@@ -42,28 +42,21 @@ class SurveyProgressIndicator extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      height: 4,
-      decoration: BoxDecoration(
-        color: AppColor.lineNormalAlternative,
-        borderRadius: AppRadius.xxsBorder,
-      ),
-      child: LayoutBuilder(
-        builder: (context, constraints) {
-          return Stack(
-            children: [
-              AnimatedContainer(
-                duration: const Duration(milliseconds: 300),
-                width: constraints.maxWidth * progress,
-                decoration: BoxDecoration(
-                  color: AppColor.primaryNormal,
-                  borderRadius: AppRadius.xxsBorder,
-                ),
-              ),
-            ],
-          );
-        },
-      ),
+    return LayoutBuilder(
+      builder: (context, constraints) {
+        return Align(
+          alignment: Alignment.centerLeft,
+          child: AnimatedContainer(
+            duration: const Duration(milliseconds: 300),
+            width: constraints.maxWidth * progress.clamp(0.0, 1.0),
+            height: 4,
+            decoration: BoxDecoration(
+              color: AppColor.primaryNormal,
+              borderRadius: AppRadius.xxsBorder,
+            ),
+          ),
+        );
+      },
     );
   }
 }

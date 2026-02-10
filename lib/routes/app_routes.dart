@@ -12,7 +12,11 @@ abstract class Routes {
   static const profileSetup = '/login/profile-setup';
 
   // === Onboarding Routes ===
-  static const surveyIntro = '/onboarding/survey-intro';
+  static const surveyReason = '/onboarding/survey-reason';
+  static const surveyWelcome = '/onboarding/survey-welcome';
+  static const surveyIndex = '/onboarding/survey-index';
+  static const surveyIntro =
+      '/onboarding/survey-intro'; // Legacy - redirect to surveyIndex
   static const surveySectionIntro =
       '/onboarding/survey-section'; // With :section parameter
   static const survey = '/onboarding/survey'; // With :step parameter
@@ -46,6 +50,9 @@ abstract class Routes {
   // === Bean Routes ===
   static const beanDetail = '/coffee/bean/detail';
   static const beanEdit = '/coffee/bean/edit';
+
+  // === Recipe Routes ===
+  static const recipeEdit = '/coffee/recipe/edit';
 
   // === Auth (Additional) ===
   static const emailSignUp = '/login/email-sign-up';

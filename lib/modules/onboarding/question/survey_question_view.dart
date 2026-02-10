@@ -22,23 +22,17 @@ class SurveyQuestionView extends GetView<SurveyController> {
       body: SafeArea(
         child: Column(
           children: [
-            // Progress bar below AppBar
+            // Progress bar below AppBar - section-specific progress
             Obx(
               () => Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 24),
                 child: SurveyProgressIndicator(
-                  progress:
-                      (controller.currentStep + 1) / controller.totalSteps,
+                  progress: _calculateSectionProgress(),
                 ),
               ),
             ),
             const SizedBox(height: 8),
-            Expanded(
-              child: SingleChildScrollView(
-                padding: const EdgeInsets.symmetric(horizontal: 24),
-                child: Obx(() => _buildContent()),
-              ),
-            ),
+            Expanded(child: Obx(() => _buildContent())),
             _buildBottomButton(),
           ],
         ),
@@ -86,62 +80,123 @@ class SurveyQuestionView extends GetView<SurveyController> {
     final question = controller.currentQuestion;
     if (question == null) return const SizedBox();
 
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        const SizedBox(height: 24),
+    // For rating questions, center the options vertically
+    final isRatingQuestion = question.questionType == SurveyQuestionType.rating;
 
-        // Question text
-        Text(
-          question.question,
-          style: AppTextStyles.heading1Bold.copyWith(
-            color: AppColor.labelNormal,
-          ),
+    if (isRatingQuestion) {
+      return Padding(
+        padding: const EdgeInsets.symmetric(horizontal: 24),
+        child: Column(
+          children: [
+            const SizedBox(height: 24),
+            // Question text at top
+            Align(
+              alignment: Alignment.centerLeft,
+              child: Text(
+                question.question,
+                style: AppTextStyles.heading1Bold.copyWith(
+                  color: AppColor.labelNormal,
+                ),
+              ),
+            ),
+            if (question.description.isNotEmpty) ...[
+              const SizedBox(height: 8),
+              Align(
+                alignment: Alignment.centerLeft,
+                child: Text(
+                  question.description,
+                  style: AppTextStyles.body2NormalRegular.copyWith(
+                    color: AppColor.labelAlternative,
+                  ),
+                ),
+              ),
+            ],
+            // Center the rating buttons vertically in remaining space
+            Expanded(child: Center(child: _buildOptionsForType(question))),
+          ],
         ),
+      );
+    }
 
-        if (question.description.isNotEmpty) ...[
-          const SizedBox(height: 8),
+    // For other question types, use scrollable layout
+    return SingleChildScrollView(
+      padding: const EdgeInsets.symmetric(horizontal: 24),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          const SizedBox(height: 24),
+
+          // Question text
           Text(
-            question.description,
-            style: AppTextStyles.body2NormalRegular.copyWith(
-              color: AppColor.labelAlternative,
+            question.question,
+            style: AppTextStyles.heading1Bold.copyWith(
+              color: AppColor.labelNormal,
             ),
           ),
+
+          if (question.description.isNotEmpty) ...[
+            const SizedBox(height: 8),
+            Text(
+              question.description,
+              style: AppTextStyles.body2NormalRegular.copyWith(
+                color: AppColor.labelAlternative,
+              ),
+            ),
+          ],
+
+          const SizedBox(height: 32),
+
+          // Render options based on question type
+          _buildOptionsForType(question),
+
+          const SizedBox(height: 24),
         ],
-
-        const SizedBox(height: 32),
-
-        // Render options based on question type
-        _buildOptionsForType(question),
-
-        const SizedBox(height: 24),
-      ],
+      ),
     );
   }
 
   Widget _buildBottomButton() {
-    return Container(
-      padding: const EdgeInsets.all(24),
-      decoration: BoxDecoration(
-        color: AppColor.backgroundNormalNormal,
-        boxShadow: AppShadows.shadowBlackNormal,
-      ),
-      child: Obx(() {
-        String buttonText;
-        if (controller.currentStep < controller.totalSteps - 1) {
-          buttonText = '다음';
-        } else {
-          buttonText = '완료';
-        }
-        return PrimaryButton(
+    return Obx(() {
+      // Section 2-3 (steps 2-9): rating questions - no button, auto-advance
+      if (controller.currentStep >= 2) {
+        return const SizedBox.shrink();
+      }
+
+      // Section 1 (steps 0-1): checkbox questions - show button
+      final buttonText = '선택했어요';
+
+      return Container(
+        padding: const EdgeInsets.all(24),
+        decoration: BoxDecoration(
+          color: AppColor.backgroundNormalNormal,
+          boxShadow: AppShadows.shadowBlackNormal,
+        ),
+        child: PrimaryButton(
           text: buttonText,
-          isEnabled: controller.hasSelection,
-          onPressed: controller.hasSelection
-              ? () => controller.nextQuestion()
-              : null,
-        );
-      }),
-    );
+          isEnabled: true,
+          onPressed: () => controller.nextQuestion(),
+        ),
+      );
+    });
+  }
+
+  /// Calculate progress within current section
+  /// Section 1 (steps 0-1): 2 questions
+  /// Section 2 (steps 2-5): 4 questions
+  /// Section 3 (steps 6-9): 4 questions
+  double _calculateSectionProgress() {
+    final step = controller.currentStep;
+
+    if (step <= 1) {
+      // Section 1: steps 0-1
+      return (step + 1) / 2;
+    } else if (step <= 5) {
+      // Section 2: steps 2-5
+      return (step - 2 + 1) / 4;
+    } else {
+      // Section 3: steps 6-9
+      return (step - 6 + 1) / 4;
+    }
   }
 
   /// Build options based on question type

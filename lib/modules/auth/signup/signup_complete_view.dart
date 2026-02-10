@@ -3,22 +3,23 @@ import 'package:get/get.dart';
 import 'package:coflanet/constants/asset_constant.dart';
 import 'package:coflanet/constants/color_constant.dart';
 import 'package:coflanet/constants/style_constant.dart';
+import 'package:coflanet/core/storage/local_storage.dart';
 import 'package:coflanet/routes/app_pages.dart';
 import 'package:coflanet/widgets/buttons/primary_button.dart';
 
-/// 회원가입 완료 화면 (11-completion-page)
-/// 회원가입 성공 후 환영 메시지와 함께 온보딩으로 안내
+/// 완료페이지 (Figma: 937:45601)
+/// "홍길동님, 환영합니다!" + "회원가입이 완료되었어요"
 class SignUpCompleteView extends StatelessWidget {
   const SignUpCompleteView({super.key});
 
   @override
   Widget build(BuildContext context) {
-    // Get user name from arguments or use default
-    final userName = Get.arguments?['userName'] as String? ?? '사용자';
+    // Get user name from storage
+    final storage = Get.find<LocalStorage>();
+    final userName = storage.getUserName() ?? '사용자';
 
     return Scaffold(
       backgroundColor: AppColor.backgroundNormalNormal,
-      appBar: _buildAppBar(),
       body: SafeArea(
         child: Padding(
           padding: const EdgeInsets.symmetric(horizontal: 24),
@@ -26,7 +27,7 @@ class SignUpCompleteView extends StatelessWidget {
             children: [
               const Spacer(flex: 2),
 
-              // Celebration illustration
+              // Celebration illustration (182x182 per Figma)
               _buildCelebrationIllustration(),
 
               const SizedBox(height: 40),
@@ -47,52 +48,37 @@ class SignUpCompleteView extends StatelessWidget {
     );
   }
 
-  PreferredSizeWidget _buildAppBar() {
-    return AppBar(
-      backgroundColor: AppColor.backgroundNormalNormal,
-      elevation: 0,
-      leading: const SizedBox.shrink(), // No back button - arrived via offNamed
-    );
-  }
-
-  /// Clapping hands illustration from storyboard 11-completion-page.png
+  /// Celebration illustration - clapping hands image (Figma: 182x182)
   Widget _buildCelebrationIllustration() {
     return Image.asset(
       AssetPath.completionClappingHands,
-      width: 200,
-      height: 200,
+      width: 182,
+      height: 182,
       fit: BoxFit.contain,
-      errorBuilder: (context, error, stackTrace) =>
-          _buildFallbackIllustration(),
-    );
-  }
-
-  /// Fallback illustration if image fails to load
-  Widget _buildFallbackIllustration() {
-    return Container(
-      width: 180,
-      height: 180,
-      decoration: BoxDecoration(
-        gradient: LinearGradient(
-          begin: Alignment.topLeft,
-          end: Alignment.bottomRight,
-          colors: [
-            AppColor.primaryLight,
-            AppColor.primaryLight.withValues(alpha: 0.5),
-          ],
+      errorBuilder: (context, error, stackTrace) => Container(
+        width: 182,
+        height: 182,
+        decoration: BoxDecoration(
+          color: AppColor.primaryLight.withValues(alpha: 0.2),
+          shape: BoxShape.circle,
         ),
-        shape: BoxShape.circle,
+        child: const Center(child: Text('👏', style: TextStyle(fontSize: 80))),
       ),
-      child: Center(child: Text('👏', style: AppTextStyles.emojiXLarge)),
     );
   }
 
+  /// Welcome text per Figma (937:45601)
+  /// - "홍길동님, 환영합니다!" (28px, Bold)
+  /// - "회원가입이 완료되었어요" (16px, Regular)
   Widget _buildWelcomeText(String userName) {
     return Column(
       children: [
         Text(
           '$userName님, 환영합니다!',
-          style: AppTextStyles.title1Bold.copyWith(color: AppColor.labelNormal),
+          style: AppTextStyles.heading1Bold.copyWith(
+            color: AppColor.labelNormal,
+            fontSize: 28,
+          ),
           textAlign: TextAlign.center,
         ),
         const SizedBox(height: 12),
@@ -100,6 +86,7 @@ class SignUpCompleteView extends StatelessWidget {
           '회원가입이 완료되었어요',
           style: AppTextStyles.body1NormalRegular.copyWith(
             color: AppColor.labelAlternative,
+            fontSize: 16,
           ),
           textAlign: TextAlign.center,
         ),
@@ -111,8 +98,8 @@ class SignUpCompleteView extends StatelessWidget {
     return PrimaryButton(
       text: '시작하기',
       onPressed: () {
-        // Navigate to survey intro for onboarding
-        Get.offAllNamed(Routes.surveyIntro);
+        // Navigate to survey welcome (커플래닛에 오신 걸 환영해요)
+        Get.offAllNamed(Routes.surveyWelcome);
       },
     );
   }

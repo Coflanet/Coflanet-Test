@@ -11,8 +11,7 @@ class AssetPath {
   static const String logoSplash = '$_images/logo_splash.png';
 
   // === Signup Completion ===
-  static const String completionClappingHands =
-      '$_images/completion_clapping_hands.png';
+  static const String completionClappingHands = '$_images/clapping_hands.png';
 
   // === Character Illustrations ===
   static const String charFront = '$_images/char_front.png';

@@ -32,14 +32,14 @@ class ProfileSetupController extends GetxController {
     super.onClose();
   }
 
-  /// Save name and continue to survey intro
+  /// Save name and continue to survey reason screen
   Future<void> saveAndContinue() async {
     if (!isValid) return;
 
     // Save name to local storage
     await _storage.saveUserName(_name.value.trim());
 
-    // Navigate to survey intro
-    Get.offAllNamed(Routes.surveyIntro);
+    // Navigate to survey reason (커플래닛을 찾게 된 이유)
+    Get.offAllNamed(Routes.surveyReason);
   }
 }
