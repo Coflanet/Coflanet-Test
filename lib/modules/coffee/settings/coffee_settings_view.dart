@@ -42,6 +42,7 @@ class CoffeeSettingsView extends GetView<CoffeeController> {
           _buildTopNavigation(context),
           Expanded(
             child: SingleChildScrollView(
+              physics: const AlwaysScrollableScrollPhysics(),
               padding: const EdgeInsets.symmetric(horizontal: 16),
               child: Column(
                 children: [
@@ -161,7 +162,7 @@ class CoffeeSettingsView extends GetView<CoffeeController> {
               children: [
                 // Brand text - Figma: Pretendard 14px/400, color rgba(55,56,60,0.61)
                 Text(
-                  '스타벅스',
+                  '스페셜티 로스터스',
                   style: TextStyle(
                     fontFamily: 'Pretendard',
                     fontSize: 14,
@@ -171,15 +172,18 @@ class CoffeeSettingsView extends GetView<CoffeeController> {
                 ),
                 const SizedBox(height: 4),
                 // Bean name - Figma: Pretendard 18px/600, color #171719
-                const Text(
-                  '에티오피아 예가체프',
-                  style: TextStyle(
-                    fontFamily: 'Pretendard',
-                    fontSize: 18,
-                    fontWeight: FontWeight.w600,
-                    color: Color(0xFF171719),
-                  ),
-                ),
+                Obx(() {
+                  final beanName = controller.selectedBeanName;
+                  return Text(
+                    beanName.isNotEmpty ? beanName : '에티오피아 예가체프',
+                    style: const TextStyle(
+                      fontFamily: 'Pretendard',
+                      fontSize: 18,
+                      fontWeight: FontWeight.w600,
+                      color: Color(0xFF171719),
+                    ),
+                  );
+                }),
               ],
             ),
           ),
@@ -386,22 +390,71 @@ class CoffeeSettingsView extends GetView<CoffeeController> {
   /// Progress Tracker (Recipe Steps)
   /// Figma: background #FFFFFF, border-radius 40px, padding 32px 24px, gap 16px, height 324px
   Widget _buildProgressTracker() {
-    return Container(
-      padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 32),
-      decoration: BoxDecoration(
-        color: const Color(0xFFFFFFFF),
-        borderRadius: BorderRadius.circular(40),
-      ),
-      child: Column(
-        children: [
-          for (int i = 0; i < _dummyRecipeSteps.length; i++)
-            _RecipeStepItem(
-              step: _dummyRecipeSteps[i],
-              isLast: i == _dummyRecipeSteps.length - 1,
+    return Obx(() {
+      // Use controller extraction steps if available, otherwise fall back to dummy
+      final steps = controller.extractionSteps;
+      final useControllerSteps = steps.isNotEmpty;
+
+      // Convert HandDripStep to RecipeStep format
+      List<RecipeStep> displaySteps;
+      if (useControllerSteps) {
+        displaySteps = [];
+        // Add preparation steps
+        displaySteps.add(
+          const RecipeStep(
+            number: 1,
+            title: '원두 분쇄',
+            description: '분쇄도: 800~1,000μm',
+          ),
+        );
+        displaySteps.add(
+          const RecipeStep(number: 2, title: '예열', description: '서버와 드리퍼 예열'),
+        );
+        // Add extraction steps from controller
+        for (int i = 0; i < steps.length; i++) {
+          final step = steps[i];
+          final minutes = step.duration.inMinutes;
+          final seconds = step.duration.inSeconds % 60;
+          final timeStr = minutes > 0
+              ? '${minutes}분 ${seconds}초'
+              : '${seconds}초';
+          displaySteps.add(
+            RecipeStep(
+              number: i + 3,
+              title: step.title,
+              description: '물 ${step.waterAmount}g $timeStr',
             ),
-        ],
-      ),
-    );
+          );
+        }
+        // Add final step
+        displaySteps.add(
+          RecipeStep(
+            number: displaySteps.length + 1,
+            title: '추출 완료',
+            description: '드리퍼 제거하고 서버를 섞기',
+          ),
+        );
+      } else {
+        displaySteps = _dummyRecipeSteps;
+      }
+
+      return Container(
+        padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 32),
+        decoration: BoxDecoration(
+          color: const Color(0xFFFFFFFF),
+          borderRadius: BorderRadius.circular(40),
+        ),
+        child: Column(
+          children: [
+            for (int i = 0; i < displaySteps.length; i++)
+              _RecipeStepItem(
+                step: displaySteps[i],
+                isLast: i == displaySteps.length - 1,
+              ),
+          ],
+        ),
+      );
+    });
   }
 
   /// Bottom CTA

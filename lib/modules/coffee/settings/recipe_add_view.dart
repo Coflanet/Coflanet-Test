@@ -53,6 +53,7 @@ class RecipeAddView extends GetView<CoffeeController> {
               children: [
                 // Scrollable content
                 SingleChildScrollView(
+                  physics: const AlwaysScrollableScrollPhysics(),
                   padding: const EdgeInsets.symmetric(horizontal: 16),
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
