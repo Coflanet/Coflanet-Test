@@ -1,9 +1,8 @@
-import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:coflanet/constants/color_constant.dart';
 import 'package:coflanet/core/base/base_controller.dart';
 import 'package:coflanet/data/dummy/dummy_coffee_data.dart';
 import 'package:coflanet/data/models/coffee_item_model.dart';
+import 'package:coflanet/routes/app_pages.dart';
 
 /// Controller for Select Coffee Section
 class SelectCoffeeController extends BaseController {
@@ -180,18 +179,10 @@ class SelectCoffeeController extends BaseController {
     _coffeeItems.insert(newIndex, item);
   }
 
-  /// Add new coffee
+  /// Add new coffee - navigates to recipe add page
   void addNewCoffee() {
-    // Show input modal or navigate to add screen
-    final newId = DateTime.now().millisecondsSinceEpoch.toString();
-    _coffeeItems.add(
-      CoffeeItem(
-        id: newId,
-        name: '새 커피 ${_coffeeItems.length + 1}',
-        description: '커피 설명을 입력하세요',
-        color: _getRandomColor(),
-      ),
-    );
+    // Navigate to recipe add page
+    Get.toNamed(Routes.recipeAdd);
   }
 
   /// Confirm selection and go back
@@ -204,20 +195,5 @@ class SelectCoffeeController extends BaseController {
         Get.back(result: selected);
       }
     }
-  }
-
-  /// Get random color for new coffee
-  Color _getRandomColor() {
-    final colors = [
-      AppColor.colorGlobalOrange50,
-      AppColor.colorGlobalGreen50,
-      AppColor.colorGlobalRed50,
-      AppColor.colorGlobalViolet50,
-      AppColor.colorGlobalBlue50,
-      AppColor.colorGlobalPink50,
-      AppColor.colorGlobalCyan50,
-      AppColor.colorGlobalYellow50,
-    ];
-    return colors[_coffeeItems.length % colors.length];
   }
 }

@@ -53,6 +53,7 @@ abstract class Routes {
 
   // === Recipe Routes ===
   static const recipeEdit = '/coffee/recipe/edit';
+  static const recipeAdd = '/coffee/recipe/add';
 
   // === Auth (Additional) ===
   static const emailSignUp = '/login/email-sign-up';

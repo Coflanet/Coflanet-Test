@@ -43,6 +43,7 @@ import 'package:coflanet/modules/coffee/select/select_coffee_binding.dart';
 import 'package:coflanet/modules/coffee/bean/bean_detail_view.dart';
 import 'package:coflanet/modules/coffee/bean/bean_edit_view.dart';
 import 'package:coflanet/modules/coffee/settings/recipe_edit_view.dart';
+import 'package:coflanet/modules/coffee/settings/recipe_add_view.dart';
 
 // Modules - Matching
 import 'package:coflanet/modules/matching/matching_binding.dart';
@@ -214,6 +215,12 @@ class AppPages {
     GetPage(
       name: Routes.recipeEdit,
       page: () => const RecipeEditView(),
+      binding: CoffeeBinding(),
+      transition: Transition.cupertino,
+    ),
+    GetPage(
+      name: Routes.recipeAdd,
+      page: () => const RecipeAddView(),
       binding: CoffeeBinding(),
       transition: Transition.cupertino,
     ),

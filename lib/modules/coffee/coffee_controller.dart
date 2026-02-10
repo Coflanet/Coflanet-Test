@@ -4,6 +4,35 @@ import 'package:coflanet/routes/app_pages.dart';
 
 enum CoffeeType { handDrip, espresso }
 
+/// Hand Drip Extraction Step Model
+class HandDripStep {
+  final String id;
+  final String title;
+  final int waterAmount; // ml
+  final Duration duration;
+
+  const HandDripStep({
+    required this.id,
+    required this.title,
+    required this.waterAmount,
+    required this.duration,
+  });
+
+  HandDripStep copyWith({
+    String? id,
+    String? title,
+    int? waterAmount,
+    Duration? duration,
+  }) {
+    return HandDripStep(
+      id: id ?? this.id,
+      title: title ?? this.title,
+      waterAmount: waterAmount ?? this.waterAmount,
+      duration: duration ?? this.duration,
+    );
+  }
+}
+
 class CoffeeController extends BaseController {
   // Selected coffee type
   final _selectedType = Rxn<CoffeeType>();
@@ -151,7 +180,7 @@ class CoffeeController extends BaseController {
   }
 
   /// Get grind size formatted with unit
-  String get grindSizeFormatted => '${grindSize}μm';
+  String get grindSizeFormatted => '$grindSize μm';
 
   /// Get grind size label based on current value
   String get grindSizeLabel {
@@ -169,5 +198,174 @@ class CoffeeController extends BaseController {
     if (strength < 33) return '연하게';
     if (strength < 66) return '보통';
     return '진하게';
+  }
+
+  // ===== Selected Bean (Edit Mode) =====
+
+  /// Selected bean ID for editing
+  final _selectedBeanId = Rxn<String>();
+  String? get selectedBeanId => _selectedBeanId.value;
+
+  /// Selected bean name for editing
+  final _selectedBeanName = ''.obs;
+  String get selectedBeanName => _selectedBeanName.value;
+
+  /// Set selected bean info (called when navigating from coffee list)
+  void setSelectedBean({required String id, required String name}) {
+    _selectedBeanId.value = id;
+    _selectedBeanName.value = name;
+  }
+
+  // ===== Hand Drip Extraction Steps =====
+
+  /// Extraction steps for hand drip recipe
+  final _extractionSteps = <HandDripStep>[].obs;
+  List<HandDripStep> get extractionSteps => _extractionSteps;
+
+  /// Total water amount from all steps
+  int get totalStepsWaterAmount {
+    if (_extractionSteps.isEmpty) return waterAmount;
+    return _extractionSteps.fold(0, (sum, step) => sum + step.waterAmount);
+  }
+
+  /// Total extraction time from all steps
+  Duration get totalStepsDuration {
+    if (_extractionSteps.isEmpty) return Duration(seconds: extractionTime);
+    return _extractionSteps.fold(
+      Duration.zero,
+      (sum, step) => sum + step.duration,
+    );
+  }
+
+  /// Formatted total extraction time
+  String get totalStepsTimeFormatted {
+    final total = totalStepsDuration;
+    final minutes = total.inMinutes;
+    final seconds = total.inSeconds % 60;
+    return '${minutes.toString().padLeft(2, '0')}:${seconds.toString().padLeft(2, '0')}';
+  }
+
+  /// Initialize default extraction steps for hand drip
+  void initializeDefaultSteps() {
+    _extractionSteps.clear();
+    _extractionSteps.addAll([
+      HandDripStep(
+        id: '1',
+        title: '뜸 들이기',
+        waterAmount: 30,
+        duration: const Duration(seconds: 30),
+      ),
+      HandDripStep(
+        id: '2',
+        title: '1차 추출',
+        waterAmount: 100,
+        duration: const Duration(seconds: 60),
+      ),
+      HandDripStep(
+        id: '3',
+        title: '2차 추출',
+        waterAmount: 80,
+        duration: const Duration(seconds: 90),
+      ),
+    ]);
+  }
+
+  /// Add new extraction step
+  void addExtractionStep() {
+    final stepNumber = _extractionSteps.length;
+    String title;
+
+    if (stepNumber == 0) {
+      title = '뜸 들이기';
+    } else {
+      title = '$stepNumber차 추출';
+    }
+
+    _extractionSteps.add(
+      HandDripStep(
+        id: DateTime.now().millisecondsSinceEpoch.toString(),
+        title: title,
+        waterAmount: 50,
+        duration: const Duration(seconds: 30),
+      ),
+    );
+  }
+
+  /// Delete extraction step by id
+  void deleteExtractionStep(String id) {
+    _extractionSteps.removeWhere((step) => step.id == id);
+    // Renumber remaining steps
+    _renumberSteps();
+  }
+
+  /// Renumber steps after deletion
+  void _renumberSteps() {
+    for (int i = 0; i < _extractionSteps.length; i++) {
+      final step = _extractionSteps[i];
+      String newTitle;
+      if (i == 0) {
+        newTitle = '뜸 들이기';
+      } else {
+        newTitle = '$i차 추출';
+      }
+      _extractionSteps[i] = step.copyWith(title: newTitle);
+    }
+  }
+
+  /// Update step water amount
+  void updateStepWaterAmount(String id, int amount) {
+    final index = _extractionSteps.indexWhere((step) => step.id == id);
+    if (index != -1) {
+      _extractionSteps[index] = _extractionSteps[index].copyWith(
+        waterAmount: amount.clamp(10, 500),
+      );
+    }
+  }
+
+  /// Update step duration
+  void updateStepDuration(String id, Duration duration) {
+    final index = _extractionSteps.indexWhere((step) => step.id == id);
+    if (index != -1) {
+      _extractionSteps[index] = _extractionSteps[index].copyWith(
+        duration: duration,
+      );
+    }
+  }
+
+  // ===== New Recipe (Add Mode) =====
+
+  /// Bean name for new recipe (add mode)
+  final _newRecipeBeanName = ''.obs;
+  String get newRecipeBeanName => _newRecipeBeanName.value;
+  set newRecipeBeanName(String value) => _newRecipeBeanName.value = value;
+
+  /// Clear new recipe form
+  void clearNewRecipeForm() {
+    _newRecipeBeanName.value = '';
+    _cupsCount.value = 1;
+    _strength.value = 50;
+    _customCoffeeAmount.value = null;
+    _customWaterAmount.value = null;
+  }
+
+  /// Save new recipe
+  void saveNewRecipe() {
+    // TODO: Implement actual save logic with repository
+    // For now, just log and clear
+    if (_newRecipeBeanName.value.isNotEmpty) {
+      // Save recipe with current settings
+      Get.snackbar(
+        '저장 완료',
+        '${_newRecipeBeanName.value} 레시피가 저장되었습니다',
+        snackPosition: SnackPosition.BOTTOM,
+      );
+      clearNewRecipeForm();
+    }
+  }
+
+  /// Navigate to add recipe page
+  void goToAddRecipe() {
+    clearNewRecipeForm();
+    Get.toNamed(Routes.recipeAdd);
   }
 }

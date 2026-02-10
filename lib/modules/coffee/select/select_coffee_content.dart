@@ -4,6 +4,7 @@ import 'package:coflanet/constants/color_constant.dart';
 import 'package:coflanet/constants/radius_constant.dart';
 import 'package:coflanet/constants/style_constant.dart';
 import 'package:coflanet/data/models/coffee_item_model.dart';
+import 'package:coflanet/modules/coffee/coffee_controller.dart';
 import 'package:coflanet/modules/coffee/select/select_coffee_controller.dart';
 import 'package:coflanet/routes/app_pages.dart';
 
@@ -107,7 +108,8 @@ class SelectCoffeeContent extends GetView<SelectCoffeeController> {
         children: [
           Expanded(
             child: ListView.builder(
-              padding: const EdgeInsets.fromLTRB(20, 0, 20, 24),
+              // Increased bottom padding to ensure + button is visible above navbar
+              padding: const EdgeInsets.fromLTRB(20, 0, 20, 80),
               // +1 for the add button at the end
               itemCount: items.length + 1,
               itemBuilder: (context, index) {
@@ -306,6 +308,13 @@ class SelectCoffeeContent extends GetView<SelectCoffeeController> {
 
   void _onRecipePressed(CoffeeItem item) {
     controller.selectCoffee(item.id);
+    // Set selected bean info in CoffeeController for recipe edit
+    if (Get.isRegistered<CoffeeController>()) {
+      Get.find<CoffeeController>().setSelectedBean(
+        id: item.id,
+        name: item.name,
+      );
+    }
     Get.toNamed(Routes.coffeeSettings, arguments: {'coffeeId': item.id});
   }
 

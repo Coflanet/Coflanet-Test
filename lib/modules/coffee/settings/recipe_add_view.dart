@@ -1,14 +1,12 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 import 'package:coflanet/modules/coffee/coffee_controller.dart';
 import 'package:coflanet/widgets/modals/input_modal.dart';
-import 'package:coflanet/widgets/modals/time_picker_modal.dart';
 
-/// Recipe Edit Screen - Figma node 1163-55918
-/// 원두가 이미 선택되어 있는 편집 모드 - 원두 이름은 자동으로 표시됨
-class RecipeEditView extends GetView<CoffeeController> {
-  const RecipeEditView({super.key});
+/// Recipe Add Screen - Figma node 1163-55839
+/// 새 레시피 추가 화면 - 원두 이름을 직접 입력할 수 있음
+class RecipeAddView extends GetView<CoffeeController> {
+  const RecipeAddView({super.key});
 
   // ===== Figma Color Constants (LIGHT Theme) =====
   static const Color _screenBg = Color(0xFFF5F5F5);
@@ -21,6 +19,7 @@ class RecipeEditView extends GetView<CoffeeController> {
     0xE02E2F33,
   ); // Figma: rgba(46, 47, 51, 0.88)
   static const Color _textMuted = Color(0xFF666666);
+  static const Color _textPlaceholder = Color(0xFFAAAAAA);
   static const Color _border = Color(0xFFE0E0E0);
   static const Color _stepperBg = Color(
     0x1F70737C,
@@ -116,7 +115,7 @@ class RecipeEditView extends GetView<CoffeeController> {
             // Title - centered
             const Expanded(
               child: Text(
-                '레시피 편집',
+                '레시피 추가',
                 style: TextStyle(
                   fontFamily: 'Pretendard',
                   fontSize: 18,
@@ -134,12 +133,12 @@ class RecipeEditView extends GetView<CoffeeController> {
     );
   }
 
-  /// 기본 설정 section - Bean name (separate card), then cups and intensity
+  /// 기본 설정 section - Bean name (editable), then cups and intensity
   Widget _buildBasicSettingsCard() {
     return Column(
       children: [
-        // 원두 이름 section - separate rounded card per Figma
-        _buildBeanNameRow(),
+        // 원두 이름 section - editable input for add mode
+        _buildBeanNameInputRow(),
         const SizedBox(height: 16),
         // 잔수 and 진하기 section
         Container(
@@ -163,55 +162,86 @@ class RecipeEditView extends GetView<CoffeeController> {
     );
   }
 
-  /// 원두 이름 section - 편집 모드에서는 선택된 원두 이름이 자동 표시됨
-  Widget _buildBeanNameRow() {
-    return Container(
-      width: double.infinity,
-      padding: const EdgeInsets.symmetric(vertical: 32),
-      decoration: BoxDecoration(
-        color: _cardBg,
-        borderRadius: BorderRadius.circular(40),
-      ),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          // Label: 원두 이름
-          Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 24),
-            child: Text(
-              '원두 이름',
-              style: TextStyle(
-                fontFamily: 'Pretendard',
-                fontSize: 16,
-                fontWeight: FontWeight.w400,
-                height: 1.5,
-                letterSpacing: 0.0057 * 16,
-                color: _textSecondary,
-              ),
-            ),
-          ),
-          const SizedBox(height: 8),
-          // Value: show selected bean name from controller (not editable in edit mode)
-          Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 24),
-            child: Obx(() {
-              final beanName = controller.selectedBeanName;
-              return Text(
-                beanName.isNotEmpty ? beanName : '원두를 선택해주세요',
+  /// 원두 이름 section - 추가 모드에서는 직접 입력 가능
+  Widget _buildBeanNameInputRow() {
+    return GestureDetector(
+      onTap: _showBeanNameModal,
+      child: Container(
+        width: double.infinity,
+        padding: const EdgeInsets.symmetric(vertical: 32),
+        decoration: BoxDecoration(
+          color: _cardBg,
+          borderRadius: BorderRadius.circular(40),
+        ),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            // Label: 원두 이름
+            Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 24),
+              child: Text(
+                '원두 이름',
                 style: TextStyle(
                   fontFamily: 'Pretendard',
                   fontSize: 16,
-                  fontWeight: FontWeight.w500,
+                  fontWeight: FontWeight.w400,
                   height: 1.5,
                   letterSpacing: 0.0057 * 16,
-                  color: beanName.isNotEmpty ? _textPrimary : _textSecondary,
+                  color: _textSecondary,
                 ),
-              );
-            }),
-          ),
-        ],
+              ),
+            ),
+            const SizedBox(height: 8),
+            // Value: editable text with tap to edit
+            Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 24),
+              child: Obx(() {
+                final beanName = controller.newRecipeBeanName;
+                final hasName = beanName.isNotEmpty;
+                return Row(
+                  children: [
+                    Expanded(
+                      child: Text(
+                        hasName ? beanName : '원두 이름을 입력하세요',
+                        style: TextStyle(
+                          fontFamily: 'Pretendard',
+                          fontSize: 16,
+                          fontWeight: FontWeight.w500,
+                          height: 1.5,
+                          letterSpacing: 0.0057 * 16,
+                          color: hasName ? _textPrimary : _textPlaceholder,
+                        ),
+                      ),
+                    ),
+                    Icon(Icons.edit_outlined, size: 20, color: _textSecondary),
+                  ],
+                );
+              }),
+            ),
+          ],
+        ),
       ),
     );
+  }
+
+  /// Show bean name input modal
+  Future<void> _showBeanNameModal() async {
+    final result = await InputModal.show(
+      title: '원두 이름',
+      message: '레시피에 사용할 원두 이름을 입력하세요',
+      hint: '예: 에티오피아 예가체프',
+      initialValue: controller.newRecipeBeanName,
+      keyboardType: TextInputType.text,
+      validator: (value) {
+        if (value == null || value.trim().isEmpty) {
+          return '원두 이름을 입력하세요';
+        }
+        return null;
+      },
+    );
+    if (result != null) {
+      controller.newRecipeBeanName = result.trim();
+    }
   }
 
   /// 잔수 row with chip buttons - 2x2 grid layout per Figma
@@ -883,7 +913,18 @@ class RecipeEditView extends GetView<CoffeeController> {
         height: 56,
         child: ElevatedButton(
           onPressed: () {
+            // Validate and save
+            if (controller.newRecipeBeanName.isEmpty) {
+              Get.snackbar(
+                '알림',
+                '원두 이름을 입력해주세요',
+                snackPosition: SnackPosition.BOTTOM,
+                backgroundColor: Colors.red.shade100,
+              );
+              return;
+            }
             // Save and go back
+            controller.saveNewRecipe();
             Get.back();
           },
           style: ElevatedButton.styleFrom(
@@ -906,86 +947,5 @@ class RecipeEditView extends GetView<CoffeeController> {
         ),
       ),
     );
-  }
-
-  // ===== Modal Handlers =====
-
-  Future<void> _showCoffeeAmountModal() async {
-    final result = await InputModal.show(
-      title: '원두 양 설정',
-      message: '원두량을 그램 단위로 입력하세요',
-      hint: '예: 18',
-      initialValue: controller.coffeeAmount.toString(),
-      keyboardType: TextInputType.number,
-      inputFormatters: [FilteringTextInputFormatter.digitsOnly],
-      validator: (value) {
-        if (value == null || value.isEmpty) return '값을 입력하세요';
-        final amount = int.tryParse(value);
-        if (amount == null || amount < 5 || amount > 100) {
-          return '5~100g 사이의 값을 입력하세요';
-        }
-        return null;
-      },
-    );
-    if (result != null) {
-      controller.customCoffeeAmount = int.parse(result);
-    }
-  }
-
-  Future<void> _showWaterTemperatureModal() async {
-    final result = await InputModal.show(
-      title: '물 온도 설정',
-      message: '물 온도를 섭씨 단위로 입력하세요',
-      hint: '예: 93',
-      initialValue: controller.waterTemperature.toString(),
-      keyboardType: TextInputType.number,
-      inputFormatters: [FilteringTextInputFormatter.digitsOnly],
-      validator: (value) {
-        if (value == null || value.isEmpty) return '값을 입력하세요';
-        final temp = int.tryParse(value);
-        if (temp == null || temp < 85 || temp > 100) {
-          return '85~100°C 사이의 값을 입력하세요';
-        }
-        return null;
-      },
-    );
-    if (result != null) {
-      controller.waterTemperature = int.parse(result);
-    }
-  }
-
-  Future<void> _showWaterAmountModal() async {
-    final result = await InputModal.show(
-      title: '물 양 설정',
-      message: '물 양을 ml 단위로 입력하세요',
-      hint: '예: 210',
-      initialValue: controller.waterAmount.toString(),
-      keyboardType: TextInputType.number,
-      inputFormatters: [FilteringTextInputFormatter.digitsOnly],
-      validator: (value) {
-        if (value == null || value.isEmpty) return '값을 입력하세요';
-        final amount = int.tryParse(value);
-        if (amount == null || amount < 30 || amount > 1000) {
-          return '30~1000ml 사이의 값을 입력하세요';
-        }
-        return null;
-      },
-    );
-    if (result != null) {
-      controller.customWaterAmount = int.parse(result);
-    }
-  }
-
-  Future<void> _showExtractionTimeModal() async {
-    final initialDuration = Duration(seconds: controller.extractionTime);
-    final result = await TimePickerModal.show(
-      title: '추출 시간 설정',
-      initialDuration: initialDuration,
-      maxMinutes: 10,
-      maxSeconds: 59,
-    );
-    if (result != null) {
-      controller.extractionTime = result.inSeconds;
-    }
   }
 }
