@@ -668,7 +668,7 @@ class _SelectionPill extends StatelessWidget {
           borderRadius: BorderRadius.circular(24),
         ),
         child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
+          crossAxisAlignment: CrossAxisAlignment.center,
           mainAxisSize: MainAxisSize.min,
           children: [
             // Main text - Figma: Pretendard 18px/600, color #5B35F2
@@ -680,6 +680,7 @@ class _SelectionPill extends StatelessWidget {
                 fontWeight: FontWeight.w600,
                 color: Color(0xFF5B35F2),
               ),
+              textAlign: TextAlign.center,
             ),
             const SizedBox(height: 2),
             // Sub text - Figma: Pretendard 14px/400, color rgba(55,56,60,0.61)
@@ -691,6 +692,7 @@ class _SelectionPill extends StatelessWidget {
                 fontWeight: FontWeight.w400,
                 color: const Color(0xFF37383C).withValues(alpha: 0.61),
               ),
+              textAlign: TextAlign.center,
             ),
           ],
         ),
