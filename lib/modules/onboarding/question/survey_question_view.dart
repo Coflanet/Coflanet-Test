@@ -111,8 +111,13 @@ class SurveyQuestionView extends GetView<SurveyController> {
                 ),
               ),
             ],
-            // Center the rating buttons vertically in remaining space
-            Expanded(child: Center(child: _buildOptionsForType(question))),
+            // Position rating buttons slightly above center (per Figma)
+            Expanded(
+              child: Align(
+                alignment: const Alignment(0, -0.4),
+                child: _buildOptionsForType(question),
+              ),
+            ),
           ],
         ),
       );
