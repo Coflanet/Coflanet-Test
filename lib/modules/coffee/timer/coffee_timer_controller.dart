@@ -4,6 +4,7 @@ import 'package:flutter/services.dart';
 import 'package:coflanet/core/base/base_controller.dart';
 import 'package:coflanet/data/models/timer_step_model.dart';
 import 'package:coflanet/data/dummy/dummy_timer_data.dart';
+import 'package:coflanet/modules/coffee/coffee_controller.dart';
 import 'package:coflanet/routes/app_pages.dart';
 
 /// Timer state enum
@@ -140,10 +141,111 @@ class CoffeeTimerController extends BaseController {
   void _loadRecipe() {
     final args = Get.arguments;
     final coffeeType = args?['type'] as String? ?? 'handDrip';
+
+    // Try to load from CoffeeController first
+    if (Get.isRegistered<CoffeeController>()) {
+      final coffeeController = Get.find<CoffeeController>();
+      final extractionSteps = coffeeController.extractionSteps;
+
+      if (extractionSteps.isNotEmpty) {
+        // Build recipe from CoffeeController data
+        _recipe.value = _buildRecipeFromController(coffeeController);
+        _currentStepIndex.value = 0;
+        _totalElapsedSeconds.value = 0;
+        _initCurrentStep();
+        return;
+      }
+    }
+
+    // Fall back to dummy data
     _recipe.value = DummyTimerData.getRecipe(coffeeType);
     _currentStepIndex.value = 0;
     _totalElapsedSeconds.value = 0;
     _initCurrentStep();
+  }
+
+  /// Build TimerRecipeModel from CoffeeController data
+  TimerRecipeModel _buildRecipeFromController(CoffeeController controller) {
+    final steps = <TimerStepModel>[];
+    int stepNumber = 1;
+
+    // Step 1: 원두 분쇄 (preparation)
+    steps.add(
+      TimerStepModel(
+        stepNumber: stepNumber++,
+        title: '원두 분쇄',
+        description: '분쇄도: ${controller.grindSize}μm',
+        durationSeconds: 0,
+        stepType: TimerStepType.preparation,
+        illustrationEmoji: '☕',
+        actionText: '원두 ${controller.coffeeAmount}g을 균일하게 분쇄',
+      ),
+    );
+
+    // Step 2: 예열 (preparation)
+    steps.add(
+      TimerStepModel(
+        stepNumber: stepNumber++,
+        title: '예열',
+        description: '서버와 드리퍼 예열',
+        durationSeconds: 0,
+        stepType: TimerStepType.preparation,
+        illustrationEmoji: '🔥',
+        actionText: '뜨거운 물로 드리퍼와 서버를 예열',
+      ),
+    );
+
+    // Add extraction steps from controller
+    for (final step in controller.extractionSteps) {
+      steps.add(
+        TimerStepModel(
+          stepNumber: stepNumber++,
+          title: step.title,
+          description: '물 ${step.waterAmount}ml 추출',
+          durationSeconds: step.duration.inSeconds,
+          waterAmount: step.waterAmount,
+          stepType: TimerStepType.brewing,
+          actionText: '${step.waterAmount}ml의 물을 천천히 부어주세요',
+        ),
+      );
+    }
+
+    // Final step: 추출 완료 (preparation)
+    steps.add(
+      TimerStepModel(
+        stepNumber: stepNumber++,
+        title: '추출 완료',
+        description: '드리퍼 제거하고 서버를 섞기',
+        durationSeconds: 0,
+        stepType: TimerStepType.preparation,
+        illustrationEmoji: '✨',
+        actionText: '드리퍼를 제거하고 커피를 가볍게 섞어주세요',
+      ),
+    );
+
+    // Calculate total duration from brewing steps only
+    final totalDuration = steps
+        .where((s) => s.hasTimer)
+        .fold(0, (sum, s) => sum + s.durationSeconds);
+
+    return TimerRecipeModel(
+      id: 'custom_recipe',
+      name: controller.selectedBeanName.isNotEmpty
+          ? controller.selectedBeanName
+          : '커스텀 레시피',
+      coffeeType: 'handDrip',
+      coffeeAmount: controller.coffeeAmount,
+      waterAmount: controller.totalStepsWaterAmount,
+      totalDurationSeconds: totalDuration,
+      steps: steps,
+      completionMessage: '추출이 완료되었습니다!',
+      aromaDescription: '신선한 커피의 향을 즐겨보세요',
+      aromaTags: const [
+        AromaTagModel(emoji: '🍫', name: '초콜릿'),
+        AromaTagModel(emoji: '🌰', name: '견과류'),
+        AromaTagModel(emoji: '🍯', name: '카라멜'),
+      ],
+    );
   }
 
   void _initCurrentStep() {
