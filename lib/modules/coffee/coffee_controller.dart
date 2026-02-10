@@ -34,6 +34,13 @@ class HandDripStep {
 }
 
 class CoffeeController extends BaseController {
+  @override
+  void onInit() {
+    super.onInit();
+    // Initialize default extraction steps
+    initializeDefaultSteps();
+  }
+
   // Selected coffee type
   final _selectedType = Rxn<CoffeeType>();
   CoffeeType? get selectedType => _selectedType.value;
@@ -222,6 +229,9 @@ class CoffeeController extends BaseController {
   final _extractionSteps = <HandDripStep>[].obs;
   List<HandDripStep> get extractionSteps => _extractionSteps;
 
+  /// Flag to prevent multiple initializations
+  bool _stepsInitialized = false;
+
   /// Total water amount from all steps
   int get totalStepsWaterAmount {
     if (_extractionSteps.isEmpty) return waterAmount;
@@ -247,6 +257,8 @@ class CoffeeController extends BaseController {
 
   /// Initialize default extraction steps for hand drip
   void initializeDefaultSteps() {
+    if (_stepsInitialized) return;
+    _stepsInitialized = true;
     _extractionSteps.clear();
     _extractionSteps.addAll([
       HandDripStep(

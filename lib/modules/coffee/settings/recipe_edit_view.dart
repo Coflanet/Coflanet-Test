@@ -35,11 +35,6 @@ class RecipeEditView extends GetView<CoffeeController> {
 
   @override
   Widget build(BuildContext context) {
-    // Initialize extraction steps if empty
-    if (controller.extractionSteps.isEmpty) {
-      controller.initializeDefaultSteps();
-    }
-
     final bottomPadding = MediaQuery.of(context).padding.bottom;
     // Calculate total bottom area needed: button height (56) + padding (32) + safe area
     final bottomAreaHeight = 56 + 32 + bottomPadding;
