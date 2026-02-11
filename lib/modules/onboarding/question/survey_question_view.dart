@@ -63,14 +63,18 @@ class SurveyQuestionView extends GetView<SurveyController> {
         ),
       ),
       actions: [
-        TextButton(
-          onPressed: () => controller.skipSurvey(),
-          child: Text(
-            '건너뛰기',
-            style: AppTextStyles.label1NormalMedium.copyWith(
-              color: AppColor.labelAssistive,
+        // X 닫기 버튼 (Figma 디자인)
+        IconButton(
+          icon: SvgPicture.asset(
+            AssetPath.iconClose,
+            width: 24,
+            height: 24,
+            colorFilter: ColorFilter.mode(
+              AppColor.labelNormal,
+              BlendMode.srcIn,
             ),
           ),
+          onPressed: () => controller.skipSurvey(),
         ),
       ],
     );
@@ -186,21 +190,26 @@ class SurveyQuestionView extends GetView<SurveyController> {
   }
 
   /// Calculate progress within current section
-  /// Section 1 (steps 0-1): 2 questions
-  /// Section 2 (steps 2-5): 4 questions
-  /// Section 3 (steps 6-9): 4 questions
+  /// Standard: Section 1 (0-1), Section 2 (2-5), Section 3 (6-9)
+  /// Lifestyle: Section 1 (0-1), Section 2 (2-5), Section 3 (6-9), Section 4 (10-11)
   double _calculateSectionProgress() {
     final step = controller.currentStep;
+    final isLifestyle = controller.surveyType == SurveyType.lifestyle;
 
     if (step <= 1) {
-      // Section 1: steps 0-1
+      // Section 1: steps 0-1 (2 questions)
       return (step + 1) / 2;
     } else if (step <= 5) {
-      // Section 2: steps 2-5
+      // Section 2: steps 2-5 (4 questions)
       return (step - 2 + 1) / 4;
-    } else {
-      // Section 3: steps 6-9
+    } else if (step <= 9) {
+      // Section 3: steps 6-9 (4 questions)
       return (step - 6 + 1) / 4;
+    } else if (isLifestyle && step <= 11) {
+      // Section 4 (lifestyle only): steps 10-11 (2 questions)
+      return (step - 10 + 1) / 2;
+    } else {
+      return 1.0;
     }
   }
 
