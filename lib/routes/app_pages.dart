@@ -17,7 +17,6 @@ import 'package:coflanet/modules/auth/profile_setup/profile_setup_binding.dart';
 import 'package:coflanet/modules/onboarding/survey_binding.dart';
 import 'package:coflanet/modules/onboarding/reason/survey_reason_view.dart';
 import 'package:coflanet/modules/onboarding/reason/survey_reason_binding.dart';
-import 'package:coflanet/modules/onboarding/welcome/survey_welcome_view.dart';
 import 'package:coflanet/modules/onboarding/index/survey_index_view.dart';
 import 'package:coflanet/modules/onboarding/intro/survey_intro_view.dart';
 import 'package:coflanet/modules/onboarding/section_intro/survey_section_intro_view.dart';
@@ -107,11 +106,6 @@ class AppPages {
       name: Routes.surveyReason,
       page: () => const SurveyReasonView(),
       binding: SurveyReasonBinding(),
-      transition: Transition.cupertino,
-    ),
-    GetPage(
-      name: Routes.surveyWelcome,
-      page: () => const SurveyWelcomeView(),
       transition: Transition.cupertino,
     ),
     GetPage(

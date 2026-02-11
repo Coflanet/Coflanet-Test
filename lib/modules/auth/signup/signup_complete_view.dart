@@ -98,8 +98,8 @@ class SignUpCompleteView extends StatelessWidget {
     return PrimaryButton(
       text: '시작하기',
       onPressed: () {
-        // Navigate to survey welcome (커플래닛에 오신 걸 환영해요)
-        Get.offAllNamed(Routes.surveyWelcome);
+        // Navigate to survey intro (취향 선택 화면)
+        Get.offAllNamed(Routes.surveyIntro);
       },
     );
   }
