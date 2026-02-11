@@ -1,11 +1,16 @@
 import 'package:get/get.dart';
 import 'package:coflanet/core/base/base_controller.dart';
-import 'package:coflanet/data/dummy/dummy_coffee_data.dart';
 import 'package:coflanet/data/models/coffee_item_model.dart';
+import 'package:coflanet/data/repositories/repository_interfaces.dart';
+import 'package:coflanet/data/repositories/repository_provider.dart';
 import 'package:coflanet/routes/app_pages.dart';
 
 /// Controller for Select Coffee Section
 class SelectCoffeeController extends BaseController {
+  /// Coffee repository for CRUD operations
+  final CoffeeRepository _coffeeRepository =
+      RepositoryProvider.coffeeRepository;
+
   // List of coffee items
   final _coffeeItems = <CoffeeItem>[].obs;
   List<CoffeeItem> get coffeeItems => _coffeeItems;
@@ -41,15 +46,12 @@ class SelectCoffeeController extends BaseController {
     _loadCoffeeItems();
   }
 
-  /// Load coffee items from storage/API
+  /// Load coffee items from repository
   Future<void> _loadCoffeeItems() async {
     showLoading();
 
-    // Simulate loading delay
-    await Future.delayed(const Duration(milliseconds: 500));
-
-    // Load dummy data
-    _coffeeItems.value = DummyCoffeeData.coffeeItems.toList();
+    // Load from repository (handles dummy vs API internally)
+    _coffeeItems.value = await _coffeeRepository.getCoffeeItems();
 
     // Pre-select first item
     if (_coffeeItems.isNotEmpty) {
@@ -81,9 +83,10 @@ class SelectCoffeeController extends BaseController {
   bool isSelectedForEdit(String id) => _selectedIdsForEdit.contains(id);
 
   /// Delete all selected items in edit mode
-  void deleteSelectedItems() {
+  Future<void> deleteSelectedItems() async {
     for (final id in _selectedIdsForEdit.toList()) {
       _coffeeItems.removeWhere((item) => item.id == id);
+      await _coffeeRepository.deleteCoffeeItem(id);
     }
     _selectedIdsForEdit.clear();
 
@@ -102,11 +105,12 @@ class SelectCoffeeController extends BaseController {
   }
 
   /// Hide a coffee item (move to hidden section)
-  void hideCoffee(String id) {
+  Future<void> hideCoffee(String id) async {
     final index = _coffeeItems.indexWhere((item) => item.id == id);
     if (index != -1) {
       final item = _coffeeItems[index];
       _coffeeItems[index] = item.copyWith(isHidden: true);
+      await _coffeeRepository.updateCoffeeVisibility(id, true);
 
       // Update selection if hidden item was selected
       if (_selectedId.value == id) {
@@ -118,27 +122,32 @@ class SelectCoffeeController extends BaseController {
   }
 
   /// Unhide a coffee item (restore from hidden section)
-  void unhideCoffee(String id) {
+  Future<void> unhideCoffee(String id) async {
     final index = _coffeeItems.indexWhere((item) => item.id == id);
     if (index != -1) {
       final item = _coffeeItems[index];
       _coffeeItems[index] = item.copyWith(isHidden: false);
+      await _coffeeRepository.updateCoffeeVisibility(id, false);
     }
   }
 
   /// Hide all selected items in edit mode
-  void hideSelectedItems() {
+  Future<void> hideSelectedItems() async {
     for (final id in _selectedIdsForEdit.toList()) {
-      hideCoffee(id);
+      await hideCoffee(id);
     }
     _selectedIdsForEdit.clear();
   }
 
   /// Restore all hidden items
-  void restoreAllHiddenItems() {
+  Future<void> restoreAllHiddenItems() async {
     for (int i = 0; i < _coffeeItems.length; i++) {
       if (_coffeeItems[i].isHidden) {
         _coffeeItems[i] = _coffeeItems[i].copyWith(isHidden: false);
+        await _coffeeRepository.updateCoffeeVisibility(
+          _coffeeItems[i].id,
+          false,
+        );
       }
     }
   }
@@ -159,8 +168,9 @@ class SelectCoffeeController extends BaseController {
   }
 
   /// Delete a coffee item
-  void deleteCoffee(String id) {
+  Future<void> deleteCoffee(String id) async {
     _coffeeItems.removeWhere((item) => item.id == id);
+    await _coffeeRepository.deleteCoffeeItem(id);
 
     // Clear selection if deleted item was selected
     if (_selectedId.value == id) {
@@ -171,12 +181,16 @@ class SelectCoffeeController extends BaseController {
   }
 
   /// Reorder items
-  void reorderItems(int oldIndex, int newIndex) {
+  Future<void> reorderItems(int oldIndex, int newIndex) async {
     if (newIndex > oldIndex) {
       newIndex -= 1;
     }
     final item = _coffeeItems.removeAt(oldIndex);
     _coffeeItems.insert(newIndex, item);
+
+    // Persist new order
+    final orderedIds = _coffeeItems.map((i) => i.id).toList();
+    await _coffeeRepository.reorderCoffeeItems(orderedIds);
   }
 
   /// Add new coffee - navigates to recipe add page

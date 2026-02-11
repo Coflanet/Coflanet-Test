@@ -1,134 +1,126 @@
+import 'package:flutter_naver_login/flutter_naver_login.dart';
+import 'package:flutter_naver_login/interface/types/naver_login_result.dart';
+import 'package:flutter_naver_login/interface/types/naver_login_status.dart';
+import 'package:flutter_naver_login/interface/types/naver_token.dart';
+import 'package:flutter_naver_login/interface/types/naver_account_result.dart';
 import 'package:coflanet/data/models/user_model.dart';
 import 'package:coflanet/data/providers/auth_provider.dart';
+import 'package:coflanet/core/config/social_login_config.dart';
 
 /// Naver authentication provider
 ///
-/// ## Setup Requirements
-///
-/// ### 1. Package Installation
-/// Add to pubspec.yaml:
-/// ```yaml
-/// dependencies:
-///   flutter_naver_login: ^1.8.0
-/// ```
-///
-/// ### 2. Naver Developers Console
-/// 1. Go to https://developers.naver.com
-/// 2. Create application
-/// 3. Get Client ID and Client Secret
-/// 4. Set API permissions (name, email, profile image)
-/// 5. Add platforms (Android/iOS)
-///
-/// ### 3. Android Configuration
-/// android/app/src/main/res/values/strings.xml:
-/// ```xml
-/// <resources>
-///     <string name="naver_client_id">{CLIENT_ID}</string>
-///     <string name="naver_client_secret">{CLIENT_SECRET}</string>
-///     <string name="naver_client_name">Coflanet</string>
-/// </resources>
-/// ```
-///
-/// ### 4. iOS Configuration
-/// ios/Runner/Info.plist:
-/// ```xml
-/// <key>CFBundleURLTypes</key>
-/// <array>
-///     <dict>
-///         <key>CFBundleTypeRole</key>
-///         <string>Editor</string>
-///         <key>CFBundleURLSchemes</key>
-///         <array>
-///             <string>naver{CLIENT_ID}</string>
-///         </array>
-///     </dict>
-/// </array>
-/// <key>LSApplicationQueriesSchemes</key>
-/// <array>
-///     <string>naversearchapp</string>
-///     <string>naversearchthirdlogin</string>
-/// </array>
-/// <key>naverServiceAppUrlScheme</key>
-/// <string>naver{CLIENT_ID}</string>
-/// <key>naverConsumerKey</key>
-/// <string>{CLIENT_ID}</string>
-/// <key>naverConsumerSecret</key>
-/// <string>{CLIENT_SECRET}</string>
-/// <key>naverServiceAppName</key>
-/// <string>Coflanet</string>
-/// ```
+/// 자세한 설정은 docs/SOCIAL_LOGIN_SETUP.md 참조.
 class NaverAuthProvider implements AuthProvider {
   @override
   SocialLoginType get type => SocialLoginType.naver;
 
   @override
   Future<UserModel> signIn() async {
-    // TODO: Implement actual Naver login
-    //
-    // Example implementation:
-    // ```dart
-    // import 'package:flutter_naver_login/flutter_naver_login.dart';
-    //
-    // NaverLoginResult result = await FlutterNaverLogin.logIn();
-    //
-    // if (result.status == NaverLoginStatus.loggedIn) {
-    //   NaverAccountResult account = await FlutterNaverLogin.currentAccount();
-    //
-    //   return UserModel(
-    //     id: account.id,
-    //     email: account.email,
-    //     name: account.name,
-    //     profileImageUrl: account.profileImage,
-    //     provider: 'naver',
-    //     accessToken: result.accessToken?.accessToken ?? '',
-    //     refreshToken: result.accessToken?.refreshToken,
-    //   );
-    // }
-    //
-    // throw AuthException('Naver login cancelled');
-    // ```
+    try {
+      final NaverLoginResult result = await FlutterNaverLogin.logIn();
 
-    throw AuthException(
-      'Naver login not implemented. See NaverAuthProvider documentation.',
-      code: 'NOT_IMPLEMENTED',
-    );
+      if (result.status == NaverLoginStatus.loggedIn) {
+        _logDebug('네이버 로그인 성공');
+
+        final account = result.account;
+        if (account == null) {
+          throw AuthException(
+            '네이버 계정 정보를 가져올 수 없습니다.',
+            code: 'NAVER_ACCOUNT_NULL',
+          );
+        }
+
+        final NaverToken tokenResult =
+            await FlutterNaverLogin.getCurrentAccessToken();
+
+        return UserModel(
+          id: account.id ?? '',
+          email: account.email,
+          name: account.name,
+          profileImageUrl: account.profileImage,
+          provider: 'naver',
+          accessToken: tokenResult.accessToken,
+          refreshToken: tokenResult.refreshToken,
+        );
+      } else if (result.status == NaverLoginStatus.loggedOut) {
+        throw AuthException('로그인이 취소되었습니다.', code: 'CANCELED');
+      } else {
+        throw AuthException('네이버 로그인에 실패했습니다.', code: 'NAVER_LOGIN_FAILED');
+      }
+    } on AuthException {
+      rethrow;
+    } catch (error) {
+      _logDebug('네이버 로그인 오류: $error');
+      throw AuthException(
+        '네이버 로그인에 실패했습니다.',
+        code: 'NAVER_LOGIN_ERROR',
+        originalError: error,
+      );
+    }
   }
 
   @override
   Future<void> signOut() async {
-    // TODO: Implement actual Naver logout
-    //
-    // Example implementation:
-    // ```dart
-    // await FlutterNaverLogin.logOut();
-    // ```
-
-    throw AuthException(
-      'Naver logout not implemented.',
-      code: 'NOT_IMPLEMENTED',
-    );
+    try {
+      await FlutterNaverLogin.logOut();
+      _logDebug('네이버 로그아웃 성공');
+    } catch (error) {
+      _logDebug('네이버 로그아웃 실패: $error');
+    }
   }
 
   @override
   Future<bool> isSignedIn() async {
-    // TODO: Implement actual check
-    //
-    // Example implementation:
-    // ```dart
-    // try {
-    //   NaverLoginResult result = await FlutterNaverLogin.currentAccessToken();
-    //   return result.status == NaverLoginStatus.loggedIn;
-    // } catch (e) {
-    //   return false;
-    // }
-    // ```
-
-    return false;
+    try {
+      final NaverToken token = await FlutterNaverLogin.getCurrentAccessToken();
+      final isValid = token.isValid();
+      _logDebug('토큰 유효성: $isValid');
+      return isValid;
+    } catch (error) {
+      _logDebug('토큰 확인 실패: $error');
+      return false;
+    }
   }
 
   @override
   Future<UserModel?> refreshToken(UserModel currentUser) async {
-    // TODO: Implement token refresh if needed
+    try {
+      final NaverToken token = await FlutterNaverLogin.getCurrentAccessToken();
+
+      if (token.isValid()) {
+        final NaverAccountResult account =
+            await FlutterNaverLogin.getCurrentAccount();
+
+        return currentUser.copyWith(
+          name: account.name,
+          profileImageUrl: account.profileImage,
+          accessToken: token.accessToken,
+          refreshToken: token.refreshToken,
+        );
+      }
+    } catch (error) {
+      _logDebug('토큰 갱신 실패: $error');
+    }
     return null;
+  }
+
+  Future<void> logOutAndDeleteToken() async {
+    try {
+      await FlutterNaverLogin.logOutAndDeleteToken();
+      _logDebug('네이버 연결 해제 성공');
+    } catch (error) {
+      _logDebug('네이버 연결 해제 실패: $error');
+      throw AuthException(
+        '네이버 연결 해제에 실패했습니다.',
+        code: 'NAVER_UNLINK_FAILED',
+        originalError: error,
+      );
+    }
+  }
+
+  void _logDebug(String message) {
+    if (SocialLoginConfig.enableDebugLogging) {
+      print('[NaverAuthProvider] $message');
+    }
   }
 }

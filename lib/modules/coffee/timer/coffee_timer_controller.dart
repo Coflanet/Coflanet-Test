@@ -3,7 +3,8 @@ import 'package:get/get.dart';
 import 'package:flutter/services.dart';
 import 'package:coflanet/core/base/base_controller.dart';
 import 'package:coflanet/data/models/timer_step_model.dart';
-import 'package:coflanet/data/dummy/dummy_timer_data.dart';
+import 'package:coflanet/data/repositories/repository_interfaces.dart';
+import 'package:coflanet/data/repositories/repository_provider.dart';
 import 'package:coflanet/modules/coffee/coffee_controller.dart';
 import 'package:coflanet/routes/app_pages.dart';
 
@@ -12,6 +13,10 @@ enum TimerState { idle, preCountdown, running, paused, completed }
 
 /// Controller for coffee brewing timer — Figma step-by-step flow
 class CoffeeTimerController extends BaseController {
+  /// Recipe repository for loading recipes
+  final RecipeRepository _recipeRepository =
+      RepositoryProvider.recipeRepository;
+
   // ─── Recipe ───
   final Rxn<TimerRecipeModel> _recipe = Rxn<TimerRecipeModel>();
   TimerRecipeModel? get recipe => _recipe.value;
@@ -138,7 +143,7 @@ class CoffeeTimerController extends BaseController {
     super.onClose();
   }
 
-  void _loadRecipe() {
+  Future<void> _loadRecipe() async {
     final args = Get.arguments;
     final coffeeType = args?['type'] as String? ?? 'handDrip';
 
@@ -157,8 +162,8 @@ class CoffeeTimerController extends BaseController {
       }
     }
 
-    // Fall back to dummy data
-    _recipe.value = DummyTimerData.getRecipe(coffeeType);
+    // Load from repository (handles dummy vs API internally)
+    _recipe.value = await _recipeRepository.getRecipeByType(coffeeType);
     _currentStepIndex.value = 0;
     _totalElapsedSeconds.value = 0;
     _initCurrentStep();

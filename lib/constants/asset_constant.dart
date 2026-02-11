@@ -29,6 +29,10 @@ class AssetPath {
   static const String coffeeHandDrip = '$_images/coffee_hand_drip.png';
   static const String coffeeEspresso = '$_images/coffee_espresso.png';
 
+  // === Survey Intro Icons ===
+  static const String emojiCoffee = '$_images/emoji_coffee.png';
+  static const String emojiBeach = '$_images/emoji_beach.png';
+
   // === Timer Step Illustrations ===
   static const String timerStepGrinder = '$_images/timer_step01_grinder.png';
   static const String timerStepPourover = '$_images/timer_step02_pourover.png';

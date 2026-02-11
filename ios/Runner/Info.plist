@@ -45,5 +45,44 @@
 	<true/>
 	<key>UIApplicationSupportsIndirectInputEvents</key>
 	<true/>
+
+	<!-- Social Login URL Schemes -->
+	<key>CFBundleURLTypes</key>
+	<array>
+		<dict>
+			<key>CFBundleTypeRole</key>
+			<string>Editor</string>
+			<key>CFBundleURLSchemes</key>
+			<array>
+				<!-- Kakao: Replace YOUR_KAKAO_NATIVE_APP_KEY with actual key -->
+				<string>kakaoYOUR_KAKAO_NATIVE_APP_KEY</string>
+				<!-- Naver: Replace YOUR_NAVER_CLIENT_ID with actual ID -->
+				<string>naverYOUR_NAVER_CLIENT_ID</string>
+			</array>
+		</dict>
+	</array>
+
+	<!-- App Query Schemes for Kakao/Naver -->
+	<key>LSApplicationQueriesSchemes</key>
+	<array>
+		<!-- Kakao -->
+		<string>kakaokompassauth</string>
+		<string>kakaolink</string>
+		<string>kakaoplus</string>
+		<!-- Naver -->
+		<string>naversearchapp</string>
+		<string>naversearchthirdlogin</string>
+	</array>
+
+	<!-- Naver SDK Configuration -->
+	<!-- Replace YOUR_NAVER_* placeholders with actual values from https://developers.naver.com -->
+	<key>NidUrlScheme</key>
+	<string>naverYOUR_NAVER_CLIENT_ID</string>
+	<key>NidClientID</key>
+	<string>YOUR_NAVER_CLIENT_ID</string>
+	<key>NidClientSecret</key>
+	<string>YOUR_NAVER_CLIENT_SECRET</string>
+	<key>NidAppName</key>
+	<string>Coflanet</string>
 </dict>
 </plist>

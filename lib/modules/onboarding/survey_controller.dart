@@ -1,28 +1,44 @@
 import 'package:get/get.dart';
 import 'package:coflanet/core/base/base_controller.dart';
-import 'package:coflanet/core/storage/local_storage.dart';
 import 'package:coflanet/data/models/survey_question_model.dart';
 import 'package:coflanet/data/models/survey_result_model.dart';
-import 'package:coflanet/data/dummy/dummy_survey_data.dart';
+import 'package:coflanet/data/repositories/repository_interfaces.dart';
+import 'package:coflanet/data/repositories/repository_provider.dart';
 import 'package:coflanet/routes/app_pages.dart';
 
 class SurveyController extends BaseController {
-  final LocalStorage _storage = Get.find<LocalStorage>();
+  /// Survey repository for questions and results
+  final SurveyRepository _surveyRepository =
+      RepositoryProvider.surveyRepository;
+
+  /// User preferences repository for onboarding state
+  final UserPreferencesRepository _prefsRepository =
+      RepositoryProvider.userPreferencesRepository;
+
+  /// Cached questions loaded from repository
+  List<SurveyQuestionModel> _questions = [];
 
   @override
   void onInit() {
     super.onInit();
+    _loadQuestions();
+    _loadUserName();
     // Note: Do NOT initialize dummy result here.
     // Survey result should only be set after user completes the survey.
     // Skipping survey should leave _surveyResult as null.
+  }
+
+  /// Load survey questions from repository
+  Future<void> _loadQuestions() async {
+    _questions = await _surveyRepository.getQuestions();
   }
 
   // Survey state
   final _currentStep = 0.obs;
   int get currentStep => _currentStep.value;
 
-  // Total steps from dummy data (10 questions)
-  int get totalSteps => DummySurveyData.questions.length;
+  // Total steps from loaded questions
+  int get totalSteps => _questions.length;
 
   /// Get AppBar title for current step (per Figma design)
   String get currentStepTitle {
@@ -85,8 +101,8 @@ class SurveyController extends BaseController {
 
   // Current question
   SurveyQuestionModel? get currentQuestion {
-    if (_currentStep.value >= DummySurveyData.questions.length) return null;
-    return DummySurveyData.questions[_currentStep.value];
+    if (_currentStep.value >= _questions.length) return null;
+    return _questions[_currentStep.value];
   }
 
   // Survey result
@@ -237,11 +253,9 @@ class SurveyController extends BaseController {
   Future<void> analyzeSurvey() async {
     showLoading();
 
-    // Simulate analysis delay
-    await Future.delayed(const Duration(seconds: 2));
-
-    // Generate result from answers
-    _surveyResult.value = DummySurveyData.generateResult(_answers);
+    // Generate result from answers via repository
+    // Repository handles the analysis (dummy generates locally, API would send to server)
+    _surveyResult.value = await _surveyRepository.generateResult(_answers);
 
     hideLoading();
 
@@ -272,16 +286,16 @@ class SurveyController extends BaseController {
   /// Complete onboarding and go to main shell (Select Coffee Section)
   /// Per Figma: Survey Result → MainShell Tab 0 (원두)
   Future<void> completeOnboarding() async {
-    await _storage.setOnboardingComplete(true);
+    await _prefsRepository.setOnboardingComplete(true);
 
     // Save survey result
     if (_surveyResult.value != null) {
-      await _storage.saveSurveyResult(_surveyResult.value!.toJson());
+      await _surveyRepository.saveSurveyResult(_surveyResult.value!);
     }
 
     // Save selected bean IDs for MainShell to load
     if (_selectedBeanIds.isNotEmpty) {
-      await _storage.write('selected_bean_ids', _selectedBeanIds.toList());
+      await _surveyRepository.saveSelectedBeanIds(_selectedBeanIds.toList());
     }
 
     // Navigate to MainShell Tab 0 (원두) per Figma design
@@ -291,12 +305,23 @@ class SurveyController extends BaseController {
   /// Skip survey and go to main shell without saving survey result
   /// User can take survey later from My Planet screen
   Future<void> skipSurvey() async {
-    await _storage.setOnboardingComplete(true);
+    await _prefsRepository.setOnboardingComplete(true);
     // Do NOT save survey result - leave it null so My Planet shows empty state
     // Navigate to MainShell Tab 0 (원두) per Figma design
     Get.offAllNamed(Routes.mainShell, arguments: {'initialTab': 0});
   }
 
-  /// Get user name from storage
-  String get userName => _storage.getUserName() ?? '사용자';
+  /// Get user name from preferences
+  String get userName {
+    // Note: This is synchronous for UI binding, but we cache the value
+    // The actual async load happens in onInit
+    return _cachedUserName;
+  }
+
+  String _cachedUserName = '사용자';
+
+  /// Load user name asynchronously (called in onInit)
+  Future<void> _loadUserName() async {
+    _cachedUserName = await _prefsRepository.getUserName() ?? '사용자';
+  }
 }

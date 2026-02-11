@@ -1,10 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
+import 'package:kakao_flutter_sdk_common/kakao_flutter_sdk_common.dart';
 import 'package:coflanet/app_binding.dart';
 import 'package:coflanet/routes/app_pages.dart';
 import 'package:coflanet/core/theme/app_theme.dart';
 import 'package:coflanet/core/storage/local_storage.dart';
+import 'package:coflanet/core/config/social_login_config.dart';
 import 'package:coflanet/constants/color_constant.dart';
 
 void main() async {
@@ -12,6 +14,9 @@ void main() async {
 
   // Initialize local storage
   await LocalStorage().init();
+
+  // Initialize Social Login SDKs
+  _initSocialLoginSdks();
 
   // Set preferred orientations
   await SystemChrome.setPreferredOrientations([
@@ -59,4 +64,22 @@ class CoflanetApp extends StatelessWidget {
       },
     );
   }
+}
+
+void _initSocialLoginSdks() {
+  if (SocialLoginConfig.useDummyProviders) {
+    SocialLoginConfig.printConfigStatus();
+    return;
+  }
+
+  if (SocialLoginConfig.isKakaoConfigured) {
+    KakaoSdk.init(
+      nativeAppKey: SocialLoginConfig.kakaoNativeAppKey,
+      javaScriptAppKey: SocialLoginConfig.kakaoJavaScriptAppKey.isNotEmpty
+          ? SocialLoginConfig.kakaoJavaScriptAppKey
+          : null,
+    );
+  }
+
+  SocialLoginConfig.printConfigStatus();
 }
