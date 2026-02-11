@@ -64,7 +64,7 @@ class SurveyQuestionView extends GetView<SurveyController> {
       ),
       actions: [
         TextButton(
-          onPressed: () => controller.completeOnboarding(),
+          onPressed: () => controller.skipSurvey(),
           child: Text(
             '건너뛰기',
             style: AppTextStyles.label1NormalMedium.copyWith(

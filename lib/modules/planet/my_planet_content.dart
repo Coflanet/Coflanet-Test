@@ -75,66 +75,73 @@ class MyPlanetContent extends GetView<MyPlanetController> {
   }
 
   // ==================== EMPTY STATE ====================
-  // Figma CSS: background: #F4F4F5; border-radius: 40px; padding: 16px;
+  // Figma: Pink-to-white gradient card with mascot and CTA
+  // node-id=1341-16217
 
   Widget _buildEmptyContent() {
     return Container(
       width: double.infinity,
-      padding: const EdgeInsets.all(16), // Figma: padding 16px
+      padding: const EdgeInsets.all(24),
       decoration: BoxDecoration(
-        color: const Color(0xFFF4F4F5), // Figma: #F4F4F5 (gray)
-        borderRadius: BorderRadius.circular(40), // Figma: 40px
+        // Figma: Pink-to-white gradient (vertical)
+        gradient: const LinearGradient(
+          begin: Alignment.topCenter,
+          end: Alignment.bottomCenter,
+          colors: [
+            Color(0xFFFFB6C1), // Light pink at top
+            Color(0xFFFFD4E0), // Lighter pink
+            Color(0xFFFFF0F3), // Very light pink
+            Colors.white, // White at bottom
+          ],
+          stops: [0.0, 0.3, 0.6, 1.0],
+        ),
+        borderRadius: BorderRadius.circular(24),
       ),
       child: Column(
         children: [
-          // Contents container with 8px padding
-          Padding(
-            padding: const EdgeInsets.all(8),
-            child: Column(
-              children: [
-                // Headline - Figma: Title 3/Bold 24px, color #171719
-                Text(
-                  '내 커피 취향을\n찾아볼까요?',
-                  style: AppTextStyles.title3Bold.copyWith(
-                    color: const Color(0xFF171719), // Figma: #171719
-                    letterSpacing: -0.023 * 24,
-                  ),
-                  textAlign: TextAlign.center,
-                ),
-                const SizedBox(height: 4),
-                // Mascot illustration
-                _buildMascotPlaceholder(),
-              ],
+          const SizedBox(height: 16),
+          // Headline - Figma: Bold, dark text, centered
+          Text(
+            '내 커피 취향을\n찾아볼까요?',
+            style: AppTextStyles.title3Bold.copyWith(
+              color: const Color(0xFF171719),
+              height: 1.3,
             ),
+            textAlign: TextAlign.center,
           ),
-          // CTA Button - Figma: rgba(112, 115, 124, 0.08) bg, border-radius: 99px, padding 12px 28px
+          const SizedBox(height: 16),
+          // Mascot illustration
+          _buildMascotPlaceholder(),
+          const SizedBox(height: 24),
+          // CTA Button - Figma: White/transparent background, violet text, pill shape
           GestureDetector(
             onTap: () => controller.goToSurvey(),
             child: Container(
               width: double.infinity,
-              padding: const EdgeInsets.symmetric(
-                vertical: 12,
-                horizontal: 28,
-              ), // Figma: 12px 28px
+              padding: const EdgeInsets.symmetric(vertical: 14, horizontal: 28),
               decoration: BoxDecoration(
-                color: const Color(0x14707C7C), // rgba(112, 115, 124, 0.08)
-                borderRadius: BorderRadius.circular(99), // Figma: 99px
+                // Figma: White with transparency/blur effect
+                color: Colors.white.withOpacity(0.9),
+                borderRadius: BorderRadius.circular(99), // Pill shape
+                boxShadow: [
+                  BoxShadow(
+                    color: Colors.black.withOpacity(0.05),
+                    blurRadius: 8,
+                    offset: const Offset(0, 2),
+                  ),
+                ],
               ),
               child: Center(
                 child: Text(
                   '취향 설문 하기',
-                  style: const TextStyle(
-                    fontFamily: 'Pretendard',
-                    fontSize: 16,
-                    fontWeight: FontWeight.w600, // Figma: 600
-                    height: 1.5, // 150%
-                    letterSpacing: 0.0057 * 16,
-                    color: Color(0xFF6541F2), // Figma: #6541F2
+                  style: AppTextStyles.headline2Bold.copyWith(
+                    color: AppColor.primaryNormal, // #6541F2
                   ),
                 ),
               ),
             ),
           ),
+          const SizedBox(height: 8),
         ],
       ),
     );

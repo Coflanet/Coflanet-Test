@@ -12,10 +12,9 @@ class SurveyController extends BaseController {
   @override
   void onInit() {
     super.onInit();
-    // Initialize with dummy result if null (for direct navigation testing)
-    if (_surveyResult.value == null) {
-      _surveyResult.value = DummySurveyData.generateResult({});
-    }
+    // Note: Do NOT initialize dummy result here.
+    // Survey result should only be set after user completes the survey.
+    // Skipping survey should leave _surveyResult as null.
   }
 
   // Survey state
@@ -285,6 +284,15 @@ class SurveyController extends BaseController {
       await _storage.write('selected_bean_ids', _selectedBeanIds.toList());
     }
 
+    // Navigate to MainShell Tab 0 (원두) per Figma design
+    Get.offAllNamed(Routes.mainShell, arguments: {'initialTab': 0});
+  }
+
+  /// Skip survey and go to main shell without saving survey result
+  /// User can take survey later from My Planet screen
+  Future<void> skipSurvey() async {
+    await _storage.setOnboardingComplete(true);
+    // Do NOT save survey result - leave it null so My Planet shows empty state
     // Navigate to MainShell Tab 0 (원두) per Figma design
     Get.offAllNamed(Routes.mainShell, arguments: {'initialTab': 0});
   }
