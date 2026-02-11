@@ -13,6 +13,7 @@ class LocalStorage {
   static const String keyRefreshToken = 'refresh_token';
   static const String keyUserId = 'user_id';
   static const String keyUserName = 'user_name';
+  static const String keyUserData = 'user_data';
   static const String keyOnboardingComplete = 'onboarding_complete';
   static const String keySurveyAnswers = 'survey_answers';
   static const String keySurveyResult = 'survey_result';
@@ -85,6 +86,20 @@ class LocalStorage {
 
   String? getUserName() {
     return read<String>(keyUserName);
+  }
+
+  // === User Data (Full Model) ===
+
+  Future<void> saveUserData(Map<String, dynamic> userData) async {
+    await write(keyUserData, userData);
+  }
+
+  Map<String, dynamic>? getUserData() {
+    return read<Map<String, dynamic>>(keyUserData);
+  }
+
+  Future<void> clearUserData() async {
+    await remove(keyUserData);
   }
 
   // === Onboarding ===

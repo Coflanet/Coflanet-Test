@@ -4,6 +4,7 @@ import 'package:coflanet/constants/asset_constant.dart';
 import 'package:coflanet/constants/color_constant.dart';
 import 'package:coflanet/constants/style_constant.dart';
 import 'package:coflanet/constants/radius_constant.dart';
+import 'package:coflanet/data/providers/auth_provider.dart';
 import 'package:coflanet/modules/auth/signin/signin_controller.dart';
 import 'package:coflanet/routes/app_pages.dart';
 import 'package:coflanet/widgets/buttons/social_button.dart';
