@@ -9,6 +9,7 @@ import 'package:coflanet/modules/coffee/select/select_coffee_controller.dart';
 import 'package:coflanet/modules/extraction/extraction_list_view.dart';
 import 'package:coflanet/modules/tasting/tasting_notes_view.dart';
 import 'package:coflanet/modules/planet/my_planet_content.dart';
+import 'package:coflanet/modules/planet/my_planet_controller.dart';
 
 class MainShellView extends GetView<MainShellController> {
   const MainShellView({super.key});
@@ -71,44 +72,57 @@ class MainShellView extends GetView<MainShellController> {
           children: [
             // ===== CONTENT AREA =====
             // Content extends from top nav to ABOVE tab bar (or to bottom in edit mode)
+            // My Planet (tab 3) has black background, others have gray background
             Positioned(
               top: topPadding + topNavHeight,
               left: 0,
               right: 0,
               bottom: 0,
-              child: Container(
-                decoration: BoxDecoration(
-                  // Figma: Light gray background #F5F5F5 for both normal and edit mode
-                  color: AppColor.colorGlobalCoolNeutral98, // Figma: #F4F4F5
-                  borderRadius: BorderRadius.only(
-                    topLeft: Radius.circular(contentTopRadius),
-                    topRight: Radius.circular(contentTopRadius),
-                  ),
-                ),
-                child: ClipRRect(
-                  borderRadius: BorderRadius.only(
-                    topLeft: Radius.circular(contentTopRadius),
-                    topRight: Radius.circular(contentTopRadius),
-                  ),
-                  // Add bottom padding for tab bar space (only when tab bar is visible)
-                  child: Padding(
-                    padding: EdgeInsets.only(
-                      bottom: showTabBar
-                          ? (tabBarContentHeight + bottomPadding)
-                          : 0,
+              child: currentIndex == 3
+                  // My Planet tab: Black background, content manages its own containers
+                  ? Padding(
+                      padding: EdgeInsets.only(
+                        bottom: showTabBar
+                            ? (tabBarContentHeight + bottomPadding)
+                            : 0,
+                      ),
+                      child: const MyPlanetContent(),
+                    )
+                  // Other tabs: Gray background with rounded top corners
+                  : Container(
+                      decoration: BoxDecoration(
+                        // Figma: Light gray background #F5F5F5 for both normal and edit mode
+                        color:
+                            AppColor.colorGlobalCoolNeutral98, // Figma: #F4F4F5
+                        borderRadius: BorderRadius.only(
+                          topLeft: Radius.circular(contentTopRadius),
+                          topRight: Radius.circular(contentTopRadius),
+                        ),
+                      ),
+                      child: ClipRRect(
+                        borderRadius: BorderRadius.only(
+                          topLeft: Radius.circular(contentTopRadius),
+                          topRight: Radius.circular(contentTopRadius),
+                        ),
+                        // Add bottom padding for tab bar space (only when tab bar is visible)
+                        child: Padding(
+                          padding: EdgeInsets.only(
+                            bottom: showTabBar
+                                ? (tabBarContentHeight + bottomPadding)
+                                : 0,
+                          ),
+                          child: IndexedStack(
+                            index: currentIndex,
+                            children: const [
+                              SelectCoffeeContent(), // Tab 0: 원두
+                              ExtractionListView(), // Tab 1: 추출 목록
+                              TastingNotesView(), // Tab 2: 시음 기록
+                              SizedBox.shrink(), // Tab 3: Placeholder (MyPlanetContent handled above)
+                            ],
+                          ),
+                        ),
+                      ),
                     ),
-                    child: IndexedStack(
-                      index: currentIndex,
-                      children: const [
-                        SelectCoffeeContent(), // Tab 0: 원두
-                        ExtractionListView(), // Tab 1: 추출 목록
-                        TastingNotesView(), // Tab 2: 시음 기록
-                        MyPlanetContent(), // Tab 3: My 행성
-                      ],
-                    ),
-                  ),
-                ),
-              ),
             ),
 
             // ===== TOP NAVIGATION =====
@@ -169,11 +183,22 @@ class MainShellView extends GetView<MainShellController> {
         Get.isRegistered<SelectCoffeeController>() &&
         Get.find<SelectCoffeeController>().isEditing;
 
-    // Title changes based on edit mode per Figma
-    // Normal: "원두 목록", Edit: "원두 목록 편집"
-    final String title = currentIndex == 0 && isEditMode
-        ? '원두 목록 편집' // Edit mode title
-        : _tabs[currentIndex].navTitle; // Use navTitle for top nav
+    // Title changes based on tab and mode per Figma
+    // Tab 0 Normal: "원두 목록", Tab 0 Edit: "원두 목록 편집"
+    // Tab 3 (My 행성): Show username only (not "My 행성")
+    String title;
+    if (currentIndex == 0 && isEditMode) {
+      title = '원두 목록 편집'; // Edit mode title
+    } else if (currentIndex == 3) {
+      // For My 행성 tab, show username from MyPlanetController
+      if (Get.isRegistered<MyPlanetController>()) {
+        title = Get.find<MyPlanetController>().userName;
+      } else {
+        title = '커플래니터'; // Fallback
+      }
+    } else {
+      title = _tabs[currentIndex].navTitle; // Use navTitle for other tabs
+    }
 
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 16),

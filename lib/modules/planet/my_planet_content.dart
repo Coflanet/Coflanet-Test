@@ -8,123 +8,134 @@ import 'package:coflanet/modules/planet/my_planet_controller.dart';
 
 /// Content widget for My Planet screen (without Scaffold/bottom nav)
 /// Used inside MainShellView's IndexedStack
+///
+/// Figma Layout Structure:
+/// - Black background (handled by MainShellView for tab 3)
+/// - Main container (gray #F4F4F5, border-radius 40px top) - taste profile + flavors
+/// - Logout/Withdraw container (gray #F4F4F5, border-radius 40px) - separate
+/// - Legal links (black background, directly on black)
 class MyPlanetContent extends GetView<MyPlanetController> {
   const MyPlanetContent({super.key});
 
   @override
   Widget build(BuildContext context) {
-    return SafeArea(
-      bottom: false,
-      child: Obx(() {
-        if (controller.isLoading) {
-          return const Center(
-            child: CircularProgressIndicator(
-              color: AppColor.colorGlobalViolet50,
-            ),
-          );
-        }
-        return SingleChildScrollView(
-          physics: const BouncingScrollPhysics(),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              const SizedBox(height: 16),
-              // Header - User name
-              _buildHeader(),
-              const SizedBox(height: 24),
-              // Main content: empty or filled
-              if (controller.hasTasteProfile)
-                _buildFilledContent()
-              else
-                _buildEmptyContent(),
-              const SizedBox(height: 24),
-              // Bottom section: logout + withdraw
-              _buildBottomActions(),
-              const SizedBox(height: 24),
-            ],
-          ),
+    return Obx(() {
+      if (controller.isLoading) {
+        return const Center(
+          child: CircularProgressIndicator(color: AppColor.colorGlobalViolet50),
         );
-      }),
-    );
-  }
+      }
 
-  // ==================== HEADER ====================
-
-  Widget _buildHeader() {
-    // Fixed per Figma CSS: Shell screens use black bg, white text
-    const textColor = AppColor.colorGlobalCommon100; // White text on black bg
-
-    return Padding(
-      padding: const EdgeInsets.symmetric(horizontal: 20),
-      child: Row(
-        children: [
-          Text(
-            controller.userName,
-            style: AppTextStyles.heading1Bold.copyWith(color: textColor),
-          ),
-          const Spacer(),
-          // Debug toggle
-          GestureDetector(
-            onTap: () => controller.toggleDemoData(),
-            child: Icon(
-              Icons.science_outlined,
-              color: AppColor.colorGlobalCoolNeutral50,
-              size: 22,
+      return SingleChildScrollView(
+        physics: const BouncingScrollPhysics(),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            // ===== MAIN CONTAINER (Gray background) =====
+            // Figma: #F4F4F5, border-radius 40px, padding 12px 24px, width: stretch
+            Container(
+              width: double.infinity,
+              padding: const EdgeInsets.symmetric(
+                vertical: 12,
+                horizontal: 24,
+              ), // Figma: 12px 24px
+              decoration: BoxDecoration(
+                color: const Color(0xFFF4F4F5), // Figma: #F4F4F5
+                borderRadius: BorderRadius.circular(
+                  40,
+                ), // Figma: 40px all corners
+              ),
+              child: Column(
+                children: [
+                  const SizedBox(height: 12),
+                  // Main content: empty or filled (auto-switches based on survey data)
+                  if (controller.hasTasteProfile)
+                    _buildFilledContent()
+                  else
+                    _buildEmptyContent(),
+                  const SizedBox(height: 12),
+                ],
+              ),
             ),
-          ),
-        ],
-      ),
-    );
+
+            // ===== LOGOUT/WITHDRAW CONTAINER (Separate gray container) =====
+            // Figma: #F4F4F5, border-radius 40px, padding 12px 24px, width: stretch
+            const SizedBox(height: 8),
+            _buildAccountActionsContainer(),
+
+            // ===== LEGAL LINKS (Black background) =====
+            // Figma: Directly on black background
+            const SizedBox(height: 16),
+            _buildLegalLinksOnBlack(),
+            const SizedBox(height: 24),
+          ],
+        ),
+      );
+    });
   }
 
   // ==================== EMPTY STATE ====================
+  // Figma CSS: background: #F4F4F5; border-radius: 40px; padding: 16px;
 
   Widget _buildEmptyContent() {
-    // Empty state uses light theme: white card on light gray background
-    return Padding(
-      padding: const EdgeInsets.symmetric(horizontal: 20),
-      child: Container(
-        width: double.infinity,
-        padding: const EdgeInsets.symmetric(vertical: 48, horizontal: 24),
-        decoration: BoxDecoration(
-          color: AppColor.colorGlobalCommon100, // White card
-          borderRadius: AppRadius.xxlBorder,
-        ),
-        child: Column(
-          children: [
-            // Headline - black text on white card
-            Text(
-              '내 커피 취향을\n찾아볼까요?',
-              style: AppTextStyles.title2Bold.copyWith(
-                color: AppColor.labelNormal, // Black text
-              ),
-              textAlign: TextAlign.center,
-            ),
-            const SizedBox(height: 32),
-            // Mascot placeholder
-            _buildMascotPlaceholder(),
-            const SizedBox(height: 32),
-            // CTA Button - secondary style (light gray bg + violet text)
-            GestureDetector(
-              onTap: () => controller.goToSurvey(),
-              child: Container(
-                width: double.infinity,
-                padding: const EdgeInsets.symmetric(vertical: 16),
-                decoration: BoxDecoration(
-                  color: AppColor.componentFillNormal, // Light gray
-                  borderRadius: AppRadius.lgPlusBorder,
-                ),
-                child: Text(
-                  '취향 설문 하기',
-                  style: AppTextStyles.headline1Bold.copyWith(
-                    color: AppColor.primaryNormal, // Violet text
+    return Container(
+      width: double.infinity,
+      padding: const EdgeInsets.all(16), // Figma: padding 16px
+      decoration: BoxDecoration(
+        color: const Color(0xFFF4F4F5), // Figma: #F4F4F5 (gray)
+        borderRadius: BorderRadius.circular(40), // Figma: 40px
+      ),
+      child: Column(
+        children: [
+          // Contents container with 8px padding
+          Padding(
+            padding: const EdgeInsets.all(8),
+            child: Column(
+              children: [
+                // Headline - Figma: Title 3/Bold 24px, color #171719
+                Text(
+                  '내 커피 취향을\n찾아볼까요?',
+                  style: AppTextStyles.title3Bold.copyWith(
+                    color: const Color(0xFF171719), // Figma: #171719
+                    letterSpacing: -0.023 * 24,
                   ),
                   textAlign: TextAlign.center,
                 ),
+                const SizedBox(height: 4),
+                // Mascot illustration
+                _buildMascotPlaceholder(),
+              ],
+            ),
+          ),
+          // CTA Button - Figma: rgba(112, 115, 124, 0.08) bg, border-radius: 99px, padding 12px 28px
+          GestureDetector(
+            onTap: () => controller.goToSurvey(),
+            child: Container(
+              width: double.infinity,
+              padding: const EdgeInsets.symmetric(
+                vertical: 12,
+                horizontal: 28,
+              ), // Figma: 12px 28px
+              decoration: BoxDecoration(
+                color: const Color(0x14707C7C), // rgba(112, 115, 124, 0.08)
+                borderRadius: BorderRadius.circular(99), // Figma: 99px
+              ),
+              child: Center(
+                child: Text(
+                  '취향 설문 하기',
+                  style: const TextStyle(
+                    fontFamily: 'Pretendard',
+                    fontSize: 16,
+                    fontWeight: FontWeight.w600, // Figma: 600
+                    height: 1.5, // 150%
+                    letterSpacing: 0.0057 * 16,
+                    color: Color(0xFF6541F2), // Figma: #6541F2
+                  ),
+                ),
               ),
             ),
-          ],
-        ),
+          ),
+        ],
       ),
     );
   }
@@ -166,138 +177,213 @@ class MyPlanetContent extends GetView<MyPlanetController> {
   // ==================== FILLED STATE ====================
 
   Widget _buildFilledContent() {
+    // Survey Result style: separate sections
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        // Category taste pills (horizontal scroll)
-        _buildTasteCards(),
+        // 1. Taste profile grid (4 individual tiles with emoji)
+        _buildTasteProfileGrid(),
         const SizedBox(height: 20),
-        // Flavor description list
-        _buildFlavorList(),
+        // 2. Flavor notes list (white card)
+        _buildFlavorNotesCard(),
         const SizedBox(height: 16),
-        // Retake survey button
+        // 3. Retake survey button
         _buildRetakeSurveyButton(),
       ],
     );
   }
 
-  Widget _buildTasteCards() {
-    final preferences = controller.tastePreferences;
-    return SizedBox(
-      height: 80,
-      child: ListView.separated(
-        scrollDirection: Axis.horizontal,
-        padding: const EdgeInsets.symmetric(horizontal: 20),
-        itemCount: preferences.length,
-        separatorBuilder: (_, __) => const SizedBox(width: 10),
-        itemBuilder: (context, index) {
-          final pref = preferences[index];
-          return KeyedSubtree(
-            key: ValueKey(pref.category),
-            child: _buildTastePill(pref),
-          );
-        },
-      ),
+  /// Taste Profile Grid - Figma: 4 separate containers with gap
+  /// Each tag: white at top → color at bottom (vertical gradient)
+  /// Colors: 산미=Orange, 바디감=Yellow, 단맛=Pink, 쓴맛=Purple
+  Widget _buildTasteProfileGrid() {
+    final profile = controller.surveyResult?.tasteProfile;
+    if (profile == null) return const SizedBox.shrink();
+
+    // Get level text for each value
+    String getLevelText(int value) {
+      if (value >= 70) return '좋음';
+      if (value >= 40) return '보통';
+      return '싫음';
+    }
+
+    // Figma colors: 산미=Orange/Peach, 바디감=Yellow, 단맛=Pink, 쓴맛=Purple
+    final items = [
+      {
+        'label': '산미',
+        'level': getLevelText(profile.acidity),
+        'color': const Color(0xFFFFAA5C),
+      }, // Orange/Peach
+      {
+        'label': '바디감',
+        'level': getLevelText(profile.body),
+        'color': const Color(0xFFFFD966),
+      }, // Yellow
+      {
+        'label': '단맛',
+        'level': getLevelText(profile.sweetness),
+        'color': const Color(0xFFFF8FAB),
+      }, // Pink
+      {
+        'label': '쓴맛',
+        'level': getLevelText(profile.bitterness),
+        'color': const Color(0xFFB39DDB),
+      }, // Purple/Violet
+    ];
+
+    return Row(
+      children: [
+        for (int i = 0; i < items.length; i++) ...[
+          Expanded(
+            child: _buildTasteTag(
+              label: items[i]['label'] as String,
+              level: items[i]['level'] as String,
+              color: items[i]['color'] as Color,
+            ),
+          ),
+          if (i < items.length - 1)
+            const SizedBox(width: 8), // Gap between tags
+        ],
+      ],
     );
   }
 
-  Widget _buildTastePill(TastePreference pref) {
+  /// Individual taste tag - Figma: separate rounded container
+  /// Gradient: white from top to 50%, then fade to color at bottom
+  Widget _buildTasteTag({
+    required String label,
+    required String level,
+    required Color color,
+  }) {
     return Container(
-      padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 14),
+      height: 86, // Figma: 86px
       decoration: BoxDecoration(
+        borderRadius: BorderRadius.circular(16), // Figma: ~16px radius
         gradient: LinearGradient(
-          begin: Alignment.topLeft,
-          end: Alignment.bottomRight,
-          colors: _gradientColors(pref.gradientType),
+          begin: Alignment.topCenter,
+          end: Alignment.bottomCenter,
+          stops: const [0.0, 0.5, 1.0], // White until 50%, then fade to color
+          colors: [
+            Colors.white, // White at top (0%)
+            Colors.white, // White at middle (50%)
+            color.withOpacity(0.6), // Color at bottom (100%)
+          ],
         ),
-        borderRadius: AppRadius.xlBorder,
       ),
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
-        crossAxisAlignment: CrossAxisAlignment.start,
         children: [
+          // Label - Figma: 17px, 600 weight, #171719
           Text(
-            pref.category,
-            style: AppTextStyles.caption1Bold.copyWith(
-              color: AppColor.colorGlobalCoolNeutral10,
+            label,
+            style: const TextStyle(
+              fontFamily: 'Pretendard',
+              fontSize: 17,
+              fontWeight: FontWeight.w600,
+              height: 1.412,
+              color: Color(0xFF171719),
             ),
+            textAlign: TextAlign.center,
           ),
           const SizedBox(height: 4),
+          // Level - Figma: 14px, 400 weight, rgba(46, 47, 51, 0.88)
           Text(
-            pref.level,
-            style: AppTextStyles.headline2Bold.copyWith(
-              color: AppColor.colorGlobalCoolNeutral10,
+            level,
+            style: const TextStyle(
+              fontFamily: 'Pretendard',
+              fontSize: 14,
+              fontWeight: FontWeight.w400,
+              height: 1.429,
+              letterSpacing: 0.0145 * 14,
+              color: Color(0xE02E2F33),
             ),
+            textAlign: TextAlign.center,
           ),
         ],
       ),
     );
   }
 
-  List<Color> _gradientColors(TasteGradientType type) {
-    switch (type) {
-      case TasteGradientType.blue:
-        return [AppColor.colorGlobalLightBlue90, AppColor.colorGlobalCyan90];
-      case TasteGradientType.yellow:
-        return [AppColor.colorGlobalYellow90, AppColor.colorGlobalOrange90];
-      case TasteGradientType.pink:
-        return [AppColor.colorGlobalPink90, AppColor.colorGlobalRed90];
-    }
-  }
-
-  Widget _buildFlavorList() {
+  Widget _buildFlavorNotesCard() {
     final flavors = controller.flavorDescriptions;
-    return Padding(
-      padding: const EdgeInsets.symmetric(horizontal: 20),
-      child: Container(
-        decoration: BoxDecoration(
-          color: AppColor.colorGlobalCommon100,
-          borderRadius: AppRadius.xxlBorder,
-        ),
-        child: Column(
-          children: List.generate(flavors.length, (index) {
-            final flavor = flavors[index];
-            return Column(
-              children: [
-                _buildFlavorItem(flavor),
-                if (index < flavors.length - 1)
-                  Divider(
-                    height: 1,
-                    indent: 72,
-                    endIndent: 20,
-                    color: AppColor.lineSolidNeutral,
-                  ),
-              ],
-            );
-          }),
-        ),
+    return Container(
+      decoration: BoxDecoration(
+        color: AppColor.colorGlobalCommon100,
+        borderRadius: AppRadius.xxlBorder,
+      ),
+      child: Column(
+        children: List.generate(flavors.length, (index) {
+          final flavor = flavors[index];
+          return Column(
+            children: [
+              _buildFlavorNoteItem(flavor),
+              if (index < flavors.length - 1)
+                Divider(
+                  height: 1,
+                  indent: 72,
+                  endIndent: 20,
+                  color: AppColor.lineSolidNeutral,
+                ),
+            ],
+          );
+        }),
       ),
     );
   }
 
-  Widget _buildFlavorItem(FlavorDescription flavor) {
+  Widget _buildFlavorNotesList() {
+    final flavors = controller.flavorDescriptions;
+    return Column(
+      children: List.generate(flavors.length, (index) {
+        final flavor = flavors[index];
+        return Column(
+          children: [
+            _buildFlavorNoteItem(flavor),
+            if (index < flavors.length - 1)
+              Divider(
+                height: 1,
+                indent: 72,
+                endIndent: 20,
+                color: AppColor.lineSolidNeutral,
+              ),
+          ],
+        );
+      }),
+    );
+  }
+
+  Widget _buildFlavorNoteItem(FlavorDescription flavor) {
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 16),
       child: Row(
         children: [
-          // Circle icon placeholder
-          Container(
-            width: 40,
-            height: 40,
-            decoration: BoxDecoration(
-              shape: BoxShape.circle,
-              color: AppColor.componentFillNormal,
-            ),
-            child: Center(
-              child: Icon(
-                _flavorIcon(flavor.title),
-                size: 20,
-                color: AppColor.labelAlternative,
-              ),
+          // Aroma image
+          ClipOval(
+            child: Image.asset(
+              _flavorImagePath(flavor.title),
+              width: 40,
+              height: 40,
+              fit: BoxFit.cover,
+              errorBuilder: (context, error, stackTrace) {
+                return Container(
+                  width: 40,
+                  height: 40,
+                  decoration: BoxDecoration(
+                    shape: BoxShape.circle,
+                    color: AppColor.componentFillNormal,
+                  ),
+                  child: Center(
+                    child: Icon(
+                      _flavorIcon(flavor.title),
+                      size: 20,
+                      color: AppColor.labelAlternative,
+                    ),
+                  ),
+                );
+              },
             ),
           ),
           const SizedBox(width: 12),
-          // Text
           Expanded(
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
@@ -325,6 +411,14 @@ class MyPlanetContent extends GetView<MyPlanetController> {
     );
   }
 
+  String _flavorImagePath(String title) {
+    if (title.contains('과일')) return AssetPath.aromaFruit;
+    if (title.contains('꽃')) return AssetPath.aromaFlower;
+    if (title.contains('견과')) return AssetPath.aromaNutChoco;
+    if (title.contains('로스팅')) return AssetPath.aromaRoasting;
+    return AssetPath.aromaFruit;
+  }
+
   IconData _flavorIcon(String title) {
     if (title.contains('과일')) return Icons.energy_savings_leaf_rounded;
     if (title.contains('꽃')) return Icons.local_florist_rounded;
@@ -334,77 +428,143 @@ class MyPlanetContent extends GetView<MyPlanetController> {
   }
 
   Widget _buildRetakeSurveyButton() {
-    return Padding(
-      padding: const EdgeInsets.symmetric(horizontal: 20),
-      child: GestureDetector(
-        onTap: () => controller.retakeSurvey(),
-        child: Container(
-          width: double.infinity,
-          padding: const EdgeInsets.symmetric(vertical: 16),
-          decoration: BoxDecoration(
-            color: AppColor.componentFillNormal,
-            borderRadius: AppRadius.lgPlusBorder,
+    return GestureDetector(
+      onTap: () => controller.retakeSurvey(),
+      child: Container(
+        width: double.infinity,
+        padding: const EdgeInsets.symmetric(vertical: 14),
+        decoration: BoxDecoration(
+          color: const Color(0x14707C7C), // rgba(112, 115, 124, 0.08) per Figma
+          borderRadius: BorderRadius.circular(99), // Figma: 99px
+        ),
+        child: Text(
+          '취향 설문 다시 하기',
+          style: AppTextStyles.headline2Bold.copyWith(
+            color: AppColor.primaryNormal, // Violet text #6541F2
           ),
-          child: Text(
-            '취향 설문 다시 하기',
-            style: AppTextStyles.headline2Bold.copyWith(
-              color: AppColor.primaryNormal,
-            ),
-            textAlign: TextAlign.center,
-          ),
+          textAlign: TextAlign.center,
         ),
       ),
     );
   }
 
-  // ==================== BOTTOM ACTIONS ====================
+  // ==================== ACCOUNT ACTIONS CONTAINER ====================
+  // Figma: Separate gray container - #F4F4F5, border-radius 40px, padding 12px 24px
 
-  Widget _buildBottomActions() {
-    // Both states use white card background
-    // Filled: 로그아웃=black, 회원탈퇴=red
-    // Empty: 로그아웃=black, 회원탈퇴=violet
-    final isFilled = controller.hasTasteProfile;
-    final withdrawColor = isFilled
-        ? AppColor
-              .colorGlobalRed50 // Red for filled state
-        : AppColor.primaryNormal; // Violet for empty state
+  Widget _buildAccountActionsContainer() {
+    return Container(
+      width: double.infinity,
+      padding: const EdgeInsets.symmetric(
+        vertical: 12,
+        horizontal: 24,
+      ), // Figma: 12px 24px
+      decoration: BoxDecoration(
+        color: const Color(0xFFF4F4F5), // Figma: #F4F4F5 (gray)
+        borderRadius: BorderRadius.circular(40), // Figma: 40px
+      ),
+      child: Column(
+        children: [
+          // 로그아웃 cell - Figma: height 48px, padding 12px 0
+          _buildAccountCell(
+            text: '로그아웃',
+            color: const Color(0xFF171719), // Figma: #171719
+            onTap: () => controller.logout(),
+          ),
+          // Divider line - Figma: rgba(112, 115, 124, 0.16)
+          Container(
+            height: 1,
+            color: const Color(0x29707C7C), // rgba(112, 115, 124, 0.16)
+          ),
+          // 회원탈퇴 cell - Figma: color #FF4242
+          _buildAccountCell(
+            text: '회원탈퇴',
+            color: const Color(0xFFFF4242), // Figma: #FF4242
+            onTap: () => controller.withdrawAccount(),
+          ),
+        ],
+      ),
+    );
+  }
+
+  /// Account action cell - Figma: height 48px, padding 12px 0
+  Widget _buildAccountCell({
+    required String text,
+    required Color color,
+    required VoidCallback onTap,
+  }) {
+    return GestureDetector(
+      onTap: onTap,
+      behavior: HitTestBehavior.opaque,
+      child: Container(
+        height: 48, // Figma: 48px
+        padding: const EdgeInsets.symmetric(vertical: 12), // Figma: 12px 0
+        alignment: Alignment.centerLeft,
+        child: Text(
+          text,
+          style: const TextStyle(
+            fontFamily: 'Pretendard',
+            fontSize: 16, // Figma: 16px
+            fontWeight: FontWeight.w400, // Figma: 400
+            height: 1.5, // 150%
+            letterSpacing: 0.0057 * 16,
+            color: Color(0xFF171719),
+          ).copyWith(color: color),
+        ),
+      ),
+    );
+  }
+
+  // ==================== LEGAL LINKS (On Black Background) ====================
+  // Figma: Directly on black background, rgba(194, 196, 200, 0.88) text color
+
+  Widget _buildLegalLinksOnBlack() {
+    // Figma CSS: color: rgba(194, 196, 200, 0.88);
+    const linkColor = Color(0xE0C2C4C8); // rgba(194, 196, 200, 0.88)
 
     return Padding(
-      padding: const EdgeInsets.symmetric(horizontal: 20),
+      padding: const EdgeInsets.symmetric(horizontal: 24), // Same as containers
+      child: Column(
+        children: [
+          // 개인정보처리방침
+          _buildLegalCell(
+            text: '개인정보처리방침',
+            color: linkColor,
+            onTap: () => controller.openPrivacyPolicy(),
+          ),
+          // 서비스 이용약관
+          _buildLegalCell(
+            text: '서비스 이용약관',
+            color: linkColor,
+            onTap: () => controller.openTermsOfService(),
+          ),
+        ],
+      ),
+    );
+  }
+
+  /// Legal link cell
+  Widget _buildLegalCell({
+    required String text,
+    required Color color,
+    required VoidCallback onTap,
+  }) {
+    return GestureDetector(
+      onTap: onTap,
+      behavior: HitTestBehavior.opaque,
       child: Container(
-        width: double.infinity,
-        padding: const EdgeInsets.symmetric(vertical: 20, horizontal: 20),
-        decoration: BoxDecoration(
-          color: AppColor.colorGlobalCommon100, // White card
-          borderRadius: AppRadius.xxlBorder,
-        ),
-        child: Row(
-          children: [
-            GestureDetector(
-              onTap: () => controller.logout(),
-              child: Text(
-                '로그아웃',
-                style: AppTextStyles.body2NormalMedium.copyWith(
-                  color: AppColor.labelNormal, // Black
-                ),
-              ),
-            ),
-            Container(
-              width: 1,
-              height: 16,
-              margin: const EdgeInsets.symmetric(horizontal: 16),
-              color: AppColor.lineSolidNormal,
-            ),
-            GestureDetector(
-              onTap: () => controller.withdrawAccount(),
-              child: Text(
-                '회원탈퇴',
-                style: AppTextStyles.body2NormalMedium.copyWith(
-                  color: withdrawColor,
-                ),
-              ),
-            ),
-          ],
+        height: 48,
+        padding: const EdgeInsets.symmetric(vertical: 12),
+        alignment: Alignment.centerLeft,
+        child: Text(
+          text,
+          style: TextStyle(
+            fontFamily: 'Pretendard',
+            fontSize: 16,
+            fontWeight: FontWeight.w400,
+            height: 1.5,
+            letterSpacing: 0.0057 * 16,
+            color: color,
+          ),
         ),
       ),
     );
