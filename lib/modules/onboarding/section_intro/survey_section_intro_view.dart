@@ -9,11 +9,21 @@ import 'package:coflanet/widgets/buttons/primary_button.dart';
 
 /// Survey Section Intro View
 /// Shows vertical stepper with intro text before each section starts
-/// - Section 1: Before step 0 (커피 경험 질문)
-/// - Section 2: Before step 2 (기본 맛 취향)
-/// - Section 3: Before step 6 (특성 향미 취향)
+/// Standard: 3 sections (커피 경험, 기본 맛 취향, 특성 향미 취향)
+/// Lifestyle: 4 sections (커피 경험, 라이프스타일, 맛 취향, 감각/성향)
 class SurveySectionIntroView extends GetView<SurveyController> {
   const SurveySectionIntroView({super.key});
+
+  /// Check if current survey is lifestyle type
+  bool get _isLifestyle => controller.surveyType == SurveyType.lifestyle;
+
+  /// Get section labels based on survey type
+  List<String> get _sectionLabels => _isLifestyle
+      ? ['커피 경험 질문', '라이프스타일', '맛 취향', '감각/성향']
+      : ['커피 경험 질문', '기본 맛 취향', '특성 향미 취향'];
+
+  /// Get estimated time based on survey type
+  String get _estimatedTime => _isLifestyle ? '3분' : '10분';
 
   @override
   Widget build(BuildContext context) {
@@ -48,31 +58,15 @@ class SurveySectionIntroView extends GetView<SurveyController> {
                       ),
                     ),
                     Text(
-                      '예상 소요 시간은 10분 입니다.',
+                      '예상 소요 시간은 $_estimatedTime 입니다.',
                       style: AppTextStyles.body1NormalRegular.copyWith(
                         color: AppColor.labelAlternative,
                       ),
                     ),
                     const SizedBox(height: 32),
 
-                    // Vertical stepper
-                    _buildStepIndicator(
-                      step: 1,
-                      label: '커피 경험 질문',
-                      state: _getStepState(1, sectionNumber),
-                    ),
-                    _buildVerticalLine(isCompleted: sectionNumber > 1),
-                    _buildStepIndicator(
-                      step: 2,
-                      label: '기본 맛 취향',
-                      state: _getStepState(2, sectionNumber),
-                    ),
-                    _buildVerticalLine(isCompleted: sectionNumber > 2),
-                    _buildStepIndicator(
-                      step: 3,
-                      label: '특성 향미 취향',
-                      state: _getStepState(3, sectionNumber),
-                    ),
+                    // Vertical stepper - dynamic based on survey type
+                    ..._buildStepper(sectionNumber),
 
                     const Spacer(),
                   ],
@@ -93,6 +87,28 @@ class SurveySectionIntroView extends GetView<SurveyController> {
         ),
       ),
     );
+  }
+
+  /// Build stepper widgets dynamically based on survey type
+  List<Widget> _buildStepper(int currentSection) {
+    final labels = _sectionLabels;
+    final widgets = <Widget>[];
+
+    for (int i = 0; i < labels.length; i++) {
+      final step = i + 1;
+      widgets.add(
+        _buildStepIndicator(
+          step: step,
+          label: labels[i],
+          state: _getStepState(step, currentSection),
+        ),
+      );
+      if (i < labels.length - 1) {
+        widgets.add(_buildVerticalLine(isCompleted: currentSection > step));
+      }
+    }
+
+    return widgets;
   }
 
   PreferredSizeWidget _buildAppBar(int sectionNumber) {
@@ -124,22 +140,48 @@ class SurveySectionIntroView extends GetView<SurveyController> {
     String line1;
     String line2;
 
-    switch (sectionNumber) {
-      case 1:
-        line1 = '$userName님께';
-        line2 = '커피 경험 질문을 드릴게요!';
-        break;
-      case 2:
-        line1 = '$userName님의';
-        line2 = '기본 맛 취향을 알려주세요';
-        break;
-      case 3:
-        line1 = '$userName님의';
-        line2 = '특성 향미 취향을 알려주세요';
-        break;
-      default:
-        line1 = '$userName님의';
-        line2 = '취향을 분석할게요';
+    if (_isLifestyle) {
+      // Lifestyle survey titles
+      switch (sectionNumber) {
+        case 1:
+          line1 = '$userName님께';
+          line2 = '커피 경험 질문을 드릴게요!';
+          break;
+        case 2:
+          line1 = '$userName님께';
+          line2 = '라이프스타일 질문을 드릴게요!';
+          break;
+        case 3:
+          line1 = '$userName님께';
+          line2 = '맛 취향 질문을 드릴게요!';
+          break;
+        case 4:
+          line1 = '$userName님께';
+          line2 = '감각/성향 질문을 드릴게요!';
+          break;
+        default:
+          line1 = '$userName님의';
+          line2 = '취향을 분석할게요';
+      }
+    } else {
+      // Standard survey titles
+      switch (sectionNumber) {
+        case 1:
+          line1 = '$userName님께';
+          line2 = '커피 경험 질문을 드릴게요!';
+          break;
+        case 2:
+          line1 = '$userName님의';
+          line2 = '기본 맛 취향을 알려주세요';
+          break;
+        case 3:
+          line1 = '$userName님의';
+          line2 = '특성 향미 취향을 알려주세요';
+          break;
+        default:
+          line1 = '$userName님의';
+          line2 = '취향을 분석할게요';
+      }
     }
 
     return Column(
@@ -247,16 +289,35 @@ class SurveySectionIntroView extends GetView<SurveyController> {
 
   /// Handle next button press - navigate to first question of the section
   void _onNextPressed(int sectionNumber) {
-    switch (sectionNumber) {
-      case 1:
-        controller.goToStep(0);
-        break;
-      case 2:
-        controller.goToStep(2);
-        break;
-      case 3:
-        controller.goToStep(6);
-        break;
+    if (_isLifestyle) {
+      // Lifestyle survey section navigation
+      switch (sectionNumber) {
+        case 1:
+          controller.goToStep(0);
+          break;
+        case 2:
+          controller.goToStep(2); // Lifestyle starts at step 2
+          break;
+        case 3:
+          controller.goToStep(6); // 맛 취향 starts at step 6
+          break;
+        case 4:
+          controller.goToStep(10); // 감각/성향 starts at step 10
+          break;
+      }
+    } else {
+      // Standard survey section navigation
+      switch (sectionNumber) {
+        case 1:
+          controller.goToStep(0);
+          break;
+        case 2:
+          controller.goToStep(2);
+          break;
+        case 3:
+          controller.goToStep(6);
+          break;
+      }
     }
   }
 }
