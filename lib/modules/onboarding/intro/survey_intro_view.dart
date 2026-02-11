@@ -6,6 +6,8 @@ import 'package:coflanet/constants/color_constant.dart';
 import 'package:coflanet/constants/style_constant.dart';
 import 'package:coflanet/modules/onboarding/survey_controller.dart';
 
+/// Survey Intro View - Figma: 1114-59435
+/// 2개의 옵션 카드로 설문 유형 선택 (일반 설문 / 라이프스타일 분석)
 class SurveyIntroView extends GetView<SurveyController> {
   const SurveyIntroView({super.key});
 
@@ -62,12 +64,13 @@ class SurveyIntroView extends GetView<SurveyController> {
               ),
               const SizedBox(height: 32),
 
-              // Option cards
-              Expanded(
-                child: Row(
-                  children: [
-                    // Left card - 일반 설문
-                    Expanded(
+              // Option cards - Figma: 두 카드 동일 크기, 비율 약 1:1.3
+              Row(
+                children: [
+                  // Left card - 일반 설문
+                  Expanded(
+                    child: AspectRatio(
+                      aspectRatio: 0.77, // 약 1:1.3 비율
                       child: _buildOptionCard(
                         label: '일반 설문',
                         description: '커피 맛과 향을\n직접 선택해요',
@@ -76,14 +79,18 @@ class SurveyIntroView extends GetView<SurveyController> {
                           width: 72,
                           height: 72,
                           fit: BoxFit.contain,
+                          errorBuilder: (_, __, ___) =>
+                              const Text('☕', style: TextStyle(fontSize: 56)),
                         ),
-                        isSelected: true,
                         onTap: () => controller.startSurvey(),
                       ),
                     ),
-                    const SizedBox(width: 12),
-                    // Right card - 라이프스타일 분석
-                    Expanded(
+                  ),
+                  const SizedBox(width: 12),
+                  // Right card - 라이프스타일 분석
+                  Expanded(
+                    child: AspectRatio(
+                      aspectRatio: 0.77, // 약 1:1.3 비율
                       child: _buildOptionCard(
                         label: '라이프스타일 분석',
                         description: '일상 습관으로\n취향을 파악해요',
@@ -92,15 +99,16 @@ class SurveyIntroView extends GetView<SurveyController> {
                           width: 72,
                           height: 72,
                           fit: BoxFit.contain,
+                          errorBuilder: (_, __, ___) =>
+                              const Text('🏖️', style: TextStyle(fontSize: 56)),
                         ),
-                        isSelected: false,
-                        onTap: () => _showComingSoonSnackbar(),
+                        onTap: () => controller.startLifestyleSurvey(),
                       ),
                     ),
-                  ],
-                ),
+                  ),
+                ],
               ),
-              const SizedBox(height: 34),
+              const Spacer(),
             ],
           ),
         ),
@@ -108,100 +116,53 @@ class SurveyIntroView extends GetView<SurveyController> {
     );
   }
 
-  /// Build an option card for survey type selection
+  /// Build an option card - Figma 디자인
+  /// - 미선택 상태 (선택 인디케이터 없음)
+  /// - 중앙 정렬
+  /// - 탭 시 바로 해당 설문으로 이동
   Widget _buildOptionCard({
     required String label,
     required String description,
     required Widget iconWidget,
-    required bool isSelected,
     required VoidCallback onTap,
   }) {
     return GestureDetector(
       onTap: onTap,
       child: Container(
-        padding: const EdgeInsets.all(16),
+        padding: const EdgeInsets.all(20),
         decoration: BoxDecoration(
-          color: AppColor.componentFillNormal,
+          color: AppColor.backgroundNormalNormal,
           borderRadius: BorderRadius.circular(16),
-          border: isSelected
-              ? Border.all(color: AppColor.primaryNormal, width: 2)
-              : null,
+          border: Border.all(color: AppColor.lineNormalNormal, width: 1),
         ),
         child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            // Selection indicator
-            Row(
-              children: [
-                Container(
-                  width: 24,
-                  height: 24,
-                  decoration: BoxDecoration(
-                    shape: BoxShape.circle,
-                    color: isSelected
-                        ? AppColor.statusPositive
-                        : AppColor.transparent,
-                    border: isSelected
-                        ? null
-                        : Border.all(
-                            color: AppColor.lineNormalNormal,
-                            width: 1.5,
-                          ),
-                  ),
-                  child: isSelected
-                      ? Center(
-                          child: SvgPicture.asset(
-                            AssetPath.iconCheck,
-                            width: 14,
-                            height: 14,
-                            colorFilter: ColorFilter.mode(
-                              AppColor.staticLabelWhiteNormal,
-                              BlendMode.srcIn,
-                            ),
-                          ),
-                        )
-                      : null,
-                ),
-                const SizedBox(width: 8),
-                Expanded(
-                  child: Text(
-                    label,
-                    style: AppTextStyles.label1NormalMedium.copyWith(
-                      color: AppColor.labelAlternative,
-                    ),
-                  ),
-                ),
-              ],
+            const SizedBox(height: 8),
+            // Label - 상단 중앙
+            Text(
+              label,
+              style: AppTextStyles.label1NormalMedium.copyWith(
+                color: AppColor.labelAlternative,
+              ),
+              textAlign: TextAlign.center,
             ),
             const SizedBox(height: 16),
-            // Description text
+            // Description - 중앙
             Text(
               description,
               style: AppTextStyles.body1NormalMedium.copyWith(
                 color: AppColor.labelNormal,
                 height: 1.4,
               ),
+              textAlign: TextAlign.center,
             ),
             const Spacer(),
-            // Icon
-            Align(alignment: Alignment.bottomRight, child: iconWidget),
+            // Icon - 하단 중앙
+            iconWidget,
+            const SizedBox(height: 8),
           ],
         ),
       ),
-    );
-  }
-
-  /// Show coming soon message for lifestyle analysis
-  void _showComingSoonSnackbar() {
-    Get.snackbar(
-      '준비 중',
-      '라이프스타일 분석 기능은 곧 출시될 예정이에요!',
-      snackPosition: SnackPosition.BOTTOM,
-      backgroundColor: AppColor.componentFillStrong,
-      colorText: AppColor.staticLabelWhiteNormal,
-      margin: const EdgeInsets.all(16),
-      borderRadius: 12,
-      duration: const Duration(seconds: 2),
     );
   }
 }
