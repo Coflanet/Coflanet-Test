@@ -1,10 +1,14 @@
 import 'package:get/get.dart';
 import 'package:coflanet/core/base/base_controller.dart';
+import 'package:coflanet/data/dummy/dummy_lifestyle_survey_data.dart';
 import 'package:coflanet/data/models/survey_question_model.dart';
 import 'package:coflanet/data/models/survey_result_model.dart';
 import 'package:coflanet/data/repositories/repository_interfaces.dart';
 import 'package:coflanet/data/repositories/repository_provider.dart';
 import 'package:coflanet/routes/app_pages.dart';
+
+/// Survey type enum for standard and lifestyle surveys
+enum SurveyType { standard, lifestyle }
 
 class SurveyController extends BaseController {
   /// Survey repository for questions and results
@@ -17,6 +21,10 @@ class SurveyController extends BaseController {
 
   /// Cached questions loaded from repository
   List<SurveyQuestionModel> _questions = [];
+
+  /// Current survey type (standard or lifestyle)
+  final _surveyType = SurveyType.standard.obs;
+  SurveyType get surveyType => _surveyType.value;
 
   @override
   void onInit() {
@@ -41,7 +49,14 @@ class SurveyController extends BaseController {
   int get totalSteps => _questions.length;
 
   /// Get AppBar title for current step (per Figma design)
+  /// Lifestyle survey: All question screens show "커피 맛과 취향"
+  /// Standard survey: Section-specific titles
   String get currentStepTitle {
+    if (_surveyType.value == SurveyType.lifestyle) {
+      // Figma: 라이프스타일 설문의 모든 질문 화면은 "커피 맛과 취향" 표시
+      return '커피 맛과 취향';
+    }
+    // Standard survey
     switch (_currentStep.value) {
       case 0:
         return '커피 추출 방식 선택';
@@ -63,10 +78,28 @@ class SurveyController extends BaseController {
   }
 
   /// Get section info for current step (section number and name)
-  /// Section 1: 커피 경험 질문 (Steps 0-1)
-  /// Section 2: 기본 맛 취향 (Steps 2-5)
-  /// Section 3: 특성 향미 취향 (Steps 6-9)
+  /// Standard survey:
+  ///   Section 1: 커피 경험 질문 (Steps 0-1)
+  ///   Section 2: 기본 맛 취향 (Steps 2-5)
+  ///   Section 3: 특성 향미 취향 (Steps 6-9)
+  /// Lifestyle survey:
+  ///   Section 1: 커피 경험 (Steps 0-1)
+  ///   Section 2: 라이프스타일 (Steps 2-5)
+  ///   Section 3: 맛 취향 (Steps 6-9)
+  ///   Section 4: 감각/성향 (Steps 10-11)
   (int, String) get currentSection {
+    if (_surveyType.value == SurveyType.lifestyle) {
+      if (_currentStep.value <= 1) {
+        return (1, '커피 경험');
+      } else if (_currentStep.value <= 5) {
+        return (2, '라이프스타일');
+      } else if (_currentStep.value <= 9) {
+        return (3, '맛 취향');
+      } else {
+        return (4, '감각/성향');
+      }
+    }
+    // Standard survey
     if (_currentStep.value <= 1) {
       return (1, '커피 경험 질문');
     } else if (_currentStep.value <= 5) {
@@ -78,6 +111,21 @@ class SurveyController extends BaseController {
 
   /// Get section intro text (only shown on first question of each section)
   String? get sectionIntroText {
+    if (_surveyType.value == SurveyType.lifestyle) {
+      switch (_currentStep.value) {
+        case 0:
+          return '$userName님께\n커피 경험 질문을 드릴게요!';
+        case 2:
+          return '$userName님의\n라이프스타일을 알려주세요';
+        case 6:
+          return '$userName님의\n맛 취향을 알려주세요';
+        case 10:
+          return '$userName님의\n감각과 성향을 알려주세요';
+        default:
+          return null;
+      }
+    }
+    // Standard survey
     switch (_currentStep.value) {
       case 0:
         return '$userName님께\n커피 경험 질문을 드릴게요!';
@@ -206,17 +254,30 @@ class SurveyController extends BaseController {
       final nextStep = _currentStep.value + 1;
 
       // Check if we're transitioning to a new section
-      // Section 2 starts at step 2, Section 3 starts at step 6
-      if (nextStep == 2) {
-        // Transition to Section 2 - show Section 2 Intro
-        Get.toNamed('${Routes.surveySectionIntro}/2');
-      } else if (nextStep == 6) {
-        // Transition to Section 3 - show Section 3 Intro
-        Get.toNamed('${Routes.surveySectionIntro}/3');
+      if (_surveyType.value == SurveyType.lifestyle) {
+        // Lifestyle survey section transitions:
+        // Section 2 starts at step 2, Section 3 starts at step 6, Section 4 starts at step 10
+        if (nextStep == 2) {
+          Get.toNamed('${Routes.surveySectionIntro}/2');
+        } else if (nextStep == 6) {
+          Get.toNamed('${Routes.surveySectionIntro}/3');
+        } else if (nextStep == 10) {
+          Get.toNamed('${Routes.surveySectionIntro}/4');
+        } else {
+          _currentStep.value = nextStep;
+          Get.toNamed('${Routes.survey}/$nextStep');
+        }
       } else {
-        // Normal question transition within same section
-        _currentStep.value = nextStep;
-        Get.toNamed('${Routes.survey}/$nextStep');
+        // Standard survey section transitions:
+        // Section 2 starts at step 2, Section 3 starts at step 6
+        if (nextStep == 2) {
+          Get.toNamed('${Routes.surveySectionIntro}/2');
+        } else if (nextStep == 6) {
+          Get.toNamed('${Routes.surveySectionIntro}/3');
+        } else {
+          _currentStep.value = nextStep;
+          Get.toNamed('${Routes.survey}/$nextStep');
+        }
       }
     } else {
       // All questions answered, go to analyzing
@@ -242,10 +303,21 @@ class SurveyController extends BaseController {
 
   /// Start survey - navigate directly to step 0 (Section 1 Intro is now in SurveyIntro)
   void startSurvey() {
+    _surveyType.value = SurveyType.standard;
     _currentStep.value = 0;
     _answers.clear();
     _multiRatingAnswers.clear();
     // Go directly to first question (skip Section 1 Intro as SurveyIntro already serves this purpose)
+    Get.toNamed('${Routes.survey}/0');
+  }
+
+  /// Start lifestyle survey
+  void startLifestyleSurvey() {
+    _surveyType.value = SurveyType.lifestyle;
+    _currentStep.value = 0;
+    _answers.clear();
+    _multiRatingAnswers.clear();
+    _questions = DummyLifestyleSurveyData.questions;
     Get.toNamed('${Routes.survey}/0');
   }
 
