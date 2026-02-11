@@ -75,7 +75,7 @@ class MyPlanetContent extends GetView<MyPlanetController> {
   }
 
   // ==================== EMPTY STATE ====================
-  // Figma: Pink-to-white gradient card with mascot and CTA
+  // Figma: White card with sitting mascot and CTA
   // node-id=1341-16217
 
   Widget _buildEmptyContent() {
@@ -83,18 +83,8 @@ class MyPlanetContent extends GetView<MyPlanetController> {
       width: double.infinity,
       padding: const EdgeInsets.all(24),
       decoration: BoxDecoration(
-        // Figma: Pink-to-white gradient (vertical)
-        gradient: const LinearGradient(
-          begin: Alignment.topCenter,
-          end: Alignment.bottomCenter,
-          colors: [
-            Color(0xFFFFB6C1), // Light pink at top
-            Color(0xFFFFD4E0), // Lighter pink
-            Color(0xFFFFF0F3), // Very light pink
-            Colors.white, // White at bottom
-          ],
-          stops: [0.0, 0.3, 0.6, 1.0],
-        ),
+        // Figma: White background (no gradient)
+        color: Colors.white,
         borderRadius: BorderRadius.circular(24),
       ),
       child: Column(
@@ -110,26 +100,19 @@ class MyPlanetContent extends GetView<MyPlanetController> {
             textAlign: TextAlign.center,
           ),
           const SizedBox(height: 16),
-          // Mascot illustration
+          // Mascot illustration - sitting rabbit
           _buildMascotPlaceholder(),
           const SizedBox(height: 24),
-          // CTA Button - Figma: White/transparent background, violet text, pill shape
+          // CTA Button - Figma: Light gray background, violet text, pill shape
           GestureDetector(
             onTap: () => controller.goToSurvey(),
             child: Container(
               width: double.infinity,
               padding: const EdgeInsets.symmetric(vertical: 14, horizontal: 28),
               decoration: BoxDecoration(
-                // Figma: White with transparency/blur effect
-                color: Colors.white.withOpacity(0.9),
+                // Figma: Light gray background on white card
+                color: const Color(0xFFF4F4F5),
                 borderRadius: BorderRadius.circular(99), // Pill shape
-                boxShadow: [
-                  BoxShadow(
-                    color: Colors.black.withOpacity(0.05),
-                    blurRadius: 8,
-                    offset: const Offset(0, 2),
-                  ),
-                ],
               ),
               child: Center(
                 child: Text(
@@ -149,9 +132,9 @@ class MyPlanetContent extends GetView<MyPlanetController> {
 
   Widget _buildMascotPlaceholder() {
     return Image.asset(
-      AssetPath.charFront,
-      width: 180,
-      height: 180,
+      AssetPath.charSitting,
+      width: 200,
+      height: 200,
       fit: BoxFit.contain,
       errorBuilder: (context, error, stackTrace) {
         // Fallback to icon if image fails to load

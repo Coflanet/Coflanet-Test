@@ -15,6 +15,7 @@ class AssetPath {
 
   // === Character Illustrations ===
   static const String charFront = '$_images/char_front.png';
+  static const String charSitting = '$_images/char_sitting.png';
   static const String charGift = '$_images/char_gift.png';
   static const String charDrinkCoffee = '$_images/char_drink_coffee.png';
 
