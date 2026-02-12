@@ -1,8 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
+import 'package:coflanet/constants/asset_constant.dart';
 import 'package:coflanet/constants/color_constant.dart';
 import 'package:coflanet/constants/style_constant.dart';
 import 'package:coflanet/modules/auth/profile_setup/profile_setup_controller.dart';
+import 'package:coflanet/modules/onboarding/widgets/survey_progress_bar.dart';
 import 'package:coflanet/widgets/buttons/primary_button.dart';
 import 'package:coflanet/widgets/forms/app_text_field.dart';
 
@@ -14,30 +17,61 @@ class ProfileSetupView extends GetView<ProfileSetupController> {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: AppColor.backgroundNormalNormal,
-      body: SafeArea(
-        child: Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 24),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              const SizedBox(height: 80),
-
-              // Welcome title with emoji
-              _buildHeader(),
-
-              const SizedBox(height: 48),
-
-              // Name input field
-              _buildNameInput(),
-
-              const Spacer(),
-
-              // Continue button
-              _buildContinueButton(),
-
-              const SizedBox(height: 48),
-            ],
+      appBar: AppBar(
+        backgroundColor: AppColor.transparent,
+        elevation: 0,
+        leading: IconButton(
+          icon: SvgPicture.asset(
+            AssetPath.iconArrowBack,
+            width: 24,
+            height: 24,
+            colorFilter: ColorFilter.mode(
+              AppColor.labelNormal,
+              BlendMode.srcIn,
+            ),
           ),
+          onPressed: () => Get.back(),
+        ),
+      ),
+      body: SafeArea(
+        top: false,
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            // Progress bar - Step 1 of 2
+            Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 24),
+              child: SurveyProgressIndicator(progress: 0.5),
+            ),
+            const SizedBox(height: 8),
+
+            Expanded(
+              child: Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 24),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    const SizedBox(height: 24),
+
+                    // Welcome title with emoji
+                    _buildHeader(),
+
+                    const SizedBox(height: 48),
+
+                    // Name input field
+                    _buildNameInput(),
+
+                    const Spacer(),
+
+                    // Continue button
+                    _buildContinueButton(),
+
+                    const SizedBox(height: 48),
+                  ],
+                ),
+              ),
+            ),
+          ],
         ),
       ),
     );
@@ -49,19 +83,12 @@ class ProfileSetupView extends GetView<ProfileSetupController> {
       children: [
         Text(
           '반가워요! 👋',
-          style: AppTextStyles.heading1Bold.copyWith(
-            color: AppColor.labelNormal,
-            fontSize: 28,
-            height: 1.3,
-          ),
+          style: AppTextStyles.title2Bold.copyWith(color: AppColor.labelNormal),
         ),
         const SizedBox(height: 12),
         Text(
           '이름을 입력해주세요',
-          style: AppTextStyles.body1NormalRegular.copyWith(
-            color: AppColor.labelAlternative,
-            height: 1.5,
-          ),
+          style: AppTextStyles.title2Bold.copyWith(color: AppColor.labelNormal),
         ),
       ],
     );

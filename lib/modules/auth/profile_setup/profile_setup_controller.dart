@@ -40,6 +40,6 @@ class ProfileSetupController extends GetxController {
     await _storage.saveUserName(_name.value.trim());
 
     // Navigate to survey reason (커플래닛을 찾게 된 이유)
-    Get.offAllNamed(Routes.surveyReason);
+    Get.toNamed(Routes.surveyReason);
   }
 }

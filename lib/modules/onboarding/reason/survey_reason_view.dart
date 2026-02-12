@@ -6,6 +6,7 @@ import 'package:coflanet/constants/color_constant.dart';
 import 'package:coflanet/constants/style_constant.dart';
 import 'package:coflanet/modules/onboarding/reason/survey_reason_controller.dart';
 import 'package:coflanet/modules/onboarding/widgets/survey_checkbox_item.dart';
+import 'package:coflanet/modules/onboarding/widgets/survey_progress_bar.dart';
 import 'package:coflanet/widgets/buttons/primary_button.dart';
 
 /// Survey Reason Screen (Figma: 937:45569 - Onboarding_Survey_Reason)
@@ -22,6 +23,13 @@ class SurveyReasonView extends GetView<SurveyReasonController> {
         top: false,
         child: Column(
           children: [
+            // Progress bar
+            Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 24),
+              child: SurveyProgressIndicator(progress: 1.0),
+            ),
+            const SizedBox(height: 8),
+
             Expanded(
               child: SingleChildScrollView(
                 padding: const EdgeInsets.symmetric(horizontal: 24),
@@ -81,13 +89,6 @@ class SurveyReasonView extends GetView<SurveyReasonController> {
           colorFilter: ColorFilter.mode(AppColor.labelNormal, BlendMode.srcIn),
         ),
         onPressed: () => Get.back(),
-      ),
-      centerTitle: true,
-      title: Text(
-        '회원가입',
-        style: AppTextStyles.headline2Bold.copyWith(
-          color: AppColor.labelNormal,
-        ),
       ),
     );
   }

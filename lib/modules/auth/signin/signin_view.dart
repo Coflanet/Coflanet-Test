@@ -20,13 +20,12 @@ class SignInView extends GetView<SignInController> {
         child: Padding(
           padding: const EdgeInsets.symmetric(horizontal: 24),
           child: Column(
+            crossAxisAlignment: CrossAxisAlignment.center,
             children: [
-              const Spacer(flex: 2),
-
-              // Logo and welcome text
+              // Logo and welcome text - 상단에 가깝게 (SafeArea 바로 아래)
               _buildHeader(),
 
-              const Spacer(flex: 2),
+              const Spacer(),
 
               // Social login buttons
               _buildSocialButtons(),

@@ -114,6 +114,23 @@ class SurveyIntroView extends GetView<SurveyController> {
                   ],
                 ),
               ),
+
+              // 설문 건너뛰기 링크 - 하단
+              const SizedBox(height: 24),
+              Center(
+                child: GestureDetector(
+                  onTap: () => controller.skipSurvey(),
+                  child: Text(
+                    '설문 건너뛰기',
+                    style: AppTextStyles.body2NormalMedium.copyWith(
+                      color: AppColor.labelAssistive,
+                      decoration: TextDecoration.underline,
+                      decorationColor: AppColor.labelAssistive,
+                    ),
+                  ),
+                ),
+              ),
+              const SizedBox(height: 32),
             ],
           ),
         ),

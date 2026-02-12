@@ -18,7 +18,7 @@ class SignInController extends BaseController {
 
       await _authService.signIn(type);
       // Navigate to profile setup for name input
-      Get.offAllNamed(Routes.profileSetup);
+      Get.toNamed(Routes.profileSetup);
     } on AuthException catch (e) {
       _showErrorSnackbar(e.message);
     } catch (e) {
@@ -36,7 +36,7 @@ class SignInController extends BaseController {
 
       await _authService.continueAsGuest();
       // Navigate to profile setup for name input
-      Get.offAllNamed(Routes.profileSetup);
+      Get.toNamed(Routes.profileSetup);
     } catch (e) {
       _showErrorSnackbar('게스트 로그인 중 오류가 발생했습니다.');
     } finally {
