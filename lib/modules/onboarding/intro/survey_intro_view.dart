@@ -64,51 +64,56 @@ class SurveyIntroView extends GetView<SurveyController> {
               ),
               const SizedBox(height: 32),
 
-              // Option cards - Figma: 두 카드 동일 크기, 비율 약 1:1.3
-              Row(
-                children: [
-                  // Left card - 일반 설문
-                  Expanded(
-                    child: AspectRatio(
-                      aspectRatio: 0.77, // 약 1:1.3 비율
-                      child: _buildOptionCard(
-                        label: '일반 설문',
-                        description: '커피 맛과 향을\n직접 선택해요',
-                        iconWidget: Image.asset(
-                          AssetPath.emojiCoffee,
-                          width: 72,
-                          height: 72,
-                          fit: BoxFit.contain,
-                          errorBuilder: (_, __, ___) =>
-                              const Text('☕', style: TextStyle(fontSize: 56)),
+              // Option cards - Figma: 두 카드 동일 크기
+              // Expanded로 남은 공간에 맞게 조정 (오버플로우 방지)
+              Expanded(
+                child: Row(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    // Left card - 일반 설문
+                    Expanded(
+                      child: ConstrainedBox(
+                        constraints: const BoxConstraints(maxHeight: 280),
+                        child: _buildOptionCard(
+                          label: '일반 설문',
+                          description: '커피 맛과 향을\n직접 선택해요',
+                          iconWidget: Image.asset(
+                            AssetPath.emojiCoffee,
+                            width: 72,
+                            height: 72,
+                            fit: BoxFit.contain,
+                            errorBuilder: (_, __, ___) =>
+                                const Text('☕', style: TextStyle(fontSize: 56)),
+                          ),
+                          onTap: () => controller.startSurvey(),
                         ),
-                        onTap: () => controller.startSurvey(),
                       ),
                     ),
-                  ),
-                  const SizedBox(width: 12),
-                  // Right card - 라이프스타일 분석
-                  Expanded(
-                    child: AspectRatio(
-                      aspectRatio: 0.77, // 약 1:1.3 비율
-                      child: _buildOptionCard(
-                        label: '라이프스타일 분석',
-                        description: '일상 습관으로\n취향을 파악해요',
-                        iconWidget: Image.asset(
-                          AssetPath.emojiBeach,
-                          width: 72,
-                          height: 72,
-                          fit: BoxFit.contain,
-                          errorBuilder: (_, __, ___) =>
-                              const Text('🏖️', style: TextStyle(fontSize: 56)),
+                    const SizedBox(width: 12),
+                    // Right card - 라이프스타일 분석
+                    Expanded(
+                      child: ConstrainedBox(
+                        constraints: const BoxConstraints(maxHeight: 280),
+                        child: _buildOptionCard(
+                          label: '라이프스타일 분석',
+                          description: '일상 습관으로\n취향을 파악해요',
+                          iconWidget: Image.asset(
+                            AssetPath.emojiBeach,
+                            width: 72,
+                            height: 72,
+                            fit: BoxFit.contain,
+                            errorBuilder: (_, __, ___) => const Text(
+                              '🏖️',
+                              style: TextStyle(fontSize: 56),
+                            ),
+                          ),
+                          onTap: () => controller.startLifestyleSurvey(),
                         ),
-                        onTap: () => controller.startLifestyleSurvey(),
                       ),
                     ),
-                  ),
-                ],
+                  ],
+                ),
               ),
-              const Spacer(),
             ],
           ),
         ),

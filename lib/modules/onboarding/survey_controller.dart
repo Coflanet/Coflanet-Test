@@ -1,6 +1,7 @@
 import 'package:get/get.dart';
 import 'package:coflanet/core/base/base_controller.dart';
 import 'package:coflanet/data/dummy/dummy_lifestyle_survey_data.dart';
+import 'package:coflanet/data/dummy/dummy_survey_data.dart';
 import 'package:coflanet/data/models/survey_question_model.dart';
 import 'package:coflanet/data/models/survey_result_model.dart';
 import 'package:coflanet/data/repositories/repository_interfaces.dart';
@@ -307,6 +308,7 @@ class SurveyController extends BaseController {
     _currentStep.value = 0;
     _answers.clear();
     _multiRatingAnswers.clear();
+    _questions = DummySurveyData.questions;
     // Go directly to first question (skip Section 1 Intro as SurveyIntro already serves this purpose)
     Get.toNamed('${Routes.survey}/0');
   }

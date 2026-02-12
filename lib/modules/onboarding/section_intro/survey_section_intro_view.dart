@@ -131,6 +131,21 @@ class SurveySectionIntroView extends GetView<SurveyController> {
           color: AppColor.labelNormal,
         ),
       ),
+      actions: [
+        // X 닫기 버튼 (건너뛰기)
+        IconButton(
+          icon: SvgPicture.asset(
+            AssetPath.iconClose,
+            width: 24,
+            height: 24,
+            colorFilter: ColorFilter.mode(
+              AppColor.labelNormal,
+              BlendMode.srcIn,
+            ),
+          ),
+          onPressed: () => controller.skipSurvey(),
+        ),
+      ],
     );
   }
 
