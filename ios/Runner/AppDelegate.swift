@@ -8,6 +8,10 @@ import NidThirdPartyLogin
     _ application: UIApplication,
     didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?
   ) -> Bool {
+    // Initialize Naver SDK before plugin registration (reads from Info.plist)
+    NidOAuth.shared.initialize()
+    NidOAuth.shared.setLoginBehavior(.inAppBrowser)
+    
     GeneratedPluginRegistrant.register(with: self)
     return super.application(application, didFinishLaunchingWithOptions: launchOptions)
   }
