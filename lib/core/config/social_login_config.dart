@@ -1,22 +1,9 @@
+import 'package:flutter_dotenv/flutter_dotenv.dart';
+
 /// Social Login SDK Configuration
 ///
 /// API 키와 설정을 중앙에서 관리합니다.
-/// 실제 배포 시에는 환경 변수나 보안 저장소에서 값을 가져와야 합니다.
-///
-/// ## 사용법
-///
-/// ### 개발 환경 (더미 로그인):
-/// ```dart
-/// SocialLoginConfig.useDummyProviders = true;
-/// ```
-///
-/// ### 프로덕션 환경:
-/// ```dart
-/// SocialLoginConfig.useDummyProviders = false;
-/// SocialLoginConfig.kakaoNativeAppKey = 'YOUR_KAKAO_NATIVE_APP_KEY';
-/// SocialLoginConfig.naverClientId = 'YOUR_NAVER_CLIENT_ID';
-/// // ...
-/// ```
+/// .env 파일에서 런타임에 키를 로드합니다.
 ///
 /// ## 보안 주의사항
 /// - 이 파일에 실제 API 키를 하드코딩하지 마세요.
@@ -104,6 +91,37 @@ class SocialLoginConfig {
   /// Apple Sign In 설정 여부 확인 (iOS는 항상 가능)
   static bool get isAppleConfiguredForAndroid =>
       appleServiceId.isNotEmpty && appleRedirectUri.isNotEmpty;
+
+  // ============================================================
+  // .env 로딩
+  // ============================================================
+
+  /// .env 파일에서 키를 로드하여 static 변수에 설정
+  /// 기존 --dart-define 값이 있으면 유지, 없으면 dotenv에서 로드
+  static void loadFromDotenv() {
+    if (kakaoNativeAppKey.isEmpty) {
+      kakaoNativeAppKey = dotenv.env['KAKAO_NATIVE_APP_KEY'] ?? '';
+    }
+    if (kakaoJavaScriptAppKey.isEmpty) {
+      kakaoJavaScriptAppKey = dotenv.env['KAKAO_JAVASCRIPT_APP_KEY'] ?? '';
+    }
+    if (naverClientId.isEmpty) {
+      naverClientId = dotenv.env['NAVER_CLIENT_ID'] ?? '';
+    }
+    if (naverClientSecret.isEmpty) {
+      naverClientSecret = dotenv.env['NAVER_CLIENT_SECRET'] ?? '';
+    }
+    final envClientName = dotenv.env['NAVER_CLIENT_NAME'];
+    if (envClientName != null && envClientName.isNotEmpty) {
+      naverClientName = envClientName;
+    }
+    if (appleServiceId.isEmpty) {
+      appleServiceId = dotenv.env['APPLE_SERVICE_ID'] ?? '';
+    }
+    if (appleRedirectUri.isEmpty) {
+      appleRedirectUri = dotenv.env['APPLE_REDIRECT_URI'] ?? '';
+    }
+  }
 
   // ============================================================
   // 디버그 설정

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
+import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:kakao_flutter_sdk_common/kakao_flutter_sdk_common.dart';
 import 'package:coflanet/app_binding.dart';
 import 'package:coflanet/routes/app_pages.dart';
@@ -14,6 +15,10 @@ void main() async {
 
   // Initialize local storage
   await LocalStorage().init();
+
+  // Load .env and configure social login keys
+  await dotenv.load(fileName: ".env");
+  SocialLoginConfig.loadFromDotenv();
 
   // Initialize Social Login SDKs
   _initSocialLoginSdks();
