@@ -56,8 +56,8 @@
 			<array>
 				<!-- Kakao -->
 				<string>kakao$(KAKAO_NATIVE_APP_KEY)</string>
-				<!-- Naver -->
-				<string>naver$(NAVER_CLIENT_ID)</string>
+			<!-- Naver -->
+			<string>coflanetnaverlogin</string>
 			</array>
 		</dict>
 	</array>
@@ -76,7 +76,7 @@
 
 	<!-- Naver SDK Configuration -->
 	<key>NidUrlScheme</key>
-	<string>naver$(NAVER_CLIENT_ID)</string>
+	<string>coflanetnaverlogin</string>
 	<key>NidClientID</key>
 	<string>$(NAVER_CLIENT_ID)</string>
 	<key>NidClientSecret</key>
