@@ -1,8 +1,16 @@
+import java.util.Properties
+
 plugins {
     id("com.android.application")
     id("kotlin-android")
     // The Flutter Gradle Plugin must be applied after the Android and Kotlin Gradle plugins.
     id("dev.flutter.flutter-gradle-plugin")
+}
+
+val envFile = rootProject.file("../.env")
+val envProps = Properties()
+if (envFile.exists()) {
+    envFile.inputStream().use { envProps.load(it) }
 }
 
 android {
@@ -26,7 +34,13 @@ android {
         versionCode = flutter.versionCode
         versionName = flutter.versionName
 
-        manifestPlaceholders["KAKAO_NATIVE_APP_KEY"] = project.findProperty("KAKAO_NATIVE_APP_KEY") ?: "YOUR_KAKAO_NATIVE_APP_KEY"
+        manifestPlaceholders["KAKAO_NATIVE_APP_KEY"] =
+            envProps.getProperty("KAKAO_NATIVE_APP_KEY", "")
+        resValue("string", "naver_client_id",
+            envProps.getProperty("NAVER_CLIENT_ID", ""))
+        resValue("string", "naver_client_secret",
+            envProps.getProperty("NAVER_CLIENT_SECRET", ""))
+        resValue("string", "naver_client_name", "Coflanet")
     }
 
     buildTypes {

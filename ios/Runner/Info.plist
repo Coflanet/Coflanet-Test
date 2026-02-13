@@ -54,10 +54,10 @@
 			<string>Editor</string>
 			<key>CFBundleURLSchemes</key>
 			<array>
-				<!-- Kakao: Replace YOUR_KAKAO_NATIVE_APP_KEY with actual key -->
-				<string>kakaoYOUR_KAKAO_NATIVE_APP_KEY</string>
-				<!-- Naver: Replace YOUR_NAVER_CLIENT_ID with actual ID -->
-				<string>naverYOUR_NAVER_CLIENT_ID</string>
+				<!-- Kakao -->
+				<string>kakao$(KAKAO_NATIVE_APP_KEY)</string>
+				<!-- Naver -->
+				<string>naver$(NAVER_CLIENT_ID)</string>
 			</array>
 		</dict>
 	</array>
@@ -75,13 +75,12 @@
 	</array>
 
 	<!-- Naver SDK Configuration -->
-	<!-- Replace YOUR_NAVER_* placeholders with actual values from https://developers.naver.com -->
 	<key>NidUrlScheme</key>
-	<string>naverYOUR_NAVER_CLIENT_ID</string>
+	<string>naver$(NAVER_CLIENT_ID)</string>
 	<key>NidClientID</key>
-	<string>YOUR_NAVER_CLIENT_ID</string>
+	<string>$(NAVER_CLIENT_ID)</string>
 	<key>NidClientSecret</key>
-	<string>YOUR_NAVER_CLIENT_SECRET</string>
+	<string>$(NAVER_CLIENT_SECRET)</string>
 	<key>NidAppName</key>
 	<string>Coflanet</string>
 </dict>
