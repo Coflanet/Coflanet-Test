@@ -171,6 +171,13 @@ class AppleAuthProvider implements AuthProvider {
     return null;
   }
 
+  @override
+  Future<void> unlink() async {
+    // Apple은 앱에서 직접 연결 해제 불가
+    // iOS 설정 > Apple ID > 암호 및 보안에서 해제
+    _logDebug('Apple 연결 해제 (로컬 세션 정리만 수행)');
+  }
+
   /// Apple 자격 증명 상태 확인
   ///
   /// Apple이 제공하는 API로 사용자의 자격 증명 상태를 확인합니다.

@@ -56,6 +56,12 @@ class DummyAuthProvider implements AuthProvider {
     );
   }
 
+  @override
+  Future<void> unlink() async {
+    await Future.delayed(const Duration(milliseconds: 500));
+    _isSignedIn = false;
+  }
+
   String _getProviderName() {
     switch (_type) {
       case SocialLoginType.kakao:

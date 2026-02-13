@@ -34,4 +34,13 @@ abstract class AuthProvider {
     // Default implementation: not supported
     return null;
   }
+
+  /// Unlink (disconnect) the social account
+  ///
+  /// Revokes tokens and removes the app connection from the social provider.
+  /// Used for account withdrawal (회원탈퇴).
+  Future<void> unlink() async {
+    // Default: same as signOut
+    await signOut();
+  }
 }

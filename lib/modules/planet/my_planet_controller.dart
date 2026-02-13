@@ -1,7 +1,8 @@
+import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:coflanet/core/base/base_controller.dart';
+import 'package:coflanet/core/services/auth_service.dart';
 import 'package:coflanet/core/services/survey_service.dart';
-import 'package:coflanet/core/storage/local_storage.dart';
 import 'package:coflanet/data/models/survey_result_model.dart';
 import 'package:coflanet/routes/app_pages.dart';
 
@@ -48,8 +49,8 @@ class SavedRecipe {
 }
 
 class MyPlanetController extends BaseController {
+  final AuthService _authService = Get.find<AuthService>();
   final SurveyService _surveyService = Get.find<SurveyService>();
-  final LocalStorage _storage = Get.find<LocalStorage>();
 
   // Saved recipes list (kept for backward compatibility)
   final RxList<SavedRecipe> _savedRecipes = <SavedRecipe>[].obs;
@@ -150,18 +151,55 @@ class MyPlanetController extends BaseController {
 
   /// Logout
   Future<void> logout() async {
-    await _storage.clearTokens();
+    try {
+      await _authService.signOut();
+    } catch (_) {
+      // SDK 로그아웃 실패해도 로컬 세션은 정리
+    }
     Get.offAllNamed(Routes.signIn);
   }
 
-  /// Withdraw account
+  /// Withdraw account (회원탈퇴)
   void withdrawAccount() {
-    // TODO: Implement account withdrawal flow
-    Get.snackbar(
-      '회원탈퇴',
-      '회원탈퇴 기능은 준비 중입니다.',
-      snackPosition: SnackPosition.BOTTOM,
+    Get.dialog(
+      AlertDialog(
+        title: const Text('회원탈퇴'),
+        content: const Text('정말 탈퇴하시겠습니까?\n모든 데이터가 삭제됩니다.'),
+        actions: [
+          TextButton(
+            onPressed: () => Get.back(),
+            child: const Text('취소'),
+          ),
+          TextButton(
+            onPressed: () async {
+              Get.back(); // close dialog
+              await _executeWithdrawal();
+            },
+            child: const Text(
+              '탈퇴',
+              style: TextStyle(color: Color(0xFFFF4242)),
+            ),
+          ),
+        ],
+      ),
     );
+  }
+
+  Future<void> _executeWithdrawal() async {
+    try {
+      isLoading = true;
+      await _authService.deleteAccount();
+      await _surveyService.clearSurveyResult();
+      Get.offAllNamed(Routes.signIn);
+    } catch (e) {
+      Get.snackbar(
+        '오류',
+        '회원탈퇴 중 오류가 발생했습니다: ${e.toString()}',
+        snackPosition: SnackPosition.BOTTOM,
+      );
+    } finally {
+      isLoading = false;
+    }
   }
 
   /// Open privacy policy

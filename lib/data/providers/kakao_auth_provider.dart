@@ -162,6 +162,7 @@ class KakaoAuthProvider implements AuthProvider {
   }
 
   /// 카카오 연결 해제 (회원 탈퇴)
+  @override
   Future<void> unlink() async {
     try {
       await UserApi.instance.unlink();

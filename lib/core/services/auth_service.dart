@@ -162,6 +162,36 @@ class AuthService extends GetxService {
     }
   }
 
+  /// Delete account (회원탈퇴)
+  ///
+  /// Unlinks the social provider connection and clears all local data.
+  Future<void> deleteAccount() async {
+    final user = _currentUser.value;
+    if (user == null) return;
+
+    _isLoading.value = true;
+
+    try {
+      final providerType = SocialLoginType.values.firstWhere(
+        (t) => t.name == user.provider,
+        orElse: () => SocialLoginType.guest,
+      );
+
+      final provider = _providers[providerType];
+
+      // Unlink from social provider (revoke tokens)
+      await provider?.unlink();
+
+      // Clear storage
+      await _clearUserFromStorage();
+
+      // Update state
+      _currentUser.value = null;
+    } finally {
+      _isLoading.value = false;
+    }
+  }
+
   /// Continue as guest
   Future<UserModel> continueAsGuest() async {
     return signIn(SocialLoginType.guest);

@@ -104,7 +104,8 @@ class NaverAuthProvider implements AuthProvider {
     return null;
   }
 
-  Future<void> logOutAndDeleteToken() async {
+  @override
+  Future<void> unlink() async {
     try {
       await FlutterNaverLogin.logOutAndDeleteToken();
       _logDebug('네이버 연결 해제 성공');
