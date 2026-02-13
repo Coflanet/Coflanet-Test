@@ -1,11 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:coflanet/core/storage/local_storage.dart';
+import 'package:coflanet/core/services/auth_service.dart';
 import 'package:coflanet/routes/app_pages.dart';
 
 /// Controller for profile setup screen (name input after social login)
 class ProfileSetupController extends GetxController {
   final LocalStorage _storage = Get.find<LocalStorage>();
+  final AuthService _authService = Get.find<AuthService>();
 
   /// Text controller for name input
   final TextEditingController nameController = TextEditingController();
@@ -24,6 +26,17 @@ class ProfileSetupController extends GetxController {
     nameController.addListener(() {
       _name.value = nameController.text;
     });
+
+    // Pre-fill name from social login if available
+    _prefillNameFromSocialLogin();
+  }
+
+  /// Pre-fill name field with name from social login
+  void _prefillNameFromSocialLogin() {
+    final user = _authService.currentUser;
+    if (user?.name != null && user!.name!.isNotEmpty) {
+      nameController.text = user.name!;
+    }
   }
 
   @override
