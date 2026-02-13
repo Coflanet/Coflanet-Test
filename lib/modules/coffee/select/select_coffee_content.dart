@@ -100,7 +100,6 @@ class SelectCoffeeContent extends GetView<SelectCoffeeController> {
   }
 
   Widget _buildCoffeeList() {
-    return Obx(() {
       final items = controller.coffeeItems;
       final isEditing = controller.isEditing;
 
@@ -173,7 +172,6 @@ class SelectCoffeeContent extends GetView<SelectCoffeeController> {
           if (isEditing) _buildEditingBottomBar(),
         ],
       );
-    });
   }
 
   /// Add button at the end of the list

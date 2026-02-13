@@ -55,120 +55,110 @@ class MainShellView extends GetView<MainShellController> {
         96.0; // Dark bg (16px) + pill (64px) + margin (16px)
     const contentTopRadius = 40.0;
 
-    return Obx(() {
-      // Check if we're in edit mode (for 원두 tab)
-      final currentIndex = controller.currentTabIndex.value;
-      final bool isEditMode =
-          currentIndex == 0 &&
-          Get.isRegistered<SelectCoffeeController>() &&
-          Get.find<SelectCoffeeController>().isEditing;
+    return Scaffold(
+      backgroundColor: AppColor.colorGlobalCommon0,
+      body: Stack(
+        children: [
+          // ===== CONTENT AREA (Obx: only content rebuilds on tab switch) =====
+          Positioned(
+            top: topPadding + topNavHeight,
+            left: 0,
+            right: 0,
+            bottom: 0,
+            child: Obx(() {
+              final currentIndex = controller.currentTabIndex.value;
+              final bool isEditMode =
+                  currentIndex == 0 &&
+                  Get.isRegistered<SelectCoffeeController>() &&
+                  Get.find<SelectCoffeeController>().isEditing;
+              final bottomInset =
+                  isEditMode ? 0.0 : tabBarContentHeight + bottomPadding;
 
-      // In edit mode, hide tab bar
-      final showTabBar = !isEditMode;
-
-      return Scaffold(
-        backgroundColor: AppColor.colorGlobalCommon0, // Pure black
-        body: Stack(
-          children: [
-            // ===== CONTENT AREA =====
-            // Content extends from top nav to ABOVE tab bar (or to bottom in edit mode)
-            // My Planet (tab 3) has black background, others have gray background
-            Positioned(
-              top: topPadding + topNavHeight,
-              left: 0,
-              right: 0,
-              bottom: 0,
-              child: currentIndex == 3
-                  // My Planet tab: Black background, content manages its own containers
-                  ? Padding(
-                      padding: EdgeInsets.only(
-                        bottom: showTabBar
-                            ? (tabBarContentHeight + bottomPadding)
-                            : 0,
-                      ),
-                      child: const MyPlanetContent(),
-                    )
-                  // Other tabs: Gray background with rounded top corners
-                  : Container(
-                      decoration: BoxDecoration(
-                        // Figma: Light gray background #F5F5F5 for both normal and edit mode
-                        color:
-                            AppColor.colorGlobalCoolNeutral98, // Figma: #F4F4F5
-                        borderRadius: BorderRadius.only(
-                          topLeft: Radius.circular(contentTopRadius),
-                          topRight: Radius.circular(contentTopRadius),
-                        ),
-                      ),
-                      child: ClipRRect(
-                        borderRadius: BorderRadius.only(
-                          topLeft: Radius.circular(contentTopRadius),
-                          topRight: Radius.circular(contentTopRadius),
-                        ),
-                        // Add bottom padding for tab bar space (only when tab bar is visible)
-                        child: Padding(
-                          padding: EdgeInsets.only(
-                            bottom: showTabBar
-                                ? (tabBarContentHeight + bottomPadding)
-                                : 0,
-                          ),
-                          child: IndexedStack(
-                            index: currentIndex,
-                            children: const [
-                              SelectCoffeeContent(), // Tab 0: 원두
-                              ExtractionListView(), // Tab 1: 추출 목록
-                              TastingNotesView(), // Tab 2: 시음 기록
-                              SizedBox.shrink(), // Tab 3: Placeholder (MyPlanetContent handled above)
-                            ],
-                          ),
-                        ),
-                      ),
-                    ),
-            ),
-
-            // ===== TOP NAVIGATION =====
-            // Figma: Top Navigation with gradient mask background
-            // Height: 110px (54px status + 56px nav), gradient from transparent to semi-black
-            Positioned(
-              top: 0,
-              left: 0,
-              right: 0,
-              child: Container(
-                padding: EdgeInsets.only(top: topPadding),
-                height: topPadding + topNavHeight,
+              if (currentIndex == 3) {
+                return Padding(
+                  padding: EdgeInsets.only(bottom: bottomInset),
+                  child: const MyPlanetContent(),
+                );
+              }
+              return Container(
                 decoration: BoxDecoration(
-                  // Figma gradient mask: fades from transparent at top to semi-black at bottom
-                  gradient: LinearGradient(
-                    begin: Alignment.topCenter,
-                    end: Alignment.bottomCenter,
-                    stops: const [0.0, 0.4, 0.7, 1.0],
-                    colors: [
-                      AppColor.colorGlobalCommon0.withValues(
-                        alpha: 0.0,
-                      ), // Transparent
-                      AppColor.colorGlobalCommon0.withValues(alpha: 0.1), // 10%
-                      AppColor.colorGlobalCommon0.withValues(alpha: 0.3), // 30%
-                      AppColor.colorGlobalCommon0.withValues(
-                        alpha: 0.5,
-                      ), // 50% - Figma: opacity 0.5
-                    ],
+                  color: AppColor.colorGlobalCoolNeutral98,
+                  borderRadius: BorderRadius.only(
+                    topLeft: Radius.circular(contentTopRadius),
+                    topRight: Radius.circular(contentTopRadius),
                   ),
                 ),
-                child: _buildTopNavigation(),
-              ),
-            ),
+                child: ClipRRect(
+                  borderRadius: BorderRadius.only(
+                    topLeft: Radius.circular(contentTopRadius),
+                    topRight: Radius.circular(contentTopRadius),
+                  ),
+                  child: Padding(
+                    padding: EdgeInsets.only(bottom: bottomInset),
+                    child: _buildCurrentTab(currentIndex),
+                  ),
+                ),
+              );
+            }),
+          ),
 
-            // ===== TAB BAR ===== (hidden in edit mode)
-            if (showTabBar)
-              Positioned(
-                bottom: 0,
-                left: 0,
-                right: 0,
-                child: _buildTabBar(bottomPadding, tabBarContentHeight),
+          // ===== TOP NAVIGATION (Obx: only title/buttons rebuild) =====
+          Positioned(
+            top: 0,
+            left: 0,
+            right: 0,
+            child: Container(
+              padding: EdgeInsets.only(top: topPadding),
+              height: topPadding + topNavHeight,
+              decoration: BoxDecoration(
+                gradient: LinearGradient(
+                  begin: Alignment.topCenter,
+                  end: Alignment.bottomCenter,
+                  stops: const [0.0, 0.4, 0.7, 1.0],
+                  colors: [
+                    AppColor.colorGlobalCommon0.withValues(alpha: 0.0),
+                    AppColor.colorGlobalCommon0.withValues(alpha: 0.1),
+                    AppColor.colorGlobalCommon0.withValues(alpha: 0.3),
+                    AppColor.colorGlobalCommon0.withValues(alpha: 0.5),
+                  ],
+                ),
               ),
-          ],
-        ),
-      );
-    });
+              child: Obx(() => _buildTopNavigation()),
+            ),
+          ),
+
+          // ===== TAB BAR (Obx: only tab bar rebuilds) =====
+          Positioned(
+            bottom: 0,
+            left: 0,
+            right: 0,
+            child: Obx(() {
+              final currentIndex = controller.currentTabIndex.value;
+              final bool isEditMode =
+                  currentIndex == 0 &&
+                  Get.isRegistered<SelectCoffeeController>() &&
+                  Get.find<SelectCoffeeController>().isEditing;
+              if (isEditMode) return const SizedBox.shrink();
+              return _buildTabBar(bottomPadding, tabBarContentHeight);
+            }),
+          ),
+        ],
+      ),
+    );
+  }
+
+  /// Only renders the active tab (replaces IndexedStack that kept all 4 tabs alive)
+  Widget _buildCurrentTab(int index) {
+    switch (index) {
+      case 0:
+        return const SelectCoffeeContent();
+      case 1:
+        return const ExtractionListView();
+      case 2:
+        return const TastingNotesView();
+      default:
+        return const SizedBox.shrink();
+    }
   }
 
   /// Custom top navigation (NOT AppBar) - Figma: Top Navigation/Top Navigation
