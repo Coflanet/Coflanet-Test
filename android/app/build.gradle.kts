@@ -6,7 +6,7 @@ plugins {
 }
 
 android {
-    namespace = "com.coflanet.app.coflanet"
+    namespace = "com.coflanet.app"
     compileSdk = flutter.compileSdkVersion
     ndkVersion = flutter.ndkVersion
 
@@ -20,7 +20,7 @@ android {
     }
 
     defaultConfig {
-        applicationId = "com.coflanet.app.coflanet"
+        applicationId = "com.coflanet.app"
         minSdk = flutter.minSdkVersion
         targetSdk = flutter.targetSdkVersion
         versionCode = flutter.versionCode

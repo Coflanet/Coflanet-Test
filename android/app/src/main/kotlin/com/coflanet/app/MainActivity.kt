@@ -1,4 +1,4 @@
-package com.coflanet.app.coflanet
+package com.coflanet.app
 
 import io.flutter.embedding.android.FlutterFragmentActivity
 
