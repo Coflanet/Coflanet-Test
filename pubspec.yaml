@@ -33,10 +33,7 @@ dependencies:
 
   # Social Login
   kakao_flutter_sdk_user: ^1.10.0
-  flutter_naver_login:
-    git:
-      url: https://github.com/sehoon787/flutter_naver_login.git
-      ref: master
+  flutter_naver_login: ^2.1.1
   sign_in_with_apple: ^7.0.1
 
 dev_dependencies:
