@@ -36,6 +36,8 @@ android {
 
         manifestPlaceholders["KAKAO_NATIVE_APP_KEY"] =
             envProps.getProperty("KAKAO_NATIVE_APP_KEY", "")
+        manifestPlaceholders["nidOAuthRedirectScheme"] =
+            "naver" + envProps.getProperty("NAVER_CLIENT_ID", "")
         resValue("string", "naver_client_id",
             envProps.getProperty("NAVER_CLIENT_ID", ""))
         resValue("string", "naver_client_secret",
