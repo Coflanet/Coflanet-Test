@@ -238,11 +238,9 @@ packages:
   flutter_naver_login:
     dependency: "direct main"
     description:
-      path: "."
-      ref: master
-      resolved-ref: d62a6d2203fae32c311a0be81198c0cd1b767b7a
-      url: "https://github.com/sehoon787/flutter_naver_login.git"
-    source: git
+      path: "../flutter_naver_login_local"
+      relative: true
+    source: path
     version: "2.1.1"
   flutter_svg:
     dependency: "direct main"
