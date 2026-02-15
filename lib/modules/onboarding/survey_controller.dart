@@ -1,5 +1,6 @@
 import 'package:get/get.dart';
 import 'package:coflanet/core/base/base_controller.dart';
+import 'package:coflanet/core/services/survey_service.dart';
 import 'package:coflanet/data/dummy/dummy_lifestyle_survey_data.dart';
 import 'package:coflanet/data/dummy/dummy_survey_data.dart';
 import 'package:coflanet/data/models/survey_question_model.dart';
@@ -20,6 +21,9 @@ class SurveyController extends BaseController {
   final UserPreferencesRepository _prefsRepository =
       RepositoryProvider.userPreferencesRepository;
 
+  /// Survey service for shared state (including userName)
+  final SurveyService _surveyService = Get.find<SurveyService>();
+
   /// Cached questions loaded from repository
   List<SurveyQuestionModel> _questions = [];
 
@@ -31,7 +35,6 @@ class SurveyController extends BaseController {
   void onInit() {
     super.onInit();
     _loadQuestions();
-    _loadUserName();
     // Note: Do NOT initialize dummy result here.
     // Survey result should only be set after user completes the survey.
     // Skipping survey should leave _surveyResult as null.
@@ -385,17 +388,6 @@ class SurveyController extends BaseController {
     Get.offAllNamed(Routes.mainShell, arguments: {'initialTab': 0});
   }
 
-  /// Get user name from preferences
-  String get userName {
-    // Note: This is synchronous for UI binding, but we cache the value
-    // The actual async load happens in onInit
-    return _cachedUserName;
-  }
-
-  String _cachedUserName = '사용자';
-
-  /// Load user name asynchronously (called in onInit)
-  Future<void> _loadUserName() async {
-    _cachedUserName = await _prefsRepository.getUserName() ?? '사용자';
-  }
+  /// Get user name from SurveyService (shared state)
+  String get userName => _surveyService.userName;
 }

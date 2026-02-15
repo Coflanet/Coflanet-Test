@@ -2,12 +2,14 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:coflanet/core/storage/local_storage.dart';
 import 'package:coflanet/core/services/auth_service.dart';
+import 'package:coflanet/core/services/survey_service.dart';
 import 'package:coflanet/routes/app_pages.dart';
 
 /// Controller for profile setup screen (name input after social login)
 class ProfileSetupController extends GetxController {
   final LocalStorage _storage = Get.find<LocalStorage>();
   final AuthService _authService = Get.find<AuthService>();
+  final SurveyService _surveyService = Get.find<SurveyService>();
 
   /// Text controller for name input
   final TextEditingController nameController = TextEditingController();
@@ -49,8 +51,16 @@ class ProfileSetupController extends GetxController {
   Future<void> saveAndContinue() async {
     if (!isValid) return;
 
+    final trimmedName = _name.value.trim();
+
     // Save name to local storage
-    await _storage.saveUserName(_name.value.trim());
+    await _storage.saveUserName(trimmedName);
+
+    // Update SurveyService cache so other screens can access the name
+    await _surveyService.updateUserName(trimmedName);
+
+    // Update AuthService user model
+    await _authService.updateUserName(trimmedName);
 
     // Navigate to survey reason (커플래닛을 찾게 된 이유)
     Get.toNamed(Routes.surveyReason);

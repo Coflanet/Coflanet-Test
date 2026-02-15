@@ -20,8 +20,8 @@ class SurveyService extends GetxService {
   bool get hasResult => _surveyResult.value != null;
 
   // ─── User Info ───
-  String _cachedUserName = '사용자';
-  String get userName => _cachedUserName;
+  final RxString _userName = '사용자'.obs;
+  String get userName => _userName.value;
 
   // ─── Initialization ───
 
@@ -33,7 +33,12 @@ class SurveyService extends GetxService {
   }
 
   Future<void> _loadUserName() async {
-    _cachedUserName = await _prefsRepository.getUserName() ?? '사용자';
+    _userName.value = await _prefsRepository.getUserName() ?? '사용자';
+  }
+
+  /// Update cached username (call after profile setup)
+  Future<void> updateUserName(String name) async {
+    _userName.value = name;
   }
 
   // ─── Survey Result Management ───
