@@ -2,9 +2,50 @@ import 'package:coflanet/data/models/coffee_item_model.dart';
 import 'package:coflanet/data/models/survey_question_model.dart';
 import 'package:coflanet/data/models/survey_result_model.dart';
 import 'package:coflanet/data/models/timer_step_model.dart';
+import 'package:coflanet/data/models/user_model.dart';
+import 'package:coflanet/data/providers/auth_provider.dart';
 
 /// Repository interfaces for data access abstraction
 /// Allows switching between Dummy (local) and API (remote) implementations
+
+// ─────────────────────────────────────────────────────────────────────────────
+// Auth Repository
+// ─────────────────────────────────────────────────────────────────────────────
+
+/// Repository for authentication and user management
+/// Handles server-side token exchange after social login
+abstract class AuthRepository {
+  /// Exchange social login token for server JWT
+  ///
+  /// After getting token from social SDK, send to server for validation
+  /// and receive server's own JWT tokens.
+  ///
+  /// [socialToken] - Access token from social provider (Kakao/Naver/Apple)
+  /// [provider] - Social login provider type
+  /// [socialUser] - User info from social SDK (optional, for registration)
+  ///
+  /// Returns [UserModel] with server JWT tokens
+  Future<UserModel> exchangeToken({
+    required String socialToken,
+    required SocialLoginType provider,
+    UserModel? socialUser,
+  });
+
+  /// Refresh server access token using refresh token
+  Future<UserModel?> refreshToken(String refreshToken);
+
+  /// Logout from server (invalidate tokens)
+  Future<void> logout();
+
+  /// Delete account from server (회원탈퇴)
+  Future<void> deleteAccount();
+
+  /// Get current user info from server
+  Future<UserModel?> getCurrentUser();
+
+  /// Update user profile on server
+  Future<UserModel> updateProfile({String? name, String? profileImageUrl});
+}
 
 // ─────────────────────────────────────────────────────────────────────────────
 // Survey Repository

@@ -1,11 +1,13 @@
 import 'package:coflanet/data/repositories/repository_config.dart';
 import 'package:coflanet/data/repositories/repository_interfaces.dart';
 // Dummy implementations
+import 'package:coflanet/data/repositories/dummy/dummy_auth_repository.dart';
 import 'package:coflanet/data/repositories/dummy/dummy_survey_repository.dart';
 import 'package:coflanet/data/repositories/dummy/dummy_coffee_repository.dart';
 import 'package:coflanet/data/repositories/dummy/dummy_recipe_repository.dart';
 import 'package:coflanet/data/repositories/dummy/dummy_user_preferences_repository.dart';
 // API implementations
+import 'package:coflanet/data/repositories/api/api_auth_repository.dart';
 import 'package:coflanet/data/repositories/api/api_survey_repository.dart';
 import 'package:coflanet/data/repositories/api/api_coffee_repository.dart';
 import 'package:coflanet/data/repositories/api/api_recipe_repository.dart';
@@ -16,10 +18,19 @@ import 'package:coflanet/data/repositories/api/api_user_preferences_repository.d
 class RepositoryProvider {
   RepositoryProvider._();
 
+  static AuthRepository? _authRepository;
   static SurveyRepository? _surveyRepository;
   static CoffeeRepository? _coffeeRepository;
   static RecipeRepository? _recipeRepository;
   static UserPreferencesRepository? _userPreferencesRepository;
+
+  /// Get AuthRepository instance
+  static AuthRepository get authRepository {
+    _authRepository ??= RepositoryConfig.useDummyData
+        ? DummyAuthRepository()
+        : ApiAuthRepository();
+    return _authRepository!;
+  }
 
   /// Get SurveyRepository instance
   static SurveyRepository get surveyRepository {
@@ -55,6 +66,7 @@ class RepositoryProvider {
 
   /// Reset all repositories (useful for testing)
   static void reset() {
+    _authRepository = null;
     _surveyRepository = null;
     _coffeeRepository = null;
     _recipeRepository = null;

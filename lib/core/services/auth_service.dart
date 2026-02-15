@@ -6,6 +6,8 @@ import 'package:coflanet/data/providers/dummy_auth_provider.dart';
 import 'package:coflanet/data/providers/kakao_auth_provider.dart';
 import 'package:coflanet/data/providers/naver_auth_provider.dart';
 import 'package:coflanet/data/providers/apple_auth_provider.dart';
+import 'package:coflanet/data/repositories/repository_interfaces.dart';
+import 'package:coflanet/data/repositories/repository_provider.dart';
 
 /// Authentication service configuration
 class AuthServiceConfig {
@@ -13,7 +15,15 @@ class AuthServiceConfig {
   /// Set to false in production to use real social login SDKs
   final bool useDummyProviders;
 
-  const AuthServiceConfig({this.useDummyProviders = true});
+  /// Use server token exchange
+  /// When true, social tokens are exchanged for server JWT via AuthRepository
+  /// When false (default), social tokens are used directly (for development)
+  final bool useServerAuth;
+
+  const AuthServiceConfig({
+    this.useDummyProviders = true,
+    this.useServerAuth = false,
+  });
 }
 
 /// Central authentication service
@@ -46,6 +56,9 @@ class AuthServiceConfig {
 class AuthService extends GetxService {
   final AuthServiceConfig config;
   final LocalStorage _storage = Get.find<LocalStorage>();
+
+  // Repository for server auth (token exchange)
+  final AuthRepository _authRepository = RepositoryProvider.authRepository;
 
   // Providers
   late final Map<SocialLoginType, AuthProvider> _providers;
@@ -104,6 +117,11 @@ class AuthService extends GetxService {
 
   /// Sign in with the specified provider
   ///
+  /// Flow:
+  /// 1. Get token from social SDK (Kakao/Naver/Apple)
+  /// 2. If useServerAuth is true, exchange token with server for JWT
+  /// 3. Save user data and tokens to storage
+  ///
   /// Returns [UserModel] on success
   /// Throws [AuthException] on failure
   Future<UserModel> signIn(SocialLoginType type) async {
@@ -115,9 +133,25 @@ class AuthService extends GetxService {
     _isLoading.value = true;
 
     try {
-      final user = await provider.signIn();
+      // Step 1: Get social token from SDK
+      final socialUser = await provider.signIn();
 
-      // Save to storage
+      UserModel user;
+
+      // Step 2: Exchange token with server (if enabled)
+      if (config.useServerAuth) {
+        // Exchange social token for server JWT
+        user = await _authRepository.exchangeToken(
+          socialToken: socialUser.accessToken,
+          provider: type,
+          socialUser: socialUser,
+        );
+      } else {
+        // Use social token directly (development mode)
+        user = socialUser;
+      }
+
+      // Step 3: Save to storage
       await _saveUserToStorage(user);
 
       // Update state
@@ -145,7 +179,16 @@ class AuthService extends GetxService {
 
       final provider = _providers[providerType];
 
-      // Try to sign out from provider
+      // Sign out from server (if using server auth)
+      if (config.useServerAuth) {
+        try {
+          await _authRepository.logout();
+        } catch (e) {
+          // Ignore server logout errors, still clear local session
+        }
+      }
+
+      // Try to sign out from social provider
       try {
         await provider?.signOut();
       } catch (e) {
@@ -164,7 +207,7 @@ class AuthService extends GetxService {
 
   /// Delete account (회원탈퇴)
   ///
-  /// Unlinks the social provider connection and clears all local data.
+  /// Deletes account from server, unlinks social provider, and clears all local data.
   Future<void> deleteAccount() async {
     final user = _currentUser.value;
     if (user == null) return;
@@ -178,6 +221,11 @@ class AuthService extends GetxService {
       );
 
       final provider = _providers[providerType];
+
+      // Delete account from server (if using server auth)
+      if (config.useServerAuth) {
+        await _authRepository.deleteAccount();
+      }
 
       // Unlink from social provider (revoke tokens)
       await provider?.unlink();
@@ -202,16 +250,28 @@ class AuthService extends GetxService {
     final user = _currentUser.value;
     if (user == null) return;
 
-    final providerType = SocialLoginType.values.firstWhere(
-      (t) => t.name == user.provider,
-      orElse: () => SocialLoginType.guest,
-    );
-
-    final provider = _providers[providerType];
-    if (provider == null) return;
-
     try {
-      final refreshedUser = await provider.refreshToken(user);
+      UserModel? refreshedUser;
+
+      if (config.useServerAuth) {
+        // Refresh server JWT using refresh token
+        final refreshToken = user.refreshToken;
+        if (refreshToken != null) {
+          refreshedUser = await _authRepository.refreshToken(refreshToken);
+        }
+      } else {
+        // Refresh social provider token directly
+        final providerType = SocialLoginType.values.firstWhere(
+          (t) => t.name == user.provider,
+          orElse: () => SocialLoginType.guest,
+        );
+
+        final provider = _providers[providerType];
+        if (provider != null) {
+          refreshedUser = await provider.refreshToken(user);
+        }
+      }
+
       if (refreshedUser != null) {
         await _saveUserToStorage(refreshedUser);
         _currentUser.value = refreshedUser;
@@ -227,7 +287,16 @@ class AuthService extends GetxService {
     final user = _currentUser.value;
     if (user == null) return;
 
-    final updatedUser = user.copyWith(name: name);
+    UserModel updatedUser;
+
+    if (config.useServerAuth) {
+      // Update on server
+      updatedUser = await _authRepository.updateProfile(name: name);
+    } else {
+      // Update locally only
+      updatedUser = user.copyWith(name: name);
+    }
+
     await _saveUserToStorage(updatedUser);
     _currentUser.value = updatedUser;
   }

@@ -1,6 +1,6 @@
 import 'package:get/get.dart';
 import 'package:coflanet/core/storage/local_storage.dart';
-import 'package:coflanet/core/network/api_client.dart';
+import 'package:coflanet/core/api/api_client.dart';
 import 'package:coflanet/core/theme/theme_controller.dart';
 import 'package:coflanet/core/services/survey_service.dart';
 import 'package:coflanet/core/services/auth_service.dart';
@@ -10,9 +10,8 @@ import 'package:coflanet/core/config/social_login_config.dart';
 class AppBinding extends Bindings {
   @override
   void dependencies() {
-    // Core services
+    // Core services - LocalStorage must be initialized first (sync)
     Get.put<LocalStorage>(LocalStorage(), permanent: true);
-    Get.put<ApiClient>(ApiClient(), permanent: true);
     Get.put<ThemeController>(ThemeController(), permanent: true);
 
     // Auth service - uses SocialLoginConfig.useDummyProviders for configuration
@@ -31,7 +30,8 @@ class AppBinding extends Bindings {
     // Domain services
     Get.put<SurveyService>(SurveyService(), permanent: true);
 
-    // Initialize API client
-    Get.find<ApiClient>().init();
+    // API Client - initialized asynchronously via GetxService
+    // Must be after LocalStorage since it depends on token storage
+    Get.putAsync<ApiClient>(() => ApiClient().init(), permanent: true);
   }
 }
