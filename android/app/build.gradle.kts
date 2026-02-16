@@ -14,7 +14,7 @@ if (envFile.exists()) {
 }
 
 android {
-    namespace = "com.coflanet.app"
+    namespace = "com.coflanet.tech.app"
     compileSdk = flutter.compileSdkVersion
     ndkVersion = flutter.ndkVersion
 
@@ -28,7 +28,7 @@ android {
     }
 
     defaultConfig {
-        applicationId = "com.coflanet.app"
+        applicationId = "com.coflanet.tech.app"
         minSdk = flutter.minSdkVersion
         targetSdk = flutter.targetSdkVersion
         versionCode = flutter.versionCode
