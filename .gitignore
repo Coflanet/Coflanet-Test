@@ -58,3 +58,9 @@ screenshots/
 
 # Allow assets/images PNGs (actual app assets)
 !assets/images/*.png
+
+# Apple Certificates
+apple_cert/
+
+# VSCode
+.vscode/
