@@ -1,3 +1,4 @@
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
@@ -391,52 +392,51 @@ class CoffeeSettingsView extends GetView<CoffeeController> {
   /// Figma: background #FFFFFF, border-radius 40px, padding 32px 24px, gap 16px, height 324px
   Widget _buildProgressTracker() {
     return Obx(() {
-      // Use controller extraction steps if available, otherwise fall back to dummy
+      // Force Obx to track list changes by accessing length
       final steps = controller.extractionSteps;
-      final useControllerSteps = steps.isNotEmpty;
+      final stepCount = steps.length;
+      debugPrint(
+        '[CoffeeSettingsView] Building progress tracker - steps: $stepCount',
+      );
 
-      // Convert HandDripStep to RecipeStep format
-      List<RecipeStep> displaySteps;
-      if (useControllerSteps) {
-        displaySteps = [];
-        // Add preparation steps
-        displaySteps.add(
-          const RecipeStep(
-            number: 1,
-            title: '원두 분쇄',
-            description: '분쇄도: 800~1,000μm',
-          ),
-        );
-        displaySteps.add(
-          const RecipeStep(number: 2, title: '예열', description: '서버와 드리퍼 예열'),
-        );
-        // Add extraction steps from controller
-        for (int i = 0; i < steps.length; i++) {
-          final step = steps[i];
-          final minutes = step.duration.inMinutes;
-          final seconds = step.duration.inSeconds % 60;
-          final timeStr = minutes > 0
-              ? '${minutes}분 ${seconds}초'
-              : '${seconds}초';
-          displaySteps.add(
-            RecipeStep(
-              number: i + 3,
-              title: step.title,
-              description: '물 ${step.waterAmount}g $timeStr',
-            ),
-          );
-        }
-        // Add final step
+      // Always build from controller state - don't fall back to dummy data
+      List<RecipeStep> displaySteps = [];
+
+      // Add preparation steps (always shown)
+      displaySteps.add(
+        const RecipeStep(
+          number: 1,
+          title: '원두 분쇄',
+          description: '분쇄도: 800~1,000μm',
+        ),
+      );
+      displaySteps.add(
+        const RecipeStep(number: 2, title: '예열', description: '서버와 드리퍼 예열'),
+      );
+
+      // Add extraction steps from controller (if any)
+      for (int i = 0; i < steps.length; i++) {
+        final step = steps[i];
+        final minutes = step.duration.inMinutes;
+        final seconds = step.duration.inSeconds % 60;
+        final timeStr = minutes > 0 ? '${minutes}분 ${seconds}초' : '${seconds}초';
         displaySteps.add(
           RecipeStep(
-            number: displaySteps.length + 1,
-            title: '추출 완료',
-            description: '드리퍼 제거하고 서버를 섞기',
+            number: i + 3,
+            title: step.title,
+            description: '물 ${step.waterAmount}g $timeStr',
           ),
         );
-      } else {
-        displaySteps = _dummyRecipeSteps;
       }
+
+      // Add final step (always shown)
+      displaySteps.add(
+        RecipeStep(
+          number: displaySteps.length + 1,
+          title: '추출 완료',
+          description: '드리퍼 제거하고 서버를 섞기',
+        ),
+      );
 
       return Container(
         padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 32),

@@ -1,5 +1,9 @@
+import 'package:flutter/foundation.dart';
 import 'package:get/get.dart';
 import 'package:coflanet/core/base/base_controller.dart';
+import 'package:coflanet/data/models/timer_step_model.dart';
+import 'package:coflanet/data/repositories/repository_interfaces.dart';
+import 'package:coflanet/data/repositories/repository_provider.dart';
 import 'package:coflanet/routes/app_pages.dart';
 
 enum CoffeeType { handDrip, espresso }
@@ -31,9 +35,37 @@ class HandDripStep {
       duration: duration ?? this.duration,
     );
   }
+
+  /// Convert to TimerStepModel for persistence
+  TimerStepModel toTimerStepModel(int stepNumber) {
+    return TimerStepModel(
+      stepNumber: stepNumber,
+      title: title,
+      description: '$waterAmount ml 붓기',
+      durationSeconds: duration.inSeconds,
+      waterAmount: waterAmount,
+      stepType: stepNumber == 1
+          ? TimerStepType.preparation
+          : TimerStepType.brewing,
+    );
+  }
+
+  /// Create from TimerStepModel
+  factory HandDripStep.fromTimerStepModel(TimerStepModel model) {
+    return HandDripStep(
+      id: model.stepNumber.toString(),
+      title: model.title,
+      waterAmount: model.waterAmount ?? 50,
+      duration: Duration(seconds: model.durationSeconds),
+    );
+  }
 }
 
 class CoffeeController extends BaseController {
+  /// Recipe repository for persistence
+  final RecipeRepository _recipeRepository =
+      RepositoryProvider.recipeRepository;
+
   @override
   void onInit() {
     super.onInit();
@@ -218,9 +250,92 @@ class CoffeeController extends BaseController {
   String get selectedBeanName => _selectedBeanName.value;
 
   /// Set selected bean info (called when navigating from coffee list)
-  void setSelectedBean({required String id, required String name}) {
+  Future<void> setSelectedBean({
+    required String id,
+    required String name,
+  }) async {
     _selectedBeanId.value = id;
     _selectedBeanName.value = name;
+    // Load recipe for this bean and wait for completion
+    await loadRecipeForBean(id);
+  }
+
+  /// Load recipe for a specific bean ID
+  Future<void> loadRecipeForBean(String beanId) async {
+    final recipeId = 'bean_$beanId';
+    final recipe = await _recipeRepository.getRecipeById(recipeId);
+
+    if (recipe != null) {
+      // Load saved recipe settings
+      _cupsCount.value = (recipe.coffeeAmount / 15).round().clamp(1, 6);
+      _customCoffeeAmount.value = recipe.coffeeAmount;
+      _customWaterAmount.value = recipe.waterAmount;
+      _extractionTime.value = recipe.totalDurationSeconds;
+
+      // Load extraction steps
+      _extractionSteps.clear();
+      _extractionSteps.addAll(
+        recipe.steps.map((step) => HandDripStep.fromTimerStepModel(step)),
+      );
+      _extractionSteps.refresh();
+      _stepsInitialized = true;
+    } else {
+      // No saved recipe, use defaults
+      _stepsInitialized = false;
+      initializeDefaultSteps();
+    }
+  }
+
+  /// Save current recipe for the selected bean
+  Future<bool> saveCurrentRecipe() async {
+    final beanId = _selectedBeanId.value;
+    debugPrint('[saveCurrentRecipe] beanId: $beanId');
+
+    if (beanId == null) {
+      debugPrint('[saveCurrentRecipe] FAILED: beanId is null');
+      Get.snackbar(
+        '저장 실패',
+        '원두가 선택되지 않았습니다',
+        snackPosition: SnackPosition.BOTTOM,
+      );
+      return false;
+    }
+
+    try {
+      // Convert HandDripSteps to TimerStepModels
+      final timerSteps = <TimerStepModel>[];
+      for (int i = 0; i < _extractionSteps.length; i++) {
+        timerSteps.add(_extractionSteps[i].toTimerStepModel(i + 1));
+      }
+      debugPrint('[saveCurrentRecipe] steps count: ${timerSteps.length}');
+
+      // Create recipe model
+      final recipe = TimerRecipeModel(
+        id: 'bean_$beanId',
+        name: _selectedBeanName.value,
+        coffeeType: 'handDrip',
+        coffeeAmount: coffeeAmount,
+        waterAmount: totalStepsWaterAmount,
+        totalDurationSeconds: totalStepsDuration.inSeconds,
+        steps: timerSteps,
+      );
+      debugPrint('[saveCurrentRecipe] recipe created: ${recipe.id}');
+
+      // Save to repository
+      await _recipeRepository.saveRecipe(recipe);
+      debugPrint('[saveCurrentRecipe] saved to repository');
+
+      return true;
+    } catch (e, stackTrace) {
+      debugPrint('[saveCurrentRecipe] ERROR: $e');
+      debugPrint('[saveCurrentRecipe] STACK: $stackTrace');
+      Get.snackbar(
+        '저장 실패',
+        '레시피 저장 중 오류가 발생했습니다',
+        snackPosition: SnackPosition.BOTTOM,
+      );
+      return false;
+    }
   }
 
   // ===== Hand Drip Extraction Steps =====
@@ -255,6 +370,11 @@ class CoffeeController extends BaseController {
     return '${minutes.toString().padLeft(2, '0')}:${seconds.toString().padLeft(2, '0')}';
   }
 
+  /// Force refresh extraction steps list to trigger Obx rebuild
+  void refreshExtrationSteps() {
+    _extractionSteps.refresh();
+  }
+
   /// Initialize default extraction steps for hand drip
   void initializeDefaultSteps() {
     if (_stepsInitialized) return;
@@ -280,6 +400,7 @@ class CoffeeController extends BaseController {
         duration: const Duration(seconds: 90),
       ),
     ]);
+    _extractionSteps.refresh();
   }
 
   /// Add new extraction step
@@ -301,6 +422,7 @@ class CoffeeController extends BaseController {
         duration: const Duration(seconds: 30),
       ),
     );
+    _extractionSteps.refresh();
   }
 
   /// Delete extraction step by id
@@ -308,6 +430,7 @@ class CoffeeController extends BaseController {
     _extractionSteps.removeWhere((step) => step.id == id);
     // Renumber remaining steps
     _renumberSteps();
+    _extractionSteps.refresh();
   }
 
   /// Renumber steps after deletion
@@ -331,6 +454,7 @@ class CoffeeController extends BaseController {
       _extractionSteps[index] = _extractionSteps[index].copyWith(
         waterAmount: amount.clamp(10, 500),
       );
+      _extractionSteps.refresh();
     }
   }
 
@@ -341,6 +465,7 @@ class CoffeeController extends BaseController {
       _extractionSteps[index] = _extractionSteps[index].copyWith(
         duration: duration,
       );
+      _extractionSteps.refresh();
     }
   }
 
