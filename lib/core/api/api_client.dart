@@ -25,7 +25,6 @@ class ApiClient extends GetxService {
 
     // Add interceptors
     _dio.interceptors.add(_authInterceptor());
-    _dio.interceptors.add(_loggingInterceptor());
 
     return this;
   }
@@ -50,29 +49,6 @@ class ApiClient extends GetxService {
             return handler.resolve(retryResponse);
           }
         }
-        return handler.next(error);
-      },
-    );
-  }
-
-  /// Logging interceptor for debugging
-  Interceptor _loggingInterceptor() {
-    return InterceptorsWrapper(
-      onRequest: (options, handler) {
-        // ignore: avoid_print
-        print('API Request: ${options.method} ${options.uri}');
-        return handler.next(options);
-      },
-      onResponse: (response, handler) {
-        // ignore: avoid_print
-        print(
-          'API Response: ${response.statusCode} ${response.requestOptions.uri}',
-        );
-        return handler.next(response);
-      },
-      onError: (error, handler) {
-        // ignore: avoid_print
-        print('API Error: ${error.message} ${error.requestOptions.uri}');
         return handler.next(error);
       },
     );

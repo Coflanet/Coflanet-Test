@@ -1,4 +1,5 @@
 import 'dart:io';
+import 'package:flutter/foundation.dart';
 import 'package:sign_in_with_apple/sign_in_with_apple.dart';
 import 'package:coflanet/data/models/user_model.dart';
 import 'package:coflanet/data/providers/auth_provider.dart';
@@ -137,7 +138,7 @@ class AppleAuthProvider implements AuthProvider {
 
   void _logDebug(String message) {
     if (SocialLoginConfig.enableDebugLogging) {
-      print('[AppleAuthProvider] $message');
+      debugPrint('[AppleAuthProvider] $message');
     }
   }
 }

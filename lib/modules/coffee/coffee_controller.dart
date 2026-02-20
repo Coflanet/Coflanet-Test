@@ -1,4 +1,3 @@
-import 'package:flutter/foundation.dart';
 import 'package:get/get.dart';
 import 'package:coflanet/core/base/base_controller.dart';
 import 'package:coflanet/data/models/timer_step_model.dart';
@@ -289,10 +288,8 @@ class CoffeeController extends BaseController {
   /// Save current recipe for the selected bean
   Future<bool> saveCurrentRecipe() async {
     final beanId = _selectedBeanId.value;
-    debugPrint('[saveCurrentRecipe] beanId: $beanId');
 
     if (beanId == null) {
-      debugPrint('[saveCurrentRecipe] FAILED: beanId is null');
       Get.snackbar(
         '저장 실패',
         '원두가 선택되지 않았습니다',
@@ -307,8 +304,6 @@ class CoffeeController extends BaseController {
       for (int i = 0; i < _extractionSteps.length; i++) {
         timerSteps.add(_extractionSteps[i].toTimerStepModel(i + 1));
       }
-      debugPrint('[saveCurrentRecipe] steps count: ${timerSteps.length}');
-
       // Create recipe model
       final recipe = TimerRecipeModel(
         id: 'bean_$beanId',
@@ -319,16 +314,11 @@ class CoffeeController extends BaseController {
         totalDurationSeconds: totalStepsDuration.inSeconds,
         steps: timerSteps,
       );
-      debugPrint('[saveCurrentRecipe] recipe created: ${recipe.id}');
-
       // Save to repository
       await _recipeRepository.saveRecipe(recipe);
-      debugPrint('[saveCurrentRecipe] saved to repository');
 
       return true;
     } catch (e, stackTrace) {
-      debugPrint('[saveCurrentRecipe] ERROR: $e');
-      debugPrint('[saveCurrentRecipe] STACK: $stackTrace');
       Get.snackbar(
         '저장 실패',
         '레시피 저장 중 오류가 발생했습니다',
@@ -368,11 +358,6 @@ class CoffeeController extends BaseController {
     final minutes = total.inMinutes;
     final seconds = total.inSeconds % 60;
     return '${minutes.toString().padLeft(2, '0')}:${seconds.toString().padLeft(2, '0')}';
-  }
-
-  /// Force refresh extraction steps list to trigger Obx rebuild
-  void refreshExtrationSteps() {
-    _extractionSteps.refresh();
   }
 
   /// Initialize default extraction steps for hand drip
@@ -486,17 +471,36 @@ class CoffeeController extends BaseController {
   }
 
   /// Save new recipe
-  void saveNewRecipe() {
-    // TODO: Implement actual save logic with repository
-    // For now, just log and clear
-    if (_newRecipeBeanName.value.isNotEmpty) {
-      // Save recipe with current settings
+  Future<bool> saveNewRecipe() async {
+    if (_newRecipeBeanName.value.isEmpty) return false;
+
+    try {
+      final timerSteps = <TimerStepModel>[];
+      for (int i = 0; i < _extractionSteps.length; i++) {
+        timerSteps.add(_extractionSteps[i].toTimerStepModel(i + 1));
+      }
+
+      final recipeId = 'custom_${DateTime.now().millisecondsSinceEpoch}';
+      final recipe = TimerRecipeModel(
+        id: recipeId,
+        name: _newRecipeBeanName.value,
+        coffeeType: 'handDrip',
+        coffeeAmount: coffeeAmount,
+        waterAmount: totalStepsWaterAmount,
+        totalDurationSeconds: totalStepsDuration.inSeconds,
+        steps: timerSteps,
+      );
+
+      await _recipeRepository.saveRecipe(recipe);
+      clearNewRecipeForm();
+      return true;
+    } catch (e, stackTrace) {
       Get.snackbar(
-        '저장 완료',
-        '${_newRecipeBeanName.value} 레시피가 저장되었습니다',
+        '저장 실패',
+        '레시피 저장 중 오류가 발생했습니다',
         snackPosition: SnackPosition.BOTTOM,
       );
-      clearNewRecipeForm();
+      return false;
     }
   }
 

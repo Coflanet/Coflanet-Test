@@ -1,4 +1,3 @@
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
@@ -395,9 +394,6 @@ class CoffeeSettingsView extends GetView<CoffeeController> {
       // Force Obx to track list changes by accessing length
       final steps = controller.extractionSteps;
       final stepCount = steps.length;
-      debugPrint(
-        '[CoffeeSettingsView] Building progress tracker - steps: $stepCount',
-      );
 
       // Always build from controller state - don't fall back to dummy data
       List<RecipeStep> displaySteps = [];

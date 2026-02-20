@@ -1,4 +1,3 @@
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
@@ -429,7 +428,7 @@ class RecipeEditView extends GetView<CoffeeController> {
         ),
         GestureDetector(
           onTap: () {
-            // TODO: Show device selection modal
+            // 추출 기구 선택 모달 (추후 구현)
           },
           child: const Text(
             '변경하기',
@@ -866,23 +865,17 @@ class RecipeEditView extends GetView<CoffeeController> {
         height: 56,
         child: ElevatedButton(
           onPressed: () async {
-            debugPrint('[RecipeEditView] 저장 버튼 눌림!');
-            // Save recipe to repository
             final success = await controller.saveCurrentRecipe();
-            debugPrint('[RecipeEditView] saveCurrentRecipe 결과: $success');
             if (success) {
               // Navigate back first, then show snackbar on the previous page.
               // Calling Get.snackbar() before Get.back() can cause Get.back()
               // to pop the snackbar overlay instead of the page route.
-              debugPrint('[RecipeEditView] Get.back() 호출');
               Get.back();
               Get.snackbar(
                 '저장 완료',
                 '${controller.selectedBeanName} 레시피가 저장되었습니다',
                 snackPosition: SnackPosition.BOTTOM,
               );
-            } else {
-              debugPrint('[RecipeEditView] 저장 실패 - Get.back() 호출 안함');
             }
           },
           style: ElevatedButton.styleFrom(

@@ -1,5 +1,4 @@
 import 'dart:convert';
-import 'package:flutter/foundation.dart';
 import 'package:coflanet/core/storage/local_storage.dart';
 import 'package:coflanet/data/dummy/dummy_timer_data.dart';
 import 'package:coflanet/data/models/timer_step_model.dart';
@@ -138,11 +137,7 @@ class DummyRecipeRepository implements RecipeRepository {
       return jsonList
           .map((e) => TimerRecipeModel.fromJson(e as Map<String, dynamic>))
           .toList();
-    } catch (e, stackTrace) {
-      debugPrint('[DummyRecipeRepository] Error parsing custom recipes: $e');
-      debugPrint('[DummyRecipeRepository] Stack: $stackTrace');
-      debugPrint('[DummyRecipeRepository] Raw data: $data');
-      // Return empty list but log the error for debugging
+    } catch (_) {
       return [];
     }
   }

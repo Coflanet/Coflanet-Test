@@ -1,3 +1,4 @@
+import 'package:flutter/foundation.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 
 /// Social Login SDK Configuration
@@ -134,12 +135,12 @@ class SocialLoginConfig {
   static void printConfigStatus() {
     if (!enableDebugLogging) return;
 
-    print('=== Social Login Config Status ===');
-    print('useDummyProviders: $useDummyProviders');
-    print('Kakao configured: $isKakaoConfigured');
-    print('Naver configured: $isNaverConfigured');
-    print('Apple (Android) configured: $isAppleConfiguredForAndroid');
-    print('================================');
+    debugPrint('=== Social Login Config Status ===');
+    debugPrint('useDummyProviders: $useDummyProviders');
+    debugPrint('Kakao configured: $isKakaoConfigured');
+    debugPrint('Naver configured: $isNaverConfigured');
+    debugPrint('Apple (Android) configured: $isAppleConfiguredForAndroid');
+    debugPrint('================================');
   }
 
   // ============================================================

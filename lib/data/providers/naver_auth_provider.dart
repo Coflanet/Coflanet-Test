@@ -1,3 +1,4 @@
+import 'package:flutter/foundation.dart';
 import 'package:flutter_naver_login/flutter_naver_login.dart';
 import 'package:flutter_naver_login/interface/types/naver_login_result.dart';
 import 'package:flutter_naver_login/interface/types/naver_login_status.dart';
@@ -121,7 +122,7 @@ class NaverAuthProvider implements AuthProvider {
 
   void _logDebug(String message) {
     if (SocialLoginConfig.enableDebugLogging) {
-      print('[NaverAuthProvider] $message');
+      debugPrint('[NaverAuthProvider] $message');
     }
   }
 }

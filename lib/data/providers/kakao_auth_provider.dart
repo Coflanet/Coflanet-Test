@@ -1,3 +1,4 @@
+import 'package:flutter/foundation.dart';
 import 'package:flutter/services.dart';
 import 'package:kakao_flutter_sdk_user/kakao_flutter_sdk_user.dart';
 import 'package:coflanet/data/models/user_model.dart';
@@ -179,7 +180,7 @@ class KakaoAuthProvider implements AuthProvider {
 
   void _logDebug(String message) {
     if (SocialLoginConfig.enableDebugLogging) {
-      print('[KakaoAuthProvider] $message');
+      debugPrint('[KakaoAuthProvider] $message');
     }
   }
 }
