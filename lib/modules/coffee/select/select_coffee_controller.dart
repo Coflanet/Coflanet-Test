@@ -157,7 +157,7 @@ class SelectCoffeeController extends BaseController {
 
   /// Share selected items (placeholder for future implementation)
   void shareSelectedItems() {
-    // TODO: Implement share functionality
+    // 공유 기능 (추후 구현)
     Get.snackbar(
       '공유',
       '$selectedEditCount개 항목 공유 기능은 준비 중입니다',

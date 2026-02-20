@@ -204,20 +204,20 @@ class MyPlanetController extends BaseController {
 
   /// Open privacy policy
   void openPrivacyPolicy() {
-    // TODO: Navigate to privacy policy page or open URL
+    // 개인정보처리방침 URL 연동 (추후 구현)
     Get.snackbar(
       '개인정보처리방침',
-      '개인정보처리방침 페이지로 이동합니다.',
+      '준비 중입니다',
       snackPosition: SnackPosition.BOTTOM,
     );
   }
 
   /// Open terms of service
   void openTermsOfService() {
-    // TODO: Navigate to terms of service page or open URL
+    // 서비스 이용약관 URL 연동 (추후 구현)
     Get.snackbar(
       '서비스 이용약관',
-      '서비스 이용약관 페이지로 이동합니다.',
+      '준비 중입니다',
       snackPosition: SnackPosition.BOTTOM,
     );
   }

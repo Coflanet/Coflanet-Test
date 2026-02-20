@@ -109,8 +109,7 @@ class SignUpController extends BaseController {
       // Simulate API delay
       await Future.delayed(const Duration(milliseconds: 1500));
 
-      // TODO: Replace with actual sign up API implementation
-      // For now, save dummy token
+      // API 연동 시 실제 회원가입 로직으로 교체
       await _storage.saveAccessToken(
         'email_signup_token_${DateTime.now().millisecondsSinceEpoch}',
       );

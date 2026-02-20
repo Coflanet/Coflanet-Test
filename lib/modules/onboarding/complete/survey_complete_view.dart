@@ -32,7 +32,7 @@ class SurveyCompleteView extends GetView<SurveyController> {
               ),
             ),
             onPressed: () {
-              // TODO: Navigate to settings
+              // 설정 화면 연결 (추후 구현)
             },
           ),
         ],

@@ -679,7 +679,7 @@ class SurveyResultView extends GetView<SurveyController> {
             width: double.infinity,
             child: OutlinedButton(
               onPressed: () {
-                // TODO: Navigate to full recommendation list
+                // 추천 원두 전체 목록 (추후 구현)
               },
               style: OutlinedButton.styleFrom(
                 padding: const EdgeInsets.symmetric(vertical: 14),
