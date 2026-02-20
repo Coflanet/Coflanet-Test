@@ -1,3 +1,4 @@
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
@@ -35,49 +36,35 @@ class RecipeEditView extends GetView<CoffeeController> {
 
   @override
   Widget build(BuildContext context) {
-    final bottomPadding = MediaQuery.of(context).padding.bottom;
-    // Calculate total bottom area needed: button height (56) + padding (32) + safe area
-    final bottomAreaHeight = 56 + 32 + bottomPadding;
-
     return Scaffold(
       backgroundColor: _screenBg,
       body: Column(
         children: [
           _buildHeader(context),
+          // Scrollable content
           Expanded(
-            child: Stack(
-              children: [
-                // Scrollable content
-                SingleChildScrollView(
-                  physics: const AlwaysScrollableScrollPhysics(),
-                  padding: const EdgeInsets.symmetric(horizontal: 16),
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      const SizedBox(height: 24),
-                      _buildBasicSettingsCard(),
-                      const SizedBox(height: 16),
-                      _buildDetailedSettingsCard(),
-                      const SizedBox(height: 16),
-                      _buildExtractionSettingsCard(),
-                      const SizedBox(height: 20),
-                      // + button separated outside the card per Figma
-                      _buildAddStepButton(),
-                      // Extra padding for bottom button area
-                      SizedBox(height: bottomAreaHeight + 20),
-                    ],
-                  ),
-                ),
-                // Fixed bottom save button
-                Positioned(
-                  left: 0,
-                  right: 0,
-                  bottom: 0,
-                  child: _buildBottomSaveButton(context),
-                ),
-              ],
+            child: SingleChildScrollView(
+              physics: const AlwaysScrollableScrollPhysics(),
+              padding: const EdgeInsets.symmetric(horizontal: 16),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  const SizedBox(height: 24),
+                  _buildBasicSettingsCard(),
+                  const SizedBox(height: 16),
+                  _buildDetailedSettingsCard(),
+                  const SizedBox(height: 16),
+                  _buildExtractionSettingsCard(),
+                  const SizedBox(height: 20),
+                  // + button separated outside the card per Figma
+                  _buildAddStepButton(),
+                  const SizedBox(height: 20),
+                ],
+              ),
             ),
           ),
+          // Fixed bottom save button - OUTSIDE of Stack to ensure tap works
+          _buildBottomSaveButton(context),
         ],
       ),
     );
@@ -878,9 +865,25 @@ class RecipeEditView extends GetView<CoffeeController> {
         width: double.infinity,
         height: 56,
         child: ElevatedButton(
-          onPressed: () {
-            // Save and go back
-            Get.back();
+          onPressed: () async {
+            debugPrint('[RecipeEditView] 저장 버튼 눌림!');
+            // Save recipe to repository
+            final success = await controller.saveCurrentRecipe();
+            debugPrint('[RecipeEditView] saveCurrentRecipe 결과: $success');
+            if (success) {
+              // Navigate back first, then show snackbar on the previous page.
+              // Calling Get.snackbar() before Get.back() can cause Get.back()
+              // to pop the snackbar overlay instead of the page route.
+              debugPrint('[RecipeEditView] Get.back() 호출');
+              Get.back();
+              Get.snackbar(
+                '저장 완료',
+                '${controller.selectedBeanName} 레시피가 저장되었습니다',
+                snackPosition: SnackPosition.BOTTOM,
+              );
+            } else {
+              debugPrint('[RecipeEditView] 저장 실패 - Get.back() 호출 안함');
+            }
           },
           style: ElevatedButton.styleFrom(
             backgroundColor: _primary,
