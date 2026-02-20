@@ -40,7 +40,7 @@ class MyPlanetContent extends GetView<MyPlanetController> {
                 horizontal: 24,
               ), // Figma: 12px 24px
               decoration: BoxDecoration(
-                color: const Color(0xFFF4F4F5), // Figma: #F4F4F5
+                color: AppColor.colorGlobalCoolNeutral98, // Figma: #F4F4F5
                 borderRadius: BorderRadius.circular(
                   40,
                 ), // Figma: 40px all corners
@@ -84,7 +84,7 @@ class MyPlanetContent extends GetView<MyPlanetController> {
       padding: const EdgeInsets.all(24),
       decoration: BoxDecoration(
         // Figma: White background (no gradient)
-        color: Colors.white,
+        color: AppColor.colorGlobalCommon100,
         borderRadius: BorderRadius.circular(24),
       ),
       child: Column(
@@ -94,7 +94,7 @@ class MyPlanetContent extends GetView<MyPlanetController> {
           Text(
             '내 커피 취향을\n찾아볼까요?',
             style: AppTextStyles.title3Bold.copyWith(
-              color: const Color(0xFF171719),
+              color: AppColor.labelNormal,
               height: 1.3,
             ),
             textAlign: TextAlign.center,
@@ -111,7 +111,7 @@ class MyPlanetContent extends GetView<MyPlanetController> {
               padding: const EdgeInsets.symmetric(vertical: 14, horizontal: 28),
               decoration: BoxDecoration(
                 // Figma: Light gray background on white card
-                color: const Color(0xFFF4F4F5),
+                color: AppColor.colorGlobalCoolNeutral98,
                 borderRadius: BorderRadius.circular(99), // Pill shape
               ),
               child: Center(
@@ -254,8 +254,8 @@ class MyPlanetContent extends GetView<MyPlanetController> {
           end: Alignment.bottomCenter,
           stops: const [0.0, 0.5, 1.0], // White until 50%, then fade to color
           colors: [
-            Colors.white, // White at top (0%)
-            Colors.white, // White at middle (50%)
+            AppColor.colorGlobalCommon100, // White at top (0%)
+            AppColor.colorGlobalCommon100, // White at middle (50%)
             color.withOpacity(0.6), // Color at bottom (100%)
           ],
         ),
@@ -266,12 +266,8 @@ class MyPlanetContent extends GetView<MyPlanetController> {
           // Label - Figma: 17px, 600 weight, #171719
           Text(
             label,
-            style: const TextStyle(
-              fontFamily: 'Pretendard',
-              fontSize: 17,
-              fontWeight: FontWeight.w600,
-              height: 1.412,
-              color: Color(0xFF171719),
+            style: AppTextStyles.headline2Bold.copyWith(
+              color: AppColor.labelNormal,
             ),
             textAlign: TextAlign.center,
           ),
@@ -279,13 +275,8 @@ class MyPlanetContent extends GetView<MyPlanetController> {
           // Level - Figma: 14px, 400 weight, rgba(46, 47, 51, 0.88)
           Text(
             level,
-            style: const TextStyle(
-              fontFamily: 'Pretendard',
-              fontSize: 14,
-              fontWeight: FontWeight.w400,
-              height: 1.429,
-              letterSpacing: 0.0145 * 14,
-              color: Color(0xE02E2F33),
+            style: AppTextStyles.caption1Regular.copyWith(
+              color: AppColor.labelNeutral,
             ),
             textAlign: TextAlign.center,
           ),
@@ -424,7 +415,7 @@ class MyPlanetContent extends GetView<MyPlanetController> {
         width: double.infinity,
         padding: const EdgeInsets.symmetric(vertical: 14),
         decoration: BoxDecoration(
-          color: const Color(0x14707C7C), // rgba(112, 115, 124, 0.08) per Figma
+          color: AppColor.componentFillNormal, // rgba(112, 115, 124, 0.08) per Figma
           borderRadius: BorderRadius.circular(99), // Figma: 99px
         ),
         child: Text(
@@ -457,18 +448,18 @@ class MyPlanetContent extends GetView<MyPlanetController> {
           // 로그아웃 cell - Figma: height 48px, padding 12px 0
           _buildAccountCell(
             text: '로그아웃',
-            color: const Color(0xFF171719), // Figma: #171719
+            color: AppColor.labelNormal, // Figma: #171719
             onTap: () => controller.logout(),
           ),
           // Divider line - Figma: rgba(112, 115, 124, 0.16)
           Container(
             height: 1,
-            color: const Color(0x29707C7C), // rgba(112, 115, 124, 0.16)
+            color: AppColor.lineNormalNeutral, // rgba(112, 115, 124, 0.16)
           ),
           // 회원탈퇴 cell - Figma: color #FF4242
           _buildAccountCell(
             text: '회원탈퇴',
-            color: const Color(0xFFFF4242), // Figma: #FF4242
+            color: AppColor.statusNegative, // Figma: #FF4242
             onTap: () => controller.withdrawAccount(),
           ),
         ],
@@ -491,14 +482,7 @@ class MyPlanetContent extends GetView<MyPlanetController> {
         alignment: Alignment.centerLeft,
         child: Text(
           text,
-          style: const TextStyle(
-            fontFamily: 'Pretendard',
-            fontSize: 16, // Figma: 16px
-            fontWeight: FontWeight.w400, // Figma: 400
-            height: 1.5, // 150%
-            letterSpacing: 0.0057 * 16,
-            color: Color(0xFF171719),
-          ).copyWith(color: color),
+          style: AppTextStyles.body1NormalRegular.copyWith(color: color),
         ),
       ),
     );
@@ -509,7 +493,7 @@ class MyPlanetContent extends GetView<MyPlanetController> {
 
   Widget _buildLegalLinksOnBlack() {
     // Figma CSS: color: rgba(194, 196, 200, 0.88);
-    const linkColor = Color(0xE0C2C4C8); // rgba(194, 196, 200, 0.88)
+    final linkColor = AppColor.inverseLabelNeutral; // rgba(194, 196, 200, 0.88)
 
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 24), // Same as containers
@@ -547,14 +531,7 @@ class MyPlanetContent extends GetView<MyPlanetController> {
         alignment: Alignment.centerLeft,
         child: Text(
           text,
-          style: TextStyle(
-            fontFamily: 'Pretendard',
-            fontSize: 16,
-            fontWeight: FontWeight.w400,
-            height: 1.5,
-            letterSpacing: 0.0057 * 16,
-            color: color,
-          ),
+          style: AppTextStyles.body1NormalRegular.copyWith(color: color),
         ),
       ),
     );

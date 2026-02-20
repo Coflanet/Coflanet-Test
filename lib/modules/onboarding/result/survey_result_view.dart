@@ -89,8 +89,8 @@ class SurveyResultView extends GetView<SurveyController> {
           begin: Alignment.topLeft,
           end: Alignment.bottomRight,
           colors: [
-            Color(0xFF7D5EF7), // Violet 60
-            Color(0xFF6541F2), // Violet 50 (primary)
+            AppColor.colorGlobalViolet60, // Violet 60
+            AppColor.colorGlobalViolet50, // Violet 50 (primary)
           ],
         ),
         borderRadius: AppRadius.xlBorder,
@@ -195,7 +195,7 @@ class SurveyResultView extends GetView<SurveyController> {
               borderRadius: BorderRadius.circular(12),
               boxShadow: [
                 BoxShadow(
-                  color: Colors.black.withValues(alpha: 0.06),
+                  color: AppColor.colorGlobalCommon0.withValues(alpha: 0.06),
                   blurRadius: 8,
                   offset: const Offset(0, 2),
                 ),
@@ -406,13 +406,13 @@ class SurveyResultView extends GetView<SurveyController> {
                       vertical: 4,
                     ),
                     decoration: BoxDecoration(
-                      color: const Color(0xFF0066FF).withValues(alpha: 0.08),
+                      color: AppColor.colorGlobalBlue50.withValues(alpha: 0.08),
                       borderRadius: BorderRadius.circular(99),
                     ),
                     child: Text(
                       '일치율 $matchPercent%',
                       style: AppTextStyles.caption2Regular.copyWith(
-                        color: const Color(0xFF0066FF),
+                        color: AppColor.colorGlobalBlue50,
                         fontSize: 11,
                       ),
                     ),
@@ -448,7 +448,7 @@ class SurveyResultView extends GetView<SurveyController> {
                         Text(
                           rec.name,
                           style: AppTextStyles.body1NormalMedium.copyWith(
-                            color: const Color(0xFF171719),
+                            color: AppColor.labelNormal,
                           ),
                           maxLines: 1,
                           overflow: TextOverflow.ellipsis,
@@ -467,7 +467,7 @@ class SurveyResultView extends GetView<SurveyController> {
               Container(
                 padding: const EdgeInsets.fromLTRB(24, 16, 24, 24),
                 decoration: BoxDecoration(
-                  color: const Color(0xFF70737C).withValues(alpha: 0.08),
+                  color: AppColor.componentFillNormal,
                   borderRadius: BorderRadius.circular(24),
                 ),
                 child: Column(
@@ -478,7 +478,7 @@ class SurveyResultView extends GetView<SurveyController> {
                     Container(
                       height: 1,
                       margin: const EdgeInsets.symmetric(vertical: 16),
-                      color: const Color(0xFF70737C).withValues(alpha: 0.08),
+                      color: AppColor.componentFillNormal,
                     ),
                     // Flavor tags
                     _buildFigmaFlavorTags(rec.flavorTags),
@@ -506,12 +506,12 @@ class SurveyResultView extends GetView<SurveyController> {
         width: 18,
         height: 18,
         decoration: BoxDecoration(
-          color: isSelected ? AppColor.primaryNormal : Colors.transparent,
+          color: isSelected ? AppColor.primaryNormal : AppColor.transparent,
           border: Border.all(color: AppColor.primaryNormal, width: 1.5),
           borderRadius: BorderRadius.circular(3),
         ),
         child: isSelected
-            ? Icon(Icons.check, size: 12, color: Colors.white)
+            ? Icon(Icons.check, size: 12, color: AppColor.colorGlobalCommon100)
             : null,
       ),
     );
@@ -528,14 +528,14 @@ class SurveyResultView extends GetView<SurveyController> {
         Text(
           priceStr,
           style: AppTextStyles.body1NormalBold.copyWith(
-            color: const Color(0xFF171719),
+            color: AppColor.labelNormal,
             fontWeight: FontWeight.w600,
           ),
         ),
         Text(
           '원',
           style: AppTextStyles.body2NormalRegular.copyWith(
-            color: const Color(0xFF2E2F33).withValues(alpha: 0.88),
+            color: AppColor.labelNeutral,
           ),
         ),
       ],
@@ -573,7 +573,7 @@ class SurveyResultView extends GetView<SurveyController> {
                   child: Text(
                     item.$1,
                     style: AppTextStyles.label1NormalMedium.copyWith(
-                      color: const Color(0xFF171719),
+                      color: AppColor.labelNormal,
                       fontSize: 14,
                     ),
                   ),
@@ -584,7 +584,7 @@ class SurveyResultView extends GetView<SurveyController> {
                   child: Container(
                     height: 8,
                     decoration: BoxDecoration(
-                      color: const Color(0xFF70737C).withValues(alpha: 0.12),
+                      color: AppColor.componentFillNormal,
                       borderRadius: BorderRadius.circular(99),
                     ),
                     child: FractionallySizedBox(
@@ -592,7 +592,7 @@ class SurveyResultView extends GetView<SurveyController> {
                       widthFactor: item.$2 / 100,
                       child: Container(
                         decoration: BoxDecoration(
-                          color: const Color(0xFF9E86FC), // Light purple
+                          color: AppColor.colorGlobalViolet70, // Light purple
                           borderRadius: BorderRadius.circular(99),
                         ),
                       ),
@@ -606,7 +606,7 @@ class SurveyResultView extends GetView<SurveyController> {
                   child: Text(
                     fiveScaleValue.toStringAsFixed(1),
                     style: AppTextStyles.label1NormalRegular.copyWith(
-                      color: const Color(0xFF37383C).withValues(alpha: 0.61),
+                      color: AppColor.labelAlternative,
                       fontSize: 14,
                     ),
                     textAlign: TextAlign.right,
@@ -629,13 +629,13 @@ class SurveyResultView extends GetView<SurveyController> {
         return Container(
           padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 6),
           decoration: BoxDecoration(
-            color: const Color(0xFF70737C).withValues(alpha: 0.08),
+            color: AppColor.componentFillNormal,
             borderRadius: BorderRadius.circular(99),
           ),
           child: Text(
             tag,
             style: AppTextStyles.label1NormalMedium.copyWith(
-              color: const Color(0xFF171719),
+              color: AppColor.labelNormal,
               fontSize: 14,
             ),
           ),
@@ -650,7 +650,7 @@ class SurveyResultView extends GetView<SurveyController> {
       width: double.infinity,
       padding: const EdgeInsets.symmetric(vertical: 9, horizontal: 20),
       decoration: BoxDecoration(
-        color: const Color(0xFF70737C).withValues(alpha: 0.08),
+        color: AppColor.componentFillNormal,
         borderRadius: BorderRadius.circular(99),
       ),
       child: Center(

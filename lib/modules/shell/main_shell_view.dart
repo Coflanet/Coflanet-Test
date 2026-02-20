@@ -205,12 +205,8 @@ class MainShellView extends GetView<MainShellController> {
                 ? Center(
                     child: Text(
                       title,
-                      style: const TextStyle(
-                        fontFamily: 'Pretendard',
-                        fontSize: 17, // Figma: 17px
-                        fontWeight: FontWeight.w600, // Figma: 600
-                        height: 1.412, // Figma: 141.2%
-                        color: Color(0xFFFFFFFF), // Figma: #FFFFFF
+                      style: AppTextStyles.headline2Bold.copyWith(
+                        color: AppColor.colorGlobalCommon100,
                       ),
                     ),
                   )
@@ -248,8 +244,8 @@ class MainShellView extends GetView<MainShellController> {
             begin: Alignment.topCenter,
             end: Alignment.bottomCenter,
             colors: [
-              const Color(0xFFFFFFFF).withValues(alpha: 0.25 * 0.67),
-              const Color(0xFF000000).withValues(alpha: 0.6 * 0.67),
+              AppColor.colorGlobalCommon100.withValues(alpha: 0.25 * 0.67),
+              AppColor.colorGlobalCommon0.withValues(alpha: 0.6 * 0.67),
             ],
           ),
         ),
@@ -257,12 +253,12 @@ class MainShellView extends GetView<MainShellController> {
           decoration: BoxDecoration(
             shape: BoxShape.circle,
             // Figma: Glass Effect - rgba(0,0,0,0.2)
-            color: const Color(0xFF000000).withValues(alpha: 0.2),
+            color: AppColor.colorGlobalCommon0.withValues(alpha: 0.2),
           ),
           child: const Center(
             child: Icon(
               Icons.chevron_left,
-              color: Color(0xFFF7F7F8), // Figma: #F7F7F8
+              color: AppColor.colorGlobalCoolNeutral99, // Figma: #F7F7F8
               size: 20, // Figma: 20x20 icon
             ),
           ),
@@ -296,18 +292,18 @@ class MainShellView extends GetView<MainShellController> {
             borderRadius: BorderRadius.circular(99), // Figma: 99px pill
             // Figma: Tint layer for edit mode (Violet Liquid Glass Primary)
             color: isEditing
-                ? const Color(0xFF7D5EF7) // Figma: #7D5EF7 violet
+                ? AppColor.colorGlobalViolet60 // Figma: #7D5EF7 violet
                 : AppColor.colorGlobalCommon100.withValues(alpha: 0.25),
             // Figma: box-shadow: 0px 0px 2px rgba(0,0,0,0.1), 0px 1px 8px rgba(0,0,0,0.12)
             boxShadow: isEditing
                 ? [
                     BoxShadow(
-                      color: const Color(0xFF000000).withValues(alpha: 0.1),
+                      color: AppColor.colorGlobalCommon0.withValues(alpha: 0.1),
                       blurRadius: 2,
                       offset: Offset.zero,
                     ),
                     BoxShadow(
-                      color: const Color(0xFF000000).withValues(alpha: 0.12),
+                      color: AppColor.colorGlobalCommon0.withValues(alpha: 0.12),
                       blurRadius: 8,
                       offset: const Offset(0, 1),
                     ),
@@ -322,7 +318,7 @@ class MainShellView extends GetView<MainShellController> {
               fontWeight: FontWeight.w600, // Figma: 600
               height: 1.2, // Reduced line height
               letterSpacing: 0.01,
-              color: Color(0xFFF7F7F8), // Figma: #F7F7F8
+              color: AppColor.colorGlobalCoolNeutral99, // Figma: #F7F7F8
             ),
           ),
         ),
@@ -341,7 +337,7 @@ class MainShellView extends GetView<MainShellController> {
       ),
       child: Container(
         // Dark background area - Figma: #1C1C1E
-        decoration: const BoxDecoration(color: Color(0xFF1C1C1E)),
+        decoration: BoxDecoration(color: AppColor.colorGlobalCoolNeutral15),
         padding: EdgeInsets.only(top: 16, bottom: bottomPadding + 16),
         child: Center(
           child: Container(
@@ -350,7 +346,7 @@ class MainShellView extends GetView<MainShellController> {
             padding: const EdgeInsets.all(4),
             decoration: BoxDecoration(
               // Figma: rgba(112, 115, 124, 0.22) - glass effect
-              color: const Color(0xFF70737C).withOpacity(0.22),
+              color: AppColor.lineNormalNormal,
               borderRadius: BorderRadius.circular(99), // Pill shape
             ),
             child: Row(
@@ -374,10 +370,8 @@ class MainShellView extends GetView<MainShellController> {
     final tab = _tabs[index];
 
     // Colors per Figma CSS
-    final activeColor = const Color(0xFF7D5EF7); // Figma: #7D5EF7
-    final inactiveColor = const Color(
-      0xFFC2C4C8,
-    ).withOpacity(0.88); // Figma: rgba(194, 196, 200, 0.88)
+    final activeColor = AppColor.colorGlobalViolet60; // Figma: #7D5EF7
+    final inactiveColor = AppColor.inverseLabelNeutral; // rgba(194, 196, 200, 0.88)
 
     // Selected: violet, Unselected: light gray
     final iconColor = isActive ? activeColor : inactiveColor;
@@ -395,7 +389,7 @@ class MainShellView extends GetView<MainShellController> {
         margin: const EdgeInsets.symmetric(horizontal: 2),
         decoration: BoxDecoration(
           // Figma: Active = black @ 35% opacity, pill shape
-          color: isActive ? Colors.black.withOpacity(0.35) : Colors.transparent,
+          color: isActive ? AppColor.colorGlobalCommon0.withOpacity(0.35) : AppColor.transparent,
           borderRadius: BorderRadius.circular(99), // Pill shape
         ),
         child: Column(

@@ -7,7 +7,7 @@ class CoffeeBinding extends Bindings {
     // Use lazyPut to preserve existing controller if already registered
     // This prevents overwriting selectedBeanId when navigating
     if (!Get.isRegistered<CoffeeController>()) {
-      Get.put<CoffeeController>(CoffeeController(), permanent: true);
+      Get.put<CoffeeController>(CoffeeController());
     }
   }
 }

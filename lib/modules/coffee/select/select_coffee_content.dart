@@ -153,7 +153,7 @@ class SelectCoffeeContent extends GetView<SelectCoffeeController> {
             proxyDecorator: (child, index, animation) {
               return Material(
                 elevation: 4,
-                color: Colors.transparent,
+                color: AppColor.transparent,
                 borderRadius: BorderRadius.circular(20),
                 child: child,
               );
@@ -192,9 +192,9 @@ class SelectCoffeeContent extends GetView<SelectCoffeeController> {
                           // Drag handle with ReorderableDragStartListener
                           ReorderableDragStartListener(
                             index: index,
-                            child: const Icon(
+                            child: Icon(
                               Icons.drag_handle,
-                              color: Color(0xFF171719),
+                              color: AppColor.labelNormal,
                               size: 24,
                             ),
                           ),
@@ -256,7 +256,7 @@ class SelectCoffeeContent extends GetView<SelectCoffeeController> {
           ),
           // Dark shadow on top-left (simulates depth/recess)
           BoxShadow(
-            color: const Color(0xFF000000).withValues(alpha: 0.15),
+            color: AppColor.colorGlobalCommon0.withValues(alpha: 0.15),
             blurRadius: 4,
             offset: const Offset(-2, -2),
           ),
@@ -300,7 +300,7 @@ class SelectCoffeeContent extends GetView<SelectCoffeeController> {
         boxShadow: [
           // Inner shadow effect (top-left dark)
           BoxShadow(
-            color: const Color(0xFF000000).withValues(alpha: 0.08),
+            color: AppColor.colorGlobalCommon0.withValues(alpha: 0.08),
             blurRadius: 3,
             offset: const Offset(-1, -1),
             spreadRadius: -1,
@@ -372,14 +372,14 @@ class SelectCoffeeContent extends GetView<SelectCoffeeController> {
           vertical: 12,
         ), // Figma: padding
         decoration: BoxDecoration(
-          color: const Color(0xFFFFFFFF), // Figma: #FFFFFF
+          color: AppColor.colorGlobalCommon100, // Figma: #FFFFFF
           borderRadius: BorderRadius.circular(20), // Figma: ~16-20px radius
           border: isSelected
               ? Border.all(color: AppColor.primaryNormal, width: 2)
               : null,
           boxShadow: [
             BoxShadow(
-              color: const Color(0xFF000000).withValues(alpha: 0.04),
+              color: AppColor.colorGlobalCommon0.withValues(alpha: 0.04),
               blurRadius: 8,
               offset: const Offset(0, 2),
             ),
@@ -421,7 +421,7 @@ class SelectCoffeeContent extends GetView<SelectCoffeeController> {
                       fontWeight: FontWeight.w400, // Figma: 400
                       height: 1.4,
                       letterSpacing: 0.02,
-                      color: Color(0xFF888888), // Figma: gray
+                      color: AppColor.colorGlobalNeutral60, // Figma: gray
                     ),
                     maxLines: 1,
                     overflow: TextOverflow.ellipsis,
@@ -436,7 +436,7 @@ class SelectCoffeeContent extends GetView<SelectCoffeeController> {
                       fontWeight: FontWeight.w600, // Figma: 600
                       height: 1.4,
                       letterSpacing: 0.01,
-                      color: Color(0xFF1A1A1A), // Figma: near black
+                      color: AppColor.colorGlobalNeutral10, // Figma: near black
                     ),
                     maxLines: 1,
                     overflow: TextOverflow.ellipsis,
@@ -474,7 +474,7 @@ class SelectCoffeeContent extends GetView<SelectCoffeeController> {
           ),
         ),
         child: isSelected
-            ? const Icon(Icons.check, size: 12, color: Color(0xFFFFFFFF))
+            ? const Icon(Icons.check, size: 12, color: AppColor.colorGlobalCommon100)
             : null,
       ),
     );
@@ -519,7 +519,7 @@ class SelectCoffeeContent extends GetView<SelectCoffeeController> {
                     fontWeight: FontWeight.w400, // Figma: 400
                     height: 1.5, // Figma: 150%
                     letterSpacing: 0.01,
-                    color: Color(0xFFF7F7F8), // Figma: #F7F7F8
+                    color: AppColor.colorGlobalCoolNeutral99, // Figma: #F7F7F8
                   ),
                 ),
                 // Delete button - Figma: Button/Icon/LiquidGlass 44x44
@@ -555,8 +555,8 @@ class SelectCoffeeContent extends GetView<SelectCoffeeController> {
           begin: Alignment.topCenter,
           end: Alignment.bottomCenter,
           colors: [
-            const Color(0xFFFFFFFF).withValues(alpha: 0.25 * 0.67),
-            const Color(0xFF000000).withValues(alpha: 0.6 * 0.67),
+            AppColor.colorGlobalCommon100.withValues(alpha: 0.25 * 0.67),
+            AppColor.colorGlobalCommon0.withValues(alpha: 0.6 * 0.67),
           ],
         ),
       ),
@@ -564,7 +564,7 @@ class SelectCoffeeContent extends GetView<SelectCoffeeController> {
         decoration: BoxDecoration(
           shape: BoxShape.circle,
           // Figma: Glass Effect - rgba(0,0,0,0.2)
-          color: const Color(0xFF000000).withValues(alpha: 0.2),
+          color: AppColor.colorGlobalCommon0.withValues(alpha: 0.2),
         ),
         child: Center(
           child: Icon(
@@ -679,7 +679,7 @@ class _CoffeeAccordionCardState extends State<_CoffeeAccordionCard>
           boxShadow: [
             // Subtle shadow for all cards
             BoxShadow(
-              color: const Color(0xFF000000).withValues(alpha: 0.06),
+              color: AppColor.colorGlobalCommon0.withValues(alpha: 0.06),
               blurRadius: 8,
               offset: const Offset(0, 2),
             ),
@@ -715,7 +715,7 @@ class _CoffeeAccordionCardState extends State<_CoffeeAccordionCard>
   /// Note: In edit mode, checkbox and drag handle are OUTSIDE the card (in parent list)
   Widget _buildHeader() {
     // Figma: brand text color rgba(55, 56, 60, 0.61) = #37383C @ 61%
-    final subtitleColor = const Color(0xFF37383C).withValues(alpha: 0.61);
+    final subtitleColor = AppColor.labelAlternative;
     // Figma: coffee name color #171719
     const textColor = AppColor.colorGlobalCoolNeutral10;
 
@@ -784,7 +784,7 @@ class _CoffeeAccordionCardState extends State<_CoffeeAccordionCard>
                 turns: _iconTurns,
                 child: Icon(
                   Icons.keyboard_arrow_down,
-                  color: const Color(0xFF2E2F33).withValues(alpha: 0.88),
+                  color: AppColor.labelNeutral,
                   size: 24,
                 ),
               ),
@@ -831,7 +831,7 @@ class _CoffeeAccordionCardState extends State<_CoffeeAccordionCard>
         24,
       ), // Figma: 16px 24px 24px
       decoration: BoxDecoration(
-        color: const Color(0xFF70737C).withValues(alpha: 0.08),
+        color: AppColor.componentFillNormal,
         borderRadius: BorderRadius.circular(24),
       ),
       child: Column(
@@ -849,7 +849,7 @@ class _CoffeeAccordionCardState extends State<_CoffeeAccordionCard>
             const SizedBox(height: 20), // gap before divider
             Container(
               height: 1,
-              color: const Color(0xFF70737C).withValues(alpha: 0.08),
+              color: AppColor.componentFillNormal,
             ),
             const SizedBox(height: 20), // gap after divider (before tags)
             // ── Flavor Notes Section (Figma: Coffee Profile/Flavor Notes) ──
@@ -863,7 +863,7 @@ class _CoffeeAccordionCardState extends State<_CoffeeAccordionCard>
                     vertical: 6,
                   ),
                   decoration: BoxDecoration(
-                    color: const Color(0xFF70737C).withValues(alpha: 0.08),
+                    color: AppColor.componentFillNormal,
                     borderRadius: AppRadius.fullBorder,
                   ),
                   child: Text(
@@ -1006,7 +1006,7 @@ class _TasteProgressBar extends StatelessWidget {
             child: Text(
               clampedValue.toStringAsFixed(1),
               style: AppTextStyles.label1NormalRegular.copyWith(
-                color: const Color(0xFF37383C).withValues(alpha: 0.61),
+                color: AppColor.labelAlternative,
                 letterSpacing: 0.0145,
                 fontFeatures: const [FontFeature.tabularFigures()],
               ),
@@ -1023,7 +1023,7 @@ class _TasteProgressBar extends StatelessWidget {
   /// Dividers are 1px wide, taking actual space in the layout
   List<Widget> _buildSegmentsWithDividers(int filledSegments) {
     final List<Widget> children = [];
-    const dividerColor = Color(0xFF70737C); // Figma: rgba(112, 115, 124, 0.16)
+    final dividerColor = AppColor.colorGlobalCoolNeutral50; // Figma: rgba(112, 115, 124, 0.16)
 
     for (int i = 0; i < _segmentCount; i++) {
       final isFilled = i < filledSegments;

@@ -226,7 +226,7 @@ class SurveyController extends BaseController {
       // Section 2-3 (steps 2-9): auto-advance after selection
       if (_currentStep.value >= 2) {
         Future.delayed(const Duration(milliseconds: 300), () {
-          nextQuestion();
+          if (!isClosed) nextQuestion();
         });
       }
     }

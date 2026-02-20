@@ -294,6 +294,7 @@ class CoffeeTimerController extends BaseController {
     _preCountdownSeconds.value = 5;
     _timer?.cancel();
     _timer = Timer.periodic(const Duration(seconds: 1), (_) {
+      if (isClosed) return;
       if (_preCountdownSeconds.value > 1) {
         _preCountdownSeconds.value--;
       } else {
@@ -313,6 +314,7 @@ class CoffeeTimerController extends BaseController {
     _remainingSeconds.value = step.durationSeconds;
     _timer?.cancel();
     _timer = Timer.periodic(const Duration(seconds: 1), (_) {
+      if (isClosed) return;
       if (_remainingSeconds.value > 0) {
         _remainingSeconds.value--;
         _totalElapsedSeconds.value++;
@@ -363,6 +365,7 @@ class CoffeeTimerController extends BaseController {
     _state.value = TimerState.running;
     _timer?.cancel();
     _timer = Timer.periodic(const Duration(seconds: 1), (_) {
+      if (isClosed) return;
       if (_remainingSeconds.value > 0) {
         _remainingSeconds.value--;
         _totalElapsedSeconds.value++;
@@ -380,7 +383,7 @@ class CoffeeTimerController extends BaseController {
 
     HapticFeedback.heavyImpact();
     Future.delayed(const Duration(milliseconds: 200), () {
-      HapticFeedback.heavyImpact();
+      if (!isClosed) HapticFeedback.heavyImpact();
     });
 
     Get.offNamed(
