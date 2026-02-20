@@ -21,7 +21,6 @@ class ApiCoffeeRepository implements CoffeeRepository {
       final List<dynamic> data = response.data['coffees'];
       return data.map((e) => _coffeeItemFromJson(e)).toList();
     } catch (e) {
-      // TODO: Handle API errors
       rethrow;
     }
   }
@@ -44,7 +43,6 @@ class ApiCoffeeRepository implements CoffeeRepository {
     try {
       await _apiClient.post(_baseEndpoint, data: _coffeeItemToJson(item));
     } catch (e) {
-      // TODO: Handle API errors
       rethrow;
     }
   }
@@ -57,7 +55,6 @@ class ApiCoffeeRepository implements CoffeeRepository {
         data: _coffeeItemToJson(item),
       );
     } catch (e) {
-      // TODO: Handle API errors
       rethrow;
     }
   }
@@ -67,7 +64,6 @@ class ApiCoffeeRepository implements CoffeeRepository {
     try {
       await _apiClient.delete('$_baseEndpoint/$id');
     } catch (e) {
-      // TODO: Handle API errors
       rethrow;
     }
   }
@@ -80,7 +76,6 @@ class ApiCoffeeRepository implements CoffeeRepository {
         data: {'is_hidden': isHidden},
       );
     } catch (e) {
-      // TODO: Handle API errors
       rethrow;
     }
   }
@@ -93,7 +88,6 @@ class ApiCoffeeRepository implements CoffeeRepository {
         data: {'ordered_ids': orderedIds},
       );
     } catch (e) {
-      // TODO: Handle API errors
       rethrow;
     }
   }
@@ -107,7 +101,6 @@ class ApiCoffeeRepository implements CoffeeRepository {
         data: {'coffees': jsonList},
       );
     } catch (e) {
-      // TODO: Handle API errors
       rethrow;
     }
   }

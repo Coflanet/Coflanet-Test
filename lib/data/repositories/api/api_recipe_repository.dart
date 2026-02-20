@@ -32,7 +32,6 @@ class ApiRecipeRepository implements RecipeRepository {
       final List<dynamic> data = response.data['recipes'];
       return data.map((e) => TimerRecipeModel.fromJson(e)).toList();
     } catch (e) {
-      // TODO: Handle API errors
       rethrow;
     }
   }
@@ -55,7 +54,6 @@ class ApiRecipeRepository implements RecipeRepository {
     try {
       await _apiClient.post(_baseEndpoint, data: recipe.toJson());
     } catch (e) {
-      // TODO: Handle API errors
       rethrow;
     }
   }
@@ -65,7 +63,6 @@ class ApiRecipeRepository implements RecipeRepository {
     try {
       await _apiClient.delete('$_baseEndpoint/$id');
     } catch (e) {
-      // TODO: Handle API errors
       rethrow;
     }
   }
@@ -86,7 +83,6 @@ class ApiRecipeRepository implements RecipeRepository {
     try {
       await _apiClient.post('$_savedEndpoint/$recipeId');
     } catch (e) {
-      // TODO: Handle API errors
       rethrow;
     }
   }
@@ -96,7 +92,6 @@ class ApiRecipeRepository implements RecipeRepository {
     try {
       await _apiClient.delete('$_savedEndpoint/$recipeId');
     } catch (e) {
-      // TODO: Handle API errors
       rethrow;
     }
   }

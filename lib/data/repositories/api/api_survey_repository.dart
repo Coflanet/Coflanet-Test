@@ -24,7 +24,6 @@ class ApiSurveyRepository implements SurveyRepository {
       final List<dynamic> data = response.data['questions'];
       return data.map((e) => SurveyQuestionModel.fromJson(e)).toList();
     } catch (e) {
-      // TODO: Handle API errors appropriately
       rethrow;
     }
   }
@@ -38,7 +37,6 @@ class ApiSurveyRepository implements SurveyRepository {
       }
       return null;
     } catch (e) {
-      // TODO: Handle 404 (no result) vs other errors
       return null;
     }
   }
@@ -48,7 +46,6 @@ class ApiSurveyRepository implements SurveyRepository {
     try {
       await _apiClient.post(_resultEndpoint, data: result.toJson());
     } catch (e) {
-      // TODO: Handle API errors
       rethrow;
     }
   }
@@ -58,7 +55,6 @@ class ApiSurveyRepository implements SurveyRepository {
     try {
       await _apiClient.delete(_resultEndpoint);
     } catch (e) {
-      // TODO: Handle API errors
       rethrow;
     }
   }
@@ -80,7 +76,6 @@ class ApiSurveyRepository implements SurveyRepository {
 
       return SurveyResultModel.fromJson(response.data['result']);
     } catch (e) {
-      // TODO: Handle API errors
       rethrow;
     }
   }
@@ -90,7 +85,6 @@ class ApiSurveyRepository implements SurveyRepository {
     try {
       await _apiClient.post(_answersEndpoint, data: answers);
     } catch (e) {
-      // TODO: Handle API errors
       rethrow;
     }
   }
@@ -110,7 +104,6 @@ class ApiSurveyRepository implements SurveyRepository {
     try {
       await _apiClient.post(_beansEndpoint, data: {'bean_ids': ids});
     } catch (e) {
-      // TODO: Handle API errors
       rethrow;
     }
   }
@@ -131,7 +124,6 @@ class ApiSurveyRepository implements SurveyRepository {
     try {
       await _apiClient.post(_reasonsEndpoint, data: {'reasons': reasons});
     } catch (e) {
-      // TODO: Handle API errors
       rethrow;
     }
   }

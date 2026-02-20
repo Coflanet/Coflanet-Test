@@ -62,7 +62,6 @@ class ApiAuthRepository implements AuthRepository {
 
       return user;
     } catch (e) {
-      // TODO: Handle specific API errors
       rethrow;
     }
   }
@@ -118,7 +117,6 @@ class ApiAuthRepository implements AuthRepository {
     try {
       await _apiClient.delete(_deleteAccountEndpoint);
     } catch (e) {
-      // TODO: Handle API errors
       rethrow;
     }
   }
@@ -181,7 +179,6 @@ class ApiAuthRepository implements AuthRepository {
       await _storage.saveUserData(updatedUser.toJson());
       return updatedUser;
     } catch (e) {
-      // TODO: Handle API errors
       rethrow;
     }
   }

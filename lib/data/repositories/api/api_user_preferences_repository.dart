@@ -78,7 +78,6 @@ class ApiUserPreferencesRepository implements UserPreferencesRepository {
     try {
       await _apiClient.patch(_userEndpoint, data: {'name': name});
     } catch (e) {
-      // TODO: Handle API errors - maybe queue for retry
       rethrow;
     }
   }
