@@ -75,6 +75,17 @@ class AromaTagModel {
   final String name;
 
   const AromaTagModel({required this.emoji, required this.name});
+
+  factory AromaTagModel.fromJson(Map<String, dynamic> json) {
+    return AromaTagModel(
+      emoji: json['emoji'] as String? ?? '',
+      name: json['name'] as String? ?? '',
+    );
+  }
+
+  Map<String, dynamic> toJson() {
+    return {'emoji': emoji, 'name': name};
+  }
 }
 
 /// Timer recipe configuration
@@ -114,6 +125,13 @@ class TimerRecipeModel {
       steps: (json['steps'] as List<dynamic>)
           .map((e) => TimerStepModel.fromJson(e as Map<String, dynamic>))
           .toList(),
+      completionMessage: json['completionMessage'] as String?,
+      aromaDescription: json['aromaDescription'] as String?,
+      aromaTags: json['aromaTags'] != null
+          ? (json['aromaTags'] as List<dynamic>)
+                .map((e) => AromaTagModel.fromJson(e as Map<String, dynamic>))
+                .toList()
+          : const [],
     );
   }
 
@@ -126,6 +144,10 @@ class TimerRecipeModel {
       'waterAmount': waterAmount,
       'totalDurationSeconds': totalDurationSeconds,
       'steps': steps.map((e) => e.toJson()).toList(),
+      if (completionMessage != null) 'completionMessage': completionMessage,
+      if (aromaDescription != null) 'aromaDescription': aromaDescription,
+      if (aromaTags.isNotEmpty)
+        'aromaTags': aromaTags.map((e) => e.toJson()).toList(),
     };
   }
 }
