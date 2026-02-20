@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
+import 'package:coflanet/constants/color_constant.dart';
 import 'package:coflanet/modules/coffee/coffee_controller.dart';
 import 'package:coflanet/routes/app_pages.dart';
 import 'package:coflanet/widgets/modals/input_modal.dart';
@@ -36,7 +37,7 @@ class CoffeeSettingsView extends GetView<CoffeeController> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: const Color(0xFF000000), // Figma: #000000 (BLACK)
+      backgroundColor: AppColor.colorGlobalCommon0, // Figma: #000000 (BLACK)
       body: Column(
         children: [
           _buildTopNavigation(context),
@@ -71,7 +72,7 @@ class CoffeeSettingsView extends GetView<CoffeeController> {
     return Container(
       height: statusBarHeight + 56,
       padding: EdgeInsets.only(top: statusBarHeight, left: 16, right: 16),
-      color: const Color(0xFF000000),
+      color: AppColor.colorGlobalCommon0,
       child: Row(
         children: [
           // Back button - Figma: 40x40px, rgba(77,77,77,0.6), border-radius 99px
@@ -81,7 +82,7 @@ class CoffeeSettingsView extends GetView<CoffeeController> {
               width: 40,
               height: 40,
               decoration: BoxDecoration(
-                color: const Color(0xFF4D4D4D).withValues(alpha: 0.6),
+                color: AppColor.componentFillScroll,
                 borderRadius: BorderRadius.circular(99),
               ),
               child: const Icon(
@@ -99,7 +100,7 @@ class CoffeeSettingsView extends GetView<CoffeeController> {
                 fontFamily: 'Pretendard',
                 fontSize: 17,
                 fontWeight: FontWeight.w600,
-                color: Color(0xFFFFFFFF),
+                color: AppColor.colorGlobalCommon100,
               ),
               textAlign: TextAlign.center,
             ),
@@ -110,7 +111,7 @@ class CoffeeSettingsView extends GetView<CoffeeController> {
             child: Container(
               padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
               decoration: BoxDecoration(
-                color: const Color(0xFF4D4D4D).withValues(alpha: 0.6),
+                color: AppColor.componentFillScroll,
                 borderRadius: BorderRadius.circular(99),
               ),
               child: const Text(
@@ -119,7 +120,7 @@ class CoffeeSettingsView extends GetView<CoffeeController> {
                   fontFamily: 'Pretendard',
                   fontSize: 16,
                   fontWeight: FontWeight.w600,
-                  color: Color(0xFFF7F7F8),
+                  color: AppColor.colorGlobalCoolNeutral99,
                 ),
               ),
             ),
@@ -136,7 +137,7 @@ class CoffeeSettingsView extends GetView<CoffeeController> {
       height: 112,
       padding: const EdgeInsets.all(16),
       decoration: BoxDecoration(
-        color: const Color(0xFFFFFFFF),
+        color: AppColor.colorGlobalCommon100,
         borderRadius: BorderRadius.circular(40),
       ),
       child: Row(
@@ -146,11 +147,11 @@ class CoffeeSettingsView extends GetView<CoffeeController> {
             width: 64,
             height: 64,
             decoration: BoxDecoration(
-              color: const Color(0xFFF5F5F5),
+              color: AppColor.colorGlobalCoolNeutral98,
               borderRadius: BorderRadius.circular(20),
             ),
             child: const Center(
-              child: Icon(Icons.coffee, size: 32, color: Color(0xFF8E8E8E)),
+              child: Icon(Icons.coffee, size: 32, color: AppColor.colorGlobalNeutral60),
             ),
           ),
           const SizedBox(width: 12),
@@ -167,7 +168,7 @@ class CoffeeSettingsView extends GetView<CoffeeController> {
                     fontFamily: 'Pretendard',
                     fontSize: 14,
                     fontWeight: FontWeight.w400,
-                    color: const Color(0xFF37383C).withValues(alpha: 0.61),
+                    color: AppColor.labelAlternative,
                   ),
                 ),
                 const SizedBox(height: 4),
@@ -176,11 +177,11 @@ class CoffeeSettingsView extends GetView<CoffeeController> {
                   final beanName = controller.selectedBeanName;
                   return Text(
                     beanName.isNotEmpty ? beanName : '에티오피아 예가체프',
-                    style: const TextStyle(
+                    style: TextStyle(
                       fontFamily: 'Pretendard',
                       fontSize: 18,
                       fontWeight: FontWeight.w600,
-                      color: Color(0xFF171719),
+                      color: AppColor.labelNormal,
                     ),
                   );
                 }),
@@ -190,7 +191,7 @@ class CoffeeSettingsView extends GetView<CoffeeController> {
           // Chevron
           Icon(
             Icons.chevron_right,
-            color: const Color(0xFF37383C).withValues(alpha: 0.61),
+            color: AppColor.labelAlternative,
             size: 24,
           ),
         ],
@@ -204,7 +205,7 @@ class CoffeeSettingsView extends GetView<CoffeeController> {
     return Container(
       padding: const EdgeInsets.all(16),
       decoration: BoxDecoration(
-        color: const Color(0xFFFFFFFF),
+        color: AppColor.colorGlobalCommon100,
         borderRadius: BorderRadius.circular(40),
       ),
       child: Column(
@@ -226,7 +227,7 @@ class CoffeeSettingsView extends GetView<CoffeeController> {
       height: 104,
       padding: const EdgeInsets.all(24),
       decoration: BoxDecoration(
-        color: const Color(0xFF70737C).withValues(alpha: 0.12),
+        color: AppColor.colorGlobalCoolNeutral50.withOpacity(0.12),
         borderRadius: BorderRadius.circular(24),
       ),
       child: Row(
@@ -243,7 +244,7 @@ class CoffeeSettingsView extends GetView<CoffeeController> {
                     fontFamily: 'Pretendard',
                     fontSize: 16,
                     fontWeight: FontWeight.w400,
-                    color: const Color(0xFF37383C).withValues(alpha: 0.61),
+                    color: AppColor.labelAlternative,
                   ),
                 ),
                 const SizedBox(height: 4),
@@ -253,11 +254,11 @@ class CoffeeSettingsView extends GetView<CoffeeController> {
                     controller.selectedType == CoffeeType.espresso
                         ? '에스프레소'
                         : '핸드드립',
-                    style: const TextStyle(
+                    style: TextStyle(
                       fontFamily: 'Pretendard',
                       fontSize: 16,
                       fontWeight: FontWeight.w400,
-                      color: Color(0xFF171719),
+                      color: AppColor.labelNormal,
                     ),
                   ),
                 ),
@@ -272,7 +273,7 @@ class CoffeeSettingsView extends GetView<CoffeeController> {
               height: 32,
               padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 7),
               decoration: BoxDecoration(
-                color: const Color(0xFF70737C).withValues(alpha: 0.08),
+                color: AppColor.componentFillNormal,
                 borderRadius: BorderRadius.circular(99),
               ),
               child: Center(
@@ -283,7 +284,7 @@ class CoffeeSettingsView extends GetView<CoffeeController> {
                     fontFamily: 'Pretendard',
                     fontSize: 13,
                     fontWeight: FontWeight.w600,
-                    color: const Color(0xFF37383C).withValues(alpha: 0.61),
+                    color: AppColor.labelAlternative,
                   ),
                 ),
               ),
@@ -334,7 +335,7 @@ class CoffeeSettingsView extends GetView<CoffeeController> {
     return Container(
       padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 16),
       decoration: BoxDecoration(
-        color: const Color(0xFF70737C).withValues(alpha: 0.12),
+        color: AppColor.colorGlobalCoolNeutral50.withOpacity(0.12),
         borderRadius: BorderRadius.circular(32),
       ),
       child: Obx(
@@ -383,7 +384,7 @@ class CoffeeSettingsView extends GetView<CoffeeController> {
     return Container(
       width: 1,
       height: 24,
-      color: const Color(0xFF70737C).withValues(alpha: 0.16),
+      color: AppColor.componentFillStrong,
     );
   }
 
@@ -437,7 +438,7 @@ class CoffeeSettingsView extends GetView<CoffeeController> {
       return Container(
         padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 32),
         decoration: BoxDecoration(
-          color: const Color(0xFFFFFFFF),
+          color: AppColor.colorGlobalCommon100,
           borderRadius: BorderRadius.circular(40),
         ),
         child: Column(
@@ -458,7 +459,7 @@ class CoffeeSettingsView extends GetView<CoffeeController> {
   Widget _buildBottomCTA() {
     return Container(
       padding: const EdgeInsets.fromLTRB(16, 12, 16, 16),
-      color: const Color(0xFF000000),
+      color: AppColor.colorGlobalCommon0,
       child: SafeArea(
         top: false,
         child: SizedBox(
@@ -467,7 +468,7 @@ class CoffeeSettingsView extends GetView<CoffeeController> {
           child: ElevatedButton(
             onPressed: () => Get.toNamed(Routes.timerActive),
             style: ElevatedButton.styleFrom(
-              backgroundColor: const Color(0xFF6541F2),
+              backgroundColor: AppColor.primaryNormal,
               foregroundColor: Colors.white,
               elevation: 0,
               shape: RoundedRectangleBorder(
@@ -659,8 +660,8 @@ class _SelectionPill extends StatelessWidget {
       child: Container(
         padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 14),
         decoration: BoxDecoration(
-          color: const Color(0xFFF0ECFE),
-          border: Border.all(color: const Color(0xFFC0B0FF), width: 1),
+          color: AppColor.colorGlobalViolet95,
+          border: Border.all(color: AppColor.colorGlobalViolet80, width: 1),
           borderRadius: BorderRadius.circular(24),
         ),
         child: Column(
@@ -670,11 +671,11 @@ class _SelectionPill extends StatelessWidget {
             // Main text - Figma: Pretendard 18px/600, color #5B35F2
             Text(
               mainText,
-              style: const TextStyle(
+              style: TextStyle(
                 fontFamily: 'Pretendard',
                 fontSize: 18,
                 fontWeight: FontWeight.w600,
-                color: Color(0xFF5B35F2),
+                color: AppColor.primaryStrong,
               ),
               textAlign: TextAlign.center,
             ),
@@ -686,7 +687,7 @@ class _SelectionPill extends StatelessWidget {
                 fontFamily: 'Pretendard',
                 fontSize: 14,
                 fontWeight: FontWeight.w400,
-                color: const Color(0xFF37383C).withValues(alpha: 0.61),
+                color: AppColor.labelAlternative,
               ),
               textAlign: TextAlign.center,
             ),
@@ -725,7 +726,7 @@ class _ParameterItem extends StatelessWidget {
               fontFamily: 'Pretendard',
               fontSize: 15,
               fontWeight: FontWeight.w500,
-              color: const Color(0xFF2E2F33).withValues(alpha: 0.88),
+              color: AppColor.labelNeutral,
             ),
             textAlign: TextAlign.center,
           ),
@@ -737,7 +738,7 @@ class _ParameterItem extends StatelessWidget {
               fontFamily: 'Pretendard',
               fontSize: 14,
               fontWeight: FontWeight.w400,
-              color: const Color(0xFF37383C).withValues(alpha: 0.61),
+              color: AppColor.labelAlternative,
             ),
             textAlign: TextAlign.center,
           ),
@@ -772,7 +773,7 @@ class _RecipeStepItem extends StatelessWidget {
               width: 20,
               height: 20,
               decoration: BoxDecoration(
-                color: const Color(0xFFE1E2E4),
+                color: AppColor.colorGlobalCoolNeutral96,
                 borderRadius: BorderRadius.circular(1000),
               ),
               child: Center(
@@ -783,14 +784,14 @@ class _RecipeStepItem extends StatelessWidget {
                     fontFamily: 'Pretendard',
                     fontSize: 12,
                     fontWeight: FontWeight.w600,
-                    color: Color(0xFFFFFFFF),
+                    color: AppColor.colorGlobalCommon100,
                   ),
                 ),
               ),
             ),
             // Vertical divider line - Figma: 1px width, 28px height, background #E1E2E4
             if (!isLast)
-              Container(width: 1, height: 28, color: const Color(0xFFE1E2E4)),
+              Container(width: 1, height: 28, color: AppColor.colorGlobalCoolNeutral96),
           ],
         ),
         const SizedBox(width: 12),
@@ -803,7 +804,7 @@ class _RecipeStepItem extends StatelessWidget {
               fontFamily: 'Pretendard',
               fontSize: 16,
               fontWeight: FontWeight.w500,
-              color: const Color(0xFF37383C).withValues(alpha: 0.61),
+              color: AppColor.labelAlternative,
             ),
           ),
         ),
@@ -815,7 +816,7 @@ class _RecipeStepItem extends StatelessWidget {
             fontFamily: 'Pretendard',
             fontSize: 14,
             fontWeight: FontWeight.w400,
-            color: const Color(0xFF37383C).withValues(alpha: 0.35),
+            color: AppColor.labelAssistive,
           ),
           textAlign: TextAlign.right,
         ),

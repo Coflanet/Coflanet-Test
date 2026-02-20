@@ -1,3 +1,4 @@
+import 'dart:io' show Platform;
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:coflanet/constants/asset_constant.dart';
@@ -104,16 +105,17 @@ class SignInView extends GetView<SignInController> {
                 : () => controller.signInWithSocial(SocialLoginType.naver),
             isLoading: controller.isLoading,
           ),
-          const SizedBox(height: 12),
-
-          // Apple Login
-          SocialButton(
-            type: SocialButtonType.apple,
-            onPressed: controller.isLoading
-                ? null
-                : () => controller.signInWithSocial(SocialLoginType.apple),
-            isLoading: controller.isLoading,
-          ),
+          // Apple Login - iOS only
+          if (Platform.isIOS) ...[
+            const SizedBox(height: 12),
+            SocialButton(
+              type: SocialButtonType.apple,
+              onPressed: controller.isLoading
+                  ? null
+                  : () => controller.signInWithSocial(SocialLoginType.apple),
+              isLoading: controller.isLoading,
+            ),
+          ],
         ],
       ),
     );

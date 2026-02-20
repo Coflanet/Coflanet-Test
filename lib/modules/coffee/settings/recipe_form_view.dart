@@ -1,46 +1,24 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:get/get.dart';
+import 'package:coflanet/constants/color_constant.dart';
 import 'package:coflanet/modules/coffee/coffee_controller.dart';
 import 'package:coflanet/widgets/modals/input_modal.dart';
-import 'package:coflanet/widgets/modals/time_picker_modal.dart';
 
-/// Recipe Edit Screen - Figma node 1163-55918
-/// 원두가 이미 선택되어 있는 편집 모드 - 원두 이름은 자동으로 표시됨
-class RecipeEditView extends GetView<CoffeeController> {
-  const RecipeEditView({super.key});
+/// Unified Recipe Form Screen - handles both edit and add modes
+/// Edit mode: Figma node 1163-55918 (원두 이름 읽기전용)
+/// Add mode: Figma node 1163-55839 (원두 이름 입력 가능)
+class RecipeFormView extends GetView<CoffeeController> {
+  final bool isEditMode;
 
-  // ===== Figma Color Constants (LIGHT Theme) =====
-  static const Color _screenBg = Color(0xFFF5F5F5);
-  static const Color _cardBg = Color(0xFFFFFFFF);
-  static const Color _textPrimary = Color(0xFF171719); // Figma: #171719
-  static const Color _textSecondary = Color(
-    0x9C37383C,
-  ); // Figma: rgba(55, 56, 60, 0.61)
-  static const Color _textValue = Color(
-    0xE02E2F33,
-  ); // Figma: rgba(46, 47, 51, 0.88)
-  static const Color _textMuted = Color(0xFF666666);
-  static const Color _border = Color(0xFFE0E0E0);
-  static const Color _stepperBg = Color(
-    0x1F70737C,
-  ); // Figma: rgba(112, 115, 124, 0.12)
-  static const Color _grayBg = Color(
-    0x1F70737C,
-  ); // Figma: rgba(112, 115, 124, 0.12)
-  static const Color _divider = Color(
-    0x2970737C,
-  ); // Figma: rgba(112, 115, 124, 0.16)
-  static const Color _primary = Color(0xFF6541F2);
+  const RecipeFormView({super.key, required this.isEditMode});
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: _screenBg,
+      backgroundColor: AppColor.backgroundNormalAlternative,
       body: Column(
         children: [
           _buildHeader(context),
-          // Scrollable content
           Expanded(
             child: SingleChildScrollView(
               physics: const AlwaysScrollableScrollPhysics(),
@@ -55,60 +33,55 @@ class RecipeEditView extends GetView<CoffeeController> {
                   const SizedBox(height: 16),
                   _buildExtractionSettingsCard(),
                   const SizedBox(height: 20),
-                  // + button separated outside the card per Figma
                   _buildAddStepButton(),
                   const SizedBox(height: 20),
                 ],
               ),
             ),
           ),
-          // Fixed bottom save button - OUTSIDE of Stack to ensure tap works
           _buildBottomSaveButton(context),
         ],
       ),
     );
   }
 
-  /// Header - Light background with black text
+  /// Header with back button and centered title
   Widget _buildHeader(BuildContext context) {
     final topPadding = MediaQuery.of(context).padding.top;
 
     return Container(
       padding: EdgeInsets.only(top: topPadding),
-      color: _screenBg,
+      color: AppColor.backgroundNormalAlternative,
       child: Container(
         height: 56,
         padding: const EdgeInsets.symmetric(horizontal: 16),
         child: Row(
           children: [
-            // Back button
             GestureDetector(
               onTap: () => Get.back(),
               child: Container(
                 width: 40,
                 height: 40,
                 alignment: Alignment.center,
-                child: const Icon(
+                child: Icon(
                   Icons.arrow_back_ios,
-                  color: _textPrimary,
+                  color: AppColor.labelNormal,
                   size: 20,
                 ),
               ),
             ),
-            // Title - centered
-            const Expanded(
+            Expanded(
               child: Text(
-                '레시피 편집',
+                isEditMode ? '레시피 편집' : '레시피 추가',
                 style: TextStyle(
                   fontFamily: 'Pretendard',
                   fontSize: 18,
                   fontWeight: FontWeight.w600,
-                  color: _textPrimary,
+                  color: AppColor.labelNormal,
                 ),
                 textAlign: TextAlign.center,
               ),
             ),
-            // Spacer for symmetry
             const SizedBox(width: 40),
           ],
         ),
@@ -116,27 +89,23 @@ class RecipeEditView extends GetView<CoffeeController> {
     );
   }
 
-  /// 기본 설정 section - Bean name (separate card), then cups and intensity
+  /// 기본 설정 section - Bean name + cups + intensity
   Widget _buildBasicSettingsCard() {
     return Column(
       children: [
-        // 원두 이름 section - separate rounded card per Figma
-        _buildBeanNameRow(),
+        isEditMode ? _buildBeanNameDisplay() : _buildBeanNameInput(),
         const SizedBox(height: 16),
-        // 잔수 and 진하기 section
         Container(
           padding: const EdgeInsets.all(20),
           decoration: BoxDecoration(
-            color: _cardBg,
+            color: AppColor.backgroundNormalNormal,
             borderRadius: BorderRadius.circular(16),
           ),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              // 잔수 row
               _buildCupsRow(),
               const SizedBox(height: 24),
-              // 진하기 정도 row
               _buildIntensityRow(),
             ],
           ),
@@ -145,19 +114,18 @@ class RecipeEditView extends GetView<CoffeeController> {
     );
   }
 
-  /// 원두 이름 section - 편집 모드에서는 선택된 원두 이름이 자동 표시됨
-  Widget _buildBeanNameRow() {
+  /// 원두 이름 - 편집 모드 (읽기전용)
+  Widget _buildBeanNameDisplay() {
     return Container(
       width: double.infinity,
       padding: const EdgeInsets.symmetric(vertical: 32),
       decoration: BoxDecoration(
-        color: _cardBg,
+        color: AppColor.backgroundNormalNormal,
         borderRadius: BorderRadius.circular(40),
       ),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          // Label: 원두 이름
           Padding(
             padding: const EdgeInsets.symmetric(horizontal: 24),
             child: Text(
@@ -168,12 +136,11 @@ class RecipeEditView extends GetView<CoffeeController> {
                 fontWeight: FontWeight.w400,
                 height: 1.5,
                 letterSpacing: 0.0057 * 16,
-                color: _textSecondary,
+                color: AppColor.labelAlternative,
               ),
             ),
           ),
           const SizedBox(height: 8),
-          // Value: show selected bean name from controller (not editable in edit mode)
           Padding(
             padding: const EdgeInsets.symmetric(horizontal: 24),
             child: Obx(() {
@@ -186,7 +153,9 @@ class RecipeEditView extends GetView<CoffeeController> {
                   fontWeight: FontWeight.w500,
                   height: 1.5,
                   letterSpacing: 0.0057 * 16,
-                  color: beanName.isNotEmpty ? _textPrimary : _textSecondary,
+                  color: beanName.isNotEmpty
+                      ? AppColor.labelNormal
+                      : AppColor.labelAlternative,
                 ),
               );
             }),
@@ -196,25 +165,110 @@ class RecipeEditView extends GetView<CoffeeController> {
     );
   }
 
-  /// 잔수 row with chip buttons - 2x2 grid layout per Figma
+  /// 원두 이름 - 추가 모드 (편집 가능)
+  Widget _buildBeanNameInput() {
+    return GestureDetector(
+      onTap: _showBeanNameModal,
+      child: Container(
+        width: double.infinity,
+        padding: const EdgeInsets.symmetric(vertical: 32),
+        decoration: BoxDecoration(
+          color: AppColor.backgroundNormalNormal,
+          borderRadius: BorderRadius.circular(40),
+        ),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 24),
+              child: Text(
+                '원두 이름',
+                style: TextStyle(
+                  fontFamily: 'Pretendard',
+                  fontSize: 16,
+                  fontWeight: FontWeight.w400,
+                  height: 1.5,
+                  letterSpacing: 0.0057 * 16,
+                  color: AppColor.labelAlternative,
+                ),
+              ),
+            ),
+            const SizedBox(height: 8),
+            Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 24),
+              child: Obx(() {
+                final beanName = controller.newRecipeBeanName;
+                final hasName = beanName.isNotEmpty;
+                return Row(
+                  children: [
+                    Expanded(
+                      child: Text(
+                        hasName ? beanName : '원두 이름을 입력하세요',
+                        style: TextStyle(
+                          fontFamily: 'Pretendard',
+                          fontSize: 16,
+                          fontWeight: FontWeight.w500,
+                          height: 1.5,
+                          letterSpacing: 0.0057 * 16,
+                          color: hasName
+                              ? AppColor.labelNormal
+                              : AppColor.labelAssistive,
+                        ),
+                      ),
+                    ),
+                    Icon(
+                      Icons.edit_outlined,
+                      size: 20,
+                      color: AppColor.labelAlternative,
+                    ),
+                  ],
+                );
+              }),
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+
+  /// Bean name input modal (add mode only)
+  Future<void> _showBeanNameModal() async {
+    final result = await InputModal.show(
+      title: '원두 이름',
+      message: '레시피에 사용할 원두 이름을 입력하세요',
+      hint: '예: 에티오피아 예가체프',
+      initialValue: controller.newRecipeBeanName,
+      keyboardType: TextInputType.text,
+      validator: (value) {
+        if (value == null || value.trim().isEmpty) {
+          return '원두 이름을 입력하세요';
+        }
+        return null;
+      },
+    );
+    if (result != null) {
+      controller.newRecipeBeanName = result.trim();
+    }
+  }
+
+  /// 잔수 row - 2x2 grid layout
   Widget _buildCupsRow() {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        const Text(
+        Text(
           '잔수',
           style: TextStyle(
             fontFamily: 'Pretendard',
             fontSize: 12,
             fontWeight: FontWeight.w400,
-            color: _textSecondary,
+            color: AppColor.labelAlternative,
           ),
         ),
         const SizedBox(height: 12),
         Obx(
           () => Column(
             children: [
-              // First row: 1잔, 2잔
               Row(
                 children: [
                   Expanded(child: _buildCupChip('1잔', 1)),
@@ -223,7 +277,6 @@ class RecipeEditView extends GetView<CoffeeController> {
                 ],
               ),
               const SizedBox(height: 8),
-              // Second row: 3잔, 4잔
               Row(
                 children: [
                   Expanded(child: _buildCupChip('3잔', 3)),
@@ -238,7 +291,7 @@ class RecipeEditView extends GetView<CoffeeController> {
     );
   }
 
-  /// Cup chip button - border style when selected, full-width pill shape
+  /// Cup chip button - pill shape with border highlight
   Widget _buildCupChip(String label, int cups) {
     final isSelected = controller.cupsCount == cups;
     return GestureDetector(
@@ -247,10 +300,10 @@ class RecipeEditView extends GetView<CoffeeController> {
         height: 44,
         alignment: Alignment.center,
         decoration: BoxDecoration(
-          color: _cardBg,
+          color: AppColor.backgroundNormalNormal,
           borderRadius: BorderRadius.circular(22),
           border: Border.all(
-            color: isSelected ? _primary : _border,
+            color: isSelected ? AppColor.primaryNormal : AppColor.lineSolidNormal,
             width: isSelected ? 2 : 1,
           ),
         ),
@@ -260,25 +313,27 @@ class RecipeEditView extends GetView<CoffeeController> {
             fontFamily: 'Pretendard',
             fontSize: 14,
             fontWeight: FontWeight.w500,
-            color: isSelected ? _primary : _textMuted,
+            color: isSelected
+                ? AppColor.primaryNormal
+                : AppColor.colorGlobalCoolNeutral40,
           ),
         ),
       ),
     );
   }
 
-  /// 진하기 정도 row with chip buttons - vertical full-width layout per Figma
+  /// 진하기 정도 row
   Widget _buildIntensityRow() {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        const Text(
+        Text(
           '진하기 정도',
           style: TextStyle(
             fontFamily: 'Pretendard',
             fontSize: 12,
             fontWeight: FontWeight.w400,
-            color: _textSecondary,
+            color: AppColor.labelAlternative,
           ),
         ),
         const SizedBox(height: 12),
@@ -297,9 +352,8 @@ class RecipeEditView extends GetView<CoffeeController> {
     );
   }
 
-  /// Intensity chip button - full-width, filled style when selected
+  /// Intensity chip - filled when selected
   Widget _buildIntensityChip(String label, int intensity) {
-    // Map intensity levels: 0=light(<30), 1=balanced(30-60), 2=strong(>60)
     final currentStrength = controller.strength;
     final isSelected =
         (intensity == 0 && currentStrength < 30) ||
@@ -321,9 +375,14 @@ class RecipeEditView extends GetView<CoffeeController> {
         height: 48,
         alignment: Alignment.center,
         decoration: BoxDecoration(
-          color: isSelected ? _primary : _cardBg,
+          color: isSelected
+              ? AppColor.primaryNormal
+              : AppColor.backgroundNormalNormal,
           borderRadius: BorderRadius.circular(24),
-          border: Border.all(color: isSelected ? _primary : _border, width: 1),
+          border: Border.all(
+            color: isSelected ? AppColor.primaryNormal : AppColor.lineSolidNormal,
+            width: 1,
+          ),
         ),
         child: Text(
           label,
@@ -331,7 +390,9 @@ class RecipeEditView extends GetView<CoffeeController> {
             fontFamily: 'Pretendard',
             fontSize: 14,
             fontWeight: FontWeight.w500,
-            color: isSelected ? Colors.white : _textMuted,
+            color: isSelected
+                ? Colors.white
+                : AppColor.colorGlobalCoolNeutral40,
           ),
         ),
       ),
@@ -343,27 +404,24 @@ class RecipeEditView extends GetView<CoffeeController> {
     return Container(
       padding: const EdgeInsets.all(20),
       decoration: BoxDecoration(
-        color: _cardBg,
+        color: AppColor.backgroundNormalNormal,
         borderRadius: BorderRadius.circular(16),
       ),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          // Section title
-          const Text(
+          Text(
             '상세 설정',
             style: TextStyle(
               fontFamily: 'Pretendard',
               fontSize: 18,
               fontWeight: FontWeight.w700,
-              color: _textPrimary,
+              color: AppColor.labelNormal,
             ),
           ),
           const SizedBox(height: 24),
-          // 추출 기기 row
           _buildDeviceRow(),
           const SizedBox(height: 20),
-          // 원두 row
           Obx(
             () => _buildSettingRowWithStepper(
               label: '원두',
@@ -376,7 +434,6 @@ class RecipeEditView extends GetView<CoffeeController> {
             ),
           ),
           const SizedBox(height: 20),
-          // 물 온도 row
           Obx(
             () => _buildSettingRowWithStepper(
               label: '물 온도',
@@ -389,38 +446,37 @@ class RecipeEditView extends GetView<CoffeeController> {
             ),
           ),
           const SizedBox(height: 20),
-          // 분쇄도 row
           _buildGrindSizeRow(),
         ],
       ),
     );
   }
 
-  /// 추출 기기 row with change button
+  /// 추출 기기 row
   Widget _buildDeviceRow() {
     return Row(
       children: [
         Expanded(
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
-            children: const [
+            children: [
               Text(
                 '추출 기기',
                 style: TextStyle(
                   fontFamily: 'Pretendard',
                   fontSize: 12,
                   fontWeight: FontWeight.w400,
-                  color: _textSecondary,
+                  color: AppColor.labelAlternative,
                 ),
               ),
-              SizedBox(height: 4),
+              const SizedBox(height: 4),
               Text(
                 '핸드드립',
                 style: TextStyle(
                   fontFamily: 'Pretendard',
                   fontSize: 16,
                   fontWeight: FontWeight.w500,
-                  color: _textPrimary,
+                  color: AppColor.labelNormal,
                 ),
               ),
             ],
@@ -430,13 +486,13 @@ class RecipeEditView extends GetView<CoffeeController> {
           onTap: () {
             // 추출 기구 선택 모달 (추후 구현)
           },
-          child: const Text(
+          child: Text(
             '변경하기',
             style: TextStyle(
               fontFamily: 'Pretendard',
               fontSize: 14,
               fontWeight: FontWeight.w500,
-              color: _primary,
+              color: AppColor.primaryNormal,
             ),
           ),
         ),
@@ -444,7 +500,7 @@ class RecipeEditView extends GetView<CoffeeController> {
     );
   }
 
-  /// Setting row with stepper control (no change button)
+  /// Setting row with stepper
   Widget _buildSettingRowWithStepper({
     required String label,
     required int value,
@@ -454,19 +510,17 @@ class RecipeEditView extends GetView<CoffeeController> {
   }) {
     return Row(
       children: [
-        // Label
         Expanded(
           child: Text(
             label,
-            style: const TextStyle(
+            style: TextStyle(
               fontFamily: 'Pretendard',
               fontSize: 14,
               fontWeight: FontWeight.w400,
-              color: _textSecondary,
+              color: AppColor.labelAlternative,
             ),
           ),
         ),
-        // Stepper control
         _buildStepper(
           value: value,
           unit: unit,
@@ -477,18 +531,18 @@ class RecipeEditView extends GetView<CoffeeController> {
     );
   }
 
-  /// 분쇄도 row with stepper
+  /// 분쇄도 row
   Widget _buildGrindSizeRow() {
     return Row(
       children: [
-        const Expanded(
+        Expanded(
           child: Text(
             '분쇄도',
             style: TextStyle(
               fontFamily: 'Pretendard',
               fontSize: 14,
               fontWeight: FontWeight.w400,
-              color: _textSecondary,
+              color: AppColor.labelAlternative,
             ),
           ),
         ),
@@ -512,46 +566,51 @@ class RecipeEditView extends GetView<CoffeeController> {
     return Container(
       height: 40,
       decoration: BoxDecoration(
-        color: _stepperBg,
+        color: AppColor.componentFillNormal,
         borderRadius: BorderRadius.circular(8),
       ),
       child: Row(
         mainAxisSize: MainAxisSize.min,
         children: [
-          // Minus button
           GestureDetector(
             onTap: onDecrement,
             child: Container(
               width: 40,
               height: 40,
               alignment: Alignment.center,
-              child: const Icon(Icons.remove, size: 20, color: _textMuted),
+              child: Icon(
+                Icons.remove,
+                size: 20,
+                color: AppColor.colorGlobalCoolNeutral40,
+              ),
             ),
           ),
-          // Value display
           Container(
             constraints: const BoxConstraints(minWidth: 70),
             padding: const EdgeInsets.symmetric(horizontal: 8),
             child: Center(
               child: Text(
                 '$value$unit',
-                style: const TextStyle(
+                style: TextStyle(
                   fontFamily: 'Pretendard',
                   fontSize: 16,
                   fontWeight: FontWeight.w600,
-                  color: _textPrimary,
+                  color: AppColor.labelNormal,
                 ),
               ),
             ),
           ),
-          // Plus button
           GestureDetector(
             onTap: onIncrement,
             child: Container(
               width: 40,
               height: 40,
               alignment: Alignment.center,
-              child: const Icon(Icons.add, size: 20, color: _textMuted),
+              child: Icon(
+                Icons.add,
+                size: 20,
+                color: AppColor.colorGlobalCoolNeutral40,
+              ),
             ),
           ),
         ],
@@ -572,46 +631,51 @@ class RecipeEditView extends GetView<CoffeeController> {
     return Container(
       height: 40,
       decoration: BoxDecoration(
-        color: _stepperBg,
+        color: AppColor.componentFillNormal,
         borderRadius: BorderRadius.circular(8),
       ),
       child: Row(
         mainAxisSize: MainAxisSize.min,
         children: [
-          // Minus button
           GestureDetector(
             onTap: onDecrement,
             child: Container(
               width: 40,
               height: 40,
               alignment: Alignment.center,
-              child: const Icon(Icons.remove, size: 20, color: _textMuted),
+              child: Icon(
+                Icons.remove,
+                size: 20,
+                color: AppColor.colorGlobalCoolNeutral40,
+              ),
             ),
           ),
-          // Value display
           Container(
             constraints: const BoxConstraints(minWidth: 70),
             padding: const EdgeInsets.symmetric(horizontal: 8),
             child: Center(
               child: Text(
                 timeString,
-                style: const TextStyle(
+                style: TextStyle(
                   fontFamily: 'Pretendard',
                   fontSize: 16,
                   fontWeight: FontWeight.w600,
-                  color: _textPrimary,
+                  color: AppColor.labelNormal,
                 ),
               ),
             ),
           ),
-          // Plus button
           GestureDetector(
             onTap: onIncrement,
             child: Container(
               width: 40,
               height: 40,
               alignment: Alignment.center,
-              child: const Icon(Icons.add, size: 20, color: _textMuted),
+              child: Icon(
+                Icons.add,
+                size: 20,
+                color: AppColor.colorGlobalCoolNeutral40,
+              ),
             ),
           ),
         ],
@@ -619,7 +683,7 @@ class RecipeEditView extends GetView<CoffeeController> {
     );
   }
 
-  /// 추출 설정 Card with summary stats and extraction steps INSIDE
+  /// 추출 설정 Card with summary and extraction steps
   Widget _buildExtractionSettingsCard() {
     return Obx(() {
       final steps = controller.extractionSteps;
@@ -627,28 +691,27 @@ class RecipeEditView extends GetView<CoffeeController> {
       return Container(
         padding: const EdgeInsets.all(20),
         decoration: BoxDecoration(
-          color: _cardBg,
+          color: AppColor.backgroundNormalNormal,
           borderRadius: BorderRadius.circular(16),
         ),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            // Section title
-            const Text(
+            Text(
               '추출 설정',
               style: TextStyle(
                 fontFamily: 'Pretendard',
                 fontSize: 18,
                 fontWeight: FontWeight.w700,
-                color: _textPrimary,
+                color: AppColor.labelNormal,
               ),
             ),
             const SizedBox(height: 20),
-            // Summary container - Figma: gray background, border-radius 32px
+            // Summary container
             Container(
               height: 100,
               decoration: BoxDecoration(
-                color: _grayBg,
+                color: AppColor.componentFillNormal,
                 borderRadius: BorderRadius.circular(32),
               ),
               child: Row(
@@ -666,7 +729,7 @@ class RecipeEditView extends GetView<CoffeeController> {
                             fontWeight: FontWeight.w500,
                             height: 1.445,
                             letterSpacing: -0.0002 * 18,
-                            color: _textValue,
+                            color: AppColor.labelNeutral,
                           ),
                         ),
                         const SizedBox(height: 2),
@@ -678,14 +741,18 @@ class RecipeEditView extends GetView<CoffeeController> {
                             fontWeight: FontWeight.w400,
                             height: 1.5,
                             letterSpacing: 0.0057 * 16,
-                            color: _textSecondary,
+                            color: AppColor.labelAlternative,
                           ),
                         ),
                       ],
                     ),
                   ),
                   // Vertical divider
-                  Container(width: 1, height: 32, color: _divider),
+                  Container(
+                    width: 1,
+                    height: 32,
+                    color: AppColor.lineNormalNeutral,
+                  ),
                   // 총 추출 시간
                   Expanded(
                     child: Column(
@@ -699,7 +766,7 @@ class RecipeEditView extends GetView<CoffeeController> {
                             fontWeight: FontWeight.w500,
                             height: 1.445,
                             letterSpacing: -0.0002 * 18,
-                            color: _textValue,
+                            color: AppColor.labelNeutral,
                           ),
                         ),
                         const SizedBox(height: 2),
@@ -711,7 +778,7 @@ class RecipeEditView extends GetView<CoffeeController> {
                             fontWeight: FontWeight.w400,
                             height: 1.5,
                             letterSpacing: 0.0057 * 16,
-                            color: _textSecondary,
+                            color: AppColor.labelAlternative,
                           ),
                         ),
                       ],
@@ -745,7 +812,7 @@ class RecipeEditView extends GetView<CoffeeController> {
     });
   }
 
-  /// Extraction step item (inside the white card)
+  /// Extraction step item
   Widget _buildExtractionStep({
     required HandDripStep step,
     required Function(int) onWaterAmountChanged,
@@ -755,26 +822,25 @@ class RecipeEditView extends GetView<CoffeeController> {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        // Header row with title and delete button
         Row(
           children: [
             Expanded(
               child: Text(
                 step.title,
-                style: const TextStyle(
+                style: TextStyle(
                   fontFamily: 'Pretendard',
                   fontSize: 16,
                   fontWeight: FontWeight.w600,
-                  color: _textPrimary,
+                  color: AppColor.labelNormal,
                 ),
               ),
             ),
             GestureDetector(
               onTap: onDelete,
-              child: const Icon(
+              child: Icon(
                 Icons.delete_outline,
                 size: 20,
-                color: _textSecondary,
+                color: AppColor.labelAlternative,
               ),
             ),
           ],
@@ -783,14 +849,14 @@ class RecipeEditView extends GetView<CoffeeController> {
         // 물의 양 row
         Row(
           children: [
-            const Expanded(
+            Expanded(
               child: Text(
                 '물의 양',
                 style: TextStyle(
                   fontFamily: 'Pretendard',
                   fontSize: 14,
                   fontWeight: FontWeight.w400,
-                  color: _textSecondary,
+                  color: AppColor.labelAlternative,
                 ),
               ),
             ),
@@ -803,22 +869,26 @@ class RecipeEditView extends GetView<CoffeeController> {
           ],
         ),
         const SizedBox(height: 12),
-        // 시간 row with info tooltip
+        // 시간 row
         Row(
           children: [
             Row(
-              children: const [
+              children: [
                 Text(
                   '시간',
                   style: TextStyle(
                     fontFamily: 'Pretendard',
                     fontSize: 14,
                     fontWeight: FontWeight.w400,
-                    color: _textSecondary,
+                    color: AppColor.labelAlternative,
                   ),
                 ),
-                SizedBox(width: 4),
-                Icon(Icons.info_outline, size: 16, color: _textSecondary),
+                const SizedBox(width: 4),
+                Icon(
+                  Icons.info_outline,
+                  size: 16,
+                  color: AppColor.labelAlternative,
+                ),
               ],
             ),
             const Spacer(),
@@ -838,7 +908,7 @@ class RecipeEditView extends GetView<CoffeeController> {
     );
   }
 
-  /// Add step button - Figma: gray circular background with plus icon
+  /// Add step button
   Widget _buildAddStepButton() {
     return GestureDetector(
       onTap: () => controller.addExtractionStep(),
@@ -846,8 +916,11 @@ class RecipeEditView extends GetView<CoffeeController> {
         child: Container(
           width: 48,
           height: 48,
-          decoration: BoxDecoration(color: _grayBg, shape: BoxShape.circle),
-          child: const Icon(Icons.add, size: 20, color: _textPrimary),
+          decoration: BoxDecoration(
+            color: AppColor.componentFillNormal,
+            shape: BoxShape.circle,
+          ),
+          child: Icon(Icons.add, size: 20, color: AppColor.labelNormal),
         ),
       ),
     );
@@ -859,27 +932,20 @@ class RecipeEditView extends GetView<CoffeeController> {
 
     return Container(
       padding: EdgeInsets.fromLTRB(16, 16, 16, 16 + bottomPadding),
-      decoration: const BoxDecoration(color: _screenBg),
+      decoration: BoxDecoration(color: AppColor.backgroundNormalAlternative),
       child: SizedBox(
         width: double.infinity,
         height: 56,
         child: ElevatedButton(
           onPressed: () async {
-            final success = await controller.saveCurrentRecipe();
-            if (success) {
-              // Navigate back first, then show snackbar on the previous page.
-              // Calling Get.snackbar() before Get.back() can cause Get.back()
-              // to pop the snackbar overlay instead of the page route.
-              Get.back();
-              Get.snackbar(
-                '저장 완료',
-                '${controller.selectedBeanName} 레시피가 저장되었습니다',
-                snackPosition: SnackPosition.BOTTOM,
-              );
+            if (isEditMode) {
+              await _saveExisting();
+            } else {
+              await _saveNew();
             }
           },
           style: ElevatedButton.styleFrom(
-            backgroundColor: _primary,
+            backgroundColor: AppColor.primaryNormal,
             foregroundColor: Colors.white,
             elevation: 0,
             shape: RoundedRectangleBorder(
@@ -900,84 +966,38 @@ class RecipeEditView extends GetView<CoffeeController> {
     );
   }
 
-  // ===== Modal Handlers =====
-
-  Future<void> _showCoffeeAmountModal() async {
-    final result = await InputModal.show(
-      title: '원두 양 설정',
-      message: '원두량을 그램 단위로 입력하세요',
-      hint: '예: 18',
-      initialValue: controller.coffeeAmount.toString(),
-      keyboardType: TextInputType.number,
-      inputFormatters: [FilteringTextInputFormatter.digitsOnly],
-      validator: (value) {
-        if (value == null || value.isEmpty) return '값을 입력하세요';
-        final amount = int.tryParse(value);
-        if (amount == null || amount < 5 || amount > 100) {
-          return '5~100g 사이의 값을 입력하세요';
-        }
-        return null;
-      },
-    );
-    if (result != null) {
-      controller.customCoffeeAmount = int.parse(result);
+  /// Save existing recipe (edit mode)
+  Future<void> _saveExisting() async {
+    final success = await controller.saveCurrentRecipe();
+    if (success) {
+      Get.back();
+      Get.snackbar(
+        '저장 완료',
+        '${controller.selectedBeanName} 레시피가 저장되었습니다',
+        snackPosition: SnackPosition.BOTTOM,
+      );
     }
   }
 
-  Future<void> _showWaterTemperatureModal() async {
-    final result = await InputModal.show(
-      title: '물 온도 설정',
-      message: '물 온도를 섭씨 단위로 입력하세요',
-      hint: '예: 93',
-      initialValue: controller.waterTemperature.toString(),
-      keyboardType: TextInputType.number,
-      inputFormatters: [FilteringTextInputFormatter.digitsOnly],
-      validator: (value) {
-        if (value == null || value.isEmpty) return '값을 입력하세요';
-        final temp = int.tryParse(value);
-        if (temp == null || temp < 85 || temp > 100) {
-          return '85~100°C 사이의 값을 입력하세요';
-        }
-        return null;
-      },
-    );
-    if (result != null) {
-      controller.waterTemperature = int.parse(result);
+  /// Save new recipe (add mode)
+  Future<void> _saveNew() async {
+    if (controller.newRecipeBeanName.isEmpty) {
+      Get.snackbar(
+        '알림',
+        '원두 이름을 입력해주세요',
+        snackPosition: SnackPosition.BOTTOM,
+        backgroundColor: Colors.red.shade100,
+      );
+      return;
     }
-  }
-
-  Future<void> _showWaterAmountModal() async {
-    final result = await InputModal.show(
-      title: '물 양 설정',
-      message: '물 양을 ml 단위로 입력하세요',
-      hint: '예: 210',
-      initialValue: controller.waterAmount.toString(),
-      keyboardType: TextInputType.number,
-      inputFormatters: [FilteringTextInputFormatter.digitsOnly],
-      validator: (value) {
-        if (value == null || value.isEmpty) return '값을 입력하세요';
-        final amount = int.tryParse(value);
-        if (amount == null || amount < 30 || amount > 1000) {
-          return '30~1000ml 사이의 값을 입력하세요';
-        }
-        return null;
-      },
-    );
-    if (result != null) {
-      controller.customWaterAmount = int.parse(result);
-    }
-  }
-
-  Future<void> _showExtractionTimeModal() async {
-    final initialDuration = Duration(seconds: controller.extractionTime);
-    final result = await TimePickerModal.show(
-      title: '추출 시간 설정',
-      initialDuration: initialDuration,
-      maxMinutes: 10,
-      maxSeconds: 59,
-    );
-    if (result != null) {
-      controller.extractionTime = result.inSeconds;
+    final success = await controller.saveNewRecipe();
+    if (success) {
+      Get.back();
+      Get.snackbar(
+        '저장 완료',
+        '${controller.newRecipeBeanName} 레시피가 저장되었습니다',
+        snackPosition: SnackPosition.BOTTOM,
+      );
     }
   }
 }

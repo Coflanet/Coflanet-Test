@@ -160,37 +160,49 @@ class SelectCoffeeContent extends GetView<SelectCoffeeController> {
             },
             itemBuilder: (context, index) {
               final item = items[index];
-              final isSelected = controller.isSelectedForEdit(item.id);
 
-              return Padding(
+              // Obx wraps each item so checkbox reacts to selection changes
+              // independently. ReorderableListView.builder calls itemBuilder
+              // lazily during layout (outside the parent Obx scope), so without
+              // a per-item Obx, _selectedIdsForEdit changes would not trigger
+              // a rebuild of the checkbox UI.
+              return Obx(
                 key: ValueKey(item.id),
-                padding: const EdgeInsets.only(bottom: 8),
-                child: SizedBox(
-                  height: 80,
-                  child: Row(
-                    crossAxisAlignment: CrossAxisAlignment.center,
-                    children: [
-                      // Checkbox OUTSIDE card (left)
-                      GestureDetector(
-                        onTap: () => controller.toggleEditSelection(item.id),
-                        child: _buildEditCheckbox(isSelected),
+                () {
+                  final isSelected = controller.isSelectedForEdit(item.id);
+
+                  return Padding(
+                    padding: const EdgeInsets.only(bottom: 8),
+                    child: SizedBox(
+                      height: 80,
+                      child: Row(
+                        crossAxisAlignment: CrossAxisAlignment.center,
+                        children: [
+                          // Checkbox OUTSIDE card (left)
+                          GestureDetector(
+                            onTap: () =>
+                                controller.toggleEditSelection(item.id),
+                            child: _buildEditCheckbox(isSelected),
+                          ),
+                          const SizedBox(width: 12),
+                          // Card
+                          Expanded(
+                              child: _buildEditModeCard(item, isSelected)),
+                          const SizedBox(width: 12),
+                          // Drag handle with ReorderableDragStartListener
+                          ReorderableDragStartListener(
+                            index: index,
+                            child: const Icon(
+                              Icons.drag_handle,
+                              color: Color(0xFF171719),
+                              size: 24,
+                            ),
+                          ),
+                        ],
                       ),
-                      const SizedBox(width: 12),
-                      // Card
-                      Expanded(child: _buildEditModeCard(item, isSelected)),
-                      const SizedBox(width: 12),
-                      // Drag handle with ReorderableDragStartListener
-                      ReorderableDragStartListener(
-                        index: index,
-                        child: const Icon(
-                          Icons.drag_handle,
-                          color: Color(0xFF171719),
-                          size: 24,
-                        ),
-                      ),
-                    ],
-                  ),
-                ),
+                    ),
+                  );
+                },
               );
             },
           ),
