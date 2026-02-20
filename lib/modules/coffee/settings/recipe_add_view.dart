@@ -472,7 +472,7 @@ class RecipeAddView extends GetView<CoffeeController> {
         ),
         GestureDetector(
           onTap: () {
-            // TODO: Show device selection modal
+            // 추출 기구 선택 모달 (추후 구현)
           },
           child: const Text(
             '변경하기',
@@ -908,8 +908,7 @@ class RecipeAddView extends GetView<CoffeeController> {
         width: double.infinity,
         height: 56,
         child: ElevatedButton(
-          onPressed: () {
-            // Validate and save
+          onPressed: () async {
             if (controller.newRecipeBeanName.isEmpty) {
               Get.snackbar(
                 '알림',
@@ -919,9 +918,15 @@ class RecipeAddView extends GetView<CoffeeController> {
               );
               return;
             }
-            // Save and go back
-            controller.saveNewRecipe();
-            Get.back();
+            final success = await controller.saveNewRecipe();
+            if (success) {
+              Get.back();
+              Get.snackbar(
+                '저장 완료',
+                '${controller.newRecipeBeanName} 레시피가 저장되었습니다',
+                snackPosition: SnackPosition.BOTTOM,
+              );
+            }
           },
           style: ElevatedButton.styleFrom(
             backgroundColor: _primary,
