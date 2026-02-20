@@ -100,78 +100,108 @@ class SelectCoffeeContent extends GetView<SelectCoffeeController> {
   }
 
   Widget _buildCoffeeList() {
-      final items = controller.coffeeItems;
-      final isEditing = controller.isEditing;
+    final items = controller.coffeeItems;
+    final isEditing = controller.isEditing;
 
-      return Column(
-        children: [
-          Expanded(
-            child: ListView.builder(
-              // Increased bottom padding to ensure + button is visible above navbar
-              padding: const EdgeInsets.fromLTRB(20, 0, 20, 80),
-              // +1 for the add button at the end
-              itemCount: items.length + 1,
-              itemBuilder: (context, index) {
-                // Last item: Add button (different style for normal vs edit mode)
-                if (index == items.length) {
-                  return _buildListAddButton(isEditing);
-                }
+    return Column(
+      children: [
+        Expanded(
+          child: isEditing
+              ? _buildEditModeList(items)
+              : _buildNormalModeList(items),
+        ),
+        // Bottom action bar in edit mode
+        if (isEditing) _buildEditingBottomBar(),
+      ],
+    );
+  }
 
-                final item = items[index];
-                final isSelected = controller.isSelectedForEdit(item.id);
+  /// Normal mode list with accordion cards
+  Widget _buildNormalModeList(List<CoffeeItem> items) {
+    return ListView.builder(
+      padding: const EdgeInsets.fromLTRB(20, 0, 20, 80),
+      itemCount: items.length + 1,
+      itemBuilder: (context, index) {
+        if (index == items.length) {
+          return _buildListAddButton(false);
+        }
+        final item = items[index];
+        return _CoffeeAccordionCard(
+          item: item,
+          isEditing: false,
+          isSelected: false,
+          initiallyExpanded: index == 0,
+          onTap: null,
+          onDetailPressed: () => _onDetailPressed(item),
+          onRecipePressed: () => _onRecipePressed(item),
+        );
+      },
+    );
+  }
 
-                // In edit mode: [Checkbox] [Card] [DragHandle] layout
-                // Figma: gap 8px between elements, total height 80px (increased for better proportions)
-                if (isEditing) {
-                  return Padding(
-                    padding: const EdgeInsets.only(
-                      bottom: 8,
-                    ), // Figma: 8px gap between cards
-                    child: SizedBox(
-                      height:
-                          80, // Figma: ~72-80px row height for better proportions
-                      child: Row(
-                        crossAxisAlignment: CrossAxisAlignment.center,
-                        children: [
-                          // Checkbox OUTSIDE card (left) - Figma: 24x24
-                          GestureDetector(
-                            onTap: () =>
-                                controller.toggleEditSelection(item.id),
-                            child: _buildEditCheckbox(isSelected),
-                          ),
-                          const SizedBox(width: 12), // Figma: gap 12px
-                          // Card - Figma: 80px height, 20px radius, white bg
-                          Expanded(child: _buildEditModeCard(item, isSelected)),
-                          const SizedBox(width: 12), // Figma: gap 12px
-                          // Drag handle OUTSIDE card (right) - Figma: 24x24, color #171719
-                          const Icon(
-                            Icons.drag_handle,
-                            color: Color(0xFF171719), // Figma: #171719
-                            size: 24,
-                          ),
-                        ],
+  /// Edit mode list with reorderable items
+  Widget _buildEditModeList(List<CoffeeItem> items) {
+    return Column(
+      children: [
+        Expanded(
+          child: ReorderableListView.builder(
+            padding: const EdgeInsets.fromLTRB(20, 0, 20, 80),
+            itemCount: items.length,
+            onReorder: (oldIndex, newIndex) {
+              controller.reorderItems(oldIndex, newIndex);
+            },
+            proxyDecorator: (child, index, animation) {
+              return Material(
+                elevation: 4,
+                color: Colors.transparent,
+                borderRadius: BorderRadius.circular(20),
+                child: child,
+              );
+            },
+            itemBuilder: (context, index) {
+              final item = items[index];
+              final isSelected = controller.isSelectedForEdit(item.id);
+
+              return Padding(
+                key: ValueKey(item.id),
+                padding: const EdgeInsets.only(bottom: 8),
+                child: SizedBox(
+                  height: 80,
+                  child: Row(
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    children: [
+                      // Checkbox OUTSIDE card (left)
+                      GestureDetector(
+                        onTap: () => controller.toggleEditSelection(item.id),
+                        child: _buildEditCheckbox(isSelected),
                       ),
-                    ),
-                  );
-                }
-
-                // Normal mode: just the card
-                return _CoffeeAccordionCard(
-                  item: item,
-                  isEditing: false,
-                  isSelected: false,
-                  initiallyExpanded: index == 0,
-                  onTap: null,
-                  onDetailPressed: () => _onDetailPressed(item),
-                  onRecipePressed: () => _onRecipePressed(item),
-                );
-              },
-            ),
+                      const SizedBox(width: 12),
+                      // Card
+                      Expanded(child: _buildEditModeCard(item, isSelected)),
+                      const SizedBox(width: 12),
+                      // Drag handle with ReorderableDragStartListener
+                      ReorderableDragStartListener(
+                        index: index,
+                        child: const Icon(
+                          Icons.drag_handle,
+                          color: Color(0xFF171719),
+                          size: 24,
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+              );
+            },
           ),
-          // Bottom action bar in edit mode
-          if (isEditing) _buildEditingBottomBar(),
-        ],
-      );
+        ),
+        // Add button at the bottom (outside ReorderableListView)
+        Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 20),
+          child: _buildListAddButton(true),
+        ),
+      ],
+    );
   }
 
   /// Add button at the end of the list
@@ -304,15 +334,17 @@ class SelectCoffeeContent extends GetView<SelectCoffeeController> {
     Get.toNamed(Routes.beanDetail, arguments: {'coffeeId': item.id});
   }
 
-  void _onRecipePressed(CoffeeItem item) {
+  Future<void> _onRecipePressed(CoffeeItem item) async {
     controller.selectCoffee(item.id);
-    // Set selected bean info in CoffeeController for recipe edit
-    if (Get.isRegistered<CoffeeController>()) {
-      Get.find<CoffeeController>().setSelectedBean(
-        id: item.id,
-        name: item.name,
-      );
+    // Ensure CoffeeController is registered and set selected bean
+    if (!Get.isRegistered<CoffeeController>()) {
+      Get.put<CoffeeController>(CoffeeController(), permanent: true);
     }
+    // Wait for recipe to load before navigating
+    await Get.find<CoffeeController>().setSelectedBean(
+      id: item.id,
+      name: item.name,
+    );
     Get.toNamed(Routes.coffeeSettings, arguments: {'coffeeId': item.id});
   }
 

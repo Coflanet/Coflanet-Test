@@ -77,6 +77,7 @@ class SelectCoffeeController extends BaseController {
     } else {
       _selectedIdsForEdit.add(id);
     }
+    _selectedIdsForEdit.refresh();
   }
 
   /// Check if item is selected in edit mode
@@ -110,6 +111,7 @@ class SelectCoffeeController extends BaseController {
     if (index != -1) {
       final item = _coffeeItems[index];
       _coffeeItems[index] = item.copyWith(isHidden: true);
+      _coffeeItems.refresh();
       await _coffeeRepository.updateCoffeeVisibility(id, true);
 
       // Update selection if hidden item was selected
@@ -127,6 +129,7 @@ class SelectCoffeeController extends BaseController {
     if (index != -1) {
       final item = _coffeeItems[index];
       _coffeeItems[index] = item.copyWith(isHidden: false);
+      _coffeeItems.refresh();
       await _coffeeRepository.updateCoffeeVisibility(id, false);
     }
   }
