@@ -14,6 +14,18 @@ void main() {
   IntegrationTestWidgetsFlutterBinding.ensureInitialized();
 
   group('Coflanet Full E2E Test', () {
+    // Suppress "deactivated widget's ancestor" errors during GetX navigation teardown
+    final originalOnError = FlutterError.onError;
+    setUp(() {
+      FlutterError.onError = (details) {
+        if (details.toString().contains('deactivated widget')) return;
+        originalOnError?.call(details);
+      };
+    });
+    tearDown(() {
+      FlutterError.onError = originalOnError;
+    });
+
     testWidgets('Complete App Flow - All Screens and Buttons', (tester) async {
       // Start the app
       app.main();

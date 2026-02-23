@@ -25,26 +25,27 @@ void main() async {
   // Initialize Social Login SDKs
   _initSocialLoginSdks();
 
-  // Initialize Supabase (Auth + RPC + Edge Functions)
-  if (RepositoryConfig.dataSource == DataSource.supabase) {
-    await Supabase.initialize(
-      url: dotenv.env['SUPABASE_URL']!,
-      anonKey: dotenv.env['SUPABASE_ANON_KEY']!,
-    );
-    // Sync existing session to LocalStorage for splash controller compatibility
-    final session = Supabase.instance.client.auth.currentSession;
-    if (session != null) {
-      final localStorage = LocalStorage();
-      await localStorage.saveAccessToken(session.accessToken);
-      await localStorage.saveUserId(session.user.id);
-      // Sync display name from metadata if available
-      final meta = session.user.userMetadata;
-      final displayName = meta?['display_name'] as String? ??
-          meta?['full_name'] as String? ??
-          meta?['name'] as String? ??
-          meta?['preferred_username'] as String?;
-      if (displayName != null && displayName.isNotEmpty) {
-        await localStorage.saveUserName(displayName);
+  // Initialize Supabase (always — some controllers reference Supabase.instance directly)
+  final supabaseUrl = dotenv.env['SUPABASE_URL'] ?? '';
+  final supabaseKey = dotenv.env['SUPABASE_ANON_KEY'] ?? '';
+  if (supabaseUrl.isNotEmpty && supabaseKey.isNotEmpty) {
+    await Supabase.initialize(url: supabaseUrl, anonKey: supabaseKey);
+
+    // Sync existing session to LocalStorage (supabase mode only)
+    if (RepositoryConfig.dataSource == DataSource.supabase) {
+      final session = Supabase.instance.client.auth.currentSession;
+      if (session != null) {
+        final localStorage = LocalStorage();
+        await localStorage.saveAccessToken(session.accessToken);
+        await localStorage.saveUserId(session.user.id);
+        final meta = session.user.userMetadata;
+        final displayName = meta?['display_name'] as String? ??
+            meta?['full_name'] as String? ??
+            meta?['name'] as String? ??
+            meta?['preferred_username'] as String?;
+        if (displayName != null && displayName.isNotEmpty) {
+          await localStorage.saveUserName(displayName);
+        }
       }
     }
   }
