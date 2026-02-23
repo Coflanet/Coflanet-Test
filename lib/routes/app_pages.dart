@@ -10,6 +10,8 @@ import 'package:coflanet/modules/auth/signin/signin_binding.dart';
 import 'package:coflanet/modules/auth/signup/signup_view.dart';
 import 'package:coflanet/modules/auth/signup/signup_binding.dart';
 import 'package:coflanet/modules/auth/signup/signup_complete_view.dart';
+import 'package:coflanet/modules/auth/email_login/email_login_view.dart';
+import 'package:coflanet/modules/auth/email_login/email_login_binding.dart';
 import 'package:coflanet/modules/auth/profile_setup/profile_setup_view.dart';
 import 'package:coflanet/modules/auth/profile_setup/profile_setup_binding.dart';
 
@@ -86,6 +88,12 @@ class AppPages {
       name: Routes.profileSetup,
       page: () => const ProfileSetupView(),
       binding: ProfileSetupBinding(),
+      transition: Transition.cupertino,
+    ),
+    GetPage(
+      name: Routes.emailLogin,
+      page: () => const EmailLoginView(),
+      binding: EmailLoginBinding(),
       transition: Transition.cupertino,
     ),
     GetPage(

@@ -26,6 +26,13 @@
                 <category android:name="android.intent.category.BROWSABLE" />
                 <data android:host="kakaolink" android:scheme="kakao${KAKAO_NATIVE_APP_KEY}" />
             </intent-filter>
+            <!-- Supabase OAuth Callback -->
+            <intent-filter>
+                <action android:name="android.intent.action.VIEW" />
+                <category android:name="android.intent.category.DEFAULT" />
+                <category android:name="android.intent.category.BROWSABLE" />
+                <data android:scheme="com.coflanet.tech.app" android:host="callback" />
+            </intent-filter>
         </activity>
 
         <!-- Kakao Login OAuth Activity -->

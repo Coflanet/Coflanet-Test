@@ -1,10 +1,11 @@
+import 'package:flutter/foundation.dart';
 import 'package:get/get.dart';
 import 'package:coflanet/core/base/base_controller.dart';
-import 'package:coflanet/core/storage/local_storage.dart';
+import 'package:coflanet/core/services/auth_service.dart';
 import 'package:coflanet/routes/app_pages.dart';
 
 class SignUpController extends BaseController {
-  final LocalStorage _storage = Get.find<LocalStorage>();
+  final AuthService _authService = Get.find<AuthService>();
 
   // Form fields
   final email = ''.obs;
@@ -64,16 +65,25 @@ class SignUpController extends BaseController {
     return null;
   }
 
-  /// Update email and validate
+  /// Update email and validate in real-time
   void onEmailChanged(String value) {
     email.value = value;
-    emailError.value = null;
+    // 입력 중일 때는 빈 값이면 에러 숨김, 값이 있으면 실시간 검증
+    if (value.isEmpty) {
+      emailError.value = null;
+    } else {
+      emailError.value = _validateEmail(value);
+    }
   }
 
-  /// Update password and validate
+  /// Update password and validate in real-time
   void onPasswordChanged(String value) {
     password.value = value;
-    passwordError.value = null;
+    if (value.isEmpty) {
+      passwordError.value = null;
+    } else {
+      passwordError.value = _validatePassword(value);
+    }
     // Re-validate confirm password if already entered
     if (confirmPassword.value.isNotEmpty) {
       confirmPasswordError.value = _validateConfirmPassword(
@@ -82,10 +92,14 @@ class SignUpController extends BaseController {
     }
   }
 
-  /// Update confirm password and validate
+  /// Update confirm password and validate in real-time
   void onConfirmPasswordChanged(String value) {
     confirmPassword.value = value;
-    confirmPasswordError.value = null;
+    if (value.isEmpty) {
+      confirmPasswordError.value = null;
+    } else {
+      confirmPasswordError.value = _validateConfirmPassword(value);
+    }
   }
 
   /// Validate all fields and show errors
@@ -106,26 +120,31 @@ class SignUpController extends BaseController {
     if (!validateAll()) return;
 
     await executeWithLoading(() async {
-      // Simulate API delay
-      await Future.delayed(const Duration(milliseconds: 1500));
-
-      // API 연동 시 실제 회원가입 로직으로 교체
-      await _storage.saveAccessToken(
-        'email_signup_token_${DateTime.now().millisecondsSinceEpoch}',
-      );
-      await _storage.saveUserId(
-        'user_${DateTime.now().millisecondsSinceEpoch}',
-      );
-      final userName = email.value.split('@').first;
-      await _storage.saveUserName(userName);
-
-      // Navigate to sign up complete page
-      Get.offNamed(Routes.signUpComplete, arguments: {'userName': userName});
+      try {
+        await _authService.signUpWithEmail(email.value, password.value);
+        // Navigate to profile setup (name input → survey reason → complete)
+        Get.offNamed(Routes.profileSetup);
+      } catch (e) {
+        debugPrint('[SignUp] signUpWithEmail error: $e');
+        final message = e.toString();
+        if (message.contains('already registered') ||
+            message.contains('already exists')) {
+          emailError.value = '이미 가입된 이메일입니다';
+        } else if (message.contains('rate limit') ||
+            message.contains('429')) {
+          emailError.value = '요청이 너무 많습니다. 잠시 후 다시 시도해주세요.';
+        } else if (message.contains('email_address_invalid') ||
+            message.contains('invalid')) {
+          emailError.value = '유효하지 않은 이메일 주소입니다';
+        } else {
+          emailError.value = '회원가입에 실패했습니다. 다시 시도해주세요.';
+        }
+      }
     });
   }
 
-  /// Navigate back to sign in
+  /// Navigate to email login
   void goToSignIn() {
-    Get.back();
+    Get.offNamed(Routes.emailLogin);
   }
 }

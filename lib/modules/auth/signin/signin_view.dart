@@ -126,9 +126,9 @@ class SignInView extends GetView<SignInController> {
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
         TextButton(
-          onPressed: () => Get.toNamed(Routes.emailSignUp),
+          onPressed: () => Get.toNamed(Routes.emailLogin),
           child: Text(
-            '회원가입',
+            '이메일 로그인',
             style: AppTextStyles.label1NormalMedium.copyWith(
               color: AppColor.labelAlternative,
             ),

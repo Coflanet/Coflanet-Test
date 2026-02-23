@@ -58,6 +58,8 @@
 				<string>kakao$(KAKAO_NATIVE_APP_KEY)</string>
 			<!-- Naver -->
 			<string>coflanetnaverlogin</string>
+			<!-- Supabase OAuth Callback -->
+			<string>com.coflanet.tech.app</string>
 			</array>
 		</dict>
 	</array>
