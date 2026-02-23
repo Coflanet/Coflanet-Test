@@ -61,6 +61,11 @@ class SelectCoffeeController extends BaseController {
     hideLoading();
   }
 
+  /// Refresh the coffee items list from repository
+  Future<void> refreshList() async {
+    await _loadCoffeeItems();
+  }
+
   /// Toggle edit mode
   void toggleEditMode() {
     _isEditing.value = !_isEditing.value;
@@ -196,10 +201,13 @@ class SelectCoffeeController extends BaseController {
     await _coffeeRepository.reorderCoffeeItems(orderedIds);
   }
 
-  /// Add new coffee - navigates to recipe add page
-  void addNewCoffee() {
-    // Navigate to recipe add page
-    Get.toNamed(Routes.recipeAdd);
+  /// Add new coffee - navigates to bean edit page
+  Future<void> addNewCoffee() async {
+    final result = await Get.toNamed(Routes.beanEdit);
+    if (result is CoffeeItem) {
+      await _coffeeRepository.addCoffeeItem(result);
+      await _loadCoffeeItems();
+    }
   }
 
   /// Confirm selection and go back

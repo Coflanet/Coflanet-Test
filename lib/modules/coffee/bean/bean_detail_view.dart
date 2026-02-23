@@ -9,6 +9,7 @@ import 'package:coflanet/data/models/coffee_item_model.dart';
 import 'package:coflanet/widgets/charts/flavor_radar_chart.dart';
 import 'package:coflanet/widgets/navigation/app_bottom_bar.dart';
 import 'package:coflanet/routes/app_pages.dart';
+import 'package:coflanet/data/repositories/repository_provider.dart';
 
 /// Bean Detail View (원두 상세)
 ///
@@ -105,8 +106,17 @@ class BeanDetailView extends StatelessWidget {
               color: AppColor.colorGlobalCommon100,
               size: 24,
             ),
-            onPressed: () {
-              Get.toNamed(Routes.beanEdit, arguments: {'bean': _bean});
+            onPressed: () async {
+              final result = await Get.toNamed(
+                Routes.beanEdit,
+                arguments: {'bean': _bean},
+              );
+              if (result is CoffeeItem) {
+                await RepositoryProvider.coffeeRepository
+                    .updateCoffeeItem(result);
+                // Return updated bean to refresh the list
+                Get.back(result: result);
+              }
             },
           ),
         ],
@@ -267,7 +277,7 @@ class BeanDetailView extends StatelessWidget {
               AnimatedContainer(
                 duration: const Duration(milliseconds: 800),
                 curve: Curves.easeOutCubic,
-                width: constraints.maxWidth * (value / 5.0),
+                width: constraints.maxWidth * (value / 100.0),
                 decoration: BoxDecoration(
                   gradient: LinearGradient(
                     colors: [
@@ -314,7 +324,7 @@ class BeanDetailView extends StatelessWidget {
               SizedBox(
                 width: 30,
                 child: Text(
-                  item.$2.toStringAsFixed(1),
+                  item.$2.round().toString(),
                   style: AppTextStyles.body2NormalMedium.copyWith(
                     color: AppColor.colorGlobalCommon100,
                   ),
@@ -342,7 +352,7 @@ class BeanDetailView extends StatelessWidget {
             child: AnimatedContainer(
               duration: const Duration(milliseconds: 800),
               curve: Curves.easeOutCubic,
-              width: constraints.maxWidth * (value / 5.0),
+              width: constraints.maxWidth * (value / 100.0),
               decoration: BoxDecoration(
                 color: AppColor.primaryNormal,
                 borderRadius: AppRadius.xxxlBorder,

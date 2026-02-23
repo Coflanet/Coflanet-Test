@@ -342,8 +342,12 @@ class SelectCoffeeContent extends GetView<SelectCoffeeController> {
     );
   }
 
-  void _onDetailPressed(CoffeeItem item) {
-    Get.toNamed(Routes.beanDetail, arguments: {'coffeeId': item.id});
+  Future<void> _onDetailPressed(CoffeeItem item) async {
+    final result = await Get.toNamed(Routes.beanDetail, arguments: {'bean': item});
+    if (result is CoffeeItem) {
+      // Bean was edited — refresh the list
+      controller.refreshList();
+    }
   }
 
   Future<void> _onRecipePressed(CoffeeItem item) async {

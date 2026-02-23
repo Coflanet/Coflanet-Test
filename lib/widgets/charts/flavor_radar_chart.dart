@@ -5,19 +5,19 @@ import 'package:coflanet/constants/style_constant.dart';
 
 /// Data model for flavor profile values.
 class FlavorProfile {
-  /// 산미 (Acidity) - 0.0 to 5.0
+  /// 산미 (Acidity) - 0 to 100
   final double acidity;
 
-  /// 바디감 (Body) - 0.0 to 5.0
+  /// 바디감 (Body) - 0 to 100
   final double body;
 
-  /// 단맛 (Sweetness) - 0.0 to 5.0
+  /// 단맛 (Sweetness) - 0 to 100
   final double sweetness;
 
-  /// 쓴맛 (Bitterness) - 0.0 to 5.0
+  /// 쓴맛 (Bitterness) - 0 to 100
   final double bitterness;
 
-  /// 밸런스 (Balance) - 0.0 to 5.0
+  /// 밸런스 (Balance) - 0 to 100
   final double balance;
 
   const FlavorProfile({
@@ -162,7 +162,7 @@ class FlavorRadarChart extends StatefulWidget {
     super.key,
     required this.profile,
     this.size = 200,
-    this.maxValue = 5.0,
+    this.maxValue = 100.0,
     this.gridLevels = 5,
     this.showLabels = true,
     this.showValues = true,
@@ -452,7 +452,7 @@ class _FlavorRadarChartPainter extends CustomPainter {
       // Draw value if enabled
       if (showValues) {
         final valueSpan = TextSpan(
-          text: value.toStringAsFixed(1),
+          text: value.round().toString(),
           style: AppTextStyles.caption1Regular.copyWith(color: strokeColor),
         );
         final valuePainter = TextPainter(

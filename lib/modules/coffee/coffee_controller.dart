@@ -61,6 +61,12 @@ class HandDripStep {
 }
 
 class CoffeeController extends BaseController {
+  /// Get coffeeType string from selected type
+  String get _coffeeTypeString => switch (_selectedType.value) {
+    CoffeeType.espresso => 'espresso',
+    _ => 'handDrip',
+  };
+
   /// Recipe repository for persistence
   final RecipeRepository _recipeRepository =
       RepositoryProvider.recipeRepository;
@@ -308,7 +314,7 @@ class CoffeeController extends BaseController {
       final recipe = TimerRecipeModel(
         id: 'bean_$beanId',
         name: _selectedBeanName.value,
-        coffeeType: 'handDrip',
+        coffeeType: _coffeeTypeString,
         coffeeAmount: coffeeAmount,
         waterAmount: totalStepsWaterAmount,
         totalDurationSeconds: totalStepsDuration.inSeconds,
@@ -484,7 +490,7 @@ class CoffeeController extends BaseController {
       final recipe = TimerRecipeModel(
         id: recipeId,
         name: _newRecipeBeanName.value,
-        coffeeType: 'handDrip',
+        coffeeType: _coffeeTypeString,
         coffeeAmount: coffeeAmount,
         waterAmount: totalStepsWaterAmount,
         totalDurationSeconds: totalStepsDuration.inSeconds,

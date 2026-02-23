@@ -35,13 +35,13 @@ class _BeanEditViewState extends State<BeanEditView> {
   final _nameController = TextEditingController();
   final _originController = TextEditingController();
 
-  // Flavor profile values
-  double _acidity = 2.5;
-  double _body = 2.5;
-  double _sweetness = 2.5;
-  double _bitterness = 2.5;
-  double _balance = 2.5;
-  double _aromaIntensity = 2.5;
+  // Flavor profile values (0-100 scale, matching Supabase schema)
+  double _acidity = 50;
+  double _body = 50;
+  double _sweetness = 50;
+  double _bitterness = 50;
+  double _balance = 50;
+  double _aromaIntensity = 50;
 
   // Selected flavor tags
   final Set<String> _selectedCommonFlavors = {};
@@ -175,11 +175,11 @@ class _BeanEditViewState extends State<BeanEditView> {
       parts.add(_selectedCommonFlavors.take(2).join(', '));
     }
 
-    if (_acidity >= 4.0) {
+    if (_acidity >= 70) {
       parts.add('산미가 강한');
-    } else if (_body >= 4.0) {
+    } else if (_body >= 70) {
       parts.add('묵직한 바디감의');
-    } else if (_sweetness >= 4.0) {
+    } else if (_sweetness >= 70) {
       parts.add('달콤한');
     }
 
@@ -526,7 +526,7 @@ class _BeanEditViewState extends State<BeanEditView> {
                 ),
               ),
               Text(
-                value.toStringAsFixed(1),
+                value.round().toString(),
                 style: AppTextStyles.body2NormalBold.copyWith(
                   color: AppColor.primaryNormal,
                 ),
@@ -546,8 +546,8 @@ class _BeanEditViewState extends State<BeanEditView> {
             child: Slider(
               value: value,
               min: 0,
-              max: 5,
-              divisions: 50,
+              max: 100,
+              divisions: 100,
               onChanged: onChanged,
             ),
           ),
