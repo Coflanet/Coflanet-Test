@@ -58,6 +58,7 @@ jobs:
             --driver=test_driver/integration_test.dart \
             --target=integration_test/app_test.dart \
             -d "$DEVICE_ID" \
+            --dart-define=CI_TEST=true \
             --no-pub
 
       - name: Shutdown Simulator

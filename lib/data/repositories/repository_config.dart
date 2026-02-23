@@ -6,8 +6,13 @@ enum DataSource { dummy, supabase, api }
 class RepositoryConfig {
   RepositoryConfig._();
 
+  /// CI test mode (passed via --dart-define=CI_TEST=true)
+  static const bool isCiTest = bool.fromEnvironment('CI_TEST');
+
   /// Current data source (change this one line to switch)
-  static const DataSource dataSource = DataSource.supabase;
+  /// In CI test mode, always use dummy to avoid external dependencies
+  static const DataSource dataSource =
+      isCiTest ? DataSource.dummy : DataSource.supabase;
 
   /// API base URL (used when dataSource is api)
   static const String apiBaseUrl = 'https://api.coflanet.com/v1';
