@@ -1,12 +1,14 @@
 import 'package:flutter/foundation.dart';
 import 'package:get/get.dart';
+import 'package:supabase_flutter/supabase_flutter.dart' hide LocalStorage;
 import 'package:coflanet/core/base/base_controller.dart';
 import 'package:coflanet/core/storage/local_storage.dart';
+import 'package:coflanet/core/services/survey_service.dart';
+import 'package:coflanet/data/repositories/repository_config.dart';
 import 'package:coflanet/routes/app_pages.dart';
 
 class SplashController extends BaseController {
-  // Use singleton directly instead of Get.find() to avoid timing issues
-  final LocalStorage _storage = LocalStorage();
+  final LocalStorage _storage = Get.find<LocalStorage>();
 
   @override
   void onInit() {
@@ -20,7 +22,7 @@ class SplashController extends BaseController {
       await Future.delayed(const Duration(seconds: 2));
 
       // Navigate based on login and onboarding status
-      _navigateToNextScreen();
+      await _navigateToNextScreen();
     } catch (e, stackTrace) {
       // Keep error logging for debugging critical issues
       if (kDebugMode) {
@@ -41,7 +43,7 @@ class SplashController extends BaseController {
   // [DEV] Set to true to go directly to MainShell for UI testing
   static const bool _devForceMainShell = false;
 
-  void _navigateToNextScreen() {
+  Future<void> _navigateToNextScreen() async {
     // [DEV] Direct navigation to MainShell for UI testing
     if (_devForceMainShell) {
       Get.offAllNamed(Routes.mainShell, arguments: {'initialTab': 0});
@@ -54,6 +56,52 @@ class SplashController extends BaseController {
       return;
     }
 
+    if (RepositoryConfig.dataSource == DataSource.supabase) {
+      await _navigateSupabase();
+    } else {
+      _navigateLocal();
+    }
+  }
+
+  /// Supabase mode: check Supabase Auth session
+  Future<void> _navigateSupabase() async {
+    final session = Supabase.instance.client.auth.currentSession;
+
+    if (_devForceSignIn || session == null) {
+      _safeNavigate(Routes.signIn);
+      return;
+    }
+
+    // Session exists — check onboarding via server RPC
+    bool isOnboardingComplete = false;
+    if (!_devForceOnboarding) {
+      try {
+        final result = await Supabase.instance.client.rpc('get_onboarding_status');
+        if (result is Map<String, dynamic>) {
+          isOnboardingComplete = result['has_completed_survey'] as bool? ?? false;
+        }
+      } catch (e) {
+        debugPrint('[SplashController] get_onboarding_status error: $e');
+        isOnboardingComplete = _storage.isOnboardingComplete;
+      }
+    }
+
+    // Refresh user data (userName, surveyResult) before navigating
+    try {
+      await Get.find<SurveyService>().refresh();
+    } catch (e) {
+      debugPrint('[SplashController] SurveyService refresh error: $e');
+    }
+
+    if (!isOnboardingComplete) {
+      _safeNavigate(Routes.surveyIntro);
+    } else {
+      Get.offAllNamed(Routes.mainShell, arguments: {'initialTab': 0});
+    }
+  }
+
+  /// Local/Dummy mode: check LocalStorage
+  void _navigateLocal() {
     final isLoggedIn = _devForceSignIn ? false : _storage.isLoggedIn;
     final isOnboardingComplete = _devForceOnboarding
         ? false

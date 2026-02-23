@@ -1,3 +1,4 @@
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:coflanet/core/base/base_controller.dart';
@@ -153,8 +154,8 @@ class MyPlanetController extends BaseController {
   Future<void> logout() async {
     try {
       await _authService.signOut();
-    } catch (_) {
-      // SDK 로그아웃 실패해도 로컬 세션은 정리
+    } catch (e) {
+      debugPrint('[MyPlanet] logout error: $e');
     }
     Get.offAllNamed(Routes.signIn);
   }
