@@ -580,7 +580,7 @@ class _BeanEditViewState extends State<BeanEditView> {
           ),
           child: DropdownButtonHideUnderline(
             child: DropdownButton<String>(
-              value: value,
+              value: options.contains(value) ? value : null,
               isExpanded: true,
               hint: Text(
                 '선택해주세요',
