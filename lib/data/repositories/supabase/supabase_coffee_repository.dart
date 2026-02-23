@@ -46,7 +46,7 @@ class SupabaseCoffeeRepository implements CoffeeRepository {
       if (userId == null) return;
 
       // 1. Insert bean data into coffee_beans table
-      final beanData = _buildBeanData(item, userId: userId);
+      final beanData = _buildBeanData(item);
 
       final inserted =
           await _db.from('coffee_beans').insert(beanData).select().single();
@@ -111,19 +111,16 @@ class SupabaseCoffeeRepository implements CoffeeRepository {
   /// Build column data for coffee_beans table insert/update.
   /// Only includes non-null values to avoid schema mismatch errors.
   ///
-  /// coffee_beans table columns (discovered via Supabase schema):
-  /// id, name, description, brand, origin, roast_level, process_method,
+  /// coffee_beans table known columns:
+  /// id, name, description, origin, roast_level, process_method,
   /// flavor_tags, image_url, created_at
-  /// Taste profile columns are in the get_my_bean_list RPC view, not in the
-  /// base table — they are computed from a separate taste_profiles relation.
-  Map<String, dynamic> _buildBeanData(CoffeeItem item, {String? userId}) {
+  /// NOTE: brand, created_by, user_id columns do NOT exist.
+  Map<String, dynamic> _buildBeanData(CoffeeItem item) {
     final data = <String, dynamic>{
       'name': item.name,
     };
-    // Include created_by for RLS policy compliance
-    if (userId != null) data['created_by'] = userId;
     if (item.description.isNotEmpty) data['description'] = item.description;
-    if (item.origin != null) data['origin'] = item.origin;
+    if (item.origin != null) data['origin'] = [item.origin]; // TEXT[] column
     if (item.roastLevel != null) data['roast_level'] = item.roastLevel;
     if (item.processMethod != null) data['process_method'] = item.processMethod;
     return data;

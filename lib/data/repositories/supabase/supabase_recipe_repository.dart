@@ -131,34 +131,59 @@ class SupabaseRecipeRepository implements RecipeRepository {
           ? recipe.id.substring(5)
           : null;
 
-      await _db.rpc('save_custom_recipe', params: {
-        'p_brew_method_id': methodId,
-        'p_bean_id': beanId,
-        'p_name': recipe.name,
-        'p_values': {
-          'coffee_amount_g': recipe.coffeeAmount,
-          'total_water_ml': recipe.waterAmount,
-          'total_duration_seconds': recipe.totalDurationSeconds,
-          'aroma_description': recipe.aromaDescription,
-          'steps': recipe.steps.map((s) => {
-            'step_number': s.stepNumber,
-            'title': s.title,
-            'description': s.description,
-            'step_type': s.stepType.name,
-            'water_amount_ml': s.waterAmount,
-            'duration_seconds': s.durationSeconds,
-            'action_text': s.actionText,
-            'illustration_emoji': s.illustrationEmoji,
-          }).toList(),
-          'aroma_tags': recipe.aromaTags.asMap().entries.map((e) => {
-            'emoji': e.value.emoji,
-            'name': e.value.name,
-            'display_order': e.key,
-          }).toList(),
-        },
-      });
+      // Insert into recipes table directly (no save_custom_recipe RPC)
+      final recipeData = <String, dynamic>{
+        'user_id': userId,
+        'brew_method_id': methodId,
+        'name': recipe.name,
+        'coffee_amount_g': recipe.coffeeAmount,
+        'total_water_ml': recipe.waterAmount,
+        'total_duration_seconds': recipe.totalDurationSeconds,
+        'is_default': false,
+      };
+      if (recipe.aromaDescription != null) {
+        recipeData['aroma_description'] = recipe.aromaDescription;
+      }
+      if (beanId != null) {
+        recipeData['bean_id'] = beanId;
+      }
+
+      final inserted = await _db
+          .from('recipes')
+          .insert(recipeData)
+          .select()
+          .single();
+      final recipeId = inserted['id'].toString();
+      debugPrint('[RecipeRepo] inserted recipe: $recipeId');
+
+      // Insert steps
+      if (recipe.steps.isNotEmpty) {
+        final stepsData = recipe.steps.map((s) => <String, dynamic>{
+          'recipe_id': recipeId,
+          'step_number': s.stepNumber,
+          'title': s.title,
+          'description': s.description,
+          'step_type': s.stepType.name,
+          'water_amount_ml': s.waterAmount,
+          'duration_seconds': s.durationSeconds,
+          'action_text': s.actionText,
+          'illustration_emoji': s.illustrationEmoji,
+        }).toList();
+        await _db.from('recipe_steps').insert(stepsData);
+      }
+
+      // Insert aroma tags
+      if (recipe.aromaTags.isNotEmpty) {
+        final tagsData = recipe.aromaTags.asMap().entries.map((e) => <String, dynamic>{
+          'recipe_id': recipeId,
+          'emoji': e.value.emoji,
+          'name': e.value.name,
+          'display_order': e.key,
+        }).toList();
+        await _db.from('recipe_aroma_tags').insert(tagsData);
+      }
     } catch (e) {
-      debugPrint('[RecipeRepo] save_custom_recipe error: $e');
+      debugPrint('[RecipeRepo] saveRecipe error: $e');
     }
   }
 
