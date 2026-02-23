@@ -46,6 +46,7 @@ app.*.map.json
 
 # Secrets
 .env
+docs/SUPABASE_CONNECTION.md
 
 # Session data
 .sisyphus/
