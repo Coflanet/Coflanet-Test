@@ -53,7 +53,12 @@ jobs:
           echo "Booted simulator: $DEVICE_ID"
 
       - name: Run E2E tests
-        run: flutter test integration_test/app_test.dart -d "$DEVICE_ID" --no-pub
+        run: |
+          flutter drive \
+            --driver=test_driver/integration_test.dart \
+            --target=integration_test/app_test.dart \
+            -d "$DEVICE_ID" \
+            --no-pub
 
       - name: Shutdown Simulator
         if: always()
