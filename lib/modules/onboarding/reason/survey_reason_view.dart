@@ -116,11 +116,11 @@ class SurveyReasonView extends GetView<SurveyReasonController> {
     return Container(
       padding: const EdgeInsets.fromLTRB(24, 16, 24, 34),
       decoration: BoxDecoration(color: AppColor.backgroundNormalNormal),
-      child: PrimaryButton(
+      child: Obx(() => PrimaryButton(
         text: '완료',
         onPressed: controller.complete,
-        isEnabled: true,
-      ),
+        isEnabled: controller.hasSelection,
+      )),
     );
   }
 }

@@ -1,8 +1,11 @@
+import 'dart:async';
+import 'package:flutter/foundation.dart';
+import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:coflanet/constants/color_constant.dart';
+import 'package:coflanet/constants/style_constant.dart';
 import 'package:coflanet/core/base/base_controller.dart';
 import 'package:coflanet/core/services/survey_service.dart';
-import 'package:coflanet/data/dummy/dummy_lifestyle_survey_data.dart';
-import 'package:coflanet/data/dummy/dummy_survey_data.dart';
 import 'package:coflanet/data/models/survey_question_model.dart';
 import 'package:coflanet/data/models/survey_result_model.dart';
 import 'package:coflanet/data/repositories/repository_interfaces.dart';
@@ -306,38 +309,76 @@ class SurveyController extends BaseController {
   }
 
   /// Start survey - navigate directly to step 0 (Section 1 Intro is now in SurveyIntro)
-  void startSurvey() {
+  Future<void> startSurvey() async {
     _surveyType.value = SurveyType.standard;
     _currentStep.value = 0;
     _answers.clear();
     _multiRatingAnswers.clear();
-    _questions = DummySurveyData.questions;
-    // Go directly to first question (skip Section 1 Intro as SurveyIntro already serves this purpose)
+    _questions = await _surveyRepository.getQuestions(type: 'standard');
     Get.toNamed('${Routes.survey}/0');
   }
 
   /// Start lifestyle survey
-  void startLifestyleSurvey() {
+  Future<void> startLifestyleSurvey() async {
     _surveyType.value = SurveyType.lifestyle;
     _currentStep.value = 0;
     _answers.clear();
     _multiRatingAnswers.clear();
-    _questions = DummyLifestyleSurveyData.questions;
+    _questions = await _surveyRepository.getQuestions(type: 'lifestyle');
     Get.toNamed('${Routes.survey}/0');
   }
 
+  /// Whether analysis is currently running (prevents duplicate calls)
+  bool _isAnalyzing = false;
+
   /// Analyze answers and generate result
   Future<void> analyzeSurvey() async {
-    showLoading();
+    if (_isAnalyzing) return;
+    _isAnalyzing = true;
 
-    // Generate result from answers via repository
-    // Repository handles the analysis (dummy generates locally, API would send to server)
-    _surveyResult.value = await _surveyRepository.generateResult(_answers);
+    try {
+      _surveyResult.value = await _surveyRepository
+          .generateResult(_answers)
+          .timeout(const Duration(seconds: 30));
+      _isAnalyzing = false;
+      Get.offNamed(Routes.surveyComplete);
+    } on TimeoutException {
+      _isAnalyzing = false;
+      debugPrint('[SurveyController] analyzeSurvey timeout');
+      _showErrorDialog(
+        '서버 응답 시간이 초과되었습니다.\n다시 시도해주세요.',
+        errorDetail: 'TimeoutException: 30초 초과',
+      );
+    } catch (e) {
+      _isAnalyzing = false;
+      debugPrint('[SurveyController] analyzeSurvey error: $e');
+      _showErrorDialog(
+        '설문 분석 중 오류가 발생했습니다.\n다시 시도해주세요.',
+        errorDetail: e.toString(),
+      );
+    }
+  }
 
-    hideLoading();
+  /// Show error dialog with retry / back options
+  /// [errorDetail] is only visible in debug builds
+  void _showErrorDialog(String message, {String? errorDetail}) {
+    final showDetail = kDebugMode && errorDetail != null;
 
-    // Navigate to complete screen
-    Get.offNamed(Routes.surveyComplete);
+    Get.dialog(
+      _ErrorDialog(
+        message: message,
+        errorDetail: showDetail ? errorDetail : null,
+        onRetry: () {
+          Get.back();
+          analyzeSurvey();
+        },
+        onBack: () {
+          Get.back();
+          Get.back();
+        },
+      ),
+      barrierDismissible: false,
+    );
   }
 
   /// View result
@@ -390,4 +431,113 @@ class SurveyController extends BaseController {
 
   /// Get user name from SurveyService (shared state)
   String get userName => _surveyService.userName;
+}
+
+/// Error dialog with expandable detail section (debug only)
+class _ErrorDialog extends StatefulWidget {
+  final String message;
+  final String? errorDetail;
+  final VoidCallback onRetry;
+  final VoidCallback onBack;
+
+  const _ErrorDialog({
+    required this.message,
+    required this.onRetry,
+    required this.onBack,
+    this.errorDetail,
+  });
+
+  @override
+  State<_ErrorDialog> createState() => _ErrorDialogState();
+}
+
+class _ErrorDialogState extends State<_ErrorDialog> {
+  bool _showDetail = false;
+
+  @override
+  Widget build(BuildContext context) {
+    return AlertDialog(
+      backgroundColor: AppColor.backgroundNormalNormal,
+      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
+      title: Text(
+        '분석 오류',
+        style: AppTextStyles.heading2Bold.copyWith(color: AppColor.labelNormal),
+      ),
+      content: Column(
+        mainAxisSize: MainAxisSize.min,
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Text(
+            widget.message,
+            style: AppTextStyles.body1NormalRegular.copyWith(
+              color: AppColor.labelNeutral,
+              height: 1.5,
+            ),
+          ),
+          if (widget.errorDetail != null) ...[
+            const SizedBox(height: 12),
+            GestureDetector(
+              onTap: () => setState(() => _showDetail = !_showDetail),
+              child: Row(
+                children: [
+                  Icon(
+                    _showDetail ? Icons.expand_less : Icons.expand_more,
+                    size: 18,
+                    color: AppColor.labelAssistive,
+                  ),
+                  const SizedBox(width: 4),
+                  Text(
+                    '오류 상세보기',
+                    style: AppTextStyles.caption1Regular.copyWith(
+                      color: AppColor.labelAssistive,
+                    ),
+                  ),
+                ],
+              ),
+            ),
+            if (_showDetail) ...[
+              const SizedBox(height: 8),
+              Container(
+                width: double.infinity,
+                padding: const EdgeInsets.all(10),
+                decoration: BoxDecoration(
+                  color: AppColor.componentFillNormal,
+                  borderRadius: BorderRadius.circular(8),
+                ),
+                child: SelectableText(
+                  widget.errorDetail!,
+                  style: AppTextStyles.caption1Regular.copyWith(
+                    color: AppColor.labelAlternative,
+                    fontFamily: 'monospace',
+                    fontSize: 11,
+                    height: 1.4,
+                  ),
+                ),
+              ),
+            ],
+          ],
+        ],
+      ),
+      actions: [
+        TextButton(
+          onPressed: widget.onBack,
+          child: Text(
+            '돌아가기',
+            style: AppTextStyles.body1NormalMedium.copyWith(
+              color: AppColor.labelAssistive,
+            ),
+          ),
+        ),
+        TextButton(
+          onPressed: widget.onRetry,
+          child: Text(
+            '재시도',
+            style: AppTextStyles.body1NormalMedium.copyWith(
+              color: AppColor.primaryNormal,
+            ),
+          ),
+        ),
+      ],
+    );
+  }
 }

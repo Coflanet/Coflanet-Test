@@ -1,4 +1,5 @@
 import 'package:coflanet/core/storage/local_storage.dart';
+import 'package:coflanet/data/dummy/dummy_lifestyle_survey_data.dart';
 import 'package:coflanet/data/dummy/dummy_survey_data.dart';
 import 'package:coflanet/data/models/survey_question_model.dart';
 import 'package:coflanet/data/models/survey_result_model.dart';
@@ -11,10 +12,11 @@ class DummySurveyRepository implements SurveyRepository {
   final LocalStorage _storage = Get.find<LocalStorage>();
 
   @override
-  Future<List<SurveyQuestionModel>> getQuestions() async {
-    // Simulate network delay
+  Future<List<SurveyQuestionModel>> getQuestions({String type = 'standard'}) async {
     await Future.delayed(const Duration(milliseconds: 100));
-    return DummySurveyData.questions;
+    return type == 'lifestyle'
+        ? DummyLifestyleSurveyData.questions
+        : DummySurveyData.questions;
   }
 
   @override

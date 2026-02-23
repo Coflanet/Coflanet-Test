@@ -182,7 +182,7 @@ class SurveyQuestionView extends GetView<SurveyController> {
         ),
         child: PrimaryButton(
           text: buttonText,
-          isEnabled: true,
+          isEnabled: controller.hasSelection,
           onPressed: () => controller.nextQuestion(),
         ),
       );
