@@ -28,7 +28,7 @@ class AppBinding extends Bindings {
     );
 
     // Domain services
-    Get.put<SurveyService>(SurveyService(), permanent: true);
+    Get.putAsync<SurveyService>(() => SurveyService().init(), permanent: true);
 
     // API Client - initialized asynchronously via GetxService
     // Must be after LocalStorage since it depends on token storage

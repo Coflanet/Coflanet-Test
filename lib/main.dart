@@ -3,12 +3,14 @@ import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:kakao_flutter_sdk_common/kakao_flutter_sdk_common.dart';
+import 'package:supabase_flutter/supabase_flutter.dart' hide LocalStorage;
 import 'package:coflanet/app_binding.dart';
 import 'package:coflanet/routes/app_pages.dart';
 import 'package:coflanet/core/theme/app_theme.dart';
 import 'package:coflanet/core/storage/local_storage.dart';
 import 'package:coflanet/core/config/social_login_config.dart';
 import 'package:coflanet/constants/color_constant.dart';
+import 'package:coflanet/data/repositories/repository_config.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -22,6 +24,30 @@ void main() async {
 
   // Initialize Social Login SDKs
   _initSocialLoginSdks();
+
+  // Initialize Supabase (Auth + RPC + Edge Functions)
+  if (RepositoryConfig.dataSource == DataSource.supabase) {
+    await Supabase.initialize(
+      url: dotenv.env['SUPABASE_URL']!,
+      anonKey: dotenv.env['SUPABASE_ANON_KEY']!,
+    );
+    // Sync existing session to LocalStorage for splash controller compatibility
+    final session = Supabase.instance.client.auth.currentSession;
+    if (session != null) {
+      final localStorage = LocalStorage();
+      await localStorage.saveAccessToken(session.accessToken);
+      await localStorage.saveUserId(session.user.id);
+      // Sync display name from metadata if available
+      final meta = session.user.userMetadata;
+      final displayName = meta?['display_name'] as String? ??
+          meta?['full_name'] as String? ??
+          meta?['name'] as String? ??
+          meta?['preferred_username'] as String?;
+      if (displayName != null && displayName.isNotEmpty) {
+        await localStorage.saveUserName(displayName);
+      }
+    }
+  }
 
   // Set preferred orientations
   await SystemChrome.setPreferredOrientations([

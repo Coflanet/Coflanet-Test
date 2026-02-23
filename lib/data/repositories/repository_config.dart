@@ -1,13 +1,15 @@
+/// Data source type for repository implementations
+enum DataSource { dummy, supabase, api }
+
 /// Configuration for repository implementations
-/// Controls whether to use dummy (local) or API (remote) data sources
+/// Controls which data source (dummy/supabase/api) is used
 class RepositoryConfig {
   RepositoryConfig._();
 
-  /// Whether to use dummy data instead of API
-  /// Set to false when API is ready for production
-  static const bool useDummyData = true;
+  /// Current data source (change this one line to switch)
+  static const DataSource dataSource = DataSource.supabase;
 
-  /// API base URL (used when useDummyData is false)
+  /// API base URL (used when dataSource is api)
   static const String apiBaseUrl = 'https://api.coflanet.com/v1';
 
   /// Timeout for API requests in seconds

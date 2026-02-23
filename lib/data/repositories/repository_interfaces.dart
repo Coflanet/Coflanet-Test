@@ -53,8 +53,8 @@ abstract class AuthRepository {
 
 /// Repository for survey-related data operations
 abstract class SurveyRepository {
-  /// Get all survey questions
-  Future<List<SurveyQuestionModel>> getQuestions();
+  /// Get survey questions by type ('standard' or 'lifestyle')
+  Future<List<SurveyQuestionModel>> getQuestions({String type = 'standard'});
 
   /// Get survey result for current user
   Future<SurveyResultModel?> getSurveyResult();
@@ -123,7 +123,8 @@ abstract class CoffeeRepository {
 /// Repository for coffee recipe/timer data operations
 abstract class RecipeRepository {
   /// Get recipe by coffee type (handDrip, espresso, etc.)
-  Future<TimerRecipeModel?> getRecipeByType(String coffeeType);
+  /// [beanId] optional bean ID for bean-specific custom recipe
+  Future<TimerRecipeModel?> getRecipeByType(String coffeeType, {String? beanId});
 
   /// Get all available recipes
   Future<List<TimerRecipeModel>> getAllRecipes();

@@ -21,6 +21,9 @@ dependencies:
   # Network
   dio: ^5.4.0
 
+  # Supabase (DB-only mode, no Auth)
+  supabase_flutter: ^2.8.4
+
   # UI Components
   flutter_svg: ^2.0.9
   cached_network_image: ^3.3.1
