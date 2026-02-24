@@ -48,6 +48,11 @@ app.*.map.json
 .env
 docs/SUPABASE_CONNECTION.md
 
+# Android signing
+android/key.properties
+*.jks
+*.keystore
+
 # Session data
 .sisyphus/
 
@@ -65,3 +70,4 @@ apple_cert/
 
 # VSCode
 .vscode/
+/google_cert/

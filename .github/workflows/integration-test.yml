@@ -2,13 +2,12 @@ name: Integration Test (E2E)
 
 on:
   workflow_dispatch:
-  push:
-    tags:
-      - 'v*'
+  workflow_call:
 
 jobs:
   e2e-ios:
     name: E2E Test (iOS Simulator)
+    if: github.repository == 'PlanewTech/coflanet-app'
     runs-on: macos-latest
     timeout-minutes: 45
     steps:

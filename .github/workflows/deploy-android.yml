@@ -1,0 +1,41 @@
+name: Deploy to Google Play
+
+on:
+  workflow_dispatch:
+    inputs:
+      release_tag:
+        description: 'Release tag to deploy (e.g., v1.0.0)'
+        required: true
+      track:
+        description: 'Release track'
+        type: choice
+        options:
+          - internal
+          - alpha
+          - beta
+          - production
+        default: internal
+
+jobs:
+  deploy:
+    name: Upload to Google Play
+    if: github.repository == 'PlanewTech/coflanet-app'
+    runs-on: ubuntu-latest
+    steps:
+      - name: Download AAB from Release
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          gh release download ${{ inputs.release_tag }} \
+            --repo ${{ github.repository }} \
+            --pattern "app-release.aab" \
+            --dir artifacts
+
+      - name: Upload to Google Play
+        uses: r0adkll/upload-google-play@v1
+        with:
+          serviceAccountJsonPlainText: ${{ secrets.GOOGLE_PLAY_SERVICE_ACCOUNT_JSON }}
+          packageName: com.coflanet.tech.app
+          releaseFiles: artifacts/app-release.aab
+          track: ${{ inputs.track }}
+          status: completed
