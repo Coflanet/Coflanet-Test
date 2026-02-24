@@ -1,3 +1,5 @@
+import 'dart:ui' show EnginePhase;
+
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:integration_test/integration_test.dart';
@@ -5,6 +7,21 @@ import 'package:get/get.dart';
 
 import 'package:coflanet/main.dart' as app;
 import 'package:coflanet/routes/app_pages.dart';
+
+/// Safe pumpAndSettle with timeout — catches timeout on infinite animations
+Future<void> safePump(WidgetTester tester, [Duration? timeout]) async {
+  timeout ??= const Duration(seconds: 3);
+  try {
+    await tester.pumpAndSettle(
+      const Duration(milliseconds: 100),
+      EnginePhase.sendSemanticsUpdate,
+      timeout,
+    );
+  } catch (_) {
+    // pumpAndSettle timed out (infinite animation) — pump once and continue
+    await tester.pump(const Duration(milliseconds: 100));
+  }
+}
 
 /// Coflanet E2E Integration Test
 /// Tests all screens and button interactions according to STORYBOARD.md
@@ -29,7 +46,7 @@ void main() {
     testWidgets('Complete App Flow - All Screens and Buttons', (tester) async {
       // Start the app
       app.main();
-      await tester.pumpAndSettle(const Duration(seconds: 4));
+      await tester.pump(const Duration(seconds: 3));
 
       // ============================================
       // 1. SPLASH -> SIGNIN (Auto navigation)
@@ -38,7 +55,7 @@ void main() {
 
       // Should have navigated to SignIn screen
       // Look for any text on SignIn screen
-      await tester.pumpAndSettle();
+      await safePump(tester);
 
       // Take note of what's on screen
       final signInIndicator = find.byType(Scaffold);
@@ -66,7 +83,7 @@ void main() {
       if (inkWells.evaluate().length > 2) {
         // Tap the first social-looking button (skip back buttons etc)
         await tester.tap(inkWells.at(2));
-        await tester.pumpAndSettle(const Duration(seconds: 2));
+        await safePump(tester, const Duration(seconds: 2));
         debugPrint('✅ PASS: Social button tapped');
       }
 
@@ -75,13 +92,13 @@ void main() {
       // ============================================
       debugPrint('📱 TEST 3: Profile Setup (Name Input)');
 
-      await tester.pumpAndSettle();
+      await safePump(tester);
 
       // Find TextField for name input
       final textFields = find.byType(TextField);
       if (textFields.evaluate().isNotEmpty) {
         await tester.enterText(textFields.first, '테스트유저');
-        await tester.pumpAndSettle();
+        await safePump(tester);
         debugPrint('   Name entered: 테스트유저');
       }
 
@@ -89,7 +106,7 @@ void main() {
       final profileButtons = find.byType(ElevatedButton);
       if (profileButtons.evaluate().isNotEmpty) {
         await tester.tap(profileButtons.first);
-        await tester.pumpAndSettle(const Duration(seconds: 1));
+        await safePump(tester);
         debugPrint('✅ PASS: Profile Setup completed');
       }
 
@@ -99,13 +116,13 @@ void main() {
       debugPrint('📱 TEST 4: Survey Intro');
 
       // Look for "취향" text which should be on survey intro
-      await tester.pumpAndSettle();
+      await safePump(tester);
 
       // Find and tap the CTA button ("취향 찾으러 가기")
       final ctaButtons = find.byType(ElevatedButton);
       if (ctaButtons.evaluate().isNotEmpty) {
         await tester.tap(ctaButtons.first);
-        await tester.pumpAndSettle(const Duration(seconds: 1));
+        await safePump(tester);
         debugPrint('✅ PASS: Survey Intro CTA tapped');
       }
 
@@ -113,13 +130,13 @@ void main() {
       // 4.5. SECTION 1 INTRO SCREEN
       // ============================================
       debugPrint('📱 TEST 4.5: Section 1 Intro');
-      await tester.pumpAndSettle();
+      await safePump(tester);
 
       // Find and tap the "다음" button
       final section1Buttons = find.byType(ElevatedButton);
       if (section1Buttons.evaluate().isNotEmpty) {
         await tester.tap(section1Buttons.first);
-        await tester.pumpAndSettle(const Duration(seconds: 1));
+        await safePump(tester);
         debugPrint('✅ PASS: Section 1 Intro "다음" tapped');
       }
 
@@ -136,7 +153,7 @@ void main() {
 
       for (int step = 0; step < 10; step++) {
         debugPrint('   Step $step...');
-        await tester.pumpAndSettle();
+        await safePump(tester);
 
         // Check if this is a Section Intro screen (before steps 2 and 6)
         // Section Intro screens don't have survey options, just the "다음" button
@@ -150,7 +167,7 @@ void main() {
           // Tap first option (skip back button at index 0)
           try {
             await tester.tap(options.at(1));
-            await tester.pumpAndSettle();
+            await safePump(tester);
           } catch (e) {
             debugPrint('   Could not tap option: $e');
           }
@@ -161,7 +178,7 @@ void main() {
         if (buttons.evaluate().isNotEmpty) {
           try {
             await tester.tap(buttons.first);
-            await tester.pumpAndSettle(const Duration(seconds: 1));
+            await safePump(tester);
           } catch (e) {
             debugPrint('   Could not tap next: $e');
           }
@@ -170,13 +187,13 @@ void main() {
         // After steps 1 and 5, we get Section Intro screens - tap through them
         if (step == 1 || step == 5) {
           debugPrint('   -> Section Intro screen expected');
-          await tester.pumpAndSettle(const Duration(seconds: 1));
+          await safePump(tester);
 
           final sectionIntroButtons = find.byType(ElevatedButton);
           if (sectionIntroButtons.evaluate().isNotEmpty) {
             try {
               await tester.tap(sectionIntroButtons.first);
-              await tester.pumpAndSettle(const Duration(seconds: 1));
+              await safePump(tester);
               debugPrint('   ✅ Section Intro "다음" tapped');
             } catch (e) {
               debugPrint('   Could not tap section intro next: $e');
@@ -188,23 +205,23 @@ void main() {
       }
 
       // ============================================
-      // 6. SURVEY ANALYZING
+      // 6. SURVEY ANALYZING (infinite animation — use pump)
       // ============================================
       debugPrint('📱 TEST 6: Survey Analyzing');
-      await tester.pumpAndSettle(const Duration(seconds: 3));
+      await tester.pump(const Duration(seconds: 3));
       debugPrint('✅ PASS: Survey Analyzing shown');
 
       // ============================================
       // 7. SURVEY COMPLETE
       // ============================================
       debugPrint('📱 TEST 7: Survey Complete');
-      await tester.pumpAndSettle(const Duration(seconds: 2));
+      await safePump(tester, const Duration(seconds: 2));
 
       // Tap continue/result button
       final resultButtons = find.byType(ElevatedButton);
       if (resultButtons.evaluate().isNotEmpty) {
         await tester.tap(resultButtons.first);
-        await tester.pumpAndSettle(const Duration(seconds: 1));
+        await safePump(tester);
       }
       debugPrint('✅ PASS: Survey Complete shown');
 
@@ -212,13 +229,13 @@ void main() {
       // 8. SURVEY RESULT
       // ============================================
       debugPrint('📱 TEST 8: Survey Result');
-      await tester.pumpAndSettle();
+      await safePump(tester);
 
       // Tap home/continue button
       final homeButtons = find.byType(ElevatedButton);
       if (homeButtons.evaluate().isNotEmpty) {
         await tester.tap(homeButtons.first);
-        await tester.pumpAndSettle(const Duration(seconds: 1));
+        await safePump(tester);
       }
       debugPrint('✅ PASS: Survey Result shown');
 
@@ -229,7 +246,7 @@ void main() {
 
       // Navigate to home directly to ensure we're there
       Get.offAllNamed(Routes.mainShell);
-      await tester.pumpAndSettle(const Duration(seconds: 1));
+      await safePump(tester);
 
       // Verify home screen elements
       final homeScaffold = find.byType(Scaffold);
@@ -242,7 +259,7 @@ void main() {
       debugPrint('📱 TEST 10: Hand Drip Recipe');
 
       Get.toNamed(Routes.handDrip);
-      await tester.pumpAndSettle();
+      await safePump(tester);
 
       // Verify screen loaded
       expect(find.byType(Scaffold), findsWidgets);
@@ -251,33 +268,33 @@ void main() {
       final timerButtons = find.byType(ElevatedButton);
       if (timerButtons.evaluate().isNotEmpty) {
         await tester.tap(timerButtons.first);
-        await tester.pumpAndSettle();
+        await safePump(tester);
         debugPrint('   Timer button tapped');
       }
       debugPrint('✅ PASS: Hand Drip Screen loaded');
 
       // ============================================
-      // 11. TIMER SCREEN
+      // 11. TIMER SCREEN (infinite animation — use pump)
       // ============================================
       debugPrint('📱 TEST 11: Timer Screen');
 
       // Check if we navigated to timer or navigate directly
       Get.toNamed(Routes.timerActive, arguments: {'type': 'handDrip'});
-      await tester.pumpAndSettle();
+      await safePump(tester);
 
-      // Test play button
+      // Test play button — timer animation runs infinitely, use pump()
       final playIcons = find.byIcon(Icons.play_arrow);
       if (playIcons.evaluate().isNotEmpty) {
         await tester.tap(playIcons.first);
-        await tester.pumpAndSettle();
+        await tester.pump(const Duration(seconds: 1));
         debugPrint('   Play button tapped');
       }
 
-      // Test pause button
+      // Test pause button — timer may still be animating
       final pauseIcons = find.byIcon(Icons.pause);
       if (pauseIcons.evaluate().isNotEmpty) {
         await tester.tap(pauseIcons.first);
-        await tester.pumpAndSettle();
+        await tester.pump(const Duration(seconds: 1));
         debugPrint('   Pause button tapped');
       }
 
@@ -286,11 +303,11 @@ void main() {
       final forwardIcons = find.byIcon(Icons.arrow_forward_ios);
       if (nextIcons.evaluate().isNotEmpty) {
         await tester.tap(nextIcons.first);
-        await tester.pumpAndSettle();
+        await tester.pump(const Duration(seconds: 1));
         debugPrint('   Next step button tapped');
       } else if (forwardIcons.evaluate().isNotEmpty) {
         await tester.tap(forwardIcons.first);
-        await tester.pumpAndSettle();
+        await tester.pump(const Duration(seconds: 1));
         debugPrint('   Forward button tapped');
       }
 
@@ -302,7 +319,7 @@ void main() {
       debugPrint('📱 TEST 12: Timer Complete');
 
       Get.toNamed(Routes.timerComplete);
-      await tester.pumpAndSettle();
+      await safePump(tester);
 
       expect(find.byType(Scaffold), findsWidgets);
       debugPrint('✅ PASS: Timer Complete Screen loaded');
@@ -313,9 +330,9 @@ void main() {
       debugPrint('📱 TEST 13: Espresso Recipe');
 
       Get.offAllNamed(Routes.mainShell);
-      await tester.pumpAndSettle();
+      await safePump(tester);
       Get.toNamed(Routes.espresso);
-      await tester.pumpAndSettle();
+      await safePump(tester);
 
       expect(find.byType(Scaffold), findsWidgets);
       debugPrint('✅ PASS: Espresso Screen loaded');
@@ -326,7 +343,7 @@ void main() {
       debugPrint('📱 TEST 14: My Planet');
 
       Get.toNamed(Routes.myPlanet);
-      await tester.pumpAndSettle();
+      await safePump(tester);
 
       expect(find.byType(Scaffold), findsWidgets);
       debugPrint('✅ PASS: My Planet Screen loaded');
@@ -337,7 +354,7 @@ void main() {
       debugPrint('📱 TEST 15: My Taste');
 
       Get.toNamed(Routes.myTaste);
-      await tester.pumpAndSettle();
+      await safePump(tester);
 
       expect(find.byType(Scaffold), findsWidgets);
       debugPrint('✅ PASS: My Taste Screen loaded');
@@ -348,7 +365,7 @@ void main() {
       debugPrint('📱 TEST 16: Coffee Settings');
 
       Get.toNamed(Routes.coffeeSettings);
-      await tester.pumpAndSettle();
+      await safePump(tester);
 
       expect(find.byType(Scaffold), findsWidgets);
 
@@ -356,7 +373,7 @@ void main() {
       final listTiles = find.byType(ListTile);
       if (listTiles.evaluate().isNotEmpty) {
         await tester.tap(listTiles.first);
-        await tester.pumpAndSettle();
+        await safePump(tester);
         debugPrint('   Setting item tapped');
       }
       debugPrint('✅ PASS: Coffee Settings Screen loaded');
@@ -367,7 +384,7 @@ void main() {
       debugPrint('📱 TEST 17: Select Coffee');
 
       Get.toNamed(Routes.selectCoffee);
-      await tester.pumpAndSettle();
+      await safePump(tester);
 
       expect(find.byType(Scaffold), findsWidgets);
 
@@ -375,7 +392,7 @@ void main() {
       final coffeeCards = find.byType(GestureDetector);
       if (coffeeCards.evaluate().length > 1) {
         await tester.tap(coffeeCards.at(1));
-        await tester.pumpAndSettle();
+        await safePump(tester);
         debugPrint('   Coffee card tapped');
       }
 
@@ -383,7 +400,7 @@ void main() {
       final editIcons = find.byIcon(Icons.edit_outlined);
       if (editIcons.evaluate().isNotEmpty) {
         await tester.tap(editIcons.first);
-        await tester.pumpAndSettle();
+        await safePump(tester);
         debugPrint('   Edit mode toggled');
       }
 
@@ -395,9 +412,9 @@ void main() {
       debugPrint('📱 TEST 18: Back Navigation');
 
       Get.offAllNamed(Routes.mainShell);
-      await tester.pumpAndSettle();
+      await safePump(tester);
       Get.toNamed(Routes.handDrip);
-      await tester.pumpAndSettle();
+      await safePump(tester);
 
       // Find and tap back button
       final backIcons = find.byIcon(Icons.arrow_back);
@@ -405,15 +422,15 @@ void main() {
 
       if (backIcons.evaluate().isNotEmpty) {
         await tester.tap(backIcons.first);
-        await tester.pumpAndSettle();
+        await safePump(tester);
         debugPrint('   Back button works');
       } else if (backIosIcons.evaluate().isNotEmpty) {
         await tester.tap(backIosIcons.first);
-        await tester.pumpAndSettle();
+        await safePump(tester);
         debugPrint('   iOS back button works');
       } else {
         Get.back();
-        await tester.pumpAndSettle();
+        await safePump(tester);
         debugPrint('   System back works');
       }
       debugPrint('✅ PASS: Back Navigation works');
@@ -424,7 +441,7 @@ void main() {
       debugPrint('📱 TEST 19: Matching Result');
 
       Get.toNamed(Routes.matchingResult);
-      await tester.pumpAndSettle();
+      await safePump(tester);
 
       expect(find.byType(Scaffold), findsWidgets);
       debugPrint('✅ PASS: Matching Result Screen loaded');
@@ -435,7 +452,7 @@ void main() {
       debugPrint('📱 TEST 20: Coffee Main');
 
       Get.toNamed(Routes.coffeeMain);
-      await tester.pumpAndSettle();
+      await safePump(tester);
 
       expect(find.byType(Scaffold), findsWidgets);
       debugPrint('✅ PASS: Coffee Main Screen loaded');

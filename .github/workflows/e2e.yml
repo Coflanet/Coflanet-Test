@@ -8,7 +8,7 @@ jobs:
     name: iOS Simulator
     if: github.repository == 'PlanewTech/coflanet-app'
     runs-on: macos-latest
-    timeout-minutes: 45
+    timeout-minutes: 30
     steps:
       - uses: actions/checkout@v4
 
