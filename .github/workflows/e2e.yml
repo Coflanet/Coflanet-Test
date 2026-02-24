@@ -1,12 +1,11 @@
-name: Integration Test (E2E)
+name: E2E Test
 
 on:
   workflow_dispatch:
-  workflow_call:
 
 jobs:
-  e2e-ios:
-    name: E2E Test (iOS Simulator)
+  test:
+    name: iOS Simulator
     if: github.repository == 'PlanewTech/coflanet-app'
     runs-on: macos-latest
     timeout-minutes: 45
@@ -49,7 +48,6 @@ jobs:
           fi
           echo "DEVICE_ID=$DEVICE_ID" >> $GITHUB_ENV
           xcrun simctl boot "$DEVICE_ID" || true
-          echo "Booted simulator: $DEVICE_ID"
 
       - name: Run E2E tests
         run: |
