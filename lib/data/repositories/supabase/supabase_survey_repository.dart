@@ -16,7 +16,9 @@ class SupabaseSurveyRepository implements SurveyRepository {
   SupabaseClient get _db => Supabase.instance.client;
 
   @override
-  Future<List<SurveyQuestionModel>> getQuestions({String type = 'standard'}) async {
+  Future<List<SurveyQuestionModel>> getQuestions({
+    String type = 'standard',
+  }) async {
     // Survey questions are static — served from local data
     // TODO: 추후 서버에서 질문 관리 시 RPC로 교체
     return type == 'lifestyle'
@@ -62,7 +64,9 @@ class SupabaseSurveyRepository implements SurveyRepository {
   SurveyResultModel _parseServerResult(dynamic profileData, dynamic recsData) {
     // profileData could be a Map or a List with one element
     final profile = profileData is List
-        ? (profileData.isNotEmpty ? profileData.first as Map<String, dynamic> : <String, dynamic>{})
+        ? (profileData.isNotEmpty
+              ? profileData.first as Map<String, dynamic>
+              : <String, dynamic>{})
         : profileData as Map<String, dynamic>? ?? <String, dynamic>{};
 
     // Parse taste profile
@@ -81,11 +85,13 @@ class SupabaseSurveyRepository implements SurveyRepository {
     if (flavorList is List) {
       for (final f in flavorList) {
         if (f is Map<String, dynamic>) {
-          flavors.add(FlavorDescriptionModel(
-            name: f['name'] as String? ?? '',
-            emoji: f['emoji'] as String? ?? '',
-            description: f['description'] as String? ?? '',
-          ));
+          flavors.add(
+            FlavorDescriptionModel(
+              name: f['name'] as String? ?? '',
+              emoji: f['emoji'] as String? ?? '',
+              description: f['description'] as String? ?? '',
+            ),
+          );
         }
       }
     }
@@ -100,10 +106,14 @@ class SupabaseSurveyRepository implements SurveyRepository {
     }
 
     final result = SurveyResultModel(
-      coffeeType: profile['coffee_type'] as String? ??
-          profile['coffeeType'] as String? ?? '밸런스형',
-      coffeeTypeDescription: profile['coffee_type_description'] as String? ??
-          profile['coffeeTypeDescription'] as String? ?? '',
+      coffeeType:
+          profile['coffee_type'] as String? ??
+          profile['coffeeType'] as String? ??
+          '밸런스형',
+      coffeeTypeDescription:
+          profile['coffee_type_description'] as String? ??
+          profile['coffeeTypeDescription'] as String? ??
+          '',
       tasteProfile: tasteProfile,
       flavorDescriptions: flavors,
       recommendations: recommendations,
@@ -140,15 +150,18 @@ class SupabaseSurveyRepository implements SurveyRepository {
       name: r['name'] as String? ?? '',
       manufacturer: r['manufacturer'] as String?,
       origin: r['origin'] as String? ?? '',
-      roastLevel: r['roast_level'] as String? ?? r['roastLevel'] as String? ?? '',
+      roastLevel:
+          r['roast_level'] as String? ?? r['roastLevel'] as String? ?? '',
       description: r['description'] as String? ?? '',
       imageUrl: r['image_url'] as String? ?? r['imageUrl'] as String?,
       originalPrice: r['original_price'] as int? ?? r['originalPrice'] as int?,
       discountPrice: r['discount_price'] as int? ?? r['discountPrice'] as int?,
-      discountPercent: r['discount_percent'] as int? ?? r['discountPercent'] as int?,
+      discountPercent:
+          r['discount_percent'] as int? ?? r['discountPercent'] as int?,
       weight: r['weight'] as String?,
       tasteProfile: tasteProfile,
-      matchPercent: r['match_percent'] as int? ?? r['matchPercent'] as int? ?? 50,
+      matchPercent:
+          r['match_percent'] as int? ?? r['matchPercent'] as int? ?? 50,
       flavorTags: flavorTags,
       purchaseUrl: r['purchase_url'] as String? ?? r['purchaseUrl'] as String?,
     );
@@ -187,7 +200,8 @@ class SupabaseSurveyRepository implements SurveyRepository {
 
     String? sessionId;
     if (retakeResult is Map<String, dynamic>) {
-      sessionId = retakeResult['new_session_id'] as String? ??
+      sessionId =
+          retakeResult['new_session_id'] as String? ??
           retakeResult['session_id'] as String?;
     } else if (retakeResult is String) {
       sessionId = retakeResult;
@@ -215,8 +229,11 @@ class SupabaseSurveyRepository implements SurveyRepository {
     }
 
     // Parse the response
-    final responseMap = data is Map<String, dynamic> ? data : <String, dynamic>{};
-    final profileData = responseMap['taste_profile'] ?? responseMap['profile'] ?? responseMap;
+    final responseMap = data is Map<String, dynamic>
+        ? data
+        : <String, dynamic>{};
+    final profileData =
+        responseMap['taste_profile'] ?? responseMap['profile'] ?? responseMap;
     final recsData = responseMap['recommendations'] ?? [];
 
     return _parseServerResult(profileData, recsData);

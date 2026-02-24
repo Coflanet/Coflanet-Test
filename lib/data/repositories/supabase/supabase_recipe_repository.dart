@@ -26,7 +26,10 @@ class SupabaseRecipeRepository implements RecipeRepository {
   // ─── Public API ───
 
   @override
-  Future<TimerRecipeModel?> getRecipeByType(String coffeeType, {String? beanId}) async {
+  Future<TimerRecipeModel?> getRecipeByType(
+    String coffeeType, {
+    String? beanId,
+  }) async {
     // Try server merged recipe first (user customization + base defaults)
     try {
       final methodId = await _getBrewMethodId(coffeeType);
@@ -76,9 +79,7 @@ class SupabaseRecipeRepository implements RecipeRepository {
           .eq('is_default', false);
 
       final slugMap = await _getSlugMap();
-      final custom = rows
-          .map((r) => _recipeFromRow(r, slugMap))
-          .toList();
+      final custom = rows.map((r) => _recipeFromRow(r, slugMap)).toList();
       return [...builtIn, ...custom];
     } catch (e) {
       debugPrint('[RecipeRepo] getAllRecipes error: $e');
@@ -92,9 +93,18 @@ class SupabaseRecipeRepository implements RecipeRepository {
     // DummyTimerData.getRecipe always returns non-null, so we need to check
     // if the id actually matches a built-in type vs. a server UUID
     final knownTypes = {
-      'handDrip', 'espresso', 'espressoDouble', 'mokaPot', 'frenchPress',
-      'aeropress', 'coldBrew', 'chemex', 'siphon', 'turkish',
-      'vietnamese', 'cleverDripper',
+      'handDrip',
+      'espresso',
+      'espressoDouble',
+      'mokaPot',
+      'frenchPress',
+      'aeropress',
+      'coldBrew',
+      'chemex',
+      'siphon',
+      'turkish',
+      'vietnamese',
+      'cleverDripper',
     };
     if (knownTypes.contains(id)) return DummyTimerData.getRecipe(id);
 
@@ -122,7 +132,9 @@ class SupabaseRecipeRepository implements RecipeRepository {
 
       final methodId = await _getBrewMethodId(recipe.coffeeType);
       if (methodId == null) {
-        debugPrint('[RecipeRepo] brew_method not found for ${recipe.coffeeType}, cannot save');
+        debugPrint(
+          '[RecipeRepo] brew_method not found for ${recipe.coffeeType}, cannot save',
+        );
         return;
       }
 
@@ -158,28 +170,38 @@ class SupabaseRecipeRepository implements RecipeRepository {
 
       // Insert steps
       if (recipe.steps.isNotEmpty) {
-        final stepsData = recipe.steps.map((s) => <String, dynamic>{
-          'recipe_id': recipeId,
-          'step_number': s.stepNumber,
-          'title': s.title,
-          'description': s.description,
-          'step_type': s.stepType.name,
-          'water_amount_ml': s.waterAmount,
-          'duration_seconds': s.durationSeconds,
-          'action_text': s.actionText,
-          'illustration_emoji': s.illustrationEmoji,
-        }).toList();
+        final stepsData = recipe.steps
+            .map(
+              (s) => <String, dynamic>{
+                'recipe_id': recipeId,
+                'step_number': s.stepNumber,
+                'title': s.title,
+                'description': s.description,
+                'step_type': s.stepType.name,
+                'water_amount_ml': s.waterAmount,
+                'duration_seconds': s.durationSeconds,
+                'action_text': s.actionText,
+                'illustration_emoji': s.illustrationEmoji,
+              },
+            )
+            .toList();
         await _db.from('recipe_steps').insert(stepsData);
       }
 
       // Insert aroma tags
       if (recipe.aromaTags.isNotEmpty) {
-        final tagsData = recipe.aromaTags.asMap().entries.map((e) => <String, dynamic>{
-          'recipe_id': recipeId,
-          'emoji': e.value.emoji,
-          'name': e.value.name,
-          'display_order': e.key,
-        }).toList();
+        final tagsData = recipe.aromaTags
+            .asMap()
+            .entries
+            .map(
+              (e) => <String, dynamic>{
+                'recipe_id': recipeId,
+                'emoji': e.value.emoji,
+                'name': e.value.name,
+                'display_order': e.key,
+              },
+            )
+            .toList();
         await _db.from('recipe_aroma_tags').insert(tagsData);
       }
     } catch (e) {
@@ -298,10 +320,12 @@ class SupabaseRecipeRepository implements RecipeRepository {
     if (rawTags is List) {
       for (final t in rawTags) {
         if (t is Map<String, dynamic>) {
-          aromaTags.add(AromaTagModel(
-            emoji: t['emoji'] as String? ?? '',
-            name: t['name'] as String? ?? '',
-          ));
+          aromaTags.add(
+            AromaTagModel(
+              emoji: t['emoji'] as String? ?? '',
+              name: t['name'] as String? ?? '',
+            ),
+          );
         }
       }
     }
@@ -332,9 +356,13 @@ class SupabaseRecipeRepository implements RecipeRepository {
     final steps = <TimerStepModel>[];
     final rawSteps = row['recipe_steps'];
     if (rawSteps is List) {
-      final sorted = List<Map<String, dynamic>>.from(
-        rawSteps.map((s) => s as Map<String, dynamic>),
-      )..sort((a, b) => _toInt(a['step_number']).compareTo(_toInt(b['step_number'])));
+      final sorted =
+          List<Map<String, dynamic>>.from(
+            rawSteps.map((s) => s as Map<String, dynamic>),
+          )..sort(
+            (a, b) =>
+                _toInt(a['step_number']).compareTo(_toInt(b['step_number'])),
+          );
 
       for (final s in sorted) {
         steps.add(_stepFromMap(s, _toInt(s['step_number'])));
@@ -345,15 +373,22 @@ class SupabaseRecipeRepository implements RecipeRepository {
     final aromaTags = <AromaTagModel>[];
     final rawTags = row['recipe_aroma_tags'];
     if (rawTags is List) {
-      final sorted = List<Map<String, dynamic>>.from(
-        rawTags.map((t) => t as Map<String, dynamic>),
-      )..sort((a, b) => _toInt(a['display_order']).compareTo(_toInt(b['display_order'])));
+      final sorted =
+          List<Map<String, dynamic>>.from(
+            rawTags.map((t) => t as Map<String, dynamic>),
+          )..sort(
+            (a, b) => _toInt(
+              a['display_order'],
+            ).compareTo(_toInt(b['display_order'])),
+          );
 
       for (final t in sorted) {
-        aromaTags.add(AromaTagModel(
-          emoji: t['emoji'] as String? ?? '',
-          name: t['name'] as String? ?? '',
-        ));
+        aromaTags.add(
+          AromaTagModel(
+            emoji: t['emoji'] as String? ?? '',
+            name: t['name'] as String? ?? '',
+          ),
+        );
       }
     }
 
@@ -372,7 +407,10 @@ class SupabaseRecipeRepository implements RecipeRepository {
 
   TimerStepModel _stepFromMap(Map<String, dynamic> s, int fallbackNumber) {
     return TimerStepModel(
-      stepNumber: _toInt(s['step_number'] ?? s['stepNumber'], defaultValue: fallbackNumber),
+      stepNumber: _toInt(
+        s['step_number'] ?? s['stepNumber'],
+        defaultValue: fallbackNumber,
+      ),
       title: s['title'] as String? ?? '',
       description: s['description'] as String? ?? '',
       durationSeconds: _toInt(s['duration_seconds'] ?? s['durationSeconds']),
@@ -381,7 +419,9 @@ class SupabaseRecipeRepository implements RecipeRepository {
         (e) => e.name == (s['step_type'] ?? s['stepType'] ?? 'brewing'),
         orElse: () => TimerStepType.brewing,
       ),
-      illustrationEmoji: s['illustration_emoji'] as String? ?? s['illustrationEmoji'] as String?,
+      illustrationEmoji:
+          s['illustration_emoji'] as String? ??
+          s['illustrationEmoji'] as String?,
       actionText: s['action_text'] as String? ?? s['actionText'] as String?,
     );
   }

@@ -303,7 +303,9 @@ class RecipeFormView extends GetView<CoffeeController> {
           color: AppColor.backgroundNormalNormal,
           borderRadius: BorderRadius.circular(22),
           border: Border.all(
-            color: isSelected ? AppColor.primaryNormal : AppColor.lineSolidNormal,
+            color: isSelected
+                ? AppColor.primaryNormal
+                : AppColor.lineSolidNormal,
             width: isSelected ? 2 : 1,
           ),
         ),
@@ -380,7 +382,9 @@ class RecipeFormView extends GetView<CoffeeController> {
               : AppColor.backgroundNormalNormal,
           borderRadius: BorderRadius.circular(24),
           border: Border.all(
-            color: isSelected ? AppColor.primaryNormal : AppColor.lineSolidNormal,
+            color: isSelected
+                ? AppColor.primaryNormal
+                : AppColor.lineSolidNormal,
             width: 1,
           ),
         ),

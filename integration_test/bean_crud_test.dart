@@ -95,7 +95,10 @@ void main() {
           await tester.pumpAndSettle();
 
           // Bean name (2nd field)
-          await tester.enterText(textFields.at(1), '테스트 원두 ${DateTime.now().millisecondsSinceEpoch}');
+          await tester.enterText(
+            textFields.at(1),
+            '테스트 원두 ${DateTime.now().millisecondsSinceEpoch}',
+          );
           await tester.pumpAndSettle();
 
           // Origin (3rd field if exists)

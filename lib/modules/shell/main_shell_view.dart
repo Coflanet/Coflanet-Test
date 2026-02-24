@@ -71,8 +71,9 @@ class MainShellView extends GetView<MainShellController> {
                   currentIndex == 0 &&
                   Get.isRegistered<SelectCoffeeController>() &&
                   Get.find<SelectCoffeeController>().isEditing;
-              final bottomInset =
-                  isEditMode ? 0.0 : tabBarContentHeight + bottomPadding;
+              final bottomInset = isEditMode
+                  ? 0.0
+                  : tabBarContentHeight + bottomPadding;
 
               if (currentIndex == 3) {
                 return Padding(
@@ -292,7 +293,8 @@ class MainShellView extends GetView<MainShellController> {
             borderRadius: BorderRadius.circular(99), // Figma: 99px pill
             // Figma: Tint layer for edit mode (Violet Liquid Glass Primary)
             color: isEditing
-                ? AppColor.colorGlobalViolet60 // Figma: #7D5EF7 violet
+                ? AppColor
+                      .colorGlobalViolet60 // Figma: #7D5EF7 violet
                 : AppColor.colorGlobalCommon100.withValues(alpha: 0.25),
             // Figma: box-shadow: 0px 0px 2px rgba(0,0,0,0.1), 0px 1px 8px rgba(0,0,0,0.12)
             boxShadow: isEditing
@@ -303,7 +305,9 @@ class MainShellView extends GetView<MainShellController> {
                       offset: Offset.zero,
                     ),
                     BoxShadow(
-                      color: AppColor.colorGlobalCommon0.withValues(alpha: 0.12),
+                      color: AppColor.colorGlobalCommon0.withValues(
+                        alpha: 0.12,
+                      ),
                       blurRadius: 8,
                       offset: const Offset(0, 1),
                     ),
@@ -371,7 +375,8 @@ class MainShellView extends GetView<MainShellController> {
 
     // Colors per Figma CSS
     final activeColor = AppColor.colorGlobalViolet60; // Figma: #7D5EF7
-    final inactiveColor = AppColor.inverseLabelNeutral; // rgba(194, 196, 200, 0.88)
+    final inactiveColor =
+        AppColor.inverseLabelNeutral; // rgba(194, 196, 200, 0.88)
 
     // Selected: violet, Unselected: light gray
     final iconColor = isActive ? activeColor : inactiveColor;
@@ -389,7 +394,9 @@ class MainShellView extends GetView<MainShellController> {
         margin: const EdgeInsets.symmetric(horizontal: 2),
         decoration: BoxDecoration(
           // Figma: Active = black @ 35% opacity, pill shape
-          color: isActive ? AppColor.colorGlobalCommon0.withOpacity(0.35) : AppColor.transparent,
+          color: isActive
+              ? AppColor.colorGlobalCommon0.withOpacity(0.35)
+              : AppColor.transparent,
           borderRadius: BorderRadius.circular(99), // Pill shape
         ),
         child: Column(

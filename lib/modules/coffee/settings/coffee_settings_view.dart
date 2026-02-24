@@ -151,7 +151,11 @@ class CoffeeSettingsView extends GetView<CoffeeController> {
               borderRadius: BorderRadius.circular(20),
             ),
             child: const Center(
-              child: Icon(Icons.coffee, size: 32, color: AppColor.colorGlobalNeutral60),
+              child: Icon(
+                Icons.coffee,
+                size: 32,
+                color: AppColor.colorGlobalNeutral60,
+              ),
             ),
           ),
           const SizedBox(width: 12),
@@ -189,11 +193,7 @@ class CoffeeSettingsView extends GetView<CoffeeController> {
             ),
           ),
           // Chevron
-          Icon(
-            Icons.chevron_right,
-            color: AppColor.labelAlternative,
-            size: 24,
-          ),
+          Icon(Icons.chevron_right, color: AppColor.labelAlternative, size: 24),
         ],
       ),
     );
@@ -381,11 +381,7 @@ class CoffeeSettingsView extends GetView<CoffeeController> {
   /// Vertical Divider between parameter columns
   /// Figma: width 1px, height 24px, color rgba(112,115,124,0.16)
   Widget _buildVerticalDivider() {
-    return Container(
-      width: 1,
-      height: 24,
-      color: AppColor.componentFillStrong,
-    );
+    return Container(width: 1, height: 24, color: AppColor.componentFillStrong);
   }
 
   /// Progress Tracker (Recipe Steps)
@@ -791,7 +787,11 @@ class _RecipeStepItem extends StatelessWidget {
             ),
             // Vertical divider line - Figma: 1px width, 28px height, background #E1E2E4
             if (!isLast)
-              Container(width: 1, height: 28, color: AppColor.colorGlobalCoolNeutral96),
+              Container(
+                width: 1,
+                height: 28,
+                color: AppColor.colorGlobalCoolNeutral96,
+              ),
           ],
         ),
         const SizedBox(width: 12),

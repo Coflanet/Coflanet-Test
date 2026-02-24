@@ -86,7 +86,9 @@ void main() {
         );
         debugPrint('  save_onboarding_reasons → $result');
 
-        final savedReasons = List<String>.from(result['onboarding_reasons'] ?? []);
+        final savedReasons = List<String>.from(
+          result['onboarding_reasons'] ?? [],
+        );
         expect(savedReasons, containsAll(reasons));
         debugPrint('✅ Reasons saved and verified: $savedReasons');
         passed++;
@@ -126,7 +128,9 @@ void main() {
       debugPrint('\n========== 5. ONBOARDING OPTIONS ==========');
       try {
         final options = await supabase.rpc('get_onboarding_options');
-        debugPrint('  get_onboarding_options → ${(options as List).length} items');
+        debugPrint(
+          '  get_onboarding_options → ${(options as List).length} items',
+        );
 
         expect(options.length, greaterThan(0));
         for (final opt in options) {
@@ -163,11 +167,15 @@ void main() {
             'submit-survey',
             body: {'session_id': sessionId},
           );
-          debugPrint('  submit-survey → status=${response.status}, data=${response.data}');
+          debugPrint(
+            '  submit-survey → status=${response.status}, data=${response.data}',
+          );
           debugPrint('✅ submit-survey succeeded');
           passed++;
         } on FunctionException catch (e) {
-          debugPrint('⚠️ submit-survey: status=${e.status} (Edge Function 서버 이슈)');
+          debugPrint(
+            '⚠️ submit-survey: status=${e.status} (Edge Function 서버 이슈)',
+          );
           debugPrint('   details: ${e.details}');
           // Don't count as failure - known server-side JWT issue
         }
@@ -225,7 +233,9 @@ void main() {
         debugPrint('✅ Dashboard loaded:');
         debugPrint('   display_name=${dashboard['display_name']}');
         debugPrint('   bean_count=${dashboard['bean_count']}');
-        debugPrint('   custom_recipe_count=${dashboard['custom_recipe_count']}');
+        debugPrint(
+          '   custom_recipe_count=${dashboard['custom_recipe_count']}',
+        );
         debugPrint('   latest_coffee_type=${dashboard['latest_coffee_type']}');
         passed++;
       } catch (e) {
@@ -258,19 +268,22 @@ void main() {
       debugPrint('\n========== 11. CUSTOM RECIPE ==========');
       try {
         // Try to save a custom recipe
-        final recipeResult = await supabase.rpc('save_custom_recipe', params: {
-          'p_brew_method_id': null,
-          'p_recipe_name': 'E2E테스트레시피',
-          'p_steps': [
-            {'label': '뜸들이기', 'duration_sec': 30, 'water_ml': 40},
-            {'label': '1차 추출', 'duration_sec': 45, 'water_ml': 100},
-          ],
-          'p_total_water_ml': 140,
-          'p_total_time_sec': 75,
-          'p_coffee_grams': 15.0,
-          'p_grind_size': '중간',
-          'p_water_temp': 92,
-        });
+        final recipeResult = await supabase.rpc(
+          'save_custom_recipe',
+          params: {
+            'p_brew_method_id': null,
+            'p_recipe_name': 'E2E테스트레시피',
+            'p_steps': [
+              {'label': '뜸들이기', 'duration_sec': 30, 'water_ml': 40},
+              {'label': '1차 추출', 'duration_sec': 45, 'water_ml': 100},
+            ],
+            'p_total_water_ml': 140,
+            'p_total_time_sec': 75,
+            'p_coffee_grams': 15.0,
+            'p_grind_size': '중간',
+            'p_water_temp': 92,
+          },
+        );
         debugPrint('  save_custom_recipe → $recipeResult');
         debugPrint('✅ Custom recipe saved');
         passed++;
@@ -334,7 +347,9 @@ void main() {
 
         final dashboard = await supabase.rpc('get_my_dashboard');
         expect(dashboard['is_dark_mode'], isTrue);
-        debugPrint('✅ Dark mode synced: is_dark_mode=${dashboard['is_dark_mode']}');
+        debugPrint(
+          '✅ Dark mode synced: is_dark_mode=${dashboard['is_dark_mode']}',
+        );
         passed++;
 
         // Reset

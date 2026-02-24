@@ -167,19 +167,13 @@ class MyPlanetController extends BaseController {
         title: const Text('회원탈퇴'),
         content: const Text('정말 탈퇴하시겠습니까?\n모든 데이터가 삭제됩니다.'),
         actions: [
-          TextButton(
-            onPressed: () => Get.back(),
-            child: const Text('취소'),
-          ),
+          TextButton(onPressed: () => Get.back(), child: const Text('취소')),
           TextButton(
             onPressed: () async {
               Get.back(); // close dialog
               await _executeWithdrawal();
             },
-            child: const Text(
-              '탈퇴',
-              style: TextStyle(color: Color(0xFFFF4242)),
-            ),
+            child: const Text('탈퇴', style: TextStyle(color: Color(0xFFFF4242))),
           ),
         ],
       ),
@@ -206,21 +200,13 @@ class MyPlanetController extends BaseController {
   /// Open privacy policy
   void openPrivacyPolicy() {
     // 개인정보처리방침 URL 연동 (추후 구현)
-    Get.snackbar(
-      '개인정보처리방침',
-      '준비 중입니다',
-      snackPosition: SnackPosition.BOTTOM,
-    );
+    Get.snackbar('개인정보처리방침', '준비 중입니다', snackPosition: SnackPosition.BOTTOM);
   }
 
   /// Open terms of service
   void openTermsOfService() {
     // 서비스 이용약관 URL 연동 (추후 구현)
-    Get.snackbar(
-      '서비스 이용약관',
-      '준비 중입니다',
-      snackPosition: SnackPosition.BOTTOM,
-    );
+    Get.snackbar('서비스 이용약관', '준비 중입니다', snackPosition: SnackPosition.BOTTOM);
   }
 
   // Kept for backward compatibility

@@ -13,7 +13,10 @@ class ApiRecipeRepository implements RecipeRepository {
   static const String _savedEndpoint = '/recipes/saved';
 
   @override
-  Future<TimerRecipeModel?> getRecipeByType(String coffeeType, {String? beanId}) async {
+  Future<TimerRecipeModel?> getRecipeByType(
+    String coffeeType, {
+    String? beanId,
+  }) async {
     try {
       final response = await _apiClient.get('$_baseEndpoint/type/$coffeeType');
       if (response.data != null && response.data['recipe'] != null) {

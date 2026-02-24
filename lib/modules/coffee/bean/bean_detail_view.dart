@@ -112,8 +112,9 @@ class BeanDetailView extends StatelessWidget {
                 arguments: {'bean': _bean},
               );
               if (result is CoffeeItem) {
-                await RepositoryProvider.coffeeRepository
-                    .updateCoffeeItem(result);
+                await RepositoryProvider.coffeeRepository.updateCoffeeItem(
+                  result,
+                );
                 // Return updated bean to refresh the list
                 Get.back(result: result);
               }

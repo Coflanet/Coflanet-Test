@@ -124,7 +124,10 @@ abstract class CoffeeRepository {
 abstract class RecipeRepository {
   /// Get recipe by coffee type (handDrip, espresso, etc.)
   /// [beanId] optional bean ID for bean-specific custom recipe
-  Future<TimerRecipeModel?> getRecipeByType(String coffeeType, {String? beanId});
+  Future<TimerRecipeModel?> getRecipeByType(
+    String coffeeType, {
+    String? beanId,
+  });
 
   /// Get all available recipes
   Future<List<TimerRecipeModel>> getAllRecipes();

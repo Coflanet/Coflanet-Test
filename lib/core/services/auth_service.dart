@@ -2,7 +2,8 @@ import 'dart:async';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/widgets.dart';
 import 'package:get/get.dart';
-import 'package:supabase_flutter/supabase_flutter.dart' hide LocalStorage, AuthException;
+import 'package:supabase_flutter/supabase_flutter.dart'
+    hide LocalStorage, AuthException;
 import 'package:coflanet/core/storage/local_storage.dart';
 import 'package:coflanet/data/models/user_model.dart';
 import 'package:coflanet/data/providers/auth_provider.dart';
@@ -84,8 +85,7 @@ class AuthService extends GetxService with WidgetsBindingObserver {
 
   AuthService({this.config = const AuthServiceConfig()});
 
-  bool get _isSupabase =>
-      RepositoryConfig.dataSource == DataSource.supabase;
+  bool get _isSupabase => RepositoryConfig.dataSource == DataSource.supabase;
 
   SupabaseClient get _supabase => Supabase.instance.client;
 
@@ -124,9 +124,7 @@ class AuthService extends GetxService with WidgetsBindingObserver {
       _oauthSub?.cancel();
       _oauthSub = null;
       _oauthCompleter = null;
-      completer.completeError(
-        AuthException('로그인이 취소되었습니다.'),
-      );
+      completer.completeError(AuthException('로그인이 취소되었습니다.'));
     }
   }
 
@@ -287,7 +285,9 @@ class AuthService extends GetxService with WidgetsBindingObserver {
     }
 
     // Set the session from the returned tokens
-    final authResponse = await _supabase.auth.setSession(data['access_token'] as String);
+    final authResponse = await _supabase.auth.setSession(
+      data['access_token'] as String,
+    );
     return _userFromAuthResponse(authResponse, 'naver');
   }
 
@@ -298,7 +298,8 @@ class AuthService extends GetxService with WidgetsBindingObserver {
     return UserModel(
       id: user?.id ?? '',
       email: user?.email,
-      name: meta?['display_name'] as String? ??
+      name:
+          meta?['display_name'] as String? ??
           meta?['full_name'] as String? ??
           meta?['name'] as String? ??
           meta?['preferred_username'] as String?,
@@ -315,7 +316,8 @@ class AuthService extends GetxService with WidgetsBindingObserver {
     return UserModel(
       id: user.id,
       email: user.email,
-      name: meta?['display_name'] as String? ??
+      name:
+          meta?['display_name'] as String? ??
           meta?['full_name'] as String? ??
           meta?['name'] as String? ??
           meta?['preferred_username'] as String?,
@@ -383,16 +385,17 @@ class AuthService extends GetxService with WidgetsBindingObserver {
         try {
           await _supabase.functions.invoke(
             'delete-account',
-            headers: {
-              if (token != null) 'Authorization': 'Bearer $token',
-            },
+            headers: {if (token != null) 'Authorization': 'Bearer $token'},
           );
         } catch (e) {
           debugPrint('[AuthService] delete-account Edge Function failed: $e');
           // Fallback: RPC 직접 호출
           final userId = _supabase.auth.currentUser?.id;
           if (userId != null) {
-            await _supabase.rpc('delete_user_data', params: {'p_user_id': userId});
+            await _supabase.rpc(
+              'delete_user_data',
+              params: {'p_user_id': userId},
+            );
           }
         }
         try {

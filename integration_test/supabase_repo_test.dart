@@ -180,7 +180,10 @@ void main() {
 
       // C3: saveSurveyAnswers + getSurveyAnswers (로컬)
       try {
-        final answers = {'step1': ['opt_a'], 'step2': ['opt_b', 'opt_c']};
+        final answers = {
+          'step1': ['opt_a'],
+          'step2': ['opt_b', 'opt_c'],
+        };
         await surveyRepo.saveSurveyAnswers(answers);
         final loaded = await surveyRepo.getSurveyAnswers();
         expect(loaded, isNotNull);
@@ -346,8 +349,10 @@ void main() {
         try {
           final recipe = await recipeRepo.getRecipeByType(type);
           expect(recipe, isNotNull);
-          pass('RecipeRepo.getRecipeByType($type)',
-              'name=${recipe!.name}, steps=${recipe.steps.length}');
+          pass(
+            'RecipeRepo.getRecipeByType($type)',
+            'name=${recipe!.name}, steps=${recipe.steps.length}',
+          );
         } catch (e) {
           fail('RecipeRepo.getRecipeByType($type)', e);
         }
@@ -374,7 +379,10 @@ void main() {
         final custom = all.where((r) => r.name == 'E2E 테스트 레시피');
         if (custom.isNotEmpty) {
           savedRecipeId = custom.first.id;
-          pass('RecipeRepo.saveRecipe 확인', 'id=$savedRecipeId, steps=${custom.first.steps.length}, tags=${custom.first.aromaTags.length}');
+          pass(
+            'RecipeRepo.saveRecipe 확인',
+            'id=$savedRecipeId, steps=${custom.first.steps.length}, tags=${custom.first.aromaTags.length}',
+          );
         } else {
           warn('RecipeRepo.saveRecipe 확인', '저장은 성공했으나 목록에서 찾을 수 없음');
         }
@@ -400,7 +408,10 @@ void main() {
         if (saved.any((r) => r.id == 'handDrip')) {
           pass('RecipeRepo.addToSavedRecipes+get', '${saved.length}개');
         } else {
-          warn('RecipeRepo.addToSavedRecipes+get', '로컬 스토리지 테스트 환경 제약 — 앱 실행 시 정상');
+          warn(
+            'RecipeRepo.addToSavedRecipes+get',
+            '로컬 스토리지 테스트 환경 제약 — 앱 실행 시 정상',
+          );
         }
         await recipeRepo.removeFromSavedRecipes('handDrip');
         pass('RecipeRepo.removeFromSavedRecipes', 'OK');
@@ -425,14 +436,20 @@ void main() {
 
       try {
         final r = await db.rpc('get_my_dashboard');
-        pass('get_my_dashboard', 'display_name=${r['display_name']}, beans=${r['bean_count']}');
+        pass(
+          'get_my_dashboard',
+          'display_name=${r['display_name']}, beans=${r['bean_count']}',
+        );
       } catch (e) {
         fail('get_my_dashboard', e);
       }
 
       try {
         final r = await db.rpc('get_my_brew_stats');
-        pass('get_my_brew_stats', 'total=${r['total_brews']}, methods=${r['unique_methods']}');
+        pass(
+          'get_my_brew_stats',
+          'total=${r['total_brews']}, methods=${r['unique_methods']}',
+        );
       } catch (e) {
         fail('get_my_brew_stats', e);
       }
@@ -462,7 +479,9 @@ void main() {
       debugPrint('\n════════════════════════════════════════');
       debugPrint('  PASSED: $passed');
       debugPrint('  FAILED: $failed');
-      debugPrint('  WARNINGS: ${issues.where((i) => i.startsWith('WARN')).length}');
+      debugPrint(
+        '  WARNINGS: ${issues.where((i) => i.startsWith('WARN')).length}',
+      );
       if (issues.isNotEmpty) {
         debugPrint('\n  Issues:');
         for (final i in issues) {
@@ -471,7 +490,12 @@ void main() {
       }
       debugPrint('════════════════════════════════════════\n');
 
-      expect(failed, equals(0), reason: '$failed tests failed:\n${issues.where((i) => i.startsWith("FAIL")).join("\n")}');
+      expect(
+        failed,
+        equals(0),
+        reason:
+            '$failed tests failed:\n${issues.where((i) => i.startsWith("FAIL")).join("\n")}',
+      );
       await tester.pumpWidget(const MaterialApp(home: Scaffold()));
     });
   });

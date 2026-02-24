@@ -130,8 +130,7 @@ class SignUpController extends BaseController {
         if (message.contains('already registered') ||
             message.contains('already exists')) {
           emailError.value = '이미 가입된 이메일입니다';
-        } else if (message.contains('rate limit') ||
-            message.contains('429')) {
+        } else if (message.contains('rate limit') || message.contains('429')) {
           emailError.value = '요청이 너무 많습니다. 잠시 후 다시 시도해주세요.';
         } else if (message.contains('email_address_invalid') ||
             message.contains('invalid')) {

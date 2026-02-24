@@ -51,8 +51,7 @@ class EmailLoginController extends BaseController {
           passwordError.value = '이메일 또는 비밀번호가 올바르지 않습니다';
         } else if (message.contains('Email not confirmed')) {
           emailError.value = '이메일 인증이 완료되지 않았습니다';
-        } else if (message.contains('rate limit') ||
-            message.contains('429')) {
+        } else if (message.contains('rate limit') || message.contains('429')) {
           emailError.value = '요청이 너무 많습니다. 잠시 후 다시 시도해주세요.';
         } else {
           emailError.value = '로그인에 실패했습니다. 다시 시도해주세요.';
@@ -64,7 +63,9 @@ class EmailLoginController extends BaseController {
   /// 온보딩 완료 여부에 따라 적절한 화면으로 이동
   Future<void> _navigateAfterLogin() async {
     try {
-      final result = await Supabase.instance.client.rpc('get_onboarding_status');
+      final result = await Supabase.instance.client.rpc(
+        'get_onboarding_status',
+      );
       if (result is Map<String, dynamic>) {
         final completed = result['has_completed_survey'] as bool? ?? false;
         if (completed) {

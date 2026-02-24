@@ -213,7 +213,9 @@ void main() {
       equals(0),
       reason: 'Steps should remain empty after save',
     );
-    debugPrint('3.4 Steps remain empty: ${stepsController.extractionSteps.length}');
+    debugPrint(
+      '3.4 Steps remain empty: ${stepsController.extractionSteps.length}',
+    );
     debugPrint('');
 
     // ===== PART 4: Verify CoffeeSettings shows empty extraction steps =====
@@ -230,7 +232,9 @@ void main() {
     expect(find.text('뜸 들이기'), findsNothing);
     expect(find.text('1차 추출'), findsNothing);
     expect(find.text('2차 추출'), findsNothing);
-    debugPrint('4.1 CoffeeSettings correctly shows only fixed steps (no extraction steps)');
+    debugPrint(
+      '4.1 CoffeeSettings correctly shows only fixed steps (no extraction steps)',
+    );
     debugPrint('');
 
     // ===== PART 5: Verify persistence - reload recipe and check empty steps =====

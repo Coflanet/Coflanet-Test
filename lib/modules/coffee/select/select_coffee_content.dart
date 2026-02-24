@@ -166,44 +166,39 @@ class SelectCoffeeContent extends GetView<SelectCoffeeController> {
               // lazily during layout (outside the parent Obx scope), so without
               // a per-item Obx, _selectedIdsForEdit changes would not trigger
               // a rebuild of the checkbox UI.
-              return Obx(
-                key: ValueKey(item.id),
-                () {
-                  final isSelected = controller.isSelectedForEdit(item.id);
+              return Obx(key: ValueKey(item.id), () {
+                final isSelected = controller.isSelectedForEdit(item.id);
 
-                  return Padding(
-                    padding: const EdgeInsets.only(bottom: 8),
-                    child: SizedBox(
-                      height: 80,
-                      child: Row(
-                        crossAxisAlignment: CrossAxisAlignment.center,
-                        children: [
-                          // Checkbox OUTSIDE card (left)
-                          GestureDetector(
-                            onTap: () =>
-                                controller.toggleEditSelection(item.id),
-                            child: _buildEditCheckbox(isSelected),
+                return Padding(
+                  padding: const EdgeInsets.only(bottom: 8),
+                  child: SizedBox(
+                    height: 80,
+                    child: Row(
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      children: [
+                        // Checkbox OUTSIDE card (left)
+                        GestureDetector(
+                          onTap: () => controller.toggleEditSelection(item.id),
+                          child: _buildEditCheckbox(isSelected),
+                        ),
+                        const SizedBox(width: 12),
+                        // Card
+                        Expanded(child: _buildEditModeCard(item, isSelected)),
+                        const SizedBox(width: 12),
+                        // Drag handle with ReorderableDragStartListener
+                        ReorderableDragStartListener(
+                          index: index,
+                          child: Icon(
+                            Icons.drag_handle,
+                            color: AppColor.labelNormal,
+                            size: 24,
                           ),
-                          const SizedBox(width: 12),
-                          // Card
-                          Expanded(
-                              child: _buildEditModeCard(item, isSelected)),
-                          const SizedBox(width: 12),
-                          // Drag handle with ReorderableDragStartListener
-                          ReorderableDragStartListener(
-                            index: index,
-                            child: Icon(
-                              Icons.drag_handle,
-                              color: AppColor.labelNormal,
-                              size: 24,
-                            ),
-                          ),
-                        ],
-                      ),
+                        ),
+                      ],
                     ),
-                  );
-                },
-              );
+                  ),
+                );
+              });
             },
           ),
         ),
@@ -343,7 +338,10 @@ class SelectCoffeeContent extends GetView<SelectCoffeeController> {
   }
 
   Future<void> _onDetailPressed(CoffeeItem item) async {
-    final result = await Get.toNamed(Routes.beanDetail, arguments: {'bean': item});
+    final result = await Get.toNamed(
+      Routes.beanDetail,
+      arguments: {'bean': item},
+    );
     if (result is CoffeeItem) {
       // Bean was edited — refresh the list
       controller.refreshList();
@@ -478,7 +476,11 @@ class SelectCoffeeContent extends GetView<SelectCoffeeController> {
           ),
         ),
         child: isSelected
-            ? const Icon(Icons.check, size: 12, color: AppColor.colorGlobalCommon100)
+            ? const Icon(
+                Icons.check,
+                size: 12,
+                color: AppColor.colorGlobalCommon100,
+              )
             : null,
       ),
     );
@@ -851,10 +853,7 @@ class _CoffeeAccordionCardState extends State<_CoffeeAccordionCard>
           // ── Divider (Figma: 1px height, gap 20px above/below via container gap) ──
           if (widget.item.allFlavorTags.isNotEmpty) ...[
             const SizedBox(height: 20), // gap before divider
-            Container(
-              height: 1,
-              color: AppColor.componentFillNormal,
-            ),
+            Container(height: 1, color: AppColor.componentFillNormal),
             const SizedBox(height: 20), // gap after divider (before tags)
             // ── Flavor Notes Section (Figma: Coffee Profile/Flavor Notes) ──
             Wrap(
@@ -1027,7 +1026,8 @@ class _TasteProgressBar extends StatelessWidget {
   /// Dividers are 1px wide, taking actual space in the layout
   List<Widget> _buildSegmentsWithDividers(int filledSegments) {
     final List<Widget> children = [];
-    final dividerColor = AppColor.colorGlobalCoolNeutral50; // Figma: rgba(112, 115, 124, 0.16)
+    final dividerColor =
+        AppColor.colorGlobalCoolNeutral50; // Figma: rgba(112, 115, 124, 0.16)
 
     for (int i = 0; i < _segmentCount; i++) {
       final isFilled = i < filledSegments;

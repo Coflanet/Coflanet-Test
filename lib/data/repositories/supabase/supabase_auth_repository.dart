@@ -28,7 +28,8 @@ class SupabaseAuthRepository implements AuthRepository {
       id: user?.id ?? socialUser?.id ?? '',
       email: user?.email ?? socialUser?.email,
       name: user?.userMetadata?['display_name'] as String? ?? socialUser?.name,
-      profileImageUrl: user?.userMetadata?['avatar_url'] as String? ??
+      profileImageUrl:
+          user?.userMetadata?['avatar_url'] as String? ??
           socialUser?.profileImageUrl,
       provider: provider.name,
       accessToken: session?.accessToken ?? socialToken,
@@ -53,12 +54,12 @@ class SupabaseAuthRepository implements AuthRepository {
     try {
       await _db.functions.invoke(
         'delete-account',
-        headers: {
-          if (token != null) 'Authorization': 'Bearer $token',
-        },
+        headers: {if (token != null) 'Authorization': 'Bearer $token'},
       );
     } catch (e) {
-      debugPrint('[SupabaseAuthRepository] delete-account Edge Function failed: $e');
+      debugPrint(
+        '[SupabaseAuthRepository] delete-account Edge Function failed: $e',
+      );
       // Fallback: RPC 직접 호출
       final userId = _db.auth.currentUser?.id;
       if (userId != null) {
@@ -76,7 +77,8 @@ class SupabaseAuthRepository implements AuthRepository {
     return UserModel(
       id: user.id,
       email: user.email,
-      name: user.userMetadata?['display_name'] as String? ??
+      name:
+          user.userMetadata?['display_name'] as String? ??
           user.userMetadata?['full_name'] as String?,
       profileImageUrl: user.userMetadata?['avatar_url'] as String?,
       provider: user.appMetadata['provider'] as String? ?? 'unknown',

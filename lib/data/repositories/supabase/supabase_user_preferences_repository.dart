@@ -73,7 +73,8 @@ class SupabaseUserPreferencesRepository implements UserPreferencesRepository {
     // Kakao OAuth may use 'name', 'full_name', or 'preferred_username'
     final user = _db.auth.currentUser;
     final meta = user?.userMetadata;
-    final name = meta?['display_name'] as String? ??
+    final name =
+        meta?['display_name'] as String? ??
         meta?['full_name'] as String? ??
         meta?['name'] as String? ??
         meta?['preferred_username'] as String?;

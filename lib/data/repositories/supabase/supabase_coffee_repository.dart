@@ -48,8 +48,11 @@ class SupabaseCoffeeRepository implements CoffeeRepository {
       // 1. Insert bean data into coffee_beans table
       final beanData = _buildBeanData(item);
 
-      final inserted =
-          await _db.from('coffee_beans').insert(beanData).select().single();
+      final inserted = await _db
+          .from('coffee_beans')
+          .insert(beanData)
+          .select()
+          .single();
       debugPrint('[CoffeeRepo] inserted coffee_bean: $inserted');
       final beanId = inserted['id'].toString();
 
@@ -89,7 +92,9 @@ class SupabaseCoffeeRepository implements CoffeeRepository {
   Future<void> updateCoffeeVisibility(String id, bool isHidden) async {
     // user_bean_lists table does not have is_hidden column
     // Visibility is handled locally only
-    debugPrint('[CoffeeRepo] updateCoffeeVisibility: no server column, local only');
+    debugPrint(
+      '[CoffeeRepo] updateCoffeeVisibility: no server column, local only',
+    );
   }
 
   @override
@@ -116,9 +121,7 @@ class SupabaseCoffeeRepository implements CoffeeRepository {
   /// flavor_tags, image_url, created_at
   /// NOTE: brand, created_by, user_id columns do NOT exist.
   Map<String, dynamic> _buildBeanData(CoffeeItem item) {
-    final data = <String, dynamic>{
-      'name': item.name,
-    };
+    final data = <String, dynamic>{'name': item.name};
     if (item.description.isNotEmpty) data['description'] = item.description;
     if (item.origin != null) data['origin'] = [item.origin]; // TEXT[] column
     if (item.roastLevel != null) data['roast_level'] = item.roastLevel;
@@ -133,7 +136,9 @@ class SupabaseCoffeeRepository implements CoffeeRepository {
     //   { id: <list_entry_id>, bean: { id: <bean_id>, name: ..., ... }, sort_order: 0 }
     // Flatten: merge bean fields into top-level, preserving sort_order from outer row
     final bean = row['bean'] as Map<String, dynamic>?;
-    final data = bean != null ? {...bean, 'sort_order': row['sort_order']} : row;
+    final data = bean != null
+        ? {...bean, 'sort_order': row['sort_order']}
+        : row;
 
     // Build flavor profile from individual fields (Supabase coffee_beans uses flat columns)
     FlavorProfile? flavorProfile;
@@ -148,7 +153,8 @@ class SupabaseCoffeeRepository implements CoffeeRepository {
       );
     } else {
       // Fallback: check nested flavor_profile / taste_profile maps
-      final fp = data['flavor_profile'] as Map<String, dynamic>? ??
+      final fp =
+          data['flavor_profile'] as Map<String, dynamic>? ??
           data['taste_profile'] as Map<String, dynamic>?;
       if (fp != null) {
         flavorProfile = FlavorProfile(
@@ -163,7 +169,9 @@ class SupabaseCoffeeRepository implements CoffeeRepository {
 
     // color may not exist on server — default to a neutral color
     final colorValue = data['color'] as int?;
-    final color = colorValue != null ? Color(colorValue) : const Color(0xFF8B6F47);
+    final color = colorValue != null
+        ? Color(colorValue)
+        : const Color(0xFF8B6F47);
 
     // Handle origin — may be a string or List<String> from server
     String? origin;
@@ -182,11 +190,16 @@ class SupabaseCoffeeRepository implements CoffeeRepository {
       imageUrl: data['image_url'] as String? ?? data['imageUrl'] as String?,
       brand: data['brand'] as String? ?? data['manufacturer'] as String?,
       flavorProfile: flavorProfile,
-      commonFlavors: _toStringList(data['common_flavors'] ?? data['flavor_tags']),
+      commonFlavors: _toStringList(
+        data['common_flavors'] ?? data['flavor_tags'],
+      ),
       characteristicFlavors: _toStringList(data['characteristic_flavors']),
-      aromaIntensity: _toDoubleNullable(data['aroma_intensity'] ?? data['aroma']),
+      aromaIntensity: _toDoubleNullable(
+        data['aroma_intensity'] ?? data['aroma'],
+      ),
       origin: origin,
-      roastLevel: data['roast_level'] as String? ?? data['roastLevel'] as String?,
+      roastLevel:
+          data['roast_level'] as String? ?? data['roastLevel'] as String?,
       processMethod: data['process_method'] as String?,
       isHidden: data['is_hidden'] as bool? ?? false,
       sortOrder: data['sort_order'] as int?,

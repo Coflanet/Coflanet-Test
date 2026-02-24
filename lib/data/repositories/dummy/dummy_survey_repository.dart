@@ -12,7 +12,9 @@ class DummySurveyRepository implements SurveyRepository {
   final LocalStorage _storage = Get.find<LocalStorage>();
 
   @override
-  Future<List<SurveyQuestionModel>> getQuestions({String type = 'standard'}) async {
+  Future<List<SurveyQuestionModel>> getQuestions({
+    String type = 'standard',
+  }) async {
     await Future.delayed(const Duration(milliseconds: 100));
     return type == 'lifestyle'
         ? DummyLifestyleSurveyData.questions

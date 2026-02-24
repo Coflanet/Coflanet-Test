@@ -39,7 +39,8 @@ void main() async {
         await localStorage.saveAccessToken(session.accessToken);
         await localStorage.saveUserId(session.user.id);
         final meta = session.user.userMetadata;
-        final displayName = meta?['display_name'] as String? ??
+        final displayName =
+            meta?['display_name'] as String? ??
             meta?['full_name'] as String? ??
             meta?['name'] as String? ??
             meta?['preferred_username'] as String?;

@@ -420,4 +420,3 @@ class AppColor {
     return isDarkMode ? darkColor : lightColor;
   }
 }
-

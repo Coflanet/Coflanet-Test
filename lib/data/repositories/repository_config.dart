@@ -11,8 +11,9 @@ class RepositoryConfig {
 
   /// Current data source (change this one line to switch)
   /// In CI test mode, always use dummy to avoid external dependencies
-  static const DataSource dataSource =
-      isCiTest ? DataSource.dummy : DataSource.supabase;
+  static const DataSource dataSource = isCiTest
+      ? DataSource.dummy
+      : DataSource.supabase;
 
   /// API base URL (used when dataSource is api)
   static const String apiBaseUrl = 'https://api.coflanet.com/v1';

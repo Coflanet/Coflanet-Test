@@ -24,8 +24,10 @@ class EmailLoginView extends GetView<EmailLoginController> {
             AssetPath.iconArrowBack,
             width: 24,
             height: 24,
-            colorFilter:
-                ColorFilter.mode(AppColor.labelNormal, BlendMode.srcIn),
+            colorFilter: ColorFilter.mode(
+              AppColor.labelNormal,
+              BlendMode.srcIn,
+            ),
           ),
         ),
       ),
@@ -68,25 +70,29 @@ class EmailLoginView extends GetView<EmailLoginController> {
   }
 
   Widget _buildEmailField() {
-    return Obx(() => _buildTextField(
-          label: '이메일',
-          hintText: 'example@email.com',
-          errorText: controller.emailError.value,
-          keyboardType: TextInputType.emailAddress,
-          onChanged: controller.onEmailChanged,
-          prefixIcon: Icons.email_outlined,
-        ));
+    return Obx(
+      () => _buildTextField(
+        label: '이메일',
+        hintText: 'example@email.com',
+        errorText: controller.emailError.value,
+        keyboardType: TextInputType.emailAddress,
+        onChanged: controller.onEmailChanged,
+        prefixIcon: Icons.email_outlined,
+      ),
+    );
   }
 
   Widget _buildPasswordField() {
-    return Obx(() => _buildTextField(
-          label: '비밀번호',
-          hintText: '비밀번호를 입력해주세요',
-          errorText: controller.passwordError.value,
-          obscureText: true,
-          onChanged: controller.onPasswordChanged,
-          prefixIcon: Icons.lock_outline,
-        ));
+    return Obx(
+      () => _buildTextField(
+        label: '비밀번호',
+        hintText: '비밀번호를 입력해주세요',
+        errorText: controller.passwordError.value,
+        obscureText: true,
+        onChanged: controller.onPasswordChanged,
+        prefixIcon: Icons.lock_outline,
+      ),
+    );
   }
 
   Widget _buildTextField({
@@ -173,12 +179,14 @@ class EmailLoginView extends GetView<EmailLoginController> {
   }
 
   Widget _buildLoginButton() {
-    return Obx(() => PrimaryButton(
-          text: '로그인',
-          onPressed: controller.signIn,
-          isLoading: controller.isLoading,
-          isEnabled: controller.isFormValid,
-        ));
+    return Obx(
+      () => PrimaryButton(
+        text: '로그인',
+        onPressed: controller.signIn,
+        isLoading: controller.isLoading,
+        isEnabled: controller.isFormValid,
+      ),
+    );
   }
 
   Widget _buildSignUpLink() {

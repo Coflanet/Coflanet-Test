@@ -415,7 +415,8 @@ class MyPlanetContent extends GetView<MyPlanetController> {
         width: double.infinity,
         padding: const EdgeInsets.symmetric(vertical: 14),
         decoration: BoxDecoration(
-          color: AppColor.componentFillNormal, // rgba(112, 115, 124, 0.08) per Figma
+          color: AppColor
+              .componentFillNormal, // rgba(112, 115, 124, 0.08) per Figma
           borderRadius: BorderRadius.circular(99), // Figma: 99px
         ),
         child: Text(

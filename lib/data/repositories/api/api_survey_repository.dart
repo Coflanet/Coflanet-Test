@@ -18,7 +18,9 @@ class ApiSurveyRepository implements SurveyRepository {
   static const String _reasonsEndpoint = '/survey/reasons';
 
   @override
-  Future<List<SurveyQuestionModel>> getQuestions({String type = 'standard'}) async {
+  Future<List<SurveyQuestionModel>> getQuestions({
+    String type = 'standard',
+  }) async {
     try {
       final response = await _apiClient.get('$_questionsEndpoint?type=$type');
       final List<dynamic> data = response.data['questions'];

@@ -18,7 +18,8 @@ class SurveyReasonOption {
 /// Handles multiple selection of reasons for joining Coflanet
 class SurveyReasonController extends GetxController {
   final LocalStorage _storage = Get.find<LocalStorage>();
-  final SurveyRepository _surveyRepository = RepositoryProvider.surveyRepository;
+  final SurveyRepository _surveyRepository =
+      RepositoryProvider.surveyRepository;
 
   /// Hardcoded fallback options from Figma (937:45569)
   static const _fallbackOptions = [
@@ -53,7 +54,9 @@ class SurveyReasonController extends GetxController {
   /// Load options from get_onboarding_options RPC
   Future<void> _loadOptions() async {
     try {
-      final result = await Supabase.instance.client.rpc('get_onboarding_options');
+      final result = await Supabase.instance.client.rpc(
+        'get_onboarding_options',
+      );
       if (result is List && result.isNotEmpty) {
         final parsed = <SurveyReasonOption>[];
         for (var i = 0; i < result.length; i++) {
@@ -61,10 +64,9 @@ class SurveyReasonController extends GetxController {
           final id = (map['id'] ?? map['slug'] ?? '').toString();
           final label = map['label'] as String? ?? map['name'] as String? ?? '';
           if (label.isEmpty) continue;
-          parsed.add(SurveyReasonOption(
-            id: id.isEmpty ? 'option_$i' : id,
-            label: label,
-          ));
+          parsed.add(
+            SurveyReasonOption(id: id.isEmpty ? 'option_$i' : id, label: label),
+          );
         }
         if (parsed.isNotEmpty) {
           _options.value = parsed;

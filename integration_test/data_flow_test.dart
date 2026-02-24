@@ -63,19 +63,32 @@ void main() {
 
       // B1: save_display_name
       try {
-        final r = await db.rpc('save_display_name', params: {'display_name': 'E2E유저'});
+        final r = await db.rpc(
+          'save_display_name',
+          params: {'display_name': 'E2E유저'},
+        );
         expect(r['display_name'], equals('E2E유저'));
         pass('save_display_name → ${r['display_name']}');
-      } catch (e) { fail('save_display_name', e); }
+      } catch (e) {
+        fail('save_display_name', e);
+      }
 
       // B2: save_onboarding_reasons
       try {
-        final r = await db.rpc('save_onboarding_reasons', params: {
-          'reasons': ['find_taste', 'try_variety'],
-        });
-        expect(List<String>.from(r['onboarding_reasons']), containsAll(['find_taste', 'try_variety']));
+        final r = await db.rpc(
+          'save_onboarding_reasons',
+          params: {
+            'reasons': ['find_taste', 'try_variety'],
+          },
+        );
+        expect(
+          List<String>.from(r['onboarding_reasons']),
+          containsAll(['find_taste', 'try_variety']),
+        );
         pass('save_onboarding_reasons → ${r['onboarding_reasons']}');
-      } catch (e) { fail('save_onboarding_reasons', e); }
+      } catch (e) {
+        fail('save_onboarding_reasons', e);
+      }
 
       // B3: get_onboarding_status
       try {
@@ -84,7 +97,9 @@ void main() {
         expect(r['has_signup_reasons'], isTrue);
         expect(r['has_completed_survey'], isFalse);
         pass('get_onboarding_status → next_screen=${r['next_screen']}');
-      } catch (e) { fail('get_onboarding_status', e); }
+      } catch (e) {
+        fail('get_onboarding_status', e);
+      }
 
       // ============================
       // C. SURVEY FLOW
@@ -98,16 +113,26 @@ void main() {
         sessionId = r?['new_session_id'] as String?;
         expect(sessionId, isNotNull);
         pass('retake_survey → session_id=$sessionId');
-      } catch (e) { fail('retake_survey', e); }
+      } catch (e) {
+        fail('retake_survey', e);
+      }
 
       // C2: submit-survey Edge Function
       if (sessionId != null) {
         try {
-          final r = await db.functions.invoke('submit-survey', body: {'session_id': sessionId});
-          debugPrint('   submit-survey response: status=${r.status}, data=${r.data}');
+          final r = await db.functions.invoke(
+            'submit-survey',
+            body: {'session_id': sessionId},
+          );
+          debugPrint(
+            '   submit-survey response: status=${r.status}, data=${r.data}',
+          );
           pass('submit-survey → status=${r.status}');
         } on FunctionException catch (e) {
-          warn('submit-survey (Edge Function)', 'status=${e.status}, details=${e.details}');
+          warn(
+            'submit-survey (Edge Function)',
+            'status=${e.status}, details=${e.details}',
+          );
         }
       }
 
@@ -120,14 +145,20 @@ void main() {
         } else {
           pass('get_my_taste_profile → null (submit-survey 미완료 시 정상)');
         }
-      } catch (e) { fail('get_my_taste_profile', e); }
+      } catch (e) {
+        fail('get_my_taste_profile', e);
+      }
 
       // C4: get_my_recommendations
       try {
         final r = await db.rpc('get_my_recommendations');
         debugPrint('   get_my_recommendations → $r');
-        pass('get_my_recommendations → ${r == null ? 'null' : '${(r as List).length}건'}');
-      } catch (e) { fail('get_my_recommendations', e); }
+        pass(
+          'get_my_recommendations → ${r == null ? 'null' : '${(r as List).length}건'}',
+        );
+      } catch (e) {
+        fail('get_my_recommendations', e);
+      }
 
       // ============================
       // D. BEAN LIST
@@ -138,7 +169,9 @@ void main() {
         final r = await db.rpc('get_my_bean_list');
         expect(r, isA<List>());
         pass('get_my_bean_list → ${(r as List).length}건');
-      } catch (e) { fail('get_my_bean_list', e); }
+      } catch (e) {
+        fail('get_my_bean_list', e);
+      }
 
       // ============================
       // E. RECIPE - 실제 테이블 접근 확인
@@ -186,7 +219,10 @@ void main() {
         final methods = await db.from('brew_methods').select('id').limit(1);
         if (methods.isNotEmpty) {
           final methodId = methods.first['id'] as String;
-          final r = await db.rpc('get_merged_recipe', params: {'p_brew_method_id': methodId});
+          final r = await db.rpc(
+            'get_merged_recipe',
+            params: {'p_brew_method_id': methodId},
+          );
           debugPrint('   get_merged_recipe → $r');
           pass('get_merged_recipe RPC OK');
         } else {
@@ -204,13 +240,21 @@ void main() {
       try {
         final r = await db.rpc('get_my_dashboard');
         expect(r['display_name'], equals('E2E유저'));
-        pass('get_my_dashboard → display_name=${r['display_name']}, beans=${r['bean_count']}, recipes=${r['custom_recipe_count']}');
-      } catch (e) { fail('get_my_dashboard', e); }
+        pass(
+          'get_my_dashboard → display_name=${r['display_name']}, beans=${r['bean_count']}, recipes=${r['custom_recipe_count']}',
+        );
+      } catch (e) {
+        fail('get_my_dashboard', e);
+      }
 
       try {
         final r = await db.rpc('get_my_brew_stats');
-        pass('get_my_brew_stats → total=${r['total_brews']}, beans=${r['unique_beans']}, methods=${r['unique_methods']}');
-      } catch (e) { fail('get_my_brew_stats', e); }
+        pass(
+          'get_my_brew_stats → total=${r['total_brews']}, beans=${r['unique_beans']}, methods=${r['unique_methods']}',
+        );
+      } catch (e) {
+        fail('get_my_brew_stats', e);
+      }
 
       // ============================
       // G. PROFILES 직접 테이블 접근 (RLS 확인)
@@ -218,9 +262,15 @@ void main() {
       debugPrint('\n===== G. PROFILES TABLE =====');
 
       try {
-        final r = await db.from('profiles').select().eq('user_id', userId!).single();
+        final r = await db
+            .from('profiles')
+            .select()
+            .eq('user_id', userId!)
+            .single();
         expect(r['display_name'], equals('E2E유저'));
-        pass('profiles 직접 쿼리 → display_name=${r['display_name']}, reasons=${r['onboarding_reasons']}');
+        pass(
+          'profiles 직접 쿼리 → display_name=${r['display_name']}, reasons=${r['onboarding_reasons']}',
+        );
       } catch (e) {
         warn('profiles 직접 쿼리', e);
       }
@@ -231,12 +281,18 @@ void main() {
       debugPrint('\n===== H. DARK MODE =====');
 
       try {
-        await db.from('profiles').update({'is_dark_mode': true}).eq('user_id', userId!);
+        await db
+            .from('profiles')
+            .update({'is_dark_mode': true})
+            .eq('user_id', userId!);
         final r = await db.rpc('get_my_dashboard');
         expect(r['is_dark_mode'], isTrue);
         pass('다크모드 서버 동기화 OK');
         // Reset
-        await db.from('profiles').update({'is_dark_mode': false}).eq('user_id', userId!);
+        await db
+            .from('profiles')
+            .update({'is_dark_mode': false})
+            .eq('user_id', userId!);
       } catch (e) {
         warn('다크모드 동기화', e);
       }
@@ -254,7 +310,9 @@ void main() {
       }
 
       // Cleanup
-      try { await db.auth.signOut(); } catch (_) {}
+      try {
+        await db.auth.signOut();
+      } catch (_) {}
 
       // ============================
       // SUMMARY
@@ -262,7 +320,9 @@ void main() {
       debugPrint('\n========================================');
       debugPrint('  PASSED: $passed');
       debugPrint('  FAILED: $failed');
-      debugPrint('  WARNINGS: ${issues.where((i) => i.startsWith('[WARN]')).length}');
+      debugPrint(
+        '  WARNINGS: ${issues.where((i) => i.startsWith('[WARN]')).length}',
+      );
       if (issues.isNotEmpty) {
         debugPrint('\n  Issues:');
         for (final i in issues) {

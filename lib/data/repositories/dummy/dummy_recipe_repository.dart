@@ -30,7 +30,10 @@ class DummyRecipeRepository implements RecipeRepository {
   ];
 
   @override
-  Future<TimerRecipeModel?> getRecipeByType(String coffeeType, {String? beanId}) async {
+  Future<TimerRecipeModel?> getRecipeByType(
+    String coffeeType, {
+    String? beanId,
+  }) async {
     // Simulate network delay
     await Future.delayed(const Duration(milliseconds: 100));
     return DummyTimerData.getRecipe(coffeeType);
