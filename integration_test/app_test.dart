@@ -349,6 +349,37 @@ void main() {
       debugPrint('✅ PASS: My Planet Screen loaded');
 
       // ============================================
+      // 14-1. MY PLANET - Privacy Policy & Terms Buttons
+      // ============================================
+      debugPrint('📱 TEST 14-1: Privacy Policy & Terms Buttons');
+
+      // Scroll down to find legal links at bottom
+      final scrollable = find.byType(SingleChildScrollView);
+      if (scrollable.evaluate().isNotEmpty) {
+        await tester.dragUntilVisible(
+          find.text('개인정보처리방침'),
+          scrollable.first,
+          const Offset(0, -200),
+        );
+        await safePump(tester);
+      }
+
+      // Verify 개인정보처리방침 button exists (don't tap — opens external browser)
+      final privacyBtn = find.text('개인정보처리방침');
+      expect(privacyBtn, findsOneWidget, reason: '개인정보처리방침 button should exist');
+      debugPrint('   개인정보처리방침 button found');
+
+      // Verify 서비스 이용약관 button exists (don't tap — opens external browser)
+      final termsBtn = find.text('서비스 이용약관');
+      expect(termsBtn, findsOneWidget, reason: '서비스 이용약관 button should exist');
+      debugPrint('   서비스 이용약관 button found');
+
+      // Verify 로그아웃 and 회원탈퇴 buttons also exist
+      expect(find.text('로그아웃'), findsOneWidget);
+      expect(find.text('회원탈퇴'), findsOneWidget);
+      debugPrint('✅ PASS: Privacy/Terms/Logout/Withdraw buttons verified');
+
+      // ============================================
       // 15. MY TASTE SCREEN
       // ============================================
       debugPrint('📱 TEST 15: My Taste');
@@ -464,7 +495,7 @@ void main() {
       debugPrint('═══════════════════════════════════════════');
       debugPrint('🎉 ALL E2E TESTS PASSED!');
       debugPrint('═══════════════════════════════════════════');
-      debugPrint('Screens Tested: 20');
+      debugPrint('Screens Tested: 20 + Legal Buttons');
       debugPrint('- Splash ✓');
       debugPrint('- SignIn ✓');
       debugPrint('- Profile Setup (Name Input) ✓');
@@ -479,6 +510,7 @@ void main() {
       debugPrint('- Timer Complete ✓');
       debugPrint('- Espresso ✓');
       debugPrint('- My Planet ✓');
+      debugPrint('- My Planet Legal Links (개인정보처리방침/이용약관) ✓');
       debugPrint('- My Taste ✓');
       debugPrint('- Coffee Settings ✓');
       debugPrint('- Select Coffee ✓');

@@ -143,37 +143,16 @@ class SupabaseRecipeRepository implements RecipeRepository {
           ? recipe.id.substring(5)
           : null;
 
-      // Insert into recipes table directly (no save_custom_recipe RPC)
-      final recipeData = <String, dynamic>{
-        'user_id': userId,
-        'brew_method_id': methodId,
-        'name': recipe.name,
+      // Build p_values jsonb payload
+      final values = <String, dynamic>{
         'coffee_amount_g': recipe.coffeeAmount,
         'total_water_ml': recipe.waterAmount,
         'total_duration_seconds': recipe.totalDurationSeconds,
-        'is_default': false,
-      };
-      if (recipe.aromaDescription != null) {
-        recipeData['aroma_description'] = recipe.aromaDescription;
-      }
-      if (beanId != null) {
-        recipeData['bean_id'] = beanId;
-      }
-
-      final inserted = await _db
-          .from('recipes')
-          .insert(recipeData)
-          .select()
-          .single();
-      final recipeId = inserted['id'].toString();
-      debugPrint('[RecipeRepo] inserted recipe: $recipeId');
-
-      // Insert steps
-      if (recipe.steps.isNotEmpty) {
-        final stepsData = recipe.steps
+        if (recipe.aromaDescription != null)
+          'aroma_description': recipe.aromaDescription,
+        'steps': recipe.steps
             .map(
               (s) => <String, dynamic>{
-                'recipe_id': recipeId,
                 'step_number': s.stepNumber,
                 'title': s.title,
                 'description': s.description,
@@ -184,26 +163,27 @@ class SupabaseRecipeRepository implements RecipeRepository {
                 'illustration_emoji': s.illustrationEmoji,
               },
             )
-            .toList();
-        await _db.from('recipe_steps').insert(stepsData);
-      }
-
-      // Insert aroma tags
-      if (recipe.aromaTags.isNotEmpty) {
-        final tagsData = recipe.aromaTags
+            .toList(),
+        'aroma_tags': recipe.aromaTags
             .asMap()
             .entries
             .map(
               (e) => <String, dynamic>{
-                'recipe_id': recipeId,
                 'emoji': e.value.emoji,
                 'name': e.value.name,
                 'display_order': e.key,
               },
             )
-            .toList();
-        await _db.from('recipe_aroma_tags').insert(tagsData);
-      }
+            .toList(),
+      };
+
+      final result = await _db.rpc('save_custom_recipe', params: {
+        'p_brew_method_id': methodId,
+        'p_bean_id': beanId,
+        'p_name': recipe.name,
+        'p_values': values,
+      });
+      debugPrint('[RecipeRepo] save_custom_recipe result: $result');
     } catch (e) {
       debugPrint('[RecipeRepo] saveRecipe error: $e');
     }
