@@ -71,3 +71,6 @@ apple_cert/
 # VSCode
 .vscode/
 /google_cert/
+
+# Schema snapshots (local only)
+scripts/.schema_snapshots/
