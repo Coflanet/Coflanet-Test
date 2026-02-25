@@ -1,6 +1,7 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:url_launcher/url_launcher.dart';
 import 'package:coflanet/core/base/base_controller.dart';
 import 'package:coflanet/core/services/auth_service.dart';
 import 'package:coflanet/core/services/survey_service.dart';
@@ -199,14 +200,18 @@ class MyPlanetController extends BaseController {
 
   /// Open privacy policy
   void openPrivacyPolicy() {
-    // 개인정보처리방침 URL 연동 (추후 구현)
-    Get.snackbar('개인정보처리방침', '준비 중입니다', snackPosition: SnackPosition.BOTTOM);
+    launchUrl(
+      Uri.parse('https://coflanet.github.io/coflanet/privacy'),
+      mode: LaunchMode.externalApplication,
+    );
   }
 
   /// Open terms of service
   void openTermsOfService() {
-    // 서비스 이용약관 URL 연동 (추후 구현)
-    Get.snackbar('서비스 이용약관', '준비 중입니다', snackPosition: SnackPosition.BOTTOM);
+    launchUrl(
+      Uri.parse('https://coflanet.github.io/coflanet/terms'),
+      mode: LaunchMode.externalApplication,
+    );
   }
 
   // Kept for backward compatibility

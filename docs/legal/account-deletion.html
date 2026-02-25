@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Coflanet - 계정 및 데이터 삭제 안내</title>
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+      background: #f9f9f9;
+      color: #1A1A1A;
+      line-height: 1.7;
+    }
+    .container { max-width: 680px; margin: 0 auto; padding: 40px 24px; }
+    h1 { font-size: 28px; font-weight: 800; margin-bottom: 8px; }
+    .app-info { color: #888; font-size: 14px; margin-bottom: 40px; }
+    h2 {
+      font-size: 20px;
+      font-weight: 700;
+      margin: 32px 0 16px;
+      padding-bottom: 8px;
+      border-bottom: 2px solid #6541F2;
+    }
+    h3 { font-size: 16px; font-weight: 600; margin: 20px 0 8px; }
+    p, li { font-size: 15px; color: #333; }
+    ul, ol { padding-left: 20px; margin: 8px 0 16px; }
+    li { margin-bottom: 6px; }
+    .step {
+      background: #fff;
+      border: 1px solid #eee;
+      border-radius: 12px;
+      padding: 20px;
+      margin: 12px 0;
+    }
+    .step-num {
+      display: inline-block;
+      width: 28px;
+      height: 28px;
+      background: #6541F2;
+      color: #fff;
+      border-radius: 50%;
+      text-align: center;
+      line-height: 28px;
+      font-weight: 700;
+      font-size: 14px;
+      margin-right: 8px;
+    }
+    .warning {
+      background: #FFF3CD;
+      border: 1px solid #FFECB5;
+      border-radius: 8px;
+      padding: 16px;
+      margin: 16px 0;
+      font-size: 14px;
+    }
+    table { width: 100%; border-collapse: collapse; margin: 12px 0; }
+    th, td { text-align: left; padding: 10px 12px; border-bottom: 1px solid #eee; font-size: 14px; }
+    th { background: #f5f5f5; font-weight: 600; }
+    .contact {
+      background: #fff;
+      border: 1px solid #eee;
+      border-radius: 12px;
+      padding: 20px;
+      margin-top: 32px;
+    }
+    .contact a { color: #6541F2; text-decoration: none; }
+    a { color: #6541F2; }
+    footer { text-align: center; margin-top: 48px; color: #bbb; font-size: 12px; }
+  </style>
+</head>
+<body>
+<div class="container">
+
+  <h1>Coflanet</h1>
+  <p class="app-info">개발자: Coflanet (team.coflanet@gmail.com)</p>
+
+  <h2>1. 계정 삭제</h2>
+
+  <p>Coflanet 앱 내에서 직접 계정을 삭제할 수 있습니다.</p>
+
+  <h3>삭제 방법</h3>
+
+  <div class="step">
+    <p><span class="step-num">1</span>앱 실행 후 하단 탭에서 <strong>My 행성</strong> 탭을 탭합니다.</p>
+  </div>
+  <div class="step">
+    <p><span class="step-num">2</span>My 행성 화면 하단의 <strong>회원탈퇴</strong>를 탭합니다.</p>
+  </div>
+  <div class="step">
+    <p><span class="step-num">3</span>확인 다이얼로그에서 <strong>탈퇴</strong>를 탭하면 계정이 즉시 삭제됩니다.</p>
+  </div>
+
+  <h3>삭제되는 데이터</h3>
+  <table>
+    <tr><th>데이터 유형</th><th>처리</th><th>보관 기간</th></tr>
+    <tr><td>계정 정보 (소셜 로그인 식별자, 닉네임)</td><td>즉시 삭제</td><td>없음</td></tr>
+    <tr><td>커피 취향 설문 결과</td><td>즉시 삭제</td><td>없음</td></tr>
+    <tr><td>저장된 커피 원두 목록</td><td>즉시 삭제</td><td>없음</td></tr>
+    <tr><td>커피 추출 레시피</td><td>즉시 삭제</td><td>없음</td></tr>
+    <tr><td>앱 설정 및 환경설정</td><td>즉시 삭제</td><td>없음</td></tr>
+  </table>
+
+  <div class="warning">
+    계정 삭제 시 모든 데이터가 서버(Supabase)와 기기 로컬 저장소에서 영구적으로 삭제되며, 복구할 수 없습니다.
+  </div>
+
+  <h2>2. 데이터 삭제 (계정 유지)</h2>
+
+  <p>계정을 삭제하지 않고도 앱 내에서 개별 데이터를 삭제할 수 있습니다.</p>
+
+  <h3>삭제 가능한 데이터 및 방법</h3>
+
+  <div class="step">
+    <p><strong>취향 설문 재설정:</strong> My 행성 > 설문 다시하기를 통해 기존 결과를 덮어씁니다.</p>
+  </div>
+  <div class="step">
+    <p><strong>원두 목록 삭제:</strong> 커피 원두 관리에서 개별 원두를 삭제할 수 있습니다.</p>
+  </div>
+  <div class="step">
+    <p><strong>전체 로컬 데이터 초기화:</strong> 앱 삭제 후 재설치 시 기기 내 모든 로컬 데이터가 삭제됩니다.</p>
+  </div>
+
+  <h3>데이터 삭제 범위</h3>
+  <table>
+    <tr><th>데이터 유형</th><th>개별 삭제</th><th>방법</th></tr>
+    <tr><td>취향 설문 결과</td><td>덮어쓰기</td><td>My 행성 > 설문 다시하기</td></tr>
+    <tr><td>커피 원두 목록</td><td>가능</td><td>원두 관리에서 삭제</td></tr>
+    <tr><td>추출 레시피</td><td>가능</td><td>레시피 관리에서 삭제</td></tr>
+    <tr><td>계정 정보</td><td>불가</td><td>계정 삭제 필요</td></tr>
+  </table>
+
+  <div class="contact">
+    <h3>문의</h3>
+    <p>데이터 삭제 또는 개인정보 관련 문의: <a href="mailto:team.coflanet@gmail.com">team.coflanet@gmail.com</a></p>
+    <p>본인 확인 후 요청을 처리해 드립니다.</p>
+  </div>
+
+  <footer>
+    <p><a href="../">&larr; 돌아가기</a></p>
+    <p>&copy; 2025 Coflanet. All Rights Reserved.</p>
+    <p>최종 업데이트: 2025년 2월 25일</p>
+  </footer>
+
+</div>
+</body>
+</html>
