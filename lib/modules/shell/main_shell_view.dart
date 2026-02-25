@@ -47,12 +47,11 @@ class MainShellView extends GetView<MainShellController> {
   @override
   Widget build(BuildContext context) {
     final topPadding = MediaQuery.of(context).padding.top;
-    final bottomPadding = MediaQuery.of(context).padding.bottom;
 
     // Layout constants
-    const topNavHeight = 64.0; // Increased for better text visibility
-    const tabBarContentHeight =
-        96.0; // Dark bg (16px) + pill (64px) + margin (16px)
+    const topNavHeight = 64.0;
+    // Tab bar: 6px top + 64px pill + 16px bottom = 86px
+    const tabBarTotalHeight = 86.0;
     const contentTopRadius = 40.0;
 
     return Scaffold(
@@ -73,7 +72,7 @@ class MainShellView extends GetView<MainShellController> {
                   Get.find<SelectCoffeeController>().isEditing;
               final bottomInset = isEditMode
                   ? 0.0
-                  : tabBarContentHeight + bottomPadding;
+                  : tabBarTotalHeight;
 
               if (currentIndex == 3) {
                 return Padding(
@@ -140,7 +139,7 @@ class MainShellView extends GetView<MainShellController> {
                   Get.isRegistered<SelectCoffeeController>() &&
                   Get.find<SelectCoffeeController>().isEditing;
               if (isEditMode) return const SizedBox.shrink();
-              return _buildTabBar(bottomPadding, tabBarContentHeight);
+              return _buildTabBar();
             }),
           ),
         ],
@@ -333,16 +332,16 @@ class MainShellView extends GetView<MainShellController> {
   /// Custom tab bar - Figma: Dark background with pill-shaped tab container inside
   /// Outer: Dark charcoal background with rounded top corners
   /// Inner: 328x64px pill-shaped glass effect container
-  Widget _buildTabBar(double bottomPadding, double contentHeight) {
+  Widget _buildTabBar() {
     return ClipRRect(
       borderRadius: const BorderRadius.only(
-        topLeft: Radius.circular(28),
-        topRight: Radius.circular(28),
+        topLeft: Radius.circular(12),
+        topRight: Radius.circular(12),
       ),
       child: Container(
         // Dark background area - Figma: #1C1C1E
         decoration: BoxDecoration(color: AppColor.colorGlobalCoolNeutral15),
-        padding: EdgeInsets.only(top: 16, bottom: bottomPadding + 16),
+        padding: const EdgeInsets.only(top: 6, bottom: 16),
         child: Center(
           child: Container(
             width: 328,
