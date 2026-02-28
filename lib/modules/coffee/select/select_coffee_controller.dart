@@ -1,4 +1,5 @@
 import 'package:get/get.dart';
+import 'package:share_plus/share_plus.dart';
 import 'package:coflanet/core/base/base_controller.dart';
 import 'package:coflanet/data/models/coffee_item_model.dart';
 import 'package:coflanet/data/repositories/repository_interfaces.dart';
@@ -160,14 +161,24 @@ class SelectCoffeeController extends BaseController {
     }
   }
 
-  /// Share selected items (placeholder for future implementation)
-  void shareSelectedItems() {
-    // 공유 기능 (추후 구현)
-    Get.snackbar(
-      '공유',
-      '$selectedEditCount개 항목 공유 기능은 준비 중입니다',
-      snackPosition: SnackPosition.BOTTOM,
-    );
+  /// Share selected items via system share sheet
+  Future<void> shareSelectedItems() async {
+    final selected = _coffeeItems
+        .where((item) => _selectedIdsForEdit.contains(item.id))
+        .toList();
+    if (selected.isEmpty) return;
+
+    final lines = selected.map((item) {
+      final parts = <String>[item.name];
+      if (item.origin != null) parts.add('산지: ${item.origin}');
+      if (item.roastLevel != null) parts.add('로스팅: ${item.roastLevel}');
+      final tags = item.allFlavorTags;
+      if (tags.isNotEmpty) parts.add('향미: ${tags.join(', ')}');
+      return parts.join('\n');
+    });
+
+    final text = lines.join('\n\n');
+    await Share.share(text);
   }
 
   /// Select a coffee item

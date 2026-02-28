@@ -28,6 +28,11 @@ class SupabaseSurveyRepository implements SurveyRepository {
 
   @override
   Future<SurveyResultModel?> getSurveyResult() async {
+    // Skip server call if not authenticated
+    if (_db.auth.currentUser == null) {
+      return _getLocalResult();
+    }
+
     try {
       // Get taste profile
       final profileData = await _db.rpc('get_my_taste_profile');
