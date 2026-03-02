@@ -266,7 +266,6 @@ class AuthService extends GetxService with WidgetsBindingObserver {
 
   /// Naver sign-in via native SDK + Edge Function
   Future<UserModel> _signInWithNaverEdgeFunction() async {
-    // Get access token from native Naver SDK
     final naverProvider = _providers[SocialLoginType.naver];
     if (naverProvider == null) {
       throw AuthException('Naver provider not configured');
@@ -277,25 +276,33 @@ class AuthService extends GetxService with WidgetsBindingObserver {
       '[AuthService] Naver token length: ${naverUser.accessToken.length}',
     );
 
-    // Exchange with Edge Function (server expects authorization_code)
+    // Edge Function 호출 — 서버는 'code' 필드를 기대
     final response = await _supabase.functions.invoke(
       'naver-auth',
-      body: {'authorization_code': naverUser.accessToken},
+      body: {'code': naverUser.accessToken},
     );
 
     final data = response.data as Map<String, dynamic>;
-    debugPrint('[AuthService] naver-auth response keys: ${data.keys}');
+    debugPrint('[AuthService] naver-auth response: $data');
 
-    if (data['error'] != null) {
-      throw AuthException('Naver auth failed: ${data['error']}');
-    }
-    if (data['access_token'] == null) {
-      throw AuthException('Naver auth Edge Function 실패: ${data.keys.toList()}');
+    // 에러 응답 처리: { success: false, error: { code, message } }
+    if (data['success'] != true) {
+      final error = data['error'] as Map<String, dynamic>?;
+      throw AuthException(
+        'Naver auth failed: ${error?['message'] ?? 'unknown'}',
+      );
     }
 
-    // Set the session from the returned tokens
+    // 성공 응답 파싱: { success: true, data: { session: { access_token, ... } } }
+    final sessionData =
+        (data['data'] as Map<String, dynamic>?)?['session']
+            as Map<String, dynamic>?;
+    if (sessionData == null || sessionData['access_token'] == null) {
+      throw AuthException('Naver auth: 세션 데이터 없음');
+    }
+
     final authResponse = await _supabase.auth.setSession(
-      data['access_token'] as String,
+      sessionData['access_token'] as String,
     );
     return _userFromAuthResponse(authResponse, 'naver');
   }
@@ -490,7 +497,7 @@ class AuthService extends GetxService with WidgetsBindingObserver {
         case SocialLoginType.apple:
           return await _linkWithOAuth(OAuthProvider.apple, 'apple');
         case SocialLoginType.naver:
-          throw AuthException('네이버 로그인은 아직 연동을 지원하지 않습니다');
+          return await _linkWithNaverEdgeFunction();
         case SocialLoginType.guest:
           throw AuthException('이미 게스트 계정입니다');
       }
@@ -574,6 +581,38 @@ class AuthService extends GetxService with WidgetsBindingObserver {
       _oauthCompleter = null;
       rethrow;
     }
+  }
+
+  /// 네이버 계정 연동 (Edge Function mode: 'link')
+  Future<UserModel> _linkWithNaverEdgeFunction() async {
+    final naverProvider = _providers[SocialLoginType.naver];
+    if (naverProvider == null) {
+      throw AuthException('Naver provider not configured');
+    }
+    final naverUser = await naverProvider.signIn();
+
+    final currentSession = _supabase.auth.currentSession;
+    if (currentSession == null) {
+      throw AuthException('현재 세션이 없습니다');
+    }
+
+    final response = await _supabase.functions.invoke(
+      'naver-auth',
+      body: {'code': naverUser.accessToken, 'mode': 'link'},
+      headers: {'Authorization': 'Bearer ${currentSession.accessToken}'},
+    );
+
+    final data = response.data as Map<String, dynamic>;
+    if (data['success'] != true) {
+      final error = data['error'] as Map<String, dynamic>?;
+      throw AuthException(error?['message'] ?? '네이버 계정 연동 실패');
+    }
+
+    final refreshed = await _supabase.auth.refreshSession();
+    final user = _userFromAuthResponse(refreshed, 'naver');
+    await _saveUserToStorage(user);
+    _currentUser.value = user;
+    return user;
   }
 
   /// Refresh current user's token

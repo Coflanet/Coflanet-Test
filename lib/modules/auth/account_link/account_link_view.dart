@@ -64,6 +64,14 @@ class AccountLinkView extends GetView<AccountLinkController> {
                       : () => controller.linkWithSocial(SocialLoginType.kakao),
                   isLoading: controller.isLoading,
                 ),
+                const SizedBox(height: 12),
+                SocialButton(
+                  type: SocialButtonType.naver,
+                  onPressed: controller.isLoading
+                      ? null
+                      : () => controller.linkWithSocial(SocialLoginType.naver),
+                  isLoading: controller.isLoading,
+                ),
                 if (Platform.isIOS) ...[
                   const SizedBox(height: 12),
                   SocialButton(

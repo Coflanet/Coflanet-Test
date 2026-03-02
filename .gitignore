@@ -46,7 +46,15 @@ app.*.map.json
 
 # Secrets
 .env
-docs/SUPABASE_CONNECTION.md
+
+# Private docs & scripts (local only)
+docs/*
+!docs/legal/
+CLAUDE.md
+CHANGELOG.md
+REFACTOR.md
+DATA.md
+scripts/
 
 # Android signing
 android/key.properties
@@ -72,5 +80,3 @@ apple_cert/
 .vscode/
 /google_cert/
 
-# Schema snapshots (local only)
-scripts/.schema_snapshots/
