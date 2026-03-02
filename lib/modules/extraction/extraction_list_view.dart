@@ -18,9 +18,7 @@ class ExtractionListView extends GetView<ExtractionListController> {
       child: Obx(() {
         if (controller.isLoading) {
           return Center(
-            child: CircularProgressIndicator(
-              color: AppColor.primaryNormal,
-            ),
+            child: CircularProgressIndicator(color: AppColor.primaryNormal),
           );
         }
 
@@ -40,35 +38,36 @@ class ExtractionListView extends GetView<ExtractionListController> {
               return false;
             },
             child: CustomScrollView(
-            slivers: [
-              // Stats card
-              SliverToBoxAdapter(child: _buildStatsCard()),
-              // Brew log list
-              SliverList(
-                delegate: SliverChildBuilderDelegate(
-                  (context, index) {
-                    if (index >= controller.brewLogs.length) {
-                      // Loading more indicator
-                      return controller.hasMore
-                          ? Padding(
-                              padding: const EdgeInsets.all(16),
-                              child: Center(
-                                child: CircularProgressIndicator(
-                                  color: AppColor.primaryNormal,
-                                  strokeWidth: 2,
+              slivers: [
+                // Stats card
+                SliverToBoxAdapter(child: _buildStatsCard()),
+                // Brew log list
+                SliverList(
+                  delegate: SliverChildBuilderDelegate(
+                    (context, index) {
+                      if (index >= controller.brewLogs.length) {
+                        // Loading more indicator
+                        return controller.hasMore
+                            ? Padding(
+                                padding: const EdgeInsets.all(16),
+                                child: Center(
+                                  child: CircularProgressIndicator(
+                                    color: AppColor.primaryNormal,
+                                    strokeWidth: 2,
+                                  ),
                                 ),
-                              ),
-                            )
-                          : const SizedBox.shrink();
-                    }
-                    return _buildLogItem(controller.brewLogs[index]);
-                  },
-                  childCount: controller.brewLogs.length +
-                      (controller.hasMore ? 1 : 0),
+                              )
+                            : const SizedBox.shrink();
+                      }
+                      return _buildLogItem(controller.brewLogs[index]);
+                    },
+                    childCount:
+                        controller.brewLogs.length +
+                        (controller.hasMore ? 1 : 0),
+                  ),
                 ),
-              ),
-            ],
-          ),
+              ],
+            ),
           ),
         );
       }),

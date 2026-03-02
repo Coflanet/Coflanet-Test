@@ -264,10 +264,7 @@ class SupabaseSurveyRepository implements SurveyRepository {
     // Step 2: Save ALL answers at once (ensures completeness)
     final allAnswerMaps = <Map<String, dynamic>>[];
     for (final entry in answers.entries) {
-      allAnswerMaps.add({
-        'step': entry.key,
-        'selected_options': entry.value,
-      });
+      allAnswerMaps.add({'step': entry.key, 'selected_options': entry.value});
     }
     if (allAnswerMaps.isNotEmpty) {
       await saveSurveyStepAnswers(sessionId, allAnswerMaps);
@@ -351,12 +348,9 @@ class SupabaseSurveyRepository implements SurveyRepository {
       params: {'p_survey_type': surveyType},
     );
     debugPrint('[SurveyRepo] start_survey result: $result');
-    final data = result is Map<String, dynamic>
-        ? result
-        : <String, dynamic>{};
+    final data = result is Map<String, dynamic> ? result : <String, dynamic>{};
     _currentSessionId =
-        data['session_id'] as String? ??
-        data['new_session_id'] as String?;
+        data['session_id'] as String? ?? data['new_session_id'] as String?;
     _currentSurveyType = surveyType;
 
     // Pre-load question UUIDs for this survey type
@@ -444,10 +438,10 @@ class SupabaseSurveyRepository implements SurveyRepository {
       return {};
     }
 
-    final result = await _db.rpc('save_survey_answers', params: {
-      'p_session_id': sessionId,
-      'p_answers': resolvedAnswers,
-    });
+    final result = await _db.rpc(
+      'save_survey_answers',
+      params: {'p_session_id': sessionId, 'p_answers': resolvedAnswers},
+    );
     debugPrint('[SurveyRepo] save_survey_answers result: $result');
     return result is Map<String, dynamic> ? result : <String, dynamic>{};
   }

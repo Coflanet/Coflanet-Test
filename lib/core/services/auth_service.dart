@@ -273,7 +273,9 @@ class AuthService extends GetxService with WidgetsBindingObserver {
     }
     final naverUser = await naverProvider.signIn();
 
-    debugPrint('[AuthService] Naver token length: ${naverUser.accessToken.length}');
+    debugPrint(
+      '[AuthService] Naver token length: ${naverUser.accessToken.length}',
+    );
 
     // Exchange with Edge Function (server expects authorization_code)
     final response = await _supabase.functions.invoke(
@@ -288,9 +290,7 @@ class AuthService extends GetxService with WidgetsBindingObserver {
       throw AuthException('Naver auth failed: ${data['error']}');
     }
     if (data['access_token'] == null) {
-      throw AuthException(
-        'Naver auth Edge Function 실패: ${data.keys.toList()}',
-      );
+      throw AuthException('Naver auth Edge Function 실패: ${data.keys.toList()}');
     }
 
     // Set the session from the returned tokens

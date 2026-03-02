@@ -366,7 +366,11 @@ void main() {
 
       // Verify 개인정보처리방침 button exists (don't tap — opens external browser)
       final privacyBtn = find.text('개인정보처리방침');
-      expect(privacyBtn, findsOneWidget, reason: '개인정보처리방침 button should exist');
+      expect(
+        privacyBtn,
+        findsOneWidget,
+        reason: '개인정보처리방침 button should exist',
+      );
       debugPrint('   개인정보처리방침 button found');
 
       // Verify 서비스 이용약관 button exists (don't tap — opens external browser)

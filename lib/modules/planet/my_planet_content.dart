@@ -453,10 +453,7 @@ class MyPlanetContent extends GetView<MyPlanetController> {
               color: AppColor.primaryNormal,
               onTap: () => controller.goToAccountLink(),
             ),
-            Container(
-              height: 1,
-              color: AppColor.lineNormalNeutral,
-            ),
+            Container(height: 1, color: AppColor.lineNormalNeutral),
           ],
           // 로그아웃 cell - Figma: height 48px, padding 12px 0
           _buildAccountCell(

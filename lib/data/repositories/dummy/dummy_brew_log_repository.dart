@@ -64,7 +64,8 @@ class DummyBrewLogRepository implements BrewLogRepository {
     for (final log in logs) {
       final beanId = log['bean_id'] as String?;
       if (beanId != null) beanIds.add(beanId);
-      final methodId = log['brew_method_slug'] as String? ??
+      final methodId =
+          log['brew_method_slug'] as String? ??
           log['brew_method_id'] as String?;
       if (methodId != null) methodIds.add(methodId);
       final rating = log['rating'] as int?;

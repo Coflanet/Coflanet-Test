@@ -175,18 +175,18 @@ void main() {
               entry['score_value'] = options[i] == 'like'
                   ? 3
                   : options[i] == 'neutral'
-                      ? 2
-                      : 1;
+                  ? 2
+                  : 1;
             } else if (i >= 6 && i <= 9) {
               entry['score_value'] = options[i] == 'like' ? 1 : 0;
             }
             answers.add(entry);
           }
 
-          final saveR = await db.rpc('save_survey_answers', params: {
-            'p_session_id': sessionId,
-            'p_answers': answers,
-          });
+          final saveR = await db.rpc(
+            'save_survey_answers',
+            params: {'p_session_id': sessionId, 'p_answers': answers},
+          );
           debugPrint('   save_survey_answers result: $saveR');
           pass('save_survey_answers → ${answers.length}개 저장');
         } catch (e) {

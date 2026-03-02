@@ -70,7 +70,8 @@ class AccountLinkView extends GetView<AccountLinkController> {
                     type: SocialButtonType.apple,
                     onPressed: controller.isLoading
                         ? null
-                        : () => controller.linkWithSocial(SocialLoginType.apple),
+                        : () =>
+                              controller.linkWithSocial(SocialLoginType.apple),
                     isLoading: controller.isLoading,
                   ),
                 ],
@@ -81,7 +82,10 @@ class AccountLinkView extends GetView<AccountLinkController> {
                 Row(
                   children: [
                     Expanded(
-                      child: Container(height: 1, color: AppColor.lineNormalNeutral),
+                      child: Container(
+                        height: 1,
+                        color: AppColor.lineNormalNeutral,
+                      ),
                     ),
                     Padding(
                       padding: const EdgeInsets.symmetric(horizontal: 16),
@@ -93,7 +97,10 @@ class AccountLinkView extends GetView<AccountLinkController> {
                       ),
                     ),
                     Expanded(
-                      child: Container(height: 1, color: AppColor.lineNormalNeutral),
+                      child: Container(
+                        height: 1,
+                        color: AppColor.lineNormalNeutral,
+                      ),
                     ),
                   ],
                 ),
@@ -120,7 +127,9 @@ class AccountLinkView extends GetView<AccountLinkController> {
 
                 // 이메일로 연결 버튼
                 GestureDetector(
-                  onTap: controller.isLoading ? null : () => controller.linkWithEmail(),
+                  onTap: controller.isLoading
+                      ? null
+                      : () => controller.linkWithEmail(),
                   child: Container(
                     width: double.infinity,
                     height: 52,

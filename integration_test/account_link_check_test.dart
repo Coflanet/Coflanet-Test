@@ -7,7 +7,9 @@ import 'package:coflanet/main.dart' as app;
 void main() {
   IntegrationTestWidgetsFlutterBinding.ensureInitialized();
 
-  testWidgets('Guest → Account Link button visible on My Planet', (tester) async {
+  testWidgets('Guest → Account Link button visible on My Planet', (
+    tester,
+  ) async {
     app.main();
     await tester.pumpAndSettle(const Duration(seconds: 4));
 
@@ -96,7 +98,11 @@ void main() {
     debugPrint('[Test] 회원탈퇴: ${withdrawBtn.evaluate().isNotEmpty}');
     debugPrint('[Test] ============================');
 
-    expect(accountLinkBtn, findsOneWidget, reason: '게스트일 때 "계정 연결" 버튼이 보여야 합니다');
+    expect(
+      accountLinkBtn,
+      findsOneWidget,
+      reason: '게스트일 때 "계정 연결" 버튼이 보여야 합니다',
+    );
     expect(logoutBtn, findsOneWidget);
     expect(withdrawBtn, findsOneWidget);
 

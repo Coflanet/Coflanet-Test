@@ -42,10 +42,10 @@ class SupabaseBrewLogRepository implements BrewLogRepository {
     int offset = 0,
   }) async {
     try {
-      final result = await _db.rpc('get_my_brew_logs', params: {
-        'p_limit': limit,
-        'p_offset': offset,
-      });
+      final result = await _db.rpc(
+        'get_my_brew_logs',
+        params: {'p_limit': limit, 'p_offset': offset},
+      );
       debugPrint('[BrewLogRepo] get_my_brew_logs: $result');
       if (result == null) return [];
 
@@ -71,10 +71,10 @@ class SupabaseBrewLogRepository implements BrewLogRepository {
   @override
   Future<void> updateBrewLog(String logId, Map<String, dynamic> values) async {
     try {
-      await _db.rpc('update_brew_log', params: {
-        'p_log_id': logId,
-        'p_values': values,
-      });
+      await _db.rpc(
+        'update_brew_log',
+        params: {'p_log_id': logId, 'p_values': values},
+      );
     } catch (e) {
       debugPrint('[BrewLogRepo] updateBrewLog error: $e');
     }

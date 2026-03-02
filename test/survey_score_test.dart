@@ -114,10 +114,7 @@ void main() {
 
     // Edge cases
     test('빈 옵션 리스트는 null 반환', () {
-      expect(
-        SupabaseSurveyRepository.computeScoreValue(3, []),
-        isNull,
-      );
+      expect(SupabaseSurveyRepository.computeScoreValue(3, []), isNull);
     });
 
     test('인식 불가 옵션은 null 반환', () {
@@ -128,10 +125,7 @@ void main() {
     });
 
     test('step 10+ 는 null 반환', () {
-      expect(
-        SupabaseSurveyRepository.computeScoreValue(10, ['like']),
-        isNull,
-      );
+      expect(SupabaseSurveyRepository.computeScoreValue(10, ['like']), isNull);
     });
   });
 }

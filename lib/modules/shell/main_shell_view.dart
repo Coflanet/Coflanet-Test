@@ -70,9 +70,7 @@ class MainShellView extends GetView<MainShellController> {
                   currentIndex == 0 &&
                   Get.isRegistered<SelectCoffeeController>() &&
                   Get.find<SelectCoffeeController>().isEditing;
-              final bottomInset = isEditMode
-                  ? 0.0
-                  : tabBarTotalHeight;
+              final bottomInset = isEditMode ? 0.0 : tabBarTotalHeight;
 
               if (currentIndex == 3) {
                 return Padding(

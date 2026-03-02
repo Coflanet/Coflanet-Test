@@ -177,12 +177,15 @@ class SupabaseRecipeRepository implements RecipeRepository {
             .toList(),
       };
 
-      final result = await _db.rpc('save_custom_recipe', params: {
-        'p_brew_method_id': methodId,
-        'p_bean_id': beanId,
-        'p_name': recipe.name,
-        'p_values': values,
-      });
+      final result = await _db.rpc(
+        'save_custom_recipe',
+        params: {
+          'p_brew_method_id': methodId,
+          'p_bean_id': beanId,
+          'p_name': recipe.name,
+          'p_values': values,
+        },
+      );
       debugPrint('[RecipeRepo] save_custom_recipe result: $result');
     } catch (e) {
       debugPrint('[RecipeRepo] saveRecipe error: $e');

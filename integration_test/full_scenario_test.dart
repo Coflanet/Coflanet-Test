@@ -103,16 +103,46 @@ void main() {
 
         // A4: saveSurveyStepAnswers (10개)
         final answers = <Map<String, dynamic>>[
-          {'step': 0, 'selected_options': ['espresso']},
-          {'step': 1, 'selected_options': ['beginner']},
-          {'step': 2, 'selected_options': ['like']},
-          {'step': 3, 'selected_options': ['neutral']},
-          {'step': 4, 'selected_options': ['like']},
-          {'step': 5, 'selected_options': ['dislike']},
-          {'step': 6, 'selected_options': ['like']},
-          {'step': 7, 'selected_options': ['dislike']},
-          {'step': 8, 'selected_options': ['like']},
-          {'step': 9, 'selected_options': ['dislike']},
+          {
+            'step': 0,
+            'selected_options': ['espresso'],
+          },
+          {
+            'step': 1,
+            'selected_options': ['beginner'],
+          },
+          {
+            'step': 2,
+            'selected_options': ['like'],
+          },
+          {
+            'step': 3,
+            'selected_options': ['neutral'],
+          },
+          {
+            'step': 4,
+            'selected_options': ['like'],
+          },
+          {
+            'step': 5,
+            'selected_options': ['dislike'],
+          },
+          {
+            'step': 6,
+            'selected_options': ['like'],
+          },
+          {
+            'step': 7,
+            'selected_options': ['dislike'],
+          },
+          {
+            'step': 8,
+            'selected_options': ['like'],
+          },
+          {
+            'step': 9,
+            'selected_options': ['dislike'],
+          },
         ];
         await surveyRepo.saveSurveyStepAnswers(sessionId!, answers);
         pass('A4: saveSurveyStepAnswers', '10개');
@@ -171,10 +201,7 @@ void main() {
         pass('B1: signInAnonymously');
 
         // B2: save_display_name
-        await db.rpc(
-          'save_display_name',
-          params: {'display_name': 'B_스킵유저'},
-        );
+        await db.rpc('save_display_name', params: {'display_name': 'B_스킵유저'});
         pass('B2: save_display_name');
 
         // B3: setOnboardingComplete
@@ -219,8 +246,7 @@ void main() {
         // 먼저 카탈로그에서 bean_id 하나 확보
         String? catalogBeanId;
         try {
-          final beans =
-              await db.from('coffee_beans').select('id').limit(1);
+          final beans = await db.from('coffee_beans').select('id').limit(1);
           if (beans.isNotEmpty) {
             catalogBeanId = beans.first['id'] as String;
           }
@@ -246,12 +272,14 @@ void main() {
 
         // C5: addCoffeeItem (커스텀 원두)
         try {
-          await coffeeRepo.addCoffeeItem(CoffeeItem(
-            id: 'e2e_custom_bean',
-            name: 'E2E 커스텀 원두',
-            description: '테스트용 원두',
-            color: const Color(0xFF8B6F47),
-          ));
+          await coffeeRepo.addCoffeeItem(
+            CoffeeItem(
+              id: 'e2e_custom_bean',
+              name: 'E2E 커스텀 원두',
+              description: '테스트용 원두',
+              color: const Color(0xFF8B6F47),
+            ),
+          );
           pass('C5: addCoffeeItem (커스텀)');
         } catch (e) {
           warn('C5: addCoffeeItem', e);
@@ -321,9 +349,7 @@ void main() {
                 stepType: TimerStepType.brewing,
               ),
             ],
-            aromaTags: const [
-              AromaTagModel(emoji: '🍊', name: '시트러스'),
-            ],
+            aromaTags: const [AromaTagModel(emoji: '🍊', name: '시트러스')],
           );
           await recipeRepo.saveRecipe(testRecipe);
           pass('D4: saveRecipe');
@@ -481,10 +507,7 @@ void main() {
         pass('F1: signInAnonymously', 'userId=$userId');
 
         // F2: save_display_name
-        await db.rpc(
-          'save_display_name',
-          params: {'display_name': 'F_탈퇴유저'},
-        );
+        await db.rpc('save_display_name', params: {'display_name': 'F_탈퇴유저'});
         pass('F2: save_display_name');
 
         // F3: deleteAccount
@@ -520,10 +543,7 @@ void main() {
         pass('G1: signInAnonymously', 'userId=$userId');
 
         // G2: 닉네임 설정
-        await db.rpc(
-          'save_display_name',
-          params: {'display_name': 'G_재로그인유저'},
-        );
+        await db.rpc('save_display_name', params: {'display_name': 'G_재로그인유저'});
         pass('G2: save_display_name');
 
         // G3: 설문 완료
@@ -534,16 +554,46 @@ void main() {
         pass('G3: startSurvey', 'session_id=$sessionId');
 
         final answers = <Map<String, dynamic>>[
-          {'step': 0, 'selected_options': ['espresso']},
-          {'step': 1, 'selected_options': ['beginner']},
-          {'step': 2, 'selected_options': ['like']},
-          {'step': 3, 'selected_options': ['neutral']},
-          {'step': 4, 'selected_options': ['like']},
-          {'step': 5, 'selected_options': ['dislike']},
-          {'step': 6, 'selected_options': ['like']},
-          {'step': 7, 'selected_options': ['dislike']},
-          {'step': 8, 'selected_options': ['like']},
-          {'step': 9, 'selected_options': ['dislike']},
+          {
+            'step': 0,
+            'selected_options': ['espresso'],
+          },
+          {
+            'step': 1,
+            'selected_options': ['beginner'],
+          },
+          {
+            'step': 2,
+            'selected_options': ['like'],
+          },
+          {
+            'step': 3,
+            'selected_options': ['neutral'],
+          },
+          {
+            'step': 4,
+            'selected_options': ['like'],
+          },
+          {
+            'step': 5,
+            'selected_options': ['dislike'],
+          },
+          {
+            'step': 6,
+            'selected_options': ['like'],
+          },
+          {
+            'step': 7,
+            'selected_options': ['dislike'],
+          },
+          {
+            'step': 8,
+            'selected_options': ['like'],
+          },
+          {
+            'step': 9,
+            'selected_options': ['dislike'],
+          },
         ];
         await surveyRepo.saveSurveyStepAnswers(sessionId!, answers);
         try {
@@ -566,8 +616,9 @@ void main() {
 
         // G5: get_onboarding_status 확인 (설문 완료 상태)
         final status = await db.rpc('get_onboarding_status');
-        final hasCompleted =
-            (status is Map) ? status['has_completed_survey'] as bool? : null;
+        final hasCompleted = (status is Map)
+            ? status['has_completed_survey'] as bool?
+            : null;
         pass('G5: get_onboarding_status', 'has_completed_survey=$hasCompleted');
 
         // G6: 로그아웃 (이 게스트 계정은 탈퇴하지 않음 — 재로그인 불가이므로)
@@ -578,12 +629,14 @@ void main() {
         // G7: 새 게스트로 로그인 → 설문 미완료 상태여야 함 (새 계정)
         final db2 = await signInGuest();
         final status2 = await db2.rpc('get_onboarding_status');
-        final hasCompleted2 =
-            (status2 is Map) ? status2['has_completed_survey'] as bool? : null;
-        expect(hasCompleted2, isFalse,
-            reason: '새 게스트는 설문 미완료 상태여야 합니다');
-        pass('G7: new guest onboarding_status',
-            'has_completed_survey=$hasCompleted2 (expected: false)');
+        final hasCompleted2 = (status2 is Map)
+            ? status2['has_completed_survey'] as bool?
+            : null;
+        expect(hasCompleted2, isFalse, reason: '새 게스트는 설문 미완료 상태여야 합니다');
+        pass(
+          'G7: new guest onboarding_status',
+          'has_completed_survey=$hasCompleted2 (expected: false)',
+        );
 
         // Cleanup
         final authRepo = SupabaseAuthRepository();

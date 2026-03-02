@@ -58,7 +58,9 @@ class SupabaseUserPreferencesRepository implements UserPreferencesRepository {
       if (_db.auth.currentUser != null) {
         await _db.rpc(
           'update_profile',
-          params: {'p_values': {'is_dark_mode': isDark}},
+          params: {
+            'p_values': {'is_dark_mode': isDark},
+          },
         );
       }
     } catch (e) {

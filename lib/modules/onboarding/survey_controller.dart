@@ -327,7 +327,8 @@ class SurveyController extends BaseController {
       final result = await _surveyRepository.startSurvey(
         surveyType: 'preference',
       );
-      _sessionId = result['session_id'] as String? ??
+      _sessionId =
+          result['session_id'] as String? ??
           result['new_session_id'] as String?;
     } catch (e) {
       debugPrint('[SurveyController] startSurvey RPC failed: $e');
@@ -348,7 +349,8 @@ class SurveyController extends BaseController {
       final result = await _surveyRepository.startSurvey(
         surveyType: 'lifestyle',
       );
-      _sessionId = result['session_id'] as String? ??
+      _sessionId =
+          result['session_id'] as String? ??
           result['new_session_id'] as String?;
     } catch (e) {
       debugPrint('[SurveyController] startLifestyleSurvey RPC failed: $e');
@@ -368,18 +370,15 @@ class SurveyController extends BaseController {
     // Send step + selected_options for the RPC to resolve question_id via step lookup
     // survey_answers table: session_id, question_id (FK UUID), selected_options text[]
     final answerMaps = <Map<String, dynamic>>[
-      {
-        'step': question?.step ?? step,
-        'selected_options': stepAnswers,
-      },
+      {'step': question?.step ?? step, 'selected_options': stepAnswers},
     ];
 
-    _surveyRepository
-        .saveSurveyStepAnswers(_sessionId!, answerMaps)
-        .catchError((e) {
-      debugPrint('[SurveyController] saveSurveyStepAnswers failed: $e');
-      return <String, dynamic>{};
-    });
+    _surveyRepository.saveSurveyStepAnswers(_sessionId!, answerMaps).catchError(
+      (e) {
+        debugPrint('[SurveyController] saveSurveyStepAnswers failed: $e');
+        return <String, dynamic>{};
+      },
+    );
   }
 
   /// Whether analysis is currently running (prevents duplicate calls)

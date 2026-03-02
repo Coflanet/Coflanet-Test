@@ -191,7 +191,8 @@ class SupabaseCoffeeRepository implements CoffeeRepository {
       origin: origin,
       roastLevel:
           data['roast_level'] as String? ?? data['roastLevel'] as String?,
-      processMethod: data['processing'] as String? ?? data['process_method'] as String?,
+      processMethod:
+          data['processing'] as String? ?? data['process_method'] as String?,
       isHidden: data['is_hidden'] as bool? ?? false,
       sortOrder: data['sort_order'] as int?,
     );
@@ -222,10 +223,10 @@ class SupabaseCoffeeRepository implements CoffeeRepository {
     String addedFrom = 'manual',
   }) async {
     try {
-      final result = await _db.rpc('add_to_coffee_list', params: {
-        'p_bean_id': beanId,
-        'p_added_from': addedFrom,
-      });
+      final result = await _db.rpc(
+        'add_to_coffee_list',
+        params: {'p_bean_id': beanId, 'p_added_from': addedFrom},
+      );
       debugPrint('[CoffeeRepo] add_to_coffee_list result: $result');
       return result is Map<String, dynamic> ? result : <String, dynamic>{};
     } catch (e) {
