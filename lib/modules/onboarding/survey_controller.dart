@@ -30,6 +30,9 @@ class SurveyController extends BaseController {
   /// Cached questions loaded from repository
   List<SurveyQuestionModel> _questions = [];
 
+  /// Server session ID for survey (set by start_survey RPC)
+  String? _sessionId;
+
   /// Current survey type (standard or lifestyle)
   final _surveyType = SurveyType.standard.obs;
   SurveyType get surveyType => _surveyType.value;
@@ -257,6 +260,9 @@ class SurveyController extends BaseController {
   /// Go to next question
   /// Navigates to Section Intro screens at section transitions
   void nextQuestion() {
+    // Save current step answers to server (fire-and-forget)
+    _saveCurrentStepToServer();
+
     if (_currentStep.value < totalSteps - 1) {
       final nextStep = _currentStep.value + 1;
 
@@ -315,6 +321,18 @@ class SurveyController extends BaseController {
     _answers.clear();
     _multiRatingAnswers.clear();
     _questions = await _surveyRepository.getQuestions(type: 'standard');
+
+    // start_survey RPC — server CHECK: 'preference' or 'lifestyle'
+    try {
+      final result = await _surveyRepository.startSurvey(
+        surveyType: 'preference',
+      );
+      _sessionId = result['session_id'] as String? ??
+          result['new_session_id'] as String?;
+    } catch (e) {
+      debugPrint('[SurveyController] startSurvey RPC failed: $e');
+    }
+
     Get.toNamed('${Routes.survey}/0');
   }
 
@@ -325,7 +343,43 @@ class SurveyController extends BaseController {
     _answers.clear();
     _multiRatingAnswers.clear();
     _questions = await _surveyRepository.getQuestions(type: 'lifestyle');
+
+    try {
+      final result = await _surveyRepository.startSurvey(
+        surveyType: 'lifestyle',
+      );
+      _sessionId = result['session_id'] as String? ??
+          result['new_session_id'] as String?;
+    } catch (e) {
+      debugPrint('[SurveyController] startLifestyleSurvey RPC failed: $e');
+    }
+
     Get.toNamed('${Routes.survey}/0');
+  }
+
+  /// Save current step's answers to server (fire-and-forget, non-blocking)
+  void _saveCurrentStepToServer() {
+    if (_sessionId == null) return;
+    final step = _currentStep.value;
+    final stepAnswers = _answers[step];
+    if (stepAnswers == null || stepAnswers.isEmpty) return;
+
+    final question = currentQuestion;
+    // Send step + selected_options for the RPC to resolve question_id via step lookup
+    // survey_answers table: session_id, question_id (FK UUID), selected_options text[]
+    final answerMaps = <Map<String, dynamic>>[
+      {
+        'step': question?.step ?? step,
+        'selected_options': stepAnswers,
+      },
+    ];
+
+    _surveyRepository
+        .saveSurveyStepAnswers(_sessionId!, answerMaps)
+        .catchError((e) {
+      debugPrint('[SurveyController] saveSurveyStepAnswers failed: $e');
+      return <String, dynamic>{};
+    });
   }
 
   /// Whether analysis is currently running (prevents duplicate calls)

@@ -63,6 +63,9 @@ class MyPlanetController extends BaseController {
   bool get hasTasteProfile => _surveyService.hasResult;
   String get userName => _surveyService.userName;
 
+  // 게스트 여부
+  bool get isAnonymous => _authService.isAnonymous;
+
   // Has saved recipes (backward compat)
   bool get hasRecipes => _savedRecipes.isNotEmpty;
 
@@ -139,6 +142,11 @@ class MyPlanetController extends BaseController {
         ),
       );
     }
+  }
+
+  /// 계정 연동 화면으로 이동
+  void goToAccountLink() {
+    Get.toNamed(Routes.accountLink);
   }
 
   /// Navigate to survey

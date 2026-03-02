@@ -74,4 +74,24 @@ class DummySurveyRepository implements SurveyRepository {
   Future<void> saveSurveyReasons(List<String> reasons) async {
     await _storage.write('survey_reasons', reasons);
   }
+
+  @override
+  Future<Map<String, dynamic>> startSurvey({
+    String surveyType = 'standard',
+  }) async {
+    return {'session_id': 'dummy_session', 'status': 'ok'};
+  }
+
+  @override
+  Future<Map<String, dynamic>> saveSurveyStepAnswers(
+    String sessionId,
+    List<Map<String, dynamic>> answers,
+  ) async {
+    return {'status': 'ok'};
+  }
+
+  @override
+  Future<Map<String, dynamic>> completeSurvey(String sessionId) async {
+    return {'status': 'ok'};
+  }
 }

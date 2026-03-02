@@ -129,4 +129,24 @@ class ApiSurveyRepository implements SurveyRepository {
       rethrow;
     }
   }
+
+  @override
+  Future<Map<String, dynamic>> startSurvey({
+    String surveyType = 'standard',
+  }) async {
+    throw UnimplementedError('API startSurvey not implemented');
+  }
+
+  @override
+  Future<Map<String, dynamic>> saveSurveyStepAnswers(
+    String sessionId,
+    List<Map<String, dynamic>> answers,
+  ) async {
+    throw UnimplementedError('API saveSurveyStepAnswers not implemented');
+  }
+
+  @override
+  Future<Map<String, dynamic>> completeSurvey(String sessionId) async {
+    throw UnimplementedError('API completeSurvey not implemented');
+  }
 }

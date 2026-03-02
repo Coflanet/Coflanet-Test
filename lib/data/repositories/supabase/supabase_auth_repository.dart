@@ -50,12 +50,9 @@ class SupabaseAuthRepository implements AuthRepository {
 
   @override
   Future<void> deleteAccount() async {
-    final token = _db.auth.currentSession?.accessToken;
     try {
-      await _db.functions.invoke(
-        'delete-account',
-        headers: {if (token != null) 'Authorization': 'Bearer $token'},
-      );
+      // supabase_flutter automatically includes auth headers
+      await _db.functions.invoke('delete-account');
     } catch (e) {
       debugPrint(
         '[SupabaseAuthRepository] delete-account Edge Function failed: $e',

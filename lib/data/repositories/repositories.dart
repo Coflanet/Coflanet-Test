@@ -6,6 +6,7 @@ export 'repository_config.dart';
 export 'repository_provider.dart';
 
 // Dummy implementations
+export 'dummy/dummy_brew_log_repository.dart';
 export 'dummy/dummy_survey_repository.dart';
 export 'dummy/dummy_coffee_repository.dart';
 export 'dummy/dummy_recipe_repository.dart';
@@ -13,6 +14,7 @@ export 'dummy/dummy_user_preferences_repository.dart';
 
 // Supabase implementations
 export 'supabase/supabase_auth_repository.dart';
+export 'supabase/supabase_brew_log_repository.dart';
 export 'supabase/supabase_survey_repository.dart';
 export 'supabase/supabase_coffee_repository.dart';
 export 'supabase/supabase_recipe_repository.dart';

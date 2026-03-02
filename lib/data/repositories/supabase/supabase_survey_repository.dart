@@ -15,12 +15,51 @@ class SupabaseSurveyRepository implements SurveyRepository {
 
   SupabaseClient get _db => Supabase.instance.client;
 
+  /// Current survey session ID (tracked across start → save → complete)
+  String? _currentSessionId;
+
+  /// Current survey type for question ID lookups
+  String? _currentSurveyType;
+
+  /// Cached question_key → question UUID map (loaded from survey_questions table)
+  Map<String, String>? _questionKeyToIdCache;
+
+  /// Static mapping: dummy question index → server question_key (preference)
+  static const _preferenceQuestionKeys = <int, String>{
+    0: 'brew_method',
+    1: 'experience_level',
+    2: 'pref_acidity',
+    3: 'pref_body',
+    4: 'pref_sweetness',
+    5: 'pref_bitterness',
+    6: 'pref_aroma_fruity',
+    7: 'pref_aroma_floral',
+    8: 'pref_aroma_nutty_cocoa',
+    9: 'pref_aroma_roasted',
+  };
+
+  /// Static mapping: dummy question index → server question_key (lifestyle)
+  static const _lifestyleQuestionKeys = <int, String>{
+    0: 'brew_method',
+    1: 'experience_level',
+    2: 'life_morning',
+    3: 'life_weekend',
+    4: 'life_stress',
+    5: 'life_new_experience',
+    6: 'life_taste',
+    7: 'life_dessert',
+    8: 'life_drink_temp',
+    9: 'life_scent',
+    10: 'life_personality',
+    11: 'life_decision',
+  };
+
   @override
   Future<List<SurveyQuestionModel>> getQuestions({
     String type = 'standard',
   }) async {
-    // Survey questions are static — served from local data
-    // TODO: 추후 서버에서 질문 관리 시 RPC로 교체
+    // Questions are static — served from local data
+    // Server session is started separately via startSurvey()
     return type == 'lifestyle'
         ? DummyLifestyleSurveyData.questions
         : DummySurveyData.questions;
@@ -199,32 +238,52 @@ class SupabaseSurveyRepository implements SurveyRepository {
   Future<SurveyResultModel> generateResult(
     Map<int, List<String>> answers,
   ) async {
-    // Step 1: retake_survey → get new session_id
-    final retakeResult = await _db.rpc('retake_survey');
-    debugPrint('[SurveyRepo] retake_survey result: $retakeResult');
-
-    String? sessionId;
-    if (retakeResult is Map<String, dynamic>) {
-      sessionId =
-          retakeResult['new_session_id'] as String? ??
-          retakeResult['session_id'] as String?;
-    } else if (retakeResult is String) {
-      sessionId = retakeResult;
-    }
+    // Step 1: Ensure session exists
+    String? sessionId = _currentSessionId;
     if (sessionId == null || sessionId.isEmpty) {
-      throw Exception('[SurveyRepo] retake_survey did not return session_id');
+      final retakeResult = await _db.rpc('retake_survey');
+      debugPrint('[SurveyRepo] retake_survey result: $retakeResult');
+
+      if (retakeResult is Map<String, dynamic>) {
+        sessionId =
+            retakeResult['new_session_id'] as String? ??
+            retakeResult['session_id'] as String?;
+      } else if (retakeResult is String) {
+        sessionId = retakeResult;
+      }
+      if (sessionId == null || sessionId.isEmpty) {
+        throw Exception('[SurveyRepo] retake_survey did not return session_id');
+      }
+      _currentSessionId = sessionId;
+
+      // Load question IDs for the new session
+      final surveyType = _currentSurveyType ?? 'preference';
+      await _loadQuestionIds(surveyType);
     }
 
-    // Step 2: submit-survey Edge Function (답변 포함)
-    final accessToken = _db.auth.currentSession?.accessToken;
-    final answersJson = answers.map((k, v) => MapEntry(k.toString(), v));
+    // Step 2: Save ALL answers at once (ensures completeness)
+    final allAnswerMaps = <Map<String, dynamic>>[];
+    for (final entry in answers.entries) {
+      allAnswerMaps.add({
+        'step': entry.key,
+        'selected_options': entry.value,
+      });
+    }
+    if (allAnswerMaps.isNotEmpty) {
+      await saveSurveyStepAnswers(sessionId, allAnswerMaps);
+    }
 
+    // Step 3: complete_survey RPC
+    try {
+      await completeSurvey(sessionId);
+    } catch (e) {
+      debugPrint('[SurveyRepo] complete_survey error (continuing): $e');
+    }
+
+    // Step 4: submit-survey Edge Function (supabase_flutter handles auth)
     final response = await _db.functions.invoke(
       'submit-survey',
-      body: {'session_id': sessionId, 'answers': answersJson},
-      headers: {
-        if (accessToken != null) 'Authorization': 'Bearer $accessToken',
-      },
+      body: {'session_id': sessionId},
     );
 
     final data = response.data;
@@ -240,6 +299,11 @@ class SupabaseSurveyRepository implements SurveyRepository {
     final profileData =
         responseMap['taste_profile'] ?? responseMap['profile'] ?? responseMap;
     final recsData = responseMap['recommendations'] ?? [];
+
+    // Clear session after successful completion
+    _currentSessionId = null;
+    _currentSurveyType = null;
+    _questionKeyToIdCache = null;
 
     return _parseServerResult(profileData, recsData);
   }
@@ -276,5 +340,174 @@ class SupabaseSurveyRepository implements SurveyRepository {
     }
     // Cache locally as well
     await _storage.write('survey_reasons', reasons);
+  }
+
+  @override
+  Future<Map<String, dynamic>> startSurvey({
+    String surveyType = 'standard',
+  }) async {
+    final result = await _db.rpc(
+      'start_survey',
+      params: {'p_survey_type': surveyType},
+    );
+    debugPrint('[SurveyRepo] start_survey result: $result');
+    final data = result is Map<String, dynamic>
+        ? result
+        : <String, dynamic>{};
+    _currentSessionId =
+        data['session_id'] as String? ??
+        data['new_session_id'] as String?;
+    _currentSurveyType = surveyType;
+
+    // Pre-load question UUIDs for this survey type
+    _questionKeyToIdCache = null; // invalidate old cache
+    await _loadQuestionIds(surveyType);
+
+    return data;
+  }
+
+  /// Load question_key → question UUID mapping from survey_questions table.
+  Future<void> _loadQuestionIds(String surveyType) async {
+    try {
+      final rows = await _db
+          .from('survey_questions')
+          .select('id, question_key, survey_type')
+          .or('survey_type.eq.common,survey_type.eq.$surveyType')
+          .order('step')
+          .order('question_order');
+
+      final map = <String, String>{};
+      for (final r in rows) {
+        final key = r['question_key'] as String?;
+        if (key != null) {
+          map[key] = r['id'] as String;
+        }
+      }
+      _questionKeyToIdCache = map;
+      debugPrint('[SurveyRepo] loaded ${map.length} question IDs by key: $map');
+    } catch (e) {
+      debugPrint('[SurveyRepo] _loadQuestionIds error: $e');
+    }
+  }
+
+  @override
+  Future<Map<String, dynamic>> saveSurveyStepAnswers(
+    String sessionId,
+    List<Map<String, dynamic>> answers,
+  ) async {
+    // Resolve dummy step → question_key → question UUID before sending
+    // RPC expects: [{question_id: UUID, selected_options: [...], score_value: int?}]
+    if (_questionKeyToIdCache == null && _currentSurveyType != null) {
+      await _loadQuestionIds(_currentSurveyType!);
+    }
+
+    final questionKeys = _currentSurveyType == 'lifestyle'
+        ? _lifestyleQuestionKeys
+        : _preferenceQuestionKeys;
+
+    final resolvedAnswers = <Map<String, dynamic>>[];
+    for (final answer in answers) {
+      final step = answer['step'] as int?;
+      if (step == null) continue;
+
+      final questionKey = questionKeys[step];
+      if (questionKey == null) {
+        debugPrint('[SurveyRepo] no question_key for step $step, skipping');
+        continue;
+      }
+
+      final questionId = _questionKeyToIdCache?[questionKey];
+      if (questionId == null) {
+        debugPrint(
+          '[SurveyRepo] no UUID for question_key=$questionKey, skipping',
+        );
+        continue;
+      }
+
+      final selectedOptions = answer['selected_options'] as List? ?? [];
+      final resolved = <String, dynamic>{
+        'question_id': questionId,
+        'selected_options': selectedOptions,
+      };
+
+      // Add score_value for preference taste/aroma questions
+      final score = _computeScoreValue(step, selectedOptions);
+      if (score != null) {
+        resolved['score_value'] = score;
+      }
+
+      resolvedAnswers.add(resolved);
+    }
+
+    if (resolvedAnswers.isEmpty) {
+      debugPrint('[SurveyRepo] no resolved answers to save');
+      return {};
+    }
+
+    final result = await _db.rpc('save_survey_answers', params: {
+      'p_session_id': sessionId,
+      'p_answers': resolvedAnswers,
+    });
+    debugPrint('[SurveyRepo] save_survey_answers result: $result');
+    return result is Map<String, dynamic> ? result : <String, dynamic>{};
+  }
+
+  /// Exposed for unit testing: preference question key mapping.
+  @visibleForTesting
+  static Map<int, String> get preferenceQuestionKeys => _preferenceQuestionKeys;
+
+  /// Exposed for unit testing: lifestyle question key mapping.
+  @visibleForTesting
+  static Map<int, String> get lifestyleQuestionKeys => _lifestyleQuestionKeys;
+
+  /// Exposed for unit testing: score_value computation.
+  @visibleForTesting
+  static int? computeScoreValue(int dummyStep, List<dynamic> selectedOptions) {
+    return _computeScoreValueStatic(dummyStep, selectedOptions);
+  }
+
+  /// Compute score_value for preference survey taste/aroma questions.
+  /// Taste (steps 2-5): dislike=1, neutral=2, like=3
+  /// Aroma (steps 6-9): dislike=0, like=1
+  int? _computeScoreValue(int dummyStep, List<dynamic> selectedOptions) {
+    if (_currentSurveyType != 'preference') return null;
+    return _computeScoreValueStatic(dummyStep, selectedOptions);
+  }
+
+  static int? _computeScoreValueStatic(
+    int dummyStep,
+    List<dynamic> selectedOptions,
+  ) {
+    if (selectedOptions.isEmpty) return null;
+    final option = selectedOptions.first.toString();
+
+    if (dummyStep >= 2 && dummyStep <= 5) {
+      switch (option) {
+        case 'dislike':
+          return 1;
+        case 'neutral':
+          return 2;
+        case 'like':
+          return 3;
+      }
+    } else if (dummyStep >= 6 && dummyStep <= 9) {
+      switch (option) {
+        case 'dislike':
+          return 0;
+        case 'like':
+          return 1;
+      }
+    }
+    return null;
+  }
+
+  @override
+  Future<Map<String, dynamic>> completeSurvey(String sessionId) async {
+    final result = await _db.rpc(
+      'complete_survey',
+      params: {'p_session_id': sessionId},
+    );
+    debugPrint('[SurveyRepo] complete_survey result: $result');
+    return result is Map<String, dynamic> ? result : <String, dynamic>{};
   }
 }

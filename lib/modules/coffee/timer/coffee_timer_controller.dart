@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'package:flutter/foundation.dart';
 import 'package:get/get.dart';
 import 'package:flutter/services.dart';
 import 'package:coflanet/core/base/base_controller.dart';
@@ -386,6 +387,9 @@ class CoffeeTimerController extends BaseController {
       if (!isClosed) HapticFeedback.heavyImpact();
     });
 
+    // Save brew log (fire-and-forget, don't block timer completion)
+    _saveBrewLog();
+
     Get.offNamed(
       Routes.timerComplete,
       arguments: {
@@ -393,6 +397,47 @@ class CoffeeTimerController extends BaseController {
         'totalTime': _totalElapsedSeconds.value,
       },
     );
+  }
+
+  /// Save brew log after timer completion (non-blocking)
+  /// brew_logs table columns: bean_id, brew_method_id, recipe_id,
+  /// coffee_amount_g, water_temp_c, grind_size_um, total_water_ml,
+  /// total_yield_g, total_duration_seconds, cups, strength, rating, notes, brewed_at
+  void _saveBrewLog() {
+    final r = _recipe.value;
+    if (r == null) return;
+
+    final values = <String, dynamic>{
+      // Send slug for RPC to resolve → brew_method_id
+      'brew_method_slug': r.coffeeType,
+      'coffee_amount_g': r.coffeeAmount,
+      'total_water_ml': r.waterAmount,
+      'total_duration_seconds': _totalElapsedSeconds.value,
+      'brewed_at': DateTime.now().toIso8601String(),
+    };
+
+    // Recipe ID (if it's a server UUID, not a local key)
+    if (r.id.contains('-')) {
+      values['recipe_id'] = r.id;
+    }
+
+    // Try to get bean info from CoffeeController if available
+    if (Get.isRegistered<CoffeeController>()) {
+      try {
+        final cc = Get.find<CoffeeController>();
+        if (cc.selectedBeanId != null && cc.selectedBeanId!.isNotEmpty) {
+          values['bean_id'] = cc.selectedBeanId;
+        }
+        if (cc.grindSize > 0) {
+          values['grind_size_um'] = cc.grindSize;
+        }
+      } catch (_) {}
+    }
+
+    RepositoryProvider.brewLogRepository.saveBrewLog(values).catchError((e) {
+      debugPrint('[CoffeeTimer] saveBrewLog failed: $e');
+      return <String, dynamic>{};
+    });
   }
 
   /// Stop and go back

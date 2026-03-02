@@ -27,7 +27,7 @@ lib/
 │   ├── models/          # 데이터 모델
 │   └── repositories/    # Repository 패턴 (Dummy/API 추상화)
 ├── modules/             # 기능 모듈 (화면 + 컨트롤러 + 바인딩)
-│   ├── auth/            # 로그인 (카카오, 네이버, 애플)
+│   ├── auth/            # 로그인 (카카오, 네이버, 애플), 계정 연동
 │   ├── coffee/          # 핸드드립, 에스프레소, 타이머, 설정, 원두 선택
 │   ├── extraction/      # 추출 목록
 │   ├── matching/        # 매칭 결과

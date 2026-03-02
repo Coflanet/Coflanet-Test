@@ -1,3 +1,4 @@
+import 'package:coflanet/data/models/brew_log_model.dart';
 import 'package:coflanet/data/models/coffee_item_model.dart';
 import 'package:coflanet/data/models/survey_question_model.dart';
 import 'package:coflanet/data/models/survey_result_model.dart';
@@ -83,6 +84,18 @@ abstract class SurveyRepository {
 
   /// Save survey reasons (why user joined)
   Future<void> saveSurveyReasons(List<String> reasons);
+
+  /// Start a new survey session on the server
+  Future<Map<String, dynamic>> startSurvey({String surveyType = 'standard'});
+
+  /// Save answers for current survey step to server
+  Future<Map<String, dynamic>> saveSurveyStepAnswers(
+    String sessionId,
+    List<Map<String, dynamic>> answers,
+  );
+
+  /// Complete a survey session on the server
+  Future<Map<String, dynamic>> completeSurvey(String sessionId);
 }
 
 // ─────────────────────────────────────────────────────────────────────────────
@@ -114,6 +127,18 @@ abstract class CoffeeRepository {
 
   /// Save coffee items list (for local persistence)
   Future<void> saveCoffeeItems(List<CoffeeItem> items);
+
+  /// Add a bean to user's coffee list (from catalog)
+  /// [addedFrom] must be: 'recommendation', 'search', or 'manual'
+  Future<Map<String, dynamic>> addToCoffeeList(
+    String beanId, {
+    String addedFrom = 'manual',
+  });
+
+  /// Get coffee catalog with optional filters
+  Future<Map<String, dynamic>> getCoffeeCatalog({
+    Map<String, dynamic>? filters,
+  });
 }
 
 // ─────────────────────────────────────────────────────────────────────────────
@@ -183,4 +208,26 @@ abstract class UserPreferencesRepository {
 
   /// Clear all user preferences
   Future<void> clearAll();
+}
+
+// ─────────────────────────────────────────────────────────────────────────────
+// Brew Log Repository
+// ─────────────────────────────────────────────────────────────────────────────
+
+/// Repository for brew log (extraction history) operations
+abstract class BrewLogRepository {
+  /// Save a new brew log entry
+  Future<Map<String, dynamic>> saveBrewLog(Map<String, dynamic> values);
+
+  /// Get paginated list of user's brew logs
+  Future<List<BrewLogModel>> getMyBrewLogs({int limit = 20, int offset = 0});
+
+  /// Update an existing brew log entry
+  Future<void> updateBrewLog(String logId, Map<String, dynamic> values);
+
+  /// Delete a brew log entry
+  Future<void> deleteBrewLog(String logId);
+
+  /// Get user's brewing statistics
+  Future<Map<String, dynamic>?> getMyBrewStats();
 }

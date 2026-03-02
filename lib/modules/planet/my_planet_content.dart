@@ -446,6 +446,18 @@ class MyPlanetContent extends GetView<MyPlanetController> {
       ),
       child: Column(
         children: [
+          // 게스트일 때만 계정 연결 표시
+          if (controller.isAnonymous) ...[
+            _buildAccountCell(
+              text: '계정 연결',
+              color: AppColor.primaryNormal,
+              onTap: () => controller.goToAccountLink(),
+            ),
+            Container(
+              height: 1,
+              color: AppColor.lineNormalNeutral,
+            ),
+          ],
           // 로그아웃 cell - Figma: height 48px, padding 12px 0
           _buildAccountCell(
             text: '로그아웃',

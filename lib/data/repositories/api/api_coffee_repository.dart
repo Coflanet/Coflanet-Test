@@ -135,6 +135,21 @@ class ApiCoffeeRepository implements CoffeeRepository {
     };
   }
 
+  @override
+  Future<Map<String, dynamic>> addToCoffeeList(
+    String beanId, {
+    String addedFrom = 'manual',
+  }) async {
+    throw UnimplementedError('API addToCoffeeList not implemented');
+  }
+
+  @override
+  Future<Map<String, dynamic>> getCoffeeCatalog({
+    Map<String, dynamic>? filters,
+  }) async {
+    throw UnimplementedError('API getCoffeeCatalog not implemented');
+  }
+
   CoffeeItem _coffeeItemFromJson(Map<String, dynamic> json) {
     return CoffeeItem(
       id: json['id'] as String,

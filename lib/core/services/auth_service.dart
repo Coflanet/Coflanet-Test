@@ -273,6 +273,8 @@ class AuthService extends GetxService with WidgetsBindingObserver {
     }
     final naverUser = await naverProvider.signIn();
 
+    debugPrint('[AuthService] Naver token length: ${naverUser.accessToken.length}');
+
     // Exchange with Edge Function (server expects authorization_code)
     final response = await _supabase.functions.invoke(
       'naver-auth',
@@ -280,8 +282,15 @@ class AuthService extends GetxService with WidgetsBindingObserver {
     );
 
     final data = response.data as Map<String, dynamic>;
+    debugPrint('[AuthService] naver-auth response keys: ${data.keys}');
+
+    if (data['error'] != null) {
+      throw AuthException('Naver auth failed: ${data['error']}');
+    }
     if (data['access_token'] == null) {
-      throw AuthException('Naver auth Edge Function 실패');
+      throw AuthException(
+        'Naver auth Edge Function 실패: ${data.keys.toList()}',
+      );
     }
 
     // Set the session from the returned tokens
@@ -459,6 +468,112 @@ class AuthService extends GetxService with WidgetsBindingObserver {
   /// Continue as guest
   Future<UserModel> continueAsGuest() async {
     return signIn(SocialLoginType.guest);
+  }
+
+  /// 현재 유저가 게스트(익명)인지 확인
+  bool get isAnonymous {
+    if (!_isSupabase) return currentUser?.provider == 'guest';
+    return _supabase.auth.currentUser?.isAnonymous ?? false;
+  }
+
+  /// 게스트 계정을 소셜 계정으로 연동 (linkIdentity)
+  /// user_id 유지 → 기존 데이터 자동 보존
+  Future<UserModel> linkWithSocial(SocialLoginType type) async {
+    _isLoading.value = true;
+    try {
+      if (!_isSupabase) throw AuthException('Supabase 모드에서만 지원');
+      if (!isAnonymous) throw AuthException('게스트 계정만 연동 가능');
+
+      switch (type) {
+        case SocialLoginType.kakao:
+          return await _linkWithOAuth(OAuthProvider.kakao, 'kakao');
+        case SocialLoginType.apple:
+          return await _linkWithOAuth(OAuthProvider.apple, 'apple');
+        case SocialLoginType.naver:
+          throw AuthException('네이버 로그인은 아직 연동을 지원하지 않습니다');
+        case SocialLoginType.guest:
+          throw AuthException('이미 게스트 계정입니다');
+      }
+    } finally {
+      _isLoading.value = false;
+    }
+  }
+
+  /// 게스트 계정을 이메일 계정으로 연동
+  Future<UserModel> linkWithEmail(String email, String password) async {
+    _isLoading.value = true;
+    try {
+      if (!_isSupabase) throw AuthException('Supabase 모드에서만 지원');
+      if (!isAnonymous) throw AuthException('게스트 계정만 연동 가능');
+
+      final response = await _supabase.auth.updateUser(
+        UserAttributes(email: email, password: password),
+      );
+      final supaUser = response.user;
+      final user = UserModel(
+        id: supaUser?.id ?? '',
+        email: supaUser?.email,
+        name: supaUser?.userMetadata?['display_name'] as String?,
+        provider: 'email',
+        accessToken: _supabase.auth.currentSession?.accessToken ?? '',
+        refreshToken: _supabase.auth.currentSession?.refreshToken,
+      );
+      await _saveUserToStorage(user);
+      _currentUser.value = user;
+      return user;
+    } finally {
+      _isLoading.value = false;
+    }
+  }
+
+  /// OAuth 연동 (linkIdentity) — user_id 유지, 기존 데이터 보존
+  Future<UserModel> _linkWithOAuth(
+    OAuthProvider provider,
+    String providerName,
+  ) async {
+    _oauthResumeTimer?.cancel();
+    _oauthSub?.cancel();
+
+    final completer = Completer<UserModel>();
+    _oauthCompleter = completer;
+
+    _oauthSub = _supabase.auth.onAuthStateChange.listen((data) {
+      if (data.event == AuthChangeEvent.signedIn && data.session != null) {
+        _oauthResumeTimer?.cancel();
+        _oauthSub?.cancel();
+        _oauthSub = null;
+        _oauthCompleter = null;
+        if (!completer.isCompleted) {
+          completer.complete(_userFromSession(data.session!, providerName));
+        }
+      }
+    });
+
+    await _supabase.auth.linkIdentity(
+      provider,
+      redirectTo: 'com.coflanet.tech.app://callback',
+      authScreenLaunchMode: LaunchMode.externalApplication,
+    );
+
+    try {
+      final user = await completer.future.timeout(
+        const Duration(minutes: 2),
+        onTimeout: () {
+          _oauthSub?.cancel();
+          _oauthSub = null;
+          _oauthCompleter = null;
+          throw AuthException('계정 연동 시간 초과');
+        },
+      );
+      await _saveUserToStorage(user);
+      _currentUser.value = user;
+      return user;
+    } catch (e) {
+      _oauthSub?.cancel();
+      _oauthSub = null;
+      _oauthCompleter = null;
+      rethrow;
+    }
   }
 
   /// Refresh current user's token

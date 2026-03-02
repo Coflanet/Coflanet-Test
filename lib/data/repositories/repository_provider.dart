@@ -2,12 +2,14 @@ import 'package:coflanet/data/repositories/repository_config.dart';
 import 'package:coflanet/data/repositories/repository_interfaces.dart';
 // Dummy implementations
 import 'package:coflanet/data/repositories/dummy/dummy_auth_repository.dart';
+import 'package:coflanet/data/repositories/dummy/dummy_brew_log_repository.dart';
 import 'package:coflanet/data/repositories/dummy/dummy_survey_repository.dart';
 import 'package:coflanet/data/repositories/dummy/dummy_coffee_repository.dart';
 import 'package:coflanet/data/repositories/dummy/dummy_recipe_repository.dart';
 import 'package:coflanet/data/repositories/dummy/dummy_user_preferences_repository.dart';
 // Supabase implementations
 import 'package:coflanet/data/repositories/supabase/supabase_auth_repository.dart';
+import 'package:coflanet/data/repositories/supabase/supabase_brew_log_repository.dart';
 import 'package:coflanet/data/repositories/supabase/supabase_survey_repository.dart';
 import 'package:coflanet/data/repositories/supabase/supabase_coffee_repository.dart';
 import 'package:coflanet/data/repositories/supabase/supabase_recipe_repository.dart';
@@ -29,6 +31,7 @@ class RepositoryProvider {
   static CoffeeRepository? _coffeeRepository;
   static RecipeRepository? _recipeRepository;
   static UserPreferencesRepository? _userPreferencesRepository;
+  static BrewLogRepository? _brewLogRepository;
 
   /// Get AuthRepository instance
   static AuthRepository get authRepository {
@@ -80,6 +83,16 @@ class RepositoryProvider {
     return _userPreferencesRepository!;
   }
 
+  /// Get BrewLogRepository instance
+  static BrewLogRepository get brewLogRepository {
+    _brewLogRepository ??= switch (RepositoryConfig.dataSource) {
+      DataSource.dummy => DummyBrewLogRepository(),
+      DataSource.supabase => SupabaseBrewLogRepository(),
+      DataSource.api => DummyBrewLogRepository(), // API stub uses dummy
+    };
+    return _brewLogRepository!;
+  }
+
   /// Reset all repositories (useful for testing)
   static void reset() {
     _authRepository = null;
@@ -87,5 +100,6 @@ class RepositoryProvider {
     _coffeeRepository = null;
     _recipeRepository = null;
     _userPreferencesRepository = null;
+    _brewLogRepository = null;
   }
 }

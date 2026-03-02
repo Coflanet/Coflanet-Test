@@ -57,4 +57,5 @@ abstract class Routes {
   static const emailLogin = '/login/email-login';
   static const emailSignUp = '/login/email-sign-up';
   static const signUpComplete = '/login/sign-up-complete';
+  static const accountLink = '/login/account-link';
 }

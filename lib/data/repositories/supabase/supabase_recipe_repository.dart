@@ -192,14 +192,7 @@ class SupabaseRecipeRepository implements RecipeRepository {
   @override
   Future<void> deleteRecipe(String id) async {
     try {
-      final userId = _db.auth.currentUser?.id;
-      if (userId == null) return;
-
-      // Delete steps and aroma tags first (or rely on CASCADE if configured)
-      await _db.from('recipe_steps').delete().eq('recipe_id', id);
-      await _db.from('recipe_aroma_tags').delete().eq('recipe_id', id);
-      await _db.from('recipes').delete().eq('id', id).eq('user_id', userId);
-
+      await _db.rpc('delete_custom_recipe', params: {'p_recipe_id': id});
       await removeFromSavedRecipes(id);
     } catch (e) {
       debugPrint('[RecipeRepo] deleteRecipe error: $e');

@@ -106,15 +106,106 @@ void main() {
       // ============================
       debugPrint('\n===== C. SURVEY FLOW =====');
 
-      // C1: retake_survey → session_id
+      // C1: start_survey RPC → session_id
       String? sessionId;
       try {
-        final r = await db.rpc('retake_survey');
-        sessionId = r?['new_session_id'] as String?;
+        final r = await db.rpc(
+          'start_survey',
+          params: {'p_survey_type': 'preference'},
+        );
+        sessionId = r?['session_id'] as String?;
         expect(sessionId, isNotNull);
-        pass('retake_survey → session_id=$sessionId');
+        pass('start_survey → session_id=$sessionId');
       } catch (e) {
-        fail('retake_survey', e);
+        fail('start_survey', e);
+      }
+
+      // C1.5: save_survey_answers — 10개 답변 저장
+      if (sessionId != null) {
+        try {
+          // question_key → UUID 조회
+          final qRows = await db
+              .from('survey_questions')
+              .select('id, question_key, survey_type')
+              .or('survey_type.eq.common,survey_type.eq.preference')
+              .order('step')
+              .order('question_order');
+
+          final keyToId = <String, String>{};
+          for (final r in qRows) {
+            final key = r['question_key'] as String?;
+            if (key != null) keyToId[key] = r['id'] as String;
+          }
+          debugPrint('   loaded ${keyToId.length} question IDs');
+
+          final questionKeys = [
+            'brew_method',
+            'experience_level',
+            'pref_acidity',
+            'pref_body',
+            'pref_sweetness',
+            'pref_bitterness',
+            'pref_aroma_fruity',
+            'pref_aroma_floral',
+            'pref_aroma_nutty_cocoa',
+            'pref_aroma_roasted',
+          ];
+          final options = [
+            'espresso',
+            'beginner',
+            'like',
+            'neutral',
+            'like',
+            'dislike',
+            'like',
+            'dislike',
+            'like',
+            'dislike',
+          ];
+          final answers = <Map<String, dynamic>>[];
+          for (int i = 0; i < questionKeys.length; i++) {
+            final qId = keyToId[questionKeys[i]];
+            if (qId == null) continue;
+            final entry = <String, dynamic>{
+              'question_id': qId,
+              'selected_options': [options[i]],
+            };
+            // score_value for taste (2-5) and aroma (6-9) steps
+            if (i >= 2 && i <= 5) {
+              entry['score_value'] = options[i] == 'like'
+                  ? 3
+                  : options[i] == 'neutral'
+                      ? 2
+                      : 1;
+            } else if (i >= 6 && i <= 9) {
+              entry['score_value'] = options[i] == 'like' ? 1 : 0;
+            }
+            answers.add(entry);
+          }
+
+          final saveR = await db.rpc('save_survey_answers', params: {
+            'p_session_id': sessionId,
+            'p_answers': answers,
+          });
+          debugPrint('   save_survey_answers result: $saveR');
+          pass('save_survey_answers → ${answers.length}개 저장');
+        } catch (e) {
+          fail('save_survey_answers', e);
+        }
+      }
+
+      // C1.7: complete_survey RPC
+      if (sessionId != null) {
+        try {
+          final r = await db.rpc(
+            'complete_survey',
+            params: {'p_session_id': sessionId},
+          );
+          debugPrint('   complete_survey result: $r');
+          pass('complete_survey');
+        } catch (e) {
+          fail('complete_survey', e);
+        }
       }
 
       // C2: submit-survey Edge Function

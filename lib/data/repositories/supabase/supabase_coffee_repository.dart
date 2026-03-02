@@ -42,27 +42,12 @@ class SupabaseCoffeeRepository implements CoffeeRepository {
   @override
   Future<void> addCoffeeItem(CoffeeItem item) async {
     try {
-      final userId = _db.auth.currentUser?.id;
-      if (userId == null) return;
-
-      // 1. Insert bean data into coffee_beans table
-      final beanData = _buildBeanData(item);
-
-      final inserted = await _db
-          .from('coffee_beans')
-          .insert(beanData)
-          .select()
-          .single();
-      debugPrint('[CoffeeRepo] inserted coffee_bean: $inserted');
-      final beanId = inserted['id'].toString();
-
-      // 2. Link bean to user's list
-      await _db.from('user_bean_lists').insert({
-        'user_id': userId,
-        'bean_id': beanId,
-        'sort_order': item.sortOrder ?? 0,
-        'added_from': 'custom',
-      });
+      final values = _buildBeanData(item);
+      final result = await _db.rpc(
+        'add_custom_bean',
+        params: {'p_values': values},
+      );
+      debugPrint('[CoffeeRepo] add_custom_bean result: $result');
     } catch (e) {
       debugPrint('[CoffeeRepo] addCoffeeItem error: $e');
     }
@@ -71,9 +56,12 @@ class SupabaseCoffeeRepository implements CoffeeRepository {
   @override
   Future<void> updateCoffeeItem(CoffeeItem item) async {
     try {
-      final beanData = _buildBeanData(item);
-      await _db.from('coffee_beans').update(beanData).eq('id', item.id);
-      debugPrint('[CoffeeRepo] updated coffee_bean id: ${item.id}');
+      final values = _buildBeanData(item);
+      final result = await _db.rpc(
+        'update_custom_bean',
+        params: {'p_bean_id': item.id, 'p_values': values},
+      );
+      debugPrint('[CoffeeRepo] update_custom_bean result: $result');
     } catch (e) {
       debugPrint('[CoffeeRepo] updateCoffeeItem error: $e');
     }
@@ -120,12 +108,15 @@ class SupabaseCoffeeRepository implements CoffeeRepository {
   /// id, name, description, origin, roast_level, process_method,
   /// flavor_tags, image_url, created_at
   /// NOTE: brand, created_by, user_id columns do NOT exist.
+  /// Build jsonb payload for add_custom_bean / update_custom_bean RPCs.
+  /// Column names must match actual coffee_beans schema.
   Map<String, dynamic> _buildBeanData(CoffeeItem item) {
     final data = <String, dynamic>{'name': item.name};
     if (item.description.isNotEmpty) data['description'] = item.description;
     if (item.origin != null) data['origin'] = [item.origin]; // TEXT[] column
     if (item.roastLevel != null) data['roast_level'] = item.roastLevel;
-    if (item.processMethod != null) data['process_method'] = item.processMethod;
+    if (item.processMethod != null) data['processing'] = item.processMethod;
+    // flavor_tags → bean_flavor_tags 별도 테이블이므로 여기서 보내지 않음
     return data;
   }
 
@@ -200,7 +191,7 @@ class SupabaseCoffeeRepository implements CoffeeRepository {
       origin: origin,
       roastLevel:
           data['roast_level'] as String? ?? data['roastLevel'] as String?,
-      processMethod: data['process_method'] as String?,
+      processMethod: data['processing'] as String? ?? data['process_method'] as String?,
       isHidden: data['is_hidden'] as bool? ?? false,
       sortOrder: data['sort_order'] as int?,
     );
@@ -222,5 +213,41 @@ class SupabaseCoffeeRepository implements CoffeeRepository {
     if (value == null) return null;
     if (value is List) return value.map((e) => e.toString()).toList();
     return null;
+  }
+
+  @override
+  Future<Map<String, dynamic>> addToCoffeeList(
+    String beanId, {
+    // Server CHECK: 'recommendation', 'search', 'manual'
+    String addedFrom = 'manual',
+  }) async {
+    try {
+      final result = await _db.rpc('add_to_coffee_list', params: {
+        'p_bean_id': beanId,
+        'p_added_from': addedFrom,
+      });
+      debugPrint('[CoffeeRepo] add_to_coffee_list result: $result');
+      return result is Map<String, dynamic> ? result : <String, dynamic>{};
+    } catch (e) {
+      debugPrint('[CoffeeRepo] addToCoffeeList error: $e');
+      return {};
+    }
+  }
+
+  @override
+  Future<Map<String, dynamic>> getCoffeeCatalog({
+    Map<String, dynamic>? filters,
+  }) async {
+    try {
+      final result = await _db.rpc(
+        'get_coffee_catalog',
+        params: filters != null ? {'p_filters': filters} : {},
+      );
+      debugPrint('[CoffeeRepo] get_coffee_catalog result: $result');
+      return result is Map<String, dynamic> ? result : <String, dynamic>{};
+    } catch (e) {
+      debugPrint('[CoffeeRepo] getCoffeeCatalog error: $e');
+      return {};
+    }
   }
 }

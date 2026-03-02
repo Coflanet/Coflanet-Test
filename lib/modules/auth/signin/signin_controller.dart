@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:supabase_flutter/supabase_flutter.dart'
+    hide LocalStorage, AuthException;
 import 'package:coflanet/constants/color_constant.dart';
 import 'package:coflanet/core/base/base_controller.dart';
 import 'package:coflanet/core/services/auth_service.dart';
@@ -17,8 +19,7 @@ class SignInController extends BaseController {
       clearError();
 
       await _authService.signIn(type);
-      // Navigate to profile setup for name input
-      Get.toNamed(Routes.profileSetup);
+      await _navigateAfterLogin();
     } on AuthException catch (e) {
       _showErrorSnackbar(e.message);
     } catch (e) {
@@ -28,20 +29,39 @@ class SignInController extends BaseController {
     }
   }
 
-  /// Continue as guest
+  /// Continue as guest (always new → profile setup)
   Future<void> continueAsGuest() async {
     try {
       isLoading = true;
       clearError();
 
       await _authService.continueAsGuest();
-      // Navigate to profile setup for name input
       Get.toNamed(Routes.profileSetup);
     } catch (e) {
       _showErrorSnackbar('게스트 로그인 중 오류가 발생했습니다.');
     } finally {
       isLoading = false;
     }
+  }
+
+  /// Check onboarding status and navigate accordingly
+  Future<void> _navigateAfterLogin() async {
+    try {
+      final result = await Supabase.instance.client.rpc(
+        'get_onboarding_status',
+      );
+      if (result is Map<String, dynamic>) {
+        final completed = result['has_completed_survey'] as bool? ?? false;
+        if (completed) {
+          Get.offAllNamed(Routes.mainShell, arguments: {'initialTab': 0});
+          return;
+        }
+      }
+    } catch (e) {
+      debugPrint('[SignIn] get_onboarding_status error: $e');
+    }
+    // 온보딩 미완료 → 프로필 설정
+    Get.offAllNamed(Routes.profileSetup);
   }
 
   /// Show error message via Snackbar

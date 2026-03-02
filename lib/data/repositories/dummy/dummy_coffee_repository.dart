@@ -140,6 +140,21 @@ class DummyCoffeeRepository implements CoffeeRepository {
     await _persistItems(items);
   }
 
+  @override
+  Future<Map<String, dynamic>> addToCoffeeList(
+    String beanId, {
+    String addedFrom = 'manual',
+  }) async {
+    return {'status': 'ok'};
+  }
+
+  @override
+  Future<Map<String, dynamic>> getCoffeeCatalog({
+    Map<String, dynamic>? filters,
+  }) async {
+    return {'beans': [], 'total': 0};
+  }
+
   Future<void> _persistItems(List<CoffeeItem> items) async {
     final jsonList = items.map((i) => _coffeeItemToJson(i)).toList();
     await _storage.write(_storageKey, json.encode(jsonList));

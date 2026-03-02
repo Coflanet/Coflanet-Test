@@ -53,14 +53,13 @@ class SupabaseUserPreferencesRepository implements UserPreferencesRepository {
   Future<void> setDarkMode(bool isDark) async {
     await _storage.setDarkMode(isDark);
 
-    // Sync to server profiles table
+    // Sync to server via RPC
     try {
-      final userId = _db.auth.currentUser?.id;
-      if (userId != null) {
-        await _db
-            .from('profiles')
-            .update({'is_dark_mode': isDark})
-            .eq('user_id', userId);
+      if (_db.auth.currentUser != null) {
+        await _db.rpc(
+          'update_profile',
+          params: {'p_values': {'is_dark_mode': isDark}},
+        );
       }
     } catch (e) {
       debugPrint('[UserPrefsRepo] setDarkMode sync error: $e');

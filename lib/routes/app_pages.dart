@@ -14,6 +14,8 @@ import 'package:coflanet/modules/auth/email_login/email_login_view.dart';
 import 'package:coflanet/modules/auth/email_login/email_login_binding.dart';
 import 'package:coflanet/modules/auth/profile_setup/profile_setup_view.dart';
 import 'package:coflanet/modules/auth/profile_setup/profile_setup_binding.dart';
+import 'package:coflanet/modules/auth/account_link/account_link_view.dart';
+import 'package:coflanet/modules/auth/account_link/account_link_binding.dart';
 
 // Modules - Onboarding
 import 'package:coflanet/modules/onboarding/survey_binding.dart';
@@ -106,6 +108,12 @@ class AppPages {
       name: Routes.signUpComplete,
       page: () => const SignUpCompleteView(),
       transition: Transition.fade,
+    ),
+    GetPage(
+      name: Routes.accountLink,
+      page: () => const AccountLinkView(),
+      binding: AccountLinkBinding(),
+      transition: Transition.cupertino,
     ),
 
     // === Onboarding ===
