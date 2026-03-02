@@ -272,20 +272,12 @@ class AuthService extends GetxService with WidgetsBindingObserver {
     }
     final naverUser = await naverProvider.signIn();
 
-    debugPrint(
-      '[AuthService] Naver token length: ${naverUser.accessToken.length}',
-    );
-
-    // Edge Function 호출 — 서버는 'code' 필드를 기대
     final response = await _supabase.functions.invoke(
       'naver-auth',
       body: {'code': naverUser.accessToken},
     );
 
     final data = response.data as Map<String, dynamic>;
-    debugPrint('[AuthService] naver-auth response: $data');
-
-    // 에러 응답 처리: { success: false, error: { code, message } }
     if (data['success'] != true) {
       final error = data['error'] as Map<String, dynamic>?;
       throw AuthException(
@@ -293,17 +285,16 @@ class AuthService extends GetxService with WidgetsBindingObserver {
       );
     }
 
-    // 성공 응답 파싱: { success: true, data: { session: { access_token, ... } } }
     final sessionData =
         (data['data'] as Map<String, dynamic>?)?['session']
             as Map<String, dynamic>?;
-    if (sessionData == null || sessionData['access_token'] == null) {
-      throw AuthException('Naver auth: 세션 데이터 없음');
+    final refreshToken = sessionData?['refresh_token'] as String?;
+    if (refreshToken == null || refreshToken.isEmpty) {
+      throw AuthException('Naver auth: refresh_token 없음');
     }
 
-    final authResponse = await _supabase.auth.setSession(
-      sessionData['access_token'] as String,
-    );
+    // setSession()은 refresh_token으로 새 세션 생성
+    final authResponse = await _supabase.auth.setSession(refreshToken);
     return _userFromAuthResponse(authResponse, 'naver');
   }
 
