@@ -15,6 +15,7 @@ vibecraft.ignore
 # --- VibeCraft 전용 워크플로우 ---
 .github/workflows/vibecraft-guard.yml
 .github/workflows/sync-upstream.yml
+.github/workflows/pr-policy-check.yml
 
 # --- VibeCraft 스크립트 ---
 scripts/setup-fork.sh
