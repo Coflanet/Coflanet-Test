@@ -77,7 +77,7 @@ UPSTREAM_TOKEN="${UPSTREAM_TOKEN:-}"
 
 if [ -z "$UPSTREAM_REPO" ] && command -v gh &>/dev/null && gh auth status &>/dev/null; then
   FORK_REPO=$(gh repo view --json nameWithOwner -q '.nameWithOwner' 2>/dev/null || true)
-  UPSTREAM_REPO=$(gh api "repos/$FORK_REPO" --jq '.parent.full_name' 2>/dev/null || true)
+  UPSTREAM_REPO=$(gh api "repos/$FORK_REPO" --jq '.source.full_name' 2>/dev/null || true)
   # fork가 아니면 현재 레포 자체를 대상으로 사용
   if [ -z "$UPSTREAM_REPO" ]; then
     UPSTREAM_REPO="$FORK_REPO"
