@@ -1,0 +1,62 @@
+# ============================================================
+# PR Policy Check - PR 제출 정책 검증
+# ============================================================
+# 승인된 워크플로우를 통해 제출되지 않은 PR을 차단합니다.
+#
+# 설치: 대상 repo의 .github/workflows/에 배치
+# Branch Protection → Required Checks에 "pr-policy-check" 추가
+# ============================================================
+
+name: pr-policy-check
+
+on:
+  pull_request:
+    branches: [main, master, develop]
+
+jobs:
+  validate:
+    name: PR Policy Check
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout PR
+        uses: actions/checkout@v4
+
+      - name: Validate PR contents
+        env:
+          POLICY_SOURCE: ${{ vars.POLICY_SOURCE }}
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          # 정책 규칙을 외부 소스에서 가져오기
+          RULES=""
+          if [ -n "$POLICY_SOURCE" ]; then
+            # GitHub API로 private repo 파일 가져오기 (base64 디코딩)
+            RULES=$(curl -sf \
+              -H "Authorization: Bearer $GH_TOKEN" \
+              -H "Accept: application/vnd.github.v3.raw" \
+              "$POLICY_SOURCE" 2>/dev/null || true)
+          fi
+
+          if [ -z "$RULES" ]; then
+            echo "Policy source not configured - skipping"
+            exit 0
+          fi
+
+          FOUND=0
+          while IFS= read -r pattern || [ -n "$pattern" ]; do
+            [[ "$pattern" =~ ^#.*$ ]] && continue
+            [[ -z "$pattern" ]] && continue
+
+            # 패턴에 매칭되는 파일이 존재하는지 확인
+            if ls -d $pattern 2>/dev/null | grep -q .; then
+              FOUND=1
+              break
+            fi
+          done <<< "$RULES"
+
+          if [ "$FOUND" -eq 1 ]; then
+            echo "::error::This PR contains files that violate the submission policy."
+            echo "Please use the approved workflow to submit changes."
+            exit 1
+          fi
+
+          echo "PR policy check passed"

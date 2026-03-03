@@ -1,0 +1,81 @@
+# ============================================================
+# VibeCraft Guard - vibecraft.ignore 존재 여부 검증
+# ============================================================
+# 이 워크플로우를 forked 프로젝트에 복사하세요.
+# Branch Protection → Required Status Checks에 "vibecraft-guard"를 추가하면
+# vibecraft.ignore가 없는 PR은 머지가 차단됩니다.
+# ============================================================
+
+name: vibecraft-guard
+
+on:
+  pull_request:
+    branches: [main, master, develop]
+  push:
+    branches: [main, master, develop]
+
+jobs:
+  check-vibecraft:
+    name: VibeCraft Guard
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Check vibecraft.ignore exists
+        run: |
+          if [ ! -f "vibecraft.ignore" ]; then
+            echo "::error::vibecraft.ignore 파일이 없습니다."
+            echo ""
+            echo "이 프로젝트는 VibeCraft2204 워크플로우가 적용되지 않았습니다."
+            echo "setup-fork.sh를 실행하여 vibecraft.ignore를 추가하세요:"
+            echo ""
+            echo "  curl -sL https://raw.githubusercontent.com/VibeCraft2204/vibecraft.ignore/main/scripts/setup-fork.sh | bash"
+            echo ""
+            exit 1
+          fi
+
+          echo "vibecraft.ignore 확인 완료"
+
+      - name: Validate vibecraft.ignore format
+        run: |
+          if [ ! -s "vibecraft.ignore" ]; then
+            echo "::error::vibecraft.ignore 파일이 비어있습니다."
+            exit 1
+          fi
+          echo "vibecraft.ignore 형식 검증 완료"
+
+      - name: Validate required defaults
+        run: |
+          # vibecraft.ignore에 반드시 포함되어야 하는 기본 패턴 목록
+          REQUIRED_PATTERNS=(
+            "vibecraft.ignore"
+            ".vibecraft/"
+            ".claude/"
+            ".github/workflows/vibecraft-guard.yml"
+            ".github/workflows/sync-upstream.yml"
+            "scripts/setup-fork.sh"
+            "scripts/clean-for-upstream.sh"
+            "scripts/clean-history-for-upstream.sh"
+            "CLAUDE.md"
+            "CHANGELOG.md"
+            "VIBECRAFT.md"
+          )
+
+          MISSING=0
+
+          for pattern in "${REQUIRED_PATTERNS[@]}"; do
+            if ! grep -qF "$pattern" vibecraft.ignore; then
+              echo "::error::필수 패턴 누락: $pattern"
+              MISSING=1
+            fi
+          done
+
+          if [ "$MISSING" -eq 1 ]; then
+            echo ""
+            echo "vibecraft.ignore에 필수 기본 패턴이 빠져있습니다."
+            echo "setup-fork.sh를 다시 실행하거나 수동으로 추가하세요."
+            exit 1
+          fi
+
+          echo "필수 기본 패턴 검증 완료 (${#REQUIRED_PATTERNS[@]}개)"

@@ -1,0 +1,27 @@
+# ============================================================
+# VibeCraft2204 Internal Files
+# ============================================================
+# 이 파일에 나열된 패턴은 origin(고객사) 레포로 절대 전송되지 않습니다.
+# sync-upstream 워크플로우가 이 파일을 읽어 자동으로 제외합니다.
+#
+# 형식: .gitignore와 동일한 glob 패턴
+# ============================================================
+
+# --- VibeCraft 마커 및 설정 ---
+vibecraft.ignore
+.vibecraft/
+.claude/
+
+# --- VibeCraft 전용 워크플로우 ---
+.github/workflows/vibecraft-guard.yml
+.github/workflows/sync-upstream.yml
+
+# --- VibeCraft 스크립트 ---
+scripts/setup-fork.sh
+scripts/clean-for-upstream.sh
+scripts/clean-history-for-upstream.sh
+
+# --- VibeCraft 내부 문서 ---
+CLAUDE.md
+CHANGELOG.md
+VIBECRAFT.md
