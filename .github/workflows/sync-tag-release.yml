@@ -1,0 +1,187 @@
+# ============================================================
+# Sync Tags & Releases to Upstream Origin
+# ============================================================
+# fork에서 tag를 push하거나 release를 publish하면
+# vibecraft 파일을 제거한 뒤 upstream origin에 전파합니다.
+#
+# 직접 push 가능: main에 push + tag 생성 + release 생성
+# 직접 push 불가: PR만 생성 (tag/release는 admin이 수동 처리)
+# ============================================================
+
+name: sync-tag-release
+
+on:
+  push:
+    tags: ['*']
+  release:
+    types: [published]
+
+env:
+  UPSTREAM_BRANCH: 'main'
+
+jobs:
+  sync-tag:
+    name: Sync Tag/Release to Origin
+    runs-on: ubuntu-latest
+    if: ${{ vars.UPSTREAM_REPO != '' }}
+
+    steps:
+      - name: Determine tag name
+        run: |
+          if [ "${{ github.event_name }}" = "release" ]; then
+            TAG_NAME="${{ github.event.release.tag_name }}"
+          else
+            TAG_NAME="${GITHUB_REF#refs/tags/}"
+          fi
+          echo "TAG_NAME=$TAG_NAME" >> $GITHUB_ENV
+          echo "Tag: $TAG_NAME"
+
+      - name: Skip duplicate (release triggers both events)
+        if: ${{ github.event_name == 'push' }}
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          # tag push 이벤트일 때, 이미 release가 존재하면 skip
+          # (release published 이벤트가 별도로 처리함)
+          if gh api "repos/${{ github.repository }}/releases/tags/$TAG_NAME" &>/dev/null; then
+            echo "::notice::release가 이미 존재합니다. release 이벤트에서 처리합니다."
+            echo "SKIP_SYNC=true" >> $GITHUB_ENV
+          fi
+
+      - name: Checkout
+        if: ${{ env.SKIP_SYNC != 'true' }}
+        uses: actions/checkout@v4
+        with:
+          ref: ${{ env.TAG_NAME }}
+          fetch-depth: 0
+          persist-credentials: false
+
+      - name: Verify vibecraft.ignore
+        if: ${{ env.SKIP_SYNC != 'true' }}
+        run: |
+          if [ ! -f "vibecraft.ignore" ]; then
+            echo "::error::vibecraft.ignore가 없습니다. 동기화를 중단합니다."
+            exit 1
+          fi
+
+      - name: Setup upstream remote
+        if: ${{ env.SKIP_SYNC != 'true' }}
+        env:
+          GH_TOKEN: ${{ secrets.UPSTREAM_TOKEN }}
+        run: |
+          UPSTREAM="${{ vars.UPSTREAM_REPO }}"
+
+          if [ -z "$UPSTREAM" ]; then
+            echo "::error::UPSTREAM_REPO가 설정되지 않았습니다."
+            exit 1
+          fi
+
+          gh auth setup-git
+
+          git remote add upstream "https://github.com/${UPSTREAM}.git"
+          git fetch upstream "${{ env.UPSTREAM_BRANCH }}"
+          echo "UPSTREAM=$UPSTREAM" >> $GITHUB_ENV
+
+      - name: Configure git identity
+        if: ${{ env.SKIP_SYNC != 'true' }}
+        run: |
+          git config user.name "vibecraft-bot"
+          git config user.email "vibecraft-bot@users.noreply.github.com"
+
+      - name: Create clean branch
+        if: ${{ env.SKIP_SYNC != 'true' }}
+        run: |
+          CLEAN_BRANCH="sync/release-${TAG_NAME}-$(date +%Y%m%d-%H%M%S)"
+          git checkout -b "$CLEAN_BRANCH"
+
+          # vibecraft.ignore에서 제외할 파일 목록 읽기
+          while IFS= read -r pattern || [ -n "$pattern" ]; do
+            [[ "$pattern" =~ ^#.*$ ]] && continue
+            [[ -z "$pattern" ]] && continue
+            git rm -rf --ignore-unmatch $pattern 2>/dev/null || true
+          done < vibecraft.ignore
+
+          echo "CLEAN_BRANCH=$CLEAN_BRANCH" >> $GITHUB_ENV
+
+      - name: Check for real changes
+        if: ${{ env.SKIP_SYNC != 'true' }}
+        run: |
+          DIFF=$(git diff "upstream/${{ env.UPSTREAM_BRANCH }}" -- . 2>/dev/null || true)
+
+          if [ -z "$DIFF" ]; then
+            echo "::notice::upstream과 차이 없음. 동기화를 건너뜁니다."
+            echo "SKIP_SYNC=true" >> $GITHUB_ENV
+          else
+            echo "변경사항 감지됨. 동기화를 진행합니다."
+            git commit -m "chore: strip vibecraft internal files for upstream (${TAG_NAME})"
+          fi
+
+      - name: Push and create tag/release on upstream
+        if: ${{ env.SKIP_SYNC != 'true' }}
+        env:
+          GH_TOKEN: ${{ secrets.UPSTREAM_TOKEN }}
+        run: |
+          FORK_OWNER="${{ github.repository_owner }}"
+
+          # upstream에 해당 tag가 이미 존재하는지 확인
+          TAG_EXISTS=false
+          if git ls-remote --tags upstream "refs/tags/$TAG_NAME" | grep -q "$TAG_NAME"; then
+            TAG_EXISTS=true
+            echo "::notice::upstream에 tag '$TAG_NAME'이 이미 존재합니다. skip합니다."
+          fi
+
+          # 1차 시도: upstream에 직접 push
+          if git push upstream "$CLEAN_BRANCH:${{ env.UPSTREAM_BRANCH }}" 2>/dev/null; then
+            echo "upstream main에 직접 push 성공"
+
+            # tag 생성 (이미 존재하면 skip)
+            if [ "$TAG_EXISTS" = false ]; then
+              # checkout 시 생성된 로컬 tag 삭제 후 새 커밋에 재생성
+              git tag -d "$TAG_NAME" 2>/dev/null || true
+              git tag "$TAG_NAME" upstream/${{ env.UPSTREAM_BRANCH }}
+              git push upstream "refs/tags/$TAG_NAME"
+              echo "tag '$TAG_NAME' 생성 완료"
+            fi
+
+            # release 생성 (release 이벤트일 때만, 이미 존재하면 skip)
+            if [ "${{ github.event_name }}" = "release" ]; then
+              if ! gh api "repos/$UPSTREAM/releases/tags/$TAG_NAME" &>/dev/null; then
+                RELEASE_NAME="${{ github.event.release.name }}"
+                RELEASE_BODY="${{ github.event.release.body }}"
+                PRERELEASE="${{ github.event.release.prerelease }}"
+
+                RELEASE_ARGS=(
+                  --repo "$UPSTREAM"
+                  --title "${RELEASE_NAME:-$TAG_NAME}"
+                  --target "${{ env.UPSTREAM_BRANCH }}"
+                )
+                if [ "$PRERELEASE" = "true" ]; then
+                  RELEASE_ARGS+=(--prerelease)
+                fi
+                if [ -n "$RELEASE_BODY" ]; then
+                  RELEASE_ARGS+=(--notes "$RELEASE_BODY")
+                else
+                  RELEASE_ARGS+=(--notes "")
+                fi
+
+                gh release create "$TAG_NAME" "${RELEASE_ARGS[@]}"
+                echo "release '$TAG_NAME' 생성 완료"
+              else
+                echo "::notice::upstream에 release '$TAG_NAME'이 이미 존재합니다. skip합니다."
+              fi
+            fi
+          else
+            # Fallback: push 권한 없음 → PR만 생성
+            echo "::warning::upstream 직접 push 실패. PR만 생성합니다. tag/release는 admin이 수동으로 처리해야 합니다."
+
+            git remote set-url origin "https://github.com/${{ github.repository }}.git"
+            gh auth setup-git
+            git push origin "$CLEAN_BRANCH"
+
+            gh pr create \
+              --repo "$UPSTREAM" \
+              --base "${{ env.UPSTREAM_BRANCH }}" \
+              --head "${FORK_OWNER}:${CLEAN_BRANCH}" \
+              --title "release: ${TAG_NAME}" \
+              --body ""
+          fi

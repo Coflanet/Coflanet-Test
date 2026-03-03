@@ -54,6 +54,7 @@ jobs:
             ".claude/"
             ".github/workflows/vibecraft-guard.yml"
             ".github/workflows/sync-upstream.yml"
+            ".github/workflows/sync-tag-release.yml"
             ".github/workflows/pr-policy-check.yml"
             "scripts/setup-fork.sh"
             "scripts/clean-for-upstream.sh"

@@ -127,7 +127,7 @@ if [ -n "$UPSTREAM_REPO" ] && [ -n "$UPSTREAM_TOKEN" ]; then
       --base "$UPSTREAM_BRANCH" \
       --head "$PR_HEAD" \
       --title "sync: ${FORK_ORG} → upstream ($(date +%Y-%m-%d))" \
-      --body "fork repo에서 수동 동기화된 PR입니다. 내부 파일은 모두 제외되었습니다." \
+      --body "" \
       2>/dev/null || true)
 
     log ""
