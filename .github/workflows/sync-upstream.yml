@@ -30,7 +30,7 @@ jobs:
     name: Sync to Origin
     runs-on: ubuntu-latest
     # UPSTREAM_REPO가 설정된 경우에만 실행
-    if: ${{ vars.UPSTREAM_REPO != '' || github.event.inputs.dry_run == 'true' }}
+    if: ${{ github.repository != 'VibeCraft2204/vibecraft.ignore' && (vars.UPSTREAM_REPO != '' || github.event.inputs.dry_run == 'true') }}
 
     steps:
       - name: Checkout

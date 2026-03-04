@@ -16,6 +16,7 @@ jobs:
   check-vibecraft:
     name: VibeCraft Guard
     runs-on: ubuntu-latest
+    if: ${{ github.repository != 'VibeCraft2204/vibecraft.ignore' }}
     steps:
       - name: Checkout
         uses: actions/checkout@v4

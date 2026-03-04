@@ -29,7 +29,7 @@ jobs:
     name: PR Policy Check
     runs-on: ubuntu-latest
     # UPSTREAM_REPO 변수가 있으면 fork → skip (upstream에서만 동작)
-    if: ${{ vars.UPSTREAM_REPO == '' }}
+    if: ${{ github.repository != 'VibeCraft2204/vibecraft.ignore' && vars.UPSTREAM_REPO == '' }}
     steps:
       - name: Validate contents
         env:

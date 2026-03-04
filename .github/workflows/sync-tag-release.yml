@@ -23,7 +23,7 @@ jobs:
   sync-tag:
     name: Sync Tag/Release to Origin
     runs-on: ubuntu-latest
-    if: ${{ vars.UPSTREAM_REPO != '' }}
+    if: ${{ github.repository != 'VibeCraft2204/vibecraft.ignore' && vars.UPSTREAM_REPO != '' }}
 
     steps:
       - name: Determine tag name
