@@ -111,15 +111,22 @@ jobs:
           # 현재 repo의 org/owner 추출 (PR 제목에 사용)
           FORK_OWNER="${{ github.repository_owner }}"
 
-          # 1차 시도: upstream에 직접 push 후 PR 생성
+          # 1차 시도: upstream에 직접 push 후 PR 생성 → 즉시 merge
           if git push upstream "$CLEAN_BRANCH" 2>/dev/null; then
             echo "upstream에 직접 push 성공"
-            gh pr create \
+            PR_URL=$(gh pr create \
               --repo "$UPSTREAM" \
               --base "${{ env.UPSTREAM_BRANCH }}" \
               --head "$CLEAN_BRANCH" \
               --title "sync: ${FORK_OWNER} → upstream ($(date +%Y-%m-%d))" \
-              --body ""
+              --body "")
+
+            # PR 즉시 merge 후 브랜치 삭제
+            if gh pr merge "$PR_URL" --merge --delete-branch 2>/dev/null; then
+              echo "PR merge 완료"
+            else
+              echo "::warning::PR auto-merge 실패. 수동으로 merge하세요: $PR_URL"
+            fi
           else
             # Fallback: push 권한 없음 → fork에 push 후 cross-fork PR 생성
             echo "::warning::upstream 직접 push 실패. fork 경유 PR로 전환합니다."

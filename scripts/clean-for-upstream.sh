@@ -130,12 +130,21 @@ if [ -n "$UPSTREAM_REPO" ] && [ -n "$UPSTREAM_TOKEN" ]; then
       --body "" \
       2>/dev/null || true)
 
-    log ""
-    log "============================================"
-    log "  고객사 origin PR 생성 완료!"
-    log "============================================"
+    # PR 즉시 merge 시도
     if [ -n "$PR_URL" ]; then
-      log "  PR: $PR_URL"
+      if GH_TOKEN="$UPSTREAM_TOKEN" gh pr merge "$PR_URL" --merge --delete-branch 2>/dev/null; then
+        log ""
+        log "============================================"
+        log "  고객사 origin PR merge 완료!"
+        log "============================================"
+        log "  PR: $PR_URL"
+      else
+        log ""
+        log "============================================"
+        log "  고객사 origin PR 생성 완료 (수동 merge 필요)"
+        log "============================================"
+        log "  PR: $PR_URL"
+      fi
     fi
     log "  대상: $UPSTREAM_REPO ($UPSTREAM_BRANCH)"
   fi
