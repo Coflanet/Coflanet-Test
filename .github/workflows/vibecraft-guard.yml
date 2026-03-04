@@ -50,6 +50,7 @@ jobs:
             "vibecraft.ignore"
             ".vibecraft/"
             ".claude/"
+            ".codex/"
             ".github/workflows/vibecraft-guard.yml"
             ".github/workflows/sync-upstream.yml"
             ".github/workflows/sync-tag-release.yml"

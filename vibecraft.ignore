@@ -11,6 +11,7 @@
 vibecraft.ignore
 .vibecraft/
 .claude/
+.codex/
 
 # --- VibeCraft 전용 워크플로우 ---
 .github/workflows/vibecraft-guard.yml
