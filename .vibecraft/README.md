@@ -1,24 +1,93 @@
-# VibeCraft 내부 구조 가이드
+# .vibecraft/ 디렉토리
 
-이 문서는 `.vibecraft/` 및 `scripts/` 디렉토리의 역할과 워크플로우 간 관계를 설명합니다.
+VibeCraft 내부 설정 파일이 위치하는 디렉토리입니다. fork repo에 배포되며, 워크플로우가 런타임에 참조합니다.
 
-## `.vibecraft/` 디렉토리
+## 파일 목록
 
 | 파일 | 역할 |
 |------|------|
-| `required-patterns.txt` | 필수 패턴의 **단일 소스(Single Source of Truth)**. `vibecraft-guard.yml`이 런타임에 읽고, `sync-patterns.yml`이 `pr-policy-check.yml`에 자동 동기화 |
-| `fork-repos.txt` | `deploy-vibecraft.yml`의 배포 대상 목록. `OWNER/REPO` 형식, `#` 주석 지원 |
+| `required-patterns.txt` | 필수 패턴의 **단일 소스(Single Source of Truth)** |
+| `fork-repos.txt` | 자동 배포 대상 fork repo 목록 |
 | `README.md` | 이 문서 |
 
-## `scripts/` 디렉토리
+---
 
-| 스크립트 | 용도 | 실행 방법 |
-|----------|------|-----------|
-| `setup-fork.sh` | fork 프로젝트 초기 설정 (워크플로우, vibecraft.ignore, GitHub 설정) | `bash .vibecraft-setup/scripts/setup-fork.sh` |
-| `clean-for-upstream.sh` | upstream push 전 VibeCraft 파일 제거 | `bash scripts/clean-for-upstream.sh` |
-| `clean-history-for-upstream.sh` | upstream push 전 VibeCraft 파일 히스토리 제거 | `bash scripts/clean-history-for-upstream.sh` |
+## required-patterns.txt
 
-## 워크플로우 관계도
+`vibecraft.ignore`에 반드시 포함되어야 하는 필수 패턴 목록입니다.
+
+**참조하는 워크플로우:**
+
+| 워크플로우 | 방식 | 설명 |
+|-----------|------|------|
+| `vibecraft-guard.yml` | 런타임 파일 읽기 | fork push/PR 시 이 파일을 읽어 필수 패턴 검증 |
+| `sync-patterns.yml` | 빌드타임 자동 갱신 | 이 파일 변경 시 `pr-policy-check.yml`의 하드코딩 배열을 자동 덮어쓰기 |
+| `validate-vibecraft.yml` | CI 검증 | vibecraft.ignore에 모든 필수 패턴이 포함되어 있는지 검증 |
+
+**패턴 추가/제거 방법:**
+
+1. `required-patterns.txt`만 수정하고 push
+2. `sync-patterns.yml`이 자동으로:
+   - `vibecraft.ignore`에 누락된 패턴 추가
+   - `pr-policy-check.yml`의 `BEGIN/END PATTERNS` 사이를 갱신
+3. `deploy-vibecraft.yml`이 변경을 감지하여 fork repo에 배포
+
+> `pr-policy-check.yml`의 패턴을 직접 수정하지 마세요. `sync-patterns.yml`이 덮어씁니다.
+
+**현재 필수 패턴 (13개):**
+
+```
+vibecraft.ignore          # 마커 파일
+.vibecraft/               # 내부 설정 디렉토리
+.claude/                  # Claude Code 메모리
+.codex/                   # Codex 설정
+
+.github/workflows/vibecraft-guard.yml    # 내부 전용 워크플로우
+.github/workflows/sync-upstream.yml
+.github/workflows/sync-tag-release.yml
+
+scripts/setup-fork.sh                    # 내부 스크립트
+scripts/clean-for-upstream.sh
+scripts/clean-history-for-upstream.sh
+
+CLAUDE.md                 # Claude Code 프로젝트 설정
+CHANGELOG.md              # 내부 변경 이력
+VIBECRAFT.md              # 내부 문서
+```
+
+---
+
+## fork-repos.txt
+
+`deploy-vibecraft.yml`이 읽는 자동 배포 대상 목록입니다.
+
+**형식:** 한 줄에 하나의 `OWNER/REPO`, `#`으로 시작하는 줄은 주석
+
+```
+# 예시
+VibeCraft2204/syc-fe
+VibeCraft2204/syc-be
+# VibeCraft2204/archived-repo  ← 주석으로 비활성화
+```
+
+**배포 대상 추가 방법:**
+
+1. 이 파일에 `OWNER/REPO` 추가 후 push
+2. `deploy-vibecraft.yml`을 수동 실행 (Actions → Run workflow) 또는 vibecraft 파일 변경 시 자동 배포
+
+**DEPLOY_TOKEN 설정 (최초 1회):**
+
+배포에는 fork repo push 권한이 있는 PAT가 필요합니다.
+
+1. GitHub → Settings → Developer settings → [Personal access tokens](https://github.com/settings/tokens) → **Generate new token**
+2. 권한: `repo` (Full control of private repositories)
+3. [vibecraft.ignore repo Settings](https://github.com/VibeCraft2204/vibecraft.ignore/settings/secrets/actions) → Secrets → **New repository secret**
+   - Name: `DEPLOY_TOKEN`
+   - Value: 생성한 토큰
+
+---
+
+## 워크플로우 관계도 (패턴 동기화)
 
 ```
 required-patterns.txt 변경
@@ -26,8 +95,7 @@ required-patterns.txt 변경
         ├──▶ sync-patterns.yml (자동 트리거)
         │       ├── vibecraft.ignore에 누락 패턴 추가
         │       └── pr-policy-check.yml BEGIN/END PATTERNS 갱신
-        │               │
-        │               ▼
+        │
         ├──▶ deploy-vibecraft.yml (변경 감지 → fork 배포)
         │       └── fork repo에 워크플로우, 스크립트, required-patterns.txt 배포
         │
@@ -36,18 +104,4 @@ required-patterns.txt 변경
                 ├── fork-repos.txt 형식 검증
                 ├── YAML 워크플로우 문법 검증
                 └── 필수 패턴 포함 여부 검증
-
-vibecraft-guard.yml (fork repo에서 실행)
-        └── required-patterns.txt를 읽어 vibecraft.ignore 필수 패턴 검증
-
-pr-policy-check.yml (upstream repo에서 실행)
-        └── 하드코딩된 패턴으로 내부 파일 변경 차단 (vibecraft 파일 없는 환경)
 ```
-
-## 패턴 관리 방법
-
-1. **패턴 추가/제거**: `.vibecraft/required-patterns.txt`만 수정
-2. **자동 동기화**: push 시 `sync-patterns.yml`이 `pr-policy-check.yml`과 `vibecraft.ignore`를 자동 갱신
-3. **배포**: 변경이 감지되면 `deploy-vibecraft.yml`이 fork repo에 자동 배포
-
-> `pr-policy-check.yml`의 패턴을 직접 수정하지 마세요. `sync-patterns.yml`이 덮어씁니다.
