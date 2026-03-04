@@ -82,8 +82,8 @@ jobs:
           done < vibecraft.ignore
           CLEAN_TREE=$(git write-tree)
 
-          # upstream/main에서 브랜치 생성 후 clean tree 적용
-          git checkout -b "$CLEAN_BRANCH" "upstream/${{ env.UPSTREAM_BRANCH }}"
+          # upstream/main에서 브랜치 생성 후 clean tree 적용 (-f: 직후 read-tree로 덮어쓰므로 안전)
+          git checkout -f -b "$CLEAN_BRANCH" "upstream/${{ env.UPSTREAM_BRANCH }}"
           git read-tree -u --reset "$CLEAN_TREE"
 
           echo "CLEAN_BRANCH=$CLEAN_BRANCH" >> $GITHUB_ENV
@@ -108,7 +108,7 @@ jobs:
           # 현재 repo의 org/owner 추출 (PR 제목에 사용)
           FORK_OWNER="${{ github.repository_owner }}"
 
-          # 1차 시도: upstream에 직접 push 후 PR 생성 → 즉시 merge
+          # 1차 시도: upstream에 직접 push 후 PR 생성
           if git push upstream "$CLEAN_BRANCH" 2>/dev/null; then
             echo "upstream에 직접 push 성공"
             PR_URL=$(gh pr create \
@@ -118,11 +118,35 @@ jobs:
               --title "sync: ${FORK_OWNER} → upstream ($(date +%Y-%m-%d))" \
               --body "")
 
-            # PR 즉시 merge 후 브랜치 삭제
-            if gh pr merge "$PR_URL" --squash --delete-branch 2>/dev/null; then
-              echo "PR merge 완료"
-            else
-              echo "::warning::PR auto-merge 실패. 수동으로 merge하세요: $PR_URL"
+            # pr-policy-check 완료 대기 (최대 60초)
+            echo "pr-policy-check 결과 대기 중..."
+            CHECK_PASSED=false
+            for i in $(seq 1 20); do
+              CHECKS=$(gh pr checks "$PR_URL" 2>&1 || true)
+              if echo "$CHECKS" | grep -q "PR Policy Check.*pass"; then
+                CHECK_PASSED=true
+                break
+              elif echo "$CHECKS" | grep -q "PR Policy Check.*fail"; then
+                echo "::error::PR Policy Check 실패. merge를 중단합니다: $PR_URL"
+                break
+              fi
+              sleep 3
+            done
+
+            # check 통과 또는 pr-policy-check 미설치 시 merge
+            if [ "$CHECK_PASSED" = true ]; then
+              if gh pr merge "$PR_URL" --squash --delete-branch 2>/dev/null; then
+                echo "PR merge 완료 (pr-policy-check 통과)"
+              else
+                echo "::warning::PR merge 실패. 수동으로 merge하세요: $PR_URL"
+              fi
+            elif ! echo "$CHECKS" | grep -q "PR Policy Check"; then
+              # pr-policy-check가 아직 없는 경우 (최초 sync) → 직접 merge
+              if gh pr merge "$PR_URL" --squash --delete-branch 2>/dev/null; then
+                echo "PR merge 완료 (pr-policy-check 미설치)"
+              else
+                echo "::warning::PR merge 실패. 수동으로 merge하세요: $PR_URL"
+              fi
             fi
           else
             # Fallback: push 권한 없음 → fork에 push 후 cross-fork PR 생성

@@ -16,7 +16,7 @@ vibecraft.ignore
 .github/workflows/vibecraft-guard.yml
 .github/workflows/sync-upstream.yml
 .github/workflows/sync-tag-release.yml
-.github/workflows/pr-policy-check.yml
+# pr-policy-check.yml은 upstream에서도 동작해야 하므로 제외하지 않음
 
 # --- VibeCraft 스크립트 ---
 scripts/setup-fork.sh

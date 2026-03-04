@@ -2,60 +2,75 @@
 # PR Policy Check - PR 제출 정책 검증
 # ============================================================
 # 승인된 워크플로우를 통해 제출되지 않은 PR을 차단합니다.
+# 내부 파일 패턴이 직접 내장되어 있어 Secret/Variable 없이 동작합니다.
+#
+# pull_request_target을 사용하여:
+# - PR 코드가 아닌 base branch의 워크플로우가 실행됨 (우회 불가)
+# - 위반 PR을 자동으로 close (Ruleset/Branch Protection 없이 동작)
 #
 # 설치: 대상 repo의 .github/workflows/에 배치
-# Branch Protection → Required Checks에 "pr-policy-check" 추가
 # ============================================================
 
 name: pr-policy-check
 
 on:
-  pull_request:
+  pull_request_target:
     branches: [main, master, develop]
+
+permissions:
+  pull-requests: write
 
 jobs:
   validate:
     name: PR Policy Check
     runs-on: ubuntu-latest
     steps:
-      - name: Checkout PR
-        uses: actions/checkout@v4
-
       - name: Validate PR contents
         env:
-          POLICY_SOURCE: ${{ vars.POLICY_SOURCE }}
-          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          GH_TOKEN: ${{ github.token }}
+          PR_NUMBER: ${{ github.event.pull_request.number }}
+          REPO: ${{ github.repository }}
         run: |
-          # 정책 규칙을 외부 소스에서 가져오기
-          RULES=""
-          if [ -n "$POLICY_SOURCE" ]; then
-            # GitHub API로 private repo 파일 가져오기 (base64 디코딩)
-            RULES=$(curl -sf \
-              -H "Authorization: Bearer $GH_TOKEN" \
-              -H "Accept: application/vnd.github.v3.raw" \
-              "$POLICY_SOURCE" 2>/dev/null || true)
-          fi
+          PATTERNS=(
+            "vibecraft.ignore"
+            ".vibecraft/"
+            ".claude/"
+            ".github/workflows/vibecraft-guard.yml"
+            ".github/workflows/sync-upstream.yml"
+            ".github/workflows/sync-tag-release.yml"
+            "scripts/setup-fork.sh"
+            "scripts/clean-for-upstream.sh"
+            "scripts/clean-history-for-upstream.sh"
+            "CLAUDE.md"
+            "CHANGELOG.md"
+            "VIBECRAFT.md"
+          )
 
-          if [ -z "$RULES" ]; then
-            echo "Policy source not configured - skipping"
-            exit 0
-          fi
+          # PR의 변경된 파일 목록을 API로 가져오기 (삭제는 제외 — 추가/수정만 검사)
+          FILES=$(gh api "repos/$REPO/pulls/$PR_NUMBER/files" --paginate --jq '.[] | select(.status != "removed") | .filename')
 
-          FOUND=0
-          while IFS= read -r pattern || [ -n "$pattern" ]; do
-            [[ "$pattern" =~ ^#.*$ ]] && continue
-            [[ -z "$pattern" ]] && continue
+          FOUND=""
+          for file in $FILES; do
+            for pattern in "${PATTERNS[@]}"; do
+              if [[ "$pattern" == */ ]]; then
+                # 디렉토리 패턴: prefix 매칭
+                if [[ "$file" == ${pattern}* ]]; then
+                  FOUND="$file"
+                  break 2
+                fi
+              else
+                if [[ "$file" == "$pattern" ]]; then
+                  FOUND="$file"
+                  break 2
+                fi
+              fi
+            done
+          done
 
-            # 패턴에 매칭되는 파일이 존재하는지 확인
-            if ls -d $pattern 2>/dev/null | grep -q .; then
-              FOUND=1
-              break
-            fi
-          done <<< "$RULES"
-
-          if [ "$FOUND" -eq 1 ]; then
-            echo "::error::This PR contains files that violate the submission policy."
-            echo "Please use the approved workflow to submit changes."
+          if [ -n "$FOUND" ]; then
+            echo "::error::This PR contains files that violate the submission policy: $FOUND"
+            gh pr close "$PR_NUMBER" --repo "$REPO" \
+              --comment "This PR has been automatically closed because it contains files that violate the submission policy (\`$FOUND\`). Please use the approved workflow to submit changes."
             exit 1
           fi
 

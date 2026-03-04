@@ -129,7 +129,7 @@ jobs:
           TAG_EXISTS=false
           if git ls-remote --tags upstream "refs/tags/$TAG_NAME" | grep -q "$TAG_NAME"; then
             TAG_EXISTS=true
-            echo "::notice::upstream에 tag '$TAG_NAME'이 이미 존재합니다. skip합니다."
+            echo "::notice::upstream에 tag '$TAG_NAME'이 이미 존재합니다. tag 생성만 skip합니다."
           fi
 
           # 1차 시도: upstream에 직접 push

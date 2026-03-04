@@ -36,10 +36,10 @@ fi
 
 # git user 미설정 시 기존 커밋에서 자동 설정
 if [ -z "$(git config user.name 2>/dev/null)" ]; then
-  git config user.name "$(git log -1 --format='%an' 2>/dev/null || echo 'VibeCraft2204')"
+  git config user.name "$(git log -1 --format='%an' 2>/dev/null || echo 'vibecraft-bot')"
 fi
 if [ -z "$(git config user.email 2>/dev/null)" ]; then
-  git config user.email "$(git log -1 --format='%ae' 2>/dev/null || echo 'noreply@github.com')"
+  git config user.email "$(git log -1 --format='%ae' 2>/dev/null || echo 'vibecraft-bot@users.noreply.github.com')"
 fi
 
 # --- 경고 및 확인 ---
