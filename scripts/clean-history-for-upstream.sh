@@ -30,7 +30,18 @@ if [ ! -d ".git" ]; then
   error "Git 레포지터리가 아닙니다."
 fi
 
-if [ ! -f "vibecraft.ignore" ]; then
+# --- Find vibecraft.ignore ---
+VIBECRAFT_IGNORE=""
+if [ -f "vibecraft.ignore" ]; then
+  VIBECRAFT_IGNORE="vibecraft.ignore"
+elif [ -f ".vibecraft/vibecraft.ignore" ]; then
+  VIBECRAFT_IGNORE=".vibecraft/vibecraft.ignore"
+else
+  VIBECRAFT_IGNORE=$(find . -name "vibecraft.ignore" -type f \
+    -not -path "./.git/*" -not -path "./.vibecraft/source/*" 2>/dev/null | head -1)
+fi
+
+if [ -z "$VIBECRAFT_IGNORE" ]; then
   error "vibecraft.ignore 파일이 없습니다. setup-fork.sh를 먼저 실행하세요."
 fi
 
@@ -108,7 +119,7 @@ while IFS= read -r pattern || [ -n "$pattern" ]; do
   # trailing slash 제거
   pattern="${pattern%/}"
   PATTERNS+=("$pattern")
-done < vibecraft.ignore
+done < "$VIBECRAFT_IGNORE"
 
 PATTERN_COUNT=${#PATTERNS[@]}
 log "제거 대상: ${PATTERN_COUNT}개 패턴"

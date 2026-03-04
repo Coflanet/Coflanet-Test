@@ -39,12 +39,25 @@ jobs:
           fetch-depth: 0
           persist-credentials: false
 
-      - name: Verify vibecraft.ignore
+      - name: Find vibecraft.ignore
         run: |
-          if [ ! -f "vibecraft.ignore" ]; then
+          VIBECRAFT_IGNORE=""
+          if [ -f "vibecraft.ignore" ]; then
+            VIBECRAFT_IGNORE="vibecraft.ignore"
+          elif [ -f ".vibecraft/vibecraft.ignore" ]; then
+            VIBECRAFT_IGNORE=".vibecraft/vibecraft.ignore"
+          else
+            VIBECRAFT_IGNORE=$(find . -name "vibecraft.ignore" -type f \
+              -not -path "./.git/*" -not -path "./.vibecraft/source/*" 2>/dev/null | head -1)
+          fi
+
+          if [ -z "$VIBECRAFT_IGNORE" ]; then
             echo "::error::vibecraft.ignore가 없습니다. 동기화를 중단합니다."
             exit 1
           fi
+
+          echo "vibecraft.ignore 경로: $VIBECRAFT_IGNORE"
+          echo "VIBECRAFT_IGNORE=$VIBECRAFT_IGNORE" >> $GITHUB_ENV
 
       - name: Setup upstream remote
         env:
@@ -79,7 +92,7 @@ jobs:
             [[ "$pattern" =~ ^#.*$ ]] && continue
             [[ -z "$pattern" ]] && continue
             git rm -rf --ignore-unmatch $pattern 2>/dev/null || true
-          done < vibecraft.ignore
+          done < "$VIBECRAFT_IGNORE"
           CLEAN_TREE=$(git write-tree)
 
           # upstream/main에서 브랜치 생성 후 clean tree 적용 (-f: 직후 read-tree로 덮어쓰므로 안전)

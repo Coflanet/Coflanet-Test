@@ -21,9 +21,19 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v4
 
-      - name: Check vibecraft.ignore exists
+      - name: Find vibecraft.ignore
         run: |
-          if [ ! -f "vibecraft.ignore" ]; then
+          VIBECRAFT_IGNORE=""
+          if [ -f "vibecraft.ignore" ]; then
+            VIBECRAFT_IGNORE="vibecraft.ignore"
+          elif [ -f ".vibecraft/vibecraft.ignore" ]; then
+            VIBECRAFT_IGNORE=".vibecraft/vibecraft.ignore"
+          else
+            VIBECRAFT_IGNORE=$(find . -name "vibecraft.ignore" -type f \
+              -not -path "./.git/*" -not -path "./.vibecraft/source/*" 2>/dev/null | head -1)
+          fi
+
+          if [ -z "$VIBECRAFT_IGNORE" ]; then
             echo "::error::vibecraft.ignore 파일이 없습니다."
             echo ""
             echo "이 프로젝트는 VibeCraft2204 워크플로우가 적용되지 않았습니다."
@@ -34,11 +44,12 @@ jobs:
             exit 1
           fi
 
-          echo "vibecraft.ignore 확인 완료"
+          echo "vibecraft.ignore 경로: $VIBECRAFT_IGNORE"
+          echo "VIBECRAFT_IGNORE=$VIBECRAFT_IGNORE" >> $GITHUB_ENV
 
       - name: Validate vibecraft.ignore format
         run: |
-          if [ ! -s "vibecraft.ignore" ]; then
+          if [ ! -s "$VIBECRAFT_IGNORE" ]; then
             echo "::error::vibecraft.ignore 파일이 비어있습니다."
             exit 1
           fi
@@ -63,7 +74,7 @@ jobs:
             [ -z "$pattern" ] && continue
 
             COUNT=$((COUNT + 1))
-            if ! grep -qF "$pattern" vibecraft.ignore; then
+            if ! grep -qF "$pattern" "$VIBECRAFT_IGNORE"; then
               echo "::error::필수 패턴 누락: $pattern"
               MISSING=1
             fi
