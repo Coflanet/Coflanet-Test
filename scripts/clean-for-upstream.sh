@@ -78,32 +78,48 @@ else
   error "고객사 origin을 감지할 수 없습니다. gh CLI 로그인 또는 UPSTREAM_REPO 환경변수를 설정하세요."
 fi
 
-# --- clean 브랜치 생성 ---
+# --- clean 브랜치 생성 (upstream 기반) ---
 
-log "Clean branch 생성: $BRANCH_NAME"
-git checkout -b "$BRANCH_NAME"
-
+# vibecraft 파일을 index에서 제거 → clean tree 저장
 while IFS= read -r pattern || [ -n "$pattern" ]; do
   [[ "$pattern" =~ ^#.*$ ]] && continue
   [[ -z "$pattern" ]] && continue
   git rm -rf --ignore-unmatch $pattern 2>/dev/null || true
 done < vibecraft.ignore
+CLEAN_TREE=$(git write-tree)
 
-git commit -m "chore: strip vibecraft internal files for upstream"
+# upstream remote 설정 및 fetch
+if [ -n "$UPSTREAM_REPO" ] && [ -n "$UPSTREAM_TOKEN" ]; then
+  if command -v gh &>/dev/null; then
+    gh auth setup-git 2>/dev/null || true
+  fi
+  git remote add upstream "https://github.com/${UPSTREAM_REPO}.git" 2>/dev/null || true
+  git fetch upstream "$UPSTREAM_BRANCH" 2>/dev/null || true
+fi
+
+# upstream이 있으면 upstream에서 분기, 없으면 현재 위치에서 분기
+log "Clean branch 생성: $BRANCH_NAME"
+if git rev-parse "upstream/$UPSTREAM_BRANCH" &>/dev/null; then
+  git checkout -b "$BRANCH_NAME" "upstream/$UPSTREAM_BRANCH"
+else
+  git checkout -b "$BRANCH_NAME"
+fi
+git read-tree -u --reset "$CLEAN_TREE"
+
+if git diff --cached --quiet 2>/dev/null; then
+  warn "upstream과 차이 없음. 동기화를 건너뜁니다."
+  exit 0
+fi
+
+git commit -m "sync: ${FORK_ORG} → upstream"
 
 # --- upstream에 자동 push ---
 
 if [ -n "$UPSTREAM_REPO" ] && [ -n "$UPSTREAM_TOKEN" ]; then
-  # gh CLI credential helper 사용 (토큰 URL 노출 방지)
-  if command -v gh &>/dev/null; then
-    gh auth setup-git 2>/dev/null || true
-  fi
-
   PUSH_SUCCESS=false
 
   # 1차 시도: upstream에 직접 push
   log "고객사 origin에 push 중... ($UPSTREAM_REPO:$BRANCH_NAME)"
-  git remote add upstream "https://github.com/${UPSTREAM_REPO}.git" 2>/dev/null || true
 
   if git push --no-verify upstream "$BRANCH_NAME" 2>/dev/null; then
     PUSH_SUCCESS=true
@@ -132,7 +148,7 @@ if [ -n "$UPSTREAM_REPO" ] && [ -n "$UPSTREAM_TOKEN" ]; then
 
     # PR 즉시 merge 시도
     if [ -n "$PR_URL" ]; then
-      if GH_TOKEN="$UPSTREAM_TOKEN" gh pr merge "$PR_URL" --merge --delete-branch 2>/dev/null; then
+      if GH_TOKEN="$UPSTREAM_TOKEN" gh pr merge "$PR_URL" --squash --delete-branch 2>/dev/null; then
         log ""
         log "============================================"
         log "  고객사 origin PR merge 완료!"

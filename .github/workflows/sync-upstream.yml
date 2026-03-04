@@ -70,37 +70,34 @@ jobs:
           git config user.name "vibecraft-bot"
           git config user.email "vibecraft-bot@users.noreply.github.com"
 
-      - name: Create clean branch
+      - name: Create clean branch from upstream
         run: |
           CLEAN_BRANCH="sync/upstream-$(date +%Y%m%d-%H%M%S)"
-          git checkout -b "$CLEAN_BRANCH"
 
-          # vibecraft.ignore에서 제외할 파일 목록 읽기
+          # fork의 index에서 vibecraft 파일 제거 → clean tree 저장
           while IFS= read -r pattern || [ -n "$pattern" ]; do
-            # 주석과 빈 줄 건너뛰기
             [[ "$pattern" =~ ^#.*$ ]] && continue
             [[ -z "$pattern" ]] && continue
-
-            # 패턴에 매칭되는 파일 삭제
             git rm -rf --ignore-unmatch $pattern 2>/dev/null || true
           done < vibecraft.ignore
+          CLEAN_TREE=$(git write-tree)
+
+          # upstream/main에서 브랜치 생성 후 clean tree 적용
+          git checkout -b "$CLEAN_BRANCH" "upstream/${{ env.UPSTREAM_BRANCH }}"
+          git read-tree -u --reset "$CLEAN_TREE"
 
           echo "CLEAN_BRANCH=$CLEAN_BRANCH" >> $GITHUB_ENV
 
       - name: Check for real changes
         run: |
-          # vibecraft 파일 제거 후 upstream과 비교
-          DIFF=$(git diff "upstream/${{ env.UPSTREAM_BRANCH }}" -- . 2>/dev/null || true)
-
-          if [ -z "$DIFF" ]; then
+          if git diff --cached --quiet; then
             echo "::notice::vibecraft 파일만 변경됨. origin 동기화를 건너뜁니다."
             echo "SKIP_SYNC=true" >> $GITHUB_ENV
           else
+            FORK_OWNER="${{ github.repository_owner }}"
             echo "실제 코드 변경 감지됨. origin 동기화를 진행합니다."
             echo "SKIP_SYNC=false" >> $GITHUB_ENV
-
-            # 변경사항 커밋
-            git commit -m "chore: strip vibecraft internal files for upstream sync"
+            git commit -m "sync: ${FORK_OWNER} → upstream"
           fi
 
       - name: Push clean branch and create PR
@@ -122,7 +119,7 @@ jobs:
               --body "")
 
             # PR 즉시 merge 후 브랜치 삭제
-            if gh pr merge "$PR_URL" --merge --delete-branch 2>/dev/null; then
+            if gh pr merge "$PR_URL" --squash --delete-branch 2>/dev/null; then
               echo "PR merge 완료"
             else
               echo "::warning::PR auto-merge 실패. 수동으로 merge하세요: $PR_URL"
@@ -160,7 +157,7 @@ jobs:
             echo "결과: 실제 코드 변경 있음 → origin 동기화 대상"
             echo ""
             echo "변경된 파일:"
-            git diff --name-only "upstream/${{ env.UPSTREAM_BRANCH }}" -- .
+            git diff --cached --name-only
           fi
           echo ""
           echo "현재 브랜치 파일 목록:"
