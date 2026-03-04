@@ -1,0 +1,92 @@
+# ============================================================
+# PR Policy Check - PR/Push 제출 정책 검증
+# ============================================================
+# 승인된 워크플로우를 통해 제출되지 않은 PR/Push를 차단합니다.
+# 내부 파일 패턴이 직접 내장되어 있어 Secret/Variable 없이 동작합니다.
+#
+# pull_request_target을 사용하여:
+# - PR 코드가 아닌 base branch의 워크플로우가 실행됨 (우회 불가)
+# - 위반 PR을 자동으로 close (Ruleset/Branch Protection 없이 동작)
+#
+# push 이벤트:
+# - 직접 push로 내부 파일이 추가/수정되면 check 실패 (알림)
+#
+# 설치: 대상 repo의 .github/workflows/에 배치
+# ============================================================
+
+name: pr-policy-check
+
+on:
+  pull_request_target:
+  push:
+
+permissions:
+  contents: read
+  pull-requests: write
+
+jobs:
+  validate:
+    name: PR Policy Check
+    runs-on: ubuntu-latest
+    # UPSTREAM_REPO 변수가 있으면 fork → skip (upstream에서만 동작)
+    if: ${{ vars.UPSTREAM_REPO == '' }}
+    steps:
+      - name: Validate contents
+        env:
+          GH_TOKEN: ${{ github.token }}
+          PR_NUMBER: ${{ github.event.pull_request.number }}
+          REPO: ${{ github.repository }}
+          EVENT_NAME: ${{ github.event_name }}
+        run: |
+          PATTERNS=(
+            "vibecraft.ignore"
+            ".vibecraft/"
+            ".claude/"
+            ".codex/"
+            ".github/workflows/vibecraft-guard.yml"
+            ".github/workflows/sync-upstream.yml"
+            ".github/workflows/sync-tag-release.yml"
+            "scripts/setup-fork.sh"
+            "scripts/clean-for-upstream.sh"
+            "scripts/clean-history-for-upstream.sh"
+            "CLAUDE.md"
+            "CHANGELOG.md"
+            "VIBECRAFT.md"
+          )
+
+          if [ "$EVENT_NAME" = "pull_request_target" ]; then
+            # PR: API로 변경 파일 조회 (삭제 제외)
+            FILES=$(gh api "repos/$REPO/pulls/$PR_NUMBER/files" --paginate --jq '.[] | select(.status != "removed") | .filename')
+          else
+            # Push: 커밋의 추가/수정 파일 조회 (삭제 제외)
+            FILES=$(gh api "repos/$REPO/commits/${{ github.sha }}" --jq '[.files[] | select(.status != "removed") | .filename] | .[]')
+          fi
+
+          FOUND=""
+          for file in $FILES; do
+            for pattern in "${PATTERNS[@]}"; do
+              if [[ "$pattern" == */ ]]; then
+                # 디렉토리 패턴: prefix 매칭
+                if [[ "$file" == ${pattern}* ]]; then
+                  FOUND="$file"
+                  break 2
+                fi
+              else
+                if [[ "$file" == "$pattern" ]]; then
+                  FOUND="$file"
+                  break 2
+                fi
+              fi
+            done
+          done
+
+          if [ -n "$FOUND" ]; then
+            echo "::error::This commit contains files that violate the submission policy: $FOUND"
+            if [ "$EVENT_NAME" = "pull_request_target" ]; then
+              gh pr close "$PR_NUMBER" --repo "$REPO" \
+                --comment "This PR has been automatically closed because it contains files that violate the submission policy (\`$FOUND\`). Please use the approved workflow to submit changes."
+            fi
+            exit 1
+          fi
+
+          echo "Policy check passed"

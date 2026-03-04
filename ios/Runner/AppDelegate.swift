@@ -1,0 +1,25 @@
+import Flutter
+import UIKit
+import NidThirdPartyLogin
+
+@main
+@objc class AppDelegate: FlutterAppDelegate {
+  override func application(
+    _ application: UIApplication,
+    didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?
+  ) -> Bool {
+    // Initialize Naver SDK before plugin registration (reads from Info.plist)
+    NidOAuth.shared.initialize()
+    NidOAuth.shared.setLoginBehavior(.inAppBrowser)
+    
+    GeneratedPluginRegistrant.register(with: self)
+    return super.application(application, didFinishLaunchingWithOptions: launchOptions)
+  }
+
+  override func application(_ app: UIApplication, open url: URL, options: [UIApplication.OpenURLOptionsKey : Any] = [:]) -> Bool {
+    if NidOAuth.shared.handleURL(url) {
+      return true
+    }
+    return super.application(app, open: url, options: options)
+  }
+}
