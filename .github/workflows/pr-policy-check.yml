@@ -38,6 +38,7 @@ jobs:
           REPO: ${{ github.repository }}
           EVENT_NAME: ${{ github.event_name }}
         run: |
+          # --- BEGIN PATTERNS ---
           PATTERNS=(
             "vibecraft.ignore"
             ".vibecraft/"
@@ -53,6 +54,7 @@ jobs:
             "CHANGELOG.md"
             "VIBECRAFT.md"
           )
+          # --- END PATTERNS ---
 
           if [ "$EVENT_NAME" = "pull_request_target" ]; then
             # PR: API로 변경 파일 조회 (삭제 제외)

@@ -46,31 +46,28 @@ jobs:
 
       - name: Validate required defaults
         run: |
-          # vibecraft.ignore에 반드시 포함되어야 하는 기본 패턴 목록
-          REQUIRED_PATTERNS=(
-            "vibecraft.ignore"
-            ".vibecraft/"
-            ".claude/"
-            ".codex/"
-            ".github/workflows/vibecraft-guard.yml"
-            ".github/workflows/sync-upstream.yml"
-            ".github/workflows/sync-tag-release.yml"
-            "scripts/setup-fork.sh"
-            "scripts/clean-for-upstream.sh"
-            "scripts/clean-history-for-upstream.sh"
-            "CLAUDE.md"
-            "CHANGELOG.md"
-            "VIBECRAFT.md"
-          )
+          # .vibecraft/required-patterns.txt에서 필수 패턴 읽기
+          PATTERNS_FILE=".vibecraft/required-patterns.txt"
+          if [ ! -f "$PATTERNS_FILE" ]; then
+            echo "::error::$PATTERNS_FILE 파일이 없습니다."
+            echo "setup-fork.sh를 다시 실행하세요."
+            exit 1
+          fi
 
           MISSING=0
+          COUNT=0
 
-          for pattern in "${REQUIRED_PATTERNS[@]}"; do
+          while IFS= read -r pattern; do
+            # 주석/빈줄 제외
+            pattern=$(echo "$pattern" | sed 's/#.*//' | xargs)
+            [ -z "$pattern" ] && continue
+
+            COUNT=$((COUNT + 1))
             if ! grep -qF "$pattern" vibecraft.ignore; then
               echo "::error::필수 패턴 누락: $pattern"
               MISSING=1
             fi
-          done
+          done < "$PATTERNS_FILE"
 
           if [ "$MISSING" -eq 1 ]; then
             echo ""
@@ -79,4 +76,4 @@ jobs:
             exit 1
           fi
 
-          echo "필수 기본 패턴 검증 완료 (${#REQUIRED_PATTERNS[@]}개)"
+          echo "필수 기본 패턴 검증 완료 (${COUNT}개)"
