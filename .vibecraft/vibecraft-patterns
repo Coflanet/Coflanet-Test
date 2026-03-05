@@ -14,3 +14,4 @@ scripts/clean-history-for-upstream.sh
 CLAUDE.md
 CHANGELOG.md
 VIBECRAFT.md
+.gitattributes
