@@ -9,7 +9,7 @@
 # - 위반 PR을 자동으로 close (Ruleset/Branch Protection 없이 동작)
 #
 # push 이벤트:
-# - 직접 push로 내부 파일이 추가/수정되면 check 실패 (알림)
+# - 직접 push로 내부 파일이 추가/수정되면 자동 revert (git rm + commit + push)
 #
 # 설치: 대상 repo의 .github/workflows/에 배치
 # ============================================================
@@ -21,7 +21,7 @@ on:
   push:
 
 permissions:
-  contents: read
+  contents: write
   pull-requests: write
 
 jobs:
@@ -31,6 +31,10 @@ jobs:
     # UPSTREAM_REPO 변수가 있으면 fork → skip (upstream에서만 동작)
     if: ${{ github.repository != 'VibeCraft2204/vibecraft.ignore' && vars.UPSTREAM_REPO == '' }}
     steps:
+      - name: Checkout (push auto-revert용)
+        if: github.event_name == 'push'
+        uses: actions/checkout@v4
+
       - name: Validate contents
         env:
           GH_TOKEN: ${{ github.token }}
@@ -72,29 +76,44 @@ jobs:
             FILES=$(gh api "repos/$REPO/commits/${{ github.sha }}" --jq '[.files[] | select(.status != "removed") | .filename] | .[]')
           fi
 
-          FOUND=""
+          FOUND_FILES=()
           for file in $FILES; do
             for pattern in "${PATTERNS[@]}"; do
               if [[ "$pattern" == */ ]]; then
                 # 디렉토리 패턴: prefix 매칭
                 if [[ "$file" == ${pattern}* ]]; then
-                  FOUND="$file"
-                  break 2
+                  FOUND_FILES+=("$file")
+                  break
                 fi
               else
-                if [[ "$file" == "$pattern" ]]; then
-                  FOUND="$file"
-                  break 2
+                if [[ "$file" == $pattern ]]; then
+                  FOUND_FILES+=("$file")
+                  break
                 fi
               fi
             done
           done
 
-          if [ -n "$FOUND" ]; then
-            echo "::error::This commit contains files that violate the submission policy: $FOUND"
+          if [ ${#FOUND_FILES[@]} -gt 0 ]; then
+            FOUND_LIST=$(printf ', %s' "${FOUND_FILES[@]}")
+            FOUND_LIST=${FOUND_LIST:2}
+            echo "::error::Policy violation detected: $FOUND_LIST"
+
             if [ "$EVENT_NAME" = "pull_request_target" ]; then
               gh pr close "$PR_NUMBER" --repo "$REPO" \
-                --comment "This PR has been automatically closed because it contains files that violate the submission policy (\`$FOUND\`). Please use the approved workflow to submit changes."
+                --comment "This PR has been automatically closed because it contains files that violate the submission policy (\`$FOUND_LIST\`). Please use the approved workflow to submit changes."
+            else
+              # Push: 위반 파일 자동 제거
+              git config user.name "vibecraft-bot"
+              git config user.email "vibecraft-bot@users.noreply.github.com"
+              for f in "${FOUND_FILES[@]}"; do
+                git rm -f "$f" 2>/dev/null || true
+              done
+              git commit -m "revert: auto-remove policy-violating files ($FOUND_LIST)
+
+          Automatically reverted by pr-policy-check workflow"
+              git push
+              echo "Auto-reverted: $FOUND_LIST"
             fi
             exit 1
           fi
