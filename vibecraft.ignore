@@ -37,6 +37,7 @@ VIBECRAFT.md
 .env.staging
 credentials.json
 service-account.json
+*.pem
 
 # --- User Custom Patterns ---
 .github/workflows/sync-upstream.yml
