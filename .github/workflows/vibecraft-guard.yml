@@ -57,8 +57,8 @@ jobs:
 
       - name: Validate required defaults
         run: |
-          # .vibecraft/required-patterns.txt에서 필수 패턴 읽기
-          PATTERNS_FILE=".vibecraft/required-patterns.txt"
+          # .vibecraft/vibecraft-patterns에서 필수 패턴 읽기
+          PATTERNS_FILE=".vibecraft/vibecraft-patterns"
           if [ ! -f "$PATTERNS_FILE" ]; then
             echo "::error::$PATTERNS_FILE 파일이 없습니다."
             echo "setup-fork.sh를 다시 실행하세요."
@@ -88,3 +88,30 @@ jobs:
           fi
 
           echo "필수 기본 패턴 검증 완료 (${COUNT}개)"
+
+      - name: Validate secret-patterns superset
+        run: |
+          SECRET_FILE=".vibecraft/secret-patterns"
+          if [ ! -f "$SECRET_FILE" ]; then
+            echo "::warning::secret-patterns 파일이 없습니다. 마이그레이션 전일 수 있습니다."
+            exit 0
+          fi
+
+          MISSING=0
+          while IFS= read -r pattern; do
+            pattern=$(echo "$pattern" | sed 's/#.*//' | xargs)
+            [ -z "$pattern" ] && continue
+
+            if ! grep -qF "$pattern" "$VIBECRAFT_IGNORE"; then
+              echo "::error::vibecraft.ignore에 secret-patterns 패턴 누락: $pattern"
+              MISSING=1
+            fi
+          done < "$SECRET_FILE"
+
+          if [ "$MISSING" -eq 1 ]; then
+            echo ""
+            echo "secret-patterns의 모든 패턴은 vibecraft.ignore에 포함되어야 합니다."
+            echo "setup-fork.sh를 다시 실행하거나 수동으로 추가하세요."
+            exit 1
+          fi
+          echo "secret-patterns superset 검증 완료"

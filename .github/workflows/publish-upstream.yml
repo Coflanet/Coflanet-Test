@@ -1,5 +1,5 @@
 # ============================================================
-# Publish to Upstream Origin - Client-Mirror 방식 자동 납품
+# Publish to Upstream Origin - Client-Mirror 방식 자동 고객사 배포
 # ============================================================
 # fork의 main에 push되면 vibecraft 파일을 제거한 clean 코드를
 # client-mirror 브랜치(orphan)로 관리하여 upstream에 직접 push합니다.
@@ -107,19 +107,19 @@ jobs:
           fi
 
           if [ "$MIRROR_EXISTS" = true ]; then
-            # 이후 납품: 기존 mirror에 새 커밋 추가
+            # 이후 배포: 기존 mirror에 새 커밋 추가
             PARENT=$(git rev-parse "$MIRROR_BRANCH")
             COMMIT=$(git commit-tree "$CLEAN_TREE" -p "$PARENT" \
               -m "publish: ${FORK_OWNER} → upstream ($(date +%Y-%m-%d))")
             git update-ref "refs/heads/$MIRROR_BRANCH" "$COMMIT"
           elif git rev-parse "upstream/${{ env.UPSTREAM_BRANCH }}" &>/dev/null 2>&1; then
-            # 첫 납품 (upstream에 코드 있음): upstream/main을 parent로 사용
+            # 첫 배포 (upstream에 코드 있음): upstream/main을 parent로 사용
             PARENT=$(git rev-parse "upstream/${{ env.UPSTREAM_BRANCH }}")
             COMMIT=$(git commit-tree "$CLEAN_TREE" -p "$PARENT" \
               -m "publish: ${FORK_OWNER} → upstream (initial)")
             git branch "$MIRROR_BRANCH" "$COMMIT"
           else
-            # 첫 납품 (upstream 비어있음): orphan commit 생성
+            # 첫 배포 (upstream 비어있음): orphan commit 생성
             COMMIT=$(git commit-tree "$CLEAN_TREE" \
               -m "publish: ${FORK_OWNER} → upstream (initial)")
             git branch "$MIRROR_BRANCH" "$COMMIT"

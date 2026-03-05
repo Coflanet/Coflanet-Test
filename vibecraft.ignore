@@ -29,6 +29,14 @@ CLAUDE.md
 CHANGELOG.md
 VIBECRAFT.md
 
+# --- 민감 파일 (secret-patterns) ---
+.env
+.env.local
+.env.production
+.env.staging
+credentials.json
+service-account.json
+
 # --- User Custom Patterns ---
 .github/workflows/sync-upstream.yml
 scripts/clean-for-upstream.sh

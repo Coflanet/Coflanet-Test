@@ -1,0 +1,16 @@
+# vibecraft.ignore 필수 패턴 (단일 소스)
+# - vibecraft-guard.yml: 이 파일을 런타임에 읽어 검증
+# - pr-policy-check.yml: sync-patterns.yml이 이 파일 기반으로 자동 갱신
+vibecraft.ignore
+.vibecraft/
+.claude/
+.codex/
+.github/workflows/vibecraft-guard.yml
+.github/workflows/publish-upstream.yml
+.github/workflows/sync-tag-release.yml
+scripts/setup-fork.sh
+scripts/publish.sh
+scripts/clean-history-for-upstream.sh
+CLAUDE.md
+CHANGELOG.md
+VIBECRAFT.md

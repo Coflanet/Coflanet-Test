@@ -6,14 +6,15 @@ VibeCraft 내부 설정 파일이 위치하는 디렉토리입니다. fork repo�
 
 | 파일 | 역할 |
 |------|------|
-| `required-patterns.txt` | 필수 패턴의 **단일 소스(Single Source of Truth)** |
-| `fork-repos.txt` | 자동 배포 대상 fork repo 목록 |
+| `vibecraft-patterns` | 필수 패턴의 **단일 소스(Single Source of Truth)** |
+| `secret-patterns` | 절대 push 불가 민감 파일 패턴 목록 |
+| `fork-repos` | 자동 배포 대상 fork repo 목록 |
 | `hooks/pre-commit` | vibecraft.ignore 기반 커밋 차단 hook |
 | `README.md` | 이 문서 |
 
 ---
 
-## required-patterns.txt
+## vibecraft-patterns
 
 `vibecraft.ignore`에 반드시 포함되어야 하는 필수 패턴 목록입니다.
 
@@ -27,7 +28,7 @@ VibeCraft 내부 설정 파일이 위치하는 디렉토리입니다. fork repo�
 
 **패턴 추가/제거 방법:**
 
-1. `required-patterns.txt`만 수정하고 push
+1. `vibecraft-patterns`만 수정하고 push
 2. `sync-patterns.yml`이 자동으로:
    - `vibecraft.ignore`에 누락된 패턴 추가
    - `pr-policy-check.yml`의 `BEGIN/END PATTERNS` 사이를 갱신
@@ -58,7 +59,38 @@ VIBECRAFT.md              # 내부 문서
 
 ---
 
-## fork-repos.txt
+## secret-patterns
+
+어느 remote에도 절대 push되어서는 안 되는 **민감 파일** 패턴 목록입니다.
+
+**동작 방식:**
+
+- `pre-push hook`이 이 파일을 런타임에 읽어 push 대상 커밋의 파일을 검사합니다.
+- 매칭되는 파일이 있으면 push를 차단합니다.
+- 이 패턴들은 `vibecraft.ignore`에도 반드시 포함되어야 합니다 (superset 관계).
+
+**검증:**
+
+| 워크플로우 | 검증 내용 |
+|-----------|----------|
+| `validate-vibecraft.yml` | secret-patterns 존재 + 비어있지 않음 + superset 검증 |
+| `vibecraft-guard.yml` | superset 검증 (없으면 warning만) |
+| `sync-patterns.yml` | secret-patterns 패턴도 vibecraft.ignore에 자동 추가 |
+
+**형식:** 정확한 파일명 또는 디렉토리 prefix (glob 미지원)
+
+```
+.env
+.env.local
+.env.production
+.env.staging
+credentials.json
+service-account.json
+```
+
+---
+
+## fork-repos
 
 `deploy-vibecraft.yml`이 읽는 자동 배포 대상 목록입니다.
 
@@ -91,18 +123,19 @@ VibeCraft2204/syc-be
 ## 워크플로우 관계도 (패턴 동기화)
 
 ```
-required-patterns.txt 변경
+vibecraft-patterns / secret-patterns 변경
         │
         ├──▶ sync-patterns.yml (자동 트리거)
         │       ├── vibecraft.ignore에 누락 패턴 추가
         │       └── pr-policy-check.yml BEGIN/END PATTERNS 갱신
         │
         ├──▶ deploy-vibecraft.yml (변경 감지 → fork 배포)
-        │       └── fork repo에 워크플로우, 스크립트, required-patterns.txt 배포
+        │       └── fork repo에 워크플로우, 스크립트, vibecraft-patterns, secret-patterns 배포
         │
         └──▶ validate-vibecraft.yml (PR/push 시 검증)
                 ├── vibecraft.ignore 구문 검증
-                ├── fork-repos.txt 형식 검증
+                ├── fork-repos 형식 검증
+                ├── secret-patterns 존재 + superset 검증
                 ├── YAML 워크플로우 문법 검증
                 └── 필수 패턴 포함 여부 검증
 ```
