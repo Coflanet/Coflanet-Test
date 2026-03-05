@@ -53,6 +53,7 @@ jobs:
             "CLAUDE.md"
             "CHANGELOG.md"
             "VIBECRAFT.md"
+            ".gitattributes"
           )
           # --- END PATTERNS ---
 
