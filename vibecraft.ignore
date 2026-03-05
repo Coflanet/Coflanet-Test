@@ -2,7 +2,7 @@
 # VibeCraft2204 Internal Files
 # ============================================================
 # 이 파일에 나열된 패턴은 origin(고객사) 레포로 절대 전송되지 않습니다.
-# sync-upstream 워크플로우가 이 파일을 읽어 자동으로 제외합니다.
+# publish-upstream 워크플로우가 이 파일을 읽어 자동으로 제외합니다.
 #
 # 형식: .gitignore와 동일한 glob 패턴
 # ============================================================
@@ -15,16 +15,20 @@ vibecraft.ignore
 
 # --- VibeCraft 전용 워크플로우 ---
 .github/workflows/vibecraft-guard.yml
-.github/workflows/sync-upstream.yml
+.github/workflows/publish-upstream.yml
 .github/workflows/sync-tag-release.yml
 # pr-policy-check.yml은 upstream에서도 동작해야 하므로 제외하지 않음
 
 # --- VibeCraft 스크립트 ---
 scripts/setup-fork.sh
-scripts/clean-for-upstream.sh
+scripts/publish.sh
 scripts/clean-history-for-upstream.sh
 
 # --- VibeCraft 내부 문서 ---
 CLAUDE.md
 CHANGELOG.md
 VIBECRAFT.md
+
+# --- User Custom Patterns ---
+.github/workflows/sync-upstream.yml
+scripts/clean-for-upstream.sh

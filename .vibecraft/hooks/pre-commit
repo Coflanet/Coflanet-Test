@@ -1,0 +1,58 @@
+#!/usr/bin/env bash
+# ============================================================
+# VibeCraft pre-commit hook
+# ============================================================
+# vibecraft.ignore에 나열된 파일이 staged되어 있으면 커밋을 차단합니다.
+# setup-fork.sh가 .git/hooks/pre-commit에 설치합니다.
+# ============================================================
+
+# vibecraft.ignore 자동 탐색
+VIBECRAFT_IGNORE=""
+if [ -f "vibecraft.ignore" ]; then
+  VIBECRAFT_IGNORE="vibecraft.ignore"
+elif [ -f ".vibecraft/vibecraft.ignore" ]; then
+  VIBECRAFT_IGNORE=".vibecraft/vibecraft.ignore"
+else
+  VIBECRAFT_IGNORE=$(find . -maxdepth 3 -name "vibecraft.ignore" -type f \
+    -not -path "./.git/*" -not -path "./.vibecraft/source/*" 2>/dev/null | head -1)
+fi
+
+# vibecraft.ignore가 없으면 체크하지 않음
+if [ -z "$VIBECRAFT_IGNORE" ]; then
+  exit 0
+fi
+
+# staged 파일 목록
+STAGED=$(git diff --cached --name-only --diff-filter=ACM 2>/dev/null)
+if [ -z "$STAGED" ]; then
+  exit 0
+fi
+
+BLOCKED=""
+
+while IFS= read -r pattern || [ -n "$pattern" ]; do
+  # 주석/빈줄 무시
+  [[ "$pattern" =~ ^#.*$ ]] && continue
+  [[ -z "$pattern" ]] && continue
+  # 패턴 끝의 / 제거 (디렉토리 패턴 대응)
+  pattern="${pattern%/}"
+
+  while IFS= read -r file; do
+    [ -z "$file" ] && continue
+    # 정확히 일치하거나 디렉토리 prefix로 일치
+    if [ "$file" = "$pattern" ] || [[ "$file" == ${pattern}/* ]]; then
+      BLOCKED="${BLOCKED}  ${file}\n"
+    fi
+  done <<< "$STAGED"
+done < "$VIBECRAFT_IGNORE"
+
+if [ -n "$BLOCKED" ]; then
+  echo ""
+  echo "[vibecraft] 커밋 차단: vibecraft.ignore에 해당하는 파일이 staged되어 있습니다."
+  echo ""
+  printf "$BLOCKED"
+  echo ""
+  echo "[vibecraft] 이 파일들은 고객사 origin에 전송되면 안 됩니다."
+  echo "[vibecraft] fork repo에서 작업하고 publish 워크플로우를 통해 납품하세요."
+  exit 1
+fi

@@ -8,6 +8,7 @@ VibeCraft 내부 설정 파일이 위치하는 디렉토리입니다. fork repo�
 |------|------|
 | `required-patterns.txt` | 필수 패턴의 **단일 소스(Single Source of Truth)** |
 | `fork-repos.txt` | 자동 배포 대상 fork repo 목록 |
+| `hooks/pre-commit` | vibecraft.ignore 기반 커밋 차단 hook |
 | `README.md` | 이 문서 |
 
 ---
@@ -43,11 +44,11 @@ vibecraft.ignore          # 마커 파일
 .codex/                   # Codex 설정
 
 .github/workflows/vibecraft-guard.yml    # 내부 전용 워크플로우
-.github/workflows/sync-upstream.yml
+.github/workflows/publish-upstream.yml
 .github/workflows/sync-tag-release.yml
 
 scripts/setup-fork.sh                    # 내부 스크립트
-scripts/clean-for-upstream.sh
+scripts/publish.sh
 scripts/clean-history-for-upstream.sh
 
 CLAUDE.md                 # Claude Code 프로젝트 설정
