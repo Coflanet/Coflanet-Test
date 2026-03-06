@@ -1,0 +1,8 @@
+# Shell scripts must use LF line endings (bash cannot handle CRLF)
+*.sh text eol=lf
+
+# YAML workflows
+*.yml text eol=lf
+
+# vibecraft.ignore (read by shell scripts)
+vibecraft.ignore text eol=lf

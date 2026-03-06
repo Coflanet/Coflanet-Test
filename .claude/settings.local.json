@@ -1,0 +1,10 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(find \"C:/Users/jas01/Desktop/Taek/Coflanet/Coflanet App\" -name \".gitmodules\" -exec cat {} ;)",
+      "Bash(find \"C:/Users/jas01/Desktop/Taek/Coflanet/Coflanet App\" -name \"package.json\" -exec grep -l \"Coflanet\\\\|../Coflanet\" {} ;)",
+      "Bash(xargs cat)",
+      "Bash(wc -l \"C:/Users/jas01/Desktop/Taek/Coflanet/Coflanet App/Coflanet-main/Coflanet-main/algorithm\"/*.js \"C:/Users/jas01/Desktop/Taek/Coflanet/Coflanet App/coflanet-backend-main/coflanet-backend-main/refs/Coflanet-main/algorithm\"/*.js)"
+    ]
+  }
+}
