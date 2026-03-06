@@ -1,0 +1,304 @@
+{
+  "산미파": {
+    "coffeeType": "산미파",
+    "coffeeTypeDescription": "진하고 깊은 풍미를 좋아하네요 😊",
+    "tasteProfile": {
+      "acidity": 90,
+      "sweetness": 60,
+      "bitterness": 30,
+      "body": 40,
+      "aroma": 80
+    },
+    "flavorDescriptions": [
+      {
+        "name": "과일향",
+        "emoji": "🍊",
+        "description": "시트러스, 베리류의 밝고 상큼한 향미가 느껴지는 커피를 선호해요"
+      },
+      {
+        "name": "꽃향",
+        "emoji": "🌸",
+        "description": "자스민, 라벤더 같은 은은한 플로럴 노트를 즐겨요"
+      },
+      {
+        "name": "견과류/초콜릿향",
+        "emoji": "🍫",
+        "description": "아몬드, 헤이즐넛, 다크초콜릿의 고소하고 달콤한 풍미"
+      },
+      {
+        "name": "로스팅향",
+        "emoji": "🔥",
+        "description": "캐러멜, 토스트 같은 따뜻하고 깊은 로스팅 향미"
+      }
+    ],
+    "recommendations": [
+      {
+        "id": "1",
+        "name": "에티오피아 예가체프",
+        "origin": "에티오피아",
+        "roastLevel": "라이트",
+        "description": "꽃향과 시트러스 노트가 특징",
+        "originalPrice": 18000,
+        "discountPrice": 14400,
+        "discountPercent": 20,
+        "weight": "200g",
+        "tasteProfile": {
+          "acidity": 85,
+          "sweetness": 70,
+          "bitterness": 25,
+          "body": 45,
+          "aroma": 90
+        }
+      },
+      {
+        "id": "2",
+        "name": "콜롬비아 수프리모",
+        "origin": "콜롬비아",
+        "roastLevel": "미디엄",
+        "description": "견과류와 캐러멜 향이 특징",
+        "originalPrice": 16000,
+        "discountPrice": 12800,
+        "discountPercent": 20,
+        "weight": "200g",
+        "tasteProfile": {
+          "acidity": 55,
+          "sweetness": 75,
+          "bitterness": 45,
+          "body": 65,
+          "aroma": 70
+        }
+      },
+      {
+        "id": "3",
+        "name": "과테말라 안티구아",
+        "origin": "과테말라",
+        "roastLevel": "미디엄",
+        "description": "초콜릿과 스파이시한 향이 특징",
+        "originalPrice": 17000,
+        "discountPrice": 13600,
+        "discountPercent": 20,
+        "weight": "200g",
+        "tasteProfile": {
+          "acidity": 50,
+          "sweetness": 65,
+          "bitterness": 55,
+          "body": 70,
+          "aroma": 75
+        }
+      }
+    ]
+  },
+  "진한맛파": {
+    "coffeeType": "진한맛파",
+    "coffeeTypeDescription": "진하고 깊은 풍미를 좋아하네요 😊",
+    "tasteProfile": {
+      "acidity": 30,
+      "sweetness": 40,
+      "bitterness": 90,
+      "body": 85,
+      "aroma": 60
+    },
+    "flavorDescriptions": [
+      {
+        "name": "로스팅향",
+        "emoji": "🔥",
+        "description": "진하게 볶아낸 깊고 스모키한 향미를 좋아해요"
+      },
+      {
+        "name": "견과류/초콜릿향",
+        "emoji": "🍫",
+        "description": "다크초콜릿, 카카오의 깊고 묵직한 풍미"
+      },
+      {
+        "name": "스파이시향",
+        "emoji": "🌶️",
+        "description": "후추, 시나몬 같은 향신료의 자극적인 느낌"
+      },
+      {
+        "name": "우디향",
+        "emoji": "🌲",
+        "description": "오크, 삼나무 같은 나무의 따뜻하고 건조한 향"
+      }
+    ],
+    "recommendations": [
+      {
+        "id": "4",
+        "name": "인도네시아 만델링",
+        "origin": "인도네시아",
+        "roastLevel": "다크",
+        "description": "우디향과 깊은 바디감이 특징",
+        "originalPrice": 19000,
+        "discountPrice": 15200,
+        "discountPercent": 20,
+        "weight": "200g",
+        "tasteProfile": {
+          "acidity": 25,
+          "sweetness": 45,
+          "bitterness": 85,
+          "body": 90,
+          "aroma": 65
+        }
+      },
+      {
+        "id": "5",
+        "name": "브라질 산토스",
+        "origin": "브라질",
+        "roastLevel": "미디엄-다크",
+        "description": "초콜릿과 너트향의 밸런스",
+        "originalPrice": 15000,
+        "discountPrice": 12000,
+        "discountPercent": 20,
+        "weight": "200g",
+        "tasteProfile": {
+          "acidity": 35,
+          "sweetness": 50,
+          "bitterness": 80,
+          "body": 80,
+          "aroma": 70
+        }
+      }
+    ]
+  },
+  "달달파": {
+    "coffeeType": "달달파",
+    "coffeeTypeDescription": "달콤하고 부드러운 커피를 즐기시네요 😊",
+    "tasteProfile": {
+      "acidity": 40,
+      "sweetness": 85,
+      "bitterness": 35,
+      "body": 60,
+      "aroma": 70
+    },
+    "flavorDescriptions": [
+      {
+        "name": "캐러멜향",
+        "emoji": "🍯",
+        "description": "달콤한 캐러멜, 토피, 꿀 같은 부드러운 단맛 향미"
+      },
+      {
+        "name": "견과류향",
+        "emoji": "🥜",
+        "description": "아몬드, 헤이즐넛의 고소하면서도 달콤한 풍미"
+      },
+      {
+        "name": "과일향",
+        "emoji": "🍒",
+        "description": "체리, 자두 같은 달콤한 과일의 잘 익은 향미"
+      },
+      {
+        "name": "바닐라향",
+        "emoji": "🍦",
+        "description": "바닐라, 크림 같은 부드럽고 포근한 향"
+      }
+    ],
+    "recommendations": [
+      {
+        "id": "6",
+        "name": "브라질 케라도",
+        "origin": "브라질",
+        "roastLevel": "미디엄",
+        "description": "캐러멜과 너트향이 풍부",
+        "originalPrice": 17000,
+        "discountPrice": 13600,
+        "discountPercent": 20,
+        "weight": "200g",
+        "tasteProfile": {
+          "acidity": 40,
+          "sweetness": 80,
+          "bitterness": 40,
+          "body": 65,
+          "aroma": 75
+        }
+      },
+      {
+        "id": "7",
+        "name": "엘살바도르 보르본",
+        "origin": "엘살바도르",
+        "roastLevel": "미디엄",
+        "description": "달콤한 과일향과 바닐라 노트",
+        "originalPrice": 18000,
+        "discountPrice": 14400,
+        "discountPercent": 20,
+        "weight": "200g",
+        "tasteProfile": {
+          "acidity": 45,
+          "sweetness": 85,
+          "bitterness": 30,
+          "body": 60,
+          "aroma": 75
+        }
+      }
+    ]
+  },
+  "밸런스파": {
+    "coffeeType": "밸런스파",
+    "coffeeTypeDescription": "균형 잡힌 맛을 즐기시네요 😊",
+    "tasteProfile": {
+      "acidity": 60,
+      "sweetness": 60,
+      "bitterness": 60,
+      "body": 60,
+      "aroma": 60
+    },
+    "flavorDescriptions": [
+      {
+        "name": "과일향",
+        "emoji": "🍊",
+        "description": "적당한 산미와 함께 느껴지는 과일의 밝은 향"
+      },
+      {
+        "name": "견과류/초콜릿향",
+        "emoji": "🍫",
+        "description": "밀크초콜릿, 아몬드의 편안하고 고소한 풍미"
+      },
+      {
+        "name": "캐러멜향",
+        "emoji": "🍯",
+        "description": "캐러멜의 부드러운 달콤함이 은은하게 감도는 맛"
+      },
+      {
+        "name": "꽃향",
+        "emoji": "🌼",
+        "description": "살짝 느껴지는 플로럴 노트가 복합미를 더해요"
+      }
+    ],
+    "recommendations": [
+      {
+        "id": "8",
+        "name": "콜롬비아 후일라",
+        "origin": "콜롬비아",
+        "roastLevel": "미디엄",
+        "description": "완벽한 밸런스의 클래식한 맛",
+        "originalPrice": 16500,
+        "discountPrice": 13200,
+        "discountPercent": 20,
+        "weight": "200g",
+        "tasteProfile": {
+          "acidity": 60,
+          "sweetness": 65,
+          "bitterness": 55,
+          "body": 65,
+          "aroma": 70
+        }
+      },
+      {
+        "id": "9",
+        "name": "페루 차치코이",
+        "origin": "페루",
+        "roastLevel": "미디엄",
+        "description": "부드러운 산미와 단맛의 조화",
+        "originalPrice": 15500,
+        "discountPrice": 12400,
+        "discountPercent": 20,
+        "weight": "200g",
+        "tasteProfile": {
+          "acidity": 65,
+          "sweetness": 60,
+          "bitterness": 50,
+          "body": 60,
+          "aroma": 65
+        }
+      }
+    ]
+  }
+}
