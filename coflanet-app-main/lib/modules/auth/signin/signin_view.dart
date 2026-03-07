@@ -1,4 +1,4 @@
-import 'dart:io' show Platform;
+import 'package:flutter/foundation.dart' show defaultTargetPlatform, TargetPlatform;
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:coflanet/constants/asset_constant.dart';
@@ -106,7 +106,7 @@ class SignInView extends GetView<SignInController> {
             isLoading: controller.isLoading,
           ),
           // Apple Login - iOS only
-          if (Platform.isIOS) ...[
+          if (defaultTargetPlatform == TargetPlatform.iOS) ...[
             const SizedBox(height: 12),
             SocialButton(
               type: SocialButtonType.apple,
