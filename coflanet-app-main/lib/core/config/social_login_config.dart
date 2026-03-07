@@ -20,7 +20,7 @@ class SocialLoginConfig {
   /// 더미 프로바이더 사용 여부
   /// true: 개발용 더미 로그인 (SDK 없이 테스트)
   /// false: 실제 소셜 로그인 SDK 사용
-  static bool useDummyProviders = const bool.fromEnvironment('CI_TEST');
+  static bool useDummyProviders = true;
 
   // ============================================================
   // Kakao SDK 설정
