@@ -151,7 +151,7 @@ jobs:
           if [ -f ".gitignore" ]; then
             git init -q
             git add -A
-            git ls-files --ignored --exclude-standard -z | xargs -0 rm -f 2>/dev/null || true
+            git ls-files -c --ignored --exclude-standard -z | xargs -0 rm -f 2>/dev/null || true
             find . -type d -empty -delete 2>/dev/null || true
             rm -rf .git
           fi
