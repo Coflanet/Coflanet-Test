@@ -200,7 +200,6 @@ jobs:
         run: |
           if git push upstream "$MIRROR_BRANCH:$UPSTREAM_BRANCH" 2>/dev/null; then
             echo "Push to upstream main succeeded."
-            git push upstream "$MIRROR_BRANCH" --force 2>/dev/null || true
           else
             echo "::error::Push failed. Check UPSTREAM_TOKEN permissions."
             exit 1
