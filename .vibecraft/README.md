@@ -9,6 +9,7 @@ VibeCraft 내부 설정 파일이 위치하는 디렉토리입니다. fork repo�
 | `vibecraft-patterns` | 필수 패턴의 **단일 소스(Single Source of Truth)** |
 | `secret-patterns` | 절대 push 불가 민감 파일 패턴 목록 |
 | `fork-repos` | 자동 배포 대상 fork repo 목록 |
+| `config` | fork별 VibeCraft 설정 (SECURE_ENABLED 등) |
 | `hooks/pre-commit` | vibecraft.ignore 기반 커밋 차단 hook |
 | `README.md` | 이 문서 |
 
@@ -82,6 +83,37 @@ VIBECRAFT.md              # 내부 문서
 .env.staging
 credentials.json
 service-account.json
+```
+
+---
+
+## config
+
+fork 레포별 VibeCraft 설정 파일입니다. 최초 배포 시 기본값으로 생성되며, 이후 fork 레포에서 자유롭게 수정할 수 있습니다.
+
+**설정 항목:**
+
+| 항목 | 기본값 | 설명 |
+|------|--------|------|
+| `VIBECRAFT_VERSION` | (자동) | deploy/setup 시 자동 기록. 수동 수정 불필요 |
+| `SECURE_ENABLED` | `true` | AI 분석 방어 레이어(vibecraft-secure) on/off. fork별 독립 설정 |
+| `FORCE_SECURE_ENABLED` | `false` | `true` 시 모든 fork의 `SECURE_ENABLED`를 소스 config 값으로 강제 동기화 |
+
+**동작 방식:**
+
+- `SECURE_ENABLED`: fork 레포의 config 값을 존중. deploy 시 덮어쓰지 않음
+- `FORCE_SECURE_ENABLED`: 소스(`vibecraft.ignore`) config에서만 의미 있음. `true`로 설정하면 다음 deploy 시 모든 fork의 `SECURE_ENABLED`를 소스 값으로 강제 변경. 일회성 강제 적용 후 `false`로 되돌리는 것을 권장
+
+**예시:**
+
+```
+# fork별 자율 설정 (기본)
+SECURE_ENABLED=true
+FORCE_SECURE_ENABLED=false
+
+# 모든 fork에 SECURE_ENABLED=true 강제 적용
+SECURE_ENABLED=true
+FORCE_SECURE_ENABLED=true
 ```
 
 ---
