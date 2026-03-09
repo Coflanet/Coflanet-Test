@@ -21,13 +21,6 @@ vibecraft.ignore
 .github/workflows/sync-tag-release.yml
 # pr-policy-check.yml은 upstream에서도 동작해야 하므로 제외하지 않음
 
-# --- 레거시 scripts/ (v0.10.0 이전 경로) ---
-scripts/README.md
-scripts/setup-fork.sh
-scripts/publish.sh
-scripts/clean-for-upstream.sh
-scripts/clean-history-for-upstream.sh
-
 # --- VibeCraft 내부 문서 ---
 CLAUDE.md
 CHANGELOG.md
@@ -60,4 +53,9 @@ GEMINI.md
 .tabnine/
 
 # --- User Custom Patterns ---
+scripts/README.md
+scripts/setup-fork.sh
+scripts/publish.sh
+scripts/clean-for-upstream.sh
+scripts/clean-history-for-upstream.sh
 .github/workflows/sync-upstream.yml
