@@ -896,13 +896,16 @@ export interface ${name} {
  *
  * @internal
  */
-export const enum ${name} {
-  Canary = 'CANARY',
-  BlueGreen = 'BLUE_GREEN',
-  Rolling = 'ROLLING',
-  Shadow = 'SHADOW',
-  DarkLaunch = 'DARK_LAUNCH',
-}
+export const ${name} = {
+  Canary: 'CANARY',
+  BlueGreen: 'BLUE_GREEN',
+  Rolling: 'ROLLING',
+  Shadow: 'SHADOW',
+  DarkLaunch: 'DARK_LAUNCH',
+} as const;
+
+/** @internal */
+export type ${name} = (typeof ${name})[keyof typeof ${name}];
 
 /** @internal */
 export const ${toUpperSnake(name)}_WEIGHTS: Record<${name}, number> = {
