@@ -1,6 +1,10 @@
 # ============================================================
-# Publish to Upstream Origin - Client-Mirror 방식 자동 고객사 배포
+# Publish to Upstream Origin - Orphan Commit 방식 자동 고객사 배포
 # ============================================================
+# 매 publish마다 orphan commit(이력 없음)으로 force push.
+# force push 불가 시 upstream/main 기반 PR로 폴백.
+# 이전 버전은 태그/릴리즈로 보존.
+#
 # 두 가지 경로로 실행:
 #   1. push (.vibecraft/config SECURE_ENABLED!=true): 원본 코드로 upstream push
 #   2. workflow_run (vibecraft-secure 완료 후): 보호된 코드로 upstream push
@@ -160,7 +164,7 @@ jobs:
           unset GIT_INDEX_FILE
           echo "CLEAN_TREE=$CLEAN_TREE" >> $GITHUB_ENV
 
-      - name: Manage client-mirror branch
+      - name: Create publish commit
         if: env.SKIP_PUBLISH != 'true'
         run: |
           FORK_OWNER="${{ github.repository_owner }}"
@@ -168,17 +172,20 @@ jobs:
           if [ "${{ github.event_name }}" = "workflow_run" ]; then
             SECURED=" [secured]"
           fi
+          PUBLISH_MSG="publish: ${FORK_OWNER} -> upstream ($(date +%Y-%m-%d))${SECURED}"
 
-          # 항상 upstream/main 위에 단일 커밋 생성 (이력 누적 방지)
+          # Orphan commit (이력 없음) — force push용
+          ORPHAN_COMMIT=$(git commit-tree "$CLEAN_TREE" -m "initial release")
+          git branch -f "$MIRROR_BRANCH" "$ORPHAN_COMMIT"
+
+          # PR 폴백용 커밋 (upstream/main 기반)
           if git rev-parse "upstream/$UPSTREAM_BRANCH" &>/dev/null 2>&1; then
             PARENT=$(git rev-parse "upstream/$UPSTREAM_BRANCH")
-            COMMIT=$(git commit-tree "$CLEAN_TREE" -p "$PARENT" \
-              -m "publish: ${FORK_OWNER} -> upstream ($(date +%Y-%m-%d))${SECURED}")
-          else
-            COMMIT=$(git commit-tree "$CLEAN_TREE" \
-              -m "publish: ${FORK_OWNER} -> upstream (initial)${SECURED}")
+            PR_COMMIT=$(git commit-tree "$CLEAN_TREE" -p "$PARENT" -m "$PUBLISH_MSG")
+            git branch -f "${MIRROR_BRANCH}-pr" "$PR_COMMIT"
           fi
-          git branch -f "$MIRROR_BRANCH" "$COMMIT"
+
+          echo "PUBLISH_MSG=$PUBLISH_MSG" >> $GITHUB_ENV
 
       - name: Check for real changes
         if: env.SKIP_PUBLISH != 'true'
@@ -189,22 +196,45 @@ jobs:
           if [ -n "$UPSTREAM_TREE" ] && [ "$UPSTREAM_TREE" = "$MIRROR_TREE" ]; then
             echo "::notice::No real changes. Skipping push."
             echo "SKIP_PUBLISH=true" >> $GITHUB_ENV
-          else
-            echo "SKIP_PUBLISH=false" >> $GITHUB_ENV
           fi
 
       - name: Push to upstream
-        if: ${{ env.SKIP_PUBLISH != 'true' }}
+        if: env.SKIP_PUBLISH != 'true'
         env:
           GH_TOKEN: ${{ secrets.UPSTREAM_TOKEN }}
         run: |
-          if git push upstream "$MIRROR_BRANCH:$UPSTREAM_BRANCH"; then
-            echo "Push to upstream main succeeded."
+          # 1차: orphan commit force push (이력 제거)
+          if git push upstream "$MIRROR_BRANCH:$UPSTREAM_BRANCH" --force 2>/dev/null; then
+            echo "::notice::Force push succeeded. Upstream has clean single commit."
+            echo "PUSH_METHOD=force" >> $GITHUB_ENV
+          # 2차: PR 폴백 (branch protection 등으로 force push 불가 시)
+          elif git rev-parse "${MIRROR_BRANCH}-pr" &>/dev/null 2>&1; then
+            PR_BRANCH="publish/$(date +%Y%m%d-%H%M%S)"
+            git push upstream "${MIRROR_BRANCH}-pr:refs/heads/$PR_BRANCH" 2>/dev/null || {
+              echo "::error::Both force push and PR branch push failed."
+              exit 1
+            }
+            echo "::notice::Force push blocked. Creating PR instead."
+            echo "PR_BRANCH=$PR_BRANCH" >> $GITHUB_ENV
+            echo "PUSH_METHOD=pr" >> $GITHUB_ENV
           else
-            echo "::error::Push failed. Check UPSTREAM_TOKEN permissions."
+            echo "::error::Push failed and no PR fallback available."
             exit 1
           fi
 
+      - name: Create PR (fallback)
+        if: env.PUSH_METHOD == 'pr'
+        env:
+          GH_TOKEN: ${{ secrets.UPSTREAM_TOKEN }}
+        run: |
+          gh pr create \
+            --repo "$UPSTREAM" \
+            --base "$UPSTREAM_BRANCH" \
+            --head "$PR_BRANCH" \
+            --title "$PUBLISH_MSG" \
+            --body "Automated publish from ${{ github.repository }}. Force push was blocked by branch protection." \
+            2>/dev/null || echo "::warning::PR creation failed. Branch pushed: $PR_BRANCH"
+
       - name: Skip notice
-        if: ${{ env.SKIP_PUBLISH == 'true' }}
+        if: env.SKIP_PUBLISH == 'true'
         run: echo "::notice::No changes to publish."
