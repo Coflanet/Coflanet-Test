@@ -169,37 +169,16 @@ jobs:
             SECURED=" [secured]"
           fi
 
-          # client-mirror 브랜치 존재 확인
-          MIRROR_EXISTS=false
-          if git rev-parse "upstream/$MIRROR_BRANCH" &>/dev/null 2>&1; then
-            git branch "$MIRROR_BRANCH" "upstream/$MIRROR_BRANCH"
-            MIRROR_EXISTS=true
-          fi
-
-          if [ "$MIRROR_EXISTS" = true ]; then
-            # diverge 체크: upstream/main이 client-mirror의 ancestor인지 확인
-            if git merge-base --is-ancestor "upstream/$UPSTREAM_BRANCH" "$MIRROR_BRANCH" 2>/dev/null; then
-              PARENT=$(git rev-parse "$MIRROR_BRANCH")
-            else
-              # upstream이 diverge — upstream/main 위에 덮어쓰기
-              echo "::warning::upstream diverged from client-mirror. Rebasing onto upstream/$UPSTREAM_BRANCH."
-              PARENT=$(git rev-parse "upstream/$UPSTREAM_BRANCH")
-            fi
-            COMMIT=$(git commit-tree "$CLEAN_TREE" -p "$PARENT" \
-              -m "publish: ${FORK_OWNER} -> upstream ($(date +%Y-%m-%d))${SECURED}")
-            git update-ref "refs/heads/$MIRROR_BRANCH" "$COMMIT"
-          elif git rev-parse "upstream/$UPSTREAM_BRANCH" &>/dev/null 2>&1; then
+          # 항상 upstream/main 위에 단일 커밋 생성 (이력 누적 방지)
+          if git rev-parse "upstream/$UPSTREAM_BRANCH" &>/dev/null 2>&1; then
             PARENT=$(git rev-parse "upstream/$UPSTREAM_BRANCH")
             COMMIT=$(git commit-tree "$CLEAN_TREE" -p "$PARENT" \
-              -m "publish: ${FORK_OWNER} -> upstream (initial)${SECURED}")
-            git branch "$MIRROR_BRANCH" "$COMMIT"
+              -m "publish: ${FORK_OWNER} -> upstream ($(date +%Y-%m-%d))${SECURED}")
           else
             COMMIT=$(git commit-tree "$CLEAN_TREE" \
               -m "publish: ${FORK_OWNER} -> upstream (initial)${SECURED}")
-            git branch "$MIRROR_BRANCH" "$COMMIT"
           fi
-
-          echo "MIRROR_EXISTS=$MIRROR_EXISTS" >> $GITHUB_ENV
+          git branch -f "$MIRROR_BRANCH" "$COMMIT"
 
       - name: Check for real changes
         if: env.SKIP_PUBLISH != 'true'
@@ -221,7 +200,7 @@ jobs:
         run: |
           if git push upstream "$MIRROR_BRANCH:$UPSTREAM_BRANCH" 2>/dev/null; then
             echo "Push to upstream main succeeded."
-            git push upstream "$MIRROR_BRANCH" 2>/dev/null || true
+            git push upstream "$MIRROR_BRANCH" --force 2>/dev/null || true
           else
             echo "::error::Push failed. Check UPSTREAM_TOKEN permissions."
             exit 1
