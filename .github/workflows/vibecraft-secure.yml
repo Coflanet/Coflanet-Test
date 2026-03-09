@@ -1,0 +1,155 @@
+# ============================================================
+# VibeCraft Secure - Metadata Obfuscation
+# ============================================================
+# Applies metadata-level obfuscation (semantic comments, decoy files,
+# fake tests) to the work tree before upstream publish.
+# Runs before publish-upstream.yml in the pipeline:
+#   main push -> vibecraft-secure (inject + verify) -> publish-upstream
+# ============================================================
+
+name: vibecraft-secure
+
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+concurrency:
+  group: vibecraft-secure-${{ github.repository }}
+  cancel-in-progress: true
+
+jobs:
+  check-config:
+    runs-on: ubuntu-latest
+    if: ${{ github.repository != 'VibeCraft2204/vibecraft.ignore' }}
+    outputs:
+      secure_enabled: ${{ steps.config.outputs.secure_enabled }}
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          sparse-checkout: '.vibecraft/config'
+          sparse-checkout-cone-mode: false
+      - id: config
+        run: |
+          if [ -f ".vibecraft/config" ] && grep -q "^SECURE_ENABLED=true" ".vibecraft/config"; then
+            echo "secure_enabled=true" >> $GITHUB_OUTPUT
+          else
+            echo "secure_enabled=false" >> $GITHUB_OUTPUT
+          fi
+
+  secure:
+    needs: check-config
+    if: ${{ needs.check-config.outputs.secure_enabled == 'true' }}
+    name: Apply Defense Layers
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+          persist-credentials: false
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+
+      - name: Install vibecraft-secure dependencies
+        run: |
+          cd .vibecraft/vibecraft-secure
+          npm ci --ignore-scripts
+
+      - name: Find vibecraft.ignore
+        run: |
+          VIBECRAFT_IGNORE=""
+          if [ -f "vibecraft.ignore" ]; then
+            VIBECRAFT_IGNORE="vibecraft.ignore"
+          elif [ -f ".vibecraft/vibecraft.ignore" ]; then
+            VIBECRAFT_IGNORE=".vibecraft/vibecraft.ignore"
+          else
+            VIBECRAFT_IGNORE=$(find . -name "vibecraft.ignore" -type f \
+              -not -path "./.git/*" -not -path "./.vibecraft/source/*" 2>/dev/null | head -1)
+          fi
+
+          if [ -z "$VIBECRAFT_IGNORE" ]; then
+            echo "::error::vibecraft.ignore not found."
+            exit 1
+          fi
+
+          echo "VIBECRAFT_IGNORE=$VIBECRAFT_IGNORE" >> $GITHUB_ENV
+
+      - name: Create clean work tree
+        run: |
+          # Create a temporary directory with vibecraft files removed
+          WORK_DIR=$(mktemp -d)
+          echo "WORK_DIR=$WORK_DIR" >> $GITHUB_ENV
+
+          # Copy all files except .git
+          rsync -a --exclude='.git' . "$WORK_DIR/"
+
+          # Remove vibecraft-internal files from work dir
+          cd "$WORK_DIR"
+          while IFS= read -r pattern || [ -n "$pattern" ]; do
+            [[ "$pattern" =~ ^#.*$ ]] && continue
+            [[ -z "$pattern" ]] && continue
+            # Strip trailing slash for find -path compatibility
+            pattern="${pattern%/}"
+            # Remove matching files/directories
+            find . -path "./$pattern" -exec rm -rf {} + 2>/dev/null || true
+          done < "$GITHUB_WORKSPACE/$VIBECRAFT_IGNORE"
+          cd "$GITHUB_WORKSPACE"
+
+      - name: Apply vibecraft-secure metadata obfuscation
+        run: |
+          node .vibecraft/vibecraft-secure/inject.mjs "$WORK_DIR"
+
+      - name: Build verification
+        run: |
+          cd "$WORK_DIR"
+
+          # Check if package.json exists and has a build script
+          if [ -f "package.json" ]; then
+            if grep -q '"build"' package.json; then
+              echo "Running npm build verification..."
+              npm install --ignore-scripts 2>/dev/null || true
+              npm run build || {
+                echo "::error::Build failed after applying vibecraft-secure."
+                exit 1
+              }
+              echo "Build verification passed."
+            else
+              echo "No build script found. Skipping build verification."
+            fi
+          elif [ -f "build.gradle" ] || [ -f "build.gradle.kts" ]; then
+            echo "Gradle project detected. Running build..."
+            ./gradlew build -x test || {
+              echo "::error::Gradle build failed after applying vibecraft-secure."
+              exit 1
+            }
+          elif [ -f "pom.xml" ]; then
+            echo "Maven project detected. Running build..."
+            mvn compile -q || {
+              echo "::error::Maven build failed after applying vibecraft-secure."
+              exit 1
+            }
+          elif [ -f "requirements.txt" ] || [ -f "setup.py" ] || [ -f "pyproject.toml" ]; then
+            echo "Python project detected. Running syntax check..."
+            find . -name "*.py" -exec python3 -m py_compile {} + || {
+              echo "::error::Python syntax check failed after applying vibecraft-secure."
+              exit 1
+            }
+          else
+            echo "No recognized build system. Skipping build verification."
+          fi
+
+      - name: Upload protected tree as artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: protected-tree
+          path: ${{ env.WORK_DIR }}
+          retention-days: 1
+
+      - name: Cleanup
+        if: always()
+        run: rm -rf "$WORK_DIR"

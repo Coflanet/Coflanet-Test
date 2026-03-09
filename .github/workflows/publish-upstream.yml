@@ -1,12 +1,9 @@
 # ============================================================
 # Publish to Upstream Origin - Client-Mirror 방식 자동 고객사 배포
 # ============================================================
-# fork의 main에 push되면 vibecraft 파일을 제거한 clean 코드를
-# client-mirror 브랜치(orphan)로 관리하여 upstream에 직접 push합니다.
-#
-# sync-upstream.yml(PR 방식) 대체:
-#   - PR 생성/대기/merge 루프 제거 → 직접 push
-#   - orphan commit으로 이력 완전 분리
+# 두 가지 경로로 실행:
+#   1. push (.vibecraft/config SECURE_ENABLED!=true): 원본 코드로 upstream push
+#   2. workflow_run (vibecraft-secure 완료 후): 보호된 코드로 upstream push
 # ============================================================
 
 name: publish-upstream
@@ -14,17 +11,56 @@ name: publish-upstream
 on:
   push:
     branches: [main]
+  workflow_run:
+    workflows: ["vibecraft-secure"]
+    types: [completed]
+    branches: [main]
   workflow_dispatch:
+
+concurrency:
+  group: upstream-publish-${{ github.repository }}
+  cancel-in-progress: false
 
 env:
   UPSTREAM_BRANCH: 'main'
   MIRROR_BRANCH: 'client-mirror'
 
 jobs:
+  check-config:
+    runs-on: ubuntu-latest
+    if: ${{ github.event_name == 'push' }}
+    outputs:
+      secure_enabled: ${{ steps.config.outputs.secure_enabled }}
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          sparse-checkout: '.vibecraft/config'
+          sparse-checkout-cone-mode: false
+      - id: config
+        run: |
+          if [ -f ".vibecraft/config" ] && grep -q "^SECURE_ENABLED=true" ".vibecraft/config"; then
+            echo "secure_enabled=true" >> $GITHUB_OUTPUT
+          else
+            echo "secure_enabled=false" >> $GITHUB_OUTPUT
+          fi
+
   publish:
+    needs: [check-config]
+    if: >
+      always() && (
+        (github.event_name == 'push'
+         && needs.check-config.outputs.secure_enabled != 'true'
+         && github.repository != 'VibeCraft2204/vibecraft.ignore'
+         && vars.UPSTREAM_REPO != '') ||
+        (github.event_name == 'workflow_run'
+         && github.event.workflow_run.conclusion == 'success') ||
+        github.event_name == 'workflow_dispatch'
+      )
     name: Publish to Origin
     runs-on: ubuntu-latest
-    if: ${{ github.repository != 'VibeCraft2204/vibecraft.ignore' && vars.UPSTREAM_REPO != '' }}
+    permissions:
+      actions: read
+      contents: write
 
     steps:
       - name: Checkout
@@ -32,6 +68,15 @@ jobs:
         with:
           fetch-depth: 0
           persist-credentials: false
+
+      - name: Download protected artifact
+        if: github.event_name == 'workflow_run'
+        uses: actions/download-artifact@v4
+        with:
+          name: protected-tree
+          run-id: ${{ github.event.workflow_run.id }}
+          github-token: ${{ github.token }}
+          path: protected-tree
 
       - name: Find vibecraft.ignore
         run: |
@@ -46,11 +91,10 @@ jobs:
           fi
 
           if [ -z "$VIBECRAFT_IGNORE" ]; then
-            echo "::error::vibecraft.ignore가 없습니다. 동기화를 중단합니다."
+            echo "::error::vibecraft.ignore not found."
             exit 1
           fi
 
-          echo "vibecraft.ignore 경로: $VIBECRAFT_IGNORE"
           echo "VIBECRAFT_IGNORE=$VIBECRAFT_IGNORE" >> $GITHUB_ENV
 
       - name: Setup upstream remote
@@ -60,16 +104,15 @@ jobs:
           UPSTREAM="${{ vars.UPSTREAM_REPO }}"
 
           if [ -z "$UPSTREAM" ]; then
-            echo "::error::UPSTREAM_REPO가 설정되지 않았습니다."
+            echo "::error::UPSTREAM_REPO not configured."
             exit 1
           fi
 
           gh auth setup-git
 
           git remote add upstream "https://github.com/${UPSTREAM}.git"
-          git fetch upstream "${{ env.UPSTREAM_BRANCH }}" || true
-          # client-mirror 브랜치가 있으면 fetch
-          git fetch upstream "${{ env.MIRROR_BRANCH }}" || true
+          git fetch upstream "$UPSTREAM_BRANCH" || true
+          git fetch upstream "$MIRROR_BRANCH" || true
           echo "UPSTREAM=$UPSTREAM" >> $GITHUB_ENV
 
       - name: Configure git identity
@@ -79,25 +122,39 @@ jobs:
 
       - name: Create clean tree
         run: |
-          # 현재 HEAD의 tree를 임시 index로 로드하여 vibecraft 파일 제거
-          ORIG_HEAD=$(git rev-parse HEAD)
-          export GIT_INDEX_FILE=$(mktemp)
-          git read-tree "$ORIG_HEAD"
+          # mktemp creates a 0-byte file; git requires a valid index header or non-existent file
+          GIT_INDEX_FILE=$(mktemp -u)
+          export GIT_INDEX_FILE
 
-          while IFS= read -r pattern || [ -n "$pattern" ]; do
-            [[ "$pattern" =~ ^#.*$ ]] && continue
-            [[ -z "$pattern" ]] && continue
-            git rm -rf --cached --ignore-unmatch $pattern 2>/dev/null || true
-          done < "$VIBECRAFT_IGNORE"
+          if [ "${{ github.event_name }}" = "workflow_run" ] && [ -d "protected-tree" ]; then
+            # vibecraft-secure가 보호 처리한 파일로 tree 생성
+            PROTECTED_DIR="$GITHUB_WORKSPACE/protected-tree"
+            while IFS= read -r relpath; do
+              BLOB=$(git hash-object -w "$PROTECTED_DIR/$relpath")
+              git update-index --add --cacheinfo 100644,"$BLOB","$relpath"
+            done < <(cd "$PROTECTED_DIR" && find . -type f -not -path './.git/*' | sed 's|^\./||')
+            CLEAN_TREE=$(git write-tree)
+          else
+            # 기존 방식: HEAD에서 vibecraft 파일 제거
+            git read-tree HEAD
+            while IFS= read -r pattern || [ -n "$pattern" ]; do
+              [[ "$pattern" =~ ^#.*$ ]] && continue
+              [[ -z "$pattern" ]] && continue
+              git rm -rf --cached --ignore-unmatch $pattern 2>/dev/null || true
+            done < "$VIBECRAFT_IGNORE"
+            CLEAN_TREE=$(git write-tree)
+          fi
 
-          CLEAN_TREE=$(git write-tree)
           unset GIT_INDEX_FILE
-
           echo "CLEAN_TREE=$CLEAN_TREE" >> $GITHUB_ENV
 
       - name: Manage client-mirror branch
         run: |
           FORK_OWNER="${{ github.repository_owner }}"
+          SECURED=""
+          if [ "${{ github.event_name }}" = "workflow_run" ]; then
+            SECURED=" [secured]"
+          fi
 
           # client-mirror 브랜치 존재 확인
           MIRROR_EXISTS=false
@@ -107,40 +164,39 @@ jobs:
           fi
 
           if [ "$MIRROR_EXISTS" = true ]; then
-            # 이후 배포: 기존 mirror에 새 커밋 추가
-            PARENT=$(git rev-parse "$MIRROR_BRANCH")
+            # diverge 체크: upstream/main이 client-mirror의 ancestor인지 확인
+            if git merge-base --is-ancestor "upstream/$UPSTREAM_BRANCH" "$MIRROR_BRANCH" 2>/dev/null; then
+              PARENT=$(git rev-parse "$MIRROR_BRANCH")
+            else
+              # upstream이 diverge — upstream/main 위에 덮어쓰기
+              echo "::warning::upstream diverged from client-mirror. Rebasing onto upstream/$UPSTREAM_BRANCH."
+              PARENT=$(git rev-parse "upstream/$UPSTREAM_BRANCH")
+            fi
             COMMIT=$(git commit-tree "$CLEAN_TREE" -p "$PARENT" \
-              -m "publish: ${FORK_OWNER} → upstream ($(date +%Y-%m-%d))")
+              -m "publish: ${FORK_OWNER} -> upstream ($(date +%Y-%m-%d))${SECURED}")
             git update-ref "refs/heads/$MIRROR_BRANCH" "$COMMIT"
-          elif git rev-parse "upstream/${{ env.UPSTREAM_BRANCH }}" &>/dev/null 2>&1; then
-            # 첫 배포 (upstream에 코드 있음): upstream/main을 parent로 사용
-            PARENT=$(git rev-parse "upstream/${{ env.UPSTREAM_BRANCH }}")
+          elif git rev-parse "upstream/$UPSTREAM_BRANCH" &>/dev/null 2>&1; then
+            PARENT=$(git rev-parse "upstream/$UPSTREAM_BRANCH")
             COMMIT=$(git commit-tree "$CLEAN_TREE" -p "$PARENT" \
-              -m "publish: ${FORK_OWNER} → upstream (initial)")
+              -m "publish: ${FORK_OWNER} -> upstream (initial)${SECURED}")
             git branch "$MIRROR_BRANCH" "$COMMIT"
           else
-            # 첫 배포 (upstream 비어있음): orphan commit 생성
             COMMIT=$(git commit-tree "$CLEAN_TREE" \
-              -m "publish: ${FORK_OWNER} → upstream (initial)")
+              -m "publish: ${FORK_OWNER} -> upstream (initial)${SECURED}")
             git branch "$MIRROR_BRANCH" "$COMMIT"
           fi
 
           echo "MIRROR_EXISTS=$MIRROR_EXISTS" >> $GITHUB_ENV
-          if [ "$MIRROR_EXISTS" = true ]; then
-            echo "MIRROR_PARENT=$PARENT" >> $GITHUB_ENV
-          fi
 
       - name: Check for real changes
         run: |
-          # upstream main과 client-mirror의 tree 비교
-          UPSTREAM_TREE=$(git rev-parse "upstream/${{ env.UPSTREAM_BRANCH }}^{tree}" 2>/dev/null || echo "")
+          UPSTREAM_TREE=$(git rev-parse "upstream/$UPSTREAM_BRANCH^{tree}" 2>/dev/null || echo "")
           MIRROR_TREE=$(git rev-parse "$MIRROR_BRANCH^{tree}")
 
           if [ -n "$UPSTREAM_TREE" ] && [ "$UPSTREAM_TREE" = "$MIRROR_TREE" ]; then
-            echo "::notice::vibecraft 파일만 변경됨. origin 동기화를 건너뜁니다."
+            echo "::notice::No real changes. Skipping push."
             echo "SKIP_PUBLISH=true" >> $GITHUB_ENV
           else
-            echo "실제 코드 변경 감지됨. origin 동기화를 진행합니다."
             echo "SKIP_PUBLISH=false" >> $GITHUB_ENV
           fi
 
@@ -149,17 +205,14 @@ jobs:
         env:
           GH_TOKEN: ${{ secrets.UPSTREAM_TOKEN }}
         run: |
-          # client-mirror → upstream main에 직접 push
-          if git push upstream "$MIRROR_BRANCH:${{ env.UPSTREAM_BRANCH }}" 2>/dev/null; then
-            echo "upstream main에 직접 push 성공"
-            # client-mirror 브랜치도 upstream에 보관
+          if git push upstream "$MIRROR_BRANCH:$UPSTREAM_BRANCH" 2>/dev/null; then
+            echo "Push to upstream main succeeded."
             git push upstream "$MIRROR_BRANCH" 2>/dev/null || true
           else
-            echo "::error::upstream push 실패. UPSTREAM_TOKEN 권한을 확인하세요."
+            echo "::error::Push failed. Check UPSTREAM_TOKEN permissions."
             exit 1
           fi
 
       - name: Skip notice
         if: ${{ env.SKIP_PUBLISH == 'true' }}
-        run: |
-          echo "::notice::vibecraft 전용 변경이므로 origin push를 건너뛰었습니다."
+        run: echo "::notice::No changes to publish."

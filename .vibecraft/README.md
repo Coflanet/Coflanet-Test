@@ -36,21 +36,17 @@ VibeCraft 내부 설정 파일이 위치하는 디렉토리입니다. fork repo�
 
 > `pr-policy-check.yml`의 패턴을 직접 수정하지 마세요. `sync-patterns.yml`이 덮어씁니다.
 
-**현재 필수 패턴 (13개):**
+**현재 필수 패턴 (10개):**
 
 ```
 vibecraft.ignore          # 마커 파일
-.vibecraft/               # 내부 설정 디렉토리
+.vibecraft/               # 내부 설정 + 스크립트 디렉토리 (scripts/ 포함)
 .claude/                  # Claude Code 메모리
 .codex/                   # Codex 설정
 
 .github/workflows/vibecraft-guard.yml    # 내부 전용 워크플로우
 .github/workflows/publish-upstream.yml
 .github/workflows/sync-tag-release.yml
-
-scripts/setup-fork.sh                    # 내부 스크립트
-scripts/publish.sh
-scripts/clean-history-for-upstream.sh
 
 CLAUDE.md                 # Claude Code 프로젝트 설정
 CHANGELOG.md              # 내부 변경 이력

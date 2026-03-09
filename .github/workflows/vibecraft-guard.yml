@@ -39,7 +39,7 @@ jobs:
             echo "이 프로젝트는 VibeCraft2204 워크플로우가 적용되지 않았습니다."
             echo "setup-fork.sh를 실행하여 vibecraft.ignore를 추가하세요:"
             echo ""
-            echo "  curl -sL https://raw.githubusercontent.com/VibeCraft2204/vibecraft.ignore/main/scripts/setup-fork.sh | bash"
+            echo "  curl -sL https://raw.githubusercontent.com/VibeCraft2204/vibecraft.ignore/main/.vibecraft/scripts/setup-fork.sh | bash"
             echo ""
             exit 1
           fi
