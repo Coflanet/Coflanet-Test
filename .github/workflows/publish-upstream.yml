@@ -198,7 +198,7 @@ jobs:
         env:
           GH_TOKEN: ${{ secrets.UPSTREAM_TOKEN }}
         run: |
-          if git push upstream "$MIRROR_BRANCH:$UPSTREAM_BRANCH" 2>/dev/null; then
+          if git push upstream "$MIRROR_BRANCH:$UPSTREAM_BRANCH"; then
             echo "Push to upstream main succeeded."
           else
             echo "::error::Push failed. Check UPSTREAM_TOKEN permissions."
