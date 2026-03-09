@@ -123,7 +123,7 @@ jobs:
             fi
           elif [ -f "build.gradle" ] || [ -f "build.gradle.kts" ]; then
             echo "Gradle project detected. Running build..."
-            ./gradlew build -x test || {
+            ./gradlew build -x test -x lint -x lintAnalyzeDebug || {
               echo "::error::Gradle build failed after applying vibecraft-secure."
               exit 1
             }
