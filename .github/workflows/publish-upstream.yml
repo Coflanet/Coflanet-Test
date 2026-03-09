@@ -70,7 +70,9 @@ jobs:
           persist-credentials: false
 
       - name: Download protected artifact
+        id: download-artifact
         if: github.event_name == 'workflow_run'
+        continue-on-error: true
         uses: actions/download-artifact@v4
         with:
           name: protected-tree
@@ -78,7 +80,14 @@ jobs:
           github-token: ${{ github.token }}
           path: protected-tree
 
+      - name: Skip if no artifact (SECURE_ENABLED=false)
+        if: github.event_name == 'workflow_run' && steps.download-artifact.outcome == 'failure'
+        run: |
+          echo "::notice::vibecraft-secure completed without artifact (SECURE_ENABLED=false). Skipping — push trigger handles this path."
+          echo "SKIP_PUBLISH=true" >> $GITHUB_ENV
+
       - name: Find vibecraft.ignore
+        if: env.SKIP_PUBLISH != 'true'
         run: |
           VIBECRAFT_IGNORE=""
           if [ -f "vibecraft.ignore" ]; then
@@ -98,6 +107,7 @@ jobs:
           echo "VIBECRAFT_IGNORE=$VIBECRAFT_IGNORE" >> $GITHUB_ENV
 
       - name: Setup upstream remote
+        if: env.SKIP_PUBLISH != 'true'
         env:
           GH_TOKEN: ${{ secrets.UPSTREAM_TOKEN }}
         run: |
@@ -116,11 +126,13 @@ jobs:
           echo "UPSTREAM=$UPSTREAM" >> $GITHUB_ENV
 
       - name: Configure git identity
+        if: env.SKIP_PUBLISH != 'true'
         run: |
           git config user.name "vibecraft-bot"
           git config user.email "vibecraft-bot@users.noreply.github.com"
 
       - name: Create clean tree
+        if: env.SKIP_PUBLISH != 'true'
         run: |
           # mktemp creates a 0-byte file; git requires a valid index header or non-existent file
           GIT_INDEX_FILE=$(mktemp -u)
@@ -149,6 +161,7 @@ jobs:
           echo "CLEAN_TREE=$CLEAN_TREE" >> $GITHUB_ENV
 
       - name: Manage client-mirror branch
+        if: env.SKIP_PUBLISH != 'true'
         run: |
           FORK_OWNER="${{ github.repository_owner }}"
           SECURED=""
@@ -189,6 +202,7 @@ jobs:
           echo "MIRROR_EXISTS=$MIRROR_EXISTS" >> $GITHUB_ENV
 
       - name: Check for real changes
+        if: env.SKIP_PUBLISH != 'true'
         run: |
           UPSTREAM_TREE=$(git rev-parse "upstream/$UPSTREAM_BRANCH^{tree}" 2>/dev/null || echo "")
           MIRROR_TREE=$(git rev-parse "$MIRROR_BRANCH^{tree}")
