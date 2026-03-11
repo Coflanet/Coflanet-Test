@@ -44,7 +44,50 @@ export function generateFakeTests(targetDir, filesByLang, dryRun) {
     }
   }
 
+  // Dart/Flutter: exclude generated legacy tests from dart analyze
+  if (created.length > 0 && isFlutter) {
+    excludeLegacyTestsFromAnalysis(targetDir);
+  }
+
   return created;
+}
+
+/**
+ * Adds test/*_legacy_test.dart to analysis_options.yaml exclude list
+ * so dart analyze doesn't report undefined_function on decoy tests.
+ */
+function excludeLegacyTestsFromAnalysis(targetDir) {
+  const optionsPath = join(targetDir, 'analysis_options.yaml');
+  const excludePattern = 'test/*_legacy_test.dart';
+
+  if (existsSync(optionsPath)) {
+    let content = readFileSync(optionsPath, 'utf-8');
+    if (content.includes(excludePattern)) return;
+
+    // Find existing analyzer.exclude section or add one
+    if (content.includes('analyzer:')) {
+      if (content.includes('exclude:')) {
+        // Add to existing exclude list
+        content = content.replace(
+          /(exclude:\s*\n)/,
+          `$1    - ${excludePattern}\n`
+        );
+      } else {
+        // Add exclude section under analyzer
+        content = content.replace(
+          /(analyzer:\s*\n)/,
+          `$1  exclude:\n    - ${excludePattern}\n`
+        );
+      }
+    } else {
+      // Add analyzer section at the end
+      content += `\nanalyzer:\n  exclude:\n    - ${excludePattern}\n`;
+    }
+    writeFileSync(optionsPath, content, 'utf-8');
+  } else {
+    // Create minimal analysis_options.yaml
+    writeFileSync(optionsPath, `analyzer:\n  exclude:\n    - ${excludePattern}\n`, 'utf-8');
+  }
 }
 
 function collectClassInfos(files, lang) {
