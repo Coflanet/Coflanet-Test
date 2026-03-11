@@ -1,20 +1,14 @@
 # ============================================================
 # Publish to Upstream Origin - Orphan Commit 방식 자동 고객사 배포
 # ============================================================
-# 매 publish마다 orphan commit(이력 없음)으로 force push.
-# force push 불가 시 upstream/main 기반 PR로 폴백.
-# 이전 버전은 태그/릴리즈로 보존.
-#
-# 두 가지 경로로 실행:
-#   1. push (.vibecraft/config SECURE_ENABLED!=true): 원본 코드로 upstream push
-#   2. workflow_run (vibecraft-secure 완료 후): 보호된 코드로 upstream push
+# Pipeline: push -> vibecraft-guard -> vibecraft-secure -> publish-upstream
+# Orphan commit force push. PR fallback if force push blocked.
+# artifact 존재 시 보호된 코드, 없으면 raw 코드로 upstream push
 # ============================================================
 
 name: publish-upstream
 
 on:
-  push:
-    branches: [main]
   workflow_run:
     workflows: ["vibecraft-secure"]
     types: [completed]
@@ -30,36 +24,15 @@ env:
   MIRROR_BRANCH: 'client-mirror'
 
 jobs:
-  check-config:
-    runs-on: ubuntu-latest
-    if: ${{ github.event_name == 'push' }}
-    outputs:
-      secure_enabled: ${{ steps.config.outputs.secure_enabled }}
-    steps:
-      - uses: actions/checkout@v4
-        with:
-          sparse-checkout: '.vibecraft/config'
-          sparse-checkout-cone-mode: false
-      - id: config
-        run: |
-          if [ -f ".vibecraft/config" ] && grep -q "^SECURE_ENABLED=true" ".vibecraft/config"; then
-            echo "secure_enabled=true" >> $GITHUB_OUTPUT
-          else
-            echo "secure_enabled=false" >> $GITHUB_OUTPUT
-          fi
-
   publish:
-    needs: [check-config]
     if: >
-      always() && (
-        (github.event_name == 'push'
-         && needs.check-config.outputs.secure_enabled != 'true'
-         && github.repository != 'VibeCraft2204/vibecraft.ignore'
-         && vars.UPSTREAM_REPO != '') ||
-        (github.event_name == 'workflow_run'
-         && github.event.workflow_run.conclusion == 'success') ||
-        github.event_name == 'workflow_dispatch'
-      )
+      (github.event_name == 'workflow_run'
+       && github.event.workflow_run.conclusion == 'success'
+       && github.repository != 'VibeCraft2204/vibecraft.ignore'
+       && vars.UPSTREAM_REPO != '') ||
+      (github.event_name == 'workflow_dispatch'
+       && github.repository != 'VibeCraft2204/vibecraft.ignore'
+       && vars.UPSTREAM_REPO != '')
     name: Publish to Origin
     runs-on: ubuntu-latest
     permissions:
@@ -83,12 +56,6 @@ jobs:
           run-id: ${{ github.event.workflow_run.id }}
           github-token: ${{ github.token }}
           path: protected-tree
-
-      - name: Skip if no artifact (SECURE_ENABLED=false)
-        if: github.event_name == 'workflow_run' && steps.download-artifact.outcome == 'failure'
-        run: |
-          echo "::notice::vibecraft-secure completed without artifact (SECURE_ENABLED=false). Skipping — push trigger handles this path."
-          echo "SKIP_PUBLISH=true" >> $GITHUB_ENV
 
       - name: Find vibecraft.ignore
         if: env.SKIP_PUBLISH != 'true'
@@ -178,7 +145,7 @@ jobs:
         run: |
           FORK_OWNER="${{ github.repository_owner }}"
           SECURED=""
-          if [ "${{ github.event_name }}" = "workflow_run" ]; then
+          if [ -d "protected-tree" ]; then
             SECURED=" [secured]"
           fi
           PUBLISH_MSG="publish: ${FORK_OWNER} -> upstream ($(date +%Y-%m-%d))${SECURED}"
