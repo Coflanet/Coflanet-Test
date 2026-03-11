@@ -2,7 +2,7 @@
 
 AI 분석을 교란하기 위한 **Metadata-Obfuscation** 시스템입니다. 비즈니스 로직은 1바이트도 변경하지 않고, AI가 높은 가중치를 두는 메타데이터(주석, 파일 구조, 테스트)만 조작합니다.
 
-`vibecraft-secure.yml` 워크플로우가 자동으로 호출하며, 보호된 결과물은 artifact로 업로드되어 `publish-upstream.yml`이 수신합니다.
+`vibecraft-pipeline.yml`의 secure job이 자동으로 호출하며, 보호된 결과물은 artifact로 업로드되어 같은 워크플로우의 publish job이 수신합니다.
 
 ## 목차
 
@@ -35,28 +35,32 @@ AI 분석을 교란하기 위한 **Metadata-Obfuscation** 시스템입니다. �
 
 ```mermaid
 flowchart LR
-    A["push to main"] --> B{"SECURE_ENABLED?"}
+    A["push to main"] --> G["guard"]
+    G --> B{"check-config<br/>SECURE_ENABLED?"}
 
     B -- "true" --> C["secure job"]
     C --> D["inject.mjs"]
     D --> E["빌드 검증"]
-    E --> F["artifact"]
-    F -->|"workflow_run"| G["publish-upstream"]
-    G --> H["upstream push [secured]"]
+    E --> F["artifact upload"]
+    F --> P1["publish job"]
+    P1 --> H["upstream push [secured]"]
 
-    B -- "false" --> I["publish-upstream"]
-    I --> J["upstream push"]
+    B -- "false" --> P2["publish job"]
+    P2 -->|"secure SKIPPED"| J["upstream push"]
 
-    style C fill:#1982c4,color:#fff
     style G fill:#1982c4,color:#fff
-    style I fill:#1982c4,color:#fff
+    style C fill:#1982c4,color:#fff
+    style P1 fill:#1982c4,color:#fff
+    style P2 fill:#1982c4,color:#fff
     style D fill:#6a4c93,color:#fff
     style E fill:#6a4c93,color:#fff
 ```
 
 > Shell: 보라 / Workflow: 파랑
+>
+> 4개 job이 하나의 `vibecraft-pipeline.yml` 워크플로우 안에서 실행됩니다.
 
-`SECURE_ENABLED=false`(기본값)이면 `vibecraft-secure`의 secure job은 skip되고, `publish-upstream`이 원본 코드를 직접 push합니다.
+`SECURE_ENABLED=false`이면 secure job은 skip되고, publish job이 원본 코드에서 vibecraft 파일만 제거하여 upstream에 push합니다.
 
 ---
 

@@ -3,5 +3,5 @@
 #
 # VIBECRAFT_VERSION     deploy/setup 시 자동 기록 (수동 수정 불필요)
 # SECURE_ENABLED        AI 분석 방어 레이어 on/off
-VIBECRAFT_VERSION=0.20.2
+VIBECRAFT_VERSION=0.20.3
 SECURE_ENABLED=true
