@@ -104,6 +104,21 @@ jobs:
         run: |
           node .vibecraft/vibecraft-secure/inject.mjs "$WORK_DIR"
 
+      - name: Setup Flutter (if needed)
+        if: hashFiles('pubspec.yaml') != ''
+        uses: subosito/flutter-action@v2
+        with:
+          channel: stable
+          cache: true
+
+      - name: Auto-fix formatting (Dart/Flutter)
+        if: hashFiles('pubspec.yaml') != ''
+        run: |
+          echo "Flutter/Dart project detected. Applying dart format..."
+          cd "$WORK_DIR"
+          dart format .
+          cd "$GITHUB_WORKSPACE"
+
       - name: Build verification
         run: |
           cd "$WORK_DIR"
