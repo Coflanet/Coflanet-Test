@@ -6,7 +6,7 @@ export const DEFAULT_CONFIG = {
   },
 
   sampling: {
-    semanticComments: 0.25, // 25% of valid locations get comments
+    semanticComments: 0.4,  // 40% of valid locations get comments
     decoyFiles: 6,          // max number of decoy files to generate
     fakeTests: 6,           // max number of fake test files to generate
   },
