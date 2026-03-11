@@ -147,6 +147,45 @@ VibeCraft2204/syc-be
 
 ---
 
+## vibecraft-pipeline.yml 실행 흐름
+
+단일 워크플로우 내 4개 job이 `needs:` 의존성으로 순차 실행됩니다.
+
+```
+push/PR → guard (필수 패턴 검증)
+              │
+              ├── PR인 경우 → 여기서 끝 (Required Status Check만)
+              │
+              └── push to main / dispatch
+                    │
+                    ▼
+              check-config (SECURE_ENABLED 읽기)
+                    │
+          ┌─────────┴──────────┐
+          │                    │
+   SECURE_ENABLED=true  SECURE_ENABLED=false
+          │                    │
+          ▼                    │
+   Apply Defense Layers    (SKIPPED)
+   (obfuscation + build)       │
+          │                    │
+          ▼                    ▼
+      Publish to Origin    Publish to Origin
+   (보호된 코드 사용)     (raw 코드, vibecraft 파일 제거)
+```
+
+**사용 GitHub Actions 버전:**
+
+| Action | 버전 | Node.js |
+|--------|------|---------|
+| `actions/checkout` | `@v5` | 24 |
+| `actions/setup-node` | `@v5` | 24 |
+| `actions/upload-artifact` | `@v6` | 24 |
+| `actions/download-artifact` | `@v7` | 24 |
+| `subosito/flutter-action` | `@v2` | 20 (업데이트 미제공) |
+
+---
+
 ## 워크플로우 관계도 (패턴 동기화)
 
 ```

@@ -32,7 +32,7 @@ jobs:
     if: ${{ github.repository != 'VibeCraft2204/vibecraft.ignore' }}
     steps:
       - name: Checkout
-        uses: actions/checkout@v4
+        uses: actions/checkout@v5
 
       - name: Find vibecraft.ignore
         run: |
@@ -138,7 +138,7 @@ jobs:
     outputs:
       secure_enabled: ${{ steps.config.outputs.secure_enabled }}
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v5
         with:
           sparse-checkout: '.vibecraft/config'
           sparse-checkout-cone-mode: false
@@ -160,13 +160,13 @@ jobs:
 
     steps:
       - name: Checkout
-        uses: actions/checkout@v4
+        uses: actions/checkout@v5
         with:
           fetch-depth: 0
           persist-credentials: false
 
       - name: Setup Node.js
-        uses: actions/setup-node@v4
+        uses: actions/setup-node@v5
         with:
           node-version: '20'
 
@@ -280,7 +280,7 @@ jobs:
           find . -type f -size +100M -delete 2>/dev/null || true
 
       - name: Upload protected tree as artifact
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v6
         with:
           name: protected-tree
           path: ${{ env.WORK_DIR }}
@@ -310,7 +310,7 @@ jobs:
 
     steps:
       - name: Checkout
-        uses: actions/checkout@v4
+        uses: actions/checkout@v5
         with:
           fetch-depth: 0
           persist-credentials: false
@@ -319,7 +319,7 @@ jobs:
         id: download-artifact
         if: needs.secure.result == 'success'
         continue-on-error: true
-        uses: actions/download-artifact@v4
+        uses: actions/download-artifact@v7
         with:
           name: protected-tree
           path: protected-tree
