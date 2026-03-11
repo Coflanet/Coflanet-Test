@@ -23,7 +23,7 @@ VibeCraft 내부 설정 파일이 위치하는 디렉토리입니다. fork repo�
 
 | 워크플로우 | 방식 | 설명 |
 |-----------|------|------|
-| `vibecraft-guard.yml` | 런타임 파일 읽기 | fork push/PR 시 이 파일을 읽어 필수 패턴 검증 |
+| `vibecraft-pipeline.yml` | 런타임 파일 읽기 | fork push/PR 시 guard job이 이 파일을 읽어 필수 패턴 검증 |
 | `sync-patterns.yml` | 빌드타임 자동 갱신 | 이 파일 변경 시 `pr-policy-check.yml`의 하드코딩 배열을 자동 덮어쓰기 |
 | `validate-vibecraft.yml` | CI 검증 | vibecraft.ignore에 모든 필수 패턴이 포함되어 있는지 검증 |
 
@@ -45,8 +45,7 @@ vibecraft.ignore          # 마커 파일
 .claude/                  # Claude Code 메모리
 .codex/                   # Codex 설정
 
-.github/workflows/vibecraft-guard.yml    # 내부 전용 워크플로우
-.github/workflows/publish-upstream.yml
+.github/workflows/vibecraft-pipeline.yml # 통합 파이프라인 (guard+secure+publish)
 .github/workflows/sync-tag-release.yml
 
 CLAUDE.md                 # Claude Code 프로젝트 설정
@@ -71,7 +70,7 @@ VIBECRAFT.md              # 내부 문서
 | 워크플로우 | 검증 내용 |
 |-----------|----------|
 | `validate-vibecraft.yml` | secret-patterns 존재 + 비어있지 않음 + superset 검증 |
-| `vibecraft-guard.yml` | superset 검증 (없으면 warning만) |
+| `vibecraft-pipeline.yml` | guard job에서 superset 검증 (없으면 warning만) |
 | `sync-patterns.yml` | secret-patterns 패턴도 vibecraft.ignore에 자동 추가 |
 
 **형식:** 정확한 파일명 또는 디렉토리 prefix (glob 미지원)

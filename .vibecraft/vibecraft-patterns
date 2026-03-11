@@ -5,9 +5,7 @@ vibecraft.ignore
 .vibecraft/
 .claude/
 .codex/
-.github/workflows/vibecraft-guard.yml
-.github/workflows/publish-upstream.yml
-.github/workflows/vibecraft-secure.yml
+.github/workflows/vibecraft-pipeline.yml
 .github/workflows/sync-tag-release.yml
 CLAUDE.md
 CHANGELOG.md

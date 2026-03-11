@@ -15,9 +15,7 @@ vibecraft.ignore
 .gitattributes
 
 # --- VibeCraft 전용 워크플로우 ---
-.github/workflows/vibecraft-guard.yml
-.github/workflows/publish-upstream.yml
-.github/workflows/vibecraft-secure.yml
+.github/workflows/vibecraft-pipeline.yml
 .github/workflows/sync-tag-release.yml
 # pr-policy-check.yml은 upstream에서도 동작해야 하므로 제외하지 않음
 
@@ -53,6 +51,9 @@ GEMINI.md
 .tabnine/
 
 # --- User Custom Patterns ---
+.github/workflows/vibecraft-guard.yml
+.github/workflows/publish-upstream.yml
+.github/workflows/vibecraft-secure.yml
 scripts/README.md
 scripts/setup-fork.sh
 scripts/publish.sh
