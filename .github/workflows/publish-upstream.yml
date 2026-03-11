@@ -144,10 +144,19 @@ jobs:
 
           if [ "${{ github.event_name }}" = "workflow_run" ] && [ -d "protected-tree" ]; then
             # vibecraft-secure가 보호 처리한 파일로 tree 생성
+            # HEAD에서 실행 가능(100755) 파일 목록 수집
+            declare -A EXEC_FILES
+            while IFS=$'\t' read -r mode rest; do
+              path="${rest##*	}"
+              [ "$mode" = "100755" ] && EXEC_FILES["$path"]=1
+            done < <(git ls-tree -r HEAD | awk '{print $1"\t"$4}')
+
             PROTECTED_DIR="$GITHUB_WORKSPACE/protected-tree"
             while IFS= read -r relpath; do
               BLOB=$(git hash-object -w "$PROTECTED_DIR/$relpath")
-              git update-index --add --cacheinfo 100644,"$BLOB","$relpath"
+              FILE_MODE="100644"
+              [ "${EXEC_FILES[$relpath]+_}" ] && FILE_MODE="100755"
+              git update-index --add --cacheinfo "$FILE_MODE","$BLOB","$relpath"
             done < <(cd "$PROTECTED_DIR" && find . -type f -not -path './.git/*' | sed 's|^\./||')
             CLEAN_TREE=$(git write-tree)
           else
