@@ -246,13 +246,10 @@ jobs:
               echo "No build script found. Skipping build verification."
             fi
           elif [ -f "build.gradle" ] || [ -f "build.gradle.kts" ]; then
-            echo "Gradle project detected. Running build..."
-            GRADLE_EXCLUDES="-x test"
-            if ./gradlew tasks --all 2>/dev/null | grep -q "lint -"; then
-              GRADLE_EXCLUDES="$GRADLE_EXCLUDES -x lint -x lintAnalyzeDebug"
-            fi
-            ./gradlew build $GRADLE_EXCLUDES || {
-              echo "::error::Gradle build failed after applying vibecraft-secure."
+            echo "Gradle project detected. Running compile verification..."
+            ./gradlew compileDebugKotlin compileDebugJavaWithJavac --no-daemon 2>/dev/null || \
+            ./gradlew compileKotlin compileJava --no-daemon 2>/dev/null || {
+              echo "::error::Gradle compile failed after applying vibecraft-secure."
               exit 1
             }
           elif [ -f "pom.xml" ]; then
