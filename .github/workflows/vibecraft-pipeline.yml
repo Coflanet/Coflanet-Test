@@ -472,6 +472,13 @@ jobs:
             --body "Automated publish from ${{ github.repository }}. Force push was blocked by branch protection." \
             2>/dev/null || echo "::warning::PR creation failed. Branch pushed: $PR_BRANCH"
 
+      - name: Delete protected-tree artifact
+        if: needs.secure.result == 'success'
+        uses: geekyeggo/delete-artifact@v5
+        with:
+          name: protected-tree
+          failOnError: false
+
       - name: Skip notice
         if: env.SKIP_PUBLISH == 'true'
         run: echo "::notice::No changes to publish."
