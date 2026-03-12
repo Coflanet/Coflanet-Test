@@ -256,7 +256,8 @@ jobs:
             echo "Gradle project detected. Running compile verification..."
             chmod +x ./gradlew 2>/dev/null || true
             ./gradlew compileDebugKotlin compileDebugJavaWithJavac --no-daemon || \
-            ./gradlew compileKotlin compileJava --no-daemon || {
+            ./gradlew compileKotlin compileJava --no-daemon || \
+            ./gradlew compileJava --no-daemon || {
               echo "::error::Gradle compile failed after applying vibecraft-secure."
               exit 1
             }
