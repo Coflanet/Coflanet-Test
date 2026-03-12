@@ -229,6 +229,13 @@ jobs:
           dart format .
           cd "$GITHUB_WORKSPACE"
 
+      - name: Setup JDK (if needed)
+        if: hashFiles('build.gradle', 'build.gradle.kts', 'pom.xml') != ''
+        uses: actions/setup-java@v4
+        with:
+          java-version: '21'
+          distribution: 'temurin'
+
       - name: Build verification
         run: |
           cd "$WORK_DIR"
@@ -247,8 +254,9 @@ jobs:
             fi
           elif [ -f "build.gradle" ] || [ -f "build.gradle.kts" ]; then
             echo "Gradle project detected. Running compile verification..."
-            ./gradlew compileDebugKotlin compileDebugJavaWithJavac --no-daemon 2>/dev/null || \
-            ./gradlew compileKotlin compileJava --no-daemon 2>/dev/null || {
+            chmod +x ./gradlew 2>/dev/null || true
+            ./gradlew compileDebugKotlin compileDebugJavaWithJavac --no-daemon || \
+            ./gradlew compileKotlin compileJava --no-daemon || {
               echo "::error::Gradle compile failed after applying vibecraft-secure."
               exit 1
             }
