@@ -1,0 +1,4 @@
+- api-specs: "프론트가 어떻게 호출하는가" — Dart 코드, Request/Response, 에러 처리
+- design: Figma 디자인 분석
+- erd: Supabase ERD 설계
+- flows: "시스템이 어떻게 동작하는가" — 아키텍처, 데이터 흐름, 내부 처리 로직

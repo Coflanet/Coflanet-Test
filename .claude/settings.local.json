@@ -1,0 +1,8 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(find C:Usersjas01DesktopTaekCoflanetcoflanet-app -type f \\\\\\(-name package.json -o -name pubspec.yaml -o -name docker-compose.yml -o -name docker-compose.yaml -o -name Makefile -o -name .env* \\\\\\))",
+      "Bash(find C:Usersjas01DesktopTaekCoflanetcoflanet-app -type f \\\\\\(-name *.json -o -name *.yaml -o -name Makefile -o -name docker-compose* \\\\\\))"
+    ]
+  }
+}
