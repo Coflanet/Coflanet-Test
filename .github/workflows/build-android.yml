@@ -1,0 +1,61 @@
+name: Build Android APK
+
+on:
+  push:
+    branches: [ main, master, 'claude/**' ]
+  pull_request:
+    branches: [ main, master ]
+  workflow_dispatch:  # 수동 실행 가능
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Set up Java 17
+        uses: actions/setup-java@v4
+        with:
+          distribution: 'temurin'
+          java-version: '17'
+
+      - name: Set up Flutter
+        uses: subosito/flutter-action@v2
+        with:
+          flutter-version: '3.41.4'
+          channel: 'stable'
+          cache: true
+
+      - name: Create .env file
+        working-directory: coflanet-app-0.1.2
+        run: |
+          cat > .env << 'ENVEOF'
+          SUPABASE_URL=
+          SUPABASE_ANON_KEY=
+          KAKAO_NATIVE_APP_KEY=
+          NAVER_CLIENT_ID=
+          NAVER_CLIENT_SECRET=
+          ENVEOF
+
+      - name: Get Flutter dependencies
+        working-directory: coflanet-app-0.1.2
+        run: flutter pub get
+
+      - name: Build APK (release)
+        working-directory: coflanet-app-0.1.2
+        run: flutter build apk --release
+
+      - name: Copy APK to distribution folder
+        run: |
+          mkdir -p coflanet-app-0.1.2/android_distribution
+          cp coflanet-app-0.1.2/build/app/outputs/flutter-apk/app-release.apk \
+             coflanet-app-0.1.2/android_distribution/coflanet-app-v0.1.2.apk
+
+      - name: Upload APK artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: coflanet-apk
+          path: coflanet-app-0.1.2/android_distribution/coflanet-app-v0.1.2.apk
+          retention-days: 30
