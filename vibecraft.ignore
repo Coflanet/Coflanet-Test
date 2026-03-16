@@ -49,6 +49,7 @@ GEMINI.md
 .augment/
 .augment-guidelines
 .tabnine/
+.omc/
 
 # --- User Custom Patterns ---
 .github/workflows/vibecraft-guard.yml
