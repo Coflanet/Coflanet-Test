@@ -28,22 +28,39 @@ jobs:
           channel: 'stable'
           cache: true
 
-      - name: Create .env file
+      - name: Check secrets availability
+        id: check-secrets
+        run: |
+          if [ -n "${{ secrets.SUPABASE_URL }}" ] && [ -n "${{ secrets.SUPABASE_ANON_KEY }}" ]; then
+            echo "has_secrets=true" >> "$GITHUB_OUTPUT"
+            echo "✅ Supabase secrets detected — building with real backend"
+          else
+            echo "has_secrets=false" >> "$GITHUB_OUTPUT"
+            echo "⚠️ Supabase secrets not set — building in dummy mode"
+          fi
+
+      - name: Create .env file from GitHub Secrets
         working-directory: coflanet-app-0.1.2
         run: |
-          cat > .env << 'ENVEOF'
-          SUPABASE_URL=
-          SUPABASE_ANON_KEY=
-          KAKAO_NATIVE_APP_KEY=
-          NAVER_CLIENT_ID=
-          NAVER_CLIENT_SECRET=
+          cat > .env << ENVEOF
+          SUPABASE_URL=${{ secrets.SUPABASE_URL }}
+          SUPABASE_ANON_KEY=${{ secrets.SUPABASE_ANON_KEY }}
+          KAKAO_NATIVE_APP_KEY=${{ secrets.KAKAO_NATIVE_APP_KEY }}
+          NAVER_CLIENT_ID=${{ secrets.NAVER_CLIENT_ID }}
+          NAVER_CLIENT_SECRET=${{ secrets.NAVER_CLIENT_SECRET }}
           ENVEOF
 
       - name: Get Flutter dependencies
         working-directory: coflanet-app-0.1.2
         run: flutter pub get
 
-      - name: Build APK (release, UI test mode)
+      - name: Build APK (real backend)
+        if: steps.check-secrets.outputs.has_secrets == 'true'
+        working-directory: coflanet-app-0.1.2
+        run: flutter build apk --release
+
+      - name: Build APK (dummy mode fallback)
+        if: steps.check-secrets.outputs.has_secrets != 'true'
         working-directory: coflanet-app-0.1.2
         run: flutter build apk --release --dart-define=CI_TEST=true
 
