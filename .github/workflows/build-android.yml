@@ -24,7 +24,7 @@ jobs:
       - name: Set up Flutter
         uses: subosito/flutter-action@v2
         with:
-          flutter-version: '3.41.4'
+          flutter-version: '3.29.3'
           channel: 'stable'
           cache: true
 
@@ -43,9 +43,9 @@ jobs:
         working-directory: coflanet-app-0.1.2
         run: flutter pub get
 
-      - name: Build APK (release)
+      - name: Build APK (release, UI test mode)
         working-directory: coflanet-app-0.1.2
-        run: flutter build apk --release
+        run: flutter build apk --release --dart-define=CI_TEST=true
 
       - name: Copy APK to distribution folder
         run: |

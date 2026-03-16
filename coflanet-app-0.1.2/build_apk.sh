@@ -26,8 +26,8 @@ fi
 echo ">> flutter pub get"
 flutter pub get
 
-echo ">> flutter build apk --release"
-flutter build apk --release
+echo ">> flutter build apk --release (UI 테스트 모드: 로그인 없이 더미 데이터 사용)"
+flutter build apk --release --dart-define=CI_TEST=true
 
 echo "========================================"
 echo "빌드 완료!"
