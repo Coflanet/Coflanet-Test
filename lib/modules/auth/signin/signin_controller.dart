@@ -7,6 +7,7 @@ import 'package:coflanet/core/base/base_controller.dart';
 import 'package:coflanet/core/services/auth_service.dart';
 import 'package:coflanet/data/models/user_model.dart';
 import 'package:coflanet/data/providers/auth_provider.dart';
+import 'package:coflanet/data/repositories/repository_config.dart';
 import 'package:coflanet/routes/app_pages.dart';
 
 class SignInController extends BaseController {
@@ -46,6 +47,11 @@ class SignInController extends BaseController {
 
   /// Check onboarding status and navigate accordingly
   Future<void> _navigateAfterLogin() async {
+    if (RepositoryConfig.isCiTest) {
+      // Skip RPC in CI test mode — no real Supabase session
+      Get.offAllNamed(Routes.profileSetup);
+      return;
+    }
     try {
       final result = await Supabase.instance.client.rpc(
         'get_onboarding_status',

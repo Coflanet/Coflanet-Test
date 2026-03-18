@@ -75,17 +75,21 @@ class SplashController extends BaseController {
     // Session exists — check onboarding via server RPC
     bool isOnboardingComplete = false;
     if (!_devForceOnboarding) {
-      try {
-        final result = await Supabase.instance.client.rpc(
-          'get_onboarding_status',
-        );
-        if (result is Map<String, dynamic>) {
-          isOnboardingComplete =
-              result['has_completed_survey'] as bool? ?? false;
-        }
-      } catch (e) {
-        debugPrint('[SplashController] get_onboarding_status error: $e');
+      if (RepositoryConfig.isCiTest) {
         isOnboardingComplete = _storage.isOnboardingComplete;
+      } else {
+        try {
+          final result = await Supabase.instance.client.rpc(
+            'get_onboarding_status',
+          );
+          if (result is Map<String, dynamic>) {
+            isOnboardingComplete =
+                result['has_completed_survey'] as bool? ?? false;
+          }
+        } catch (e) {
+          debugPrint('[SplashController] get_onboarding_status error: $e');
+          isOnboardingComplete = _storage.isOnboardingComplete;
+        }
       }
     }
 

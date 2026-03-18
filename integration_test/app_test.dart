@@ -267,6 +267,8 @@ void main() {
       // Find timer/start button
       final timerButtons = find.byType(ElevatedButton);
       if (timerButtons.evaluate().isNotEmpty) {
+        await tester.ensureVisible(timerButtons.first);
+        await safePump(tester);
         await tester.tap(timerButtons.first);
         await safePump(tester);
         debugPrint('   Timer button tapped');
