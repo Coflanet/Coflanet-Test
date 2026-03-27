@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:coflanet/constants/color_constant.dart';
+import 'package:coflanet/constants/style_constant.dart';
 import 'package:coflanet/modules/coffee/coffee_controller.dart';
 import 'package:coflanet/widgets/modals/input_modal.dart';
 
@@ -73,10 +74,7 @@ class RecipeFormView extends GetView<CoffeeController> {
             Expanded(
               child: Text(
                 isEditMode ? '레시피 편집' : '레시피 추가',
-                style: TextStyle(
-                  fontFamily: 'Pretendard',
-                  fontSize: 18,
-                  fontWeight: FontWeight.w600,
+                style: AppTextStyles.headline1Bold.copyWith(
                   color: AppColor.labelNormal,
                 ),
                 textAlign: TextAlign.center,
@@ -130,10 +128,7 @@ class RecipeFormView extends GetView<CoffeeController> {
             padding: const EdgeInsets.symmetric(horizontal: 24),
             child: Text(
               '원두 이름',
-              style: TextStyle(
-                fontFamily: 'Pretendard',
-                fontSize: 16,
-                fontWeight: FontWeight.w400,
+              style: AppTextStyles.body1NormalRegular.copyWith(
                 height: 1.5,
                 letterSpacing: 0.0057 * 16,
                 color: AppColor.labelAlternative,
@@ -147,10 +142,7 @@ class RecipeFormView extends GetView<CoffeeController> {
               final beanName = controller.selectedBeanName;
               return Text(
                 beanName.isNotEmpty ? beanName : '원두를 선택해주세요',
-                style: TextStyle(
-                  fontFamily: 'Pretendard',
-                  fontSize: 16,
-                  fontWeight: FontWeight.w500,
+                style: AppTextStyles.body1NormalMedium.copyWith(
                   height: 1.5,
                   letterSpacing: 0.0057 * 16,
                   color: beanName.isNotEmpty
@@ -183,10 +175,7 @@ class RecipeFormView extends GetView<CoffeeController> {
               padding: const EdgeInsets.symmetric(horizontal: 24),
               child: Text(
                 '원두 이름',
-                style: TextStyle(
-                  fontFamily: 'Pretendard',
-                  fontSize: 16,
-                  fontWeight: FontWeight.w400,
+                style: AppTextStyles.body1NormalRegular.copyWith(
                   height: 1.5,
                   letterSpacing: 0.0057 * 16,
                   color: AppColor.labelAlternative,
@@ -204,10 +193,7 @@ class RecipeFormView extends GetView<CoffeeController> {
                     Expanded(
                       child: Text(
                         hasName ? beanName : '원두 이름을 입력하세요',
-                        style: TextStyle(
-                          fontFamily: 'Pretendard',
-                          fontSize: 16,
-                          fontWeight: FontWeight.w500,
+                        style: AppTextStyles.body1NormalMedium.copyWith(
                           height: 1.5,
                           letterSpacing: 0.0057 * 16,
                           color: hasName
@@ -258,10 +244,7 @@ class RecipeFormView extends GetView<CoffeeController> {
       children: [
         Text(
           '잔수',
-          style: TextStyle(
-            fontFamily: 'Pretendard',
-            fontSize: 12,
-            fontWeight: FontWeight.w400,
+          style: AppTextStyles.caption1Regular.copyWith(
             color: AppColor.labelAlternative,
           ),
         ),
@@ -311,10 +294,7 @@ class RecipeFormView extends GetView<CoffeeController> {
         ),
         child: Text(
           label,
-          style: TextStyle(
-            fontFamily: 'Pretendard',
-            fontSize: 14,
-            fontWeight: FontWeight.w500,
+          style: AppTextStyles.label1NormalMedium.copyWith(
             color: isSelected
                 ? AppColor.primaryNormal
                 : AppColor.colorGlobalCoolNeutral40,
@@ -331,10 +311,7 @@ class RecipeFormView extends GetView<CoffeeController> {
       children: [
         Text(
           '진하기 정도',
-          style: TextStyle(
-            fontFamily: 'Pretendard',
-            fontSize: 12,
-            fontWeight: FontWeight.w400,
+          style: AppTextStyles.caption1Regular.copyWith(
             color: AppColor.labelAlternative,
           ),
         ),
@@ -390,10 +367,7 @@ class RecipeFormView extends GetView<CoffeeController> {
         ),
         child: Text(
           label,
-          style: TextStyle(
-            fontFamily: 'Pretendard',
-            fontSize: 14,
-            fontWeight: FontWeight.w500,
+          style: AppTextStyles.label1NormalMedium.copyWith(
             color: isSelected
                 ? Colors.white
                 : AppColor.colorGlobalCoolNeutral40,
@@ -416,10 +390,7 @@ class RecipeFormView extends GetView<CoffeeController> {
         children: [
           Text(
             '상세 설정',
-            style: TextStyle(
-              fontFamily: 'Pretendard',
-              fontSize: 18,
-              fontWeight: FontWeight.w700,
+            style: AppTextStyles.headline1Bold.copyWith(
               color: AppColor.labelNormal,
             ),
           ),
@@ -466,20 +437,14 @@ class RecipeFormView extends GetView<CoffeeController> {
             children: [
               Text(
                 '추출 기기',
-                style: TextStyle(
-                  fontFamily: 'Pretendard',
-                  fontSize: 12,
-                  fontWeight: FontWeight.w400,
+                style: AppTextStyles.caption1Regular.copyWith(
                   color: AppColor.labelAlternative,
                 ),
               ),
               const SizedBox(height: 4),
               Text(
                 '핸드드립',
-                style: TextStyle(
-                  fontFamily: 'Pretendard',
-                  fontSize: 16,
-                  fontWeight: FontWeight.w500,
+                style: AppTextStyles.body1NormalMedium.copyWith(
                   color: AppColor.labelNormal,
                 ),
               ),
@@ -492,10 +457,7 @@ class RecipeFormView extends GetView<CoffeeController> {
           },
           child: Text(
             '변경하기',
-            style: TextStyle(
-              fontFamily: 'Pretendard',
-              fontSize: 14,
-              fontWeight: FontWeight.w500,
+            style: AppTextStyles.label1NormalMedium.copyWith(
               color: AppColor.primaryNormal,
             ),
           ),
@@ -517,10 +479,7 @@ class RecipeFormView extends GetView<CoffeeController> {
         Expanded(
           child: Text(
             label,
-            style: TextStyle(
-              fontFamily: 'Pretendard',
-              fontSize: 14,
-              fontWeight: FontWeight.w400,
+            style: AppTextStyles.label1NormalRegular.copyWith(
               color: AppColor.labelAlternative,
             ),
           ),
@@ -542,10 +501,7 @@ class RecipeFormView extends GetView<CoffeeController> {
         Expanded(
           child: Text(
             '분쇄도',
-            style: TextStyle(
-              fontFamily: 'Pretendard',
-              fontSize: 14,
-              fontWeight: FontWeight.w400,
+            style: AppTextStyles.label1NormalRegular.copyWith(
               color: AppColor.labelAlternative,
             ),
           ),
@@ -595,9 +551,7 @@ class RecipeFormView extends GetView<CoffeeController> {
             child: Center(
               child: Text(
                 '$value$unit',
-                style: TextStyle(
-                  fontFamily: 'Pretendard',
-                  fontSize: 16,
+                style: AppTextStyles.body1NormalMedium.copyWith(
                   fontWeight: FontWeight.w600,
                   color: AppColor.labelNormal,
                 ),
@@ -660,9 +614,7 @@ class RecipeFormView extends GetView<CoffeeController> {
             child: Center(
               child: Text(
                 timeString,
-                style: TextStyle(
-                  fontFamily: 'Pretendard',
-                  fontSize: 16,
+                style: AppTextStyles.body1NormalMedium.copyWith(
                   fontWeight: FontWeight.w600,
                   color: AppColor.labelNormal,
                 ),
@@ -703,10 +655,7 @@ class RecipeFormView extends GetView<CoffeeController> {
           children: [
             Text(
               '추출 설정',
-              style: TextStyle(
-                fontFamily: 'Pretendard',
-                fontSize: 18,
-                fontWeight: FontWeight.w700,
+              style: AppTextStyles.headline1Bold.copyWith(
                 color: AppColor.labelNormal,
               ),
             ),
@@ -727,9 +676,7 @@ class RecipeFormView extends GetView<CoffeeController> {
                       children: [
                         Text(
                           '${controller.totalStepsWaterAmount}ml',
-                          style: TextStyle(
-                            fontFamily: 'Pretendard',
-                            fontSize: 18,
+                          style: AppTextStyles.headline1Bold.copyWith(
                             fontWeight: FontWeight.w500,
                             height: 1.445,
                             letterSpacing: -0.0002 * 18,

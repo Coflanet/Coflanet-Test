@@ -3,7 +3,9 @@ import 'package:flutter/material.dart';
 class AppTextStyles {
   // Font Family - Using system fonts as fallback until custom fonts are added
   static const String _fontFamily = 'Pretendard';
-  static const String _monospaceFontFamily = 'PretendardMono'; // 숫자-고정폭용
+  // Tabular numbers: Pretendard + tnum feature로 숫자 고정폭 구현
+  // PretendardMono 폰트 불필요 — fontFeatures: [FontFeature.tabularFigures()] 사용
+  static const List<FontFeature> _tabularFigures = [FontFeature.tabularFigures()];
 
   // Note: When fonts are not available, Flutter falls back to system fonts
 
@@ -94,7 +96,8 @@ class AppTextStyles {
   );
 
   static const TextStyle title2MediumMono = TextStyle(
-    fontFamily: _monospaceFontFamily,
+    fontFamily: _fontFamily,
+    fontFeatures: _tabularFigures,
     fontWeight: FontWeight.w500,
     fontSize: 28.0,
     height: 1.3,
@@ -122,7 +125,8 @@ class AppTextStyles {
   );
 
   static const TextStyle title3MediumMono = TextStyle(
-    fontFamily: _monospaceFontFamily,
+    fontFamily: _fontFamily,
+    fontFeatures: _tabularFigures,
     fontWeight: FontWeight.w500,
     fontSize: 24.0,
     height: 1.3,
@@ -137,7 +141,8 @@ class AppTextStyles {
   );
 
   static const TextStyle heading1BoldMono = TextStyle(
-    fontFamily: _monospaceFontFamily,
+    fontFamily: _fontFamily,
+    fontFeatures: _tabularFigures,
     fontWeight: FontWeight.w700,
     fontSize: 22.0,
     height: 1.4,
@@ -165,7 +170,8 @@ class AppTextStyles {
   );
 
   static const TextStyle heading2BoldMono = TextStyle(
-    fontFamily: _monospaceFontFamily,
+    fontFamily: _fontFamily,
+    fontFeatures: _tabularFigures,
     fontWeight: FontWeight.w700,
     fontSize: 20.0,
     height: 1.4,
@@ -194,7 +200,8 @@ class AppTextStyles {
   );
 
   static const TextStyle headline1BoldMono = TextStyle(
-    fontFamily: _monospaceFontFamily,
+    fontFamily: _fontFamily,
+    fontFeatures: _tabularFigures,
     fontWeight: FontWeight.w700,
     fontSize: 18.0,
     height: 1.4,
@@ -222,7 +229,8 @@ class AppTextStyles {
   );
 
   static const TextStyle headline2BoldMono = TextStyle(
-    fontFamily: _monospaceFontFamily,
+    fontFamily: _fontFamily,
+    fontFeatures: _tabularFigures,
     fontWeight: FontWeight.w700,
     fontSize: 17.0,
     height: 1.4,
@@ -251,7 +259,8 @@ class AppTextStyles {
   );
 
   static const TextStyle body1NormalRegularMono = TextStyle(
-    fontFamily: _monospaceFontFamily,
+    fontFamily: _fontFamily,
+    fontFeatures: _tabularFigures,
     fontWeight: FontWeight.w400,
     fontSize: 16.0,
     height: 1.5,
@@ -300,7 +309,8 @@ class AppTextStyles {
   );
 
   static const TextStyle body2NormalRegularMono = TextStyle(
-    fontFamily: _monospaceFontFamily,
+    fontFamily: _fontFamily,
+    fontFeatures: _tabularFigures,
     fontWeight: FontWeight.w400,
     fontSize: 15.0,
     height: 1.5,
@@ -350,7 +360,8 @@ class AppTextStyles {
   );
 
   static const TextStyle label1NormalRegularMono = TextStyle(
-    fontFamily: _monospaceFontFamily,
+    fontFamily: _fontFamily,
+    fontFeatures: _tabularFigures,
     fontWeight: FontWeight.w400,
     fontSize: 14.0,
     height: 1.4,
@@ -399,7 +410,8 @@ class AppTextStyles {
   );
 
   static const TextStyle label2RegularMono = TextStyle(
-    fontFamily: _monospaceFontFamily,
+    fontFamily: _fontFamily,
+    fontFeatures: _tabularFigures,
     fontWeight: FontWeight.w400,
     fontSize: 13.0,
     height: 1.4,
@@ -428,7 +440,8 @@ class AppTextStyles {
   );
 
   static const TextStyle caption1RegularMono = TextStyle(
-    fontFamily: _monospaceFontFamily,
+    fontFamily: _fontFamily,
+    fontFeatures: _tabularFigures,
     fontWeight: FontWeight.w400,
     fontSize: 12.0,
     height: 1.3,
@@ -456,7 +469,8 @@ class AppTextStyles {
   );
 
   static const TextStyle caption2RegularMono = TextStyle(
-    fontFamily: _monospaceFontFamily,
+    fontFamily: _fontFamily,
+    fontFeatures: _tabularFigures,
     fontWeight: FontWeight.w400,
     fontSize: 11.0,
     height: 1.3,

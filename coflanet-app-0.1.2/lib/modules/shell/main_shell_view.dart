@@ -320,13 +320,9 @@ class MainShellView extends GetView<MainShellController> {
           ),
           child: Text(
             isEditing ? '완료' : '편집',
-            style: const TextStyle(
-              fontFamily: 'Pretendard',
-              fontSize: 15, // Slightly smaller for better fit
-              fontWeight: FontWeight.w600, // Figma: 600
-              height: 1.2, // Reduced line height
-              letterSpacing: 0.01,
-              color: AppColor.colorGlobalCoolNeutral99, // Figma: #F7F7F8
+            style: AppTextStyles.body2NormalMedium.copyWith(
+              fontWeight: FontWeight.w600,
+              color: AppColor.colorGlobalCoolNeutral99,
             ),
           ),
         ),

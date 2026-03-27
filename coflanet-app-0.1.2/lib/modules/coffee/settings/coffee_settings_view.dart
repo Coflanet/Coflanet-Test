@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 import 'package:coflanet/constants/color_constant.dart';
+import 'package:coflanet/constants/style_constant.dart';
 import 'package:coflanet/modules/coffee/coffee_controller.dart';
 import 'package:coflanet/routes/app_pages.dart';
 import 'package:coflanet/widgets/modals/input_modal.dart';
@@ -93,13 +94,10 @@ class CoffeeSettingsView extends GetView<CoffeeController> {
             ),
           ),
           // Centered title - Figma: Pretendard 17px/600, color #FFFFFF
-          const Expanded(
+          Expanded(
             child: Text(
               '레시피',
-              style: TextStyle(
-                fontFamily: 'Pretendard',
-                fontSize: 17,
-                fontWeight: FontWeight.w600,
+              style: AppTextStyles.headline2Bold.copyWith(
                 color: AppColor.colorGlobalCommon100,
               ),
               textAlign: TextAlign.center,
@@ -114,11 +112,9 @@ class CoffeeSettingsView extends GetView<CoffeeController> {
                 color: AppColor.componentFillScroll,
                 borderRadius: BorderRadius.circular(99),
               ),
-              child: const Text(
+              child: Text(
                 '편집',
-                style: TextStyle(
-                  fontFamily: 'Pretendard',
-                  fontSize: 16,
+                style: AppTextStyles.body1NormalMedium.copyWith(
                   fontWeight: FontWeight.w600,
                   color: AppColor.colorGlobalCoolNeutral99,
                 ),
@@ -168,10 +164,7 @@ class CoffeeSettingsView extends GetView<CoffeeController> {
                 // Brand text - Figma: Pretendard 14px/400, color rgba(55,56,60,0.61)
                 Text(
                   '스페셜티 로스터스',
-                  style: TextStyle(
-                    fontFamily: 'Pretendard',
-                    fontSize: 14,
-                    fontWeight: FontWeight.w400,
+                  style: AppTextStyles.label1NormalRegular.copyWith(
                     color: AppColor.labelAlternative,
                   ),
                 ),
@@ -181,10 +174,7 @@ class CoffeeSettingsView extends GetView<CoffeeController> {
                   final beanName = controller.selectedBeanName;
                   return Text(
                     beanName.isNotEmpty ? beanName : '에티오피아 예가체프',
-                    style: TextStyle(
-                      fontFamily: 'Pretendard',
-                      fontSize: 18,
-                      fontWeight: FontWeight.w600,
+                    style: AppTextStyles.headline1Bold.copyWith(
                       color: AppColor.labelNormal,
                     ),
                   );
@@ -240,10 +230,7 @@ class CoffeeSettingsView extends GetView<CoffeeController> {
                 // Label - Figma: Pretendard 16px/400, color rgba(55,56,60,0.61)
                 Text(
                   '추출 기기',
-                  style: TextStyle(
-                    fontFamily: 'Pretendard',
-                    fontSize: 16,
-                    fontWeight: FontWeight.w400,
+                  style: AppTextStyles.body1NormalRegular.copyWith(
                     color: AppColor.labelAlternative,
                   ),
                 ),
@@ -254,10 +241,7 @@ class CoffeeSettingsView extends GetView<CoffeeController> {
                     controller.selectedType == CoffeeType.espresso
                         ? '에스프레소'
                         : '핸드드립',
-                    style: TextStyle(
-                      fontFamily: 'Pretendard',
-                      fontSize: 16,
-                      fontWeight: FontWeight.w400,
+                    style: AppTextStyles.body1NormalRegular.copyWith(
                       color: AppColor.labelNormal,
                     ),
                   ),
@@ -280,9 +264,7 @@ class CoffeeSettingsView extends GetView<CoffeeController> {
                 // Button text - Figma: Pretendard 13px/600, color rgba(55,56,60,0.61)
                 child: Text(
                   '변경하기',
-                  style: TextStyle(
-                    fontFamily: 'Pretendard',
-                    fontSize: 13,
+                  style: AppTextStyles.label2Medium.copyWith(
                     fontWeight: FontWeight.w600,
                     color: AppColor.labelAlternative,
                   ),
@@ -472,11 +454,9 @@ class CoffeeSettingsView extends GetView<CoffeeController> {
               ),
               padding: const EdgeInsets.symmetric(horizontal: 28, vertical: 12),
             ),
-            child: const Text(
+            child: Text(
               '원두 레시피 시작',
-              style: TextStyle(
-                fontFamily: 'Pretendard',
-                fontSize: 16,
+              style: AppTextStyles.body1NormalMedium.copyWith(
                 fontWeight: FontWeight.w600,
                 color: Colors.white,
               ),
@@ -667,10 +647,7 @@ class _SelectionPill extends StatelessWidget {
             // Main text - Figma: Pretendard 18px/600, color #5B35F2
             Text(
               mainText,
-              style: TextStyle(
-                fontFamily: 'Pretendard',
-                fontSize: 18,
-                fontWeight: FontWeight.w600,
+              style: AppTextStyles.headline1Bold.copyWith(
                 color: AppColor.primaryStrong,
               ),
               textAlign: TextAlign.center,
@@ -679,10 +656,7 @@ class _SelectionPill extends StatelessWidget {
             // Sub text - Figma: Pretendard 14px/400, color rgba(55,56,60,0.61)
             Text(
               subText,
-              style: TextStyle(
-                fontFamily: 'Pretendard',
-                fontSize: 14,
-                fontWeight: FontWeight.w400,
+              style: AppTextStyles.label1NormalRegular.copyWith(
                 color: AppColor.labelAlternative,
               ),
               textAlign: TextAlign.center,
@@ -718,10 +692,7 @@ class _ParameterItem extends StatelessWidget {
           // Value - Figma: Pretendard 15px/500, color rgba(46,47,51,0.88)
           Text(
             value,
-            style: TextStyle(
-              fontFamily: 'Pretendard',
-              fontSize: 15,
-              fontWeight: FontWeight.w500,
+            style: AppTextStyles.body2NormalMedium.copyWith(
               color: AppColor.labelNeutral,
             ),
             textAlign: TextAlign.center,
@@ -730,10 +701,7 @@ class _ParameterItem extends StatelessWidget {
           // Label - Figma: Pretendard 14px/400, color rgba(55,56,60,0.61)
           Text(
             label,
-            style: TextStyle(
-              fontFamily: 'Pretendard',
-              fontSize: 14,
-              fontWeight: FontWeight.w400,
+            style: AppTextStyles.label1NormalRegular.copyWith(
               color: AppColor.labelAlternative,
             ),
             textAlign: TextAlign.center,
@@ -776,9 +744,7 @@ class _RecipeStepItem extends StatelessWidget {
                 // Badge number - Figma: Pretendard 12px/600, color #FFFFFF
                 child: Text(
                   '${step.number}',
-                  style: const TextStyle(
-                    fontFamily: 'Pretendard',
-                    fontSize: 12,
+                  style: AppTextStyles.caption1Bold.copyWith(
                     fontWeight: FontWeight.w600,
                     color: AppColor.colorGlobalCommon100,
                   ),
@@ -800,10 +766,7 @@ class _RecipeStepItem extends StatelessWidget {
           width: 100,
           child: Text(
             step.title,
-            style: TextStyle(
-              fontFamily: 'Pretendard',
-              fontSize: 16,
-              fontWeight: FontWeight.w500,
+            style: AppTextStyles.body1NormalMedium.copyWith(
               color: AppColor.labelAlternative,
             ),
           ),
@@ -812,10 +775,7 @@ class _RecipeStepItem extends StatelessWidget {
         // Step description - Figma: Pretendard 14px/400, color rgba(55,56,60,0.35), aligned right
         Text(
           step.description,
-          style: TextStyle(
-            fontFamily: 'Pretendard',
-            fontSize: 14,
-            fontWeight: FontWeight.w400,
+          style: AppTextStyles.label1NormalRegular.copyWith(
             color: AppColor.labelAssistive,
           ),
           textAlign: TextAlign.right,
