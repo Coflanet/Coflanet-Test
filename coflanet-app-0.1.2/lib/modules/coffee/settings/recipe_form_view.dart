@@ -686,10 +686,7 @@ class RecipeFormView extends GetView<CoffeeController> {
                         const SizedBox(height: 2),
                         Text(
                           '총 물의 양',
-                          style: TextStyle(
-                            fontFamily: 'Pretendard',
-                            fontSize: 16,
-                            fontWeight: FontWeight.w400,
+                          style: AppTextStyles.body1NormalRegular.copyWith(
                             height: 1.5,
                             letterSpacing: 0.0057 * 16,
                             color: AppColor.labelAlternative,
@@ -711,9 +708,7 @@ class RecipeFormView extends GetView<CoffeeController> {
                       children: [
                         Text(
                           controller.totalStepsTimeFormatted,
-                          style: TextStyle(
-                            fontFamily: 'Pretendard',
-                            fontSize: 18,
+                          style: AppTextStyles.headline1Bold.copyWith(
                             fontWeight: FontWeight.w500,
                             height: 1.445,
                             letterSpacing: -0.0002 * 18,
@@ -723,10 +718,7 @@ class RecipeFormView extends GetView<CoffeeController> {
                         const SizedBox(height: 2),
                         Text(
                           '총 추출 시간',
-                          style: TextStyle(
-                            fontFamily: 'Pretendard',
-                            fontSize: 16,
-                            fontWeight: FontWeight.w400,
+                          style: AppTextStyles.body1NormalRegular.copyWith(
                             height: 1.5,
                             letterSpacing: 0.0057 * 16,
                             color: AppColor.labelAlternative,
@@ -778,9 +770,7 @@ class RecipeFormView extends GetView<CoffeeController> {
             Expanded(
               child: Text(
                 step.title,
-                style: TextStyle(
-                  fontFamily: 'Pretendard',
-                  fontSize: 16,
+                style: AppTextStyles.body1NormalMedium.copyWith(
                   fontWeight: FontWeight.w600,
                   color: AppColor.labelNormal,
                 ),
@@ -803,10 +793,7 @@ class RecipeFormView extends GetView<CoffeeController> {
             Expanded(
               child: Text(
                 '물의 양',
-                style: TextStyle(
-                  fontFamily: 'Pretendard',
-                  fontSize: 14,
-                  fontWeight: FontWeight.w400,
+                style: AppTextStyles.label1NormalRegular.copyWith(
                   color: AppColor.labelAlternative,
                 ),
               ),
@@ -827,10 +814,7 @@ class RecipeFormView extends GetView<CoffeeController> {
               children: [
                 Text(
                   '시간',
-                  style: TextStyle(
-                    fontFamily: 'Pretendard',
-                    fontSize: 14,
-                    fontWeight: FontWeight.w400,
+                  style: AppTextStyles.label1NormalRegular.copyWith(
                     color: AppColor.labelAlternative,
                   ),
                 ),
@@ -903,11 +887,9 @@ class RecipeFormView extends GetView<CoffeeController> {
               borderRadius: BorderRadius.circular(12),
             ),
           ),
-          child: const Text(
+          child: Text(
             '저장하기',
-            style: TextStyle(
-              fontFamily: 'Pretendard',
-              fontSize: 16,
+            style: AppTextStyles.body1NormalMedium.copyWith(
               fontWeight: FontWeight.w600,
               color: Colors.white,
             ),

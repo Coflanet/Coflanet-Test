@@ -417,10 +417,7 @@ class SelectCoffeeContent extends GetView<SelectCoffeeController> {
                   // Brand - Figma: 12px, gray
                   Text(
                     item.brand ?? '브랜드명',
-                    style: const TextStyle(
-                      fontFamily: 'Pretendard',
-                      fontSize: 12, // Figma: 12px
-                      fontWeight: FontWeight.w400, // Figma: 400
+                    style: AppTextStyles.caption1Regular.copyWith(
                       height: 1.4,
                       letterSpacing: 0.02,
                       color: AppColor.colorGlobalNeutral60, // Figma: gray
@@ -432,10 +429,8 @@ class SelectCoffeeContent extends GetView<SelectCoffeeController> {
                   // Name - Figma: 14-16px, semi-bold
                   Text(
                     item.name,
-                    style: const TextStyle(
-                      fontFamily: 'Pretendard',
-                      fontSize: 15, // Figma: 14-16px
-                      fontWeight: FontWeight.w600, // Figma: 600
+                    style: AppTextStyles.body2NormalBold.copyWith(
+                      fontWeight: FontWeight.w600,
                       height: 1.4,
                       letterSpacing: 0.01,
                       color: AppColor.colorGlobalNeutral10, // Figma: near black
@@ -519,10 +514,7 @@ class SelectCoffeeContent extends GetView<SelectCoffeeController> {
                 // Selection count - Figma: Body 1/Normal - Regular (16px, 400)
                 Text(
                   '${controller.selectedEditCount}개가 선택됨',
-                  style: const TextStyle(
-                    fontFamily: 'Pretendard',
-                    fontSize: 15, // Increased for better visibility
-                    fontWeight: FontWeight.w400, // Figma: 400
+                  style: AppTextStyles.body2NormalRegular.copyWith(
                     height: 1.5, // Figma: 150%
                     letterSpacing: 0.01,
                     color: AppColor.colorGlobalCoolNeutral99, // Figma: #F7F7F8
