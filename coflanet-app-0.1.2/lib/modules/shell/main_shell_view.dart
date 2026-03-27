@@ -4,8 +4,8 @@ import 'package:coflanet/constants/color_constant.dart';
 import 'package:coflanet/constants/radius_constant.dart';
 import 'package:coflanet/constants/style_constant.dart';
 import 'package:coflanet/modules/shell/main_shell_controller.dart';
-import 'package:coflanet/modules/coffee/select/select_coffee_content.dart';
 import 'package:coflanet/modules/coffee/select/select_coffee_controller.dart';
+import 'package:coflanet/modules/home/home_content.dart';
 import 'package:coflanet/modules/extraction/extraction_list_view.dart';
 import 'package:coflanet/modules/tasting/tasting_notes_view.dart';
 import 'package:coflanet/modules/planet/my_planet_content.dart';
@@ -76,6 +76,13 @@ class MainShellView extends GetView<MainShellController> {
                 return Padding(
                   padding: EdgeInsets.only(bottom: bottomInset),
                   child: const MyPlanetContent(),
+                );
+              }
+              // Tab 0 (Home): black background with rounded sections inside scroll
+              if (currentIndex == 0) {
+                return Padding(
+                  padding: EdgeInsets.only(bottom: bottomInset),
+                  child: _buildCurrentTab(currentIndex),
                 );
               }
               return Container(
@@ -149,7 +156,7 @@ class MainShellView extends GetView<MainShellController> {
   Widget _buildCurrentTab(int index) {
     switch (index) {
       case 0:
-        return const SelectCoffeeContent();
+        return const HomeContent();
       case 1:
         return const ExtractionListView();
       case 2:

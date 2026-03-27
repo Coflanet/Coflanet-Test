@@ -51,6 +51,9 @@ class AppRadius {
   /// 32px - Rounded containers
   static const double round = 32.0;
 
+  /// 40px - Section containers (Figma: round/40(box))
+  static const double section = 40.0;
+
   /// 100px - Fully rounded / pill shape
   static const double full = 100.0;
 
@@ -88,6 +91,9 @@ class AppRadius {
 
   /// 32px radius - Rounded elements
   static BorderRadius get roundBorder => BorderRadius.circular(round);
+
+  /// 40px radius - Section containers
+  static BorderRadius get sectionBorder => BorderRadius.circular(section);
 
   /// 100px radius - Pill shape
   static BorderRadius get fullBorder => BorderRadius.circular(full);
