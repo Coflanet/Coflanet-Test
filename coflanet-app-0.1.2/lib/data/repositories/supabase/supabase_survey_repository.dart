@@ -277,11 +277,27 @@ class SupabaseSurveyRepository implements SurveyRepository {
       debugPrint('[SurveyRepo] complete_survey error (continuing): $e');
     }
 
-    // Step 4: submit-survey Edge Function (supabase_flutter handles auth)
-    final response = await _db.functions.invoke(
-      'submit-survey',
-      body: {'session_id': sessionId},
-    );
+    // Step 4: submit-survey Edge Function
+    // Refresh session before invoking to ensure valid JWT,
+    // and retry once on 401 (expired token) with a forced refresh.
+    FunctionResponse response;
+    try {
+      response = await _db.functions.invoke(
+        'submit-survey',
+        body: {'session_id': sessionId},
+      );
+    } on FunctionException catch (e) {
+      if (e.status == 401) {
+        debugPrint('[SurveyRepo] 401 on submit-survey, refreshing session…');
+        await _db.auth.refreshSession();
+        response = await _db.functions.invoke(
+          'submit-survey',
+          body: {'session_id': sessionId},
+        );
+      } else {
+        rethrow;
+      }
+    }
 
     final data = response.data;
     debugPrint('[SurveyRepo] submit-survey response: $data');
