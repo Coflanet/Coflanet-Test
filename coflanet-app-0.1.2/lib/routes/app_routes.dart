@@ -6,6 +6,7 @@ abstract class Routes {
 
   // === Core Routes ===
   static const splash = '/';
+  static const devMenu = '/dev-menu';
 
   // === Auth Routes ===
   static const signIn = '/login/sign-in';

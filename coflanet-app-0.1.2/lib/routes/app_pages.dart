@@ -63,6 +63,9 @@ import 'package:coflanet/modules/planet/my_planet_view.dart';
 import 'package:coflanet/modules/shell/main_shell_binding.dart';
 import 'package:coflanet/modules/shell/main_shell_view.dart';
 
+// Modules - Dev
+import 'package:coflanet/modules/dev/dev_menu_view.dart';
+
 part 'app_routes.dart';
 
 /// App routing configuration
@@ -70,6 +73,7 @@ class AppPages {
   AppPages._();
 
   static const initial = Routes.splash;
+  static const devInitial = Routes.devMenu;
 
   static final routes = [
     // === Splash ===
@@ -275,6 +279,13 @@ class AppPages {
       name: Routes.mainShell,
       page: () => const MainShellView(),
       binding: MainShellBinding(),
+      transition: Transition.fadeIn,
+    ),
+
+    // === Dev Menu (직접 네비게이션) ===
+    GetPage(
+      name: Routes.devMenu,
+      page: () => const DevMenuView(),
       transition: Transition.fadeIn,
     ),
   ];

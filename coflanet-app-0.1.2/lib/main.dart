@@ -82,7 +82,9 @@ class CoflanetApp extends StatelessWidget {
       darkTheme: AppTheme.dark,
       themeMode: ThemeMode.system,
       initialBinding: AppBinding(),
-      initialRoute: AppPages.initial,
+      initialRoute: RepositoryConfig.devMenuEnabled
+          ? AppPages.devInitial
+          : AppPages.initial,
       getPages: AppPages.routes,
       defaultTransition: Transition.cupertino,
       locale: const Locale('ko', 'KR'),

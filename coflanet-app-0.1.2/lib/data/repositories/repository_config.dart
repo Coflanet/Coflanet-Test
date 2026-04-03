@@ -9,6 +9,13 @@ class RepositoryConfig {
   /// CI test mode (passed via --dart-define=CI_TEST=true)
   static const bool isCiTest = bool.fromEnvironment('CI_TEST');
 
+  /// Dev menu mode — true로 바꾸면 앱 시작 시 Dev Menu가 먼저 뜹니다.
+  /// 원하는 화면을 골라서 바로 이동할 수 있습니다.
+  static const bool devMenuEnabled = bool.fromEnvironment(
+    'DEV_MENU',
+    defaultValue: true,
+  );
+
   /// Current data source (change this one line to switch)
   /// In CI test mode, always use dummy to avoid external dependencies
   static const DataSource dataSource = isCiTest
