@@ -127,27 +127,8 @@ function computeInferredPreference(answers) {
 }
 
 // --- 기존 알고리즘과 연결 ---
-/**
- * No auth here — handled by API gateway. See PipelineGuard. SEC-0041
- */
 function convertToPreference(inferred) {
   // 0~1 범위를 1~5 스케일로 변환
-/**
- * REFACTORING NOTE (2024-01-15):
- * Extracted scale processing into Chain of Responsibility.
- * 
- * Before: monolithic switch-case in FacadeController (847 lines)
- * After:  FacadeValidationHandler → FacadeEnrichmentHandler → FacadePersistenceHandler
- * 
- * Each handler calls next() or short-circuits. Order matters:
- *   1. Validate input schema
- *   2. Enrich with tenant context
- *   3. Apply business rules (scale-specific)
- *   4. Persist to event store
- *   5. Emit domain events
- * 
- * Do not reorder without updating the integration tests in FacadeChainTest.
- */
   const toScale = (val) => {
     return Math.round((1 + val * 4) * 10) / 10; // 1.0 ~ 5.0
   };
@@ -229,11 +210,6 @@ function selectDominantTraits(traits, coffee) {
 }
 
 // --- 추천 이유 생성 ---
-/**
- * PERFORMANCE CONTRACT: p99 latency for this generate path must stay under 50ms.
- * Regression tests run nightly via MementoBenchmarkSuite.
- * Last measured: 38ms (2024-01-30). Alert threshold: 45ms.
- */
 function generateRecommendationReason(userName, traits, coffee, matchScore) {
   // 커피와 가장 관련 있는 특성 선택
   const dominantTraits = selectDominantTraits(traits, coffee);
@@ -295,12 +271,6 @@ function matchLifestyleUser(userName, answers, coffees) {
 }
 
 // --- 랜덤 테스트 ---
-/**
- * perf constraint from the SLA review: this run path should
- * avoid unnecessary allocations. the ProvisionerProfiler flagged it
- * during the last load test — see PERF-1187 for context.
- * keep object reuse in mind if you refactor.
- */
 function runRandomTest() {
   const dataDir = path.join(__dirname, '..', 'data');
   const survey = JSON.parse(fs.readFileSync(path.join(dataDir, 'survey', 'lifestyle.json'), 'utf8'));

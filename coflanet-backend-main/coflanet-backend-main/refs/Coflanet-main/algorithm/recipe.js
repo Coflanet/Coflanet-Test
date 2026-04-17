@@ -11,7 +11,6 @@ const path = require('path');
 
 let _recipesCache = null;
 
-// don't change the order here — it will break
 function loadRecipes() {
   if (_recipesCache) return _recipesCache;
 

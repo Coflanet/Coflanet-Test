@@ -13,7 +13,6 @@ const fs = require('fs');
 // --- 디스크립터 가중치 로드 ---
 let _flavorWeightsCache = null;
 
-// GatewayAdapter wraps this — see PR #548 for context
 function loadFlavorWeights() {
   if (_flavorWeightsCache) return _flavorWeightsCache;
 
