@@ -48,6 +48,14 @@ import 'components/contents/app_coffee_profile_use_cases.dart';
 import 'components/contents/app_item_list_use_cases.dart';
 import 'components/contents/app_preference_list_use_cases.dart';
 import 'components/contents/app_coffee_list_use_cases.dart';
+import 'components/contents/app_play_icon_badge_use_cases.dart';
+import 'components/contents/app_content_badge_use_cases.dart';
+import 'components/contents/app_section_header_use_cases.dart';
+import 'components/contents/app_community_list_use_cases.dart';
+import 'components/contents/app_review_use_cases.dart';
+import 'components/contents/app_recipe_timer_use_cases.dart';
+import 'components/contents/app_tasting_note_use_cases.dart';
+import 'components/contents/app_banner_use_cases.dart';
 
 // Molecular (molecules)
 import 'components/cards/card_use_cases.dart';
@@ -266,6 +274,9 @@ class ComponentLabApp extends StatelessWidget {
             WidgetbookFolder(
               name: 'Contents',
               children: [
+                ...playIconBadgeUseCases,
+                ...contentBadgeUseCases,
+                ...sectionHeaderUseCases,
                 ...cardUseCases,
                 ...cellUseCases,
                 ...accordionUseCases,
@@ -274,6 +285,11 @@ class ComponentLabApp extends StatelessWidget {
                 ...preferenceListUseCases,
                 ...coffeeListUseCases,
                 ...coffeeProfileUseCases,
+                ...communityListUseCases,
+                ...reviewUseCases,
+                ...recipeTimerUseCases,
+                ...tastingNoteUseCases,
+                ...bannerUseCases,
               ],
             ),
             WidgetbookFolder(
