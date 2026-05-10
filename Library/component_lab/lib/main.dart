@@ -55,6 +55,7 @@ import 'components/contents/app_community_list_use_cases.dart';
 import 'components/contents/app_review_use_cases.dart';
 import 'components/contents/app_recipe_timer_use_cases.dart';
 import 'components/contents/app_tasting_note_use_cases.dart';
+import 'components/contents/app_banner_use_cases.dart';
 
 // Molecular (molecules)
 import 'components/cards/card_use_cases.dart';
@@ -288,6 +289,7 @@ class ComponentLabApp extends StatelessWidget {
                 ...reviewUseCases,
                 ...recipeTimerUseCases,
                 ...tastingNoteUseCases,
+                ...bannerUseCases,
               ],
             ),
             WidgetbookFolder(
