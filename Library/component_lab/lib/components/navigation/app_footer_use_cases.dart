@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:widgetbook/widgetbook.dart';
 
-import '../../foundation/app_spacing.dart';
 import 'app_footer.dart';
 
 // ═══════════════════════════════════════════════════════════════

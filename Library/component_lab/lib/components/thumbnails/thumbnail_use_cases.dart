@@ -59,23 +59,20 @@ final List<WidgetbookComponent> thumbnailUseCases = [
             runSpacing: 16,
             children: [
               AppThumbnail(
-                imageUrl:
-                    'https://images.unsplash.com/photo-1497935586351-b67a49e012bf?w=400',
                 width: 160,
+                fallbackIcon: Icons.coffee_rounded,
                 showBorder: true,
                 showRadius: true,
               ),
               AppThumbnail(
-                imageUrl:
-                    'https://images.unsplash.com/photo-1442550528053-c431ecb55509?w=400',
                 width: 160,
                 ratio: AppRatio.ratio16x9,
+                fallbackIcon: Icons.landscape_rounded,
                 showRadius: true,
               ),
               AppThumbnail(
-                imageUrl: 'invalid-url-fallback',
                 width: 160,
-                fallbackIcon: Icons.coffee_rounded,
+                fallbackIcon: Icons.broken_image_outlined,
                 showRadius: true,
               ),
             ],
@@ -91,24 +88,21 @@ final List<WidgetbookComponent> thumbnailUseCases = [
             runSpacing: 16,
             children: [
               AppThumbnail(
-                imageUrl:
-                    'https://images.unsplash.com/photo-1495474472287-4d71bcdd2085?w=600',
                 width: 160,
                 ratio: AppRatio.square,
+                fallbackIcon: Icons.coffee_rounded,
                 showRadius: true,
               ),
               AppThumbnail(
-                imageUrl:
-                    'https://images.unsplash.com/photo-1495474472287-4d71bcdd2085?w=600',
                 width: 160,
                 ratio: AppRatio.ratio16x9,
+                fallbackIcon: Icons.coffee_rounded,
                 showRadius: true,
               ),
               AppThumbnail(
-                imageUrl:
-                    'https://images.unsplash.com/photo-1495474472287-4d71bcdd2085?w=600',
                 width: 160,
                 ratio: AppRatio.ratio3x4,
+                fallbackIcon: Icons.coffee_rounded,
                 showRadius: true,
               ),
             ],

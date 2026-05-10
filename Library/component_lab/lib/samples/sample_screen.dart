@@ -97,7 +97,7 @@ class _SampleLoginScreenState extends State<SampleLoginScreen> {
                         AppCheckbox(
                           value: _rememberMe,
                           onChanged: (v) =>
-                              setState(() => _rememberMe = v ?? false),
+                              setState(() => _rememberMe = v),
                         ),
                         SizedBox(width: AppSpacing.space8),
                         Text(

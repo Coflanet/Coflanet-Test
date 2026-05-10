@@ -470,15 +470,19 @@ Widget _bg(BuildContext context, Widget child) {
   );
 }
 
-/// LiquidGlass·BackgroundBlur 톤은 어두운 배경에서 잘 보이게 — 이미지 BG.
+/// LiquidGlass·BackgroundBlur 톤은 어두운 배경에서 잘 보이게 — 그라디언트 BG.
+///
+/// 외부 이미지 의존 0. 그라디언트는 Violet 계열로 LiquidGlass tone 가독성을 확보한다.
 Widget _imageBg(Widget child) {
   return Container(
-    decoration: const BoxDecoration(
-      image: DecorationImage(
-        image: NetworkImage(
-          'https://images.unsplash.com/photo-1495474472287-4d71bcdd2085?w=1200',
-        ),
-        fit: BoxFit.cover,
+    decoration: BoxDecoration(
+      gradient: LinearGradient(
+        begin: Alignment.topLeft,
+        end: Alignment.bottomRight,
+        colors: [
+          AppColor.colorGlobalViolet40,
+          AppColor.colorGlobalCoolNeutral15,
+        ],
       ),
     ),
     child: Container(

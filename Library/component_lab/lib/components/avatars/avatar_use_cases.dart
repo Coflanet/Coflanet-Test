@@ -70,26 +70,22 @@ final List<WidgetbookComponent> avatarUseCases = [
         ]),
       ),
       WidgetbookUseCase(
-        name: 'With Image',
+        name: 'With Initials',
         builder: (context) => _wrap(context, [
           AppAvatar(
-            imageUrl:
-                'https://images.unsplash.com/photo-1494790108377-be9c29b29330?w=200',
+            initials: 'JD',
             size: AppAvatarSize.medium,
           ),
           AppAvatar(
-            imageUrl:
-                'https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?w=200',
+            initials: 'AB',
             size: AppAvatarSize.large,
           ),
           AppAvatar(
-            imageUrl: 'https://invalid-url.example/image.jpg',
             initials: 'FB',
             size: AppAvatarSize.large,
           ),
           AppAvatar(
-            imageUrl:
-                'https://images.unsplash.com/photo-1438761681033-6461ffad8d80?w=200',
+            initials: 'CK',
             size: AppAvatarSize.xLarge,
           ),
         ]),

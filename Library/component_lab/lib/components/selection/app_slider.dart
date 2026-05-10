@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 
 import '../../foundation/app_color.dart';
-import '../../foundation/app_radius.dart';
 import '../../foundation/app_text_style.dart';
 
 /// Slider 컴포넌트 — Figma Selection and Input 페이지.
