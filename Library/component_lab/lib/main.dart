@@ -44,6 +44,10 @@ import 'components/presentation/app_menu_use_cases.dart';
 import 'components/contents/app_cell_use_cases.dart';
 import 'components/contents/app_accordion_use_cases.dart';
 import 'components/contents/app_table_use_cases.dart';
+import 'components/contents/app_coffee_profile_use_cases.dart';
+import 'components/contents/app_item_list_use_cases.dart';
+import 'components/contents/app_preference_list_use_cases.dart';
+import 'components/contents/app_coffee_list_use_cases.dart';
 
 // Molecular (molecules)
 import 'components/cards/card_use_cases.dart';
@@ -266,6 +270,10 @@ class ComponentLabApp extends StatelessWidget {
                 ...cellUseCases,
                 ...accordionUseCases,
                 ...tableUseCases,
+                ...itemListUseCases,
+                ...preferenceListUseCases,
+                ...coffeeListUseCases,
+                ...coffeeProfileUseCases,
               ],
             ),
             WidgetbookFolder(
