@@ -1,0 +1,159 @@
+import 'package:flutter/material.dart';
+
+import '../../foundation/app_color.dart';
+import '../../foundation/app_radius.dart';
+import '../../foundation/app_spacing.dart';
+import '../../foundation/app_text_style.dart';
+
+/// Banner 레이아웃 — Figma `Contents/Card/Banner`.
+enum AppBannerLayout {
+  /// 큰 배경 이미지 위에 텍스트 오버레이 — 메인 히어로용
+  hero,
+
+  /// 좌측 텍스트 + 우측 작은 썸네일 — 리스트 카드용
+  compact,
+}
+
+/// Banner — Figma `Contents/Card/Banner`.
+///
+/// 큰 배경 이미지 / 그라디언트 위에 타이틀 텍스트가 얹어진 콘텐츠 배너.
+/// hero 레이아웃은 정사각/와이드 비율, compact 은 가로 카드 형식.
+class AppBanner extends StatelessWidget {
+  const AppBanner({
+    super.key,
+    required this.title,
+    this.body,
+    this.layout = AppBannerLayout.hero,
+    this.aspectRatio = 1,
+    this.background,
+    this.thumbnail,
+    this.onTap,
+  });
+
+  /// 큰 굵은 타이틀 — 최대 2줄 권장.
+  final String title;
+
+  /// compact 레이아웃에서 타이틀 아래 본문.
+  final String? body;
+
+  final AppBannerLayout layout;
+
+  /// hero 레이아웃의 비율 (1=square, 16/9=wide).
+  final double aspectRatio;
+
+  /// 배경 위젯. null 이면 회색 placeholder. (외부 URL 의존 0 — 호출자가 위젯 주입.)
+  final Widget? background;
+
+  /// compact 레이아웃 우측 작은 썸네일.
+  final Widget? thumbnail;
+
+  final VoidCallback? onTap;
+
+  @override
+  Widget build(BuildContext context) {
+    return GestureDetector(
+      behavior: HitTestBehavior.opaque,
+      onTap: onTap,
+      child: layout == AppBannerLayout.hero
+          ? _buildHero(context)
+          : _buildCompact(context),
+    );
+  }
+
+  Widget _buildHero(BuildContext context) {
+    return ClipRRect(
+      borderRadius: BorderRadius.circular(AppRadius.radius12),
+      child: AspectRatio(
+        aspectRatio: aspectRatio,
+        child: Stack(
+          fit: StackFit.expand,
+          children: [
+            background ??
+                Container(
+                  color: AppColor.lineSolidNormal,
+                  alignment: Alignment.center,
+                  child: Icon(
+                    Icons.image_outlined,
+                    size: 32,
+                    color: AppColor.labelAlternative,
+                  ),
+                ),
+            Positioned(
+              left: AppSpacing.space16,
+              right: AppSpacing.space16,
+              top: AppSpacing.space16,
+              child: Text(
+                title,
+                style: AppTextStyles.body1NormalBold.copyWith(
+                  color: AppColor.staticLabelBlackNormal,
+                ),
+                maxLines: 2,
+                overflow: TextOverflow.ellipsis,
+              ),
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+
+  Widget _buildCompact(BuildContext context) {
+    return Container(
+      decoration: BoxDecoration(
+        color: AppColor.backgroundElevatedAlternative,
+        borderRadius: BorderRadius.circular(AppRadius.radius12),
+      ),
+      padding: const EdgeInsets.all(AppSpacing.space12),
+      child: Row(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Expanded(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                Text(
+                  title,
+                  style: AppTextStyles.label1NormalBold.copyWith(
+                    color: AppColor.labelNormal,
+                  ),
+                  maxLines: 1,
+                  overflow: TextOverflow.ellipsis,
+                ),
+                if (body != null) ...[
+                  const SizedBox(height: 4),
+                  Text(
+                    body!,
+                    style: AppTextStyles.caption1Regular.copyWith(
+                      color: AppColor.labelAlternative,
+                    ),
+                    maxLines: 2,
+                    overflow: TextOverflow.ellipsis,
+                  ),
+                ],
+              ],
+            ),
+          ),
+          const SizedBox(width: AppSpacing.space12),
+          ClipRRect(
+            borderRadius: BorderRadius.circular(AppRadius.radius8),
+            child: SizedBox(
+              width: 56,
+              height: 56,
+              child: thumbnail ??
+                  Container(
+                    color: AppColor.lineSolidNormal,
+                    alignment: Alignment.center,
+                    child: Icon(
+                      Icons.image_outlined,
+                      size: 18,
+                      color: AppColor.labelAlternative,
+                    ),
+                  ),
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+}
