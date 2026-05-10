@@ -1,0 +1,29 @@
+name: component_lab
+description: Coflanet 디자인 시스템 위젯북 — 파운데이션 토큰·컴포넌트 카탈로그.
+publish_to: 'none'
+version: 0.1.0
+
+environment:
+  sdk: ^3.5.0
+  flutter: ^3.27.0
+
+dependencies:
+  flutter:
+    sdk: flutter
+  cupertino_icons: ^1.0.8
+  widgetbook: ^3.11.0
+  flutter_svg: ^2.0.10+1
+
+  # Coflanet 앱을 path dependency로 등록 → 토큰·테마 그대로 import 가능.
+  # 이렇게 하면 토큰 정의는 한 곳(coflanet-app/lib/constants)에서만 관리.
+  coflanet:
+    path: ../../coflanet-app-0.1.2
+
+dev_dependencies:
+  flutter_lints: ^5.0.0
+
+flutter:
+  uses-material-design: true
+
+  assets:
+    - assets/icons/
