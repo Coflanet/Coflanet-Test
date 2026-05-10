@@ -23,7 +23,7 @@ enum AppChipColor {
 }
 
 /// Chip size.
-enum AppChipSize { sm, md }
+enum AppChipTagSize { sm, md }
 
 /// 디자인 시스템 Chip / Tag.
 ///
@@ -31,7 +31,7 @@ enum AppChipSize { sm, md }
 class AppChip extends StatelessWidget {
   final String label;
   final AppChipColor color;
-  final AppChipSize size;
+  final AppChipTagSize size;
   final IconData? leadingIcon;
   final VoidCallback? onTap;
   final VoidCallback? onDelete;
@@ -40,7 +40,7 @@ class AppChip extends StatelessWidget {
     super.key,
     required this.label,
     this.color = AppChipColor.neutral,
-    this.size = AppChipSize.md,
+    this.size = AppChipTagSize.md,
     this.leadingIcon,
     this.onTap,
     this.onDelete,
@@ -154,7 +154,7 @@ class AppChip extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final colors = _colors(context);
-    final isSm = size == AppChipSize.sm;
+    final isSm = size == AppChipTagSize.sm;
     final padding = isSm
         ? const EdgeInsets.symmetric(
             horizontal: AppSpacing.space8, vertical: 4)

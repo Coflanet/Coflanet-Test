@@ -59,9 +59,23 @@ final List<WidgetbookComponent> ratioUseCases = [
             width: 280,
             child: AppRatioBox(
               ratio: AppRatio.ratio16x9,
-              child: Image.network(
-                'https://images.unsplash.com/photo-1495474472287-4d71bcdd2085?w=800',
-                fit: BoxFit.cover,
+              child: Container(
+                decoration: BoxDecoration(
+                  gradient: LinearGradient(
+                    begin: Alignment.topLeft,
+                    end: Alignment.bottomRight,
+                    colors: [
+                      AppColor.colorGlobalViolet80,
+                      AppColor.colorGlobalViolet40,
+                    ],
+                  ),
+                ),
+                alignment: Alignment.center,
+                child: Icon(
+                  Icons.image_outlined,
+                  size: 32,
+                  color: AppColor.colorGlobalCommon100.withValues(alpha: 0.8),
+                ),
               ),
             ),
           ),

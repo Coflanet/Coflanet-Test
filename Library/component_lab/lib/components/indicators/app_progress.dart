@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 
 import '../../foundation/app_color.dart';
-import '../../foundation/app_radius.dart';
 
 /// Linear progress bar (가로 바).
 ///

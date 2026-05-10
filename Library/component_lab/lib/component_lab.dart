@@ -18,7 +18,6 @@ export 'foundation/coflanet_icons.dart';
 export 'components/avatars/app_avatar.dart';
 
 // Buttons
-export 'components/buttons/app_button.dart';
 export 'components/buttons/app_floating_action_button.dart';
 export 'components/buttons/app_icon_button.dart';
 export 'components/buttons/app_liquid_glass_button.dart';
