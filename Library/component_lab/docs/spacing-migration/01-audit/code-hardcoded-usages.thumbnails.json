@@ -1,0 +1,288 @@
+{
+  "_meta": {
+    "dir": "thumbnails",
+    "scannedRoot": "lib/components/thumbnails",
+    "fileCount": 2,
+    "files": [
+      "lib/components/thumbnails/app_thumbnail.dart",
+      "lib/components/thumbnails/thumbnail_use_cases.dart"
+    ],
+    "patterns": [
+      "EdgeInsets.(all|symmetric|only|fromLTRB)(",
+      "Padding(padding:",
+      "SizedBox((width|height|.square dimension):",
+      "Gap(",
+      "margin:/padding:/spacing:/gap:/... numeric literal",
+      "AppSpacing.<token>"
+    ],
+    "phase": "Phase 1-B audit"
+  },
+  "usages": [
+    {
+      "file": "lib/components/thumbnails/app_thumbnail.dart",
+      "line": 111,
+      "snippet": "body = SizedBox(width: width, child: body);",
+      "values": [
+        {
+          "arg": "width",
+          "expr": "width",
+          "kind": "non-numeric"
+        }
+      ],
+      "unit": "px",
+      "kind": "SizedBox",
+      "contextHint": [
+        "sizedBox"
+      ]
+    },
+    {
+      "file": "lib/components/thumbnails/thumbnail_use_cases.dart",
+      "line": 123,
+      "snippet": "padding: const EdgeInsets.all(24),",
+      "values": [
+        {
+          "arg": "#0",
+          "expr": "24",
+          "value": 24,
+          "kind": "literal"
+        }
+      ],
+      "unit": "px",
+      "kind": "EdgeInsets.all",
+      "contextHint": [
+        "edgeInsets"
+      ]
+    },
+    {
+      "file": "lib/components/thumbnails/thumbnail_use_cases.dart",
+      "line": 21,
+      "snippet": "SizedBox(",
+      "values": [
+        {
+          "arg": "width",
+          "expr": "120",
+          "value": 120,
+          "kind": "literal"
+        }
+      ],
+      "unit": "px",
+      "kind": "SizedBox",
+      "contextHint": [
+        "sizedBox"
+      ]
+    },
+    {
+      "file": "lib/components/thumbnails/thumbnail_use_cases.dart",
+      "line": 28,
+      "snippet": "SizedBox(",
+      "values": [
+        {
+          "arg": "width",
+          "expr": "120",
+          "value": 120,
+          "kind": "literal"
+        }
+      ],
+      "unit": "px",
+      "kind": "SizedBox",
+      "contextHint": [
+        "sizedBox"
+      ]
+    },
+    {
+      "file": "lib/components/thumbnails/thumbnail_use_cases.dart",
+      "line": 35,
+      "snippet": "SizedBox(",
+      "values": [
+        {
+          "arg": "width",
+          "expr": "120",
+          "value": 120,
+          "kind": "literal"
+        }
+      ],
+      "unit": "px",
+      "kind": "SizedBox",
+      "contextHint": [
+        "sizedBox"
+      ]
+    },
+    {
+      "file": "lib/components/thumbnails/thumbnail_use_cases.dart",
+      "line": 42,
+      "snippet": "SizedBox(",
+      "values": [
+        {
+          "arg": "width",
+          "expr": "120",
+          "value": 120,
+          "kind": "literal"
+        }
+      ],
+      "unit": "px",
+      "kind": "SizedBox",
+      "contextHint": [
+        "sizedBox"
+      ]
+    },
+    {
+      "file": "lib/components/thumbnails/thumbnail_use_cases.dart",
+      "line": 17,
+      "snippet": "spacing: 16,",
+      "values": [
+        {
+          "arg": "spacing",
+          "expr": "16",
+          "value": 16,
+          "kind": "literal"
+        }
+      ],
+      "unit": "px",
+      "kind": "PropLiteral:spacing",
+      "contextHint": [
+        "rawPropLiteral"
+      ]
+    },
+    {
+      "file": "lib/components/thumbnails/thumbnail_use_cases.dart",
+      "line": 18,
+      "snippet": "runSpacing: 16,",
+      "values": [
+        {
+          "arg": "runSpacing",
+          "expr": "16",
+          "value": 16,
+          "kind": "literal"
+        }
+      ],
+      "unit": "px",
+      "kind": "PropLiteral:runSpacing",
+      "contextHint": [
+        "rawPropLiteral"
+      ]
+    },
+    {
+      "file": "lib/components/thumbnails/thumbnail_use_cases.dart",
+      "line": 58,
+      "snippet": "spacing: 16,",
+      "values": [
+        {
+          "arg": "spacing",
+          "expr": "16",
+          "value": 16,
+          "kind": "literal"
+        }
+      ],
+      "unit": "px",
+      "kind": "PropLiteral:spacing",
+      "contextHint": [
+        "rawPropLiteral"
+      ]
+    },
+    {
+      "file": "lib/components/thumbnails/thumbnail_use_cases.dart",
+      "line": 59,
+      "snippet": "runSpacing: 16,",
+      "values": [
+        {
+          "arg": "runSpacing",
+          "expr": "16",
+          "value": 16,
+          "kind": "literal"
+        }
+      ],
+      "unit": "px",
+      "kind": "PropLiteral:runSpacing",
+      "contextHint": [
+        "rawPropLiteral"
+      ]
+    },
+    {
+      "file": "lib/components/thumbnails/thumbnail_use_cases.dart",
+      "line": 87,
+      "snippet": "spacing: 16,",
+      "values": [
+        {
+          "arg": "spacing",
+          "expr": "16",
+          "value": 16,
+          "kind": "literal"
+        }
+      ],
+      "unit": "px",
+      "kind": "PropLiteral:spacing",
+      "contextHint": [
+        "rawPropLiteral"
+      ]
+    },
+    {
+      "file": "lib/components/thumbnails/thumbnail_use_cases.dart",
+      "line": 88,
+      "snippet": "runSpacing: 16,",
+      "values": [
+        {
+          "arg": "runSpacing",
+          "expr": "16",
+          "value": 16,
+          "kind": "literal"
+        }
+      ],
+      "unit": "px",
+      "kind": "PropLiteral:runSpacing",
+      "contextHint": [
+        "rawPropLiteral"
+      ]
+    }
+  ],
+  "_summary": {
+    "dir": "thumbnails",
+    "fileCount": 2,
+    "totalUsages": 12,
+    "distinctValues": [
+      16,
+      24,
+      120
+    ],
+    "valueFrequency": {
+      "16": 6,
+      "120": 4,
+      "24": 1
+    },
+    "tokenRefFrequency": {},
+    "suspiciousItems": [
+      {
+        "file": "lib/components/thumbnails/thumbnail_use_cases.dart",
+        "line": 21,
+        "kind": "SizedBox",
+        "value": 120,
+        "reason": "off-scale literal",
+        "snippet": "SizedBox("
+      },
+      {
+        "file": "lib/components/thumbnails/thumbnail_use_cases.dart",
+        "line": 28,
+        "kind": "SizedBox",
+        "value": 120,
+        "reason": "off-scale literal",
+        "snippet": "SizedBox("
+      },
+      {
+        "file": "lib/components/thumbnails/thumbnail_use_cases.dart",
+        "line": 35,
+        "kind": "SizedBox",
+        "value": 120,
+        "reason": "off-scale literal",
+        "snippet": "SizedBox("
+      },
+      {
+        "file": "lib/components/thumbnails/thumbnail_use_cases.dart",
+        "line": 42,
+        "kind": "SizedBox",
+        "value": 120,
+        "reason": "off-scale literal",
+        "snippet": "SizedBox("
+      }
+    ],
+    "suspiciousCount": 4
+  }
+}
