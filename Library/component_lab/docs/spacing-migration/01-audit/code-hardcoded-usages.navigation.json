@@ -1,0 +1,627 @@
+{
+  "_meta": {
+    "dir": "navigation",
+    "scannedRoot": "lib/components/navigation",
+    "fileCount": 9,
+    "files": [
+      "lib/components/navigation/app_bottom_navigation.dart",
+      "lib/components/navigation/app_bottom_navigation_use_cases.dart",
+      "lib/components/navigation/app_footer.dart",
+      "lib/components/navigation/app_footer_use_cases.dart",
+      "lib/components/navigation/app_gnb.dart",
+      "lib/components/navigation/app_gnb_use_cases.dart",
+      "lib/components/navigation/app_push_badge_dot.dart",
+      "lib/components/navigation/app_top_navigation.dart",
+      "lib/components/navigation/app_top_navigation_use_cases.dart"
+    ],
+    "patterns": [
+      "EdgeInsets.(all|symmetric|only|fromLTRB)(",
+      "Padding(padding:",
+      "SizedBox((width|height|.square dimension):",
+      "Gap(",
+      "margin:/padding:/spacing:/gap:/... numeric literal",
+      "AppSpacing.<token>"
+    ],
+    "phase": "Phase 1-B audit"
+  },
+  "usages": [
+    {
+      "file": "lib/components/navigation/app_bottom_navigation.dart",
+      "line": 94,
+      "snippet": "padding: EdgeInsets.only(",
+      "values": [
+        {
+          "arg": "left",
+          "expr": "_horizontalPadding",
+          "kind": "non-numeric"
+        },
+        {
+          "arg": "right",
+          "expr": "_horizontalPadding",
+          "kind": "non-numeric"
+        }
+      ],
+      "unit": "px",
+      "kind": "EdgeInsets.only",
+      "contextHint": [
+        "edgeInsets"
+      ]
+    },
+    {
+      "file": "lib/components/navigation/app_bottom_navigation.dart",
+      "line": 105,
+      "snippet": "padding: const EdgeInsets.all(_containerPadding),",
+      "values": [
+        {
+          "arg": "#0",
+          "expr": "_containerPadding",
+          "kind": "non-numeric"
+        }
+      ],
+      "unit": "px",
+      "kind": "EdgeInsets.all",
+      "contextHint": [
+        "edgeInsets"
+      ]
+    },
+    {
+      "file": "lib/components/navigation/app_bottom_navigation.dart",
+      "line": 142,
+      "snippet": "padding: const EdgeInsets.symmetric(",
+      "values": [
+        {
+          "arg": "horizontal",
+          "expr": "AppSpacing.space8",
+          "tokenRef": "space8",
+          "kind": "tokenRef"
+        }
+      ],
+      "unit": "px",
+      "kind": "EdgeInsets.symmetric",
+      "contextHint": [
+        "edgeInsets"
+      ]
+    },
+    {
+      "file": "lib/components/navigation/app_bottom_navigation.dart",
+      "line": 123,
+      "snippet": "child: SizedBox(",
+      "values": [
+        {
+          "arg": "width",
+          "expr": "_itemWidth",
+          "kind": "non-numeric"
+        },
+        {
+          "arg": "height",
+          "expr": "_itemHeight",
+          "kind": "non-numeric"
+        }
+      ],
+      "unit": "px",
+      "kind": "SizedBox",
+      "contextHint": [
+        "sizedBox"
+      ]
+    },
+    {
+      "file": "lib/components/navigation/app_bottom_navigation.dart",
+      "line": 143,
+      "snippet": "horizontal: AppSpacing.space8,",
+      "values": [
+        {
+          "arg": null,
+          "expr": "AppSpacing.space8",
+          "tokenRef": "space8",
+          "kind": "tokenRef"
+        }
+      ],
+      "unit": "px",
+      "kind": "AppSpacingRef",
+      "contextHint": [
+        "appSpacingRef"
+      ]
+    },
+    {
+      "file": "lib/components/navigation/app_bottom_navigation.dart",
+      "line": 144,
+      "snippet": "vertical: AppSpacing.space4,",
+      "values": [
+        {
+          "arg": null,
+          "expr": "AppSpacing.space4",
+          "tokenRef": "space4",
+          "kind": "tokenRef"
+        }
+      ],
+      "unit": "px",
+      "kind": "AppSpacingRef",
+      "contextHint": [
+        "appSpacingRef"
+      ]
+    },
+    {
+      "file": "lib/components/navigation/app_footer.dart",
+      "line": 95,
+      "snippet": "padding: const EdgeInsets.symmetric(",
+      "values": [
+        {
+          "arg": "horizontal",
+          "expr": "_horizontalPadding",
+          "kind": "non-numeric"
+        }
+      ],
+      "unit": "px",
+      "kind": "EdgeInsets.symmetric",
+      "contextHint": [
+        "edgeInsets"
+      ]
+    },
+    {
+      "file": "lib/components/navigation/app_footer.dart",
+      "line": 184,
+      "snippet": "padding: const EdgeInsets.only(",
+      "values": [
+        {
+          "arg": "top",
+          "expr": "AppSpacing.space8",
+          "tokenRef": "space8",
+          "kind": "tokenRef"
+        }
+      ],
+      "unit": "px",
+      "kind": "EdgeInsets.only",
+      "contextHint": [
+        "edgeInsets"
+      ]
+    },
+    {
+      "file": "lib/components/navigation/app_footer.dart",
+      "line": 193,
+      "snippet": ": const SizedBox(width: double.infinity, height: 0),",
+      "values": [
+        {
+          "arg": "width",
+          "expr": "double.infinity",
+          "kind": "non-numeric"
+        },
+        {
+          "arg": "height",
+          "expr": "0",
+          "value": 0,
+          "kind": "literal"
+        }
+      ],
+      "unit": "px",
+      "kind": "SizedBox",
+      "contextHint": [
+        "sizedBox"
+      ]
+    },
+    {
+      "file": "lib/components/navigation/app_footer.dart",
+      "line": 124,
+      "snippet": "spacing: AppSpacing.space8,",
+      "values": [
+        {
+          "arg": null,
+          "expr": "AppSpacing.space8",
+          "tokenRef": "space8",
+          "kind": "tokenRef"
+        }
+      ],
+      "unit": "px",
+      "kind": "AppSpacingRef",
+      "contextHint": [
+        "appSpacingRef"
+      ]
+    },
+    {
+      "file": "lib/components/navigation/app_footer.dart",
+      "line": 158,
+      "snippet": "spacing: AppSpacing.space4,",
+      "values": [
+        {
+          "arg": null,
+          "expr": "AppSpacing.space4",
+          "tokenRef": "space4",
+          "kind": "tokenRef"
+        }
+      ],
+      "unit": "px",
+      "kind": "AppSpacingRef",
+      "contextHint": [
+        "appSpacingRef"
+      ]
+    },
+    {
+      "file": "lib/components/navigation/app_footer.dart",
+      "line": 185,
+      "snippet": "top: AppSpacing.space8),",
+      "values": [
+        {
+          "arg": null,
+          "expr": "AppSpacing.space8",
+          "tokenRef": "space8",
+          "kind": "tokenRef"
+        }
+      ],
+      "unit": "px",
+      "kind": "AppSpacingRef",
+      "contextHint": [
+        "appSpacingRef"
+      ]
+    },
+    {
+      "file": "lib/components/navigation/app_gnb.dart",
+      "line": 75,
+      "snippet": "padding: const EdgeInsets.symmetric(horizontal: _horizontalPadding),",
+      "values": [
+        {
+          "arg": "horizontal",
+          "expr": "_horizontalPadding",
+          "kind": "non-numeric"
+        }
+      ],
+      "unit": "px",
+      "kind": "EdgeInsets.symmetric",
+      "contextHint": [
+        "edgeInsets"
+      ]
+    },
+    {
+      "file": "lib/components/navigation/app_gnb.dart",
+      "line": 92,
+      "snippet": "SizedBox(",
+      "values": [
+        {
+          "arg": "width",
+          "expr": "_iconButtonSize",
+          "kind": "non-numeric"
+        },
+        {
+          "arg": "height",
+          "expr": "_iconButtonSize",
+          "kind": "non-numeric"
+        }
+      ],
+      "unit": "px",
+      "kind": "SizedBox",
+      "contextHint": [
+        "sizedBox"
+      ]
+    },
+    {
+      "file": "lib/components/navigation/app_gnb_use_cases.dart",
+      "line": 18,
+      "snippet": "logo: SizedBox(",
+      "values": [
+        {
+          "arg": "height",
+          "expr": "28",
+          "value": 28,
+          "kind": "literal"
+        }
+      ],
+      "unit": "px",
+      "kind": "SizedBox",
+      "contextHint": [
+        "sizedBox"
+      ]
+    },
+    {
+      "file": "lib/components/navigation/app_gnb_use_cases.dart",
+      "line": 37,
+      "snippet": "logo: SizedBox(",
+      "values": [
+        {
+          "arg": "height",
+          "expr": "28",
+          "value": 28,
+          "kind": "literal"
+        }
+      ],
+      "unit": "px",
+      "kind": "SizedBox",
+      "contextHint": [
+        "sizedBox"
+      ]
+    },
+    {
+      "file": "lib/components/navigation/app_gnb_use_cases.dart",
+      "line": 63,
+      "snippet": "logo: SizedBox(",
+      "values": [
+        {
+          "arg": "height",
+          "expr": "28",
+          "value": 28,
+          "kind": "literal"
+        }
+      ],
+      "unit": "px",
+      "kind": "SizedBox",
+      "contextHint": [
+        "sizedBox"
+      ]
+    },
+    {
+      "file": "lib/components/navigation/app_top_navigation.dart",
+      "line": 140,
+      "snippet": "padding: const EdgeInsets.symmetric(",
+      "values": [
+        {
+          "arg": "horizontal",
+          "expr": "_horizontalPadding",
+          "kind": "non-numeric"
+        }
+      ],
+      "unit": "px",
+      "kind": "EdgeInsets.symmetric",
+      "contextHint": [
+        "edgeInsets"
+      ]
+    },
+    {
+      "file": "lib/components/navigation/app_top_navigation.dart",
+      "line": 153,
+      "snippet": "padding: EdgeInsets.symmetric(",
+      "values": [
+        {
+          "arg": "#0",
+          "expr": "horizontal:\n                              leadingIcon != null ? _iconButtonSize + 4 : 4",
+          "embeddedLiterals": [
+            4,
+            4
+          ],
+          "kind": "expression-with-literal"
+        }
+      ],
+      "unit": "px",
+      "kind": "EdgeInsets.symmetric",
+      "contextHint": [
+        "edgeInsets"
+      ]
+    },
+    {
+      "file": "lib/components/navigation/app_top_navigation.dart",
+      "line": 210,
+      "snippet": "padding: const EdgeInsets.symmetric(",
+      "values": [
+        {
+          "arg": "horizontal",
+          "expr": "_horizontalPadding",
+          "kind": "non-numeric"
+        }
+      ],
+      "unit": "px",
+      "kind": "EdgeInsets.symmetric",
+      "contextHint": [
+        "edgeInsets"
+      ]
+    },
+    {
+      "file": "lib/components/navigation/app_top_navigation.dart",
+      "line": 222,
+      "snippet": "padding: const EdgeInsets.only(bottom: _contentSpacing),",
+      "values": [
+        {
+          "arg": "bottom",
+          "expr": "_contentSpacing",
+          "kind": "non-numeric"
+        }
+      ],
+      "unit": "px",
+      "kind": "EdgeInsets.only",
+      "contextHint": [
+        "edgeInsets"
+      ]
+    },
+    {
+      "file": "lib/components/navigation/app_top_navigation.dart",
+      "line": 232,
+      "snippet": "padding: const EdgeInsets.symmetric(horizontal: AppSpacing.space4),",
+      "values": [
+        {
+          "arg": "horizontal",
+          "expr": "AppSpacing.space4",
+          "tokenRef": "space4",
+          "kind": "tokenRef"
+        }
+      ],
+      "unit": "px",
+      "kind": "EdgeInsets.symmetric",
+      "contextHint": [
+        "edgeInsets",
+        "appSpacingRef"
+      ]
+    },
+    {
+      "file": "lib/components/navigation/app_top_navigation.dart",
+      "line": 292,
+      "snippet": "padding: const EdgeInsets.symmetric(",
+      "values": [
+        {
+          "arg": "horizontal",
+          "expr": "_horizontalPadding",
+          "kind": "non-numeric"
+        }
+      ],
+      "unit": "px",
+      "kind": "EdgeInsets.symmetric",
+      "contextHint": [
+        "edgeInsets"
+      ]
+    },
+    {
+      "file": "lib/components/navigation/app_top_navigation.dart",
+      "line": 302,
+      "snippet": "padding: EdgeInsets.symmetric(",
+      "values": [
+        {
+          "arg": "#0",
+          "expr": "horizontal:\n                          leadingIcon != null ? _iconButtonSize + 4 : 4",
+          "embeddedLiterals": [
+            4,
+            4
+          ],
+          "kind": "expression-with-literal"
+        }
+      ],
+      "unit": "px",
+      "kind": "EdgeInsets.symmetric",
+      "contextHint": [
+        "edgeInsets"
+      ]
+    },
+    {
+      "file": "lib/components/navigation/app_top_navigation.dart",
+      "line": 233,
+      "snippet": "child: SizedBox(",
+      "values": [
+        {
+          "arg": "height",
+          "expr": "_iconButtonSize",
+          "kind": "non-numeric"
+        }
+      ],
+      "unit": "px",
+      "kind": "SizedBox",
+      "contextHint": [
+        "sizedBox"
+      ]
+    },
+    {
+      "file": "lib/components/navigation/app_top_navigation.dart",
+      "line": 286,
+      "snippet": "return SizedBox(",
+      "values": [
+        {
+          "arg": "height",
+          "expr": "0",
+          "value": 0,
+          "kind": "literal"
+        }
+      ],
+      "unit": "px",
+      "kind": "SizedBox",
+      "contextHint": [
+        "sizedBox"
+      ]
+    },
+    {
+      "file": "lib/components/navigation/app_top_navigation.dart",
+      "line": 351,
+      "snippet": "return SizedBox(",
+      "values": [
+        {
+          "arg": "width",
+          "expr": "_iconButtonSize",
+          "kind": "non-numeric"
+        },
+        {
+          "arg": "height",
+          "expr": "_iconButtonSize",
+          "kind": "non-numeric"
+        }
+      ],
+      "unit": "px",
+      "kind": "SizedBox",
+      "contextHint": [
+        "sizedBox"
+      ]
+    },
+    {
+      "file": "lib/components/navigation/app_top_navigation.dart",
+      "line": 370,
+      "snippet": "spacing: 10,",
+      "values": [
+        {
+          "arg": "spacing",
+          "expr": "10",
+          "value": 10,
+          "kind": "literal"
+        }
+      ],
+      "unit": "px",
+      "kind": "PropLiteral:spacing",
+      "contextHint": [
+        "rawPropLiteral"
+      ]
+    },
+    {
+      "file": "lib/components/navigation/app_top_navigation.dart",
+      "line": 232,
+      "snippet": "padding: const EdgeInsets.symmetric(horizontal: AppSpacing.space4),",
+      "values": [
+        {
+          "arg": null,
+          "expr": "AppSpacing.space4",
+          "tokenRef": "space4",
+          "kind": "tokenRef"
+        }
+      ],
+      "unit": "px",
+      "kind": "AppSpacingRef",
+      "contextHint": [
+        "appSpacingRef"
+      ]
+    }
+  ],
+  "_summary": {
+    "dir": "navigation",
+    "fileCount": 9,
+    "totalUsages": 29,
+    "distinctValues": [
+      0,
+      4,
+      10,
+      28
+    ],
+    "valueFrequency": {
+      "4": 4,
+      "28": 3,
+      "0": 2,
+      "10": 1
+    },
+    "tokenRefFrequency": {
+      "space8": 5,
+      "space4": 4
+    },
+    "suspiciousItems": [
+      {
+        "file": "lib/components/navigation/app_gnb_use_cases.dart",
+        "line": 18,
+        "kind": "SizedBox",
+        "value": 28,
+        "reason": "off-scale literal",
+        "snippet": "logo: SizedBox("
+      },
+      {
+        "file": "lib/components/navigation/app_gnb_use_cases.dart",
+        "line": 37,
+        "kind": "SizedBox",
+        "value": 28,
+        "reason": "off-scale literal",
+        "snippet": "logo: SizedBox("
+      },
+      {
+        "file": "lib/components/navigation/app_gnb_use_cases.dart",
+        "line": 63,
+        "kind": "SizedBox",
+        "value": 28,
+        "reason": "off-scale literal",
+        "snippet": "logo: SizedBox("
+      },
+      {
+        "file": "lib/components/navigation/app_top_navigation.dart",
+        "line": 370,
+        "kind": "PropLiteral:spacing",
+        "value": 10,
+        "reason": "off-scale literal",
+        "snippet": "spacing: 10,"
+      }
+    ],
+    "suspiciousCount": 4
+  }
+}
