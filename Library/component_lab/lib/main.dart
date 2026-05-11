@@ -38,6 +38,12 @@ import 'components/feedback/app_tooltip_use_cases.dart';
 import 'components/feedback/app_section_message_use_cases.dart';
 import 'components/feedback/app_empty_state_use_cases.dart';
 
+// Forms (search input)
+import 'components/forms/app_search_input_use_cases.dart';
+
+// Selection (pickers)
+import 'components/selection/app_picker_use_cases.dart';
+
 // Presentation
 import 'components/presentation/app_bottom_sheet_use_cases.dart';
 import 'components/presentation/app_menu_use_cases.dart';
@@ -242,11 +248,14 @@ class ComponentLabApp extends StatelessWidget {
               name: 'Selection and Input',
               children: [
                 ...textFieldUseCases,
+                ...searchInputUseCases,
                 ...switchUseCases,
                 ...checkboxUseCases,
                 ...radioUseCases,
                 ...sliderUseCases,
                 ...selectUseCases,
+                ...datePickerUseCases,
+                ...timePickerUseCases,
               ],
             ),
             WidgetbookFolder(
