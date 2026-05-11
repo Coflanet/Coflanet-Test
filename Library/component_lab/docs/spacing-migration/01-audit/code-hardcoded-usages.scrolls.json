@@ -1,0 +1,296 @@
+{
+  "_meta": {
+    "dir": "scrolls",
+    "scannedRoot": "lib/components/scrolls",
+    "fileCount": 2,
+    "files": [
+      "lib/components/scrolls/app_scroll_bar.dart",
+      "lib/components/scrolls/scroll_use_cases.dart"
+    ],
+    "patterns": [
+      "EdgeInsets.(all|symmetric|only|fromLTRB)(",
+      "Padding(padding:",
+      "SizedBox((width|height|.square dimension):",
+      "Gap(",
+      "margin:/padding:/spacing:/gap:/... numeric literal",
+      "AppSpacing.<token>"
+    ],
+    "phase": "Phase 1-B audit"
+  },
+  "usages": [
+    {
+      "file": "lib/components/scrolls/app_scroll_bar.dart",
+      "line": 77,
+      "snippet": "return SizedBox(",
+      "values": [
+        {
+          "arg": "width",
+          "expr": "_outerWidth",
+          "kind": "non-numeric"
+        },
+        {
+          "arg": "height",
+          "expr": "height",
+          "kind": "non-numeric"
+        }
+      ],
+      "unit": "px",
+      "kind": "SizedBox",
+      "contextHint": [
+        "sizedBox"
+      ]
+    },
+    {
+      "file": "lib/components/scrolls/app_scroll_bar.dart",
+      "line": 81,
+      "snippet": "child: SizedBox(",
+      "values": [
+        {
+          "arg": "width",
+          "expr": "_barWidth",
+          "kind": "non-numeric"
+        },
+        {
+          "arg": "height",
+          "expr": "track",
+          "kind": "non-numeric"
+        }
+      ],
+      "unit": "px",
+      "kind": "SizedBox",
+      "contextHint": [
+        "sizedBox"
+      ]
+    },
+    {
+      "file": "lib/components/scrolls/scroll_use_cases.dart",
+      "line": 152,
+      "snippet": "padding: const EdgeInsets.all(24),",
+      "values": [
+        {
+          "arg": "#0",
+          "expr": "24",
+          "value": 24,
+          "kind": "literal"
+        }
+      ],
+      "unit": "px",
+      "kind": "EdgeInsets.all",
+      "contextHint": [
+        "edgeInsets"
+      ]
+    },
+    {
+      "file": "lib/components/scrolls/scroll_use_cases.dart",
+      "line": 165,
+      "snippet": "padding: const EdgeInsets.fromLTRB(16, 16, 24, 16),",
+      "values": [
+        {
+          "arg": "#0",
+          "expr": "16",
+          "value": 16,
+          "kind": "literal"
+        },
+        {
+          "arg": "#1",
+          "expr": "16",
+          "value": 16,
+          "kind": "literal"
+        },
+        {
+          "arg": "#2",
+          "expr": "24",
+          "value": 24,
+          "kind": "literal"
+        },
+        {
+          "arg": "#3",
+          "expr": "16",
+          "value": 16,
+          "kind": "literal"
+        }
+      ],
+      "unit": "px",
+      "kind": "EdgeInsets.fromLTRB",
+      "contextHint": [
+        "edgeInsets"
+      ]
+    },
+    {
+      "file": "lib/components/scrolls/scroll_use_cases.dart",
+      "line": 168,
+      "snippet": "padding: const EdgeInsets.symmetric(vertical: 8),",
+      "values": [
+        {
+          "arg": "vertical",
+          "expr": "8",
+          "value": 8,
+          "kind": "literal"
+        }
+      ],
+      "unit": "px",
+      "kind": "EdgeInsets.symmetric",
+      "contextHint": [
+        "edgeInsets"
+      ]
+    },
+    {
+      "file": "lib/components/scrolls/scroll_use_cases.dart",
+      "line": 190,
+      "snippet": "padding: const EdgeInsets.all(24),",
+      "values": [
+        {
+          "arg": "#0",
+          "expr": "24",
+          "value": 24,
+          "kind": "literal"
+        }
+      ],
+      "unit": "px",
+      "kind": "EdgeInsets.all",
+      "contextHint": [
+        "edgeInsets"
+      ]
+    },
+    {
+      "file": "lib/components/scrolls/scroll_use_cases.dart",
+      "line": 113,
+      "snippet": "const SizedBox(height: AppSpacing.space8),",
+      "values": [
+        {
+          "arg": "height",
+          "expr": "AppSpacing.space8",
+          "tokenRef": "space8",
+          "kind": "tokenRef"
+        }
+      ],
+      "unit": "px",
+      "kind": "SizedBox",
+      "contextHint": [
+        "sizedBox",
+        "appSpacingRef"
+      ]
+    },
+    {
+      "file": "lib/components/scrolls/scroll_use_cases.dart",
+      "line": 153,
+      "snippet": "child: SizedBox(",
+      "values": [
+        {
+          "arg": "height",
+          "expr": "320",
+          "value": 320,
+          "kind": "literal"
+        }
+      ],
+      "unit": "px",
+      "kind": "SizedBox",
+      "contextHint": [
+        "sizedBox"
+      ]
+    },
+    {
+      "file": "lib/components/scrolls/scroll_use_cases.dart",
+      "line": 19,
+      "snippet": "spacing: 24,",
+      "values": [
+        {
+          "arg": "spacing",
+          "expr": "24",
+          "value": 24,
+          "kind": "literal"
+        }
+      ],
+      "unit": "px",
+      "kind": "PropLiteral:spacing",
+      "contextHint": [
+        "rawPropLiteral"
+      ]
+    },
+    {
+      "file": "lib/components/scrolls/scroll_use_cases.dart",
+      "line": 45,
+      "snippet": "spacing: 24,",
+      "values": [
+        {
+          "arg": "spacing",
+          "expr": "24",
+          "value": 24,
+          "kind": "literal"
+        }
+      ],
+      "unit": "px",
+      "kind": "PropLiteral:spacing",
+      "contextHint": [
+        "rawPropLiteral"
+      ]
+    },
+    {
+      "file": "lib/components/scrolls/scroll_use_cases.dart",
+      "line": 72,
+      "snippet": "spacing: 24,",
+      "values": [
+        {
+          "arg": "spacing",
+          "expr": "24",
+          "value": 24,
+          "kind": "literal"
+        }
+      ],
+      "unit": "px",
+      "kind": "PropLiteral:spacing",
+      "contextHint": [
+        "rawPropLiteral"
+      ]
+    },
+    {
+      "file": "lib/components/scrolls/scroll_use_cases.dart",
+      "line": 113,
+      "snippet": "const SizedBox(height: AppSpacing.space8),",
+      "values": [
+        {
+          "arg": null,
+          "expr": "AppSpacing.space8",
+          "tokenRef": "space8",
+          "kind": "tokenRef"
+        }
+      ],
+      "unit": "px",
+      "kind": "AppSpacingRef",
+      "contextHint": [
+        "appSpacingRef"
+      ]
+    }
+  ],
+  "_summary": {
+    "dir": "scrolls",
+    "fileCount": 2,
+    "totalUsages": 12,
+    "distinctValues": [
+      8,
+      16,
+      24,
+      320
+    ],
+    "valueFrequency": {
+      "24": 6,
+      "16": 3,
+      "8": 1,
+      "320": 1
+    },
+    "tokenRefFrequency": {
+      "space8": 2
+    },
+    "suspiciousItems": [
+      {
+        "file": "lib/components/scrolls/scroll_use_cases.dart",
+        "line": 153,
+        "kind": "SizedBox",
+        "value": 320,
+        "reason": "off-scale literal",
+        "snippet": "child: SizedBox("
+      }
+    ],
+    "suspiciousCount": 1
+  }
+}
