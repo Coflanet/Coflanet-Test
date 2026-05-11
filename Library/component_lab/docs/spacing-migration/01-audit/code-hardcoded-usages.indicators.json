@@ -1,0 +1,1278 @@
+{
+  "_meta": {
+    "dir": "indicators",
+    "scannedRoot": "lib/components/indicators",
+    "fileCount": 6,
+    "files": [
+      "lib/components/indicators/app_indicators.dart",
+      "lib/components/indicators/app_progress.dart",
+      "lib/components/indicators/app_progress_tracker.dart",
+      "lib/components/indicators/app_progress_tracker_use_cases.dart",
+      "lib/components/indicators/indicator_use_cases.dart",
+      "lib/components/indicators/progress_use_cases.dart"
+    ],
+    "patterns": [
+      "EdgeInsets.(all|symmetric|only|fromLTRB)(",
+      "Padding(padding:",
+      "SizedBox((width|height|.square dimension):",
+      "Gap(",
+      "margin:/padding:/spacing:/gap:/... numeric literal",
+      "AppSpacing.<token>"
+    ],
+    "phase": "Phase 1-B audit"
+  },
+  "usages": [
+    {
+      "file": "lib/components/indicators/app_indicators.dart",
+      "line": 53,
+      "snippet": "padding: EdgeInsets.symmetric(horizontal: isWide ? 6 : 4),",
+      "values": [
+        {
+          "arg": "horizontal",
+          "expr": "isWide ? 6 : 4",
+          "embeddedLiterals": [
+            6,
+            4
+          ],
+          "kind": "expression-with-literal"
+        }
+      ],
+      "unit": "px",
+      "kind": "EdgeInsets.symmetric",
+      "contextHint": [
+        "edgeInsets"
+      ]
+    },
+    {
+      "file": "lib/components/indicators/app_indicators.dart",
+      "line": 168,
+      "snippet": "padding: EdgeInsets.only(right: isLast ? 0 : gap),",
+      "values": [
+        {
+          "arg": "right",
+          "expr": "isLast ? 0 : gap",
+          "embeddedLiterals": [
+            0
+          ],
+          "kind": "expression-with-literal"
+        }
+      ],
+      "unit": "px",
+      "kind": "EdgeInsets.only",
+      "contextHint": [
+        "edgeInsets"
+      ]
+    },
+    {
+      "file": "lib/components/indicators/app_indicators.dart",
+      "line": 219,
+      "snippet": "return SizedBox(",
+      "values": [
+        {
+          "arg": "width",
+          "expr": "double.infinity",
+          "kind": "non-numeric"
+        },
+        {
+          "arg": "height",
+          "expr": "_height",
+          "kind": "non-numeric"
+        }
+      ],
+      "unit": "px",
+      "kind": "SizedBox",
+      "contextHint": [
+        "sizedBox"
+      ]
+    },
+    {
+      "file": "lib/components/indicators/app_indicators.dart",
+      "line": 253,
+      "snippet": "return SizedBox(",
+      "values": [
+        {
+          "arg": "width",
+          "expr": "double.infinity",
+          "kind": "non-numeric"
+        },
+        {
+          "arg": "height",
+          "expr": "12",
+          "value": 12,
+          "kind": "literal"
+        }
+      ],
+      "unit": "px",
+      "kind": "SizedBox",
+      "contextHint": [
+        "sizedBox"
+      ]
+    },
+    {
+      "file": "lib/components/indicators/app_progress.dart",
+      "line": 29,
+      "snippet": "child: SizedBox(",
+      "values": [
+        {
+          "arg": "height",
+          "expr": "height",
+          "kind": "non-numeric"
+        }
+      ],
+      "unit": "px",
+      "kind": "SizedBox",
+      "contextHint": [
+        "sizedBox"
+      ]
+    },
+    {
+      "file": "lib/components/indicators/app_progress.dart",
+      "line": 63,
+      "snippet": "return SizedBox(",
+      "values": [
+        {
+          "arg": "width",
+          "expr": "size",
+          "kind": "non-numeric"
+        },
+        {
+          "arg": "height",
+          "expr": "size",
+          "kind": "non-numeric"
+        }
+      ],
+      "unit": "px",
+      "kind": "SizedBox",
+      "contextHint": [
+        "sizedBox"
+      ]
+    },
+    {
+      "file": "lib/components/indicators/app_progress.dart",
+      "line": 120,
+      "snippet": "const SizedBox(height: 6),",
+      "values": [
+        {
+          "arg": "height",
+          "expr": "6",
+          "value": 6,
+          "kind": "literal"
+        }
+      ],
+      "unit": "px",
+      "kind": "SizedBox",
+      "contextHint": [
+        "sizedBox"
+      ]
+    },
+    {
+      "file": "lib/components/indicators/app_progress_tracker.dart",
+      "line": 130,
+      "snippet": "padding: EdgeInsets.only(",
+      "values": [
+        {
+          "arg": "#0",
+          "expr": "bottom: i < steps.length - 1 ? AppSpacing.space16 : 0",
+          "tokenRefs": [
+            "space16"
+          ],
+          "kind": "expression-with-token"
+        }
+      ],
+      "unit": "px",
+      "kind": "EdgeInsets.only",
+      "contextHint": [
+        "edgeInsets"
+      ]
+    },
+    {
+      "file": "lib/components/indicators/app_progress_tracker.dart",
+      "line": 206,
+      "snippet": "margin: const EdgeInsets.symmetric(horizontal: AppSpacing.space4),",
+      "values": [
+        {
+          "arg": "horizontal",
+          "expr": "AppSpacing.space4",
+          "tokenRef": "space4",
+          "kind": "tokenRef"
+        }
+      ],
+      "unit": "px",
+      "kind": "EdgeInsets.symmetric",
+      "contextHint": [
+        "edgeInsets",
+        "appSpacingRef"
+      ]
+    },
+    {
+      "file": "lib/components/indicators/app_progress_tracker.dart",
+      "line": 211,
+      "snippet": "margin: const EdgeInsets.symmetric(vertical: AppSpacing.space4),",
+      "values": [
+        {
+          "arg": "vertical",
+          "expr": "AppSpacing.space4",
+          "tokenRef": "space4",
+          "kind": "tokenRef"
+        }
+      ],
+      "unit": "px",
+      "kind": "EdgeInsets.symmetric",
+      "contextHint": [
+        "edgeInsets",
+        "appSpacingRef"
+      ]
+    },
+    {
+      "file": "lib/components/indicators/app_progress_tracker.dart",
+      "line": 95,
+      "snippet": "const SizedBox(height: AppSpacing.space8),",
+      "values": [
+        {
+          "arg": "height",
+          "expr": "AppSpacing.space8",
+          "tokenRef": "space8",
+          "kind": "tokenRef"
+        }
+      ],
+      "unit": "px",
+      "kind": "SizedBox",
+      "contextHint": [
+        "sizedBox",
+        "appSpacingRef"
+      ]
+    },
+    {
+      "file": "lib/components/indicators/app_progress_tracker.dart",
+      "line": 128,
+      "snippet": "const SizedBox(width: AppSpacing.space12),",
+      "values": [
+        {
+          "arg": "width",
+          "expr": "AppSpacing.space12",
+          "tokenRef": "space12",
+          "kind": "tokenRef"
+        }
+      ],
+      "unit": "px",
+      "kind": "SizedBox",
+      "contextHint": [
+        "sizedBox",
+        "appSpacingRef"
+      ]
+    },
+    {
+      "file": "lib/components/indicators/app_progress_tracker.dart",
+      "line": 247,
+      "snippet": "const SizedBox(height: 2),",
+      "values": [
+        {
+          "arg": "height",
+          "expr": "2",
+          "value": 2,
+          "kind": "literal"
+        }
+      ],
+      "unit": "px",
+      "kind": "SizedBox",
+      "contextHint": [
+        "sizedBox"
+      ]
+    },
+    {
+      "file": "lib/components/indicators/app_progress_tracker.dart",
+      "line": 95,
+      "snippet": "const SizedBox(height: AppSpacing.space8),",
+      "values": [
+        {
+          "arg": null,
+          "expr": "AppSpacing.space8",
+          "tokenRef": "space8",
+          "kind": "tokenRef"
+        }
+      ],
+      "unit": "px",
+      "kind": "AppSpacingRef",
+      "contextHint": [
+        "appSpacingRef"
+      ]
+    },
+    {
+      "file": "lib/components/indicators/app_progress_tracker.dart",
+      "line": 128,
+      "snippet": "const SizedBox(width: AppSpacing.space12),",
+      "values": [
+        {
+          "arg": null,
+          "expr": "AppSpacing.space12",
+          "tokenRef": "space12",
+          "kind": "tokenRef"
+        }
+      ],
+      "unit": "px",
+      "kind": "AppSpacingRef",
+      "contextHint": [
+        "appSpacingRef"
+      ]
+    },
+    {
+      "file": "lib/components/indicators/app_progress_tracker.dart",
+      "line": 131,
+      "snippet": "bottom: i < steps.length - 1 ? AppSpacing.space16 : 0,",
+      "values": [
+        {
+          "arg": null,
+          "expr": "AppSpacing.space16",
+          "tokenRef": "space16",
+          "kind": "tokenRef"
+        }
+      ],
+      "unit": "px",
+      "kind": "AppSpacingRef",
+      "contextHint": [
+        "appSpacingRef"
+      ]
+    },
+    {
+      "file": "lib/components/indicators/app_progress_tracker.dart",
+      "line": 206,
+      "snippet": "margin: const EdgeInsets.symmetric(horizontal: AppSpacing.space4),",
+      "values": [
+        {
+          "arg": null,
+          "expr": "AppSpacing.space4",
+          "tokenRef": "space4",
+          "kind": "tokenRef"
+        }
+      ],
+      "unit": "px",
+      "kind": "AppSpacingRef",
+      "contextHint": [
+        "appSpacingRef"
+      ]
+    },
+    {
+      "file": "lib/components/indicators/app_progress_tracker.dart",
+      "line": 211,
+      "snippet": "margin: const EdgeInsets.symmetric(vertical: AppSpacing.space4),",
+      "values": [
+        {
+          "arg": null,
+          "expr": "AppSpacing.space4",
+          "tokenRef": "space4",
+          "kind": "tokenRef"
+        }
+      ],
+      "unit": "px",
+      "kind": "AppSpacingRef",
+      "contextHint": [
+        "appSpacingRef"
+      ]
+    },
+    {
+      "file": "lib/components/indicators/app_progress_tracker_use_cases.dart",
+      "line": 85,
+      "snippet": "padding: const EdgeInsets.all(AppSpacing.space24),",
+      "values": [
+        {
+          "arg": "#0",
+          "expr": "AppSpacing.space24",
+          "tokenRef": "space24",
+          "kind": "tokenRef"
+        }
+      ],
+      "unit": "px",
+      "kind": "EdgeInsets.all",
+      "contextHint": [
+        "edgeInsets",
+        "appSpacingRef"
+      ]
+    },
+    {
+      "file": "lib/components/indicators/app_progress_tracker_use_cases.dart",
+      "line": 85,
+      "snippet": "padding: const EdgeInsets.all(AppSpacing.space24),",
+      "values": [
+        {
+          "arg": null,
+          "expr": "AppSpacing.space24",
+          "tokenRef": "space24",
+          "kind": "tokenRef"
+        }
+      ],
+      "unit": "px",
+      "kind": "AppSpacingRef",
+      "contextHint": [
+        "appSpacingRef"
+      ]
+    },
+    {
+      "file": "lib/components/indicators/indicator_use_cases.dart",
+      "line": 141,
+      "snippet": "padding: const EdgeInsets.all(24),",
+      "values": [
+        {
+          "arg": "#0",
+          "expr": "24",
+          "value": 24,
+          "kind": "literal"
+        }
+      ],
+      "unit": "px",
+      "kind": "EdgeInsets.all",
+      "contextHint": [
+        "edgeInsets"
+      ]
+    },
+    {
+      "file": "lib/components/indicators/indicator_use_cases.dart",
+      "line": 151,
+      "snippet": "margin: const EdgeInsets.symmetric(horizontal: 8),",
+      "values": [
+        {
+          "arg": "horizontal",
+          "expr": "8",
+          "value": 8,
+          "kind": "literal"
+        }
+      ],
+      "unit": "px",
+      "kind": "EdgeInsets.symmetric",
+      "contextHint": [
+        "edgeInsets"
+      ]
+    },
+    {
+      "file": "lib/components/indicators/indicator_use_cases.dart",
+      "line": 235,
+      "snippet": "padding: const EdgeInsets.all(24),",
+      "values": [
+        {
+          "arg": "#0",
+          "expr": "24",
+          "value": 24,
+          "kind": "literal"
+        }
+      ],
+      "unit": "px",
+      "kind": "EdgeInsets.all",
+      "contextHint": [
+        "edgeInsets"
+      ]
+    },
+    {
+      "file": "lib/components/indicators/indicator_use_cases.dart",
+      "line": 96,
+      "snippet": "SizedBox(height: AppSpacing.space16),",
+      "values": [
+        {
+          "arg": "height",
+          "expr": "AppSpacing.space16",
+          "tokenRef": "space16",
+          "kind": "tokenRef"
+        }
+      ],
+      "unit": "px",
+      "kind": "SizedBox",
+      "contextHint": [
+        "sizedBox",
+        "appSpacingRef"
+      ]
+    },
+    {
+      "file": "lib/components/indicators/indicator_use_cases.dart",
+      "line": 98,
+      "snippet": "SizedBox(height: AppSpacing.space16),",
+      "values": [
+        {
+          "arg": "height",
+          "expr": "AppSpacing.space16",
+          "tokenRef": "space16",
+          "kind": "tokenRef"
+        }
+      ],
+      "unit": "px",
+      "kind": "SizedBox",
+      "contextHint": [
+        "sizedBox",
+        "appSpacingRef"
+      ]
+    },
+    {
+      "file": "lib/components/indicators/indicator_use_cases.dart",
+      "line": 100,
+      "snippet": "SizedBox(height: AppSpacing.space24),",
+      "values": [
+        {
+          "arg": "height",
+          "expr": "AppSpacing.space24",
+          "tokenRef": "space24",
+          "kind": "tokenRef"
+        }
+      ],
+      "unit": "px",
+      "kind": "SizedBox",
+      "contextHint": [
+        "sizedBox",
+        "appSpacingRef"
+      ]
+    },
+    {
+      "file": "lib/components/indicators/indicator_use_cases.dart",
+      "line": 102,
+      "snippet": "SizedBox(height: AppSpacing.space16),",
+      "values": [
+        {
+          "arg": "height",
+          "expr": "AppSpacing.space16",
+          "tokenRef": "space16",
+          "kind": "tokenRef"
+        }
+      ],
+      "unit": "px",
+      "kind": "SizedBox",
+      "contextHint": [
+        "sizedBox",
+        "appSpacingRef"
+      ]
+    },
+    {
+      "file": "lib/components/indicators/indicator_use_cases.dart",
+      "line": 144,
+      "snippet": "SizedBox(",
+      "values": [
+        {
+          "arg": "height",
+          "expr": "200",
+          "value": 200,
+          "kind": "literal"
+        }
+      ],
+      "unit": "px",
+      "kind": "SizedBox",
+      "contextHint": [
+        "sizedBox"
+      ]
+    },
+    {
+      "file": "lib/components/indicators/indicator_use_cases.dart",
+      "line": 168,
+      "snippet": "const SizedBox(height: AppSpacing.space16),",
+      "values": [
+        {
+          "arg": "height",
+          "expr": "AppSpacing.space16",
+          "tokenRef": "space16",
+          "kind": "tokenRef"
+        }
+      ],
+      "unit": "px",
+      "kind": "SizedBox",
+      "contextHint": [
+        "sizedBox",
+        "appSpacingRef"
+      ]
+    },
+    {
+      "file": "lib/components/indicators/indicator_use_cases.dart",
+      "line": 198,
+      "snippet": "SizedBox(height: AppSpacing.space16),",
+      "values": [
+        {
+          "arg": "height",
+          "expr": "AppSpacing.space16",
+          "tokenRef": "space16",
+          "kind": "tokenRef"
+        }
+      ],
+      "unit": "px",
+      "kind": "SizedBox",
+      "contextHint": [
+        "sizedBox",
+        "appSpacingRef"
+      ]
+    },
+    {
+      "file": "lib/components/indicators/indicator_use_cases.dart",
+      "line": 203,
+      "snippet": "SizedBox(height: AppSpacing.space16),",
+      "values": [
+        {
+          "arg": "height",
+          "expr": "AppSpacing.space16",
+          "tokenRef": "space16",
+          "kind": "tokenRef"
+        }
+      ],
+      "unit": "px",
+      "kind": "SizedBox",
+      "contextHint": [
+        "sizedBox",
+        "appSpacingRef"
+      ]
+    },
+    {
+      "file": "lib/components/indicators/indicator_use_cases.dart",
+      "line": 17,
+      "snippet": "spacing: 24,",
+      "values": [
+        {
+          "arg": "spacing",
+          "expr": "24",
+          "value": 24,
+          "kind": "literal"
+        }
+      ],
+      "unit": "px",
+      "kind": "PropLiteral:spacing",
+      "contextHint": [
+        "rawPropLiteral"
+      ]
+    },
+    {
+      "file": "lib/components/indicators/indicator_use_cases.dart",
+      "line": 18,
+      "snippet": "runSpacing: 24,",
+      "values": [
+        {
+          "arg": "runSpacing",
+          "expr": "24",
+          "value": 24,
+          "kind": "literal"
+        }
+      ],
+      "unit": "px",
+      "kind": "PropLiteral:runSpacing",
+      "contextHint": [
+        "rawPropLiteral"
+      ]
+    },
+    {
+      "file": "lib/components/indicators/indicator_use_cases.dart",
+      "line": 37,
+      "snippet": "spacing: 24,",
+      "values": [
+        {
+          "arg": "spacing",
+          "expr": "24",
+          "value": 24,
+          "kind": "literal"
+        }
+      ],
+      "unit": "px",
+      "kind": "PropLiteral:spacing",
+      "contextHint": [
+        "rawPropLiteral"
+      ]
+    },
+    {
+      "file": "lib/components/indicators/indicator_use_cases.dart",
+      "line": 58,
+      "snippet": "spacing: 32,",
+      "values": [
+        {
+          "arg": "spacing",
+          "expr": "32",
+          "value": 32,
+          "kind": "literal"
+        }
+      ],
+      "unit": "px",
+      "kind": "PropLiteral:spacing",
+      "contextHint": [
+        "rawPropLiteral"
+      ]
+    },
+    {
+      "file": "lib/components/indicators/indicator_use_cases.dart",
+      "line": 59,
+      "snippet": "runSpacing: 32,",
+      "values": [
+        {
+          "arg": "runSpacing",
+          "expr": "32",
+          "value": 32,
+          "kind": "literal"
+        }
+      ],
+      "unit": "px",
+      "kind": "PropLiteral:runSpacing",
+      "contextHint": [
+        "rawPropLiteral"
+      ]
+    },
+    {
+      "file": "lib/components/indicators/indicator_use_cases.dart",
+      "line": 96,
+      "snippet": "SizedBox(height: AppSpacing.space16),",
+      "values": [
+        {
+          "arg": null,
+          "expr": "AppSpacing.space16",
+          "tokenRef": "space16",
+          "kind": "tokenRef"
+        }
+      ],
+      "unit": "px",
+      "kind": "AppSpacingRef",
+      "contextHint": [
+        "appSpacingRef"
+      ]
+    },
+    {
+      "file": "lib/components/indicators/indicator_use_cases.dart",
+      "line": 98,
+      "snippet": "SizedBox(height: AppSpacing.space16),",
+      "values": [
+        {
+          "arg": null,
+          "expr": "AppSpacing.space16",
+          "tokenRef": "space16",
+          "kind": "tokenRef"
+        }
+      ],
+      "unit": "px",
+      "kind": "AppSpacingRef",
+      "contextHint": [
+        "appSpacingRef"
+      ]
+    },
+    {
+      "file": "lib/components/indicators/indicator_use_cases.dart",
+      "line": 100,
+      "snippet": "SizedBox(height: AppSpacing.space24),",
+      "values": [
+        {
+          "arg": null,
+          "expr": "AppSpacing.space24",
+          "tokenRef": "space24",
+          "kind": "tokenRef"
+        }
+      ],
+      "unit": "px",
+      "kind": "AppSpacingRef",
+      "contextHint": [
+        "appSpacingRef"
+      ]
+    },
+    {
+      "file": "lib/components/indicators/indicator_use_cases.dart",
+      "line": 102,
+      "snippet": "SizedBox(height: AppSpacing.space16),",
+      "values": [
+        {
+          "arg": null,
+          "expr": "AppSpacing.space16",
+          "tokenRef": "space16",
+          "kind": "tokenRef"
+        }
+      ],
+      "unit": "px",
+      "kind": "AppSpacingRef",
+      "contextHint": [
+        "appSpacingRef"
+      ]
+    },
+    {
+      "file": "lib/components/indicators/indicator_use_cases.dart",
+      "line": 168,
+      "snippet": "const SizedBox(height: AppSpacing.space16),",
+      "values": [
+        {
+          "arg": null,
+          "expr": "AppSpacing.space16",
+          "tokenRef": "space16",
+          "kind": "tokenRef"
+        }
+      ],
+      "unit": "px",
+      "kind": "AppSpacingRef",
+      "contextHint": [
+        "appSpacingRef"
+      ]
+    },
+    {
+      "file": "lib/components/indicators/indicator_use_cases.dart",
+      "line": 198,
+      "snippet": "SizedBox(height: AppSpacing.space16),",
+      "values": [
+        {
+          "arg": null,
+          "expr": "AppSpacing.space16",
+          "tokenRef": "space16",
+          "kind": "tokenRef"
+        }
+      ],
+      "unit": "px",
+      "kind": "AppSpacingRef",
+      "contextHint": [
+        "appSpacingRef"
+      ]
+    },
+    {
+      "file": "lib/components/indicators/indicator_use_cases.dart",
+      "line": 203,
+      "snippet": "SizedBox(height: AppSpacing.space16),",
+      "values": [
+        {
+          "arg": null,
+          "expr": "AppSpacing.space16",
+          "tokenRef": "space16",
+          "kind": "tokenRef"
+        }
+      ],
+      "unit": "px",
+      "kind": "AppSpacingRef",
+      "contextHint": [
+        "appSpacingRef"
+      ]
+    },
+    {
+      "file": "lib/components/indicators/progress_use_cases.dart",
+      "line": 135,
+      "snippet": "padding: const EdgeInsets.all(24),",
+      "values": [
+        {
+          "arg": "#0",
+          "expr": "24",
+          "value": 24,
+          "kind": "literal"
+        }
+      ],
+      "unit": "px",
+      "kind": "EdgeInsets.all",
+      "contextHint": [
+        "edgeInsets"
+      ]
+    },
+    {
+      "file": "lib/components/indicators/progress_use_cases.dart",
+      "line": 20,
+      "snippet": "SizedBox(height: AppSpacing.space12),",
+      "values": [
+        {
+          "arg": "height",
+          "expr": "AppSpacing.space12",
+          "tokenRef": "space12",
+          "kind": "tokenRef"
+        }
+      ],
+      "unit": "px",
+      "kind": "SizedBox",
+      "contextHint": [
+        "sizedBox",
+        "appSpacingRef"
+      ]
+    },
+    {
+      "file": "lib/components/indicators/progress_use_cases.dart",
+      "line": 22,
+      "snippet": "SizedBox(height: AppSpacing.space12),",
+      "values": [
+        {
+          "arg": "height",
+          "expr": "AppSpacing.space12",
+          "tokenRef": "space12",
+          "kind": "tokenRef"
+        }
+      ],
+      "unit": "px",
+      "kind": "SizedBox",
+      "contextHint": [
+        "sizedBox",
+        "appSpacingRef"
+      ]
+    },
+    {
+      "file": "lib/components/indicators/progress_use_cases.dart",
+      "line": 24,
+      "snippet": "SizedBox(height: AppSpacing.space12),",
+      "values": [
+        {
+          "arg": "height",
+          "expr": "AppSpacing.space12",
+          "tokenRef": "space12",
+          "kind": "tokenRef"
+        }
+      ],
+      "unit": "px",
+      "kind": "SizedBox",
+      "contextHint": [
+        "sizedBox",
+        "appSpacingRef"
+      ]
+    },
+    {
+      "file": "lib/components/indicators/progress_use_cases.dart",
+      "line": 26,
+      "snippet": "SizedBox(height: AppSpacing.space12),",
+      "values": [
+        {
+          "arg": "height",
+          "expr": "AppSpacing.space12",
+          "tokenRef": "space12",
+          "kind": "tokenRef"
+        }
+      ],
+      "unit": "px",
+      "kind": "SizedBox",
+      "contextHint": [
+        "sizedBox",
+        "appSpacingRef"
+      ]
+    },
+    {
+      "file": "lib/components/indicators/progress_use_cases.dart",
+      "line": 48,
+      "snippet": "const SizedBox(height: AppSpacing.space12),",
+      "values": [
+        {
+          "arg": "height",
+          "expr": "AppSpacing.space12",
+          "tokenRef": "space12",
+          "kind": "tokenRef"
+        }
+      ],
+      "unit": "px",
+      "kind": "SizedBox",
+      "contextHint": [
+        "sizedBox",
+        "appSpacingRef"
+      ]
+    },
+    {
+      "file": "lib/components/indicators/progress_use_cases.dart",
+      "line": 51,
+      "snippet": "const SizedBox(height: AppSpacing.space12),",
+      "values": [
+        {
+          "arg": "height",
+          "expr": "AppSpacing.space12",
+          "tokenRef": "space12",
+          "kind": "tokenRef"
+        }
+      ],
+      "unit": "px",
+      "kind": "SizedBox",
+      "contextHint": [
+        "sizedBox",
+        "appSpacingRef"
+      ]
+    },
+    {
+      "file": "lib/components/indicators/progress_use_cases.dart",
+      "line": 110,
+      "snippet": "SizedBox(height: AppSpacing.space16),",
+      "values": [
+        {
+          "arg": "height",
+          "expr": "AppSpacing.space16",
+          "tokenRef": "space16",
+          "kind": "tokenRef"
+        }
+      ],
+      "unit": "px",
+      "kind": "SizedBox",
+      "contextHint": [
+        "sizedBox",
+        "appSpacingRef"
+      ]
+    },
+    {
+      "file": "lib/components/indicators/progress_use_cases.dart",
+      "line": 115,
+      "snippet": "SizedBox(height: AppSpacing.space16),",
+      "values": [
+        {
+          "arg": "height",
+          "expr": "AppSpacing.space16",
+          "tokenRef": "space16",
+          "kind": "tokenRef"
+        }
+      ],
+      "unit": "px",
+      "kind": "SizedBox",
+      "contextHint": [
+        "sizedBox",
+        "appSpacingRef"
+      ]
+    },
+    {
+      "file": "lib/components/indicators/progress_use_cases.dart",
+      "line": 68,
+      "snippet": "spacing: 24,",
+      "values": [
+        {
+          "arg": "spacing",
+          "expr": "24",
+          "value": 24,
+          "kind": "literal"
+        }
+      ],
+      "unit": "px",
+      "kind": "PropLiteral:spacing",
+      "contextHint": [
+        "rawPropLiteral"
+      ]
+    },
+    {
+      "file": "lib/components/indicators/progress_use_cases.dart",
+      "line": 69,
+      "snippet": "runSpacing: 24,",
+      "values": [
+        {
+          "arg": "runSpacing",
+          "expr": "24",
+          "value": 24,
+          "kind": "literal"
+        }
+      ],
+      "unit": "px",
+      "kind": "PropLiteral:runSpacing",
+      "contextHint": [
+        "rawPropLiteral"
+      ]
+    },
+    {
+      "file": "lib/components/indicators/progress_use_cases.dart",
+      "line": 86,
+      "snippet": "spacing: 24,",
+      "values": [
+        {
+          "arg": "spacing",
+          "expr": "24",
+          "value": 24,
+          "kind": "literal"
+        }
+      ],
+      "unit": "px",
+      "kind": "PropLiteral:spacing",
+      "contextHint": [
+        "rawPropLiteral"
+      ]
+    },
+    {
+      "file": "lib/components/indicators/progress_use_cases.dart",
+      "line": 87,
+      "snippet": "runSpacing: 24,",
+      "values": [
+        {
+          "arg": "runSpacing",
+          "expr": "24",
+          "value": 24,
+          "kind": "literal"
+        }
+      ],
+      "unit": "px",
+      "kind": "PropLiteral:runSpacing",
+      "contextHint": [
+        "rawPropLiteral"
+      ]
+    },
+    {
+      "file": "lib/components/indicators/progress_use_cases.dart",
+      "line": 20,
+      "snippet": "SizedBox(height: AppSpacing.space12),",
+      "values": [
+        {
+          "arg": null,
+          "expr": "AppSpacing.space12",
+          "tokenRef": "space12",
+          "kind": "tokenRef"
+        }
+      ],
+      "unit": "px",
+      "kind": "AppSpacingRef",
+      "contextHint": [
+        "appSpacingRef"
+      ]
+    },
+    {
+      "file": "lib/components/indicators/progress_use_cases.dart",
+      "line": 22,
+      "snippet": "SizedBox(height: AppSpacing.space12),",
+      "values": [
+        {
+          "arg": null,
+          "expr": "AppSpacing.space12",
+          "tokenRef": "space12",
+          "kind": "tokenRef"
+        }
+      ],
+      "unit": "px",
+      "kind": "AppSpacingRef",
+      "contextHint": [
+        "appSpacingRef"
+      ]
+    },
+    {
+      "file": "lib/components/indicators/progress_use_cases.dart",
+      "line": 24,
+      "snippet": "SizedBox(height: AppSpacing.space12),",
+      "values": [
+        {
+          "arg": null,
+          "expr": "AppSpacing.space12",
+          "tokenRef": "space12",
+          "kind": "tokenRef"
+        }
+      ],
+      "unit": "px",
+      "kind": "AppSpacingRef",
+      "contextHint": [
+        "appSpacingRef"
+      ]
+    },
+    {
+      "file": "lib/components/indicators/progress_use_cases.dart",
+      "line": 26,
+      "snippet": "SizedBox(height: AppSpacing.space12),",
+      "values": [
+        {
+          "arg": null,
+          "expr": "AppSpacing.space12",
+          "tokenRef": "space12",
+          "kind": "tokenRef"
+        }
+      ],
+      "unit": "px",
+      "kind": "AppSpacingRef",
+      "contextHint": [
+        "appSpacingRef"
+      ]
+    },
+    {
+      "file": "lib/components/indicators/progress_use_cases.dart",
+      "line": 48,
+      "snippet": "const SizedBox(height: AppSpacing.space12),",
+      "values": [
+        {
+          "arg": null,
+          "expr": "AppSpacing.space12",
+          "tokenRef": "space12",
+          "kind": "tokenRef"
+        }
+      ],
+      "unit": "px",
+      "kind": "AppSpacingRef",
+      "contextHint": [
+        "appSpacingRef"
+      ]
+    },
+    {
+      "file": "lib/components/indicators/progress_use_cases.dart",
+      "line": 51,
+      "snippet": "const SizedBox(height: AppSpacing.space12),",
+      "values": [
+        {
+          "arg": null,
+          "expr": "AppSpacing.space12",
+          "tokenRef": "space12",
+          "kind": "tokenRef"
+        }
+      ],
+      "unit": "px",
+      "kind": "AppSpacingRef",
+      "contextHint": [
+        "appSpacingRef"
+      ]
+    },
+    {
+      "file": "lib/components/indicators/progress_use_cases.dart",
+      "line": 110,
+      "snippet": "SizedBox(height: AppSpacing.space16),",
+      "values": [
+        {
+          "arg": null,
+          "expr": "AppSpacing.space16",
+          "tokenRef": "space16",
+          "kind": "tokenRef"
+        }
+      ],
+      "unit": "px",
+      "kind": "AppSpacingRef",
+      "contextHint": [
+        "appSpacingRef"
+      ]
+    },
+    {
+      "file": "lib/components/indicators/progress_use_cases.dart",
+      "line": 115,
+      "snippet": "SizedBox(height: AppSpacing.space16),",
+      "values": [
+        {
+          "arg": null,
+          "expr": "AppSpacing.space16",
+          "tokenRef": "space16",
+          "kind": "tokenRef"
+        }
+      ],
+      "unit": "px",
+      "kind": "AppSpacingRef",
+      "contextHint": [
+        "appSpacingRef"
+      ]
+    }
+  ],
+  "_summary": {
+    "dir": "indicators",
+    "fileCount": 6,
+    "totalUsages": 64,
+    "distinctValues": [
+      0,
+      2,
+      4,
+      6,
+      8,
+      12,
+      24,
+      32,
+      200
+    ],
+    "valueFrequency": {
+      "24": 10,
+      "6": 2,
+      "32": 2,
+      "0": 1,
+      "2": 1,
+      "4": 1,
+      "8": 1,
+      "12": 1,
+      "200": 1
+    },
+    "tokenRefFrequency": {
+      "space16": 17,
+      "space12": 14,
+      "space24": 4,
+      "space4": 4,
+      "space8": 2
+    },
+    "suspiciousItems": [
+      {
+        "file": "lib/components/indicators/app_progress.dart",
+        "line": 120,
+        "kind": "SizedBox",
+        "value": 6,
+        "reason": "off-scale literal",
+        "snippet": "const SizedBox(height: 6),"
+      },
+      {
+        "file": "lib/components/indicators/app_progress_tracker.dart",
+        "line": 247,
+        "kind": "SizedBox",
+        "value": 2,
+        "reason": "off-scale literal",
+        "snippet": "const SizedBox(height: 2),"
+      },
+      {
+        "file": "lib/components/indicators/indicator_use_cases.dart",
+        "line": 144,
+        "kind": "SizedBox",
+        "value": 200,
+        "reason": "off-scale literal",
+        "snippet": "SizedBox("
+      }
+    ],
+    "suspiciousCount": 3
+  }
+}
