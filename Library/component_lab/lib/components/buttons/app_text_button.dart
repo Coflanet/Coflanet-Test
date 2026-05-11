@@ -67,23 +67,26 @@ class AppTextButton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final fg = _foreground();
-    return InkWell(
-      onTap: onPressed,
-      child: Padding(
-        padding: _padding,
-        child: Row(
-          mainAxisSize: MainAxisSize.min,
-          children: [
-            if (leftIcon != null) ...[
-              Icon(leftIcon, size: _iconSize, color: fg),
-              SizedBox(width: _gap),
+    return Material(
+      color: Colors.transparent,
+      child: InkWell(
+        onTap: onPressed,
+        child: Padding(
+          padding: _padding,
+          child: Row(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              if (leftIcon != null) ...[
+                Icon(leftIcon, size: _iconSize, color: fg),
+                SizedBox(width: _gap),
+              ],
+              Text(label, style: _textStyle.copyWith(color: fg)),
+              if (rightIcon != null) ...[
+                SizedBox(width: _gap),
+                Icon(rightIcon, size: _iconSize, color: fg),
+              ],
             ],
-            Text(label, style: _textStyle.copyWith(color: fg)),
-            if (rightIcon != null) ...[
-              SizedBox(width: _gap),
-              Icon(rightIcon, size: _iconSize, color: fg),
-            ],
-          ],
+          ),
         ),
       ),
     );

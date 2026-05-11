@@ -104,7 +104,7 @@ class _CategoryChip extends StatelessWidget {
     if (isActive) {
       bgColor = isNormal
           ? AppColor.colorGlobalCoolNeutral10
-          : AppColor.colorGlobalCoolNeutral10;
+          : AppColor.primaryNormal;
       textColor = AppColor.colorGlobalCommon100;
       border = null;
     } else {

@@ -182,6 +182,15 @@ class AppRatioBoxVertical extends StatelessWidget {
 
     return LayoutBuilder(
       builder: (context, constraints) {
+        assert(
+          constraints.maxHeight.isFinite,
+          'AppRatioBoxVertical는 부모로부터 한정된 maxHeight를 받아야 합니다. '
+          'Column/ListView 등 unbounded 부모 직속에 두지 말고 SizedBox/Expanded 등으로 높이를 제한하세요.',
+        );
+        if (!constraints.maxHeight.isFinite) {
+          return const SizedBox.shrink();
+        }
+
         // 사용 가능한 높이 기준으로 가로 폭 계산
         final height = constraints.maxHeight;
         final width = height * ratio.value;

@@ -29,7 +29,6 @@ class AppAccordion extends StatefulWidget {
     this.leading,
     this.initiallyExpanded = false,
     this.isComplete = false,
-    this.fillWidth = false,
     this.padding = AppAccordionPadding.large,
     this.onExpansionChanged,
   });
@@ -40,7 +39,6 @@ class AppAccordion extends StatefulWidget {
   final Widget? leading;
   final bool initiallyExpanded;
   final bool isComplete;
-  final bool fillWidth;
   final AppAccordionPadding padding;
   final ValueChanged<bool>? onExpansionChanged;
 

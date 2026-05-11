@@ -7,21 +7,6 @@ import '../../foundation/app_shadow.dart';
 import '../../foundation/app_spacing.dart';
 import '../../foundation/app_text_style.dart';
 
-/// Bottom Sheet 리사이즈 모드 — Figma `Modal/Bottom Sheet` Resize variant.
-enum AppBottomSheetResize {
-  /// 콘텐츠에 맞춤
-  hug,
-
-  /// 유동적 높이
-  flexible,
-
-  /// 전체 높이
-  fill,
-
-  /// 고정 높이
-  fixed,
-}
-
 /// Bottom Sheet — Figma `Modal/Bottom Sheet`.
 ///
 /// Variant: Bottom, Size=Medium, Resize, Custom

@@ -16,13 +16,15 @@ class AppShadows {
   // PRIMARY (Violet rgb(101,65,242)) SHADOWS — 브랜드 강조용
   // ═══════════════════════════════════════════════════════════════
 
-  /// Primary Normal — 가벼운 보라 그림자 (단일)
-  static const BoxShadow shadowPrimaryNormal = BoxShadow(
-    color: Color.fromRGBO(101, 65, 242, 0.04),
-    offset: Offset(0, 1),
-    blurRadius: 2,
-    spreadRadius: 0,
-  );
+  /// Primary Normal — 가벼운 보라 그림자
+  static const List<BoxShadow> shadowPrimaryNormal = [
+    BoxShadow(
+      color: Color.fromRGBO(101, 65, 242, 0.04),
+      offset: Offset(0, 1),
+      blurRadius: 2,
+      spreadRadius: 0,
+    ),
+  ];
 
   static const List<BoxShadow> shadowPrimaryNormalList = [
     BoxShadow(

@@ -56,9 +56,11 @@ class _AppSelectState<T> extends State<AppSelect<T>> {
   }
 
   void _open() {
+    if (!mounted) return;
+    final renderObject = context.findRenderObject();
+    if (renderObject is! RenderBox) return;
     final overlay = Overlay.of(context);
-    final renderBox = context.findRenderObject() as RenderBox;
-    final size = renderBox.size;
+    final size = renderObject.size;
 
     _overlayEntry = OverlayEntry(
       builder: (_) => Stack(

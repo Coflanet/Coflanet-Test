@@ -33,6 +33,7 @@ class AppReview extends StatelessWidget {
     this.onHelpfulTap,
     this.onReportTap,
     this.onMoreTap,
+    this.avatar,
   });
 
   final double rating;
@@ -40,6 +41,9 @@ class AppReview extends StatelessWidget {
   final String date;
   final String content;
   final AppReviewLayout layout;
+
+  /// `full` 레이아웃 좌측 avatar 슬롯. null이면 기본 person placeholder.
+  final Widget? avatar;
 
   /// 본문 옆/아래에 표시할 썸네일.
   /// - compact: 첫 1개
@@ -173,6 +177,7 @@ class AppReview extends StatelessWidget {
             author: author,
             date: date,
             onReportTap: onReportTap,
+            avatar: avatar,
           ),
           if (thumbnails.isNotEmpty) ...[
             const SizedBox(height: AppSpacing.space8),
@@ -260,30 +265,35 @@ class _AvatarStarRow extends StatelessWidget {
     required this.author,
     required this.date,
     this.onReportTap,
+    this.avatar,
   });
 
   final double rating;
   final String author;
   final String date;
   final VoidCallback? onReportTap;
+  final Widget? avatar;
 
   @override
   Widget build(BuildContext context) {
     return Row(
       children: [
-        Container(
+        SizedBox(
           width: 32,
           height: 32,
-          decoration: BoxDecoration(
-            color: AppColor.lineSolidNormal,
-            shape: BoxShape.circle,
-          ),
-          alignment: Alignment.center,
-          child: Icon(
-            Icons.person_rounded,
-            size: 18,
-            color: AppColor.labelAlternative,
-          ),
+          child: avatar ??
+              Container(
+                decoration: BoxDecoration(
+                  color: AppColor.lineSolidNormal,
+                  shape: BoxShape.circle,
+                ),
+                alignment: Alignment.center,
+                child: Icon(
+                  Icons.person_rounded,
+                  size: 18,
+                  color: AppColor.labelAlternative,
+                ),
+              ),
         ),
         const SizedBox(width: AppSpacing.space8),
         Expanded(

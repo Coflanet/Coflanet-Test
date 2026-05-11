@@ -73,7 +73,6 @@ final List<WidgetbookComponent> tableUseCases = [
                 const Text('\$29'),
               ],
             ],
-            contentType: AppTableContentType.input,
           ),
         ),
       ),
