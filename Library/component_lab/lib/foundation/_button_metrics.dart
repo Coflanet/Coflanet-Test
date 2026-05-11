@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 
+import '../foundation/app_spacing.dart';
+
 import 'app_text_style.dart';
 
 /// 버튼 사이즈별 공통 메트릭 (Figma 측정).
@@ -34,7 +36,7 @@ class AppButtonMetrics {
   /// `Large` — 52h, Figma `Button/Solid/Large`.
   static const AppButtonMetrics large = AppButtonMetrics(
     height: 52,
-    padding: EdgeInsets.symmetric(horizontal: 28, vertical: 12),
+    padding: EdgeInsets.symmetric(horizontal: 28, vertical: AppSpacing.space12),
     gap: 6,
     iconSize: 20,
     textStyle: AppTextStyles.body1NormalBold,
@@ -43,7 +45,7 @@ class AppButtonMetrics {
   /// `Medium` — 40h.
   static const AppButtonMetrics medium = AppButtonMetrics(
     height: 40,
-    padding: EdgeInsets.symmetric(horizontal: 20, vertical: 9),
+    padding: EdgeInsets.symmetric(horizontal: AppSpacing.space20, vertical: 9),
     gap: 5,
     iconSize: 18,
     textStyle: AppTextStyles.body2NormalBold,
@@ -52,7 +54,7 @@ class AppButtonMetrics {
   /// `Small` — 32h.
   static const AppButtonMetrics small = AppButtonMetrics(
     height: 32,
-    padding: EdgeInsets.symmetric(horizontal: 14, vertical: 7),
+    padding: EdgeInsets.symmetric(horizontal: AppSpacing.space14, vertical: 7),
     gap: 4,
     iconSize: 16,
     textStyle: AppTextStyles.label2Bold,

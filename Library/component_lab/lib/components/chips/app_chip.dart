@@ -127,7 +127,7 @@ class AppChip extends StatelessWidget {
     final isSm = size == AppChipTagSize.sm;
     final padding = isSm
         ? const EdgeInsets.symmetric(
-            horizontal: AppSpacing.space8, vertical: 4)
+            horizontal: AppSpacing.space8, vertical: AppSpacing.space4)
         : const EdgeInsets.symmetric(
             horizontal: AppSpacing.space12, vertical: 6);
     final textStyle =
@@ -154,7 +154,7 @@ class AppChip extends StatelessWidget {
               behavior: HitTestBehavior.opaque,
               onTap: onDelete,
               child: Padding(
-                padding: const EdgeInsets.all(4),
+                padding: const EdgeInsets.all(AppSpacing.space4),
                 child: Icon(Icons.close_rounded,
                     size: iconSize, color: colors.fg),
               ),

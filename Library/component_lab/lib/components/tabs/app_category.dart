@@ -127,7 +127,7 @@ class _CategoryChip extends StatelessWidget {
       onTap: onTap,
       child: Container(
         height: height,
-        padding: const EdgeInsets.symmetric(horizontal: 16),
+        padding: const EdgeInsets.symmetric(horizontal: AppSpacing.space16),
         decoration: BoxDecoration(
           color: bgColor,
           border: border,

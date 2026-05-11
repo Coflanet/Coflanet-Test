@@ -106,7 +106,7 @@ class AppTooltipExtended extends StatelessWidget {
                 ),
             ],
           ),
-          const SizedBox(height: 4),
+          const SizedBox(height: AppSpacing.space4),
           Text(
             description,
             style: AppTextStyles.caption1Regular.copyWith(

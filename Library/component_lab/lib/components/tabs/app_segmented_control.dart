@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 
 import '../../foundation/app_color.dart';
+import '../../foundation/app_spacing.dart';
 import '../../foundation/app_radius.dart';
 import '../../foundation/app_text_style.dart';
 
@@ -96,7 +97,7 @@ class AppSegmentedControl extends StatelessWidget {
                             ? AppColor.colorGlobalCoolNeutral10
                             : AppColor.colorGlobalCoolNeutral50,
                       ),
-                      const SizedBox(width: 4),
+                      const SizedBox(width: AppSpacing.space4),
                     ],
                     Text(
                       items[i].label,

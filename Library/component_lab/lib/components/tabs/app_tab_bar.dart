@@ -97,7 +97,7 @@ class AppTabBar extends StatelessWidget {
                 ),
                 if (trailingIcon != null)
                   Padding(
-                    padding: const EdgeInsets.symmetric(horizontal: 12),
+                    padding: const EdgeInsets.symmetric(horizontal: AppSpacing.space12),
                     child: IconButton(
                       icon: Icon(trailingIcon, size: 24),
                       onPressed: onTrailingPressed,

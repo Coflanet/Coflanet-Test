@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 
+import '../foundation/app_spacing.dart';
+
 /// 카탈로그 use_case에서 공통으로 쓰는 컬러 카드 위젯.
 class Swatch extends StatelessWidget {
   final String name;
@@ -28,7 +30,7 @@ class Swatch extends StatelessWidget {
         borderRadius: BorderRadius.circular(12),
         border: Border.all(color: Colors.black12, width: 0.5),
       ),
-      padding: const EdgeInsets.all(12),
+      padding: const EdgeInsets.all(AppSpacing.space12),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -43,7 +45,7 @@ class Swatch extends StatelessWidget {
             maxLines: 2,
             overflow: TextOverflow.ellipsis,
           ),
-          const SizedBox(height: 8),
+          const SizedBox(height: AppSpacing.space8),
           Text(
             _toHex(color),
             style: TextStyle(
@@ -71,7 +73,7 @@ class Swatch extends StatelessWidget {
 /// 색상 그리드 — use_case 빌더에서 바로 호출.
 Widget swatchGrid(List<(String, Color)> items, {int crossAxisCount = 4}) {
   return Padding(
-    padding: const EdgeInsets.all(16),
+    padding: const EdgeInsets.all(AppSpacing.space16),
     child: GridView.count(
       crossAxisCount: crossAxisCount,
       crossAxisSpacing: 8,

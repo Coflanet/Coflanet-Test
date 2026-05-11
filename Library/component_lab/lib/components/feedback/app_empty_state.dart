@@ -132,7 +132,7 @@ class _OutlinedAction extends StatelessWidget {
         onTap: onPressed,
         borderRadius: BorderRadius.circular(AppRadius.radius10),
         child: Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 9),
+          padding: const EdgeInsets.symmetric(horizontal: AppSpacing.space20, vertical: 9),
           child: Text(
             label,
             style: AppTextStyles.body2NormalMedium.copyWith(

@@ -118,7 +118,7 @@ class AppReview extends StatelessWidget {
               mainAxisSize: MainAxisSize.min,
               children: [
                 _StarRow(rating: rating, author: author, date: date),
-                const SizedBox(height: 4),
+                const SizedBox(height: AppSpacing.space4),
                 Text(
                   content,
                   style: AppTextStyles.body2NormalRegular.copyWith(
@@ -225,7 +225,7 @@ class AppReview extends StatelessWidget {
             overflow: TextOverflow.ellipsis,
           ),
           if (onMoreTap != null) ...[
-            const SizedBox(height: 4),
+            const SizedBox(height: AppSpacing.space4),
             GestureDetector(
               behavior: HitTestBehavior.opaque,
               onTap: onMoreTap,
@@ -348,7 +348,7 @@ class _AvatarStarRow extends StatelessWidget {
                       ),
                     ),
                   ),
-                  const SizedBox(width: 4),
+                  const SizedBox(width: AppSpacing.space4),
                   Text(
                     rating.toStringAsFixed(1),
                     style: AppTextStyles.label2Bold.copyWith(
@@ -442,7 +442,7 @@ class _HelpfulRow extends StatelessWidget {
           behavior: HitTestBehavior.opaque,
           onTap: onTap,
           child: Container(
-            padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
+            padding: const EdgeInsets.symmetric(horizontal: AppSpacing.space8, vertical: AppSpacing.space4),
             decoration: BoxDecoration(
               color: AppColor.lineSolidNeutral,
               borderRadius: BorderRadius.circular(AppRadius.radius6),
@@ -455,7 +455,7 @@ class _HelpfulRow extends StatelessWidget {
                   size: 12,
                   color: AppColor.labelAlternative,
                 ),
-                const SizedBox(width: 4),
+                const SizedBox(width: AppSpacing.space4),
                 Text(
                   '${count ?? 0}',
                   style: AppTextStyles.caption1Regular.copyWith(

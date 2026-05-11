@@ -222,7 +222,7 @@ class _Header extends StatelessWidget {
                   ],
                 ],
               ),
-              const SizedBox(height: 4),
+              const SizedBox(height: AppSpacing.space4),
               Text(
                 name,
                 style: AppTextStyles.body2NormalMedium.copyWith(
@@ -242,7 +242,7 @@ class _Header extends StatelessWidget {
                           color: AppColor.statusNegative,
                         ),
                       ),
-                      const SizedBox(width: 4),
+                      const SizedBox(width: AppSpacing.space4),
                     ],
                     Text(
                       formatPrice(price!),

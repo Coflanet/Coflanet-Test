@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 
 import '../../foundation/app_color_theme.dart';
+import '../../foundation/app_spacing.dart';
 import '../../foundation/app_shadow.dart';
 
 /// Floating Action Button — Figma `Button/Floating Action`.
@@ -33,7 +34,7 @@ class AppFloatingActionButton extends StatelessWidget {
     final body = Container(
       width: 56,
       height: 56,
-      padding: const EdgeInsets.all(16),
+      padding: const EdgeInsets.all(AppSpacing.space16),
       decoration: BoxDecoration(
         color: fill,
         shape: BoxShape.circle,

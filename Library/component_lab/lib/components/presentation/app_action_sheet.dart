@@ -158,7 +158,7 @@ class AppActionSheet extends StatelessWidget {
           children: [
             // Drag handle
             Padding(
-              padding: const EdgeInsets.only(top: 8, bottom: 4),
+              padding: const EdgeInsets.only(top: AppSpacing.space8, bottom: AppSpacing.space4),
               child: Container(
                 width: 36,
                 height: 4,
@@ -210,7 +210,7 @@ class _Header extends StatelessWidget {
                 color: AppColor.labelNeutral,
               ),
             ),
-          if (title != null && message != null) const SizedBox(height: 4),
+          if (title != null && message != null) const SizedBox(height: AppSpacing.space4),
           if (message != null)
             Text(
               message!,

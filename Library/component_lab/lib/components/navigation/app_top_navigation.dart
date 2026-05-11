@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 
 import '../../foundation/app_color.dart';
+import '../../foundation/app_spacing.dart';
 import '../../foundation/app_text_style.dart';
 import 'app_push_badge_dot.dart';
 
@@ -228,7 +229,7 @@ class AppTopNavigation extends StatelessWidget {
                   // 큰 제목
                   if (showTitle && title != null)
                     Padding(
-                      padding: const EdgeInsets.symmetric(horizontal: 4),
+                      padding: const EdgeInsets.symmetric(horizontal: AppSpacing.space4),
                       child: SizedBox(
                         height: _iconButtonSize,
                         child: Align(

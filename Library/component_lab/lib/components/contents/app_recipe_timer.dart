@@ -65,7 +65,7 @@ class AppRecipeStepper extends StatelessWidget {
               color: AppColor.lineSolidNeutral,
               borderRadius: BorderRadius.circular(AppRadius.radiusPill),
             ),
-            padding: const EdgeInsets.symmetric(horizontal: 6, vertical: 4),
+            padding: const EdgeInsets.symmetric(horizontal: 6, vertical: AppSpacing.space4),
             child: Row(
               mainAxisSize: MainAxisSize.min,
               children: [
@@ -74,10 +74,10 @@ class AppRecipeStepper extends StatelessWidget {
                   onTap: onChanged == null ? null : () => _delta(1),
                 ),
                 Container(
-                  margin: const EdgeInsets.symmetric(horizontal: 4),
+                  margin: const EdgeInsets.symmetric(horizontal: AppSpacing.space4),
                   padding: const EdgeInsets.symmetric(
                     horizontal: 10,
-                    vertical: 4,
+                    vertical: AppSpacing.space4,
                   ),
                   decoration: BoxDecoration(
                     color: AppColor.backgroundNormalNormal,

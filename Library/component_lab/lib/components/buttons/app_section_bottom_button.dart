@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 
 import '../../foundation/app_color_theme.dart';
+import '../../foundation/app_spacing.dart';
 import '../../foundation/app_text_style.dart';
 
 /// Section Bottom 버튼 종류 — Figma `Button/Section Bottom/*` 3종.
@@ -96,7 +97,7 @@ class AppSectionBottomButton extends StatelessWidget {
             ),
           ),
           alignment: Alignment.center,
-          padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 4),
+          padding: const EdgeInsets.symmetric(horizontal: AppSpacing.space24, vertical: AppSpacing.space4),
           child: Material(
             color: Colors.transparent,
             child: InkWell(
@@ -153,7 +154,7 @@ class AppSectionBottomButton extends StatelessWidget {
                     color: altColor,
                   ),
                 ),
-                const SizedBox(width: 4),
+                const SizedBox(width: AppSpacing.space4),
                 Icon(
                   isExpanded
                       ? Icons.keyboard_arrow_up_rounded
