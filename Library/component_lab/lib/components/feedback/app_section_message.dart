@@ -161,7 +161,7 @@ class AppSectionMessage extends StatelessWidget {
           ),
         ),
         if (description != null) ...[
-          const SizedBox(height: 4),
+          const SizedBox(height: AppSpacing.space4),
           Text(
             description!,
             style: AppTextStyles.label1NormalRegular.copyWith(
@@ -218,7 +218,7 @@ class _BottomActionButton extends StatelessWidget {
         child: Padding(
           padding: const EdgeInsets.symmetric(
             horizontal: 6,
-            vertical: 4,
+            vertical: AppSpacing.space4,
           ),
           child: Text(
             action.label,
@@ -249,7 +249,7 @@ class _TrailingButton extends StatelessWidget {
         onTap: onTap,
         borderRadius: BorderRadius.circular(AppRadius.radiusPill),
         child: Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 6, vertical: 4),
+          padding: const EdgeInsets.symmetric(horizontal: 6, vertical: AppSpacing.space4),
           child: Text(
             label,
             style: AppTextStyles.label1NormalBold.copyWith(color: color),

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 
 import '../../foundation/app_color.dart';
+import '../../foundation/app_spacing.dart';
 import '../../foundation/app_text_style.dart';
 
 /// Slider 컴포넌트 — Figma Selection and Input 페이지.
@@ -40,7 +41,7 @@ class AppSlider extends StatelessWidget {
       children: [
         if (label != null || showValue)
           Padding(
-            padding: const EdgeInsets.only(bottom: 8),
+            padding: const EdgeInsets.only(bottom: AppSpacing.space8),
             child: Row(
               children: [
                 if (label != null)

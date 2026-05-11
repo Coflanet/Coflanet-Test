@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 
 import '../../foundation/app_color.dart';
+import '../../foundation/app_spacing.dart';
 import '../../foundation/app_radius.dart';
 import '../../foundation/app_text_style.dart';
 
@@ -79,7 +80,7 @@ class AppGauge extends StatelessWidget {
 
         // 라벨
         if (showLabel && labels != null && labels!.length == maxValue) ...[
-          const SizedBox(height: 8),
+          const SizedBox(height: AppSpacing.space8),
           Row(
             children: List.generate(maxValue, (i) {
               final isActive = i == value - 1;

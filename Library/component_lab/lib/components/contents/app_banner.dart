@@ -140,7 +140,7 @@ class AppBanner extends StatelessWidget {
                   overflow: TextOverflow.ellipsis,
                 ),
                 if (body != null) ...[
-                  const SizedBox(height: 4),
+                  const SizedBox(height: AppSpacing.space4),
                   Text(
                     body!,
                     style: AppTextStyles.caption1Regular.copyWith(

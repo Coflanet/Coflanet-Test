@@ -203,12 +203,12 @@ class _Connector extends StatelessWidget {
     return horizontal
         ? Container(
             height: 2,
-            margin: const EdgeInsets.symmetric(horizontal: 4),
+            margin: const EdgeInsets.symmetric(horizontal: AppSpacing.space4),
             color: color,
           )
         : Container(
             width: 2,
-            margin: const EdgeInsets.symmetric(vertical: 4),
+            margin: const EdgeInsets.symmetric(vertical: AppSpacing.space4),
             color: color,
           );
   }

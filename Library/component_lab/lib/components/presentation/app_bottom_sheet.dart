@@ -42,7 +42,7 @@ class AppBottomSheet extends StatelessWidget {
           // Handle
           if (showHandle)
             Padding(
-              padding: const EdgeInsets.only(top: 8, bottom: 4),
+              padding: const EdgeInsets.only(top: AppSpacing.space8, bottom: AppSpacing.space4),
               child: Container(
                 width: 36,
                 height: 4,

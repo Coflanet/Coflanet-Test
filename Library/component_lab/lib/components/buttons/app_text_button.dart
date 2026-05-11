@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 
 import '../../foundation/app_color.dart';
+import '../../foundation/app_spacing.dart';
 import '../../foundation/app_text_style.dart';
 
 /// Text 버튼 사이즈 — Figma는 Medium/Small 2개만.
@@ -39,7 +40,7 @@ class AppTextButton extends StatelessWidget {
 
   bool get _enabled => onPressed != null;
 
-  EdgeInsets get _padding => const EdgeInsets.symmetric(vertical: 4);
+  EdgeInsets get _padding => const EdgeInsets.symmetric(vertical: AppSpacing.space4);
   double get _gap => 10;
 
   double get _iconSize =>

@@ -80,7 +80,7 @@ class AppTasteChip extends StatelessWidget {
       onTap: onTap,
       child: Container(
         width: 60,
-        padding: const EdgeInsets.symmetric(vertical: 6, horizontal: 8),
+        padding: const EdgeInsets.symmetric(vertical: 6, horizontal: AppSpacing.space8),
         decoration: BoxDecoration(
           color: bg,
           borderRadius: BorderRadius.circular(AppRadius.radius8),

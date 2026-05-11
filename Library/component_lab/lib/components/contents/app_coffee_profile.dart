@@ -34,7 +34,7 @@ class AppCoffeeAttributeBar extends StatelessWidget {
   Widget build(BuildContext context) {
     final hasCompare = comparedValue != null;
     return Padding(
-      padding: const EdgeInsets.symmetric(vertical: 4),
+      padding: const EdgeInsets.symmetric(vertical: AppSpacing.space4),
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.center,
         children: [
@@ -57,7 +57,7 @@ class AppCoffeeAttributeBar extends StatelessWidget {
                   color: AppColor.primaryNormal,
                 ),
                 if (hasCompare) ...[
-                  const SizedBox(height: 4),
+                  const SizedBox(height: AppSpacing.space4),
                   _Track(
                     ratio: (comparedValue! / maxValue).clamp(0.0, 1.0),
                     color: AppColor.colorGlobalYellow50,
@@ -185,7 +185,7 @@ class _LegendDot extends StatelessWidget {
             color: AppColor.labelAlternative,
           ),
         ),
-        const SizedBox(width: 4),
+        const SizedBox(width: AppSpacing.space4),
         Container(
           width: 6,
           height: 6,
