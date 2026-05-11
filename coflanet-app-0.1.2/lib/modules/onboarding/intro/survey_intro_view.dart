@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:component_lab/component_lab.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
 import 'package:coflanet/constants/asset_constant.dart';
@@ -20,7 +21,8 @@ class SurveyIntroView extends GetView<SurveyController> {
         elevation: 0,
         leading: IconButton(
           icon: SvgPicture.asset(
-            AssetPath.iconArrowBack,
+            CoflanetIcons.arrowLeft,
+            package: 'component_lab',
             width: 24,
             height: 24,
             colorFilter: ColorFilter.mode(

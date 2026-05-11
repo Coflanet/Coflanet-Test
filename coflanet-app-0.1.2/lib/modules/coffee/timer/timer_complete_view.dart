@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:component_lab/component_lab.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
 import 'package:coflanet/constants/asset_constant.dart';
@@ -24,7 +25,8 @@ class TimerCompleteView extends GetView<CoffeeTimerController> {
         scrolledUnderElevation: 0,
         leading: IconButton(
           icon: SvgPicture.asset(
-            AssetPath.iconClose, // Close icon - navigates to Home
+            CoflanetIcons.close,
+            package: 'component_lab', // Close icon - navigates to Home
             width: 24,
             height: 24,
             colorFilter: ColorFilter.mode(

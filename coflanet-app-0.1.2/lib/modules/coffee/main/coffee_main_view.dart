@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:component_lab/component_lab.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
 import 'package:coflanet/constants/asset_constant.dart';
@@ -135,7 +136,8 @@ class CoffeeMainView extends GetView<CoffeeController> {
               ),
             ),
             SvgPicture.asset(
-              AssetPath.iconArrowForward,
+              CoflanetIcons.arrowRight,
+            package: 'component_lab',
               width: 20,
               height: 20,
               colorFilter: ColorFilter.mode(

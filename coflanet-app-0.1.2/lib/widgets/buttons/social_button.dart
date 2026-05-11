@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:component_lab/component_lab.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:coflanet/constants/asset_constant.dart';
 import 'package:coflanet/constants/style_constant.dart';
@@ -96,12 +97,15 @@ class SocialButton extends StatelessWidget {
   Widget _buildIcon() {
     switch (type) {
       case SocialButtonType.kakao:
-        return SvgPicture.asset(AssetPath.iconKakao, width: 24, height: 24);
+        return SvgPicture.asset(CoflanetIcons.logoKakao,
+            package: 'component_lab', width: 24, height: 24);
       case SocialButtonType.naver:
-        return SvgPicture.asset(AssetPath.iconNaver, width: 24, height: 24);
+        return SvgPicture.asset(CoflanetIcons.logoNaver,
+            package: 'component_lab', width: 24, height: 24);
       case SocialButtonType.apple:
         return SvgPicture.asset(
-          AssetPath.iconApple,
+          CoflanetIcons.logoApple,
+            package: 'component_lab',
           width: 24,
           height: 24,
           colorFilter: const ColorFilter.mode(Colors.white, BlendMode.srcIn),

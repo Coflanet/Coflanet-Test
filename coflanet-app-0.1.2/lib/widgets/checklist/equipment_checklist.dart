@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:component_lab/component_lab.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:coflanet/constants/asset_constant.dart';
 import 'package:coflanet/constants/color_constant.dart';
@@ -304,7 +305,8 @@ class EquipmentChecklist extends StatelessWidget {
       child: isChecked
           ? Center(
               child: SvgPicture.asset(
-                AssetPath.iconCheck,
+                CoflanetIcons.check,
+            package: 'component_lab',
                 width: compact ? 12 : 14,
                 height: compact ? 12 : 14,
                 colorFilter: const ColorFilter.mode(

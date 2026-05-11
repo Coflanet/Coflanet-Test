@@ -4,7 +4,6 @@ class AssetPath {
 
   // Base paths
   static const String _images = 'assets/images';
-  static const String _icons = 'assets/icons';
 
   // === Logo ===
   static const String logoMain = '$_images/logo_main.png';
@@ -38,17 +37,7 @@ class AssetPath {
   static const String timerStepPourover = '$_images/timer_step02_pourover.png';
 
   // === Icons ===
-  // TODO(design-system-migration): 아래 ic_*.svg 8종은 디자인 시스템 도입 이전 레거시.
-  // 디자인 시스템 마이그레이션(`component_lab` 패키지 도입) 완료 후
-  // `CoflanetIcons.arrowLeft`, `CoflanetIcons.logoKakao` 등으로 대체하고 이 파일에서 제거.
-  static const String iconArrowBack = '$_icons/ic_arrow_back.svg';
-  static const String iconArrowForward = '$_icons/ic_arrow_forward.svg';
-  static const String iconClose = '$_icons/ic_close.svg';
-  static const String iconCheck = '$_icons/ic_check.svg';
-  static const String iconSettings = '$_icons/ic_settings.svg';
-
-  // === Social Login Icons ===
-  static const String iconKakao = '$_icons/ic_kakao.svg';
-  static const String iconNaver = '$_icons/ic_naver.svg';
-  static const String iconApple = '$_icons/ic_apple.svg';
+  // 아이콘은 모두 component_lab 디자인 시스템 패키지로 마이그레이션 완료.
+  // `import 'package:component_lab/component_lab.dart';` 후
+  // `SvgPicture.asset(CoflanetIcons.arrowLeft, package: 'component_lab')` 형태로 사용.
 }

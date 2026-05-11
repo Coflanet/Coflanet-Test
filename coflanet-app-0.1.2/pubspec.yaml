@@ -11,6 +11,10 @@ dependencies:
     sdk: flutter
   cupertino_icons: ^1.0.8
 
+  # Coflanet Design System (Flutter 위젯·토큰·아이콘 단일 소스)
+  component_lab:
+    path: ../Library/component_lab
+
   # State Management & DI
   get: ^4.6.6
 
@@ -68,10 +72,11 @@ flutter:
   uses-material-design: true
 
   # Assets
+  # 아이콘은 component_lab 패키지(`Library/component_lab/assets/icons/`)에서
+  # `SvgPicture.asset(CoflanetIcons.xxx, package: 'component_lab')` 형태로 사용.
   assets:
     - .env
     - assets/images/
-    - assets/icons/
     - assets/fonts/
 
   fonts:
