@@ -5,13 +5,25 @@ import '../../foundation/app_radius.dart';
 import '../../foundation/app_spacing.dart';
 import '../../foundation/app_text_style.dart';
 
-/// Banner 레이아웃 — Figma `Contents/Card/Banner`.
+/// Banner 레이아웃 — Figma `banner` 5 variants.
+///
+/// Figma는 column(1/2) × ratio(3:2 / 16:9 / 9:21 / 1:1) 매트릭스로 변형을
+/// 정의. 코드에서는 각 변형을 시맨틱 이름으로 노출.
 enum AppBannerLayout {
-  /// 큰 배경 이미지 위에 텍스트 오버레이 — 메인 히어로용
+  /// 큰 배경 이미지 위에 텍스트 오버레이 — 정사각 히어로 (Figma 1col 3:2 근접).
   hero,
 
-  /// 좌측 텍스트 + 우측 작은 썸네일 — 리스트 카드용
+  /// 좌측 텍스트 + 우측 작은 썸네일 — 리스트 카드용.
   compact,
+
+  /// 와이드 히어로 (Figma `1col Ratio=16:9`).
+  wide,
+
+  /// 세로형 스토리 (Figma `1col Ratio=9:21`).
+  vertical,
+
+  /// 2열 그리드의 정사각 카드 (Figma `2col Ratio=1:1`).
+  square,
 }
 
 /// Banner — Figma `Contents/Card/Banner`.
@@ -54,17 +66,24 @@ class AppBanner extends StatelessWidget {
     return GestureDetector(
       behavior: HitTestBehavior.opaque,
       onTap: onTap,
-      child: layout == AppBannerLayout.hero
-          ? _buildHero(context)
-          : _buildCompact(context),
+      child: switch (layout) {
+        AppBannerLayout.hero => _buildHero(context, ratioOverride: null),
+        AppBannerLayout.compact => _buildCompact(context),
+        AppBannerLayout.wide =>
+          _buildHero(context, ratioOverride: 16 / 9),
+        AppBannerLayout.vertical =>
+          _buildHero(context, ratioOverride: 9 / 21),
+        AppBannerLayout.square =>
+          _buildHero(context, ratioOverride: 1),
+      },
     );
   }
 
-  Widget _buildHero(BuildContext context) {
+  Widget _buildHero(BuildContext context, {double? ratioOverride}) {
     return ClipRRect(
       borderRadius: BorderRadius.circular(AppRadius.radius12),
       child: AspectRatio(
-        aspectRatio: aspectRatio,
+        aspectRatio: ratioOverride ?? aspectRatio,
         child: Stack(
           fit: StackFit.expand,
           children: [

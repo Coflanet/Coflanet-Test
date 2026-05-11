@@ -14,13 +14,19 @@ enum AppCategoryVariant {
   alternative,
 }
 
-/// Category 사이즈.
+/// Category 사이즈 — Figma 4단계.
 enum AppCategorySize {
-  /// Medium
+  /// Large (48h)
+  large(48),
+
+  /// Medium (36h)
   medium(36),
 
-  /// Small
-  small(32);
+  /// Small (32h)
+  small(32),
+
+  /// XSmall (28h)
+  xsmall(28);
 
   const AppCategorySize(this.height);
   final double height;

@@ -145,11 +145,12 @@ class AppPreferenceItem extends StatefulWidget {
   /// 헤더 아래에 표시되는 요약 칩 라벨.
   final List<String> summaryTags;
 
-  /// 펼친 상태에서 보여줄 맛 선호도 칩들.
-  final List<AppTasteChip>? tasteChips;
+  /// 펼친 상태에서 보여줄 맛 선호도 칩들. `AppTasteChip` 권장이지만 임의의 chip
+  /// 위젯(`AppMiniChip` 등) 주입 가능.
+  final List<Widget>? tasteChips;
 
-  /// 펼친 상태에서 보여줄 향 선호 칩들.
-  final List<AppPreferenceFlavorChip>? flavorChips;
+  /// 펼친 상태에서 보여줄 향 선호 칩들. `AppPreferenceFlavorChip`/`AppMiniChip` 등.
+  final List<Widget>? flavorChips;
 
   final bool expanded;
   final AppPreferenceItemState state;

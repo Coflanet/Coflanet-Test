@@ -5,8 +5,11 @@ import '../../foundation/app_radius.dart';
 import '../../foundation/app_spacing.dart';
 import '../../foundation/app_text_style.dart';
 
-/// Review 레이아웃 — Figma `Contents/Review`.
+/// Review 레이아웃 — Figma `Contents/Review` 4 variants.
 enum AppReviewLayout {
+  /// 텍스트 전용 — 헤더(별점+작성자+날짜) + 본문만, 이미지 영역 없음.
+  textOnly,
+
   /// 컴팩트 — 한 줄 헤더(별점 + 작성자 + 날짜) + 본문 + 우측 1개 썸네일
   compact,
 
@@ -62,6 +65,8 @@ class AppReview extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     switch (layout) {
+      case AppReviewLayout.textOnly:
+        return _buildTextOnly(context);
       case AppReviewLayout.compact:
         return _buildCompact(context);
       case AppReviewLayout.multiImage:
@@ -69,6 +74,33 @@ class AppReview extends StatelessWidget {
       case AppReviewLayout.full:
         return _buildFull(context);
     }
+  }
+
+  Widget _buildTextOnly(BuildContext context) {
+    return Padding(
+      padding: const EdgeInsets.symmetric(
+        horizontal: AppSpacing.space16,
+        vertical: AppSpacing.space12,
+      ),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          _StarRow(rating: rating, author: author, date: date),
+          const SizedBox(height: AppSpacing.space8),
+          Text(
+            content,
+            style: AppTextStyles.body2NormalRegular.copyWith(
+              color: AppColor.labelNormal,
+            ),
+          ),
+          if (helpfulCount != null) ...[
+            const SizedBox(height: AppSpacing.space8),
+            _HelpfulRow(count: helpfulCount, onTap: onHelpfulTap),
+          ],
+        ],
+      ),
+    );
   }
 
   Widget _buildCompact(BuildContext context) {
