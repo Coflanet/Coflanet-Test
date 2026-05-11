@@ -4,6 +4,8 @@ import '../../foundation/app_color.dart';
 import '../../foundation/app_radius.dart';
 import '../../foundation/app_spacing.dart';
 import '../../foundation/app_text_style.dart';
+import '../../util/format.dart';
+import '../chips/app_mini_chip.dart';
 import 'app_coffee_profile.dart';
 
 /// Coffee List 아이템 상태 — Figma `Contents/Coffee List`.
@@ -208,7 +210,7 @@ class _Header extends StatelessWidget {
             children: [
               Row(
                 children: [
-                  _BrandChip(label: brand),
+                  AppMiniChip(label: brand, tone: AppMiniChipTone.primary),
                   if (expanded && price != null) ...[
                     const SizedBox(width: AppSpacing.space8),
                     Text(
@@ -243,7 +245,7 @@ class _Header extends StatelessWidget {
                       const SizedBox(width: 4),
                     ],
                     Text(
-                      _formatPrice(price!),
+                      formatPrice(price!),
                       style: AppTextStyles.label1NormalBold.copyWith(
                         color: AppColor.labelNormal,
                         fontFeatures: const [FontFeature.tabularFigures()],
@@ -277,37 +279,6 @@ class _Header extends StatelessWidget {
     );
   }
 
-  static String _formatPrice(int p) {
-    final s = p.toString();
-    final buf = StringBuffer();
-    for (int i = 0; i < s.length; i++) {
-      if (i > 0 && (s.length - i) % 3 == 0) buf.write(',');
-      buf.write(s[i]);
-    }
-    return buf.toString();
-  }
-}
-
-class _BrandChip extends StatelessWidget {
-  const _BrandChip({required this.label});
-  final String label;
-
-  @override
-  Widget build(BuildContext context) {
-    return Container(
-      padding: const EdgeInsets.symmetric(horizontal: 6, vertical: 2),
-      decoration: BoxDecoration(
-        color: AppColor.primaryLight,
-        borderRadius: BorderRadius.circular(AppRadius.radius4),
-      ),
-      child: Text(
-        label,
-        style: AppTextStyles.caption1Bold.copyWith(
-          color: AppColor.primaryNormal,
-        ),
-      ),
-    );
-  }
 }
 
 class _OutlinedActionButton extends StatelessWidget {

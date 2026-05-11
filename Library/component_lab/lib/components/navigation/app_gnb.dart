@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 
 import '../../foundation/app_color.dart';
+import 'app_push_badge_dot.dart';
 
 // ─────────────────────────────────────────────────────────────
 // GNB (Global Navigation Bar) — Figma "GNB"
@@ -105,21 +106,10 @@ class AppGnb extends StatelessWidget {
                       ),
                     ),
                     if (action.showBadge)
-                      Positioned(
+                      const Positioned(
                         right: 0,
                         top: 0,
-                        child: Container(
-                          width: 8,
-                          height: 8,
-                          decoration: BoxDecoration(
-                            color: AppColor.statusNegative,
-                            shape: BoxShape.circle,
-                            border: Border.all(
-                              color: AppColor.backgroundNormalNormal,
-                              width: 1.5,
-                            ),
-                          ),
-                        ),
+                        child: AppPushBadgeDot(),
                       ),
                   ],
                 );

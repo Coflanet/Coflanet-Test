@@ -2,6 +2,7 @@ import 'dart:ui';
 
 import 'package:flutter/material.dart';
 
+import '../../foundation/_button_metrics.dart';
 import '../../foundation/app_color.dart';
 import '../../foundation/app_radius.dart';
 import '../../foundation/app_text_style.dart';
@@ -63,42 +64,19 @@ class AppSolidButton extends StatelessWidget {
 
   bool get _enabled => onPressed != null;
 
-  // ── Size geometry (Figma 측정) ──────────────────────────────────
-  double get _height => switch (size) {
-        AppSolidButtonSize.large => 52,
-        AppSolidButtonSize.medium => 40,
-        AppSolidButtonSize.small => 32,
-        AppSolidButtonSize.xsmall => 32,
+  // ── Size geometry (Figma 측정) — `AppButtonMetrics` 단일 룩업.
+  AppButtonMetrics get _m => switch (size) {
+        AppSolidButtonSize.large => AppButtonMetrics.large,
+        AppSolidButtonSize.medium => AppButtonMetrics.medium,
+        AppSolidButtonSize.small => AppButtonMetrics.small,
+        AppSolidButtonSize.xsmall => AppButtonMetrics.xsmall,
       };
 
-  EdgeInsets get _padding => switch (size) {
-        AppSolidButtonSize.large =>
-          const EdgeInsets.symmetric(horizontal: 28, vertical: 12),
-        AppSolidButtonSize.medium =>
-          const EdgeInsets.symmetric(horizontal: 20, vertical: 9),
-        AppSolidButtonSize.small =>
-          const EdgeInsets.symmetric(horizontal: 14, vertical: 7),
-        AppSolidButtonSize.xsmall =>
-          const EdgeInsets.symmetric(horizontal: 10, vertical: 7),
-      };
-
-  double get _gap => switch (size) {
-        AppSolidButtonSize.large => 6,
-        AppSolidButtonSize.medium => 5,
-        _ => 4,
-      };
-
-  double get _iconSize => switch (size) {
-        AppSolidButtonSize.large => 20,
-        AppSolidButtonSize.medium => 18,
-        _ => 16,
-      };
-
-  TextStyle get _textStyle => switch (size) {
-        AppSolidButtonSize.large => AppTextStyles.body1NormalBold,
-        AppSolidButtonSize.medium => AppTextStyles.body2NormalBold,
-        _ => AppTextStyles.label2Bold,
-      };
+  double get _height => _m.height;
+  EdgeInsets get _padding => _m.padding;
+  double get _gap => _m.gap;
+  double get _iconSize => _m.iconSize;
+  TextStyle get _textStyle => _m.textStyle;
 
   // ── Tone colors (Figma 정확 매칭) ──────────────────────────────
   ({Color fill, Color fg, bool blur}) _colors(BuildContext context) {
