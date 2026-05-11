@@ -35,6 +35,8 @@ import 'components/gauge/app_gauge_use_cases.dart';
 import 'components/feedback/app_toast_use_cases.dart';
 import 'components/feedback/app_snackbar_use_cases.dart';
 import 'components/feedback/app_tooltip_use_cases.dart';
+import 'components/feedback/app_section_message_use_cases.dart';
+import 'components/feedback/app_empty_state_use_cases.dart';
 
 // Presentation
 import 'components/presentation/app_bottom_sheet_use_cases.dart';
@@ -261,6 +263,8 @@ class ComponentLabApp extends StatelessWidget {
                 ...toastUseCases,
                 ...snackbarUseCases,
                 ...tooltipUseCases,
+                ...sectionMessageUseCases,
+                ...emptyStateUseCases,
               ],
             ),
             WidgetbookFolder(
