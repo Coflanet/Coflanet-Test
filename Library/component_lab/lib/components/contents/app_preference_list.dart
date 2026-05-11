@@ -4,6 +4,7 @@ import '../../foundation/app_color.dart';
 import '../../foundation/app_radius.dart';
 import '../../foundation/app_spacing.dart';
 import '../../foundation/app_text_style.dart';
+import '../chips/app_mini_chip.dart';
 
 /// Preference List 아이템 상태 — Figma `Contents/Preference List`.
 enum AppPreferenceItemState {
@@ -104,6 +105,9 @@ class AppTasteChip extends StatelessWidget {
 }
 
 /// Flavor 칩 (선호 향) — Figma `Contents/Preference List/좋아하는 향`.
+///
+/// `AppMiniChip(tone: neutral)`의 얇은 별칭 — `AppPreferenceItem.flavorChips`
+/// 매개변수 타입 호환을 위해 별도 클래스로 유지.
 class AppPreferenceFlavorChip extends StatelessWidget {
   const AppPreferenceFlavorChip({
     super.key,
@@ -116,23 +120,7 @@ class AppPreferenceFlavorChip extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return GestureDetector(
-      behavior: HitTestBehavior.opaque,
-      onTap: onTap,
-      child: Container(
-        padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 6),
-        decoration: BoxDecoration(
-          color: AppColor.backgroundElevatedAlternative,
-          borderRadius: BorderRadius.circular(AppRadius.radius8),
-        ),
-        child: Text(
-          label,
-          style: AppTextStyles.label2Regular.copyWith(
-            color: AppColor.labelNormal,
-          ),
-        ),
-      ),
-    );
+    return AppMiniChip(label: label, onTap: onTap);
   }
 }
 

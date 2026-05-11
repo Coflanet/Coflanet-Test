@@ -4,6 +4,7 @@ import '../../foundation/app_color.dart';
 import '../../foundation/app_radius.dart';
 import '../../foundation/app_spacing.dart';
 import '../../foundation/app_text_style.dart';
+import '../../util/format.dart';
 
 /// Item Heart 토글 — Figma `Contents/Item List/Item/Resource/Heart`.
 ///
@@ -271,7 +272,7 @@ class _PriceRow extends StatelessWidget {
           const SizedBox(width: 4),
         ],
         Text(
-          _formatPrice(price),
+          formatPrice(price),
           style: AppTextStyles.label1NormalBold.copyWith(
             color: AppColor.labelNormal,
             fontFeatures: const [FontFeature.tabularFigures()],
@@ -281,15 +282,6 @@ class _PriceRow extends StatelessWidget {
     );
   }
 
-  static String _formatPrice(int p) {
-    final s = p.toString();
-    final buf = StringBuffer();
-    for (int i = 0; i < s.length; i++) {
-      if (i > 0 && (s.length - i) % 3 == 0) buf.write(',');
-      buf.write(s[i]);
-    }
-    return buf.toString();
-  }
 }
 
 class _RatingRow extends StatelessWidget {

@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 
 import '../../foundation/app_color.dart';
 import '../../foundation/app_text_style.dart';
+import 'app_push_badge_dot.dart';
 
 // ─────────────────────────────────────────────────────────────
 // Top Navigation — Figma "Top Navigation/Resource/Contents"
@@ -367,21 +368,10 @@ class AppTopNavigation extends StatelessWidget {
           children: [
             _buildIconButton(action.icon, action.onPressed),
             if (action.showBadge)
-              Positioned(
+              const Positioned(
                 right: 0,
                 top: 0,
-                child: Container(
-                  width: 8,
-                  height: 8,
-                  decoration: BoxDecoration(
-                    color: AppColor.statusNegative,
-                    shape: BoxShape.circle,
-                    border: Border.all(
-                      color: AppColor.backgroundNormalNormal,
-                      width: 1.5,
-                    ),
-                  ),
-                ),
+                child: AppPushBadgeDot(),
               ),
           ],
         );

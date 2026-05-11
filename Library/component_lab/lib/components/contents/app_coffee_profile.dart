@@ -4,6 +4,7 @@ import '../../foundation/app_color.dart';
 import '../../foundation/app_radius.dart';
 import '../../foundation/app_spacing.dart';
 import '../../foundation/app_text_style.dart';
+import '../chips/app_mini_chip.dart';
 
 /// Coffee Profile 속성 1행을 그리는 단위 — Figma `Contents/Coffee Profile/Attributes`.
 ///
@@ -215,29 +216,7 @@ class AppFlavorNotesChips extends StatelessWidget {
     return Wrap(
       spacing: spacing,
       runSpacing: runSpacing,
-      children: notes.map((n) => _FlavorChip(label: n)).toList(),
-    );
-  }
-}
-
-class _FlavorChip extends StatelessWidget {
-  const _FlavorChip({required this.label});
-  final String label;
-
-  @override
-  Widget build(BuildContext context) {
-    return Container(
-      padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 6),
-      decoration: BoxDecoration(
-        color: AppColor.backgroundElevatedAlternative,
-        borderRadius: BorderRadius.circular(AppRadius.radius8),
-      ),
-      child: Text(
-        label,
-        style: AppTextStyles.label2Regular.copyWith(
-          color: AppColor.labelNormal,
-        ),
-      ),
+      children: notes.map((n) => AppMiniChip(label: n)).toList(),
     );
   }
 }
