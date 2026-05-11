@@ -116,6 +116,34 @@ final List<WidgetbookComponent> textFieldUseCases = [
           ],
         ),
       ),
+      WidgetbookUseCase(
+        name: 'TextArea — multiline factory',
+        builder: (context) => _wrap(
+          context,
+          [
+            AppTextField.multiline(
+              label: '리뷰',
+              hintText: '시음 경험을 자유롭게 적어주세요',
+              maxLength: 500,
+            ),
+          ],
+        ),
+      ),
+      WidgetbookUseCase(
+        name: 'TextArea — error state',
+        builder: (context) => _wrap(
+          context,
+          [
+            AppTextField.multiline(
+              label: '메모',
+              hintText: '필수 입력 필드입니다',
+              errorText: '내용을 입력해 주세요',
+              maxLines: 5,
+              minLines: 3,
+            ),
+          ],
+        ),
+      ),
     ],
   ),
 ];

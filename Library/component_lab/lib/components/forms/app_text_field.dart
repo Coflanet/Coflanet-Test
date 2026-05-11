@@ -53,6 +53,9 @@ class AppTextField extends StatefulWidget {
   final bool readOnly;
   final AppTextFieldSize size;
 
+  /// 멀티라인일 때 글자 수 카운터 표시 여부 (`maxLength` 설정 시에만 유효).
+  final bool showCounter;
+
   const AppTextField({
     super.key,
     this.controller,
@@ -78,7 +81,50 @@ class AppTextField extends StatefulWidget {
     this.autofocus = false,
     this.readOnly = false,
     this.size = AppTextFieldSize.md,
+    this.showCounter = false,
   });
+
+  /// Multiline (Text Area) factory — Figma `Text Area/*`.
+  ///
+  /// `maxLines`/`minLines`/`maxLength`+counter를 한 번에 켠다.
+  /// 기본 4줄, 글자수 표시 on.
+  factory AppTextField.multiline({
+    Key? key,
+    TextEditingController? controller,
+    FocusNode? focusNode,
+    String? label,
+    String? hintText,
+    String? helperText,
+    String? errorText,
+    bool isEnabled = true,
+    ValueChanged<String>? onChanged,
+    int minLines = 4,
+    int maxLines = 8,
+    int? maxLength,
+    bool autofocus = false,
+    AppTextFieldSize size = AppTextFieldSize.md,
+    bool showCounter = true,
+  }) {
+    return AppTextField(
+      key: key,
+      controller: controller,
+      focusNode: focusNode,
+      label: label,
+      hintText: hintText,
+      helperText: helperText,
+      errorText: errorText,
+      isEnabled: isEnabled,
+      onChanged: onChanged,
+      minLines: minLines,
+      maxLines: maxLines,
+      maxLength: maxLength,
+      keyboardType: TextInputType.multiline,
+      textInputAction: TextInputAction.newline,
+      autofocus: autofocus,
+      size: size,
+      showCounter: showCounter,
+    );
+  }
 
   @override
   State<AppTextField> createState() => _AppTextFieldState();
@@ -211,7 +257,10 @@ class _AppTextFieldState extends State<AppTextField> {
                   : null,
               suffixIcon: _buildSuffixIcon(altColor, errorColor),
               contentPadding: _contentPadding,
-              counterText: '',
+              counterText: widget.showCounter ? null : '',
+              counterStyle: AppTextStyles.caption1Regular.copyWith(
+                color: altColor,
+              ),
               border: OutlineInputBorder(
                 borderRadius: AppRadius.radiusInputBorder,
                 borderSide: BorderSide.none,
