@@ -1,0 +1,3399 @@
+{
+  "_meta": {
+    "dir": "contents",
+    "scannedRoot": "lib/components/contents",
+    "fileCount": 30,
+    "files": [
+      "lib/components/contents/app_accordion.dart",
+      "lib/components/contents/app_accordion_use_cases.dart",
+      "lib/components/contents/app_banner.dart",
+      "lib/components/contents/app_banner_use_cases.dart",
+      "lib/components/contents/app_cell.dart",
+      "lib/components/contents/app_cell_use_cases.dart",
+      "lib/components/contents/app_coffee_list.dart",
+      "lib/components/contents/app_coffee_list_use_cases.dart",
+      "lib/components/contents/app_coffee_profile.dart",
+      "lib/components/contents/app_coffee_profile_use_cases.dart",
+      "lib/components/contents/app_community_list.dart",
+      "lib/components/contents/app_community_list_use_cases.dart",
+      "lib/components/contents/app_content_badge.dart",
+      "lib/components/contents/app_content_badge_use_cases.dart",
+      "lib/components/contents/app_item_list.dart",
+      "lib/components/contents/app_item_list_use_cases.dart",
+      "lib/components/contents/app_play_icon_badge.dart",
+      "lib/components/contents/app_play_icon_badge_use_cases.dart",
+      "lib/components/contents/app_preference_list.dart",
+      "lib/components/contents/app_preference_list_use_cases.dart",
+      "lib/components/contents/app_recipe_timer.dart",
+      "lib/components/contents/app_recipe_timer_use_cases.dart",
+      "lib/components/contents/app_review.dart",
+      "lib/components/contents/app_review_use_cases.dart",
+      "lib/components/contents/app_section_header.dart",
+      "lib/components/contents/app_section_header_use_cases.dart",
+      "lib/components/contents/app_table.dart",
+      "lib/components/contents/app_table_use_cases.dart",
+      "lib/components/contents/app_tasting_note.dart",
+      "lib/components/contents/app_tasting_note_use_cases.dart"
+    ],
+    "patterns": [
+      "EdgeInsets.(all|symmetric|only|fromLTRB)(",
+      "Padding(padding:",
+      "SizedBox((width|height|.square dimension):",
+      "Gap(",
+      "margin:/padding:/spacing:/gap:/... numeric literal",
+      "AppSpacing.<token>"
+    ],
+    "phase": "Phase 1-B audit"
+  },
+  "usages": [
+    {
+      "file": "lib/components/contents/app_play_icon_badge_use_cases.dart",
+      "line": 23,
+      "snippet": "SizedBox(width: AppSpacing.space16),",
+      "values": [
+        {
+          "arg": "width",
+          "expr": "AppSpacing.space16",
+          "tokenRef": "space16",
+          "kind": "tokenRef"
+        }
+      ],
+      "unit": "px",
+      "kind": "SizedBox",
+      "contextHint": [
+        "sizedBox",
+        "appSpacingRef"
+      ]
+    },
+    {
+      "file": "lib/components/contents/app_play_icon_badge_use_cases.dart",
+      "line": 25,
+      "snippet": "SizedBox(width: AppSpacing.space16),",
+      "values": [
+        {
+          "arg": "width",
+          "expr": "AppSpacing.space16",
+          "tokenRef": "space16",
+          "kind": "tokenRef"
+        }
+      ],
+      "unit": "px",
+      "kind": "SizedBox",
+      "contextHint": [
+        "sizedBox",
+        "appSpacingRef"
+      ]
+    },
+    {
+      "file": "lib/components/contents/app_play_icon_badge_use_cases.dart",
+      "line": 39,
+      "snippet": "SizedBox(width: AppSpacing.space16),",
+      "values": [
+        {
+          "arg": "width",
+          "expr": "AppSpacing.space16",
+          "tokenRef": "space16",
+          "kind": "tokenRef"
+        }
+      ],
+      "unit": "px",
+      "kind": "SizedBox",
+      "contextHint": [
+        "sizedBox",
+        "appSpacingRef"
+      ]
+    },
+    {
+      "file": "lib/components/contents/app_play_icon_badge_use_cases.dart",
+      "line": 59,
+      "snippet": "SizedBox(width: AppSpacing.space12),",
+      "values": [
+        {
+          "arg": "width",
+          "expr": "AppSpacing.space12",
+          "tokenRef": "space12",
+          "kind": "tokenRef"
+        }
+      ],
+      "unit": "px",
+      "kind": "SizedBox",
+      "contextHint": [
+        "sizedBox",
+        "appSpacingRef"
+      ]
+    },
+    {
+      "file": "lib/components/contents/app_play_icon_badge_use_cases.dart",
+      "line": 61,
+      "snippet": "SizedBox(width: AppSpacing.space12),",
+      "values": [
+        {
+          "arg": "width",
+          "expr": "AppSpacing.space12",
+          "tokenRef": "space12",
+          "kind": "tokenRef"
+        }
+      ],
+      "unit": "px",
+      "kind": "SizedBox",
+      "contextHint": [
+        "sizedBox",
+        "appSpacingRef"
+      ]
+    },
+    {
+      "file": "lib/components/contents/app_play_icon_badge_use_cases.dart",
+      "line": 65,
+      "snippet": "const SizedBox(height: AppSpacing.space16),",
+      "values": [
+        {
+          "arg": "height",
+          "expr": "AppSpacing.space16",
+          "tokenRef": "space16",
+          "kind": "tokenRef"
+        }
+      ],
+      "unit": "px",
+      "kind": "SizedBox",
+      "contextHint": [
+        "sizedBox",
+        "appSpacingRef"
+      ]
+    },
+    {
+      "file": "lib/components/contents/app_play_icon_badge_use_cases.dart",
+      "line": 74,
+      "snippet": "SizedBox(width: AppSpacing.space12),",
+      "values": [
+        {
+          "arg": "width",
+          "expr": "AppSpacing.space12",
+          "tokenRef": "space12",
+          "kind": "tokenRef"
+        }
+      ],
+      "unit": "px",
+      "kind": "SizedBox",
+      "contextHint": [
+        "sizedBox",
+        "appSpacingRef"
+      ]
+    },
+    {
+      "file": "lib/components/contents/app_play_icon_badge_use_cases.dart",
+      "line": 79,
+      "snippet": "SizedBox(width: AppSpacing.space12),",
+      "values": [
+        {
+          "arg": "width",
+          "expr": "AppSpacing.space12",
+          "tokenRef": "space12",
+          "kind": "tokenRef"
+        }
+      ],
+      "unit": "px",
+      "kind": "SizedBox",
+      "contextHint": [
+        "sizedBox",
+        "appSpacingRef"
+      ]
+    },
+    {
+      "file": "lib/components/contents/app_play_icon_badge_use_cases.dart",
+      "line": 23,
+      "snippet": "SizedBox(width: AppSpacing.space16),",
+      "values": [
+        {
+          "arg": null,
+          "expr": "AppSpacing.space16",
+          "tokenRef": "space16",
+          "kind": "tokenRef"
+        }
+      ],
+      "unit": "px",
+      "kind": "AppSpacingRef",
+      "contextHint": [
+        "appSpacingRef"
+      ]
+    },
+    {
+      "file": "lib/components/contents/app_play_icon_badge_use_cases.dart",
+      "line": 25,
+      "snippet": "SizedBox(width: AppSpacing.space16),",
+      "values": [
+        {
+          "arg": null,
+          "expr": "AppSpacing.space16",
+          "tokenRef": "space16",
+          "kind": "tokenRef"
+        }
+      ],
+      "unit": "px",
+      "kind": "AppSpacingRef",
+      "contextHint": [
+        "appSpacingRef"
+      ]
+    },
+    {
+      "file": "lib/components/contents/app_play_icon_badge_use_cases.dart",
+      "line": 39,
+      "snippet": "SizedBox(width: AppSpacing.space16),",
+      "values": [
+        {
+          "arg": null,
+          "expr": "AppSpacing.space16",
+          "tokenRef": "space16",
+          "kind": "tokenRef"
+        }
+      ],
+      "unit": "px",
+      "kind": "AppSpacingRef",
+      "contextHint": [
+        "appSpacingRef"
+      ]
+    },
+    {
+      "file": "lib/components/contents/app_play_icon_badge_use_cases.dart",
+      "line": 59,
+      "snippet": "SizedBox(width: AppSpacing.space12),",
+      "values": [
+        {
+          "arg": null,
+          "expr": "AppSpacing.space12",
+          "tokenRef": "space12",
+          "kind": "tokenRef"
+        }
+      ],
+      "unit": "px",
+      "kind": "AppSpacingRef",
+      "contextHint": [
+        "appSpacingRef"
+      ]
+    },
+    {
+      "file": "lib/components/contents/app_play_icon_badge_use_cases.dart",
+      "line": 61,
+      "snippet": "SizedBox(width: AppSpacing.space12),",
+      "values": [
+        {
+          "arg": null,
+          "expr": "AppSpacing.space12",
+          "tokenRef": "space12",
+          "kind": "tokenRef"
+        }
+      ],
+      "unit": "px",
+      "kind": "AppSpacingRef",
+      "contextHint": [
+        "appSpacingRef"
+      ]
+    },
+    {
+      "file": "lib/components/contents/app_play_icon_badge_use_cases.dart",
+      "line": 65,
+      "snippet": "const SizedBox(height: AppSpacing.space16),",
+      "values": [
+        {
+          "arg": null,
+          "expr": "AppSpacing.space16",
+          "tokenRef": "space16",
+          "kind": "tokenRef"
+        }
+      ],
+      "unit": "px",
+      "kind": "AppSpacingRef",
+      "contextHint": [
+        "appSpacingRef"
+      ]
+    },
+    {
+      "file": "lib/components/contents/app_play_icon_badge_use_cases.dart",
+      "line": 74,
+      "snippet": "SizedBox(width: AppSpacing.space12),",
+      "values": [
+        {
+          "arg": null,
+          "expr": "AppSpacing.space12",
+          "tokenRef": "space12",
+          "kind": "tokenRef"
+        }
+      ],
+      "unit": "px",
+      "kind": "AppSpacingRef",
+      "contextHint": [
+        "appSpacingRef"
+      ]
+    },
+    {
+      "file": "lib/components/contents/app_play_icon_badge_use_cases.dart",
+      "line": 79,
+      "snippet": "SizedBox(width: AppSpacing.space12),",
+      "values": [
+        {
+          "arg": null,
+          "expr": "AppSpacing.space12",
+          "tokenRef": "space12",
+          "kind": "tokenRef"
+        }
+      ],
+      "unit": "px",
+      "kind": "AppSpacingRef",
+      "contextHint": [
+        "appSpacingRef"
+      ]
+    },
+    {
+      "file": "lib/components/contents/app_play_icon_badge_use_cases.dart",
+      "line": 96,
+      "snippet": "padding: const EdgeInsets.all(AppSpacing.space24),",
+      "values": [
+        {
+          "arg": null,
+          "expr": "AppSpacing.space24",
+          "tokenRef": "space24",
+          "kind": "tokenRef"
+        }
+      ],
+      "unit": "px",
+      "kind": "AppSpacingRef",
+      "contextHint": [
+        "appSpacingRef"
+      ]
+    },
+    {
+      "file": "lib/components/contents/app_preference_list.dart",
+      "line": 83,
+      "snippet": "padding: const EdgeInsets.symmetric(vertical: 6, horizontal: AppSpacing.space8),",
+      "values": [
+        {
+          "arg": "vertical",
+          "expr": "6",
+          "value": 6,
+          "kind": "literal"
+        },
+        {
+          "arg": "horizontal",
+          "expr": "AppSpacing.space8",
+          "tokenRef": "space8",
+          "kind": "tokenRef"
+        }
+      ],
+      "unit": "px",
+      "kind": "EdgeInsets.symmetric",
+      "contextHint": [
+        "edgeInsets",
+        "appSpacingRef"
+      ]
+    },
+    {
+      "file": "lib/components/contents/app_preference_list.dart",
+      "line": 189,
+      "snippet": "padding: const EdgeInsets.all(AppSpacing.space16),",
+      "values": [
+        {
+          "arg": "#0",
+          "expr": "AppSpacing.space16",
+          "tokenRef": "space16",
+          "kind": "tokenRef"
+        }
+      ],
+      "unit": "px",
+      "kind": "EdgeInsets.all",
+      "contextHint": [
+        "edgeInsets",
+        "appSpacingRef"
+      ]
+    },
+    {
+      "file": "lib/components/contents/app_preference_list.dart",
+      "line": 95,
+      "snippet": "const SizedBox(height: 2),",
+      "values": [
+        {
+          "arg": "height",
+          "expr": "2",
+          "value": 2,
+          "kind": "literal"
+        }
+      ],
+      "unit": "px",
+      "kind": "SizedBox",
+      "contextHint": [
+        "sizedBox"
+      ]
+    },
+    {
+      "file": "lib/components/contents/app_preference_list.dart",
+      "line": 223,
+      "snippet": "const SizedBox(height: AppSpacing.space8),",
+      "values": [
+        {
+          "arg": "height",
+          "expr": "AppSpacing.space8",
+          "tokenRef": "space8",
+          "kind": "tokenRef"
+        }
+      ],
+      "unit": "px",
+      "kind": "SizedBox",
+      "contextHint": [
+        "sizedBox",
+        "appSpacingRef"
+      ]
+    },
+    {
+      "file": "lib/components/contents/app_preference_list.dart",
+      "line": 246,
+      "snippet": "const SizedBox(height: AppSpacing.space16),",
+      "values": [
+        {
+          "arg": "height",
+          "expr": "AppSpacing.space16",
+          "tokenRef": "space16",
+          "kind": "tokenRef"
+        }
+      ],
+      "unit": "px",
+      "kind": "SizedBox",
+      "contextHint": [
+        "sizedBox",
+        "appSpacingRef"
+      ]
+    },
+    {
+      "file": "lib/components/contents/app_preference_list.dart",
+      "line": 253,
+      "snippet": "const SizedBox(height: AppSpacing.space8),",
+      "values": [
+        {
+          "arg": "height",
+          "expr": "AppSpacing.space8",
+          "tokenRef": "space8",
+          "kind": "tokenRef"
+        }
+      ],
+      "unit": "px",
+      "kind": "SizedBox",
+      "contextHint": [
+        "sizedBox",
+        "appSpacingRef"
+      ]
+    },
+    {
+      "file": "lib/components/contents/app_preference_list.dart",
+      "line": 262,
+      "snippet": "const SizedBox(height: AppSpacing.space16),",
+      "values": [
+        {
+          "arg": "height",
+          "expr": "AppSpacing.space16",
+          "tokenRef": "space16",
+          "kind": "tokenRef"
+        }
+      ],
+      "unit": "px",
+      "kind": "SizedBox",
+      "contextHint": [
+        "sizedBox",
+        "appSpacingRef"
+      ]
+    },
+    {
+      "file": "lib/components/contents/app_preference_list.dart",
+      "line": 269,
+      "snippet": "const SizedBox(height: AppSpacing.space8),",
+      "values": [
+        {
+          "arg": "height",
+          "expr": "AppSpacing.space8",
+          "tokenRef": "space8",
+          "kind": "tokenRef"
+        }
+      ],
+      "unit": "px",
+      "kind": "SizedBox",
+      "contextHint": [
+        "sizedBox",
+        "appSpacingRef"
+      ]
+    },
+    {
+      "file": "lib/components/contents/app_preference_list.dart",
+      "line": 278,
+      "snippet": ": const SizedBox(width: double.infinity, height: 0),",
+      "values": [
+        {
+          "arg": "width",
+          "expr": "double.infinity",
+          "kind": "non-numeric"
+        },
+        {
+          "arg": "height",
+          "expr": "0",
+          "value": 0,
+          "kind": "literal"
+        }
+      ],
+      "unit": "px",
+      "kind": "SizedBox",
+      "contextHint": [
+        "sizedBox"
+      ]
+    },
+    {
+      "file": "lib/components/contents/app_preference_list.dart",
+      "line": 225,
+      "snippet": "spacing: 6,",
+      "values": [
+        {
+          "arg": "spacing",
+          "expr": "6",
+          "value": 6,
+          "kind": "literal"
+        }
+      ],
+      "unit": "px",
+      "kind": "PropLiteral:spacing",
+      "contextHint": [
+        "rawPropLiteral"
+      ]
+    },
+    {
+      "file": "lib/components/contents/app_preference_list.dart",
+      "line": 226,
+      "snippet": "runSpacing: 6,",
+      "values": [
+        {
+          "arg": "runSpacing",
+          "expr": "6",
+          "value": 6,
+          "kind": "literal"
+        }
+      ],
+      "unit": "px",
+      "kind": "PropLiteral:runSpacing",
+      "contextHint": [
+        "rawPropLiteral"
+      ]
+    },
+    {
+      "file": "lib/components/contents/app_preference_list.dart",
+      "line": 83,
+      "snippet": "padding: const EdgeInsets.symmetric(vertical: 6, horizontal: AppSpacing.space8),",
+      "values": [
+        {
+          "arg": null,
+          "expr": "AppSpacing.space8",
+          "tokenRef": "space8",
+          "kind": "tokenRef"
+        }
+      ],
+      "unit": "px",
+      "kind": "AppSpacingRef",
+      "contextHint": [
+        "appSpacingRef"
+      ]
+    },
+    {
+      "file": "lib/components/contents/app_preference_list.dart",
+      "line": 189,
+      "snippet": "padding: const EdgeInsets.all(AppSpacing.space16),",
+      "values": [
+        {
+          "arg": null,
+          "expr": "AppSpacing.space16",
+          "tokenRef": "space16",
+          "kind": "tokenRef"
+        }
+      ],
+      "unit": "px",
+      "kind": "AppSpacingRef",
+      "contextHint": [
+        "appSpacingRef"
+      ]
+    },
+    {
+      "file": "lib/components/contents/app_preference_list.dart",
+      "line": 223,
+      "snippet": "const SizedBox(height: AppSpacing.space8),",
+      "values": [
+        {
+          "arg": null,
+          "expr": "AppSpacing.space8",
+          "tokenRef": "space8",
+          "kind": "tokenRef"
+        }
+      ],
+      "unit": "px",
+      "kind": "AppSpacingRef",
+      "contextHint": [
+        "appSpacingRef"
+      ]
+    },
+    {
+      "file": "lib/components/contents/app_preference_list.dart",
+      "line": 246,
+      "snippet": "const SizedBox(height: AppSpacing.space16),",
+      "values": [
+        {
+          "arg": null,
+          "expr": "AppSpacing.space16",
+          "tokenRef": "space16",
+          "kind": "tokenRef"
+        }
+      ],
+      "unit": "px",
+      "kind": "AppSpacingRef",
+      "contextHint": [
+        "appSpacingRef"
+      ]
+    },
+    {
+      "file": "lib/components/contents/app_preference_list.dart",
+      "line": 253,
+      "snippet": "const SizedBox(height: AppSpacing.space8),",
+      "values": [
+        {
+          "arg": null,
+          "expr": "AppSpacing.space8",
+          "tokenRef": "space8",
+          "kind": "tokenRef"
+        }
+      ],
+      "unit": "px",
+      "kind": "AppSpacingRef",
+      "contextHint": [
+        "appSpacingRef"
+      ]
+    },
+    {
+      "file": "lib/components/contents/app_preference_list.dart",
+      "line": 255,
+      "snippet": "spacing: AppSpacing.space8,",
+      "values": [
+        {
+          "arg": null,
+          "expr": "AppSpacing.space8",
+          "tokenRef": "space8",
+          "kind": "tokenRef"
+        }
+      ],
+      "unit": "px",
+      "kind": "AppSpacingRef",
+      "contextHint": [
+        "appSpacingRef"
+      ]
+    },
+    {
+      "file": "lib/components/contents/app_preference_list.dart",
+      "line": 256,
+      "snippet": "runSpacing: AppSpacing.space8,",
+      "values": [
+        {
+          "arg": null,
+          "expr": "AppSpacing.space8",
+          "tokenRef": "space8",
+          "kind": "tokenRef"
+        }
+      ],
+      "unit": "px",
+      "kind": "AppSpacingRef",
+      "contextHint": [
+        "appSpacingRef"
+      ]
+    },
+    {
+      "file": "lib/components/contents/app_preference_list.dart",
+      "line": 262,
+      "snippet": "const SizedBox(height: AppSpacing.space16),",
+      "values": [
+        {
+          "arg": null,
+          "expr": "AppSpacing.space16",
+          "tokenRef": "space16",
+          "kind": "tokenRef"
+        }
+      ],
+      "unit": "px",
+      "kind": "AppSpacingRef",
+      "contextHint": [
+        "appSpacingRef"
+      ]
+    },
+    {
+      "file": "lib/components/contents/app_preference_list.dart",
+      "line": 269,
+      "snippet": "const SizedBox(height: AppSpacing.space8),",
+      "values": [
+        {
+          "arg": null,
+          "expr": "AppSpacing.space8",
+          "tokenRef": "space8",
+          "kind": "tokenRef"
+        }
+      ],
+      "unit": "px",
+      "kind": "AppSpacingRef",
+      "contextHint": [
+        "appSpacingRef"
+      ]
+    },
+    {
+      "file": "lib/components/contents/app_preference_list.dart",
+      "line": 271,
+      "snippet": "spacing: AppSpacing.space8,",
+      "values": [
+        {
+          "arg": null,
+          "expr": "AppSpacing.space8",
+          "tokenRef": "space8",
+          "kind": "tokenRef"
+        }
+      ],
+      "unit": "px",
+      "kind": "AppSpacingRef",
+      "contextHint": [
+        "appSpacingRef"
+      ]
+    },
+    {
+      "file": "lib/components/contents/app_preference_list.dart",
+      "line": 272,
+      "snippet": "runSpacing: AppSpacing.space8,",
+      "values": [
+        {
+          "arg": null,
+          "expr": "AppSpacing.space8",
+          "tokenRef": "space8",
+          "kind": "tokenRef"
+        }
+      ],
+      "unit": "px",
+      "kind": "AppSpacingRef",
+      "contextHint": [
+        "appSpacingRef"
+      ]
+    },
+    {
+      "file": "lib/components/contents/app_preference_list_use_cases.dart",
+      "line": 173,
+      "snippet": "padding: const EdgeInsets.all(AppSpacing.space16),",
+      "values": [
+        {
+          "arg": "#0",
+          "expr": "AppSpacing.space16",
+          "tokenRef": "space16",
+          "kind": "tokenRef"
+        }
+      ],
+      "unit": "px",
+      "kind": "EdgeInsets.all",
+      "contextHint": [
+        "edgeInsets",
+        "appSpacingRef"
+      ]
+    },
+    {
+      "file": "lib/components/contents/app_preference_list_use_cases.dart",
+      "line": 109,
+      "snippet": "SizedBox(width: AppSpacing.space8),",
+      "values": [
+        {
+          "arg": "width",
+          "expr": "AppSpacing.space8",
+          "tokenRef": "space8",
+          "kind": "tokenRef"
+        }
+      ],
+      "unit": "px",
+      "kind": "SizedBox",
+      "contextHint": [
+        "sizedBox",
+        "appSpacingRef"
+      ]
+    },
+    {
+      "file": "lib/components/contents/app_preference_list_use_cases.dart",
+      "line": 111,
+      "snippet": "SizedBox(width: AppSpacing.space8),",
+      "values": [
+        {
+          "arg": "width",
+          "expr": "AppSpacing.space8",
+          "tokenRef": "space8",
+          "kind": "tokenRef"
+        }
+      ],
+      "unit": "px",
+      "kind": "SizedBox",
+      "contextHint": [
+        "sizedBox",
+        "appSpacingRef"
+      ]
+    },
+    {
+      "file": "lib/components/contents/app_preference_list_use_cases.dart",
+      "line": 143,
+      "snippet": "const SizedBox(height: AppSpacing.space12),",
+      "values": [
+        {
+          "arg": "height",
+          "expr": "AppSpacing.space12",
+          "tokenRef": "space12",
+          "kind": "tokenRef"
+        }
+      ],
+      "unit": "px",
+      "kind": "SizedBox",
+      "contextHint": [
+        "sizedBox",
+        "appSpacingRef"
+      ]
+    },
+    {
+      "file": "lib/components/contents/app_preference_list_use_cases.dart",
+      "line": 149,
+      "snippet": "const SizedBox(height: AppSpacing.space12),",
+      "values": [
+        {
+          "arg": "height",
+          "expr": "AppSpacing.space12",
+          "tokenRef": "space12",
+          "kind": "tokenRef"
+        }
+      ],
+      "unit": "px",
+      "kind": "SizedBox",
+      "contextHint": [
+        "sizedBox",
+        "appSpacingRef"
+      ]
+    },
+    {
+      "file": "lib/components/contents/app_preference_list_use_cases.dart",
+      "line": 157,
+      "snippet": "const SizedBox(height: AppSpacing.space12),",
+      "values": [
+        {
+          "arg": "height",
+          "expr": "AppSpacing.space12",
+          "tokenRef": "space12",
+          "kind": "tokenRef"
+        }
+      ],
+      "unit": "px",
+      "kind": "SizedBox",
+      "contextHint": [
+        "sizedBox",
+        "appSpacingRef"
+      ]
+    },
+    {
+      "file": "lib/components/contents/app_preference_list_use_cases.dart",
+      "line": 109,
+      "snippet": "SizedBox(width: AppSpacing.space8),",
+      "values": [
+        {
+          "arg": null,
+          "expr": "AppSpacing.space8",
+          "tokenRef": "space8",
+          "kind": "tokenRef"
+        }
+      ],
+      "unit": "px",
+      "kind": "AppSpacingRef",
+      "contextHint": [
+        "appSpacingRef"
+      ]
+    },
+    {
+      "file": "lib/components/contents/app_preference_list_use_cases.dart",
+      "line": 111,
+      "snippet": "SizedBox(width: AppSpacing.space8),",
+      "values": [
+        {
+          "arg": null,
+          "expr": "AppSpacing.space8",
+          "tokenRef": "space8",
+          "kind": "tokenRef"
+        }
+      ],
+      "unit": "px",
+      "kind": "AppSpacingRef",
+      "contextHint": [
+        "appSpacingRef"
+      ]
+    },
+    {
+      "file": "lib/components/contents/app_preference_list_use_cases.dart",
+      "line": 122,
+      "snippet": "spacing: AppSpacing.space8,",
+      "values": [
+        {
+          "arg": null,
+          "expr": "AppSpacing.space8",
+          "tokenRef": "space8",
+          "kind": "tokenRef"
+        }
+      ],
+      "unit": "px",
+      "kind": "AppSpacingRef",
+      "contextHint": [
+        "appSpacingRef"
+      ]
+    },
+    {
+      "file": "lib/components/contents/app_preference_list_use_cases.dart",
+      "line": 123,
+      "snippet": "runSpacing: AppSpacing.space8,",
+      "values": [
+        {
+          "arg": null,
+          "expr": "AppSpacing.space8",
+          "tokenRef": "space8",
+          "kind": "tokenRef"
+        }
+      ],
+      "unit": "px",
+      "kind": "AppSpacingRef",
+      "contextHint": [
+        "appSpacingRef"
+      ]
+    },
+    {
+      "file": "lib/components/contents/app_preference_list_use_cases.dart",
+      "line": 143,
+      "snippet": "const SizedBox(height: AppSpacing.space12),",
+      "values": [
+        {
+          "arg": null,
+          "expr": "AppSpacing.space12",
+          "tokenRef": "space12",
+          "kind": "tokenRef"
+        }
+      ],
+      "unit": "px",
+      "kind": "AppSpacingRef",
+      "contextHint": [
+        "appSpacingRef"
+      ]
+    },
+    {
+      "file": "lib/components/contents/app_preference_list_use_cases.dart",
+      "line": 149,
+      "snippet": "const SizedBox(height: AppSpacing.space12),",
+      "values": [
+        {
+          "arg": null,
+          "expr": "AppSpacing.space12",
+          "tokenRef": "space12",
+          "kind": "tokenRef"
+        }
+      ],
+      "unit": "px",
+      "kind": "AppSpacingRef",
+      "contextHint": [
+        "appSpacingRef"
+      ]
+    },
+    {
+      "file": "lib/components/contents/app_preference_list_use_cases.dart",
+      "line": 157,
+      "snippet": "const SizedBox(height: AppSpacing.space12),",
+      "values": [
+        {
+          "arg": null,
+          "expr": "AppSpacing.space12",
+          "tokenRef": "space12",
+          "kind": "tokenRef"
+        }
+      ],
+      "unit": "px",
+      "kind": "AppSpacingRef",
+      "contextHint": [
+        "appSpacingRef"
+      ]
+    },
+    {
+      "file": "lib/components/contents/app_preference_list_use_cases.dart",
+      "line": 173,
+      "snippet": "padding: const EdgeInsets.all(AppSpacing.space16),",
+      "values": [
+        {
+          "arg": null,
+          "expr": "AppSpacing.space16",
+          "tokenRef": "space16",
+          "kind": "tokenRef"
+        }
+      ],
+      "unit": "px",
+      "kind": "AppSpacingRef",
+      "contextHint": [
+        "appSpacingRef"
+      ]
+    },
+    {
+      "file": "lib/components/contents/app_recipe_timer.dart",
+      "line": 52,
+      "snippet": "padding: const EdgeInsets.symmetric(vertical: 6),",
+      "values": [
+        {
+          "arg": "vertical",
+          "expr": "6",
+          "value": 6,
+          "kind": "literal"
+        }
+      ],
+      "unit": "px",
+      "kind": "EdgeInsets.symmetric",
+      "contextHint": [
+        "edgeInsets"
+      ]
+    },
+    {
+      "file": "lib/components/contents/app_recipe_timer.dart",
+      "line": 68,
+      "snippet": "padding: const EdgeInsets.symmetric(horizontal: 6, vertical: AppSpacing.space4),",
+      "values": [
+        {
+          "arg": "horizontal",
+          "expr": "6",
+          "value": 6,
+          "kind": "literal"
+        },
+        {
+          "arg": "vertical",
+          "expr": "AppSpacing.space4",
+          "tokenRef": "space4",
+          "kind": "tokenRef"
+        }
+      ],
+      "unit": "px",
+      "kind": "EdgeInsets.symmetric",
+      "contextHint": [
+        "edgeInsets",
+        "appSpacingRef"
+      ]
+    },
+    {
+      "file": "lib/components/contents/app_recipe_timer.dart",
+      "line": 77,
+      "snippet": "margin: const EdgeInsets.symmetric(horizontal: AppSpacing.space4),",
+      "values": [
+        {
+          "arg": "horizontal",
+          "expr": "AppSpacing.space4",
+          "tokenRef": "space4",
+          "kind": "tokenRef"
+        }
+      ],
+      "unit": "px",
+      "kind": "EdgeInsets.symmetric",
+      "contextHint": [
+        "edgeInsets",
+        "appSpacingRef"
+      ]
+    },
+    {
+      "file": "lib/components/contents/app_recipe_timer.dart",
+      "line": 78,
+      "snippet": "padding: const EdgeInsets.symmetric(",
+      "values": [
+        {
+          "arg": "horizontal",
+          "expr": "10",
+          "value": 10,
+          "kind": "literal"
+        }
+      ],
+      "unit": "px",
+      "kind": "EdgeInsets.symmetric",
+      "contextHint": [
+        "edgeInsets"
+      ]
+    },
+    {
+      "file": "lib/components/contents/app_recipe_timer.dart",
+      "line": 156,
+      "snippet": "padding: const EdgeInsets.all(AppSpacing.space16),",
+      "values": [
+        {
+          "arg": "#0",
+          "expr": "AppSpacing.space16",
+          "tokenRef": "space16",
+          "kind": "tokenRef"
+        }
+      ],
+      "unit": "px",
+      "kind": "EdgeInsets.all",
+      "contextHint": [
+        "edgeInsets",
+        "appSpacingRef"
+      ]
+    },
+    {
+      "file": "lib/components/contents/app_recipe_timer.dart",
+      "line": 116,
+      "snippet": "child: SizedBox(",
+      "values": [
+        {
+          "arg": "width",
+          "expr": "20",
+          "value": 20,
+          "kind": "literal"
+        },
+        {
+          "arg": "height",
+          "expr": "20",
+          "value": 20,
+          "kind": "literal"
+        }
+      ],
+      "unit": "px",
+      "kind": "SizedBox",
+      "contextHint": [
+        "sizedBox"
+      ]
+    },
+    {
+      "file": "lib/components/contents/app_recipe_timer.dart",
+      "line": 183,
+      "snippet": "const SizedBox(height: AppSpacing.space8),",
+      "values": [
+        {
+          "arg": "height",
+          "expr": "AppSpacing.space8",
+          "tokenRef": "space8",
+          "kind": "tokenRef"
+        }
+      ],
+      "unit": "px",
+      "kind": "SizedBox",
+      "contextHint": [
+        "sizedBox",
+        "appSpacingRef"
+      ]
+    },
+    {
+      "file": "lib/components/contents/app_recipe_timer.dart",
+      "line": 68,
+      "snippet": "padding: const EdgeInsets.symmetric(horizontal: 6, vertical: AppSpacing.space4),",
+      "values": [
+        {
+          "arg": null,
+          "expr": "AppSpacing.space4",
+          "tokenRef": "space4",
+          "kind": "tokenRef"
+        }
+      ],
+      "unit": "px",
+      "kind": "AppSpacingRef",
+      "contextHint": [
+        "appSpacingRef"
+      ]
+    },
+    {
+      "file": "lib/components/contents/app_recipe_timer.dart",
+      "line": 77,
+      "snippet": "margin: const EdgeInsets.symmetric(horizontal: AppSpacing.space4),",
+      "values": [
+        {
+          "arg": null,
+          "expr": "AppSpacing.space4",
+          "tokenRef": "space4",
+          "kind": "tokenRef"
+        }
+      ],
+      "unit": "px",
+      "kind": "AppSpacingRef",
+      "contextHint": [
+        "appSpacingRef"
+      ]
+    },
+    {
+      "file": "lib/components/contents/app_recipe_timer.dart",
+      "line": 80,
+      "snippet": "vertical: AppSpacing.space4,",
+      "values": [
+        {
+          "arg": null,
+          "expr": "AppSpacing.space4",
+          "tokenRef": "space4",
+          "kind": "tokenRef"
+        }
+      ],
+      "unit": "px",
+      "kind": "AppSpacingRef",
+      "contextHint": [
+        "appSpacingRef"
+      ]
+    },
+    {
+      "file": "lib/components/contents/app_recipe_timer.dart",
+      "line": 156,
+      "snippet": "padding: const EdgeInsets.all(AppSpacing.space16),",
+      "values": [
+        {
+          "arg": null,
+          "expr": "AppSpacing.space16",
+          "tokenRef": "space16",
+          "kind": "tokenRef"
+        }
+      ],
+      "unit": "px",
+      "kind": "AppSpacingRef",
+      "contextHint": [
+        "appSpacingRef"
+      ]
+    },
+    {
+      "file": "lib/components/contents/app_recipe_timer.dart",
+      "line": 183,
+      "snippet": "const SizedBox(height: AppSpacing.space8),",
+      "values": [
+        {
+          "arg": null,
+          "expr": "AppSpacing.space8",
+          "tokenRef": "space8",
+          "kind": "tokenRef"
+        }
+      ],
+      "unit": "px",
+      "kind": "AppSpacingRef",
+      "contextHint": [
+        "appSpacingRef"
+      ]
+    },
+    {
+      "file": "lib/components/contents/app_recipe_timer_use_cases.dart",
+      "line": 133,
+      "snippet": "padding: const EdgeInsets.all(AppSpacing.space16),",
+      "values": [
+        {
+          "arg": "#0",
+          "expr": "AppSpacing.space16",
+          "tokenRef": "space16",
+          "kind": "tokenRef"
+        }
+      ],
+      "unit": "px",
+      "kind": "EdgeInsets.all",
+      "contextHint": [
+        "edgeInsets",
+        "appSpacingRef"
+      ]
+    },
+    {
+      "file": "lib/components/contents/app_recipe_timer_use_cases.dart",
+      "line": 133,
+      "snippet": "padding: const EdgeInsets.all(AppSpacing.space16),",
+      "values": [
+        {
+          "arg": null,
+          "expr": "AppSpacing.space16",
+          "tokenRef": "space16",
+          "kind": "tokenRef"
+        }
+      ],
+      "unit": "px",
+      "kind": "AppSpacingRef",
+      "contextHint": [
+        "appSpacingRef"
+      ]
+    },
+    {
+      "file": "lib/components/contents/app_review.dart",
+      "line": 81,
+      "snippet": "padding: const EdgeInsets.symmetric(",
+      "values": [
+        {
+          "arg": "horizontal",
+          "expr": "AppSpacing.space16",
+          "tokenRef": "space16",
+          "kind": "tokenRef"
+        }
+      ],
+      "unit": "px",
+      "kind": "EdgeInsets.symmetric",
+      "contextHint": [
+        "edgeInsets"
+      ]
+    },
+    {
+      "file": "lib/components/contents/app_review.dart",
+      "line": 108,
+      "snippet": "padding: const EdgeInsets.symmetric(",
+      "values": [
+        {
+          "arg": "horizontal",
+          "expr": "AppSpacing.space16",
+          "tokenRef": "space16",
+          "kind": "tokenRef"
+        }
+      ],
+      "unit": "px",
+      "kind": "EdgeInsets.symmetric",
+      "contextHint": [
+        "edgeInsets"
+      ]
+    },
+    {
+      "file": "lib/components/contents/app_review.dart",
+      "line": 151,
+      "snippet": "padding: const EdgeInsets.symmetric(",
+      "values": [
+        {
+          "arg": "horizontal",
+          "expr": "AppSpacing.space16",
+          "tokenRef": "space16",
+          "kind": "tokenRef"
+        }
+      ],
+      "unit": "px",
+      "kind": "EdgeInsets.symmetric",
+      "contextHint": [
+        "edgeInsets"
+      ]
+    },
+    {
+      "file": "lib/components/contents/app_review.dart",
+      "line": 166,
+      "snippet": "padding: EdgeInsets.only(right: i < 3 ? 6 : 0),",
+      "values": [
+        {
+          "arg": "right",
+          "expr": "i < 3 ? 6 : 0",
+          "embeddedLiterals": [
+            3,
+            6,
+            0
+          ],
+          "kind": "expression-with-literal"
+        }
+      ],
+      "unit": "px",
+      "kind": "EdgeInsets.only",
+      "contextHint": [
+        "edgeInsets"
+      ]
+    },
+    {
+      "file": "lib/components/contents/app_review.dart",
+      "line": 199,
+      "snippet": "padding: const EdgeInsets.symmetric(",
+      "values": [
+        {
+          "arg": "horizontal",
+          "expr": "AppSpacing.space16",
+          "tokenRef": "space16",
+          "kind": "tokenRef"
+        }
+      ],
+      "unit": "px",
+      "kind": "EdgeInsets.symmetric",
+      "contextHint": [
+        "edgeInsets"
+      ]
+    },
+    {
+      "file": "lib/components/contents/app_review.dart",
+      "line": 341,
+      "snippet": "padding: const EdgeInsets.only(right: 1),",
+      "values": [
+        {
+          "arg": "right",
+          "expr": "1",
+          "value": 1,
+          "kind": "literal"
+        }
+      ],
+      "unit": "px",
+      "kind": "EdgeInsets.only",
+      "contextHint": [
+        "edgeInsets"
+      ]
+    },
+    {
+      "file": "lib/components/contents/app_review.dart",
+      "line": 410,
+      "snippet": "padding: EdgeInsets.only(right: i == 0 ? 6 : 0),",
+      "values": [
+        {
+          "arg": "right",
+          "expr": "i == 0 ? 6 : 0",
+          "embeddedLiterals": [
+            0,
+            6,
+            0
+          ],
+          "kind": "expression-with-literal"
+        }
+      ],
+      "unit": "px",
+      "kind": "EdgeInsets.only",
+      "contextHint": [
+        "edgeInsets"
+      ]
+    },
+    {
+      "file": "lib/components/contents/app_review.dart",
+      "line": 445,
+      "snippet": "padding: const EdgeInsets.symmetric(horizontal: AppSpacing.space8, vertical: AppSpacing.space4),",
+      "values": [
+        {
+          "arg": "horizontal",
+          "expr": "AppSpacing.space8",
+          "tokenRef": "space8",
+          "kind": "tokenRef"
+        },
+        {
+          "arg": "vertical",
+          "expr": "AppSpacing.space4",
+          "tokenRef": "space4",
+          "kind": "tokenRef"
+        }
+      ],
+      "unit": "px",
+      "kind": "EdgeInsets.symmetric",
+      "contextHint": [
+        "edgeInsets",
+        "appSpacingRef"
+      ]
+    },
+    {
+      "file": "lib/components/contents/app_review.dart",
+      "line": 90,
+      "snippet": "const SizedBox(height: AppSpacing.space8),",
+      "values": [
+        {
+          "arg": "height",
+          "expr": "AppSpacing.space8",
+          "tokenRef": "space8",
+          "kind": "tokenRef"
+        }
+      ],
+      "unit": "px",
+      "kind": "SizedBox",
+      "contextHint": [
+        "sizedBox",
+        "appSpacingRef"
+      ]
+    },
+    {
+      "file": "lib/components/contents/app_review.dart",
+      "line": 98,
+      "snippet": "const SizedBox(height: AppSpacing.space8),",
+      "values": [
+        {
+          "arg": "height",
+          "expr": "AppSpacing.space8",
+          "tokenRef": "space8",
+          "kind": "tokenRef"
+        }
+      ],
+      "unit": "px",
+      "kind": "SizedBox",
+      "contextHint": [
+        "sizedBox",
+        "appSpacingRef"
+      ]
+    },
+    {
+      "file": "lib/components/contents/app_review.dart",
+      "line": 121,
+      "snippet": "const SizedBox(height: AppSpacing.space4),",
+      "values": [
+        {
+          "arg": "height",
+          "expr": "AppSpacing.space4",
+          "tokenRef": "space4",
+          "kind": "tokenRef"
+        }
+      ],
+      "unit": "px",
+      "kind": "SizedBox",
+      "contextHint": [
+        "sizedBox",
+        "appSpacingRef"
+      ]
+    },
+    {
+      "file": "lib/components/contents/app_review.dart",
+      "line": 134,
+      "snippet": "const SizedBox(width: AppSpacing.space12),",
+      "values": [
+        {
+          "arg": "width",
+          "expr": "AppSpacing.space12",
+          "tokenRef": "space12",
+          "kind": "tokenRef"
+        }
+      ],
+      "unit": "px",
+      "kind": "SizedBox",
+      "contextHint": [
+        "sizedBox",
+        "appSpacingRef"
+      ]
+    },
+    {
+      "file": "lib/components/contents/app_review.dart",
+      "line": 137,
+      "snippet": "child: SizedBox(",
+      "values": [
+        {
+          "arg": "width",
+          "expr": "48",
+          "value": 48,
+          "kind": "literal"
+        },
+        {
+          "arg": "height",
+          "expr": "48",
+          "value": 48,
+          "kind": "literal"
+        }
+      ],
+      "unit": "px",
+      "kind": "SizedBox",
+      "contextHint": [
+        "sizedBox"
+      ]
+    },
+    {
+      "file": "lib/components/contents/app_review.dart",
+      "line": 160,
+      "snippet": "const SizedBox(height: AppSpacing.space8),",
+      "values": [
+        {
+          "arg": "height",
+          "expr": "AppSpacing.space8",
+          "tokenRef": "space8",
+          "kind": "tokenRef"
+        }
+      ],
+      "unit": "px",
+      "kind": "SizedBox",
+      "contextHint": [
+        "sizedBox",
+        "appSpacingRef"
+      ]
+    },
+    {
+      "file": "lib/components/contents/app_review.dart",
+      "line": 178,
+      "snippet": "const SizedBox(height: AppSpacing.space8),",
+      "values": [
+        {
+          "arg": "height",
+          "expr": "AppSpacing.space8",
+          "tokenRef": "space8",
+          "kind": "tokenRef"
+        }
+      ],
+      "unit": "px",
+      "kind": "SizedBox",
+      "contextHint": [
+        "sizedBox",
+        "appSpacingRef"
+      ]
+    },
+    {
+      "file": "lib/components/contents/app_review.dart",
+      "line": 187,
+      "snippet": "const SizedBox(height: AppSpacing.space8),",
+      "values": [
+        {
+          "arg": "height",
+          "expr": "AppSpacing.space8",
+          "tokenRef": "space8",
+          "kind": "tokenRef"
+        }
+      ],
+      "unit": "px",
+      "kind": "SizedBox",
+      "contextHint": [
+        "sizedBox",
+        "appSpacingRef"
+      ]
+    },
+    {
+      "file": "lib/components/contents/app_review.dart",
+      "line": 215,
+      "snippet": "const SizedBox(height: AppSpacing.space8),",
+      "values": [
+        {
+          "arg": "height",
+          "expr": "AppSpacing.space8",
+          "tokenRef": "space8",
+          "kind": "tokenRef"
+        }
+      ],
+      "unit": "px",
+      "kind": "SizedBox",
+      "contextHint": [
+        "sizedBox",
+        "appSpacingRef"
+      ]
+    },
+    {
+      "file": "lib/components/contents/app_review.dart",
+      "line": 218,
+      "snippet": "const SizedBox(height: AppSpacing.space8),",
+      "values": [
+        {
+          "arg": "height",
+          "expr": "AppSpacing.space8",
+          "tokenRef": "space8",
+          "kind": "tokenRef"
+        }
+      ],
+      "unit": "px",
+      "kind": "SizedBox",
+      "contextHint": [
+        "sizedBox",
+        "appSpacingRef"
+      ]
+    },
+    {
+      "file": "lib/components/contents/app_review.dart",
+      "line": 228,
+      "snippet": "const SizedBox(height: AppSpacing.space4),",
+      "values": [
+        {
+          "arg": "height",
+          "expr": "AppSpacing.space4",
+          "tokenRef": "space4",
+          "kind": "tokenRef"
+        }
+      ],
+      "unit": "px",
+      "kind": "SizedBox",
+      "contextHint": [
+        "sizedBox",
+        "appSpacingRef"
+      ]
+    },
+    {
+      "file": "lib/components/contents/app_review.dart",
+      "line": 240,
+      "snippet": "const SizedBox(height: AppSpacing.space8),",
+      "values": [
+        {
+          "arg": "height",
+          "expr": "AppSpacing.space8",
+          "tokenRef": "space8",
+          "kind": "tokenRef"
+        }
+      ],
+      "unit": "px",
+      "kind": "SizedBox",
+      "contextHint": [
+        "sizedBox",
+        "appSpacingRef"
+      ]
+    },
+    {
+      "file": "lib/components/contents/app_review.dart",
+      "line": 267,
+      "snippet": "const SizedBox(width: 2),",
+      "values": [
+        {
+          "arg": "width",
+          "expr": "2",
+          "value": 2,
+          "kind": "literal"
+        }
+      ],
+      "unit": "px",
+      "kind": "SizedBox",
+      "contextHint": [
+        "sizedBox"
+      ]
+    },
+    {
+      "file": "lib/components/contents/app_review.dart",
+      "line": 275,
+      "snippet": "const SizedBox(width: AppSpacing.space8),",
+      "values": [
+        {
+          "arg": "width",
+          "expr": "AppSpacing.space8",
+          "tokenRef": "space8",
+          "kind": "tokenRef"
+        }
+      ],
+      "unit": "px",
+      "kind": "SizedBox",
+      "contextHint": [
+        "sizedBox",
+        "appSpacingRef"
+      ]
+    },
+    {
+      "file": "lib/components/contents/app_review.dart",
+      "line": 282,
+      "snippet": "const SizedBox(width: AppSpacing.space8),",
+      "values": [
+        {
+          "arg": "width",
+          "expr": "AppSpacing.space8",
+          "tokenRef": "space8",
+          "kind": "tokenRef"
+        }
+      ],
+      "unit": "px",
+      "kind": "SizedBox",
+      "contextHint": [
+        "sizedBox",
+        "appSpacingRef"
+      ]
+    },
+    {
+      "file": "lib/components/contents/app_review.dart",
+      "line": 313,
+      "snippet": "SizedBox(",
+      "values": [
+        {
+          "arg": "width",
+          "expr": "32",
+          "value": 32,
+          "kind": "literal"
+        },
+        {
+          "arg": "height",
+          "expr": "32",
+          "value": 32,
+          "kind": "literal"
+        }
+      ],
+      "unit": "px",
+      "kind": "SizedBox",
+      "contextHint": [
+        "sizedBox"
+      ]
+    },
+    {
+      "file": "lib/components/contents/app_review.dart",
+      "line": 330,
+      "snippet": "const SizedBox(width: AppSpacing.space8),",
+      "values": [
+        {
+          "arg": "width",
+          "expr": "AppSpacing.space8",
+          "tokenRef": "space8",
+          "kind": "tokenRef"
+        }
+      ],
+      "unit": "px",
+      "kind": "SizedBox",
+      "contextHint": [
+        "sizedBox",
+        "appSpacingRef"
+      ]
+    },
+    {
+      "file": "lib/components/contents/app_review.dart",
+      "line": 351,
+      "snippet": "const SizedBox(width: AppSpacing.space4),",
+      "values": [
+        {
+          "arg": "width",
+          "expr": "AppSpacing.space4",
+          "tokenRef": "space4",
+          "kind": "tokenRef"
+        }
+      ],
+      "unit": "px",
+      "kind": "SizedBox",
+      "contextHint": [
+        "sizedBox",
+        "appSpacingRef"
+      ]
+    },
+    {
+      "file": "lib/components/contents/app_review.dart",
+      "line": 369,
+      "snippet": "const SizedBox(width: AppSpacing.space8),",
+      "values": [
+        {
+          "arg": "width",
+          "expr": "AppSpacing.space8",
+          "tokenRef": "space8",
+          "kind": "tokenRef"
+        }
+      ],
+      "unit": "px",
+      "kind": "SizedBox",
+      "contextHint": [
+        "sizedBox",
+        "appSpacingRef"
+      ]
+    },
+    {
+      "file": "lib/components/contents/app_review.dart",
+      "line": 377,
+      "snippet": "const SizedBox(width: AppSpacing.space8),",
+      "values": [
+        {
+          "arg": "width",
+          "expr": "AppSpacing.space8",
+          "tokenRef": "space8",
+          "kind": "tokenRef"
+        }
+      ],
+      "unit": "px",
+      "kind": "SizedBox",
+      "contextHint": [
+        "sizedBox",
+        "appSpacingRef"
+      ]
+    },
+    {
+      "file": "lib/components/contents/app_review.dart",
+      "line": 458,
+      "snippet": "const SizedBox(width: AppSpacing.space4),",
+      "values": [
+        {
+          "arg": "width",
+          "expr": "AppSpacing.space4",
+          "tokenRef": "space4",
+          "kind": "tokenRef"
+        }
+      ],
+      "unit": "px",
+      "kind": "SizedBox",
+      "contextHint": [
+        "sizedBox",
+        "appSpacingRef"
+      ]
+    },
+    {
+      "file": "lib/components/contents/app_review.dart",
+      "line": 82,
+      "snippet": "horizontal: AppSpacing.space16,",
+      "values": [
+        {
+          "arg": null,
+          "expr": "AppSpacing.space16",
+          "tokenRef": "space16",
+          "kind": "tokenRef"
+        }
+      ],
+      "unit": "px",
+      "kind": "AppSpacingRef",
+      "contextHint": [
+        "appSpacingRef"
+      ]
+    },
+    {
+      "file": "lib/components/contents/app_review.dart",
+      "line": 83,
+      "snippet": "vertical: AppSpacing.space12,",
+      "values": [
+        {
+          "arg": null,
+          "expr": "AppSpacing.space12",
+          "tokenRef": "space12",
+          "kind": "tokenRef"
+        }
+      ],
+      "unit": "px",
+      "kind": "AppSpacingRef",
+      "contextHint": [
+        "appSpacingRef"
+      ]
+    },
+    {
+      "file": "lib/components/contents/app_review.dart",
+      "line": 90,
+      "snippet": "const SizedBox(height: AppSpacing.space8),",
+      "values": [
+        {
+          "arg": null,
+          "expr": "AppSpacing.space8",
+          "tokenRef": "space8",
+          "kind": "tokenRef"
+        }
+      ],
+      "unit": "px",
+      "kind": "AppSpacingRef",
+      "contextHint": [
+        "appSpacingRef"
+      ]
+    },
+    {
+      "file": "lib/components/contents/app_review.dart",
+      "line": 98,
+      "snippet": "const SizedBox(height: AppSpacing.space8),",
+      "values": [
+        {
+          "arg": null,
+          "expr": "AppSpacing.space8",
+          "tokenRef": "space8",
+          "kind": "tokenRef"
+        }
+      ],
+      "unit": "px",
+      "kind": "AppSpacingRef",
+      "contextHint": [
+        "appSpacingRef"
+      ]
+    },
+    {
+      "file": "lib/components/contents/app_review.dart",
+      "line": 109,
+      "snippet": "horizontal: AppSpacing.space16,",
+      "values": [
+        {
+          "arg": null,
+          "expr": "AppSpacing.space16",
+          "tokenRef": "space16",
+          "kind": "tokenRef"
+        }
+      ],
+      "unit": "px",
+      "kind": "AppSpacingRef",
+      "contextHint": [
+        "appSpacingRef"
+      ]
+    },
+    {
+      "file": "lib/components/contents/app_review.dart",
+      "line": 110,
+      "snippet": "vertical: AppSpacing.space12,",
+      "values": [
+        {
+          "arg": null,
+          "expr": "AppSpacing.space12",
+          "tokenRef": "space12",
+          "kind": "tokenRef"
+        }
+      ],
+      "unit": "px",
+      "kind": "AppSpacingRef",
+      "contextHint": [
+        "appSpacingRef"
+      ]
+    },
+    {
+      "file": "lib/components/contents/app_review.dart",
+      "line": 121,
+      "snippet": "const SizedBox(height: AppSpacing.space4),",
+      "values": [
+        {
+          "arg": null,
+          "expr": "AppSpacing.space4",
+          "tokenRef": "space4",
+          "kind": "tokenRef"
+        }
+      ],
+      "unit": "px",
+      "kind": "AppSpacingRef",
+      "contextHint": [
+        "appSpacingRef"
+      ]
+    },
+    {
+      "file": "lib/components/contents/app_review.dart",
+      "line": 134,
+      "snippet": "const SizedBox(width: AppSpacing.space12),",
+      "values": [
+        {
+          "arg": null,
+          "expr": "AppSpacing.space12",
+          "tokenRef": "space12",
+          "kind": "tokenRef"
+        }
+      ],
+      "unit": "px",
+      "kind": "AppSpacingRef",
+      "contextHint": [
+        "appSpacingRef"
+      ]
+    },
+    {
+      "file": "lib/components/contents/app_review.dart",
+      "line": 152,
+      "snippet": "horizontal: AppSpacing.space16,",
+      "values": [
+        {
+          "arg": null,
+          "expr": "AppSpacing.space16",
+          "tokenRef": "space16",
+          "kind": "tokenRef"
+        }
+      ],
+      "unit": "px",
+      "kind": "AppSpacingRef",
+      "contextHint": [
+        "appSpacingRef"
+      ]
+    },
+    {
+      "file": "lib/components/contents/app_review.dart",
+      "line": 153,
+      "snippet": "vertical: AppSpacing.space12,",
+      "values": [
+        {
+          "arg": null,
+          "expr": "AppSpacing.space12",
+          "tokenRef": "space12",
+          "kind": "tokenRef"
+        }
+      ],
+      "unit": "px",
+      "kind": "AppSpacingRef",
+      "contextHint": [
+        "appSpacingRef"
+      ]
+    },
+    {
+      "file": "lib/components/contents/app_review.dart",
+      "line": 160,
+      "snippet": "const SizedBox(height: AppSpacing.space8),",
+      "values": [
+        {
+          "arg": null,
+          "expr": "AppSpacing.space8",
+          "tokenRef": "space8",
+          "kind": "tokenRef"
+        }
+      ],
+      "unit": "px",
+      "kind": "AppSpacingRef",
+      "contextHint": [
+        "appSpacingRef"
+      ]
+    },
+    {
+      "file": "lib/components/contents/app_review.dart",
+      "line": 178,
+      "snippet": "const SizedBox(height: AppSpacing.space8),",
+      "values": [
+        {
+          "arg": null,
+          "expr": "AppSpacing.space8",
+          "tokenRef": "space8",
+          "kind": "tokenRef"
+        }
+      ],
+      "unit": "px",
+      "kind": "AppSpacingRef",
+      "contextHint": [
+        "appSpacingRef"
+      ]
+    },
+    {
+      "file": "lib/components/contents/app_review.dart",
+      "line": 187,
+      "snippet": "const SizedBox(height: AppSpacing.space8),",
+      "values": [
+        {
+          "arg": null,
+          "expr": "AppSpacing.space8",
+          "tokenRef": "space8",
+          "kind": "tokenRef"
+        }
+      ],
+      "unit": "px",
+      "kind": "AppSpacingRef",
+      "contextHint": [
+        "appSpacingRef"
+      ]
+    },
+    {
+      "file": "lib/components/contents/app_review.dart",
+      "line": 200,
+      "snippet": "horizontal: AppSpacing.space16,",
+      "values": [
+        {
+          "arg": null,
+          "expr": "AppSpacing.space16",
+          "tokenRef": "space16",
+          "kind": "tokenRef"
+        }
+      ],
+      "unit": "px",
+      "kind": "AppSpacingRef",
+      "contextHint": [
+        "appSpacingRef"
+      ]
+    },
+    {
+      "file": "lib/components/contents/app_review.dart",
+      "line": 201,
+      "snippet": "vertical: AppSpacing.space12,",
+      "values": [
+        {
+          "arg": null,
+          "expr": "AppSpacing.space12",
+          "tokenRef": "space12",
+          "kind": "tokenRef"
+        }
+      ],
+      "unit": "px",
+      "kind": "AppSpacingRef",
+      "contextHint": [
+        "appSpacingRef"
+      ]
+    },
+    {
+      "file": "lib/components/contents/app_review.dart",
+      "line": 215,
+      "snippet": "const SizedBox(height: AppSpacing.space8),",
+      "values": [
+        {
+          "arg": null,
+          "expr": "AppSpacing.space8",
+          "tokenRef": "space8",
+          "kind": "tokenRef"
+        }
+      ],
+      "unit": "px",
+      "kind": "AppSpacingRef",
+      "contextHint": [
+        "appSpacingRef"
+      ]
+    },
+    {
+      "file": "lib/components/contents/app_review.dart",
+      "line": 218,
+      "snippet": "const SizedBox(height: AppSpacing.space8),",
+      "values": [
+        {
+          "arg": null,
+          "expr": "AppSpacing.space8",
+          "tokenRef": "space8",
+          "kind": "tokenRef"
+        }
+      ],
+      "unit": "px",
+      "kind": "AppSpacingRef",
+      "contextHint": [
+        "appSpacingRef"
+      ]
+    },
+    {
+      "file": "lib/components/contents/app_review.dart",
+      "line": 228,
+      "snippet": "const SizedBox(height: AppSpacing.space4),",
+      "values": [
+        {
+          "arg": null,
+          "expr": "AppSpacing.space4",
+          "tokenRef": "space4",
+          "kind": "tokenRef"
+        }
+      ],
+      "unit": "px",
+      "kind": "AppSpacingRef",
+      "contextHint": [
+        "appSpacingRef"
+      ]
+    },
+    {
+      "file": "lib/components/contents/app_review.dart",
+      "line": 240,
+      "snippet": "const SizedBox(height: AppSpacing.space8),",
+      "values": [
+        {
+          "arg": null,
+          "expr": "AppSpacing.space8",
+          "tokenRef": "space8",
+          "kind": "tokenRef"
+        }
+      ],
+      "unit": "px",
+      "kind": "AppSpacingRef",
+      "contextHint": [
+        "appSpacingRef"
+      ]
+    },
+    {
+      "file": "lib/components/contents/app_review.dart",
+      "line": 275,
+      "snippet": "const SizedBox(width: AppSpacing.space8),",
+      "values": [
+        {
+          "arg": null,
+          "expr": "AppSpacing.space8",
+          "tokenRef": "space8",
+          "kind": "tokenRef"
+        }
+      ],
+      "unit": "px",
+      "kind": "AppSpacingRef",
+      "contextHint": [
+        "appSpacingRef"
+      ]
+    },
+    {
+      "file": "lib/components/contents/app_review.dart",
+      "line": 282,
+      "snippet": "const SizedBox(width: AppSpacing.space8),",
+      "values": [
+        {
+          "arg": null,
+          "expr": "AppSpacing.space8",
+          "tokenRef": "space8",
+          "kind": "tokenRef"
+        }
+      ],
+      "unit": "px",
+      "kind": "AppSpacingRef",
+      "contextHint": [
+        "appSpacingRef"
+      ]
+    },
+    {
+      "file": "lib/components/contents/app_review.dart",
+      "line": 330,
+      "snippet": "const SizedBox(width: AppSpacing.space8),",
+      "values": [
+        {
+          "arg": null,
+          "expr": "AppSpacing.space8",
+          "tokenRef": "space8",
+          "kind": "tokenRef"
+        }
+      ],
+      "unit": "px",
+      "kind": "AppSpacingRef",
+      "contextHint": [
+        "appSpacingRef"
+      ]
+    },
+    {
+      "file": "lib/components/contents/app_review.dart",
+      "line": 351,
+      "snippet": "const SizedBox(width: AppSpacing.space4),",
+      "values": [
+        {
+          "arg": null,
+          "expr": "AppSpacing.space4",
+          "tokenRef": "space4",
+          "kind": "tokenRef"
+        }
+      ],
+      "unit": "px",
+      "kind": "AppSpacingRef",
+      "contextHint": [
+        "appSpacingRef"
+      ]
+    },
+    {
+      "file": "lib/components/contents/app_review.dart",
+      "line": 369,
+      "snippet": "const SizedBox(width: AppSpacing.space8),",
+      "values": [
+        {
+          "arg": null,
+          "expr": "AppSpacing.space8",
+          "tokenRef": "space8",
+          "kind": "tokenRef"
+        }
+      ],
+      "unit": "px",
+      "kind": "AppSpacingRef",
+      "contextHint": [
+        "appSpacingRef"
+      ]
+    },
+    {
+      "file": "lib/components/contents/app_review.dart",
+      "line": 377,
+      "snippet": "const SizedBox(width: AppSpacing.space8),",
+      "values": [
+        {
+          "arg": null,
+          "expr": "AppSpacing.space8",
+          "tokenRef": "space8",
+          "kind": "tokenRef"
+        }
+      ],
+      "unit": "px",
+      "kind": "AppSpacingRef",
+      "contextHint": [
+        "appSpacingRef"
+      ]
+    },
+    {
+      "file": "lib/components/contents/app_review.dart",
+      "line": 445,
+      "snippet": "padding: const EdgeInsets.symmetric(horizontal: AppSpacing.space8, vertical: AppSpacing.space4),",
+      "values": [
+        {
+          "arg": null,
+          "expr": "AppSpacing.space8",
+          "tokenRef": "space8",
+          "kind": "tokenRef"
+        }
+      ],
+      "unit": "px",
+      "kind": "AppSpacingRef",
+      "contextHint": [
+        "appSpacingRef"
+      ]
+    },
+    {
+      "file": "lib/components/contents/app_review.dart",
+      "line": 445,
+      "snippet": "padding: const EdgeInsets.symmetric(horizontal: AppSpacing.space8, vertical: AppSpacing.space4),",
+      "values": [
+        {
+          "arg": null,
+          "expr": "AppSpacing.space4",
+          "tokenRef": "space4",
+          "kind": "tokenRef"
+        }
+      ],
+      "unit": "px",
+      "kind": "AppSpacingRef",
+      "contextHint": [
+        "appSpacingRef"
+      ]
+    },
+    {
+      "file": "lib/components/contents/app_review.dart",
+      "line": 458,
+      "snippet": "const SizedBox(width: AppSpacing.space4),",
+      "values": [
+        {
+          "arg": null,
+          "expr": "AppSpacing.space4",
+          "tokenRef": "space4",
+          "kind": "tokenRef"
+        }
+      ],
+      "unit": "px",
+      "kind": "AppSpacingRef",
+      "contextHint": [
+        "appSpacingRef"
+      ]
+    },
+    {
+      "file": "lib/components/contents/app_review_use_cases.dart",
+      "line": 151,
+      "snippet": "padding: const EdgeInsets.symmetric(vertical: AppSpacing.space8),",
+      "values": [
+        {
+          "arg": "vertical",
+          "expr": "AppSpacing.space8",
+          "tokenRef": "space8",
+          "kind": "tokenRef"
+        }
+      ],
+      "unit": "px",
+      "kind": "EdgeInsets.symmetric",
+      "contextHint": [
+        "edgeInsets",
+        "appSpacingRef"
+      ]
+    },
+    {
+      "file": "lib/components/contents/app_review_use_cases.dart",
+      "line": 151,
+      "snippet": "padding: const EdgeInsets.symmetric(vertical: AppSpacing.space8),",
+      "values": [
+        {
+          "arg": null,
+          "expr": "AppSpacing.space8",
+          "tokenRef": "space8",
+          "kind": "tokenRef"
+        }
+      ],
+      "unit": "px",
+      "kind": "AppSpacingRef",
+      "contextHint": [
+        "appSpacingRef"
+      ]
+    },
+    {
+      "file": "lib/components/contents/app_section_header.dart",
+      "line": 81,
+      "snippet": "padding: const EdgeInsets.only(top: 2),",
+      "values": [
+        {
+          "arg": "top",
+          "expr": "2",
+          "value": 2,
+          "kind": "literal"
+        }
+      ],
+      "unit": "px",
+      "kind": "EdgeInsets.only",
+      "contextHint": [
+        "edgeInsets"
+      ]
+    },
+    {
+      "file": "lib/components/contents/app_section_header.dart",
+      "line": 126,
+      "snippet": "padding: const EdgeInsets.symmetric(",
+      "values": [
+        {
+          "arg": "horizontal",
+          "expr": "AppSpacing.space16",
+          "tokenRef": "space16",
+          "kind": "tokenRef"
+        }
+      ],
+      "unit": "px",
+      "kind": "EdgeInsets.symmetric",
+      "contextHint": [
+        "edgeInsets"
+      ]
+    },
+    {
+      "file": "lib/components/contents/app_section_header.dart",
+      "line": 104,
+      "snippet": "const SizedBox(width: AppSpacing.space12),",
+      "values": [
+        {
+          "arg": "width",
+          "expr": "AppSpacing.space12",
+          "tokenRef": "space12",
+          "kind": "tokenRef"
+        }
+      ],
+      "unit": "px",
+      "kind": "SizedBox",
+      "contextHint": [
+        "sizedBox",
+        "appSpacingRef"
+      ]
+    },
+    {
+      "file": "lib/components/contents/app_section_header.dart",
+      "line": 116,
+      "snippet": "const SizedBox(height: AppSpacing.space8),",
+      "values": [
+        {
+          "arg": "height",
+          "expr": "AppSpacing.space8",
+          "tokenRef": "space8",
+          "kind": "tokenRef"
+        }
+      ],
+      "unit": "px",
+      "kind": "SizedBox",
+      "contextHint": [
+        "sizedBox",
+        "appSpacingRef"
+      ]
+    },
+    {
+      "file": "lib/components/contents/app_section_header.dart",
+      "line": 104,
+      "snippet": "const SizedBox(width: AppSpacing.space12),",
+      "values": [
+        {
+          "arg": null,
+          "expr": "AppSpacing.space12",
+          "tokenRef": "space12",
+          "kind": "tokenRef"
+        }
+      ],
+      "unit": "px",
+      "kind": "AppSpacingRef",
+      "contextHint": [
+        "appSpacingRef"
+      ]
+    },
+    {
+      "file": "lib/components/contents/app_section_header.dart",
+      "line": 116,
+      "snippet": "const SizedBox(height: AppSpacing.space8),",
+      "values": [
+        {
+          "arg": null,
+          "expr": "AppSpacing.space8",
+          "tokenRef": "space8",
+          "kind": "tokenRef"
+        }
+      ],
+      "unit": "px",
+      "kind": "AppSpacingRef",
+      "contextHint": [
+        "appSpacingRef"
+      ]
+    },
+    {
+      "file": "lib/components/contents/app_section_header.dart",
+      "line": 127,
+      "snippet": "horizontal: AppSpacing.space16,",
+      "values": [
+        {
+          "arg": null,
+          "expr": "AppSpacing.space16",
+          "tokenRef": "space16",
+          "kind": "tokenRef"
+        }
+      ],
+      "unit": "px",
+      "kind": "AppSpacingRef",
+      "contextHint": [
+        "appSpacingRef"
+      ]
+    },
+    {
+      "file": "lib/components/contents/app_section_header.dart",
+      "line": 128,
+      "snippet": "vertical: AppSpacing.space12,",
+      "values": [
+        {
+          "arg": null,
+          "expr": "AppSpacing.space12",
+          "tokenRef": "space12",
+          "kind": "tokenRef"
+        }
+      ],
+      "unit": "px",
+      "kind": "AppSpacingRef",
+      "contextHint": [
+        "appSpacingRef"
+      ]
+    },
+    {
+      "file": "lib/components/contents/app_table.dart",
+      "line": 67,
+      "snippet": "padding: EdgeInsets.symmetric(",
+      "values": [
+        {
+          "arg": "horizontal",
+          "expr": "AppSpacing.space12",
+          "tokenRef": "space12",
+          "kind": "tokenRef"
+        }
+      ],
+      "unit": "px",
+      "kind": "EdgeInsets.symmetric",
+      "contextHint": [
+        "edgeInsets"
+      ]
+    },
+    {
+      "file": "lib/components/contents/app_table.dart",
+      "line": 107,
+      "snippet": "padding: EdgeInsets.symmetric(",
+      "values": [
+        {
+          "arg": "horizontal",
+          "expr": "AppSpacing.space12",
+          "tokenRef": "space12",
+          "kind": "tokenRef"
+        }
+      ],
+      "unit": "px",
+      "kind": "EdgeInsets.symmetric",
+      "contextHint": [
+        "edgeInsets"
+      ]
+    },
+    {
+      "file": "lib/components/contents/app_table.dart",
+      "line": 68,
+      "snippet": "horizontal: AppSpacing.space12,",
+      "values": [
+        {
+          "arg": null,
+          "expr": "AppSpacing.space12",
+          "tokenRef": "space12",
+          "kind": "tokenRef"
+        }
+      ],
+      "unit": "px",
+      "kind": "AppSpacingRef",
+      "contextHint": [
+        "appSpacingRef"
+      ]
+    },
+    {
+      "file": "lib/components/contents/app_table.dart",
+      "line": 69,
+      "snippet": "vertical: AppSpacing.space8,",
+      "values": [
+        {
+          "arg": null,
+          "expr": "AppSpacing.space8",
+          "tokenRef": "space8",
+          "kind": "tokenRef"
+        }
+      ],
+      "unit": "px",
+      "kind": "AppSpacingRef",
+      "contextHint": [
+        "appSpacingRef"
+      ]
+    },
+    {
+      "file": "lib/components/contents/app_table.dart",
+      "line": 108,
+      "snippet": "horizontal: AppSpacing.space12,",
+      "values": [
+        {
+          "arg": null,
+          "expr": "AppSpacing.space12",
+          "tokenRef": "space12",
+          "kind": "tokenRef"
+        }
+      ],
+      "unit": "px",
+      "kind": "AppSpacingRef",
+      "contextHint": [
+        "appSpacingRef"
+      ]
+    },
+    {
+      "file": "lib/components/contents/app_table.dart",
+      "line": 109,
+      "snippet": "vertical: AppSpacing.space8,",
+      "values": [
+        {
+          "arg": null,
+          "expr": "AppSpacing.space8",
+          "tokenRef": "space8",
+          "kind": "tokenRef"
+        }
+      ],
+      "unit": "px",
+      "kind": "AppSpacingRef",
+      "contextHint": [
+        "appSpacingRef"
+      ]
+    },
+    {
+      "file": "lib/components/contents/app_table_use_cases.dart",
+      "line": 146,
+      "snippet": "padding: const EdgeInsets.symmetric(",
+      "values": [
+        {
+          "arg": "horizontal",
+          "expr": "8",
+          "value": 8,
+          "kind": "literal"
+        }
+      ],
+      "unit": "px",
+      "kind": "EdgeInsets.symmetric",
+      "contextHint": [
+        "edgeInsets"
+      ]
+    },
+    {
+      "file": "lib/components/contents/app_table_use_cases.dart",
+      "line": 173,
+      "snippet": "padding: const EdgeInsets.symmetric(",
+      "values": [
+        {
+          "arg": "horizontal",
+          "expr": "8",
+          "value": 8,
+          "kind": "literal"
+        }
+      ],
+      "unit": "px",
+      "kind": "EdgeInsets.symmetric",
+      "contextHint": [
+        "edgeInsets"
+      ]
+    },
+    {
+      "file": "lib/components/contents/app_table_use_cases.dart",
+      "line": 200,
+      "snippet": "padding: const EdgeInsets.symmetric(",
+      "values": [
+        {
+          "arg": "horizontal",
+          "expr": "8",
+          "value": 8,
+          "kind": "literal"
+        }
+      ],
+      "unit": "px",
+      "kind": "EdgeInsets.symmetric",
+      "contextHint": [
+        "edgeInsets"
+      ]
+    },
+    {
+      "file": "lib/components/contents/app_table_use_cases.dart",
+      "line": 224,
+      "snippet": "padding: const EdgeInsets.all(AppSpacing.space16),",
+      "values": [
+        {
+          "arg": "#0",
+          "expr": "AppSpacing.space16",
+          "tokenRef": "space16",
+          "kind": "tokenRef"
+        }
+      ],
+      "unit": "px",
+      "kind": "EdgeInsets.all",
+      "contextHint": [
+        "edgeInsets",
+        "appSpacingRef"
+      ]
+    },
+    {
+      "file": "lib/components/contents/app_table_use_cases.dart",
+      "line": 140,
+      "snippet": "const SizedBox(width: 8),",
+      "values": [
+        {
+          "arg": "width",
+          "expr": "8",
+          "value": 8,
+          "kind": "literal"
+        }
+      ],
+      "unit": "px",
+      "kind": "SizedBox",
+      "contextHint": [
+        "sizedBox"
+      ]
+    },
+    {
+      "file": "lib/components/contents/app_table_use_cases.dart",
+      "line": 167,
+      "snippet": "const SizedBox(width: 8),",
+      "values": [
+        {
+          "arg": "width",
+          "expr": "8",
+          "value": 8,
+          "kind": "literal"
+        }
+      ],
+      "unit": "px",
+      "kind": "SizedBox",
+      "contextHint": [
+        "sizedBox"
+      ]
+    },
+    {
+      "file": "lib/components/contents/app_table_use_cases.dart",
+      "line": 194,
+      "snippet": "const SizedBox(width: 8),",
+      "values": [
+        {
+          "arg": "width",
+          "expr": "8",
+          "value": 8,
+          "kind": "literal"
+        }
+      ],
+      "unit": "px",
+      "kind": "SizedBox",
+      "contextHint": [
+        "sizedBox"
+      ]
+    },
+    {
+      "file": "lib/components/contents/app_table_use_cases.dart",
+      "line": 224,
+      "snippet": "padding: const EdgeInsets.all(AppSpacing.space16),",
+      "values": [
+        {
+          "arg": null,
+          "expr": "AppSpacing.space16",
+          "tokenRef": "space16",
+          "kind": "tokenRef"
+        }
+      ],
+      "unit": "px",
+      "kind": "AppSpacingRef",
+      "contextHint": [
+        "appSpacingRef"
+      ]
+    },
+    {
+      "file": "lib/components/contents/app_tasting_note.dart",
+      "line": 44,
+      "snippet": "padding: const EdgeInsets.symmetric(",
+      "values": [
+        {
+          "arg": "horizontal",
+          "expr": "AppSpacing.space12",
+          "tokenRef": "space12",
+          "kind": "tokenRef"
+        }
+      ],
+      "unit": "px",
+      "kind": "EdgeInsets.symmetric",
+      "contextHint": [
+        "edgeInsets"
+      ]
+    },
+    {
+      "file": "lib/components/contents/app_tasting_note.dart",
+      "line": 64,
+      "snippet": "const SizedBox(width: AppSpacing.space12),",
+      "values": [
+        {
+          "arg": "width",
+          "expr": "AppSpacing.space12",
+          "tokenRef": "space12",
+          "kind": "tokenRef"
+        }
+      ],
+      "unit": "px",
+      "kind": "SizedBox",
+      "contextHint": [
+        "sizedBox",
+        "appSpacingRef"
+      ]
+    },
+    {
+      "file": "lib/components/contents/app_tasting_note.dart",
+      "line": 78,
+      "snippet": "const SizedBox(height: 2),",
+      "values": [
+        {
+          "arg": "height",
+          "expr": "2",
+          "value": 2,
+          "kind": "literal"
+        }
+      ],
+      "unit": "px",
+      "kind": "SizedBox",
+      "contextHint": [
+        "sizedBox"
+      ]
+    },
+    {
+      "file": "lib/components/contents/app_tasting_note.dart",
+      "line": 91,
+      "snippet": "const SizedBox(width: AppSpacing.space8),",
+      "values": [
+        {
+          "arg": "width",
+          "expr": "AppSpacing.space8",
+          "tokenRef": "space8",
+          "kind": "tokenRef"
+        }
+      ],
+      "unit": "px",
+      "kind": "SizedBox",
+      "contextHint": [
+        "sizedBox",
+        "appSpacingRef"
+      ]
+    },
+    {
+      "file": "lib/components/contents/app_tasting_note.dart",
+      "line": 45,
+      "snippet": "horizontal: AppSpacing.space12,",
+      "values": [
+        {
+          "arg": null,
+          "expr": "AppSpacing.space12",
+          "tokenRef": "space12",
+          "kind": "tokenRef"
+        }
+      ],
+      "unit": "px",
+      "kind": "AppSpacingRef",
+      "contextHint": [
+        "appSpacingRef"
+      ]
+    },
+    {
+      "file": "lib/components/contents/app_tasting_note.dart",
+      "line": 46,
+      "snippet": "vertical: AppSpacing.space12,",
+      "values": [
+        {
+          "arg": null,
+          "expr": "AppSpacing.space12",
+          "tokenRef": "space12",
+          "kind": "tokenRef"
+        }
+      ],
+      "unit": "px",
+      "kind": "AppSpacingRef",
+      "contextHint": [
+        "appSpacingRef"
+      ]
+    },
+    {
+      "file": "lib/components/contents/app_tasting_note.dart",
+      "line": 64,
+      "snippet": "const SizedBox(width: AppSpacing.space12),",
+      "values": [
+        {
+          "arg": null,
+          "expr": "AppSpacing.space12",
+          "tokenRef": "space12",
+          "kind": "tokenRef"
+        }
+      ],
+      "unit": "px",
+      "kind": "AppSpacingRef",
+      "contextHint": [
+        "appSpacingRef"
+      ]
+    },
+    {
+      "file": "lib/components/contents/app_tasting_note.dart",
+      "line": 91,
+      "snippet": "const SizedBox(width: AppSpacing.space8),",
+      "values": [
+        {
+          "arg": null,
+          "expr": "AppSpacing.space8",
+          "tokenRef": "space8",
+          "kind": "tokenRef"
+        }
+      ],
+      "unit": "px",
+      "kind": "AppSpacingRef",
+      "contextHint": [
+        "appSpacingRef"
+      ]
+    },
+    {
+      "file": "lib/components/contents/app_tasting_note_use_cases.dart",
+      "line": 83,
+      "snippet": "padding: const EdgeInsets.all(AppSpacing.space16),",
+      "values": [
+        {
+          "arg": "#0",
+          "expr": "AppSpacing.space16",
+          "tokenRef": "space16",
+          "kind": "tokenRef"
+        }
+      ],
+      "unit": "px",
+      "kind": "EdgeInsets.all",
+      "contextHint": [
+        "edgeInsets",
+        "appSpacingRef"
+      ]
+    },
+    {
+      "file": "lib/components/contents/app_tasting_note_use_cases.dart",
+      "line": 54,
+      "snippet": "const SizedBox(height: AppSpacing.space8),",
+      "values": [
+        {
+          "arg": "height",
+          "expr": "AppSpacing.space8",
+          "tokenRef": "space8",
+          "kind": "tokenRef"
+        }
+      ],
+      "unit": "px",
+      "kind": "SizedBox",
+      "contextHint": [
+        "sizedBox",
+        "appSpacingRef"
+      ]
+    },
+    {
+      "file": "lib/components/contents/app_tasting_note_use_cases.dart",
+      "line": 60,
+      "snippet": "const SizedBox(height: AppSpacing.space8),",
+      "values": [
+        {
+          "arg": "height",
+          "expr": "AppSpacing.space8",
+          "tokenRef": "space8",
+          "kind": "tokenRef"
+        }
+      ],
+      "unit": "px",
+      "kind": "SizedBox",
+      "contextHint": [
+        "sizedBox",
+        "appSpacingRef"
+      ]
+    },
+    {
+      "file": "lib/components/contents/app_tasting_note_use_cases.dart",
+      "line": 66,
+      "snippet": "const SizedBox(height: AppSpacing.space8),",
+      "values": [
+        {
+          "arg": "height",
+          "expr": "AppSpacing.space8",
+          "tokenRef": "space8",
+          "kind": "tokenRef"
+        }
+      ],
+      "unit": "px",
+      "kind": "SizedBox",
+      "contextHint": [
+        "sizedBox",
+        "appSpacingRef"
+      ]
+    },
+    {
+      "file": "lib/components/contents/app_tasting_note_use_cases.dart",
+      "line": 54,
+      "snippet": "const SizedBox(height: AppSpacing.space8),",
+      "values": [
+        {
+          "arg": null,
+          "expr": "AppSpacing.space8",
+          "tokenRef": "space8",
+          "kind": "tokenRef"
+        }
+      ],
+      "unit": "px",
+      "kind": "AppSpacingRef",
+      "contextHint": [
+        "appSpacingRef"
+      ]
+    },
+    {
+      "file": "lib/components/contents/app_tasting_note_use_cases.dart",
+      "line": 60,
+      "snippet": "const SizedBox(height: AppSpacing.space8),",
+      "values": [
+        {
+          "arg": null,
+          "expr": "AppSpacing.space8",
+          "tokenRef": "space8",
+          "kind": "tokenRef"
+        }
+      ],
+      "unit": "px",
+      "kind": "AppSpacingRef",
+      "contextHint": [
+        "appSpacingRef"
+      ]
+    },
+    {
+      "file": "lib/components/contents/app_tasting_note_use_cases.dart",
+      "line": 66,
+      "snippet": "const SizedBox(height: AppSpacing.space8),",
+      "values": [
+        {
+          "arg": null,
+          "expr": "AppSpacing.space8",
+          "tokenRef": "space8",
+          "kind": "tokenRef"
+        }
+      ],
+      "unit": "px",
+      "kind": "AppSpacingRef",
+      "contextHint": [
+        "appSpacingRef"
+      ]
+    },
+    {
+      "file": "lib/components/contents/app_tasting_note_use_cases.dart",
+      "line": 83,
+      "snippet": "padding: const EdgeInsets.all(AppSpacing.space16),",
+      "values": [
+        {
+          "arg": null,
+          "expr": "AppSpacing.space16",
+          "tokenRef": "space16",
+          "kind": "tokenRef"
+        }
+      ],
+      "unit": "px",
+      "kind": "AppSpacingRef",
+      "contextHint": [
+        "appSpacingRef"
+      ]
+    }
+  ],
+  "_summary": {
+    "dir": "contents",
+    "fileCount": 30,
+    "totalUsages": 328,
+    "distinctValues": [
+      0,
+      1,
+      2,
+      3,
+      4,
+      6,
+      8,
+      10,
+      20,
+      32,
+      40,
+      48,
+      56,
+      112,
+      200,
+      240,
+      320
+    ],
+    "valueFrequency": {
+      "2": 15,
+      "6": 9,
+      "8": 8,
+      "0": 4,
+      "48": 4,
+      "32": 3,
+      "4": 2,
+      "20": 2,
+      "56": 2,
+      "1": 1,
+      "3": 1,
+      "10": 1,
+      "40": 1,
+      "112": 1,
+      "200": 1,
+      "240": 1,
+      "320": 1
+    },
+    "tokenRefFrequency": {
+      "space8": 91,
+      "space16": 78,
+      "space12": 66,
+      "space4": 41,
+      "space24": 4
+    },
+    "suspiciousItems": [
+      {
+        "file": "lib/components/contents/app_banner.dart",
+        "line": 159,
+        "kind": "SizedBox",
+        "value": 56,
+        "reason": "off-scale literal",
+        "snippet": "child: SizedBox("
+      },
+      {
+        "file": "lib/components/contents/app_banner.dart",
+        "line": 159,
+        "kind": "SizedBox",
+        "value": 56,
+        "reason": "off-scale literal",
+        "snippet": "child: SizedBox("
+      },
+      {
+        "file": "lib/components/contents/app_banner_use_cases.dart",
+        "line": 33,
+        "kind": "SizedBox",
+        "value": 240,
+        "reason": "off-scale literal",
+        "snippet": "SizedBox("
+      },
+      {
+        "file": "lib/components/contents/app_banner_use_cases.dart",
+        "line": 48,
+        "kind": "SizedBox",
+        "value": 320,
+        "reason": "off-scale literal",
+        "snippet": "SizedBox("
+      },
+      {
+        "file": "lib/components/contents/app_banner_use_cases.dart",
+        "line": 63,
+        "kind": "SizedBox",
+        "value": 200,
+        "reason": "off-scale literal",
+        "snippet": "SizedBox("
+      },
+      {
+        "file": "lib/components/contents/app_cell.dart",
+        "line": 117,
+        "kind": "SizedBox",
+        "value": 2,
+        "reason": "off-scale literal",
+        "snippet": "const SizedBox(height: 2),"
+      },
+      {
+        "file": "lib/components/contents/app_coffee_list.dart",
+        "line": 235,
+        "kind": "SizedBox",
+        "value": 2,
+        "reason": "off-scale literal",
+        "snippet": "const SizedBox(height: 2),"
+      },
+      {
+        "file": "lib/components/contents/app_community_list.dart",
+        "line": 63,
+        "kind": "SizedBox",
+        "value": 6,
+        "reason": "off-scale literal",
+        "snippet": "const SizedBox(height: 6),"
+      },
+      {
+        "file": "lib/components/contents/app_community_list.dart",
+        "line": 78,
+        "kind": "SizedBox",
+        "value": 2,
+        "reason": "off-scale literal",
+        "snippet": "const SizedBox(width: 2),"
+      },
+      {
+        "file": "lib/components/contents/app_community_list.dart",
+        "line": 92,
+        "kind": "SizedBox",
+        "value": 2,
+        "reason": "off-scale literal",
+        "snippet": "const SizedBox(width: 2),"
+      },
+      {
+        "file": "lib/components/contents/app_content_badge.dart",
+        "line": 148,
+        "kind": "SizedBox",
+        "value": 2,
+        "reason": "off-scale literal",
+        "snippet": "const SizedBox(width: 2),"
+      },
+      {
+        "file": "lib/components/contents/app_content_badge.dart",
+        "line": 152,
+        "kind": "SizedBox",
+        "value": 2,
+        "reason": "off-scale literal",
+        "snippet": "const SizedBox(width: 2),"
+      },
+      {
+        "file": "lib/components/contents/app_item_list.dart",
+        "line": 236,
+        "kind": "EdgeInsets.symmetric",
+        "value": 6,
+        "reason": "off-scale literal",
+        "snippet": "padding: const EdgeInsets.symmetric(horizontal: 6, vertical: 2),"
+      },
+      {
+        "file": "lib/components/contents/app_item_list.dart",
+        "line": 236,
+        "kind": "EdgeInsets.symmetric",
+        "value": 2,
+        "reason": "off-scale literal",
+        "snippet": "padding: const EdgeInsets.symmetric(horizontal: 6, vertical: 2),"
+      },
+      {
+        "file": "lib/components/contents/app_item_list.dart",
+        "line": 102,
+        "kind": "SizedBox",
+        "value": 112,
+        "reason": "off-scale literal",
+        "snippet": "return SizedBox("
+      },
+      {
+        "file": "lib/components/contents/app_item_list.dart",
+        "line": 128,
+        "kind": "SizedBox",
+        "value": 2,
+        "reason": "off-scale literal",
+        "snippet": "const SizedBox(height: 2),"
+      },
+      {
+        "file": "lib/components/contents/app_item_list.dart",
+        "line": 168,
+        "kind": "SizedBox",
+        "value": 2,
+        "reason": "off-scale literal",
+        "snippet": "const SizedBox(height: 2),"
+      },
+      {
+        "file": "lib/components/contents/app_item_list.dart",
+        "line": 298,
+        "kind": "SizedBox",
+        "value": 2,
+        "reason": "off-scale literal",
+        "snippet": "const SizedBox(width: 2),"
+      },
+      {
+        "file": "lib/components/contents/app_play_icon_badge.dart",
+        "line": 65,
+        "kind": "EdgeInsets.only",
+        "value": 2,
+        "reason": "off-scale literal",
+        "snippet": "padding: const EdgeInsets.only(left: 2),"
+      },
+      {
+        "file": "lib/components/contents/app_preference_list.dart",
+        "line": 83,
+        "kind": "EdgeInsets.symmetric",
+        "value": 6,
+        "reason": "off-scale literal",
+        "snippet": "padding: const EdgeInsets.symmetric(vertical: 6, horizontal: AppSpacing.space8),"
+      },
+      {
+        "file": "lib/components/contents/app_preference_list.dart",
+        "line": 95,
+        "kind": "SizedBox",
+        "value": 2,
+        "reason": "off-scale literal",
+        "snippet": "const SizedBox(height: 2),"
+      },
+      {
+        "file": "lib/components/contents/app_preference_list.dart",
+        "line": 225,
+        "kind": "PropLiteral:spacing",
+        "value": 6,
+        "reason": "off-scale literal",
+        "snippet": "spacing: 6,"
+      },
+      {
+        "file": "lib/components/contents/app_preference_list.dart",
+        "line": 226,
+        "kind": "PropLiteral:runSpacing",
+        "value": 6,
+        "reason": "off-scale literal",
+        "snippet": "runSpacing: 6,"
+      },
+      {
+        "file": "lib/components/contents/app_recipe_timer.dart",
+        "line": 52,
+        "kind": "EdgeInsets.symmetric",
+        "value": 6,
+        "reason": "off-scale literal",
+        "snippet": "padding: const EdgeInsets.symmetric(vertical: 6),"
+      },
+      {
+        "file": "lib/components/contents/app_recipe_timer.dart",
+        "line": 68,
+        "kind": "EdgeInsets.symmetric",
+        "value": 6,
+        "reason": "off-scale literal",
+        "snippet": "padding: const EdgeInsets.symmetric(horizontal: 6, vertical: AppSpacing.space4),"
+      },
+      {
+        "file": "lib/components/contents/app_recipe_timer.dart",
+        "line": 78,
+        "kind": "EdgeInsets.symmetric",
+        "value": 10,
+        "reason": "off-scale literal",
+        "snippet": "padding: const EdgeInsets.symmetric("
+      },
+      {
+        "file": "lib/components/contents/app_review.dart",
+        "line": 341,
+        "kind": "EdgeInsets.only",
+        "value": 1,
+        "reason": "off-scale literal",
+        "snippet": "padding: const EdgeInsets.only(right: 1),"
+      },
+      {
+        "file": "lib/components/contents/app_review.dart",
+        "line": 267,
+        "kind": "SizedBox",
+        "value": 2,
+        "reason": "off-scale literal",
+        "snippet": "const SizedBox(width: 2),"
+      },
+      {
+        "file": "lib/components/contents/app_section_header.dart",
+        "line": 81,
+        "kind": "EdgeInsets.only",
+        "value": 2,
+        "reason": "off-scale literal",
+        "snippet": "padding: const EdgeInsets.only(top: 2),"
+      },
+      {
+        "file": "lib/components/contents/app_tasting_note.dart",
+        "line": 78,
+        "kind": "SizedBox",
+        "value": 2,
+        "reason": "off-scale literal",
+        "snippet": "const SizedBox(height: 2),"
+      }
+    ],
+    "suspiciousCount": 30
+  }
+}
