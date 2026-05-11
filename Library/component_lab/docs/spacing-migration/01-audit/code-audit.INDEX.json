@@ -1,0 +1,1382 @@
+{
+  "_meta": {
+    "phase": "Phase 1-B audit",
+    "scope": "Library/component_lab/lib",
+    "auditDirCount": 22,
+    "generatedFor": "spacing token migration"
+  },
+  "foundation": {
+    "auditFile": "code-token-defs.foundation.json",
+    "summary": {
+      "dir": "foundation",
+      "paletteCount": 13,
+      "semanticCount": 20,
+      "edgeInsetsConstCount": 2,
+      "helperFunctionCount": 4,
+      "paletteValues": [
+        4.0,
+        8.0,
+        12.0,
+        14.0,
+        16.0,
+        20.0,
+        24.0,
+        32.0,
+        34.0,
+        36.0,
+        40.0,
+        44.0,
+        48.0
+      ],
+      "distinctSemanticPaletteRefs": [
+        "space12",
+        "space14",
+        "space16",
+        "space20",
+        "space24",
+        "space32",
+        "space34",
+        "space36",
+        "space44",
+        "space8"
+      ],
+      "useCases": {
+        "groupCount": 6,
+        "showcasedTokenCount": 31,
+        "hardCodedEdgeInsetsInDemoCount": 3
+      }
+    }
+  },
+  "directories": {
+    "avatars": {
+      "auditFiles": [
+        "code-hardcoded-usages.avatars.json"
+      ],
+      "summary": {
+        "dir": "avatars",
+        "fileCount": 2,
+        "totalUsages": 6,
+        "distinctValues": [
+          0,
+          16,
+          24
+        ],
+        "valueFrequency": {
+          "0": 2,
+          "16": 2,
+          "24": 1
+        },
+        "tokenRefFrequency": {},
+        "suspiciousItems": [],
+        "suspiciousCount": 0
+      }
+    },
+    "buttons": {
+      "auditFiles": [
+        "code-hardcoded-usages.buttons.json"
+      ],
+      "summary": {
+        "dir": "buttons",
+        "fileCount": 8,
+        "totalUsages": 64,
+        "distinctValues": [
+          4,
+          6,
+          8,
+          10,
+          11,
+          12,
+          16,
+          24,
+          28
+        ],
+        "valueFrequency": {
+          "12": 18,
+          "24": 4,
+          "16": 3,
+          "6": 2,
+          "10": 2,
+          "4": 1,
+          "8": 1,
+          "11": 1,
+          "28": 1
+        },
+        "tokenRefFrequency": {
+          "space4": 6,
+          "space8": 6,
+          "space24": 4,
+          "space12": 2,
+          "space16": 2
+        },
+        "suspiciousItems": [
+          {
+            "file": "lib/components/buttons/app_section_bottom_button.dart",
+            "line": 66,
+            "kind": "EdgeInsets.symmetric",
+            "value": 28,
+            "reason": "off-scale literal",
+            "snippet": "padding: const EdgeInsets.symmetric(horizontal: 28, vertical: 11),"
+          },
+          {
+            "file": "lib/components/buttons/app_section_bottom_button.dart",
+            "line": 66,
+            "kind": "EdgeInsets.symmetric",
+            "value": 11,
+            "reason": "off-scale literal",
+            "snippet": "padding: const EdgeInsets.symmetric(horizontal: 28, vertical: 11),"
+          },
+          {
+            "file": "lib/components/buttons/app_section_bottom_button.dart",
+            "line": 72,
+            "kind": "SizedBox",
+            "value": 6,
+            "reason": "off-scale literal",
+            "snippet": "const SizedBox(width: 6),"
+          },
+          {
+            "file": "lib/components/buttons/app_section_bottom_button.dart",
+            "line": 80,
+            "kind": "SizedBox",
+            "value": 6,
+            "reason": "off-scale literal",
+            "snippet": "const SizedBox(width: 6),"
+          },
+          {
+            "file": "lib/components/buttons/app_section_bottom_button.dart",
+            "line": 112,
+            "kind": "SizedBox",
+            "value": 10,
+            "reason": "off-scale literal",
+            "snippet": "const SizedBox(width: 10),"
+          },
+          {
+            "file": "lib/components/buttons/app_section_bottom_button.dart",
+            "line": 121,
+            "kind": "SizedBox",
+            "value": 10,
+            "reason": "off-scale literal",
+            "snippet": "const SizedBox(width: 10),"
+          }
+        ],
+        "suspiciousCount": 6
+      }
+    },
+    "cards": {
+      "auditFiles": [
+        "code-hardcoded-usages.cards.json"
+      ],
+      "summary": {
+        "dir": "cards",
+        "fileCount": 2,
+        "totalUsages": 23,
+        "distinctValues": [
+          2,
+          24
+        ],
+        "valueFrequency": {
+          "24": 2,
+          "2": 1
+        },
+        "tokenRefFrequency": {
+          "space16": 8,
+          "space12": 7,
+          "space4": 2,
+          "space8": 2
+        },
+        "suspiciousItems": [
+          {
+            "file": "lib/components/cards/app_card.dart",
+            "line": 163,
+            "kind": "SizedBox",
+            "value": 2,
+            "reason": "off-scale literal",
+            "snippet": "const SizedBox(height: 2),"
+          }
+        ],
+        "suspiciousCount": 1
+      }
+    },
+    "chips": {
+      "auditFiles": [
+        "code-hardcoded-usages.chips.json"
+      ],
+      "summary": {
+        "dir": "chips",
+        "fileCount": 5,
+        "totalUsages": 78,
+        "distinctValues": [
+          2,
+          3,
+          6,
+          10
+        ],
+        "valueFrequency": {
+          "2": 3,
+          "6": 3,
+          "3": 2,
+          "10": 1
+        },
+        "tokenRefFrequency": {
+          "space8": 22,
+          "space12": 18,
+          "space20": 14,
+          "space4": 6,
+          "space24": 2
+        },
+        "suspiciousItems": [
+          {
+            "file": "lib/components/chips/app_chip.dart",
+            "line": 131,
+            "kind": "EdgeInsets.symmetric",
+            "value": 6,
+            "reason": "off-scale literal",
+            "snippet": ": const EdgeInsets.symmetric("
+          },
+          {
+            "file": "lib/components/chips/app_chip_action.dart",
+            "line": 65,
+            "kind": "PropLiteral:gap",
+            "value": 2,
+            "reason": "off-scale literal",
+            "snippet": "gap: 2,"
+          },
+          {
+            "file": "lib/components/chips/app_chip_action.dart",
+            "line": 75,
+            "kind": "PropLiteral:gap",
+            "value": 2,
+            "reason": "off-scale literal",
+            "snippet": "gap: 2,"
+          },
+          {
+            "file": "lib/components/chips/app_chip_action.dart",
+            "line": 85,
+            "kind": "PropLiteral:gap",
+            "value": 3,
+            "reason": "off-scale literal",
+            "snippet": "gap: 3,"
+          },
+          {
+            "file": "lib/components/chips/app_chip_action.dart",
+            "line": 95,
+            "kind": "PropLiteral:gap",
+            "value": 3,
+            "reason": "off-scale literal",
+            "snippet": "gap: 3,"
+          },
+          {
+            "file": "lib/components/chips/app_mini_chip.dart",
+            "line": 34,
+            "kind": "EdgeInsets.symmetric",
+            "value": 10,
+            "reason": "off-scale literal",
+            "snippet": "const EdgeInsets.symmetric(horizontal: 10, vertical: 6),"
+          },
+          {
+            "file": "lib/components/chips/app_mini_chip.dart",
+            "line": 34,
+            "kind": "EdgeInsets.symmetric",
+            "value": 6,
+            "reason": "off-scale literal",
+            "snippet": "const EdgeInsets.symmetric(horizontal: 10, vertical: 6),"
+          },
+          {
+            "file": "lib/components/chips/app_mini_chip.dart",
+            "line": 41,
+            "kind": "EdgeInsets.symmetric",
+            "value": 6,
+            "reason": "off-scale literal",
+            "snippet": "const EdgeInsets.symmetric(horizontal: 6, vertical: 2),"
+          },
+          {
+            "file": "lib/components/chips/app_mini_chip.dart",
+            "line": 41,
+            "kind": "EdgeInsets.symmetric",
+            "value": 2,
+            "reason": "off-scale literal",
+            "snippet": "const EdgeInsets.symmetric(horizontal: 6, vertical: 2),"
+          }
+        ],
+        "suspiciousCount": 9
+      }
+    },
+    "contents": {
+      "auditFiles": [
+        "code-hardcoded-usages.contents-part1.json",
+        "code-hardcoded-usages.contents-part2.json"
+      ],
+      "summary": {
+        "dir": "contents",
+        "fileCount": 30,
+        "totalUsages": 328,
+        "distinctValues": [
+          0,
+          1,
+          2,
+          3,
+          4,
+          6,
+          8,
+          10,
+          20,
+          32,
+          40,
+          48,
+          56,
+          112,
+          200,
+          240,
+          320
+        ],
+        "valueFrequency": {
+          "2": 15,
+          "6": 9,
+          "8": 8,
+          "0": 4,
+          "48": 4,
+          "32": 3,
+          "4": 2,
+          "20": 2,
+          "56": 2,
+          "1": 1,
+          "3": 1,
+          "10": 1,
+          "40": 1,
+          "112": 1,
+          "200": 1,
+          "240": 1,
+          "320": 1
+        },
+        "tokenRefFrequency": {
+          "space8": 91,
+          "space16": 78,
+          "space12": 66,
+          "space4": 41,
+          "space24": 4
+        },
+        "suspiciousItems": [
+          {
+            "file": "lib/components/contents/app_banner.dart",
+            "line": 159,
+            "kind": "SizedBox",
+            "value": 56,
+            "reason": "off-scale literal",
+            "snippet": "child: SizedBox("
+          },
+          {
+            "file": "lib/components/contents/app_banner.dart",
+            "line": 159,
+            "kind": "SizedBox",
+            "value": 56,
+            "reason": "off-scale literal",
+            "snippet": "child: SizedBox("
+          },
+          {
+            "file": "lib/components/contents/app_banner_use_cases.dart",
+            "line": 33,
+            "kind": "SizedBox",
+            "value": 240,
+            "reason": "off-scale literal",
+            "snippet": "SizedBox("
+          },
+          {
+            "file": "lib/components/contents/app_banner_use_cases.dart",
+            "line": 48,
+            "kind": "SizedBox",
+            "value": 320,
+            "reason": "off-scale literal",
+            "snippet": "SizedBox("
+          },
+          {
+            "file": "lib/components/contents/app_banner_use_cases.dart",
+            "line": 63,
+            "kind": "SizedBox",
+            "value": 200,
+            "reason": "off-scale literal",
+            "snippet": "SizedBox("
+          },
+          {
+            "file": "lib/components/contents/app_cell.dart",
+            "line": 117,
+            "kind": "SizedBox",
+            "value": 2,
+            "reason": "off-scale literal",
+            "snippet": "const SizedBox(height: 2),"
+          },
+          {
+            "file": "lib/components/contents/app_coffee_list.dart",
+            "line": 235,
+            "kind": "SizedBox",
+            "value": 2,
+            "reason": "off-scale literal",
+            "snippet": "const SizedBox(height: 2),"
+          },
+          {
+            "file": "lib/components/contents/app_community_list.dart",
+            "line": 63,
+            "kind": "SizedBox",
+            "value": 6,
+            "reason": "off-scale literal",
+            "snippet": "const SizedBox(height: 6),"
+          },
+          {
+            "file": "lib/components/contents/app_community_list.dart",
+            "line": 78,
+            "kind": "SizedBox",
+            "value": 2,
+            "reason": "off-scale literal",
+            "snippet": "const SizedBox(width: 2),"
+          },
+          {
+            "file": "lib/components/contents/app_community_list.dart",
+            "line": 92,
+            "kind": "SizedBox",
+            "value": 2,
+            "reason": "off-scale literal",
+            "snippet": "const SizedBox(width: 2),"
+          },
+          {
+            "file": "lib/components/contents/app_content_badge.dart",
+            "line": 148,
+            "kind": "SizedBox",
+            "value": 2,
+            "reason": "off-scale literal",
+            "snippet": "const SizedBox(width: 2),"
+          },
+          {
+            "file": "lib/components/contents/app_content_badge.dart",
+            "line": 152,
+            "kind": "SizedBox",
+            "value": 2,
+            "reason": "off-scale literal",
+            "snippet": "const SizedBox(width: 2),"
+          },
+          {
+            "file": "lib/components/contents/app_item_list.dart",
+            "line": 236,
+            "kind": "EdgeInsets.symmetric",
+            "value": 6,
+            "reason": "off-scale literal",
+            "snippet": "padding: const EdgeInsets.symmetric(horizontal: 6, vertical: 2),"
+          },
+          {
+            "file": "lib/components/contents/app_item_list.dart",
+            "line": 236,
+            "kind": "EdgeInsets.symmetric",
+            "value": 2,
+            "reason": "off-scale literal",
+            "snippet": "padding: const EdgeInsets.symmetric(horizontal: 6, vertical: 2),"
+          },
+          {
+            "file": "lib/components/contents/app_item_list.dart",
+            "line": 102,
+            "kind": "SizedBox",
+            "value": 112,
+            "reason": "off-scale literal",
+            "snippet": "return SizedBox("
+          },
+          {
+            "file": "lib/components/contents/app_item_list.dart",
+            "line": 128,
+            "kind": "SizedBox",
+            "value": 2,
+            "reason": "off-scale literal",
+            "snippet": "const SizedBox(height: 2),"
+          },
+          {
+            "file": "lib/components/contents/app_item_list.dart",
+            "line": 168,
+            "kind": "SizedBox",
+            "value": 2,
+            "reason": "off-scale literal",
+            "snippet": "const SizedBox(height: 2),"
+          },
+          {
+            "file": "lib/components/contents/app_item_list.dart",
+            "line": 298,
+            "kind": "SizedBox",
+            "value": 2,
+            "reason": "off-scale literal",
+            "snippet": "const SizedBox(width: 2),"
+          },
+          {
+            "file": "lib/components/contents/app_play_icon_badge.dart",
+            "line": 65,
+            "kind": "EdgeInsets.only",
+            "value": 2,
+            "reason": "off-scale literal",
+            "snippet": "padding: const EdgeInsets.only(left: 2),"
+          },
+          {
+            "file": "lib/components/contents/app_preference_list.dart",
+            "line": 83,
+            "kind": "EdgeInsets.symmetric",
+            "value": 6,
+            "reason": "off-scale literal",
+            "snippet": "padding: const EdgeInsets.symmetric(vertical: 6, horizontal: AppSpacing.space8),"
+          },
+          {
+            "file": "lib/components/contents/app_preference_list.dart",
+            "line": 95,
+            "kind": "SizedBox",
+            "value": 2,
+            "reason": "off-scale literal",
+            "snippet": "const SizedBox(height: 2),"
+          },
+          {
+            "file": "lib/components/contents/app_preference_list.dart",
+            "line": 225,
+            "kind": "PropLiteral:spacing",
+            "value": 6,
+            "reason": "off-scale literal",
+            "snippet": "spacing: 6,"
+          },
+          {
+            "file": "lib/components/contents/app_preference_list.dart",
+            "line": 226,
+            "kind": "PropLiteral:runSpacing",
+            "value": 6,
+            "reason": "off-scale literal",
+            "snippet": "runSpacing: 6,"
+          },
+          {
+            "file": "lib/components/contents/app_recipe_timer.dart",
+            "line": 52,
+            "kind": "EdgeInsets.symmetric",
+            "value": 6,
+            "reason": "off-scale literal",
+            "snippet": "padding: const EdgeInsets.symmetric(vertical: 6),"
+          },
+          {
+            "file": "lib/components/contents/app_recipe_timer.dart",
+            "line": 68,
+            "kind": "EdgeInsets.symmetric",
+            "value": 6,
+            "reason": "off-scale literal",
+            "snippet": "padding: const EdgeInsets.symmetric(horizontal: 6, vertical: AppSpacing.space4),"
+          },
+          {
+            "file": "lib/components/contents/app_recipe_timer.dart",
+            "line": 78,
+            "kind": "EdgeInsets.symmetric",
+            "value": 10,
+            "reason": "off-scale literal",
+            "snippet": "padding: const EdgeInsets.symmetric("
+          },
+          {
+            "file": "lib/components/contents/app_review.dart",
+            "line": 341,
+            "kind": "EdgeInsets.only",
+            "value": 1,
+            "reason": "off-scale literal",
+            "snippet": "padding: const EdgeInsets.only(right: 1),"
+          },
+          {
+            "file": "lib/components/contents/app_review.dart",
+            "line": 267,
+            "kind": "SizedBox",
+            "value": 2,
+            "reason": "off-scale literal",
+            "snippet": "const SizedBox(width: 2),"
+          },
+          {
+            "file": "lib/components/contents/app_section_header.dart",
+            "line": 81,
+            "kind": "EdgeInsets.only",
+            "value": 2,
+            "reason": "off-scale literal",
+            "snippet": "padding: const EdgeInsets.only(top: 2),"
+          },
+          {
+            "file": "lib/components/contents/app_tasting_note.dart",
+            "line": 78,
+            "kind": "SizedBox",
+            "value": 2,
+            "reason": "off-scale literal",
+            "snippet": "const SizedBox(height: 2),"
+          }
+        ],
+        "suspiciousCount": 30
+      }
+    },
+    "control_box": {
+      "auditFiles": [
+        "code-hardcoded-usages.control_box.json"
+      ],
+      "summary": {
+        "dir": "control_box",
+        "fileCount": 2,
+        "totalUsages": 20,
+        "distinctValues": [
+          2
+        ],
+        "valueFrequency": {
+          "2": 1
+        },
+        "tokenRefFrequency": {
+          "space12": 10,
+          "space16": 9
+        },
+        "suspiciousItems": [
+          {
+            "file": "lib/components/control_box/app_control_box.dart",
+            "line": 78,
+            "kind": "SizedBox",
+            "value": 2,
+            "reason": "off-scale literal",
+            "snippet": "const SizedBox(height: 2),"
+          }
+        ],
+        "suspiciousCount": 1
+      }
+    },
+    "controls": {
+      "auditFiles": [
+        "code-hardcoded-usages.controls.json"
+      ],
+      "summary": {
+        "dir": "controls",
+        "fileCount": 4,
+        "totalUsages": 13,
+        "distinctValues": [
+          2,
+          24
+        ],
+        "valueFrequency": {
+          "24": 4,
+          "2": 1
+        },
+        "tokenRefFrequency": {
+          "space8": 4,
+          "space12": 2,
+          "space4": 2
+        },
+        "suspiciousItems": [
+          {
+            "file": "lib/components/controls/app_switch.dart",
+            "line": 53,
+            "kind": "EdgeInsets.all",
+            "value": 2,
+            "reason": "off-scale literal",
+            "snippet": "padding: const EdgeInsets.all(2),"
+          }
+        ],
+        "suspiciousCount": 1
+      }
+    },
+    "dividers": {
+      "auditFiles": [
+        "code-hardcoded-usages.dividers.json"
+      ],
+      "summary": {
+        "dir": "dividers",
+        "fileCount": 2,
+        "totalUsages": 11,
+        "distinctValues": [
+          16,
+          24,
+          48
+        ],
+        "valueFrequency": {
+          "16": 2,
+          "24": 2,
+          "48": 1
+        },
+        "tokenRefFrequency": {
+          "space24": 2,
+          "space8": 2
+        },
+        "suspiciousItems": [],
+        "suspiciousCount": 0
+      }
+    },
+    "feedback": {
+      "auditFiles": [
+        "code-hardcoded-usages.feedback.json"
+      ],
+      "summary": {
+        "dir": "feedback",
+        "fileCount": 10,
+        "totalUsages": 72,
+        "distinctValues": [
+          6,
+          9,
+          20,
+          22,
+          40,
+          80,
+          128
+        ],
+        "valueFrequency": {
+          "22": 3,
+          "6": 2,
+          "128": 2,
+          "9": 1,
+          "20": 1,
+          "40": 1,
+          "80": 1
+        },
+        "tokenRefFrequency": {
+          "space16": 25,
+          "space8": 17,
+          "space12": 11,
+          "space4": 9,
+          "space20": 2,
+          "space24": 2
+        },
+        "suspiciousItems": [
+          {
+            "file": "lib/components/feedback/app_empty_state.dart",
+            "line": 135,
+            "kind": "EdgeInsets.symmetric",
+            "value": 9,
+            "reason": "off-scale literal",
+            "snippet": "padding: const EdgeInsets.symmetric(horizontal: AppSpacing.space20, vertical: 9),"
+          },
+          {
+            "file": "lib/components/feedback/app_empty_state.dart",
+            "line": 57,
+            "kind": "SizedBox",
+            "value": 128,
+            "reason": "off-scale literal",
+            "snippet": "SizedBox(width: 128, height: 128, child: Center(child: visual)),"
+          },
+          {
+            "file": "lib/components/feedback/app_empty_state.dart",
+            "line": 57,
+            "kind": "SizedBox",
+            "value": 128,
+            "reason": "off-scale literal",
+            "snippet": "SizedBox(width: 128, height: 128, child: Center(child: visual)),"
+          },
+          {
+            "file": "lib/components/feedback/app_section_message.dart",
+            "line": 219,
+            "kind": "EdgeInsets.symmetric",
+            "value": 6,
+            "reason": "off-scale literal",
+            "snippet": "padding: const EdgeInsets.symmetric("
+          },
+          {
+            "file": "lib/components/feedback/app_section_message.dart",
+            "line": 252,
+            "kind": "EdgeInsets.symmetric",
+            "value": 6,
+            "reason": "off-scale literal",
+            "snippet": "padding: const EdgeInsets.symmetric(horizontal: 6, vertical: AppSpacing.space4),"
+          },
+          {
+            "file": "lib/components/feedback/app_section_message.dart",
+            "line": 122,
+            "kind": "SizedBox",
+            "value": 22,
+            "reason": "off-scale literal",
+            "snippet": "SizedBox("
+          },
+          {
+            "file": "lib/components/feedback/app_section_message.dart",
+            "line": 276,
+            "kind": "SizedBox",
+            "value": 22,
+            "reason": "off-scale literal",
+            "snippet": "child: SizedBox("
+          },
+          {
+            "file": "lib/components/feedback/app_section_message.dart",
+            "line": 276,
+            "kind": "SizedBox",
+            "value": 22,
+            "reason": "off-scale literal",
+            "snippet": "child: SizedBox("
+          }
+        ],
+        "suspiciousCount": 8
+      }
+    },
+    "forms": {
+      "auditFiles": [
+        "code-hardcoded-usages.forms.json"
+      ],
+      "summary": {
+        "dir": "forms",
+        "fileCount": 4,
+        "totalUsages": 15,
+        "distinctValues": [
+          1,
+          24
+        ],
+        "valueFrequency": {
+          "1": 1,
+          "24": 1
+        },
+        "tokenRefFrequency": {
+          "space16": 6,
+          "space20": 2,
+          "space4": 2,
+          "space8": 2,
+          "space12": 1
+        },
+        "suspiciousItems": [],
+        "suspiciousCount": 0
+      }
+    },
+    "gauge": {
+      "auditFiles": [
+        "code-hardcoded-usages.gauge.json"
+      ],
+      "summary": {
+        "dir": "gauge",
+        "fileCount": 2,
+        "totalUsages": 9,
+        "distinctValues": [
+          0,
+          2
+        ],
+        "valueFrequency": {
+          "0": 1,
+          "2": 1
+        },
+        "tokenRefFrequency": {
+          "space24": 4,
+          "space16": 2,
+          "space8": 2
+        },
+        "suspiciousItems": [],
+        "suspiciousCount": 0
+      }
+    },
+    "indicators": {
+      "auditFiles": [
+        "code-hardcoded-usages.indicators.json"
+      ],
+      "summary": {
+        "dir": "indicators",
+        "fileCount": 6,
+        "totalUsages": 64,
+        "distinctValues": [
+          0,
+          2,
+          4,
+          6,
+          8,
+          12,
+          24,
+          32,
+          200
+        ],
+        "valueFrequency": {
+          "24": 10,
+          "6": 2,
+          "32": 2,
+          "0": 1,
+          "2": 1,
+          "4": 1,
+          "8": 1,
+          "12": 1,
+          "200": 1
+        },
+        "tokenRefFrequency": {
+          "space16": 17,
+          "space12": 14,
+          "space24": 4,
+          "space4": 4,
+          "space8": 2
+        },
+        "suspiciousItems": [
+          {
+            "file": "lib/components/indicators/app_progress.dart",
+            "line": 120,
+            "kind": "SizedBox",
+            "value": 6,
+            "reason": "off-scale literal",
+            "snippet": "const SizedBox(height: 6),"
+          },
+          {
+            "file": "lib/components/indicators/app_progress_tracker.dart",
+            "line": 247,
+            "kind": "SizedBox",
+            "value": 2,
+            "reason": "off-scale literal",
+            "snippet": "const SizedBox(height: 2),"
+          },
+          {
+            "file": "lib/components/indicators/indicator_use_cases.dart",
+            "line": 144,
+            "kind": "SizedBox",
+            "value": 200,
+            "reason": "off-scale literal",
+            "snippet": "SizedBox("
+          }
+        ],
+        "suspiciousCount": 3
+      }
+    },
+    "modals": {
+      "auditFiles": [
+        "code-hardcoded-usages.modals.json"
+      ],
+      "summary": {
+        "dir": "modals",
+        "fileCount": 2,
+        "totalUsages": 13,
+        "distinctValues": [
+          24
+        ],
+        "valueFrequency": {
+          "24": 1
+        },
+        "tokenRefFrequency": {
+          "space24": 8,
+          "space8": 4
+        },
+        "suspiciousItems": [],
+        "suspiciousCount": 0
+      }
+    },
+    "navigation": {
+      "auditFiles": [
+        "code-hardcoded-usages.navigation.json"
+      ],
+      "summary": {
+        "dir": "navigation",
+        "fileCount": 9,
+        "totalUsages": 29,
+        "distinctValues": [
+          0,
+          4,
+          10,
+          28
+        ],
+        "valueFrequency": {
+          "4": 4,
+          "28": 3,
+          "0": 2,
+          "10": 1
+        },
+        "tokenRefFrequency": {
+          "space8": 5,
+          "space4": 4
+        },
+        "suspiciousItems": [
+          {
+            "file": "lib/components/navigation/app_gnb_use_cases.dart",
+            "line": 18,
+            "kind": "SizedBox",
+            "value": 28,
+            "reason": "off-scale literal",
+            "snippet": "logo: SizedBox("
+          },
+          {
+            "file": "lib/components/navigation/app_gnb_use_cases.dart",
+            "line": 37,
+            "kind": "SizedBox",
+            "value": 28,
+            "reason": "off-scale literal",
+            "snippet": "logo: SizedBox("
+          },
+          {
+            "file": "lib/components/navigation/app_gnb_use_cases.dart",
+            "line": 63,
+            "kind": "SizedBox",
+            "value": 28,
+            "reason": "off-scale literal",
+            "snippet": "logo: SizedBox("
+          },
+          {
+            "file": "lib/components/navigation/app_top_navigation.dart",
+            "line": 370,
+            "kind": "PropLiteral:spacing",
+            "value": 10,
+            "reason": "off-scale literal",
+            "snippet": "spacing: 10,"
+          }
+        ],
+        "suspiciousCount": 4
+      }
+    },
+    "pagination": {
+      "auditFiles": [
+        "code-hardcoded-usages.pagination.json"
+      ],
+      "summary": {
+        "dir": "pagination",
+        "fileCount": 2,
+        "totalUsages": 3,
+        "distinctValues": [
+          3
+        ],
+        "valueFrequency": {
+          "3": 1
+        },
+        "tokenRefFrequency": {
+          "space16": 2
+        },
+        "suspiciousItems": [
+          {
+            "file": "lib/components/pagination/app_pagination.dart",
+            "line": 68,
+            "kind": "EdgeInsets.symmetric",
+            "value": 3,
+            "reason": "off-scale literal",
+            "snippet": "padding: EdgeInsets.symmetric(horizontal: 3),"
+          }
+        ],
+        "suspiciousCount": 1
+      }
+    },
+    "presentation": {
+      "auditFiles": [
+        "code-hardcoded-usages.presentation.json"
+      ],
+      "summary": {
+        "dir": "presentation",
+        "fileCount": 10,
+        "totalUsages": 74,
+        "distinctValues": [
+          18
+        ],
+        "valueFrequency": {
+          "18": 2
+        },
+        "tokenRefFrequency": {
+          "space16": 35,
+          "space24": 16,
+          "space8": 14,
+          "space12": 7,
+          "space4": 6
+        },
+        "suspiciousItems": [
+          {
+            "file": "lib/components/presentation/app_auto_complete.dart",
+            "line": 223,
+            "kind": "SizedBox",
+            "value": 18,
+            "reason": "off-scale literal",
+            "snippet": "child: SizedBox("
+          },
+          {
+            "file": "lib/components/presentation/app_auto_complete.dart",
+            "line": 223,
+            "kind": "SizedBox",
+            "value": 18,
+            "reason": "off-scale literal",
+            "snippet": "child: SizedBox("
+          }
+        ],
+        "suspiciousCount": 2
+      }
+    },
+    "ratio": {
+      "auditFiles": [
+        "code-hardcoded-usages.ratio.json"
+      ],
+      "summary": {
+        "dir": "ratio",
+        "fileCount": 2,
+        "totalUsages": 12,
+        "distinctValues": [
+          8,
+          16,
+          24,
+          200,
+          280
+        ],
+        "valueFrequency": {
+          "16": 3,
+          "24": 3,
+          "8": 2,
+          "200": 1,
+          "280": 1
+        },
+        "tokenRefFrequency": {},
+        "suspiciousItems": [
+          {
+            "file": "lib/components/ratio/ratio_use_cases.dart",
+            "line": 58,
+            "kind": "SizedBox",
+            "value": 280,
+            "reason": "off-scale literal",
+            "snippet": "SizedBox("
+          },
+          {
+            "file": "lib/components/ratio/ratio_use_cases.dart",
+            "line": 95,
+            "kind": "SizedBox",
+            "value": 200,
+            "reason": "off-scale literal",
+            "snippet": "SizedBox("
+          }
+        ],
+        "suspiciousCount": 2
+      }
+    },
+    "scrolls": {
+      "auditFiles": [
+        "code-hardcoded-usages.scrolls.json"
+      ],
+      "summary": {
+        "dir": "scrolls",
+        "fileCount": 2,
+        "totalUsages": 12,
+        "distinctValues": [
+          8,
+          16,
+          24,
+          320
+        ],
+        "valueFrequency": {
+          "24": 6,
+          "16": 3,
+          "8": 1,
+          "320": 1
+        },
+        "tokenRefFrequency": {
+          "space8": 2
+        },
+        "suspiciousItems": [
+          {
+            "file": "lib/components/scrolls/scroll_use_cases.dart",
+            "line": 153,
+            "kind": "SizedBox",
+            "value": 320,
+            "reason": "off-scale literal",
+            "snippet": "child: SizedBox("
+          }
+        ],
+        "suspiciousCount": 1
+      }
+    },
+    "selection": {
+      "auditFiles": [
+        "code-hardcoded-usages.selection.json"
+      ],
+      "summary": {
+        "dir": "selection",
+        "fileCount": 7,
+        "totalUsages": 46,
+        "distinctValues": [
+          280,
+          300
+        ],
+        "valueFrequency": {
+          "280": 2,
+          "300": 1
+        },
+        "tokenRefFrequency": {
+          "space16": 18,
+          "space8": 10,
+          "space12": 5,
+          "space24": 4,
+          "space4": 4
+        },
+        "suspiciousItems": [
+          {
+            "file": "lib/components/selection/app_date_picker.dart",
+            "line": 116,
+            "kind": "SizedBox",
+            "value": 280,
+            "reason": "off-scale literal",
+            "snippet": "child: SizedBox("
+          },
+          {
+            "file": "lib/components/selection/app_select_use_cases.dart",
+            "line": 124,
+            "kind": "SizedBox",
+            "value": 300,
+            "reason": "off-scale literal",
+            "snippet": "child: SizedBox("
+          },
+          {
+            "file": "lib/components/selection/app_time_picker.dart",
+            "line": 84,
+            "kind": "SizedBox",
+            "value": 280,
+            "reason": "off-scale literal",
+            "snippet": "child: SizedBox("
+          }
+        ],
+        "suspiciousCount": 3
+      }
+    },
+    "tabs": {
+      "auditFiles": [
+        "code-hardcoded-usages.tabs.json"
+      ],
+      "summary": {
+        "dir": "tabs",
+        "fileCount": 6,
+        "totalUsages": 23,
+        "distinctValues": [
+          0,
+          1,
+          2,
+          8,
+          24
+        ],
+        "valueFrequency": {
+          "0": 2,
+          "1": 1,
+          "2": 1,
+          "8": 1,
+          "24": 1
+        },
+        "tokenRefFrequency": {
+          "space16": 12,
+          "space12": 2,
+          "space24": 2,
+          "space4": 2
+        },
+        "suspiciousItems": [
+          {
+            "file": "lib/components/tabs/app_segmented_control.dart",
+            "line": 58,
+            "kind": "EdgeInsets.all",
+            "value": 2,
+            "reason": "off-scale literal",
+            "snippet": "padding: const EdgeInsets.all(2),"
+          }
+        ],
+        "suspiciousCount": 1
+      }
+    },
+    "thumbnails": {
+      "auditFiles": [
+        "code-hardcoded-usages.thumbnails.json"
+      ],
+      "summary": {
+        "dir": "thumbnails",
+        "fileCount": 2,
+        "totalUsages": 12,
+        "distinctValues": [
+          16,
+          24,
+          120
+        ],
+        "valueFrequency": {
+          "16": 6,
+          "120": 4,
+          "24": 1
+        },
+        "tokenRefFrequency": {},
+        "suspiciousItems": [
+          {
+            "file": "lib/components/thumbnails/thumbnail_use_cases.dart",
+            "line": 21,
+            "kind": "SizedBox",
+            "value": 120,
+            "reason": "off-scale literal",
+            "snippet": "SizedBox("
+          },
+          {
+            "file": "lib/components/thumbnails/thumbnail_use_cases.dart",
+            "line": 28,
+            "kind": "SizedBox",
+            "value": 120,
+            "reason": "off-scale literal",
+            "snippet": "SizedBox("
+          },
+          {
+            "file": "lib/components/thumbnails/thumbnail_use_cases.dart",
+            "line": 35,
+            "kind": "SizedBox",
+            "value": 120,
+            "reason": "off-scale literal",
+            "snippet": "SizedBox("
+          },
+          {
+            "file": "lib/components/thumbnails/thumbnail_use_cases.dart",
+            "line": 42,
+            "kind": "SizedBox",
+            "value": 120,
+            "reason": "off-scale literal",
+            "snippet": "SizedBox("
+          }
+        ],
+        "suspiciousCount": 4
+      }
+    }
+  },
+  "_aggregate": {
+    "totalAuditedDirectories": 21,
+    "totalFiles": 119,
+    "totalUsages": 927,
+    "topValueFrequency": {
+      "24.0": 36,
+      "2.0": 24,
+      "12.0": 19,
+      "16.0": 19,
+      "6.0": 18,
+      "8.0": 14,
+      "0.0": 12,
+      "4.0": 8,
+      "10.0": 5,
+      "32.0": 5,
+      "48.0": 5,
+      "3.0": 4,
+      "28.0": 4,
+      "120.0": 4,
+      "1.0": 3,
+      "20.0": 3,
+      "22.0": 3,
+      "200.0": 3,
+      "280.0": 3,
+      "18.0": 2,
+      "40.0": 2,
+      "56.0": 2,
+      "128.0": 2,
+      "320.0": 2,
+      "9.0": 1,
+      "11.0": 1,
+      "80.0": 1,
+      "112.0": 1,
+      "240.0": 1,
+      "300.0": 1
+    },
+    "topTokenRefFrequency": {
+      "space16": 214,
+      "space8": 185,
+      "space12": 145,
+      "space4": 88,
+      "space24": 52,
+      "space20": 18
+    },
+    "offScaleLiteralValues": {
+      "2.0": 24,
+      "6.0": 18,
+      "10.0": 5,
+      "3.0": 4,
+      "28.0": 4,
+      "120.0": 4,
+      "1.0": 3,
+      "22.0": 3,
+      "200.0": 3,
+      "280.0": 3,
+      "18.0": 2,
+      "56.0": 2,
+      "128.0": 2,
+      "320.0": 2,
+      "9.0": 1,
+      "11.0": 1,
+      "80.0": 1,
+      "112.0": 1,
+      "240.0": 1,
+      "300.0": 1
+    },
+    "canonicalScale": [
+      0,
+      4,
+      8,
+      12,
+      14,
+      16,
+      20,
+      24,
+      32,
+      34,
+      36,
+      40,
+      44,
+      48
+    ]
+  }
+}
