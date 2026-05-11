@@ -393,7 +393,7 @@ class AppColor {
 
   // Dark Status
   static Color get darkStatusPositive => colorGlobalGreen60;
-  static Color get darkStatusPositiveBlue => colorGlobalGreen60;
+  static Color get darkStatusPositiveBlue => colorGlobalBlue60;
   static Color get darkStatusCautionary => colorGlobalOrange60;
   static Color get darkStatusNegative => colorGlobalRed60;
 

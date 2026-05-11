@@ -1,17 +1,16 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 
 import '../../foundation/app_color.dart';
 import '../../foundation/app_radius.dart';
 import '../../foundation/app_spacing.dart';
 import '../../foundation/app_text_style.dart';
+import '../../foundation/coflanet_icons.dart';
 
 /// 소셜 로그인 프로바이더.
 enum AppSocialProvider { kakao, naver, apple, google }
 
 /// 소셜 로그인 버튼 — 브랜드 컬러 + 로고 + 텍스트.
-///
-/// 로고 아이콘은 임시로 Material Icons 사용. 실제 브랜드 로고 SVG는
-/// `coflanet/assets/icons` 또는 `component_lab/assets`에서 별도 연결 권장.
 class AppSocialButton extends StatelessWidget {
   final AppSocialProvider provider;
   final VoidCallback? onPressed;
@@ -32,14 +31,14 @@ class AppSocialButton extends StatelessWidget {
     this.height = 52,
   });
 
-  ({Color bg, Color fg, IconData icon, String label, BorderSide? border})
+  ({Color bg, Color fg, String iconAsset, String label, BorderSide? border})
       _config() {
     switch (provider) {
       case AppSocialProvider.kakao:
         return (
           bg: AppColor.socialKakao,
           fg: AppColor.colorGlobalCommon0,
-          icon: Icons.chat_bubble_rounded,
+          iconAsset: CoflanetIcons.logoKakao,
           label: '카카오로 시작하기',
           border: null,
         );
@@ -47,7 +46,7 @@ class AppSocialButton extends StatelessWidget {
         return (
           bg: AppColor.socialNaver,
           fg: AppColor.colorGlobalCommon100,
-          icon: Icons.text_fields_rounded,
+          iconAsset: CoflanetIcons.logoNaver,
           label: '네이버로 시작하기',
           border: null,
         );
@@ -55,7 +54,7 @@ class AppSocialButton extends StatelessWidget {
         return (
           bg: AppColor.socialApple,
           fg: AppColor.colorGlobalCommon100,
-          icon: Icons.apple_rounded,
+          iconAsset: CoflanetIcons.logoApple,
           label: 'Apple로 시작하기',
           border: null,
         );
@@ -63,7 +62,8 @@ class AppSocialButton extends StatelessWidget {
         return (
           bg: AppColor.colorGlobalCommon100,
           fg: AppColor.colorGlobalCommon0,
-          icon: Icons.g_mobiledata_rounded,
+          // 전용 logoGoogle 에셋 미보유 — 가장 가까운 Google Play 브랜드 마크 사용.
+          iconAsset: CoflanetIcons.logoGooglePlay,
           label: 'Google로 시작하기',
           border: BorderSide(color: AppColor.lineSolidNormal, width: 1),
         );
@@ -93,7 +93,12 @@ class AppSocialButton extends StatelessWidget {
             child: Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                Icon(c.icon, size: 22, color: c.fg),
+                SvgPicture.asset(
+                  c.iconAsset,
+                  width: 22,
+                  height: 22,
+                  colorFilter: ColorFilter.mode(c.fg, BlendMode.srcIn),
+                ),
                 const SizedBox(width: AppSpacing.space8),
                 Text(
                   customText ?? c.label,

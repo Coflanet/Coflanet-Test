@@ -103,35 +103,38 @@ class AppSectionBottomButton extends StatelessWidget {
           ),
           alignment: Alignment.center,
           padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 4),
-          child: InkWell(
-            onTap: onPressed,
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              mainAxisSize: MainAxisSize.min,
-              children: [
-                if (leftIcon != null) ...[
-                  Icon(leftIcon, size: 18,
+          child: Material(
+            color: Colors.transparent,
+            child: InkWell(
+              onTap: onPressed,
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  if (leftIcon != null) ...[
+                    Icon(leftIcon, size: 18,
+                        color: isDark
+                            ? AppColor.darkLabelNormal
+                            : AppColor.labelNormal),
+                    const SizedBox(width: 10),
+                  ],
+                  Text(
+                    label,
+                    style: AppTextStyles.body1NormalBold.copyWith(
                       color: isDark
                           ? AppColor.darkLabelNormal
-                          : AppColor.labelNormal),
-                  const SizedBox(width: 10),
-                ],
-                Text(
-                  label,
-                  style: AppTextStyles.body1NormalBold.copyWith(
-                    color: isDark
-                        ? AppColor.darkLabelNormal
-                        : AppColor.labelNormal,
+                          : AppColor.labelNormal,
+                    ),
                   ),
-                ),
-                if (rightIcon != null) ...[
-                  const SizedBox(width: 10),
-                  Icon(rightIcon, size: 18,
-                      color: isDark
-                          ? AppColor.darkLabelNormal
-                          : AppColor.labelNormal),
+                  if (rightIcon != null) ...[
+                    const SizedBox(width: 10),
+                    Icon(rightIcon, size: 18,
+                        color: isDark
+                            ? AppColor.darkLabelNormal
+                            : AppColor.labelNormal),
+                  ],
                 ],
-              ],
+              ),
             ),
           ),
         );

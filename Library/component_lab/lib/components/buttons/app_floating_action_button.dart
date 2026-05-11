@@ -45,7 +45,7 @@ class AppFloatingActionButton extends StatelessWidget {
         boxShadow: _enabled
             ? (isDark
                 ? AppShadows.shadowBlackEmphasize
-                : AppShadows.shadowBlackEmphasize)
+                : AppShadows.shadowPrimaryEmphasize)
             : null,
       ),
       child: Center(child: Icon(icon, size: 24, color: fg)),

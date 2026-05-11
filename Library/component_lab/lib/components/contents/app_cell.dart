@@ -46,7 +46,6 @@ class AppCell extends StatelessWidget {
     this.onTap,
     this.verticalPadding = AppCellVerticalPadding.medium,
     this.verticalAlign = AppCellVerticalAlign.center,
-    this.fillWidth = false,
     this.textEllipsis = false,
     this.isActive = false,
     this.isDisabled = false,
@@ -60,7 +59,6 @@ class AppCell extends StatelessWidget {
   final VoidCallback? onTap;
   final AppCellVerticalPadding verticalPadding;
   final AppCellVerticalAlign verticalAlign;
-  final bool fillWidth;
   final bool textEllipsis;
   final bool isActive;
   final bool isDisabled;

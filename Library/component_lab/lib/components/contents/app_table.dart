@@ -4,15 +4,6 @@ import '../../foundation/app_color.dart';
 import '../../foundation/app_spacing.dart';
 import '../../foundation/app_text_style.dart';
 
-/// Table 콘텐츠 타입 — Figma `Table/Table` Content variant.
-enum AppTableContentType {
-  /// 표시만 하는 일반 셀
-  normal,
-
-  /// 입력 가능한 셀
-  input,
-}
-
 /// Table 컬럼 정의.
 class AppTableColumn {
   const AppTableColumn({
@@ -27,14 +18,11 @@ class AppTableColumn {
 }
 
 /// Table 컴포넌트 — Figma `Table/Table`.
-///
-/// Content: Normal / Input
 class AppTable extends StatelessWidget {
   const AppTable({
     super.key,
     required this.columns,
     required this.rows,
-    this.contentType = AppTableContentType.normal,
     this.showHeader = true,
     this.onCellTap,
   });
@@ -44,7 +32,6 @@ class AppTable extends StatelessWidget {
   /// 각 row는 column 순서와 동일한 길이의 위젯 리스트.
   final List<List<Widget>> rows;
 
-  final AppTableContentType contentType;
   final bool showHeader;
   final void Function(int row, int column)? onCellTap;
 

@@ -99,8 +99,8 @@ class AppOutlinedButton extends StatelessWidget {
     // Secondary/Assistive — 수직 padding -1 (Figma 측정)
     final base = _padding;
     return EdgeInsets.symmetric(
-      horizontal: base.horizontal / 2,
-      vertical: (base.vertical / 2) - 1,
+      horizontal: base.left,
+      vertical: base.top - 1,
     );
   }
 

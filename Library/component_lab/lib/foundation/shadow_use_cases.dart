@@ -35,8 +35,8 @@ final List<WidgetbookComponent> shadowUseCases = [
       WidgetbookUseCase(
         name: 'Violet 색조 그림자 (브랜드 강조)',
         builder: (context) => _grid(context, [
-          ('shadowPrimaryNormal (단일)',
-              const [AppShadows.shadowPrimaryNormal], '단일 그림자'),
+          ('shadowPrimaryNormal',
+              AppShadows.shadowPrimaryNormal, '단일 그림자'),
           ('shadowPrimaryNormalList',
               AppShadows.shadowPrimaryNormalList, '여러 그림자 합성'),
           ('shadowPrimaryEmphasize',
