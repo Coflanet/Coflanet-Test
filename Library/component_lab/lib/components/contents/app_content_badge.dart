@@ -8,7 +8,22 @@ import '../../foundation/app_text_style.dart';
 enum AppContentBadgeVariant { solid, outlined }
 
 /// Content Badge color — Figma `Contents/Content Badge` color.
-enum AppContentBadgeColor { neutral, accent }
+enum AppContentBadgeColor {
+  /// 회색 톤 (기본)
+  neutral,
+
+  /// 시안 톤 — primary accent
+  accent,
+
+  /// 초록 톤 — 성공/완료 상태 강조
+  success,
+
+  /// 주황 톤 — 경고
+  warning,
+
+  /// 파랑 톤 — 정보성
+  info,
+}
 
 /// Content Badge size — Figma `Contents/Content Badge` size.
 enum AppContentBadgeSize {
@@ -71,21 +86,44 @@ class AppContentBadge extends StatelessWidget {
   }
 
   ({Color bg, Color fg, Color border}) _colors() {
-    final isAccent = color == AppContentBadgeColor.accent;
+    final tone = switch (color) {
+      AppContentBadgeColor.neutral => (
+          solidBg: AppColor.lineSolidNormal,
+          fg: AppColor.labelAlternative,
+          outlineBorder: AppColor.lineNormalNormal,
+        ),
+      AppContentBadgeColor.accent => (
+          solidBg: AppColor.colorGlobalCyan95,
+          fg: AppColor.accentForegroundCyan,
+          outlineBorder: AppColor.accentForegroundCyan,
+        ),
+      AppContentBadgeColor.success => (
+          solidBg: AppColor.colorGlobalGreen95,
+          fg: AppColor.accentForegroundGreen,
+          outlineBorder: AppColor.accentForegroundGreen,
+        ),
+      AppContentBadgeColor.warning => (
+          solidBg: AppColor.colorGlobalOrange95,
+          fg: AppColor.accentForegroundOrange,
+          outlineBorder: AppColor.accentForegroundOrange,
+        ),
+      AppContentBadgeColor.info => (
+          solidBg: AppColor.colorGlobalBlue95,
+          fg: AppColor.accentForegroundBlue,
+          outlineBorder: AppColor.accentForegroundBlue,
+        ),
+    };
     if (variant == AppContentBadgeVariant.solid) {
       return (
-        bg: isAccent ? AppColor.colorGlobalCyan95 : AppColor.lineSolidNormal,
-        fg: isAccent ? AppColor.accentForegroundCyan : AppColor.labelAlternative,
+        bg: tone.solidBg,
+        fg: tone.fg,
         border: AppColor.transparent,
       );
     }
-    // outlined
     return (
       bg: AppColor.transparent,
-      fg: isAccent ? AppColor.accentForegroundCyan : AppColor.labelAlternative,
-      border: isAccent
-          ? AppColor.accentForegroundCyan
-          : AppColor.lineNormalNormal,
+      fg: tone.fg,
+      border: tone.outlineBorder,
     );
   }
 

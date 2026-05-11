@@ -121,6 +121,13 @@ class AppToast extends StatelessWidget {
   }) {
     final overlay = Overlay.of(context);
     late final OverlayEntry entry;
+    // 이중 제거 방지 — action tap + duration 만료가 동시에 일어나는 경합 가드.
+    bool removed = false;
+    void removeOnce() {
+      if (removed) return;
+      removed = true;
+      if (entry.mounted) entry.remove();
+    }
 
     entry = OverlayEntry(
       builder: (_) => Positioned(
@@ -135,7 +142,7 @@ class AppToast extends StatelessWidget {
             action: action,
             onAction: () {
               onAction?.call();
-              entry.remove();
+              removeOnce();
             },
           ),
         ),
@@ -143,8 +150,6 @@ class AppToast extends StatelessWidget {
     );
 
     overlay.insert(entry);
-    Future.delayed(duration, () {
-      if (entry.mounted) entry.remove();
-    });
+    Future.delayed(duration, removeOnce);
   }
 }

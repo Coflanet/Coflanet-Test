@@ -30,52 +30,97 @@ class AppGradient {
     0.71, 0.65, 0.57, 0.48, 0.38, 0.27, 0.14, 0.00,
   ];
 
-  /// 기본 색상(검정)의 easing 컬러 리스트를 생성합니다.
-  static List<Color> _blackEasingColors() =>
-      _opacities.map((o) => Color.fromRGBO(0, 0, 0, o)).toList();
+  /// 기본 색상(검정)의 easing 컬러 리스트. 호출당 알로케이션을 피하기 위해 캐시.
+  static final List<Color> _blackEasingColorsCached =
+      _opacities.map((o) => Color.fromRGBO(0, 0, 0, o)).toList(growable: false);
+
+  /// Mask용 흰색→투명 easing 컬러 리스트. 캐시.
+  static final List<Color> _whiteEasingColorsCached =
+      _opacities.map((o) => Color.fromRGBO(255, 255, 255, o)).toList(growable: false);
+
+  /// 기본 색상(검정)의 easing 컬러 리스트를 반환합니다.
+  static List<Color> _blackEasingColors() => _blackEasingColorsCached;
 
   /// 커스텀 색상의 easing 컬러 리스트를 생성합니다.
   static List<Color> _easingColors(Color baseColor) =>
       _opacities
           .map((o) => baseColor.withValues(alpha: o))
-          .toList();
+          .toList(growable: false);
 
   // ═══════════════════════════════════════════════════════════════
   // SOLID — 단일 방향 그라데이션
   // 배경 경계를 자연스럽게 표현합니다.
   // ═══════════════════════════════════════════════════════════════
 
-  /// Solid Bottom — 위에서 아래로 (검정→투명)
-  static LinearGradient solidBottom({Color? color}) => LinearGradient(
-        begin: Alignment.topCenter,
-        end: Alignment.bottomCenter,
-        colors: color != null ? _easingColors(color) : _blackEasingColors(),
-        stops: _stops,
-      );
+  /// Solid Bottom (검정 기본) 캐시.
+  static final LinearGradient _solidBottomBlack = LinearGradient(
+    begin: Alignment.topCenter,
+    end: Alignment.bottomCenter,
+    colors: _blackEasingColorsCached,
+    stops: _stops,
+  );
 
-  /// Solid Top — 아래에서 위로 (검정→투명)
-  static LinearGradient solidTop({Color? color}) => LinearGradient(
-        begin: Alignment.bottomCenter,
-        end: Alignment.topCenter,
-        colors: color != null ? _easingColors(color) : _blackEasingColors(),
-        stops: _stops,
-      );
+  /// Solid Bottom — 위에서 아래로 (검정→투명).
+  /// `color` null인 경우 캐시된 검정 그라데이션을 반환해 알로케이션을 줄임.
+  static LinearGradient solidBottom({Color? color}) => color == null
+      ? _solidBottomBlack
+      : LinearGradient(
+          begin: Alignment.topCenter,
+          end: Alignment.bottomCenter,
+          colors: _easingColors(color),
+          stops: _stops,
+        );
 
-  /// Solid Left — 오른쪽에서 왼쪽으로 (검정→투명)
-  static LinearGradient solidLeft({Color? color}) => LinearGradient(
-        begin: Alignment.centerRight,
-        end: Alignment.centerLeft,
-        colors: color != null ? _easingColors(color) : _blackEasingColors(),
-        stops: _stops,
-      );
+  static final LinearGradient _solidTopBlack = LinearGradient(
+    begin: Alignment.bottomCenter,
+    end: Alignment.topCenter,
+    colors: _blackEasingColorsCached,
+    stops: _stops,
+  );
 
-  /// Solid Right — 왼쪽에서 오른쪽으로 (검정→투명)
-  static LinearGradient solidRight({Color? color}) => LinearGradient(
-        begin: Alignment.centerLeft,
-        end: Alignment.centerRight,
-        colors: color != null ? _easingColors(color) : _blackEasingColors(),
-        stops: _stops,
-      );
+  /// Solid Top — 아래에서 위로 (검정→투명).
+  static LinearGradient solidTop({Color? color}) => color == null
+      ? _solidTopBlack
+      : LinearGradient(
+          begin: Alignment.bottomCenter,
+          end: Alignment.topCenter,
+          colors: _easingColors(color),
+          stops: _stops,
+        );
+
+  static final LinearGradient _solidLeftBlack = LinearGradient(
+    begin: Alignment.centerRight,
+    end: Alignment.centerLeft,
+    colors: _blackEasingColorsCached,
+    stops: _stops,
+  );
+
+  /// Solid Left — 오른쪽에서 왼쪽으로 (검정→투명).
+  static LinearGradient solidLeft({Color? color}) => color == null
+      ? _solidLeftBlack
+      : LinearGradient(
+          begin: Alignment.centerRight,
+          end: Alignment.centerLeft,
+          colors: _easingColors(color),
+          stops: _stops,
+        );
+
+  static final LinearGradient _solidRightBlack = LinearGradient(
+    begin: Alignment.centerLeft,
+    end: Alignment.centerRight,
+    colors: _blackEasingColorsCached,
+    stops: _stops,
+  );
+
+  /// Solid Right — 왼쪽에서 오른쪽으로 (검정→투명).
+  static LinearGradient solidRight({Color? color}) => color == null
+      ? _solidRightBlack
+      : LinearGradient(
+          begin: Alignment.centerLeft,
+          end: Alignment.centerRight,
+          colors: _easingColors(color),
+          stops: _stops,
+        );
 
   // ═══════════════════════════════════════════════════════════════
   // MULTIPLE — 두 방향 조합용 그라데이션

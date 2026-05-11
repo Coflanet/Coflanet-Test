@@ -27,6 +27,10 @@ class AppCard extends StatelessWidget {
   final BorderRadius? borderRadius;
   final double? width;
 
+  /// `variant: elevated`일 때 적용할 그림자. null이면 기본
+  /// `AppShadows.shadowBlackEmphasize` 사용.
+  final List<BoxShadow>? shadow;
+
   const AppCard({
     super.key,
     required this.child,
@@ -35,6 +39,7 @@ class AppCard extends StatelessWidget {
     this.variant = AppCardVariant.elevated,
     this.borderRadius,
     this.width,
+    this.shadow,
   });
 
   /// List 스타일 카드 — Figma `Card/List` 변형. leading / 중앙(title+subtitle) / trailing
@@ -85,7 +90,7 @@ class AppCard extends StatelessWidget {
       AppCardVariant.elevated => BoxDecoration(
           color: bg,
           borderRadius: radius,
-          boxShadow: AppShadows.shadowBlackEmphasize,
+          boxShadow: shadow ?? AppShadows.shadowBlackEmphasize,
         ),
       AppCardVariant.outlined => BoxDecoration(
           color: bg,
