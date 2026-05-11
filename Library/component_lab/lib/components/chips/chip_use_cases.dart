@@ -3,8 +3,109 @@ import 'package:widgetbook/widgetbook.dart';
 
 import '../../foundation/app_color.dart';
 import '../../foundation/app_spacing.dart';
+import 'app_chip.dart';
 import 'app_chip_action.dart';
 import 'app_chip_filter.dart';
+
+// ═══════════════════════════════════════════════════════════════
+// CHIP / BASIC — `AppChip` (13 colors × 2 sizes)
+// ═══════════════════════════════════════════════════════════════
+final List<WidgetbookComponent> chipBasicUseCases = [
+  WidgetbookComponent(
+    name: 'Basic',
+    useCases: [
+      WidgetbookUseCase(
+        name: '13 colors × 2 sizes',
+        builder: (context) => _bg(
+          context,
+          Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              for (final size in AppChipTagSize.values) ...[
+                Text(
+                  size == AppChipTagSize.sm ? 'Small' : 'Medium',
+                  style: const TextStyle(
+                      fontSize: 12, fontWeight: FontWeight.w600),
+                ),
+                const SizedBox(height: AppSpacing.space8),
+                Wrap(
+                  spacing: AppSpacing.space8,
+                  runSpacing: AppSpacing.space8,
+                  alignment: WrapAlignment.center,
+                  children: AppChipColor.values
+                      .map((color) => AppChip(
+                            label: color.name,
+                            color: color,
+                            size: size,
+                          ))
+                      .toList(),
+                ),
+                const SizedBox(height: AppSpacing.space20),
+              ],
+            ],
+          ),
+        ),
+      ),
+      WidgetbookUseCase(
+        name: 'Leading icon',
+        builder: (context) => _bg(
+          context,
+          Wrap(
+            spacing: AppSpacing.space8,
+            runSpacing: AppSpacing.space8,
+            alignment: WrapAlignment.center,
+            children: const [
+              AppChip(
+                label: 'Coffee',
+                color: AppChipColor.brown,
+                leadingIcon: Icons.coffee_rounded,
+              ),
+              AppChip(
+                label: 'New',
+                color: AppChipColor.primary,
+                leadingIcon: Icons.fiber_new_rounded,
+              ),
+              AppChip(
+                label: 'Sale',
+                color: AppChipColor.red,
+                leadingIcon: Icons.local_offer_rounded,
+              ),
+            ],
+          ),
+        ),
+      ),
+      WidgetbookUseCase(
+        name: 'Deletable + onTap',
+        builder: (context) => _bg(
+          context,
+          Wrap(
+            spacing: AppSpacing.space8,
+            runSpacing: AppSpacing.space8,
+            alignment: WrapAlignment.center,
+            children: [
+              AppChip(
+                label: 'Tap me',
+                color: AppChipColor.primary,
+                onTap: () {},
+              ),
+              AppChip(
+                label: 'Remove',
+                color: AppChipColor.neutral,
+                onDelete: () {},
+              ),
+              AppChip(
+                label: 'Both',
+                color: AppChipColor.violet,
+                onTap: () {},
+                onDelete: () {},
+              ),
+            ],
+          ),
+        ),
+      ),
+    ],
+  ),
+];
 
 // ═══════════════════════════════════════════════════════════════
 // CHIP / ACTION — Figma `Chip/Action` (Solid/Outlined × 4 size)

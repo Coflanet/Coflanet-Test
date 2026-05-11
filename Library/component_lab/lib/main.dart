@@ -78,6 +78,8 @@ import 'components/modals/modal_use_cases.dart';
 
 // Foundation (tokens)
 import 'foundation/app_theme.dart';
+import 'foundation/decorate_use_cases.dart';
+import 'foundation/gradient_use_cases.dart';
 import 'foundation/opacity_use_cases.dart';
 import 'foundation/palette_use_cases.dart';
 import 'foundation/radius_use_cases.dart';
@@ -143,7 +145,15 @@ class ComponentLabApp extends StatelessWidget {
               name: 'Opacity',
               children: opacityUseCases,
             ),
-            // 추후 추가: Gradient / Decorate / Icon / Image / 3D Illustration / Logo
+            WidgetbookFolder(
+              name: 'Gradient',
+              children: gradientUseCases,
+            ),
+            WidgetbookFolder(
+              name: 'Decorate',
+              children: decorateUseCases,
+            ),
+            // 추후 추가 (P2): Icon / Image / 3D Illustration / Logo
           ],
         ),
 
@@ -167,6 +177,7 @@ class ComponentLabApp extends StatelessWidget {
             WidgetbookFolder(
               name: 'Chip',
               children: [
+                ...chipBasicUseCases,
                 ...chipActionUseCases,
                 ...chipFilterUseCases,
               ],
