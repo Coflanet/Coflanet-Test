@@ -1,0 +1,211 @@
+{
+  "_meta": {
+    "dir": "gauge",
+    "scannedRoot": "lib/components/gauge",
+    "fileCount": 2,
+    "files": [
+      "lib/components/gauge/app_gauge.dart",
+      "lib/components/gauge/app_gauge_use_cases.dart"
+    ],
+    "patterns": [
+      "EdgeInsets.(all|symmetric|only|fromLTRB)(",
+      "Padding(padding:",
+      "SizedBox((width|height|.square dimension):",
+      "Gap(",
+      "margin:/padding:/spacing:/gap:/... numeric literal",
+      "AppSpacing.<token>"
+    ],
+    "phase": "Phase 1-B audit"
+  },
+  "usages": [
+    {
+      "file": "lib/components/gauge/app_gauge.dart",
+      "line": 64,
+      "snippet": "margin: EdgeInsets.only(right: isLast ? 0 : 2),",
+      "values": [
+        {
+          "arg": "right",
+          "expr": "isLast ? 0 : 2",
+          "embeddedLiterals": [
+            0,
+            2
+          ],
+          "kind": "expression-with-literal"
+        }
+      ],
+      "unit": "px",
+      "kind": "EdgeInsets.only",
+      "contextHint": [
+        "edgeInsets"
+      ]
+    },
+    {
+      "file": "lib/components/gauge/app_gauge.dart",
+      "line": 83,
+      "snippet": "const SizedBox(height: AppSpacing.space8),",
+      "values": [
+        {
+          "arg": "height",
+          "expr": "AppSpacing.space8",
+          "tokenRef": "space8",
+          "kind": "tokenRef"
+        }
+      ],
+      "unit": "px",
+      "kind": "SizedBox",
+      "contextHint": [
+        "sizedBox",
+        "appSpacingRef"
+      ]
+    },
+    {
+      "file": "lib/components/gauge/app_gauge.dart",
+      "line": 83,
+      "snippet": "const SizedBox(height: AppSpacing.space8),",
+      "values": [
+        {
+          "arg": null,
+          "expr": "AppSpacing.space8",
+          "tokenRef": "space8",
+          "kind": "tokenRef"
+        }
+      ],
+      "unit": "px",
+      "kind": "AppSpacingRef",
+      "contextHint": [
+        "appSpacingRef"
+      ]
+    },
+    {
+      "file": "lib/components/gauge/app_gauge_use_cases.dart",
+      "line": 96,
+      "snippet": "padding: const EdgeInsets.all(AppSpacing.space16),",
+      "values": [
+        {
+          "arg": "#0",
+          "expr": "AppSpacing.space16",
+          "tokenRef": "space16",
+          "kind": "tokenRef"
+        }
+      ],
+      "unit": "px",
+      "kind": "EdgeInsets.all",
+      "contextHint": [
+        "edgeInsets",
+        "appSpacingRef"
+      ]
+    },
+    {
+      "file": "lib/components/gauge/app_gauge_use_cases.dart",
+      "line": 73,
+      "snippet": "const SizedBox(height: AppSpacing.space24),",
+      "values": [
+        {
+          "arg": "height",
+          "expr": "AppSpacing.space24",
+          "tokenRef": "space24",
+          "kind": "tokenRef"
+        }
+      ],
+      "unit": "px",
+      "kind": "SizedBox",
+      "contextHint": [
+        "sizedBox",
+        "appSpacingRef"
+      ]
+    },
+    {
+      "file": "lib/components/gauge/app_gauge_use_cases.dart",
+      "line": 80,
+      "snippet": "const SizedBox(height: AppSpacing.space24),",
+      "values": [
+        {
+          "arg": "height",
+          "expr": "AppSpacing.space24",
+          "tokenRef": "space24",
+          "kind": "tokenRef"
+        }
+      ],
+      "unit": "px",
+      "kind": "SizedBox",
+      "contextHint": [
+        "sizedBox",
+        "appSpacingRef"
+      ]
+    },
+    {
+      "file": "lib/components/gauge/app_gauge_use_cases.dart",
+      "line": 73,
+      "snippet": "const SizedBox(height: AppSpacing.space24),",
+      "values": [
+        {
+          "arg": null,
+          "expr": "AppSpacing.space24",
+          "tokenRef": "space24",
+          "kind": "tokenRef"
+        }
+      ],
+      "unit": "px",
+      "kind": "AppSpacingRef",
+      "contextHint": [
+        "appSpacingRef"
+      ]
+    },
+    {
+      "file": "lib/components/gauge/app_gauge_use_cases.dart",
+      "line": 80,
+      "snippet": "const SizedBox(height: AppSpacing.space24),",
+      "values": [
+        {
+          "arg": null,
+          "expr": "AppSpacing.space24",
+          "tokenRef": "space24",
+          "kind": "tokenRef"
+        }
+      ],
+      "unit": "px",
+      "kind": "AppSpacingRef",
+      "contextHint": [
+        "appSpacingRef"
+      ]
+    },
+    {
+      "file": "lib/components/gauge/app_gauge_use_cases.dart",
+      "line": 96,
+      "snippet": "padding: const EdgeInsets.all(AppSpacing.space16),",
+      "values": [
+        {
+          "arg": null,
+          "expr": "AppSpacing.space16",
+          "tokenRef": "space16",
+          "kind": "tokenRef"
+        }
+      ],
+      "unit": "px",
+      "kind": "AppSpacingRef",
+      "contextHint": [
+        "appSpacingRef"
+      ]
+    }
+  ],
+  "_summary": {
+    "dir": "gauge",
+    "fileCount": 2,
+    "totalUsages": 9,
+    "distinctValues": [
+      0,
+      2
+    ],
+    "valueFrequency": {
+      "0": 1,
+      "2": 1
+    },
+    "tokenRefFrequency": {
+      "space24": 4,
+      "space16": 2,
+      "space8": 2
+    },
+    "suspiciousItems": [],
+    "suspiciousCount": 0
+  }
+}
