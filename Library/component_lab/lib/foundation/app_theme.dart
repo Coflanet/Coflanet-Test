@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 
 import 'app_color.dart';
+import 'app_color_theme.dart';
 import 'app_radius.dart';
 import 'app_text_style.dart';
 
@@ -16,6 +17,7 @@ class AppTheme {
         brightness: Brightness.light,
         primaryColor: AppColor.primaryNormal,
         scaffoldBackgroundColor: AppColor.backgroundNormalNormal,
+        extensions: <ThemeExtension<dynamic>>[AppColorTheme.light],
         colorScheme: ColorScheme.light(
           primary: AppColor.primaryNormal,
           secondary: AppColor.primarySecondary,
@@ -89,6 +91,7 @@ class AppTheme {
         brightness: Brightness.dark,
         primaryColor: AppColor.darkPrimaryNormal,
         scaffoldBackgroundColor: AppColor.darkBackgroundNormalNormal,
+        extensions: <ThemeExtension<dynamic>>[AppColorTheme.dark],
         colorScheme: ColorScheme.dark(
           primary: AppColor.darkPrimaryNormal,
           secondary: AppColor.darkPrimarySecondary,

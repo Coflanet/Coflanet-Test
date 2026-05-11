@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 
 import '../../foundation/app_color.dart';
+import '../../foundation/app_color_theme.dart';
 import '../../foundation/app_radius.dart';
 import '../../foundation/app_spacing.dart';
 import '../../foundation/app_text_style.dart';
@@ -27,7 +28,7 @@ class AppCheckbox extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final isDark = Theme.of(context).brightness == Brightness.dark;
+    final c = context.appColors;
     final disabled = onChanged == null;
     final isSm = size == AppCheckboxSize.sm;
     final box = isSm ? 18.0 : 22.0;
@@ -37,16 +38,14 @@ class AppCheckbox extends StatelessWidget {
     final fill = disabled
         ? AppColor.interactionDisable
         : (on
-            ? (isDark ? AppColor.darkPrimaryNormal : AppColor.primaryNormal)
+            ? (c.primaryNormal)
             : Colors.transparent);
     final borderColor = on
         ? Colors.transparent
-        : (isDark
-            ? AppColor.darkLineSolidNormal
-            : AppColor.lineSolidNormal);
+        : (c.lineSolidNormal);
     final iconColor = AppColor.staticLabelWhiteStrong;
     final labelColor =
-        isDark ? AppColor.darkLabelNormal : AppColor.labelNormal;
+        c.labelNormal;
 
     final boxWidget = AnimatedContainer(
       duration: const Duration(milliseconds: 120),

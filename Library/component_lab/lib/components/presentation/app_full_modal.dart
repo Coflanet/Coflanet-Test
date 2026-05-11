@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import '../../foundation/app_color.dart';
+import '../../foundation/app_color_theme.dart';
 import '../navigation/app_top_navigation.dart';
 
 /// Full Screen Modal — Figma `Modal/Full Modal`.
@@ -77,11 +77,9 @@ class AppFullModal extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final isDark = Theme.of(context).brightness == Brightness.dark;
+    final c = context.appColors;
     final bg = backgroundColor ??
-        (isDark
-            ? AppColor.darkBackgroundNormalNormal
-            : AppColor.backgroundNormalNormal);
+        (c.backgroundNormalNormal);
 
     return Scaffold(
       backgroundColor: bg,

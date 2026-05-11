@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 
 import '../../foundation/app_color.dart';
+import '../../foundation/app_color_theme.dart';
 import '../../foundation/app_radius.dart';
 import '../../foundation/app_text_style.dart';
 import '../../foundation/app_spacing.dart';
@@ -48,105 +49,74 @@ class AppChip extends StatelessWidget {
 
   ({Color bg, Color fg}) _colors(BuildContext context) {
     final isDark = Theme.of(context).brightness == Brightness.dark;
+    final c = context.appColors;
 
     Color bgFor(Color light, Color dark) => isDark ? dark : light;
 
     switch (color) {
       case AppChipColor.neutral:
-        return (
-          bg: isDark
-              ? AppColor.darkComponentFillNormal
-              : AppColor.componentFillNormal,
-          fg: isDark ? AppColor.darkLabelNormal : AppColor.labelNormal,
-        );
+        return (bg: c.componentFillNormal, fg: c.labelNormal);
       case AppChipColor.primary:
-        return (
-          bg: isDark ? AppColor.darkPrimaryLight : AppColor.primaryLight,
-          fg: isDark
-              ? AppColor.darkPrimaryNormal
-              : AppColor.primaryNormal,
-        );
+        return (bg: c.primaryLight, fg: c.primaryNormal);
       case AppChipColor.red:
         return (
           bg: bgFor(AppColor.colorGlobalRed95, AppColor.colorGlobalRed20),
-          fg: isDark
-              ? AppColor.darkAccentForegroundRed
-              : AppColor.accentForegroundRed,
+          fg: c.accentForegroundRed,
         );
       case AppChipColor.orange:
         return (
           bg: bgFor(
               AppColor.colorGlobalOrange95, AppColor.colorGlobalOrange20),
-          fg: isDark
-              ? AppColor.darkAccentForegroundOrange
-              : AppColor.accentForegroundOrange,
+          fg: c.accentForegroundOrange,
         );
       case AppChipColor.yellow:
         return (
           bg: bgFor(
               AppColor.colorGlobalYellow95, AppColor.colorGlobalYellow20),
-          fg: isDark
-              ? AppColor.darkAccentForegroundYellow
-              : AppColor.accentForegroundYellow,
+          fg: c.accentForegroundYellow,
         );
       case AppChipColor.lime:
         return (
           bg: bgFor(AppColor.colorGlobalLime95, AppColor.colorGlobalLime20),
-          fg: isDark
-              ? AppColor.darkAccentForegroundLime
-              : AppColor.accentForegroundLime,
+          fg: c.accentForegroundLime,
         );
       case AppChipColor.green:
         return (
           bg: bgFor(
               AppColor.colorGlobalGreen95, AppColor.colorGlobalGreen20),
-          fg: isDark
-              ? AppColor.darkAccentForegroundGreen
-              : AppColor.accentForegroundGreen,
+          fg: c.accentForegroundGreen,
         );
       case AppChipColor.cyan:
         return (
           bg: bgFor(AppColor.colorGlobalCyan95, AppColor.colorGlobalCyan20),
-          fg: isDark
-              ? AppColor.darkAccentForegroundCyan
-              : AppColor.accentForegroundCyan,
+          fg: c.accentForegroundCyan,
         );
       case AppChipColor.lightBlue:
         return (
           bg: bgFor(AppColor.colorGlobalLightBlue95,
               AppColor.colorGlobalLightBlue20),
-          fg: isDark
-              ? AppColor.darkAccentForegroundLightBlue
-              : AppColor.accentForegroundLightBlue,
+          fg: c.accentForegroundLightBlue,
         );
       case AppChipColor.blue:
         return (
           bg: bgFor(AppColor.colorGlobalBlue95, AppColor.colorGlobalBlue20),
-          fg: isDark
-              ? AppColor.darkAccentForegroundBlue
-              : AppColor.accentForegroundBlue,
+          fg: c.accentForegroundBlue,
         );
       case AppChipColor.pink:
         return (
           bg: bgFor(AppColor.colorGlobalPink95, AppColor.colorGlobalPink20),
-          fg: isDark
-              ? AppColor.darkAccentForegroundPink
-              : AppColor.accentForegroundPink,
+          fg: c.accentForegroundPink,
         );
       case AppChipColor.violet:
         return (
           bg: bgFor(
               AppColor.colorGlobalViolet95, AppColor.colorGlobalViolet20),
-          fg: isDark
-              ? AppColor.darkAccentForegroundViolet
-              : AppColor.accentForegroundViolet,
+          fg: c.accentForegroundViolet,
         );
       case AppChipColor.brown:
         return (
           bg: AppColor.accentBackgroundBrownLight,
-          fg: isDark
-              ? AppColor.darkAccentBackgroundBrown
-              : AppColor.accentBackgroundBrown,
+          fg: c.accentBackgroundBrown,
         );
     }
   }

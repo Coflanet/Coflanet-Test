@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import '../../foundation/app_color.dart';
+import '../../foundation/app_color_theme.dart';
 import '../../foundation/app_radius.dart';
 import '../ratio/app_ratio.dart';
 
@@ -51,16 +51,14 @@ class AppThumbnail extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final isDark = Theme.of(context).brightness == Brightness.dark;
+    final c = context.appColors;
     final radius =
         showRadius ? AppRadius.radius12Border : BorderRadius.zero;
 
     // fallback 배경·전경
-    final fallbackBg = isDark
-        ? AppColor.darkComponentFillNormal
-        : AppColor.componentFillNormal;
+    final fallbackBg = c.componentFillNormal;
     final fallbackFg =
-        isDark ? AppColor.darkLabelAssistive : AppColor.labelAssistive;
+        c.labelAssistive;
 
     // 이미지 또는 fallback
     final image = imageUrl != null && imageUrl!.isNotEmpty
@@ -81,9 +79,7 @@ class AppThumbnail extends StatelessWidget {
 
     // Border 오버레이 — Figma `line/normal/normal`
     if (showBorder) {
-      final borderColor = isDark
-          ? AppColor.darkLineNormalNormal
-          : AppColor.lineNormalNormal;
+      final borderColor = c.lineNormalNormal;
 
       body = Stack(
         children: [

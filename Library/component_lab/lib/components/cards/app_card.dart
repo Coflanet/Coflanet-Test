@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import '../../foundation/app_color.dart';
+import '../../foundation/app_color_theme.dart';
 import '../../foundation/app_radius.dart';
 import '../../foundation/app_shadow.dart';
 import '../../foundation/app_spacing.dart';
@@ -38,11 +38,9 @@ class AppCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final isDark = Theme.of(context).brightness == Brightness.dark;
+    final c = context.appColors;
     final radius = borderRadius ?? AppRadius.radiusCardBorder;
-    final bg = isDark
-        ? AppColor.darkBackgroundElevatedNormal
-        : AppColor.backgroundElevatedNormal;
+    final bg = c.backgroundElevatedNormal;
 
     final decoration = switch (variant) {
       AppCardVariant.flat => BoxDecoration(
@@ -58,9 +56,7 @@ class AppCard extends StatelessWidget {
           color: bg,
           borderRadius: radius,
           border: Border.all(
-            color: isDark
-                ? AppColor.darkLineSolidNormal
-                : AppColor.lineSolidNormal,
+            color: c.lineSolidNormal,
             width: 1,
           ),
         ),

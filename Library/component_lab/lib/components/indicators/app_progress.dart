@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import '../../foundation/app_color.dart';
+import '../../foundation/app_color_theme.dart';
 
 /// Linear progress bar (가로 바).
 ///
@@ -19,12 +19,10 @@ class AppLinearProgress extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final isDark = Theme.of(context).brightness == Brightness.dark;
-    final track = isDark
-        ? AppColor.darkComponentFillNormal
-        : AppColor.componentFillNormal;
+    final c = context.appColors;
+    final track = c.componentFillNormal;
     final fill = color ??
-        (isDark ? AppColor.darkPrimaryNormal : AppColor.primaryNormal);
+        (c.primaryNormal);
 
     return ClipRRect(
       borderRadius: BorderRadius.circular(height / 2),
@@ -58,12 +56,9 @@ class AppCircularProgress extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final isDark = Theme.of(context).brightness == Brightness.dark;
     final fill = color ??
-        (isDark ? AppColor.darkPrimaryNormal : AppColor.primaryNormal);
-    final track = isDark
-        ? AppColor.darkComponentFillNormal
-        : AppColor.componentFillNormal;
+        (c.primaryNormal);
+    final track = c.componentFillNormal;
 
     return SizedBox(
       width: size,
@@ -93,12 +88,9 @@ class AppLabeledProgress extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final isDark = Theme.of(context).brightness == Brightness.dark;
     final labelColor =
-        isDark ? AppColor.darkLabelNormal : AppColor.labelNormal;
-    final altColor = isDark
-        ? AppColor.darkLabelAlternative
-        : AppColor.labelAlternative;
+        c.labelNormal;
+    final altColor = c.labelAlternative;
     final pct = (value.clamp(0.0, 1.0) * 100).toStringAsFixed(0);
 
     return Column(

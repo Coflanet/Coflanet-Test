@@ -5,6 +5,7 @@ import 'package:flutter/foundation.dart' show kIsWeb;
 import 'package:flutter/material.dart';
 
 import '../../foundation/app_color.dart';
+import '../../foundation/app_color_theme.dart';
 import '../../foundation/app_radius.dart';
 import '../../foundation/app_spacing.dart';
 import '../../foundation/app_text_style.dart';
@@ -137,18 +138,14 @@ class _AppTimePickerState extends State<AppTimePicker> {
 
   @override
   Widget build(BuildContext context) {
-    final isDark = Theme.of(context).brightness == Brightness.dark;
+    final c = context.appColors;
     final altColor =
-        isDark ? AppColor.darkLabelAlternative : AppColor.labelAlternative;
+        c.labelAlternative;
     final labelColor =
-        isDark ? AppColor.darkLabelNormal : AppColor.labelNormal;
+        c.labelNormal;
     final fillColor = widget.isEnabled
-        ? (isDark
-            ? AppColor.darkComponentFillNormal
-            : AppColor.componentFillNormal)
-        : (isDark
-            ? AppColor.darkInteractionDisable
-            : AppColor.interactionDisable);
+        ? (c.componentFillNormal)
+        : (c.interactionDisable);
 
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,

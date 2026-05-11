@@ -3,6 +3,7 @@ import 'dart:ui';
 import 'package:flutter/material.dart';
 
 import '../../foundation/app_color.dart';
+import '../../foundation/app_color_theme.dart';
 import '../../foundation/app_radius.dart';
 
 /// Icon 버튼 톤 — Figma `Button/Icon/*` 9종.
@@ -119,9 +120,9 @@ class AppIconButton extends StatelessWidget {
 
   ({Color fill, Color fg, BorderSide? stroke, double? blurSigma}) _colors(
       BuildContext context) {
-    final isDark = Theme.of(context).brightness == Brightness.dark;
+    final c = context.appColors;
     final disabled = !_enabled;
-    final defaultFg = isDark ? AppColor.darkLabelNormal : AppColor.labelNormal;
+    final defaultFg = c.labelNormal;
 
     if (tone == AppIconButtonTone.normal) {
       return (

@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import '../../foundation/app_color.dart';
+import '../../foundation/app_color_theme.dart';
 import '../../foundation/app_radius.dart';
 
 /// Figma Ratio/Horizontal 17 개 + Ratio/Vertical 2 개 비율 프리셋.
@@ -111,12 +111,9 @@ class AppRatioBox extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final isDark = Theme.of(context).brightness == Brightness.dark;
+    final c = context.appColors;
     final radius = borderRadius ?? AppRadius.radiusCardBorder;
-    final bg = backgroundColor ??
-        (isDark
-            ? AppColor.darkComponentFillNormal
-            : AppColor.componentFillNormal);
+    final bg = backgroundColor ?? c.componentFillNormal;
 
     return AspectRatio(
       aspectRatio: ratio.value,
@@ -173,12 +170,9 @@ class AppRatioBoxVertical extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final isDark = Theme.of(context).brightness == Brightness.dark;
+    final c = context.appColors;
     final radius = borderRadius ?? AppRadius.radiusCardBorder;
-    final bg = backgroundColor ??
-        (isDark
-            ? AppColor.darkComponentFillNormal
-            : AppColor.componentFillNormal);
+    final bg = backgroundColor ?? c.componentFillNormal;
 
     return LayoutBuilder(
       builder: (context, constraints) {

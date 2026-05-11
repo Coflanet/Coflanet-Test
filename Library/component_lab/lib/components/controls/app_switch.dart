@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 
 import '../../foundation/app_color.dart';
+import '../../foundation/app_color_theme.dart';
 
 /// Switch 사이즈.
 enum AppSwitchSize { sm, md }
@@ -20,7 +21,7 @@ class AppSwitch extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final isDark = Theme.of(context).brightness == Brightness.dark;
+    final c = context.appColors;
     final isSm = size == AppSwitchSize.sm;
     final width = isSm ? 36.0 : 44.0;
     final height = isSm ? 20.0 : 24.0;
@@ -29,10 +30,8 @@ class AppSwitch extends StatelessWidget {
     final disabled = onChanged == null;
     final trackOn = disabled
         ? AppColor.interactionDisable
-        : (isDark ? AppColor.darkPrimaryNormal : AppColor.primaryNormal);
-    final trackOff = isDark
-        ? AppColor.darkComponentFillStrong
-        : AppColor.componentFillStrong;
+        : (c.primaryNormal);
+    final trackOff = c.componentFillStrong;
 
     return GestureDetector(
       onTap: disabled ? null : () => onChanged!(!value),

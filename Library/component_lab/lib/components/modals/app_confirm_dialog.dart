@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import '../../foundation/app_color.dart';
+import '../../foundation/app_color_theme.dart';
 import '../../foundation/app_radius.dart';
 import '../../foundation/app_shadow.dart';
 import '../../foundation/app_spacing.dart';
@@ -36,15 +36,11 @@ class AppConfirmDialog extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final isDark = Theme.of(context).brightness == Brightness.dark;
-    final bg = isDark
-        ? AppColor.darkBackgroundElevatedNormal
-        : AppColor.backgroundElevatedNormal;
+    final c = context.appColors;
+    final bg = c.backgroundElevatedNormal;
     final labelColor =
-        isDark ? AppColor.darkLabelNormal : AppColor.labelNormal;
-    final altColor = isDark
-        ? AppColor.darkLabelNeutral
-        : AppColor.labelNeutral;
+        c.labelNormal;
+    final altColor = c.labelNeutral;
 
     final confirmButton = AppSolidButton(
       label: confirmText,
