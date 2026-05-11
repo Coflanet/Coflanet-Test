@@ -38,6 +38,9 @@ class AssetPath {
   static const String timerStepPourover = '$_images/timer_step02_pourover.png';
 
   // === Icons ===
+  // TODO(design-system-migration): 아래 ic_*.svg 8종은 디자인 시스템 도입 이전 레거시.
+  // 디자인 시스템 마이그레이션(`component_lab` 패키지 도입) 완료 후
+  // `CoflanetIcons.arrowLeft`, `CoflanetIcons.logoKakao` 등으로 대체하고 이 파일에서 제거.
   static const String iconArrowBack = '$_icons/ic_arrow_back.svg';
   static const String iconArrowForward = '$_icons/ic_arrow_forward.svg';
   static const String iconClose = '$_icons/ic_close.svg';
