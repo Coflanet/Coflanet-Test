@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import '../../foundation/app_color.dart';
+import '../../foundation/app_color_theme.dart';
 
 /// 디자인 시스템 Divider — Figma `Basic/Divider` 컴포넌트.
 ///
@@ -35,17 +35,13 @@ class AppDivider extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final isDark = Theme.of(context).brightness == Brightness.dark;
+    final c = context.appColors;
 
     // Tick=on: line/normal/alternative (8% opacity)
     // Tick=off: line/normal/normal (22% opacity)
     final color = tick
-        ? (isDark
-            ? AppColor.darkLineNormalAlternative
-            : AppColor.lineNormalAlternative)
-        : (isDark
-            ? AppColor.darkLineNormalNormal
-            : AppColor.lineNormalNormal);
+        ? (c.lineNormalAlternative)
+        : (c.lineNormalNormal);
 
     // 세로 Divider
     if (vertical && !tick) {

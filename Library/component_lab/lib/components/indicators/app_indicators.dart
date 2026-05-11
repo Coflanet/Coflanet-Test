@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 
 import '../../foundation/app_color.dart';
+import '../../foundation/app_color_theme.dart';
 import '../../foundation/app_text_style.dart';
 
 // ═══════════════════════════════════════════════════════════════
@@ -32,9 +33,9 @@ class AppBadge extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final isDark = Theme.of(context).brightness == Brightness.dark;
+    final c = context.appColors;
     final fill = color ??
-        (isDark ? AppColor.darkStatusNegative : AppColor.statusNegative);
+        (c.statusNegative);
 
     if (style == AppBadgeStyle.dot || count == null) {
       return Container(
@@ -126,12 +127,9 @@ class AppPaginationDot extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final isDark = Theme.of(context).brightness == Brightness.dark;
     final activeColor =
-        isDark ? AppColor.darkPrimaryNormal : AppColor.primaryNormal;
-    final inactiveColor = isDark
-        ? AppColor.darkComponentFillStrong
-        : AppColor.componentFillStrong;
+        c.primaryNormal;
+    final inactiveColor = c.componentFillStrong;
 
     return AnimatedContainer(
       duration: const Duration(milliseconds: 200),
@@ -215,9 +213,8 @@ class AppHomeIndicator extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final isDark = Theme.of(context).brightness == Brightness.dark;
     final barColor =
-        isDark ? AppColor.darkLabelStrong : AppColor.labelStrong;
+        c.labelStrong;
 
     return SizedBox(
       width: double.infinity,
@@ -251,10 +248,7 @@ class AppGrabber extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final isDark = Theme.of(context).brightness == Brightness.dark;
-    final barColor = isDark
-        ? AppColor.darkComponentFillStrong
-        : AppColor.componentFillStrong;
+    final barColor = c.componentFillStrong;
 
     return SizedBox(
       width: double.infinity,

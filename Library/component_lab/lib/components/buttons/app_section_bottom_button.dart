@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import '../../foundation/app_color.dart';
+import '../../foundation/app_color_theme.dart';
 import '../../foundation/app_text_style.dart';
 
 /// Section Bottom 버튼 종류 — Figma `Button/Section Bottom/*` 3종.
@@ -48,16 +48,10 @@ class AppSectionBottomButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final isDark = Theme.of(context).brightness == Brightness.dark;
-    final altColor = isDark
-        ? AppColor.darkLabelAlternative
-        : AppColor.labelAlternative;
-    final lineColor = isDark
-        ? AppColor.darkLineNormalNormal
-        : AppColor.lineNormalNormal;
-    final bg = isDark
-        ? AppColor.darkBackgroundNormalNormal
-        : AppColor.backgroundNormalNormal;
+    final c = context.appColors;
+    final altColor = c.labelAlternative;
+    final lineColor = c.lineNormalNormal;
+    final bg = c.backgroundNormalNormal;
 
     switch (variant) {
       case AppSectionBottomVariant.topLine:
@@ -113,25 +107,19 @@ class AppSectionBottomButton extends StatelessWidget {
                 children: [
                   if (leftIcon != null) ...[
                     Icon(leftIcon, size: 18,
-                        color: isDark
-                            ? AppColor.darkLabelNormal
-                            : AppColor.labelNormal),
+                        color: c.labelNormal),
                     const SizedBox(width: 10),
                   ],
                   Text(
                     label,
                     style: AppTextStyles.body1NormalBold.copyWith(
-                      color: isDark
-                          ? AppColor.darkLabelNormal
-                          : AppColor.labelNormal,
+                      color: c.labelNormal,
                     ),
                   ),
                   if (rightIcon != null) ...[
                     const SizedBox(width: 10),
                     Icon(rightIcon, size: 18,
-                        color: isDark
-                            ? AppColor.darkLabelNormal
-                            : AppColor.labelNormal),
+                        color: c.labelNormal),
                   ],
                 ],
               ),

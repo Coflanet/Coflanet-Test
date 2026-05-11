@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import '../../foundation/app_color.dart';
+import '../../foundation/app_color_theme.dart';
 import '../../foundation/app_shadow.dart';
 
 /// Floating Action Button — Figma `Button/Floating Action`.
@@ -25,15 +25,10 @@ class AppFloatingActionButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final c = context.appColors;
     final isDark = Theme.of(context).brightness == Brightness.dark;
-    final fill = _enabled
-        ? (isDark
-            ? AppColor.darkComponentFillNormal
-            : AppColor.componentFillNormal)
-        : AppColor.interactionDisable;
-    final fg = _enabled
-        ? (isDark ? AppColor.darkLabelNormal : AppColor.labelNormal)
-        : AppColor.labelAssistive;
+    final fill = _enabled ? c.componentFillNormal : c.interactionDisable;
+    final fg = _enabled ? c.labelNormal : c.labelAssistive;
 
     final body = Container(
       width: 56,

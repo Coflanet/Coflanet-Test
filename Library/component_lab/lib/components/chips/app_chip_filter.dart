@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import '../../foundation/app_color.dart';
+import '../../foundation/app_color_theme.dart';
 import '../../foundation/app_text_style.dart';
 import 'app_chip_action.dart' show AppChipSize;
 
@@ -125,25 +125,21 @@ class AppChipFilter extends StatelessWidget {
   }
 
   ({Color bg, Color fg, BorderSide? side}) _colors(BuildContext context) {
-    final isDark = Theme.of(context).brightness == Brightness.dark;
+    final c = context.appColors;
 
     if (!_enabled) {
       if (variant == AppChipFilterVariant.solid) {
         return (
-          bg: isDark
-              ? AppColor.darkInteractionDisable
-              : AppColor.interactionDisable,
-          fg: isDark ? AppColor.darkLabelDisable : AppColor.labelDisable,
+          bg: c.interactionDisable,
+          fg: c.labelDisable,
           side: null,
         );
       }
       return (
         bg: const Color(0x00000000),
-        fg: isDark ? AppColor.darkLabelDisable : AppColor.labelDisable,
+        fg: c.labelDisable,
         side: BorderSide(
-          color: isDark
-              ? AppColor.darkLineNormalNeutral
-              : AppColor.lineNormalNeutral,
+          color: c.lineNormalNeutral,
           width: 1,
         ),
       );
@@ -152,18 +148,14 @@ class AppChipFilter extends StatelessWidget {
     if (isActive) {
       if (variant == AppChipFilterVariant.solid) {
         return (
-          bg: isDark
-              ? AppColor.darkInverseBackground
-              : AppColor.inverseBackground,
-          fg: isDark
-              ? AppColor.darkInverseLabelNormal
-              : AppColor.inverseLabelNormal,
+          bg: c.inverseBackground,
+          fg: c.inverseLabelNormal,
           side: null,
         );
       }
       // Outline Active: fill Primary/normal @ Opacity/5, stroke Primary/normal @ Opacity/43
       final primary =
-          isDark ? AppColor.darkPrimaryNormal : AppColor.primaryNormal;
+          c.primaryNormal;
       return (
         bg: primary.withValues(alpha: 0.05),
         fg: primary,
@@ -177,20 +169,16 @@ class AppChipFilter extends StatelessWidget {
     // Default
     if (variant == AppChipFilterVariant.solid) {
       return (
-        bg: isDark
-            ? AppColor.darkComponentFillAlternative
-            : AppColor.componentFillAlternative,
-        fg: isDark ? AppColor.darkLabelNormal : AppColor.labelNormal,
+        bg: c.componentFillAlternative,
+        fg: c.labelNormal,
         side: null,
       );
     }
     return (
       bg: const Color(0x00000000),
-      fg: isDark ? AppColor.darkLabelNormal : AppColor.labelNormal,
+      fg: c.labelNormal,
       side: BorderSide(
-        color: isDark
-            ? AppColor.darkLineNormalNeutral
-            : AppColor.lineNormalNeutral,
+        color: c.lineNormalNeutral,
         width: 1,
       ),
     );

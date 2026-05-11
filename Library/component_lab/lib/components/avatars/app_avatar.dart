@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import '../../foundation/app_color.dart';
+import '../../foundation/app_color_theme.dart';
 import '../../foundation/app_radius.dart';
 import '../../foundation/app_text_style.dart';
 
@@ -110,16 +110,14 @@ class AppAvatar extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final isDark = Theme.of(context).brightness == Brightness.dark;
+    final c = context.appColors;
     final diameter = _diameter;
     final radius = _borderRadius(diameter);
 
     // 피그마: Person fill = Background/normal/normal
     // Company/Academic: placeholder 자체가 배경
-    final bg = isDark
-        ? AppColor.darkBackgroundNormalNormal
-        : AppColor.backgroundNormalNormal;
-    final fg = isDark ? AppColor.darkLabelNormal : AppColor.labelNormal;
+    final bg = c.backgroundNormalNormal;
+    final fg = c.labelNormal;
 
     Widget content;
     if (imageUrl != null && imageUrl!.isNotEmpty) {

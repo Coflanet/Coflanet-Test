@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 
 import '../../foundation/app_color.dart';
+import '../../foundation/app_color_theme.dart';
 import '../../foundation/app_spacing.dart';
 import '../../foundation/app_text_style.dart';
 
@@ -21,18 +22,16 @@ class AppRadio<T> extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final isDark = Theme.of(context).brightness == Brightness.dark;
+    final c = context.appColors;
     final disabled = onChanged == null;
     final isSelected = value == groupValue;
     final outerColor = disabled
         ? AppColor.interactionDisable
         : isSelected
-            ? (isDark ? AppColor.darkPrimaryNormal : AppColor.primaryNormal)
-            : (isDark
-                ? AppColor.darkLineSolidNormal
-                : AppColor.lineSolidNormal);
+            ? (c.primaryNormal)
+            : (c.lineSolidNormal);
     final labelColor =
-        isDark ? AppColor.darkLabelNormal : AppColor.labelNormal;
+        c.labelNormal;
 
     final radio = AnimatedContainer(
       duration: const Duration(milliseconds: 120),

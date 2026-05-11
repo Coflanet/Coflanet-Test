@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
-import '../../foundation/app_color.dart';
+import '../../foundation/app_color_theme.dart';
 import '../../foundation/app_radius.dart';
 import '../../foundation/app_spacing.dart';
 import '../../foundation/app_text_style.dart';
@@ -185,23 +185,13 @@ class _AppTextFieldState extends State<AppTextField> {
 
   @override
   Widget build(BuildContext context) {
-    final isDark = Theme.of(context).brightness == Brightness.dark;
-    final labelColor =
-        isDark ? AppColor.darkLabelNormal : AppColor.labelNormal;
-    final altColor = isDark
-        ? AppColor.darkLabelAlternative
-        : AppColor.labelAlternative;
-    final errorColor = isDark
-        ? AppColor.darkStatusNegative
-        : AppColor.statusNegative;
-    final fillColor = isDark
-        ? AppColor.darkComponentFillNormal
-        : AppColor.componentFillNormal;
-    final disabledFill = isDark
-        ? AppColor.darkInteractionDisable
-        : AppColor.interactionDisable;
-    final primaryColor =
-        isDark ? AppColor.darkPrimaryNormal : AppColor.primaryNormal;
+    final c = context.appColors;
+    final labelColor = c.labelNormal;
+    final altColor = c.labelAlternative;
+    final errorColor = c.statusNegative;
+    final fillColor = c.componentFillNormal;
+    final disabledFill = c.interactionDisable;
+    final primaryColor = c.primaryNormal;
 
     final borderColor = !widget.isEnabled
         ? Colors.transparent
@@ -239,11 +229,7 @@ class _AppTextFieldState extends State<AppTextField> {
             onChanged: widget.onChanged,
             onSubmitted: widget.onSubmitted,
             style: _textStyle.copyWith(
-              color: widget.isEnabled
-                  ? labelColor
-                  : (isDark
-                      ? AppColor.darkLabelDisable
-                      : AppColor.labelDisable),
+              color: widget.isEnabled ? labelColor : c.labelDisable,
             ),
             cursorColor: primaryColor,
             decoration: InputDecoration(

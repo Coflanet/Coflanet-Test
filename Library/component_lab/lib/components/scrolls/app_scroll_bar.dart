@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import '../../foundation/app_color.dart';
+import '../../foundation/app_color_theme.dart';
 
 /// Figma `Scroll Bar` 사이즈.
 ///
@@ -62,12 +62,10 @@ class AppScrollBar extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final isDark = Theme.of(context).brightness == Brightness.dark;
+    final c = context.appColors;
 
     // 피그마: Component/fill/strong @ 0.20 opacity
-    final barColor = isDark
-        ? AppColor.darkComponentFillStrong
-        : AppColor.componentFillStrong;
+    final barColor = c.componentFillStrong;
 
     final p = percent.clamp(0.0, 1.0);
     final pos = position.clamp(0.0, 1.0);

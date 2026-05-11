@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 
 import '../../foundation/app_color.dart';
+import '../../foundation/app_color_theme.dart';
 import '../../foundation/app_radius.dart';
 import '../../foundation/app_spacing.dart';
 import '../../foundation/app_text_style.dart';
@@ -91,10 +92,8 @@ class AppActionSheet extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final isDark = Theme.of(context).brightness == Brightness.dark;
-    final cardColor = isDark
-        ? AppColor.darkBackgroundElevatedNormal
-        : AppColor.backgroundElevatedNormal;
+    final c = context.appColors;
+    final cardColor = c.backgroundElevatedNormal;
 
     return SafeArea(
       top: false,
