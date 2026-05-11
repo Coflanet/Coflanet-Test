@@ -1,0 +1,416 @@
+{
+  "_meta": {
+    "dir": "control_box",
+    "scannedRoot": "lib/components/control_box",
+    "fileCount": 2,
+    "files": [
+      "lib/components/control_box/app_control_box.dart",
+      "lib/components/control_box/app_control_box_use_cases.dart"
+    ],
+    "patterns": [
+      "EdgeInsets.(all|symmetric|only|fromLTRB)(",
+      "Padding(padding:",
+      "SizedBox((width|height|.square dimension):",
+      "Gap(",
+      "margin:/padding:/spacing:/gap:/... numeric literal",
+      "AppSpacing.<token>"
+    ],
+    "phase": "Phase 1-B audit"
+  },
+  "usages": [
+    {
+      "file": "lib/components/control_box/app_control_box.dart",
+      "line": 44,
+      "snippet": "padding: EdgeInsets.symmetric(",
+      "values": [
+        {
+          "arg": "vertical",
+          "expr": "AppSpacing.space12",
+          "tokenRef": "space12",
+          "kind": "tokenRef"
+        }
+      ],
+      "unit": "px",
+      "kind": "EdgeInsets.symmetric",
+      "contextHint": [
+        "edgeInsets"
+      ]
+    },
+    {
+      "file": "lib/components/control_box/app_control_box.dart",
+      "line": 64,
+      "snippet": "SizedBox(width: AppSpacing.space12),",
+      "values": [
+        {
+          "arg": "width",
+          "expr": "AppSpacing.space12",
+          "tokenRef": "space12",
+          "kind": "tokenRef"
+        }
+      ],
+      "unit": "px",
+      "kind": "SizedBox",
+      "contextHint": [
+        "sizedBox",
+        "appSpacingRef"
+      ]
+    },
+    {
+      "file": "lib/components/control_box/app_control_box.dart",
+      "line": 78,
+      "snippet": "const SizedBox(height: 2),",
+      "values": [
+        {
+          "arg": "height",
+          "expr": "2",
+          "value": 2,
+          "kind": "literal"
+        }
+      ],
+      "unit": "px",
+      "kind": "SizedBox",
+      "contextHint": [
+        "sizedBox"
+      ]
+    },
+    {
+      "file": "lib/components/control_box/app_control_box.dart",
+      "line": 45,
+      "snippet": "vertical: AppSpacing.space12,",
+      "values": [
+        {
+          "arg": null,
+          "expr": "AppSpacing.space12",
+          "tokenRef": "space12",
+          "kind": "tokenRef"
+        }
+      ],
+      "unit": "px",
+      "kind": "AppSpacingRef",
+      "contextHint": [
+        "appSpacingRef"
+      ]
+    },
+    {
+      "file": "lib/components/control_box/app_control_box.dart",
+      "line": 46,
+      "snippet": "horizontal: AppSpacing.space16,",
+      "values": [
+        {
+          "arg": null,
+          "expr": "AppSpacing.space16",
+          "tokenRef": "space16",
+          "kind": "tokenRef"
+        }
+      ],
+      "unit": "px",
+      "kind": "AppSpacingRef",
+      "contextHint": [
+        "appSpacingRef"
+      ]
+    },
+    {
+      "file": "lib/components/control_box/app_control_box.dart",
+      "line": 64,
+      "snippet": "SizedBox(width: AppSpacing.space12),",
+      "values": [
+        {
+          "arg": null,
+          "expr": "AppSpacing.space12",
+          "tokenRef": "space12",
+          "kind": "tokenRef"
+        }
+      ],
+      "unit": "px",
+      "kind": "AppSpacingRef",
+      "contextHint": [
+        "appSpacingRef"
+      ]
+    },
+    {
+      "file": "lib/components/control_box/app_control_box_use_cases.dart",
+      "line": 166,
+      "snippet": "padding: const EdgeInsets.all(AppSpacing.space16),",
+      "values": [
+        {
+          "arg": "#0",
+          "expr": "AppSpacing.space16",
+          "tokenRef": "space16",
+          "kind": "tokenRef"
+        }
+      ],
+      "unit": "px",
+      "kind": "EdgeInsets.all",
+      "contextHint": [
+        "edgeInsets",
+        "appSpacingRef"
+      ]
+    },
+    {
+      "file": "lib/components/control_box/app_control_box_use_cases.dart",
+      "line": 26,
+      "snippet": "const SizedBox(height: AppSpacing.space16),",
+      "values": [
+        {
+          "arg": "height",
+          "expr": "AppSpacing.space16",
+          "tokenRef": "space16",
+          "kind": "tokenRef"
+        }
+      ],
+      "unit": "px",
+      "kind": "SizedBox",
+      "contextHint": [
+        "sizedBox",
+        "appSpacingRef"
+      ]
+    },
+    {
+      "file": "lib/components/control_box/app_control_box_use_cases.dart",
+      "line": 63,
+      "snippet": "const SizedBox(height: AppSpacing.space16),",
+      "values": [
+        {
+          "arg": "height",
+          "expr": "AppSpacing.space16",
+          "tokenRef": "space16",
+          "kind": "tokenRef"
+        }
+      ],
+      "unit": "px",
+      "kind": "SizedBox",
+      "contextHint": [
+        "sizedBox",
+        "appSpacingRef"
+      ]
+    },
+    {
+      "file": "lib/components/control_box/app_control_box_use_cases.dart",
+      "line": 92,
+      "snippet": "const SizedBox(height: AppSpacing.space12),",
+      "values": [
+        {
+          "arg": "height",
+          "expr": "AppSpacing.space12",
+          "tokenRef": "space12",
+          "kind": "tokenRef"
+        }
+      ],
+      "unit": "px",
+      "kind": "SizedBox",
+      "contextHint": [
+        "sizedBox",
+        "appSpacingRef"
+      ]
+    },
+    {
+      "file": "lib/components/control_box/app_control_box_use_cases.dart",
+      "line": 99,
+      "snippet": "const SizedBox(height: AppSpacing.space12),",
+      "values": [
+        {
+          "arg": "height",
+          "expr": "AppSpacing.space12",
+          "tokenRef": "space12",
+          "kind": "tokenRef"
+        }
+      ],
+      "unit": "px",
+      "kind": "SizedBox",
+      "contextHint": [
+        "sizedBox",
+        "appSpacingRef"
+      ]
+    },
+    {
+      "file": "lib/components/control_box/app_control_box_use_cases.dart",
+      "line": 123,
+      "snippet": "const SizedBox(height: AppSpacing.space16),",
+      "values": [
+        {
+          "arg": "height",
+          "expr": "AppSpacing.space16",
+          "tokenRef": "space16",
+          "kind": "tokenRef"
+        }
+      ],
+      "unit": "px",
+      "kind": "SizedBox",
+      "contextHint": [
+        "sizedBox",
+        "appSpacingRef"
+      ]
+    },
+    {
+      "file": "lib/components/control_box/app_control_box_use_cases.dart",
+      "line": 148,
+      "snippet": "const SizedBox(height: AppSpacing.space12),",
+      "values": [
+        {
+          "arg": "height",
+          "expr": "AppSpacing.space12",
+          "tokenRef": "space12",
+          "kind": "tokenRef"
+        }
+      ],
+      "unit": "px",
+      "kind": "SizedBox",
+      "contextHint": [
+        "sizedBox",
+        "appSpacingRef"
+      ]
+    },
+    {
+      "file": "lib/components/control_box/app_control_box_use_cases.dart",
+      "line": 26,
+      "snippet": "const SizedBox(height: AppSpacing.space16),",
+      "values": [
+        {
+          "arg": null,
+          "expr": "AppSpacing.space16",
+          "tokenRef": "space16",
+          "kind": "tokenRef"
+        }
+      ],
+      "unit": "px",
+      "kind": "AppSpacingRef",
+      "contextHint": [
+        "appSpacingRef"
+      ]
+    },
+    {
+      "file": "lib/components/control_box/app_control_box_use_cases.dart",
+      "line": 63,
+      "snippet": "const SizedBox(height: AppSpacing.space16),",
+      "values": [
+        {
+          "arg": null,
+          "expr": "AppSpacing.space16",
+          "tokenRef": "space16",
+          "kind": "tokenRef"
+        }
+      ],
+      "unit": "px",
+      "kind": "AppSpacingRef",
+      "contextHint": [
+        "appSpacingRef"
+      ]
+    },
+    {
+      "file": "lib/components/control_box/app_control_box_use_cases.dart",
+      "line": 92,
+      "snippet": "const SizedBox(height: AppSpacing.space12),",
+      "values": [
+        {
+          "arg": null,
+          "expr": "AppSpacing.space12",
+          "tokenRef": "space12",
+          "kind": "tokenRef"
+        }
+      ],
+      "unit": "px",
+      "kind": "AppSpacingRef",
+      "contextHint": [
+        "appSpacingRef"
+      ]
+    },
+    {
+      "file": "lib/components/control_box/app_control_box_use_cases.dart",
+      "line": 99,
+      "snippet": "const SizedBox(height: AppSpacing.space12),",
+      "values": [
+        {
+          "arg": null,
+          "expr": "AppSpacing.space12",
+          "tokenRef": "space12",
+          "kind": "tokenRef"
+        }
+      ],
+      "unit": "px",
+      "kind": "AppSpacingRef",
+      "contextHint": [
+        "appSpacingRef"
+      ]
+    },
+    {
+      "file": "lib/components/control_box/app_control_box_use_cases.dart",
+      "line": 123,
+      "snippet": "const SizedBox(height: AppSpacing.space16),",
+      "values": [
+        {
+          "arg": null,
+          "expr": "AppSpacing.space16",
+          "tokenRef": "space16",
+          "kind": "tokenRef"
+        }
+      ],
+      "unit": "px",
+      "kind": "AppSpacingRef",
+      "contextHint": [
+        "appSpacingRef"
+      ]
+    },
+    {
+      "file": "lib/components/control_box/app_control_box_use_cases.dart",
+      "line": 148,
+      "snippet": "const SizedBox(height: AppSpacing.space12),",
+      "values": [
+        {
+          "arg": null,
+          "expr": "AppSpacing.space12",
+          "tokenRef": "space12",
+          "kind": "tokenRef"
+        }
+      ],
+      "unit": "px",
+      "kind": "AppSpacingRef",
+      "contextHint": [
+        "appSpacingRef"
+      ]
+    },
+    {
+      "file": "lib/components/control_box/app_control_box_use_cases.dart",
+      "line": 166,
+      "snippet": "padding: const EdgeInsets.all(AppSpacing.space16),",
+      "values": [
+        {
+          "arg": null,
+          "expr": "AppSpacing.space16",
+          "tokenRef": "space16",
+          "kind": "tokenRef"
+        }
+      ],
+      "unit": "px",
+      "kind": "AppSpacingRef",
+      "contextHint": [
+        "appSpacingRef"
+      ]
+    }
+  ],
+  "_summary": {
+    "dir": "control_box",
+    "fileCount": 2,
+    "totalUsages": 20,
+    "distinctValues": [
+      2
+    ],
+    "valueFrequency": {
+      "2": 1
+    },
+    "tokenRefFrequency": {
+      "space12": 10,
+      "space16": 9
+    },
+    "suspiciousItems": [
+      {
+        "file": "lib/components/control_box/app_control_box.dart",
+        "line": 78,
+        "kind": "SizedBox",
+        "value": 2,
+        "reason": "off-scale literal",
+        "snippet": "const SizedBox(height: 2),"
+      }
+    ],
+    "suspiciousCount": 1
+  }
+}
