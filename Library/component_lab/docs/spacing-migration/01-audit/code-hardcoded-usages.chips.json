@@ -1,0 +1,1577 @@
+{
+  "_meta": {
+    "dir": "chips",
+    "scannedRoot": "lib/components/chips",
+    "fileCount": 5,
+    "files": [
+      "lib/components/chips/app_chip.dart",
+      "lib/components/chips/app_chip_action.dart",
+      "lib/components/chips/app_chip_filter.dart",
+      "lib/components/chips/app_mini_chip.dart",
+      "lib/components/chips/chip_use_cases.dart"
+    ],
+    "patterns": [
+      "EdgeInsets.(all|symmetric|only|fromLTRB)(",
+      "Padding(padding:",
+      "SizedBox((width|height|.square dimension):",
+      "Gap(",
+      "margin:/padding:/spacing:/gap:/... numeric literal",
+      "AppSpacing.<token>"
+    ],
+    "phase": "Phase 1-B audit"
+  },
+  "usages": [
+    {
+      "file": "lib/components/chips/app_chip.dart",
+      "line": 129,
+      "snippet": "? const EdgeInsets.symmetric(",
+      "values": [
+        {
+          "arg": "horizontal",
+          "expr": "AppSpacing.space8",
+          "tokenRef": "space8",
+          "kind": "tokenRef"
+        },
+        {
+          "arg": "vertical",
+          "expr": "AppSpacing.space4",
+          "tokenRef": "space4",
+          "kind": "tokenRef"
+        }
+      ],
+      "unit": "px",
+      "kind": "EdgeInsets.symmetric",
+      "contextHint": [
+        "edgeInsets"
+      ]
+    },
+    {
+      "file": "lib/components/chips/app_chip.dart",
+      "line": 131,
+      "snippet": ": const EdgeInsets.symmetric(",
+      "values": [
+        {
+          "arg": "horizontal",
+          "expr": "AppSpacing.space12",
+          "tokenRef": "space12",
+          "kind": "tokenRef"
+        },
+        {
+          "arg": "vertical",
+          "expr": "6",
+          "value": 6,
+          "kind": "literal"
+        }
+      ],
+      "unit": "px",
+      "kind": "EdgeInsets.symmetric",
+      "contextHint": [
+        "edgeInsets"
+      ]
+    },
+    {
+      "file": "lib/components/chips/app_chip.dart",
+      "line": 157,
+      "snippet": "padding: const EdgeInsets.all(AppSpacing.space4),",
+      "values": [
+        {
+          "arg": "#0",
+          "expr": "AppSpacing.space4",
+          "tokenRef": "space4",
+          "kind": "tokenRef"
+        }
+      ],
+      "unit": "px",
+      "kind": "EdgeInsets.all",
+      "contextHint": [
+        "edgeInsets",
+        "appSpacingRef"
+      ]
+    },
+    {
+      "file": "lib/components/chips/app_chip.dart",
+      "line": 142,
+      "snippet": "SizedBox(width: isSm ? 4 : AppSpacing.space4),",
+      "values": [
+        {
+          "arg": "width",
+          "expr": "isSm ? 4 : AppSpacing.space4",
+          "tokenRefs": [
+            "space4"
+          ],
+          "kind": "expression-with-token"
+        }
+      ],
+      "unit": "px",
+      "kind": "SizedBox",
+      "contextHint": [
+        "sizedBox",
+        "appSpacingRef"
+      ]
+    },
+    {
+      "file": "lib/components/chips/app_chip.dart",
+      "line": 146,
+      "snippet": "SizedBox(width: isSm ? 4 : AppSpacing.space4),",
+      "values": [
+        {
+          "arg": "width",
+          "expr": "isSm ? 4 : AppSpacing.space4",
+          "tokenRefs": [
+            "space4"
+          ],
+          "kind": "expression-with-token"
+        }
+      ],
+      "unit": "px",
+      "kind": "SizedBox",
+      "contextHint": [
+        "sizedBox",
+        "appSpacingRef"
+      ]
+    },
+    {
+      "file": "lib/components/chips/app_chip.dart",
+      "line": 130,
+      "snippet": "horizontal: AppSpacing.space8, vertical: AppSpacing.space4)",
+      "values": [
+        {
+          "arg": null,
+          "expr": "AppSpacing.space8",
+          "tokenRef": "space8",
+          "kind": "tokenRef"
+        }
+      ],
+      "unit": "px",
+      "kind": "AppSpacingRef",
+      "contextHint": [
+        "appSpacingRef"
+      ]
+    },
+    {
+      "file": "lib/components/chips/app_chip.dart",
+      "line": 130,
+      "snippet": "horizontal: AppSpacing.space8, vertical: AppSpacing.space4)",
+      "values": [
+        {
+          "arg": null,
+          "expr": "AppSpacing.space4",
+          "tokenRef": "space4",
+          "kind": "tokenRef"
+        }
+      ],
+      "unit": "px",
+      "kind": "AppSpacingRef",
+      "contextHint": [
+        "appSpacingRef"
+      ]
+    },
+    {
+      "file": "lib/components/chips/app_chip.dart",
+      "line": 132,
+      "snippet": "horizontal: AppSpacing.space12, vertical: 6);",
+      "values": [
+        {
+          "arg": null,
+          "expr": "AppSpacing.space12",
+          "tokenRef": "space12",
+          "kind": "tokenRef"
+        }
+      ],
+      "unit": "px",
+      "kind": "AppSpacingRef",
+      "contextHint": [
+        "appSpacingRef"
+      ]
+    },
+    {
+      "file": "lib/components/chips/app_chip.dart",
+      "line": 142,
+      "snippet": "SizedBox(width: isSm ? 4 : AppSpacing.space4),",
+      "values": [
+        {
+          "arg": null,
+          "expr": "AppSpacing.space4",
+          "tokenRef": "space4",
+          "kind": "tokenRef"
+        }
+      ],
+      "unit": "px",
+      "kind": "AppSpacingRef",
+      "contextHint": [
+        "appSpacingRef"
+      ]
+    },
+    {
+      "file": "lib/components/chips/app_chip.dart",
+      "line": 146,
+      "snippet": "SizedBox(width: isSm ? 4 : AppSpacing.space4),",
+      "values": [
+        {
+          "arg": null,
+          "expr": "AppSpacing.space4",
+          "tokenRef": "space4",
+          "kind": "tokenRef"
+        }
+      ],
+      "unit": "px",
+      "kind": "AppSpacingRef",
+      "contextHint": [
+        "appSpacingRef"
+      ]
+    },
+    {
+      "file": "lib/components/chips/app_chip.dart",
+      "line": 157,
+      "snippet": "padding: const EdgeInsets.all(AppSpacing.space4),",
+      "values": [
+        {
+          "arg": null,
+          "expr": "AppSpacing.space4",
+          "tokenRef": "space4",
+          "kind": "tokenRef"
+        }
+      ],
+      "unit": "px",
+      "kind": "AppSpacingRef",
+      "contextHint": [
+        "appSpacingRef"
+      ]
+    },
+    {
+      "file": "lib/components/chips/app_chip_action.dart",
+      "line": 179,
+      "snippet": "padding: EdgeInsets.symmetric(horizontal: m.wrapperPadH),",
+      "values": [
+        {
+          "arg": "horizontal",
+          "expr": "m.wrapperPadH",
+          "kind": "non-numeric"
+        }
+      ],
+      "unit": "px",
+      "kind": "EdgeInsets.symmetric",
+      "contextHint": [
+        "edgeInsets"
+      ]
+    },
+    {
+      "file": "lib/components/chips/app_chip_action.dart",
+      "line": 193,
+      "snippet": "padding: EdgeInsets.symmetric(",
+      "values": [
+        {
+          "arg": "horizontal",
+          "expr": "m.padH",
+          "kind": "non-numeric"
+        }
+      ],
+      "unit": "px",
+      "kind": "EdgeInsets.symmetric",
+      "contextHint": [
+        "edgeInsets"
+      ]
+    },
+    {
+      "file": "lib/components/chips/app_chip_action.dart",
+      "line": 214,
+      "snippet": "? Padding(padding: EdgeInsets.all(tapBoost), child: material)",
+      "values": [
+        {
+          "arg": "#0",
+          "expr": "tapBoost",
+          "kind": "non-numeric"
+        }
+      ],
+      "unit": "px",
+      "kind": "EdgeInsets.all",
+      "contextHint": [
+        "edgeInsets",
+        "paddingWidget"
+      ]
+    },
+    {
+      "file": "lib/components/chips/app_chip_action.dart",
+      "line": 201,
+      "snippet": "if (i > 0) SizedBox(width: m.gap),",
+      "values": [
+        {
+          "arg": "width",
+          "expr": "m.gap",
+          "kind": "non-numeric"
+        }
+      ],
+      "unit": "px",
+      "kind": "SizedBox",
+      "contextHint": [
+        "sizedBox"
+      ]
+    },
+    {
+      "file": "lib/components/chips/app_chip_action.dart",
+      "line": 65,
+      "snippet": "gap: 2,",
+      "values": [
+        {
+          "arg": "gap",
+          "expr": "2",
+          "value": 2,
+          "kind": "literal"
+        }
+      ],
+      "unit": "px",
+      "kind": "PropLiteral:gap",
+      "contextHint": [
+        "rawPropLiteral"
+      ]
+    },
+    {
+      "file": "lib/components/chips/app_chip_action.dart",
+      "line": 75,
+      "snippet": "gap: 2,",
+      "values": [
+        {
+          "arg": "gap",
+          "expr": "2",
+          "value": 2,
+          "kind": "literal"
+        }
+      ],
+      "unit": "px",
+      "kind": "PropLiteral:gap",
+      "contextHint": [
+        "rawPropLiteral"
+      ]
+    },
+    {
+      "file": "lib/components/chips/app_chip_action.dart",
+      "line": 85,
+      "snippet": "gap: 3,",
+      "values": [
+        {
+          "arg": "gap",
+          "expr": "3",
+          "value": 3,
+          "kind": "literal"
+        }
+      ],
+      "unit": "px",
+      "kind": "PropLiteral:gap",
+      "contextHint": [
+        "rawPropLiteral"
+      ]
+    },
+    {
+      "file": "lib/components/chips/app_chip_action.dart",
+      "line": 95,
+      "snippet": "gap: 3,",
+      "values": [
+        {
+          "arg": "gap",
+          "expr": "3",
+          "value": 3,
+          "kind": "literal"
+        }
+      ],
+      "unit": "px",
+      "kind": "PropLiteral:gap",
+      "contextHint": [
+        "rawPropLiteral"
+      ]
+    },
+    {
+      "file": "lib/components/chips/app_chip_filter.dart",
+      "line": 199,
+      "snippet": "padding: EdgeInsets.symmetric(horizontal: m.wrapperPadH),",
+      "values": [
+        {
+          "arg": "horizontal",
+          "expr": "m.wrapperPadH",
+          "kind": "non-numeric"
+        }
+      ],
+      "unit": "px",
+      "kind": "EdgeInsets.symmetric",
+      "contextHint": [
+        "edgeInsets"
+      ]
+    },
+    {
+      "file": "lib/components/chips/app_chip_filter.dart",
+      "line": 223,
+      "snippet": "padding: EdgeInsets.only(",
+      "values": [
+        {
+          "arg": "left",
+          "expr": "m.padL",
+          "kind": "non-numeric"
+        },
+        {
+          "arg": "right",
+          "expr": "m.padR",
+          "kind": "non-numeric"
+        },
+        {
+          "arg": "top",
+          "expr": "m.padV",
+          "kind": "non-numeric"
+        }
+      ],
+      "unit": "px",
+      "kind": "EdgeInsets.only",
+      "contextHint": [
+        "edgeInsets"
+      ]
+    },
+    {
+      "file": "lib/components/chips/app_chip_filter.dart",
+      "line": 244,
+      "snippet": "? Padding(padding: EdgeInsets.all(tapBoost), child: material)",
+      "values": [
+        {
+          "arg": "#0",
+          "expr": "tapBoost",
+          "kind": "non-numeric"
+        }
+      ],
+      "unit": "px",
+      "kind": "EdgeInsets.all",
+      "contextHint": [
+        "edgeInsets",
+        "paddingWidget"
+      ]
+    },
+    {
+      "file": "lib/components/chips/app_chip_filter.dart",
+      "line": 203,
+      "snippet": "SizedBox(width: m.wrapperGap),",
+      "values": [
+        {
+          "arg": "width",
+          "expr": "m.wrapperGap",
+          "kind": "non-numeric"
+        }
+      ],
+      "unit": "px",
+      "kind": "SizedBox",
+      "contextHint": [
+        "sizedBox"
+      ]
+    },
+    {
+      "file": "lib/components/chips/app_chip_filter.dart",
+      "line": 233,
+      "snippet": "SizedBox(width: m.contentGap),",
+      "values": [
+        {
+          "arg": "width",
+          "expr": "m.contentGap",
+          "kind": "non-numeric"
+        }
+      ],
+      "unit": "px",
+      "kind": "SizedBox",
+      "contextHint": [
+        "sizedBox"
+      ]
+    },
+    {
+      "file": "lib/components/chips/app_mini_chip.dart",
+      "line": 34,
+      "snippet": "const EdgeInsets.symmetric(horizontal: 10, vertical: 6),",
+      "values": [
+        {
+          "arg": "horizontal",
+          "expr": "10",
+          "value": 10,
+          "kind": "literal"
+        },
+        {
+          "arg": "vertical",
+          "expr": "6",
+          "value": 6,
+          "kind": "literal"
+        }
+      ],
+      "unit": "px",
+      "kind": "EdgeInsets.symmetric",
+      "contextHint": [
+        "edgeInsets"
+      ]
+    },
+    {
+      "file": "lib/components/chips/app_mini_chip.dart",
+      "line": 41,
+      "snippet": "const EdgeInsets.symmetric(horizontal: 6, vertical: 2),",
+      "values": [
+        {
+          "arg": "horizontal",
+          "expr": "6",
+          "value": 6,
+          "kind": "literal"
+        },
+        {
+          "arg": "vertical",
+          "expr": "2",
+          "value": 2,
+          "kind": "literal"
+        }
+      ],
+      "unit": "px",
+      "kind": "EdgeInsets.symmetric",
+      "contextHint": [
+        "edgeInsets"
+      ]
+    },
+    {
+      "file": "lib/components/chips/chip_use_cases.dart",
+      "line": 399,
+      "snippet": "padding: const EdgeInsets.all(AppSpacing.space24),",
+      "values": [
+        {
+          "arg": "#0",
+          "expr": "AppSpacing.space24",
+          "tokenRef": "space24",
+          "kind": "tokenRef"
+        }
+      ],
+      "unit": "px",
+      "kind": "EdgeInsets.all",
+      "contextHint": [
+        "edgeInsets",
+        "appSpacingRef"
+      ]
+    },
+    {
+      "file": "lib/components/chips/chip_use_cases.dart",
+      "line": 30,
+      "snippet": "const SizedBox(height: AppSpacing.space8),",
+      "values": [
+        {
+          "arg": "height",
+          "expr": "AppSpacing.space8",
+          "tokenRef": "space8",
+          "kind": "tokenRef"
+        }
+      ],
+      "unit": "px",
+      "kind": "SizedBox",
+      "contextHint": [
+        "sizedBox",
+        "appSpacingRef"
+      ]
+    },
+    {
+      "file": "lib/components/chips/chip_use_cases.dart",
+      "line": 43,
+      "snippet": "const SizedBox(height: AppSpacing.space20),",
+      "values": [
+        {
+          "arg": "height",
+          "expr": "AppSpacing.space20",
+          "tokenRef": "space20",
+          "kind": "tokenRef"
+        }
+      ],
+      "unit": "px",
+      "kind": "SizedBox",
+      "contextHint": [
+        "sizedBox",
+        "appSpacingRef"
+      ]
+    },
+    {
+      "file": "lib/components/chips/chip_use_cases.dart",
+      "line": 128,
+      "snippet": "const SizedBox(height: AppSpacing.space8),",
+      "values": [
+        {
+          "arg": "height",
+          "expr": "AppSpacing.space8",
+          "tokenRef": "space8",
+          "kind": "tokenRef"
+        }
+      ],
+      "unit": "px",
+      "kind": "SizedBox",
+      "contextHint": [
+        "sizedBox",
+        "appSpacingRef"
+      ]
+    },
+    {
+      "file": "lib/components/chips/chip_use_cases.dart",
+      "line": 142,
+      "snippet": "const SizedBox(height: AppSpacing.space20),",
+      "values": [
+        {
+          "arg": "height",
+          "expr": "AppSpacing.space20",
+          "tokenRef": "space20",
+          "kind": "tokenRef"
+        }
+      ],
+      "unit": "px",
+      "kind": "SizedBox",
+      "contextHint": [
+        "sizedBox",
+        "appSpacingRef"
+      ]
+    },
+    {
+      "file": "lib/components/chips/chip_use_cases.dart",
+      "line": 159,
+      "snippet": "const SizedBox(height: AppSpacing.space8),",
+      "values": [
+        {
+          "arg": "height",
+          "expr": "AppSpacing.space8",
+          "tokenRef": "space8",
+          "kind": "tokenRef"
+        }
+      ],
+      "unit": "px",
+      "kind": "SizedBox",
+      "contextHint": [
+        "sizedBox",
+        "appSpacingRef"
+      ]
+    },
+    {
+      "file": "lib/components/chips/chip_use_cases.dart",
+      "line": 174,
+      "snippet": "const SizedBox(height: AppSpacing.space20),",
+      "values": [
+        {
+          "arg": "height",
+          "expr": "AppSpacing.space20",
+          "tokenRef": "space20",
+          "kind": "tokenRef"
+        }
+      ],
+      "unit": "px",
+      "kind": "SizedBox",
+      "contextHint": [
+        "sizedBox",
+        "appSpacingRef"
+      ]
+    },
+    {
+      "file": "lib/components/chips/chip_use_cases.dart",
+      "line": 191,
+      "snippet": "const SizedBox(height: AppSpacing.space8),",
+      "values": [
+        {
+          "arg": "height",
+          "expr": "AppSpacing.space8",
+          "tokenRef": "space8",
+          "kind": "tokenRef"
+        }
+      ],
+      "unit": "px",
+      "kind": "SizedBox",
+      "contextHint": [
+        "sizedBox",
+        "appSpacingRef"
+      ]
+    },
+    {
+      "file": "lib/components/chips/chip_use_cases.dart",
+      "line": 205,
+      "snippet": "const SizedBox(height: AppSpacing.space20),",
+      "values": [
+        {
+          "arg": "height",
+          "expr": "AppSpacing.space20",
+          "tokenRef": "space20",
+          "kind": "tokenRef"
+        }
+      ],
+      "unit": "px",
+      "kind": "SizedBox",
+      "contextHint": [
+        "sizedBox",
+        "appSpacingRef"
+      ]
+    },
+    {
+      "file": "lib/components/chips/chip_use_cases.dart",
+      "line": 273,
+      "snippet": "const SizedBox(height: AppSpacing.space8),",
+      "values": [
+        {
+          "arg": "height",
+          "expr": "AppSpacing.space8",
+          "tokenRef": "space8",
+          "kind": "tokenRef"
+        }
+      ],
+      "unit": "px",
+      "kind": "SizedBox",
+      "contextHint": [
+        "sizedBox",
+        "appSpacingRef"
+      ]
+    },
+    {
+      "file": "lib/components/chips/chip_use_cases.dart",
+      "line": 287,
+      "snippet": "const SizedBox(height: AppSpacing.space20),",
+      "values": [
+        {
+          "arg": "height",
+          "expr": "AppSpacing.space20",
+          "tokenRef": "space20",
+          "kind": "tokenRef"
+        }
+      ],
+      "unit": "px",
+      "kind": "SizedBox",
+      "contextHint": [
+        "sizedBox",
+        "appSpacingRef"
+      ]
+    },
+    {
+      "file": "lib/components/chips/chip_use_cases.dart",
+      "line": 304,
+      "snippet": "const SizedBox(height: AppSpacing.space8),",
+      "values": [
+        {
+          "arg": "height",
+          "expr": "AppSpacing.space8",
+          "tokenRef": "space8",
+          "kind": "tokenRef"
+        }
+      ],
+      "unit": "px",
+      "kind": "SizedBox",
+      "contextHint": [
+        "sizedBox",
+        "appSpacingRef"
+      ]
+    },
+    {
+      "file": "lib/components/chips/chip_use_cases.dart",
+      "line": 320,
+      "snippet": "const SizedBox(height: AppSpacing.space20),",
+      "values": [
+        {
+          "arg": "height",
+          "expr": "AppSpacing.space20",
+          "tokenRef": "space20",
+          "kind": "tokenRef"
+        }
+      ],
+      "unit": "px",
+      "kind": "SizedBox",
+      "contextHint": [
+        "sizedBox",
+        "appSpacingRef"
+      ]
+    },
+    {
+      "file": "lib/components/chips/chip_use_cases.dart",
+      "line": 356,
+      "snippet": "const SizedBox(height: AppSpacing.space8),",
+      "values": [
+        {
+          "arg": "height",
+          "expr": "AppSpacing.space8",
+          "tokenRef": "space8",
+          "kind": "tokenRef"
+        }
+      ],
+      "unit": "px",
+      "kind": "SizedBox",
+      "contextHint": [
+        "sizedBox",
+        "appSpacingRef"
+      ]
+    },
+    {
+      "file": "lib/components/chips/chip_use_cases.dart",
+      "line": 370,
+      "snippet": "const SizedBox(height: AppSpacing.space20),",
+      "values": [
+        {
+          "arg": "height",
+          "expr": "AppSpacing.space20",
+          "tokenRef": "space20",
+          "kind": "tokenRef"
+        }
+      ],
+      "unit": "px",
+      "kind": "SizedBox",
+      "contextHint": [
+        "sizedBox",
+        "appSpacingRef"
+      ]
+    },
+    {
+      "file": "lib/components/chips/chip_use_cases.dart",
+      "line": 30,
+      "snippet": "const SizedBox(height: AppSpacing.space8),",
+      "values": [
+        {
+          "arg": null,
+          "expr": "AppSpacing.space8",
+          "tokenRef": "space8",
+          "kind": "tokenRef"
+        }
+      ],
+      "unit": "px",
+      "kind": "AppSpacingRef",
+      "contextHint": [
+        "appSpacingRef"
+      ]
+    },
+    {
+      "file": "lib/components/chips/chip_use_cases.dart",
+      "line": 32,
+      "snippet": "spacing: AppSpacing.space8,",
+      "values": [
+        {
+          "arg": null,
+          "expr": "AppSpacing.space8",
+          "tokenRef": "space8",
+          "kind": "tokenRef"
+        }
+      ],
+      "unit": "px",
+      "kind": "AppSpacingRef",
+      "contextHint": [
+        "appSpacingRef"
+      ]
+    },
+    {
+      "file": "lib/components/chips/chip_use_cases.dart",
+      "line": 33,
+      "snippet": "runSpacing: AppSpacing.space8,",
+      "values": [
+        {
+          "arg": null,
+          "expr": "AppSpacing.space8",
+          "tokenRef": "space8",
+          "kind": "tokenRef"
+        }
+      ],
+      "unit": "px",
+      "kind": "AppSpacingRef",
+      "contextHint": [
+        "appSpacingRef"
+      ]
+    },
+    {
+      "file": "lib/components/chips/chip_use_cases.dart",
+      "line": 43,
+      "snippet": "const SizedBox(height: AppSpacing.space20),",
+      "values": [
+        {
+          "arg": null,
+          "expr": "AppSpacing.space20",
+          "tokenRef": "space20",
+          "kind": "tokenRef"
+        }
+      ],
+      "unit": "px",
+      "kind": "AppSpacingRef",
+      "contextHint": [
+        "appSpacingRef"
+      ]
+    },
+    {
+      "file": "lib/components/chips/chip_use_cases.dart",
+      "line": 54,
+      "snippet": "spacing: AppSpacing.space8,",
+      "values": [
+        {
+          "arg": null,
+          "expr": "AppSpacing.space8",
+          "tokenRef": "space8",
+          "kind": "tokenRef"
+        }
+      ],
+      "unit": "px",
+      "kind": "AppSpacingRef",
+      "contextHint": [
+        "appSpacingRef"
+      ]
+    },
+    {
+      "file": "lib/components/chips/chip_use_cases.dart",
+      "line": 55,
+      "snippet": "runSpacing: AppSpacing.space8,",
+      "values": [
+        {
+          "arg": null,
+          "expr": "AppSpacing.space8",
+          "tokenRef": "space8",
+          "kind": "tokenRef"
+        }
+      ],
+      "unit": "px",
+      "kind": "AppSpacingRef",
+      "contextHint": [
+        "appSpacingRef"
+      ]
+    },
+    {
+      "file": "lib/components/chips/chip_use_cases.dart",
+      "line": 82,
+      "snippet": "spacing: AppSpacing.space8,",
+      "values": [
+        {
+          "arg": null,
+          "expr": "AppSpacing.space8",
+          "tokenRef": "space8",
+          "kind": "tokenRef"
+        }
+      ],
+      "unit": "px",
+      "kind": "AppSpacingRef",
+      "contextHint": [
+        "appSpacingRef"
+      ]
+    },
+    {
+      "file": "lib/components/chips/chip_use_cases.dart",
+      "line": 83,
+      "snippet": "runSpacing: AppSpacing.space8,",
+      "values": [
+        {
+          "arg": null,
+          "expr": "AppSpacing.space8",
+          "tokenRef": "space8",
+          "kind": "tokenRef"
+        }
+      ],
+      "unit": "px",
+      "kind": "AppSpacingRef",
+      "contextHint": [
+        "appSpacingRef"
+      ]
+    },
+    {
+      "file": "lib/components/chips/chip_use_cases.dart",
+      "line": 128,
+      "snippet": "const SizedBox(height: AppSpacing.space8),",
+      "values": [
+        {
+          "arg": null,
+          "expr": "AppSpacing.space8",
+          "tokenRef": "space8",
+          "kind": "tokenRef"
+        }
+      ],
+      "unit": "px",
+      "kind": "AppSpacingRef",
+      "contextHint": [
+        "appSpacingRef"
+      ]
+    },
+    {
+      "file": "lib/components/chips/chip_use_cases.dart",
+      "line": 130,
+      "snippet": "spacing: AppSpacing.space12,",
+      "values": [
+        {
+          "arg": null,
+          "expr": "AppSpacing.space12",
+          "tokenRef": "space12",
+          "kind": "tokenRef"
+        }
+      ],
+      "unit": "px",
+      "kind": "AppSpacingRef",
+      "contextHint": [
+        "appSpacingRef"
+      ]
+    },
+    {
+      "file": "lib/components/chips/chip_use_cases.dart",
+      "line": 131,
+      "snippet": "runSpacing: AppSpacing.space12,",
+      "values": [
+        {
+          "arg": null,
+          "expr": "AppSpacing.space12",
+          "tokenRef": "space12",
+          "kind": "tokenRef"
+        }
+      ],
+      "unit": "px",
+      "kind": "AppSpacingRef",
+      "contextHint": [
+        "appSpacingRef"
+      ]
+    },
+    {
+      "file": "lib/components/chips/chip_use_cases.dart",
+      "line": 142,
+      "snippet": "const SizedBox(height: AppSpacing.space20),",
+      "values": [
+        {
+          "arg": null,
+          "expr": "AppSpacing.space20",
+          "tokenRef": "space20",
+          "kind": "tokenRef"
+        }
+      ],
+      "unit": "px",
+      "kind": "AppSpacingRef",
+      "contextHint": [
+        "appSpacingRef"
+      ]
+    },
+    {
+      "file": "lib/components/chips/chip_use_cases.dart",
+      "line": 159,
+      "snippet": "const SizedBox(height: AppSpacing.space8),",
+      "values": [
+        {
+          "arg": null,
+          "expr": "AppSpacing.space8",
+          "tokenRef": "space8",
+          "kind": "tokenRef"
+        }
+      ],
+      "unit": "px",
+      "kind": "AppSpacingRef",
+      "contextHint": [
+        "appSpacingRef"
+      ]
+    },
+    {
+      "file": "lib/components/chips/chip_use_cases.dart",
+      "line": 161,
+      "snippet": "spacing: AppSpacing.space12,",
+      "values": [
+        {
+          "arg": null,
+          "expr": "AppSpacing.space12",
+          "tokenRef": "space12",
+          "kind": "tokenRef"
+        }
+      ],
+      "unit": "px",
+      "kind": "AppSpacingRef",
+      "contextHint": [
+        "appSpacingRef"
+      ]
+    },
+    {
+      "file": "lib/components/chips/chip_use_cases.dart",
+      "line": 162,
+      "snippet": "runSpacing: AppSpacing.space12,",
+      "values": [
+        {
+          "arg": null,
+          "expr": "AppSpacing.space12",
+          "tokenRef": "space12",
+          "kind": "tokenRef"
+        }
+      ],
+      "unit": "px",
+      "kind": "AppSpacingRef",
+      "contextHint": [
+        "appSpacingRef"
+      ]
+    },
+    {
+      "file": "lib/components/chips/chip_use_cases.dart",
+      "line": 174,
+      "snippet": "const SizedBox(height: AppSpacing.space20),",
+      "values": [
+        {
+          "arg": null,
+          "expr": "AppSpacing.space20",
+          "tokenRef": "space20",
+          "kind": "tokenRef"
+        }
+      ],
+      "unit": "px",
+      "kind": "AppSpacingRef",
+      "contextHint": [
+        "appSpacingRef"
+      ]
+    },
+    {
+      "file": "lib/components/chips/chip_use_cases.dart",
+      "line": 191,
+      "snippet": "const SizedBox(height: AppSpacing.space8),",
+      "values": [
+        {
+          "arg": null,
+          "expr": "AppSpacing.space8",
+          "tokenRef": "space8",
+          "kind": "tokenRef"
+        }
+      ],
+      "unit": "px",
+      "kind": "AppSpacingRef",
+      "contextHint": [
+        "appSpacingRef"
+      ]
+    },
+    {
+      "file": "lib/components/chips/chip_use_cases.dart",
+      "line": 193,
+      "snippet": "spacing: AppSpacing.space12,",
+      "values": [
+        {
+          "arg": null,
+          "expr": "AppSpacing.space12",
+          "tokenRef": "space12",
+          "kind": "tokenRef"
+        }
+      ],
+      "unit": "px",
+      "kind": "AppSpacingRef",
+      "contextHint": [
+        "appSpacingRef"
+      ]
+    },
+    {
+      "file": "lib/components/chips/chip_use_cases.dart",
+      "line": 194,
+      "snippet": "runSpacing: AppSpacing.space12,",
+      "values": [
+        {
+          "arg": null,
+          "expr": "AppSpacing.space12",
+          "tokenRef": "space12",
+          "kind": "tokenRef"
+        }
+      ],
+      "unit": "px",
+      "kind": "AppSpacingRef",
+      "contextHint": [
+        "appSpacingRef"
+      ]
+    },
+    {
+      "file": "lib/components/chips/chip_use_cases.dart",
+      "line": 205,
+      "snippet": "const SizedBox(height: AppSpacing.space20),",
+      "values": [
+        {
+          "arg": null,
+          "expr": "AppSpacing.space20",
+          "tokenRef": "space20",
+          "kind": "tokenRef"
+        }
+      ],
+      "unit": "px",
+      "kind": "AppSpacingRef",
+      "contextHint": [
+        "appSpacingRef"
+      ]
+    },
+    {
+      "file": "lib/components/chips/chip_use_cases.dart",
+      "line": 216,
+      "snippet": "spacing: AppSpacing.space12,",
+      "values": [
+        {
+          "arg": null,
+          "expr": "AppSpacing.space12",
+          "tokenRef": "space12",
+          "kind": "tokenRef"
+        }
+      ],
+      "unit": "px",
+      "kind": "AppSpacingRef",
+      "contextHint": [
+        "appSpacingRef"
+      ]
+    },
+    {
+      "file": "lib/components/chips/chip_use_cases.dart",
+      "line": 217,
+      "snippet": "runSpacing: AppSpacing.space12,",
+      "values": [
+        {
+          "arg": null,
+          "expr": "AppSpacing.space12",
+          "tokenRef": "space12",
+          "kind": "tokenRef"
+        }
+      ],
+      "unit": "px",
+      "kind": "AppSpacingRef",
+      "contextHint": [
+        "appSpacingRef"
+      ]
+    },
+    {
+      "file": "lib/components/chips/chip_use_cases.dart",
+      "line": 273,
+      "snippet": "const SizedBox(height: AppSpacing.space8),",
+      "values": [
+        {
+          "arg": null,
+          "expr": "AppSpacing.space8",
+          "tokenRef": "space8",
+          "kind": "tokenRef"
+        }
+      ],
+      "unit": "px",
+      "kind": "AppSpacingRef",
+      "contextHint": [
+        "appSpacingRef"
+      ]
+    },
+    {
+      "file": "lib/components/chips/chip_use_cases.dart",
+      "line": 275,
+      "snippet": "spacing: AppSpacing.space12,",
+      "values": [
+        {
+          "arg": null,
+          "expr": "AppSpacing.space12",
+          "tokenRef": "space12",
+          "kind": "tokenRef"
+        }
+      ],
+      "unit": "px",
+      "kind": "AppSpacingRef",
+      "contextHint": [
+        "appSpacingRef"
+      ]
+    },
+    {
+      "file": "lib/components/chips/chip_use_cases.dart",
+      "line": 276,
+      "snippet": "runSpacing: AppSpacing.space12,",
+      "values": [
+        {
+          "arg": null,
+          "expr": "AppSpacing.space12",
+          "tokenRef": "space12",
+          "kind": "tokenRef"
+        }
+      ],
+      "unit": "px",
+      "kind": "AppSpacingRef",
+      "contextHint": [
+        "appSpacingRef"
+      ]
+    },
+    {
+      "file": "lib/components/chips/chip_use_cases.dart",
+      "line": 287,
+      "snippet": "const SizedBox(height: AppSpacing.space20),",
+      "values": [
+        {
+          "arg": null,
+          "expr": "AppSpacing.space20",
+          "tokenRef": "space20",
+          "kind": "tokenRef"
+        }
+      ],
+      "unit": "px",
+      "kind": "AppSpacingRef",
+      "contextHint": [
+        "appSpacingRef"
+      ]
+    },
+    {
+      "file": "lib/components/chips/chip_use_cases.dart",
+      "line": 304,
+      "snippet": "const SizedBox(height: AppSpacing.space8),",
+      "values": [
+        {
+          "arg": null,
+          "expr": "AppSpacing.space8",
+          "tokenRef": "space8",
+          "kind": "tokenRef"
+        }
+      ],
+      "unit": "px",
+      "kind": "AppSpacingRef",
+      "contextHint": [
+        "appSpacingRef"
+      ]
+    },
+    {
+      "file": "lib/components/chips/chip_use_cases.dart",
+      "line": 306,
+      "snippet": "spacing: AppSpacing.space12,",
+      "values": [
+        {
+          "arg": null,
+          "expr": "AppSpacing.space12",
+          "tokenRef": "space12",
+          "kind": "tokenRef"
+        }
+      ],
+      "unit": "px",
+      "kind": "AppSpacingRef",
+      "contextHint": [
+        "appSpacingRef"
+      ]
+    },
+    {
+      "file": "lib/components/chips/chip_use_cases.dart",
+      "line": 307,
+      "snippet": "runSpacing: AppSpacing.space12,",
+      "values": [
+        {
+          "arg": null,
+          "expr": "AppSpacing.space12",
+          "tokenRef": "space12",
+          "kind": "tokenRef"
+        }
+      ],
+      "unit": "px",
+      "kind": "AppSpacingRef",
+      "contextHint": [
+        "appSpacingRef"
+      ]
+    },
+    {
+      "file": "lib/components/chips/chip_use_cases.dart",
+      "line": 320,
+      "snippet": "const SizedBox(height: AppSpacing.space20),",
+      "values": [
+        {
+          "arg": null,
+          "expr": "AppSpacing.space20",
+          "tokenRef": "space20",
+          "kind": "tokenRef"
+        }
+      ],
+      "unit": "px",
+      "kind": "AppSpacingRef",
+      "contextHint": [
+        "appSpacingRef"
+      ]
+    },
+    {
+      "file": "lib/components/chips/chip_use_cases.dart",
+      "line": 331,
+      "snippet": "spacing: AppSpacing.space12,",
+      "values": [
+        {
+          "arg": null,
+          "expr": "AppSpacing.space12",
+          "tokenRef": "space12",
+          "kind": "tokenRef"
+        }
+      ],
+      "unit": "px",
+      "kind": "AppSpacingRef",
+      "contextHint": [
+        "appSpacingRef"
+      ]
+    },
+    {
+      "file": "lib/components/chips/chip_use_cases.dart",
+      "line": 332,
+      "snippet": "runSpacing: AppSpacing.space12,",
+      "values": [
+        {
+          "arg": null,
+          "expr": "AppSpacing.space12",
+          "tokenRef": "space12",
+          "kind": "tokenRef"
+        }
+      ],
+      "unit": "px",
+      "kind": "AppSpacingRef",
+      "contextHint": [
+        "appSpacingRef"
+      ]
+    },
+    {
+      "file": "lib/components/chips/chip_use_cases.dart",
+      "line": 356,
+      "snippet": "const SizedBox(height: AppSpacing.space8),",
+      "values": [
+        {
+          "arg": null,
+          "expr": "AppSpacing.space8",
+          "tokenRef": "space8",
+          "kind": "tokenRef"
+        }
+      ],
+      "unit": "px",
+      "kind": "AppSpacingRef",
+      "contextHint": [
+        "appSpacingRef"
+      ]
+    },
+    {
+      "file": "lib/components/chips/chip_use_cases.dart",
+      "line": 358,
+      "snippet": "spacing: AppSpacing.space12,",
+      "values": [
+        {
+          "arg": null,
+          "expr": "AppSpacing.space12",
+          "tokenRef": "space12",
+          "kind": "tokenRef"
+        }
+      ],
+      "unit": "px",
+      "kind": "AppSpacingRef",
+      "contextHint": [
+        "appSpacingRef"
+      ]
+    },
+    {
+      "file": "lib/components/chips/chip_use_cases.dart",
+      "line": 359,
+      "snippet": "runSpacing: AppSpacing.space12,",
+      "values": [
+        {
+          "arg": null,
+          "expr": "AppSpacing.space12",
+          "tokenRef": "space12",
+          "kind": "tokenRef"
+        }
+      ],
+      "unit": "px",
+      "kind": "AppSpacingRef",
+      "contextHint": [
+        "appSpacingRef"
+      ]
+    },
+    {
+      "file": "lib/components/chips/chip_use_cases.dart",
+      "line": 370,
+      "snippet": "const SizedBox(height: AppSpacing.space20),",
+      "values": [
+        {
+          "arg": null,
+          "expr": "AppSpacing.space20",
+          "tokenRef": "space20",
+          "kind": "tokenRef"
+        }
+      ],
+      "unit": "px",
+      "kind": "AppSpacingRef",
+      "contextHint": [
+        "appSpacingRef"
+      ]
+    },
+    {
+      "file": "lib/components/chips/chip_use_cases.dart",
+      "line": 399,
+      "snippet": "padding: const EdgeInsets.all(AppSpacing.space24),",
+      "values": [
+        {
+          "arg": null,
+          "expr": "AppSpacing.space24",
+          "tokenRef": "space24",
+          "kind": "tokenRef"
+        }
+      ],
+      "unit": "px",
+      "kind": "AppSpacingRef",
+      "contextHint": [
+        "appSpacingRef"
+      ]
+    }
+  ],
+  "_summary": {
+    "dir": "chips",
+    "fileCount": 5,
+    "totalUsages": 78,
+    "distinctValues": [
+      2,
+      3,
+      6,
+      10
+    ],
+    "valueFrequency": {
+      "2": 3,
+      "6": 3,
+      "3": 2,
+      "10": 1
+    },
+    "tokenRefFrequency": {
+      "space8": 22,
+      "space12": 18,
+      "space20": 14,
+      "space4": 6,
+      "space24": 2
+    },
+    "suspiciousItems": [
+      {
+        "file": "lib/components/chips/app_chip.dart",
+        "line": 131,
+        "kind": "EdgeInsets.symmetric",
+        "value": 6,
+        "reason": "off-scale literal",
+        "snippet": ": const EdgeInsets.symmetric("
+      },
+      {
+        "file": "lib/components/chips/app_chip_action.dart",
+        "line": 65,
+        "kind": "PropLiteral:gap",
+        "value": 2,
+        "reason": "off-scale literal",
+        "snippet": "gap: 2,"
+      },
+      {
+        "file": "lib/components/chips/app_chip_action.dart",
+        "line": 75,
+        "kind": "PropLiteral:gap",
+        "value": 2,
+        "reason": "off-scale literal",
+        "snippet": "gap: 2,"
+      },
+      {
+        "file": "lib/components/chips/app_chip_action.dart",
+        "line": 85,
+        "kind": "PropLiteral:gap",
+        "value": 3,
+        "reason": "off-scale literal",
+        "snippet": "gap: 3,"
+      },
+      {
+        "file": "lib/components/chips/app_chip_action.dart",
+        "line": 95,
+        "kind": "PropLiteral:gap",
+        "value": 3,
+        "reason": "off-scale literal",
+        "snippet": "gap: 3,"
+      },
+      {
+        "file": "lib/components/chips/app_mini_chip.dart",
+        "line": 34,
+        "kind": "EdgeInsets.symmetric",
+        "value": 10,
+        "reason": "off-scale literal",
+        "snippet": "const EdgeInsets.symmetric(horizontal: 10, vertical: 6),"
+      },
+      {
+        "file": "lib/components/chips/app_mini_chip.dart",
+        "line": 34,
+        "kind": "EdgeInsets.symmetric",
+        "value": 6,
+        "reason": "off-scale literal",
+        "snippet": "const EdgeInsets.symmetric(horizontal: 10, vertical: 6),"
+      },
+      {
+        "file": "lib/components/chips/app_mini_chip.dart",
+        "line": 41,
+        "kind": "EdgeInsets.symmetric",
+        "value": 6,
+        "reason": "off-scale literal",
+        "snippet": "const EdgeInsets.symmetric(horizontal: 6, vertical: 2),"
+      },
+      {
+        "file": "lib/components/chips/app_mini_chip.dart",
+        "line": 41,
+        "kind": "EdgeInsets.symmetric",
+        "value": 2,
+        "reason": "off-scale literal",
+        "snippet": "const EdgeInsets.symmetric(horizontal: 6, vertical: 2),"
+      }
+    ],
+    "suspiciousCount": 9
+  }
+}
