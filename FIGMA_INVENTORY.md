@@ -38,6 +38,9 @@ _(없음)_
 ### Frames (Screens)
 _(없음)_
 
+### Sections (그룹핑)
+- [ ] `2643:8532` 디자인용 🎨 컴포넌트 _(top-level section, empty)_
+
 ---
 
 ## 🗂️ 피그마 파일관리 규칙
@@ -115,6 +118,11 @@ _(없음)_
 ### Frames (Screens)
 _(없음)_
 
+### Sections (그룹핑)
+- [ ] `2485:8904` Spacing _(top-level section)_
+  - `2485:8908` Safe Area (SECTION, depth 1) → 프레임 `2485:8909` Title
+  - `3032:20131` Layout (SECTION, depth 1) → 프레임 `3032:20132` Title, `3049:35386` Container
+
 ---
 
 ## 🎨 Colors
@@ -128,6 +136,12 @@ _(없음)_
 
 ### Frames (Screens)
 - [ ] `2414:31412` Color
+
+### Sections (그룹핑)
+- [ ] `2466:74694` Palette _(top-level section)_ → 프레임 `2414:11942` Token, `2414:13298` Definition
+- [ ] `2466:74695` Semantic _(top-level section)_
+  - `2414:14077` Dark (SECTION, depth 1) → 프레임 `2414:14078` Theme, `2414:21118` Example, `2414:22061` Token
+  - `2414:22735` Light (SECTION, depth 1) → 프레임 `2414:22736` Theme, `2414:29757` Example, `2414:30739` Token
 
 ---
 
@@ -445,6 +459,9 @@ _(없음)_
 ### Frames (Screens)
 _(없음)_
 
+### Sections (그룹핑)
+- [ ] `2546:166599` _(unnamed top-level section)_ — 내부에 unnamed 중첩 섹션 + 다수 unnamed 쇼케이스 프레임
+
 ---
 
 ## 📏 Ratio
@@ -582,6 +599,10 @@ _(빈 페이지 — 사이드바 섹션 구분용)_
 - [ ] `2956:189961` Background
 - [ ] `2956:190155` Normal
 
+### Sections (그룹핑)
+- [ ] `2563:336805` 6 Navigation _(top-level section)_
+  - 다수 중첩 unnamed 섹션. 명명된 프레임: `3172:55086` Contents (depth 4), `2452:3467` Content (depth 2), `2452:3474` Component (depth 2)
+
 ---
 
 ## 📑 Tab
@@ -608,6 +629,11 @@ _(없음)_
 ### Frames (Screens)
 _(없음)_
 
+### Sections (그룹핑)
+- [ ] `2581:192649` Tab _(top-level section)_ — unnamed 중첩 섹션 + 쇼케이스 프레임
+- [ ] `2581:192733` Category _(top-level section)_ — unnamed 중첩 섹션 + 쇼케이스 프레임
+- [ ] `2581:192826` Segmented Control _(top-level section)_ — unnamed 중첩 섹션 + 쇼케이스 프레임
+
 ---
 
 ## 🔢 Pagination
@@ -630,6 +656,9 @@ _(없음)_
 ### Frames (Screens)
 _(없음)_
 
+### Sections (그룹핑)
+- [ ] `2581:196855` _(unnamed top-level section)_ — 내부 명명된 프레임: `2581:199846` Content (depth 2)
+
 ---
 
 ## ⏳ Progress Indicators
@@ -651,6 +680,9 @@ _(없음)_
 
 ### Frames (Screens)
 _(없음)_
+
+### Sections (그룹핑)
+- [ ] `2563:386143` _(unnamed top-level section)_ — 내부 명명된 프레임: `2563:388583` Component, `2563:388589` Component (둘 다 depth 4)
 
 ---
 
@@ -699,6 +731,9 @@ _(없음)_
 
 ### Frames (Screens)
 _(없음)_
+
+### Sections (그룹핑)
+- [ ] `2523:151595` 3 Selection and Input _(top-level section)_ — 깊게 중첩된 unnamed 섹션 트리(Time Picker / Date Picker / Textinput / Select / Searchinput / Input / Control / Switch / Slider 카테고리). 모두 unnamed.
 
 ---
 
@@ -754,6 +789,9 @@ _(없음)_
 ### Frames (Screens)
 _(없음)_
 
+### Sections (그룹핑)
+- [ ] `2546:37269` 7 Feedback _(top-level section)_ — unnamed 중첩 섹션 트리(Push Badge / Toast / Snackbar / Section Message / Tooltip / Alert / Empty State 그룹). 모두 unnamed.
+
 ---
 
 ## 📣 Presentation
@@ -793,6 +831,9 @@ _(없음)_
 
 ### Frames (Screens)
 _(없음)_
+
+### Sections (그룹핑)
+- [ ] `2546:93584` Presentation _(top-level section)_ — 내부 쇼케이스 프레임/섹션 (대부분 unnamed)
 
 ---
 
@@ -870,6 +911,17 @@ _(없음)_
 ### Frames (Screens)
 _(없음)_
 
+### Sections (그룹핑)
+- [ ] `2573:406726` 4 Content _(top-level section)_ — 내부 명명된 프레임:
+  - `2578:185053` Item List (depth 1)
+  - `3149:22019` Item List (depth 1)
+  - `2578:185133` Community List (depth 1)
+  - `3052:68307` Community List (depth 1)
+  - `3237:16833` Recipe/Timmer (depth 1)
+  - `3388:16710` Recipe/Timmer (depth 1)
+  - `2593:63404` Component (depth 3)
+  - `2573:410155` Frame (depth 5)
+
 ---
 
 ## ------------------------------- (구분선)
@@ -891,6 +943,9 @@ _(없음)_
 ### Frames (Screens)
 - [ ] `2556:146381` Logo
 
+### Sections (그룹핑)
+- [ ] `2556:146417` 시안 _(top-level section)_ → 프레임 `2556:146418` Frame 7
+
 ---
 
 ## 📊 총 카운트
@@ -901,60 +956,60 @@ _(없음)_
 | 단일 Components | 55 |
 | Component Sets | 378 |
 | 최상위 Frames (Screens) | 25 |
+| 최상위 Sections (그룹핑) | 16 |
 
 ### 페이지별 카운트
 
-| Page | Components | ComponentSets | Frames |
-|---|---:|---:|---:|
-| 📺 Thumbnail | 0 | 0 | 1 |
-| ⚙️ Components | 3 | 4 | 0 |
-| 🗂️ 피그마 파일관리 규칙 | 0 | 1 | 0 |
-| ----------- | 0 | 0 | 0 |
-| 🏷️ Logo | 2 | 3 | 1 |
-| 🛠️ Foundation | 0 | 0 | 0 |
-| 🔠 Typography | 0 | 1 | 4 |
-| 📐 Space | 1 | 2 | 0 |
-| 🎨 Colors | 0 | 1 | 1 |
-| 🌈 Gradient | 1 | 5 | 1 |
-| 💅 Decorate | 0 | 7 | 1 |
-| 🔘 Icon | 0 | 160 | 1 |
-| 🎨 Image | 0 | 0 | 0 |
-| 3️⃣ 3D Illustration | 2 | 2 | 1 |
-| ☕️ Product | 1 | 0 | 1 |
-| --- | 0 | 0 | 0 |
-| 🧩 Components | 0 | 0 | 0 |
-| ⏹️ Button | 1 | 26 | 1 |
-| 🍪 Chip | 0 | 2 | 0 |
-| 📏 Ratio | 0 | 2 | 1 |
-| 🖼️ Thumbnail | 0 | 2 | 1 |
-| 🖱️ Scroll | 0 | 1 | 1 |
-| 👤 Avatar | 0 | 9 | 2 |
-| 💡 Indicators | 1 | 1 | 1 |
-| ➗ Divider | 0 | 1 | 1 |
-| ----------------- | 0 | 0 | 0 |
-| ⚙️ Molecular | 0 | 0 | 0 |
-| 🧭 Navigation | 6 | 9 | 2 |
-| 📑 Tab | 0 | 13 | 0 |
-| 🔢 Pagination | 0 | 9 | 0 |
-| ⏳ Progress Indicators | 1 | 9 | 0 |
-| ☑️ Selection and 📝 Input | 1 | 35 | 0 |
-| 🕹️ Control Box | 0 | 3 | 1 |
-| 🌡️ Gauge | 0 | 1 | 1 |
-| 🪞 Feedback | 1 | 11 | 0 |
-| 📣 Presentation | 9 | 19 | 0 |
-| 📑 Contents | 25 | 39 | 0 |
-| ------------------------------- | 0 | 0 | 0 |
-| Archive | 0 | 0 | 1 |
-| **합계** | **55** | **378** | **25** |
+| Page | Components | ComponentSets | Frames | Sections |
+|---|---:|---:|---:|---:|
+| 📺 Thumbnail | 0 | 0 | 1 | 0 |
+| ⚙️ Components | 3 | 4 | 0 | 1 |
+| 🗂️ 피그마 파일관리 규칙 | 0 | 1 | 0 | 0 |
+| ----------- | 0 | 0 | 0 | 0 |
+| 🏷️ Logo | 2 | 3 | 1 | 0 |
+| 🛠️ Foundation | 0 | 0 | 0 | 0 |
+| 🔠 Typography | 0 | 1 | 4 | 0 |
+| 📐 Space | 1 | 2 | 0 | 1 |
+| 🎨 Colors | 0 | 1 | 1 | 2 |
+| 🌈 Gradient | 1 | 5 | 1 | 0 |
+| 💅 Decorate | 0 | 7 | 1 | 0 |
+| 🔘 Icon | 0 | 160 | 1 | 0 |
+| 🎨 Image | 0 | 0 | 0 | 0 |
+| 3️⃣ 3D Illustration | 2 | 2 | 1 | 0 |
+| ☕️ Product | 1 | 0 | 1 | 0 |
+| --- | 0 | 0 | 0 | 0 |
+| 🧩 Components | 0 | 0 | 0 | 0 |
+| ⏹️ Button | 1 | 26 | 1 | 0 |
+| 🍪 Chip | 0 | 2 | 0 | 1 |
+| 📏 Ratio | 0 | 2 | 1 | 0 |
+| 🖼️ Thumbnail | 0 | 2 | 1 | 0 |
+| 🖱️ Scroll | 0 | 1 | 1 | 0 |
+| 👤 Avatar | 0 | 9 | 2 | 0 |
+| 💡 Indicators | 1 | 1 | 1 | 0 |
+| ➗ Divider | 0 | 1 | 1 | 0 |
+| ----------------- | 0 | 0 | 0 | 0 |
+| ⚙️ Molecular | 0 | 0 | 0 | 0 |
+| 🧭 Navigation | 6 | 9 | 2 | 1 |
+| 📑 Tab | 0 | 13 | 0 | 3 |
+| 🔢 Pagination | 0 | 9 | 0 | 1 |
+| ⏳ Progress Indicators | 1 | 9 | 0 | 1 |
+| ☑️ Selection and 📝 Input | 1 | 35 | 0 | 1 |
+| 🕹️ Control Box | 0 | 3 | 1 | 0 |
+| 🌡️ Gauge | 0 | 1 | 1 | 0 |
+| 🪞 Feedback | 1 | 11 | 0 | 1 |
+| 📣 Presentation | 9 | 19 | 0 | 1 |
+| 📑 Contents | 25 | 39 | 0 | 1 |
+| ------------------------------- | 0 | 0 | 0 | 0 |
+| Archive | 0 | 0 | 1 | 1 |
+| **합계** | **55** | **378** | **25** | **16** |
 
-> Plugin API 직접 검증 결과: **단일 Components 55 / Component Sets 378 / 최상위 Frames 25**.
+> Plugin API 직접 검증 결과: **단일 Components 55 / Component Sets 378 / 최상위 Frames 25 / 최상위 Sections 16**.
 
 ---
 
 ## ⚠️ 추가 검증 필요
 
-- **🎨 Image** (`2934:19018`): components/component sets/frames 모두 0건. Figma 사이드바에서 섹션 구분(상위 그룹) 역할의 빈 페이지로 추정되나, 실제 캔버스에 누락된 노드가 있는지 육안 확인 권장.
-- **🛠️ Foundation** (`2500:4545`), **🧩 Components** (`2500:5052`), **⚙️ Molecular** (`2500:5053`): 마찬가지로 컨테이너성 빈 페이지로 보이나 검증 권장.
+- **🎨 Image** (`2934:19018`), **🛠️ Foundation** (`2500:4545`), **🧩 Components** (`2500:5052`), **⚙️ Molecular** (`2500:5053`): 모두 빈 페이지지만 **상위 카테고리 헤더** 용도로 의도된 것이 확인됨 (예: `🛠️ Foundation` → `Typography`/`Space`/`Colors`/… 하위 페이지 그룹). 작업 불필요.
 - **이름이 `-----------` / `---` / `-----------------` / `-------------------------------` 등인 페이지**: 명확한 사이드바 구분선. 노드 없음 확인됨.
 - **`Time Picker/Resource/\bComman/Cell`** (`2884:36949`): 원본 이름에 백스페이스(`\b`) 제어문자와 오타(`Comman` → `Common`)가 포함되어 있음. 마크다운에서는 제어문자를 제거해 표기.
 - **`Background`** (`3113:25390`, ⚙️ Components 페이지): 원본 이름에 선행 백스페이스(`\b`) 제어문자 포함. 정리해서 표기.
