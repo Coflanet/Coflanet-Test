@@ -47,6 +47,9 @@ import 'components/selection/app_picker_use_cases.dart';
 // Presentation
 import 'components/presentation/app_bottom_sheet_use_cases.dart';
 import 'components/presentation/app_menu_use_cases.dart';
+import 'components/presentation/app_full_modal_use_cases.dart';
+import 'components/presentation/app_action_sheet_use_cases.dart';
+import 'components/presentation/app_auto_complete_use_cases.dart';
 
 // Contents
 import 'components/contents/app_cell_use_cases.dart';
@@ -70,6 +73,7 @@ import 'components/cards/card_use_cases.dart';
 import 'components/controls/control_use_cases.dart';
 import 'components/forms/text_field_use_cases.dart';
 import 'components/indicators/progress_use_cases.dart';
+import 'components/indicators/app_progress_tracker_use_cases.dart';
 import 'components/modals/modal_use_cases.dart';
 
 // Foundation (tokens)
@@ -282,6 +286,9 @@ class ComponentLabApp extends StatelessWidget {
                 ...modalUseCases,
                 ...bottomSheetUseCases,
                 ...menuUseCases,
+                ...fullModalUseCases,
+                ...actionSheetUseCases,
+                ...autoCompleteUseCases,
               ],
             ),
             WidgetbookFolder(
@@ -307,7 +314,10 @@ class ComponentLabApp extends StatelessWidget {
             ),
             WidgetbookFolder(
               name: 'Progress Indicators',
-              children: progressUseCases,
+              children: [
+                ...progressUseCases,
+                ...progressTrackerUseCases,
+              ],
             ),
           ],
         ),
