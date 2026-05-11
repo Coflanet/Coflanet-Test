@@ -174,15 +174,23 @@ class _AppFooterState extends State<AppFooter> {
                     ],
                   ),
                 ),
-                if (_businessInfoExpanded && widget.businessInfoBody != null)
-                  Padding(
-                    padding: const EdgeInsets.only(top: AppSpacing.space8),
-                    child: Text(
-                      widget.businessInfoBody!,
-                      style: AppTextStyles.caption2Regular.copyWith(
-                        color: AppColor.labelAssistive,
-                      ),
-                    ),
+                if (widget.businessInfoBody != null)
+                  AnimatedSize(
+                    duration: const Duration(milliseconds: 200),
+                    curve: Curves.easeInOut,
+                    alignment: Alignment.topCenter,
+                    child: _businessInfoExpanded
+                        ? Padding(
+                            padding: const EdgeInsets.only(
+                                top: AppSpacing.space8),
+                            child: Text(
+                              widget.businessInfoBody!,
+                              style: AppTextStyles.caption2Regular.copyWith(
+                                color: AppColor.labelAssistive,
+                              ),
+                            ),
+                          )
+                        : const SizedBox(width: double.infinity, height: 0),
                   ),
               ],
             ),

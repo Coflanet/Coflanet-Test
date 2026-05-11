@@ -215,128 +215,102 @@ class AppColor {
   // ═══════════════════════════════════════════════════════════════
 
   // Primary
-  static Color get primaryNormal => colorGlobalViolet50;
-  static Color get primarySecondary => colorGlobalViolet70;
-  static Color get primaryStrong => colorGlobalViolet45;
-  static Color get primaryHeavy => colorGlobalViolet40;
-  static Color get primaryLight => colorGlobalViolet95;
+  static final Color primaryNormal = colorGlobalViolet50;
+  static final Color primarySecondary = colorGlobalViolet70;
+  static final Color primaryStrong = colorGlobalViolet45;
+  static final Color primaryHeavy = colorGlobalViolet40;
+  static final Color primaryLight = colorGlobalViolet95;
 
   // Label
-  static Color get labelNormal => colorGlobalCoolNeutral10;
-  static Color get labelStrong => colorGlobalCommon0;
-  static Color get labelNeutral =>
-      const Color(0xFF2E2F33).withValues(alpha: 0.88);
-  static Color get labelAlternative =>
-      const Color(0xFF37383C).withValues(alpha: 0.61);
-  static Color get labelAssistive =>
-      const Color(0xFF37383C).withValues(alpha: 0.35);
-  static Color get labelDisable =>
-      const Color(0xFF37383C).withValues(alpha: 0.16);
+  static final Color labelNormal = colorGlobalCoolNeutral10;
+  static final Color labelStrong = colorGlobalCommon0;
+  static final Color labelNeutral = const Color(0xFF2E2F33).withValues(alpha: 0.88);
+  static final Color labelAlternative = const Color(0xFF37383C).withValues(alpha: 0.61);
+  static final Color labelAssistive = const Color(0xFF37383C).withValues(alpha: 0.35);
+  static final Color labelDisable = const Color(0xFF37383C).withValues(alpha: 0.16);
 
   // Background
-  static Color get backgroundNormalNormal => colorGlobalCommon100;
-  static Color get backgroundNormalAlternative => colorGlobalCoolNeutral99;
-  static Color get backgroundElevatedNormal => colorGlobalCommon100;
-  static Color get backgroundElevatedAlternative => colorGlobalCoolNeutral99;
-  static Color get backgroundOpacity75 =>
-      const Color(0xFFFFFFFF).withValues(alpha: 0.75);
+  static final Color backgroundNormalNormal = colorGlobalCommon100;
+  static final Color backgroundNormalAlternative = colorGlobalCoolNeutral99;
+  static final Color backgroundElevatedNormal = colorGlobalCommon100;
+  static final Color backgroundElevatedAlternative = colorGlobalCoolNeutral99;
+  static final Color backgroundOpacity75 = const Color(0xFFFFFFFF).withValues(alpha: 0.75);
   static const Color backgroundTimer = Color(0xFF333333);
 
   // Interaction
-  static Color get interactionInactive => colorGlobalCoolNeutral70;
-  static Color get interactionDisable =>
-      const Color(0xFFF4F4F5).withValues(alpha: 0.5);
+  static final Color interactionInactive = colorGlobalCoolNeutral70;
+  static final Color interactionDisable = const Color(0xFFF4F4F5).withValues(alpha: 0.5);
 
   // Line
-  static Color get lineNormalNormal =>
-      const Color(0xFF70737C).withValues(alpha: 0.22);
-  static Color get lineNormalNeutral =>
-      const Color(0xFF70737C).withValues(alpha: 0.16);
-  static Color get lineNormalAlternative =>
-      const Color(0xFF70737C).withValues(alpha: 0.08);
-  static Color get lineSolidNormal => colorGlobalCoolNeutral96;
-  static Color get lineSolidNeutral => colorGlobalCoolNeutral97;
-  static Color get lineSolidAlternative => colorGlobalCoolNeutral98;
+  static final Color lineNormalNormal = const Color(0xFF70737C).withValues(alpha: 0.22);
+  static final Color lineNormalNeutral = const Color(0xFF70737C).withValues(alpha: 0.16);
+  static final Color lineNormalAlternative = const Color(0xFF70737C).withValues(alpha: 0.08);
+  static final Color lineSolidNormal = colorGlobalCoolNeutral96;
+  static final Color lineSolidNeutral = colorGlobalCoolNeutral97;
+  static final Color lineSolidAlternative = colorGlobalCoolNeutral98;
 
   // Status
-  static Color get statusPositive => colorGlobalGreen50;
-  static Color get statusPositiveBlue => colorGlobalBlue50;
-  static Color get statusCautionary => colorGlobalOrange50;
-  static Color get statusNegative => colorGlobalRed50;
+  static final Color statusPositive = colorGlobalGreen50;
+  static final Color statusPositiveBlue = colorGlobalBlue50;
+  static final Color statusCautionary = colorGlobalOrange50;
+  static final Color statusNegative = colorGlobalRed50;
 
   // Accent Background
-  static Color get accentBackgroundRed => colorGlobalRed50;
-  static Color get accentBackgroundOrange => colorGlobalOrange50;
-  static Color get accentBackgroundYellow => colorGlobalYellow50;
-  static Color get accentBackgroundLime => colorGlobalLime50;
-  static Color get accentBackgroundCyan => colorGlobalCyan50;
-  static Color get accentBackgroundBlue => colorGlobalBlue50;
-  static Color get accentBackgroundPink => colorGlobalPink50;
-  static Color get accentBackgroundBrown => const Color(0xFFAD683D);
-  static Color get accentBackgroundBrownLight => const Color(0xFFF5E6D9);
-  static Color get accentBackgroundViolet => colorGlobalViolet50;
+  static final Color accentBackgroundRed = colorGlobalRed50;
+  static final Color accentBackgroundOrange = colorGlobalOrange50;
+  static final Color accentBackgroundYellow = colorGlobalYellow50;
+  static final Color accentBackgroundLime = colorGlobalLime50;
+  static final Color accentBackgroundCyan = colorGlobalCyan50;
+  static final Color accentBackgroundBlue = colorGlobalBlue50;
+  static final Color accentBackgroundPink = colorGlobalPink50;
+  static final Color accentBackgroundBrown = const Color(0xFFAD683D);
+  static final Color accentBackgroundBrownLight = const Color(0xFFF5E6D9);
+  static final Color accentBackgroundViolet = colorGlobalViolet50;
 
   // Accent Foreground
-  static Color get accentForegroundRed => colorGlobalRed40;
-  static Color get accentForegroundOrange => colorGlobalOrange39;
-  static Color get accentForegroundYellow => colorGlobalYellow40;
-  static Color get accentForegroundLime => colorGlobalLime37;
-  static Color get accentForegroundGreen => colorGlobalGreen40;
-  static Color get accentForegroundCyan => colorGlobalCyan40;
-  static Color get accentForegroundLightBlue => colorGlobalLightBlue40;
-  static Color get accentForegroundBlue => colorGlobalBlue45;
-  static Color get accentForegroundViolet => colorGlobalViolet45;
-  static Color get accentForegroundPink => colorGlobalPink46;
+  static final Color accentForegroundRed = colorGlobalRed40;
+  static final Color accentForegroundOrange = colorGlobalOrange39;
+  static final Color accentForegroundYellow = colorGlobalYellow40;
+  static final Color accentForegroundLime = colorGlobalLime37;
+  static final Color accentForegroundGreen = colorGlobalGreen40;
+  static final Color accentForegroundCyan = colorGlobalCyan40;
+  static final Color accentForegroundLightBlue = colorGlobalLightBlue40;
+  static final Color accentForegroundBlue = colorGlobalBlue45;
+  static final Color accentForegroundViolet = colorGlobalViolet45;
+  static final Color accentForegroundPink = colorGlobalPink46;
 
   // Inverse
-  static Color get inversePrimary => colorGlobalViolet50;
-  static Color get inverseBackground => colorGlobalCoolNeutral15;
-  static Color get inverseLabelNormal => colorGlobalCoolNeutral99;
-  static Color get inverseLabelStrong => colorGlobalCommon100;
-  static Color get inverseLabelNeutral =>
-      const Color(0xFFC2C4C8).withValues(alpha: 0.88);
-  static Color get inverseLabelAlternative =>
-      const Color(0xFFAEB0B6).withValues(alpha: 0.61);
-  static Color get inverseLabelAssistive =>
-      const Color(0xFFAEB0B6).withValues(alpha: 0.35);
-  static Color get inverseLabelDisable =>
-      const Color(0xFF989BA2).withValues(alpha: 0.16);
+  static final Color inversePrimary = colorGlobalViolet50;
+  static final Color inverseBackground = colorGlobalCoolNeutral15;
+  static final Color inverseLabelNormal = colorGlobalCoolNeutral99;
+  static final Color inverseLabelStrong = colorGlobalCommon100;
+  static final Color inverseLabelNeutral = const Color(0xFFC2C4C8).withValues(alpha: 0.88);
+  static final Color inverseLabelAlternative = const Color(0xFFAEB0B6).withValues(alpha: 0.61);
+  static final Color inverseLabelAssistive = const Color(0xFFAEB0B6).withValues(alpha: 0.35);
+  static final Color inverseLabelDisable = const Color(0xFF989BA2).withValues(alpha: 0.16);
 
   // Static Label (Black)
-  static Color get staticLabelBlackNormal => colorGlobalCoolNeutral10;
-  static Color get staticLabelBlackStrong => colorGlobalCommon0;
-  static Color get staticLabelBlackNeutral =>
-      const Color(0xFF2E2F33).withValues(alpha: 0.88);
-  static Color get staticLabelBlackAlternative =>
-      const Color(0xFF37383C).withValues(alpha: 0.61);
-  static Color get staticLabelBlackAssistive =>
-      const Color(0xFF37383C).withValues(alpha: 0.35);
-  static Color get staticLabelBlackDisable =>
-      const Color(0xFF37383C).withValues(alpha: 0.16);
+  static final Color staticLabelBlackNormal = colorGlobalCoolNeutral10;
+  static final Color staticLabelBlackStrong = colorGlobalCommon0;
+  static final Color staticLabelBlackNeutral = const Color(0xFF2E2F33).withValues(alpha: 0.88);
+  static final Color staticLabelBlackAlternative = const Color(0xFF37383C).withValues(alpha: 0.61);
+  static final Color staticLabelBlackAssistive = const Color(0xFF37383C).withValues(alpha: 0.35);
+  static final Color staticLabelBlackDisable = const Color(0xFF37383C).withValues(alpha: 0.16);
 
   // Static Label (White)
-  static Color get staticLabelWhiteNormal => colorGlobalCoolNeutral99;
-  static Color get staticLabelWhiteStrong => colorGlobalCommon100;
-  static Color get staticLabelWhiteNeutral =>
-      const Color(0xFFC2C4C8).withValues(alpha: 0.88);
-  static Color get staticLabelWhiteAlternative =>
-      const Color(0xFFAEB0B6).withValues(alpha: 0.61);
-  static Color get staticLabelWhiteAssistive =>
-      const Color(0xFFAEB0B6).withValues(alpha: 0.35);
-  static Color get staticLabelWhiteDisable =>
-      const Color(0xFF989BA2).withValues(alpha: 0.16);
+  static final Color staticLabelWhiteNormal = colorGlobalCoolNeutral99;
+  static final Color staticLabelWhiteStrong = colorGlobalCommon100;
+  static final Color staticLabelWhiteNeutral = const Color(0xFFC2C4C8).withValues(alpha: 0.88);
+  static final Color staticLabelWhiteAlternative = const Color(0xFFAEB0B6).withValues(alpha: 0.61);
+  static final Color staticLabelWhiteAssistive = const Color(0xFFAEB0B6).withValues(alpha: 0.35);
+  static final Color staticLabelWhiteDisable = const Color(0xFF989BA2).withValues(alpha: 0.16);
 
   // Component
-  static Color get componentFillNormal =>
-      const Color(0xFF70737C).withValues(alpha: 0.08);
-  static Color get componentFillStrong =>
-      const Color(0xFF70737C).withValues(alpha: 0.16);
-  static Color get componentFillAlternative =>
-      const Color(0xFF70737C).withValues(alpha: 0.05);
-  static Color get componentFillScroll =>
-      const Color(0xFF4D4D4D).withValues(alpha: 0.6);
-  static Color get componentMaterialDimmer =>
-      const Color(0xFF171719).withValues(alpha: 0.52);
+  static final Color componentFillNormal = const Color(0xFF70737C).withValues(alpha: 0.08);
+  static final Color componentFillStrong = const Color(0xFF70737C).withValues(alpha: 0.16);
+  static final Color componentFillAlternative = const Color(0xFF70737C).withValues(alpha: 0.05);
+  static final Color componentFillScroll = const Color(0xFF4D4D4D).withValues(alpha: 0.6);
+  static final Color componentMaterialDimmer = const Color(0xFF171719).withValues(alpha: 0.52);
 
   // Social
   static const Color socialKakao = Color(0xFFFEE500);
@@ -349,124 +323,98 @@ class AppColor {
   // ═══════════════════════════════════════════════════════════════
 
   // Dark Primary
-  static Color get darkPrimaryNormal => colorGlobalViolet60;
-  static Color get darkPrimarySecondary => colorGlobalViolet70;
-  static Color get darkPrimaryStrong => colorGlobalViolet55;
-  static Color get darkPrimaryHeavy => colorGlobalViolet50;
-  static Color get darkPrimaryLight => colorGlobalViolet20;
+  static final Color darkPrimaryNormal = colorGlobalViolet60;
+  static final Color darkPrimarySecondary = colorGlobalViolet70;
+  static final Color darkPrimaryStrong = colorGlobalViolet55;
+  static final Color darkPrimaryHeavy = colorGlobalViolet50;
+  static final Color darkPrimaryLight = colorGlobalViolet20;
 
   // Dark Background
-  static Color get darkBackgroundNormalNormal => colorGlobalCoolNeutral15;
-  static Color get darkBackgroundNormalAlternative => colorGlobalCoolNeutral5;
-  static Color get darkBackgroundElevatedNormal => colorGlobalCoolNeutral17;
-  static Color get darkBackgroundElevatedAlternative => colorGlobalCoolNeutral7;
-  static Color get darkBackgroundOpacity75 =>
-      const Color(0xFF000000).withValues(alpha: 0.75);
+  static final Color darkBackgroundNormalNormal = colorGlobalCoolNeutral15;
+  static final Color darkBackgroundNormalAlternative = colorGlobalCoolNeutral5;
+  static final Color darkBackgroundElevatedNormal = colorGlobalCoolNeutral17;
+  static final Color darkBackgroundElevatedAlternative = colorGlobalCoolNeutral7;
+  static final Color darkBackgroundOpacity75 = const Color(0xFF000000).withValues(alpha: 0.75);
 
   // Dark Label
-  static Color get darkLabelNormal => colorGlobalCoolNeutral99;
-  static Color get darkLabelStrong => colorGlobalCommon100;
-  static Color get darkLabelNeutral =>
-      const Color(0xFFC2C4C8).withValues(alpha: 0.88);
-  static Color get darkLabelAlternative =>
-      const Color(0xFFAEB0B6).withValues(alpha: 0.61);
-  static Color get darkLabelAssistive =>
-      const Color(0xFFAEB0B6).withValues(alpha: 0.28);
-  static Color get darkLabelDisable =>
-      const Color(0xFF989BA2).withValues(alpha: 0.16);
+  static final Color darkLabelNormal = colorGlobalCoolNeutral99;
+  static final Color darkLabelStrong = colorGlobalCommon100;
+  static final Color darkLabelNeutral = const Color(0xFFC2C4C8).withValues(alpha: 0.88);
+  static final Color darkLabelAlternative = const Color(0xFFAEB0B6).withValues(alpha: 0.61);
+  static final Color darkLabelAssistive = const Color(0xFFAEB0B6).withValues(alpha: 0.28);
+  static final Color darkLabelDisable = const Color(0xFF989BA2).withValues(alpha: 0.16);
 
   // Dark Interaction
-  static Color get darkInteractionInactive => colorGlobalCoolNeutral40;
-  static Color get darkInteractionDisable =>
-      const Color(0xFF2E2F33).withValues(alpha: 0.5);
+  static final Color darkInteractionInactive = colorGlobalCoolNeutral40;
+  static final Color darkInteractionDisable = const Color(0xFF2E2F33).withValues(alpha: 0.5);
 
   // Dark Line
-  static Color get darkLineNormalNormal =>
-      const Color(0xFF70737C).withValues(alpha: 0.32);
-  static Color get darkLineNormalNeutral =>
-      const Color(0xFF70737C).withValues(alpha: 0.28);
-  static Color get darkLineNormalAlternative =>
-      const Color(0xFF70737C).withValues(alpha: 0.22);
-  static Color get darkLineSolidNormal => colorGlobalCoolNeutral25;
-  static Color get darkLineSolidNeutral => colorGlobalCoolNeutral23;
-  static Color get darkLineSolidAlternative => colorGlobalCoolNeutral22;
+  static final Color darkLineNormalNormal = const Color(0xFF70737C).withValues(alpha: 0.32);
+  static final Color darkLineNormalNeutral = const Color(0xFF70737C).withValues(alpha: 0.28);
+  static final Color darkLineNormalAlternative = const Color(0xFF70737C).withValues(alpha: 0.22);
+  static final Color darkLineSolidNormal = colorGlobalCoolNeutral25;
+  static final Color darkLineSolidNeutral = colorGlobalCoolNeutral23;
+  static final Color darkLineSolidAlternative = colorGlobalCoolNeutral22;
 
   // Dark Status
-  static Color get darkStatusPositive => colorGlobalGreen60;
-  static Color get darkStatusPositiveBlue => colorGlobalBlue60;
-  static Color get darkStatusCautionary => colorGlobalOrange60;
-  static Color get darkStatusNegative => colorGlobalRed60;
+  static final Color darkStatusPositive = colorGlobalGreen60;
+  static final Color darkStatusPositiveBlue = colorGlobalBlue60;
+  static final Color darkStatusCautionary = colorGlobalOrange60;
+  static final Color darkStatusNegative = colorGlobalRed60;
 
   // Dark Component
-  static Color get darkComponentFillNormal =>
-      const Color(0xFF70737C).withValues(alpha: 0.22);
-  static Color get darkComponentFillStrong =>
-      const Color(0xFF70737C).withValues(alpha: 0.28);
-  static Color get darkComponentFillAlternative =>
-      const Color(0xFF70737C).withValues(alpha: 0.12);
-  static Color get darkComponentFillScroll =>
-      const Color(0xFF3E3E3E).withValues(alpha: 0.6);
-  static Color get darkComponentMaterialDimmer =>
-      const Color(0xFF171719).withValues(alpha: 0.74);
+  static final Color darkComponentFillNormal = const Color(0xFF70737C).withValues(alpha: 0.22);
+  static final Color darkComponentFillStrong = const Color(0xFF70737C).withValues(alpha: 0.28);
+  static final Color darkComponentFillAlternative = const Color(0xFF70737C).withValues(alpha: 0.12);
+  static final Color darkComponentFillScroll = const Color(0xFF3E3E3E).withValues(alpha: 0.6);
+  static final Color darkComponentMaterialDimmer = const Color(0xFF171719).withValues(alpha: 0.74);
 
   // Dark Static Label (Black)
-  static Color get darkStaticLabelBlackNormal => colorGlobalNeutral10;
-  static Color get darkStaticLabelBlackStrong => colorGlobalCommon0;
-  static Color get darkStaticLabelBlackNeutral =>
-      const Color(0xFF2E2F33).withValues(alpha: 0.88);
-  static Color get darkStaticLabelBlackAlternative =>
-      const Color(0xFF37383C).withValues(alpha: 0.61);
-  static Color get darkStaticLabelBlackAssistive =>
-      const Color(0xFF37383C).withValues(alpha: 0.28);
-  static Color get darkStaticLabelBlackDisable =>
-      const Color(0xFF37383C).withValues(alpha: 0.16);
+  static final Color darkStaticLabelBlackNormal = colorGlobalNeutral10;
+  static final Color darkStaticLabelBlackStrong = colorGlobalCommon0;
+  static final Color darkStaticLabelBlackNeutral = const Color(0xFF2E2F33).withValues(alpha: 0.88);
+  static final Color darkStaticLabelBlackAlternative = const Color(0xFF37383C).withValues(alpha: 0.61);
+  static final Color darkStaticLabelBlackAssistive = const Color(0xFF37383C).withValues(alpha: 0.28);
+  static final Color darkStaticLabelBlackDisable = const Color(0xFF37383C).withValues(alpha: 0.16);
 
   // Dark Static Label (White)
-  static Color get darkStaticLabelWhiteNormal => colorGlobalCoolNeutral99;
-  static Color get darkStaticLabelWhiteStrong => colorGlobalCommon100;
-  static Color get darkStaticLabelWhiteNeutral =>
-      const Color(0xFFC2C4C8).withValues(alpha: 0.88);
-  static Color get darkStaticLabelWhiteAlternative =>
-      const Color(0xFFAEB0B6).withValues(alpha: 0.61);
-  static Color get darkStaticLabelWhiteAssistive =>
-      const Color(0xFFAEB0B6).withValues(alpha: 0.35);
-  static Color get darkStaticLabelWhiteDisable =>
-      const Color(0xFF989BA2).withValues(alpha: 0.16);
+  static final Color darkStaticLabelWhiteNormal = colorGlobalCoolNeutral99;
+  static final Color darkStaticLabelWhiteStrong = colorGlobalCommon100;
+  static final Color darkStaticLabelWhiteNeutral = const Color(0xFFC2C4C8).withValues(alpha: 0.88);
+  static final Color darkStaticLabelWhiteAlternative = const Color(0xFFAEB0B6).withValues(alpha: 0.61);
+  static final Color darkStaticLabelWhiteAssistive = const Color(0xFFAEB0B6).withValues(alpha: 0.35);
+  static final Color darkStaticLabelWhiteDisable = const Color(0xFF989BA2).withValues(alpha: 0.16);
 
   // Dark Accent Background
-  static Color get darkAccentBackgroundRed => colorGlobalRed60;
-  static Color get darkAccentBackgroundOrange => colorGlobalOrange60;
-  static Color get darkAccentBackgroundYellow => colorGlobalYellow60;
-  static Color get darkAccentBackgroundLime => colorGlobalLime60;
-  static Color get darkAccentBackgroundCyan => colorGlobalCyan60;
-  static Color get darkAccentBackgroundBlue => colorGlobalBlue60;
-  static Color get darkAccentBackgroundPink => colorGlobalPink60;
-  static Color get darkAccentBackgroundBrown => const Color(0xFFC27545);
-  static Color get darkAccentBackgroundViolet => colorGlobalViolet50;
+  static final Color darkAccentBackgroundRed = colorGlobalRed60;
+  static final Color darkAccentBackgroundOrange = colorGlobalOrange60;
+  static final Color darkAccentBackgroundYellow = colorGlobalYellow60;
+  static final Color darkAccentBackgroundLime = colorGlobalLime60;
+  static final Color darkAccentBackgroundCyan = colorGlobalCyan60;
+  static final Color darkAccentBackgroundBlue = colorGlobalBlue60;
+  static final Color darkAccentBackgroundPink = colorGlobalPink60;
+  static final Color darkAccentBackgroundBrown = const Color(0xFFC27545);
+  static final Color darkAccentBackgroundViolet = colorGlobalViolet50;
 
   // Dark Accent Foreground
-  static Color get darkAccentForegroundRed => colorGlobalRed60;
-  static Color get darkAccentForegroundOrange => colorGlobalOrange50;
-  static Color get darkAccentForegroundYellow => colorGlobalYellow60;
-  static Color get darkAccentForegroundLime => colorGlobalLime50;
-  static Color get darkAccentForegroundGreen => colorGlobalGreen60;
-  static Color get darkAccentForegroundCyan => colorGlobalCyan50;
-  static Color get darkAccentForegroundLightBlue => colorGlobalLightBlue50;
-  static Color get darkAccentForegroundBlue => colorGlobalBlue60;
-  static Color get darkAccentForegroundViolet => colorGlobalViolet70;
-  static Color get darkAccentForegroundPink => colorGlobalPink60;
+  static final Color darkAccentForegroundRed = colorGlobalRed60;
+  static final Color darkAccentForegroundOrange = colorGlobalOrange50;
+  static final Color darkAccentForegroundYellow = colorGlobalYellow60;
+  static final Color darkAccentForegroundLime = colorGlobalLime50;
+  static final Color darkAccentForegroundGreen = colorGlobalGreen60;
+  static final Color darkAccentForegroundCyan = colorGlobalCyan50;
+  static final Color darkAccentForegroundLightBlue = colorGlobalLightBlue50;
+  static final Color darkAccentForegroundBlue = colorGlobalBlue60;
+  static final Color darkAccentForegroundViolet = colorGlobalViolet70;
+  static final Color darkAccentForegroundPink = colorGlobalPink60;
 
   // Dark Inverse
-  static Color get darkInversePrimary => colorGlobalViolet50;
-  static Color get darkInverseBackground => colorGlobalCommon100;
-  static Color get darkInverseLabelNormal => colorGlobalCoolNeutral10;
-  static Color get darkInverseLabelStrong => colorGlobalCommon0;
-  static Color get darkInverseLabelNeutral =>
-      const Color(0xFF2E2F33).withValues(alpha: 0.88);
-  static Color get darkInverseLabelAlternative =>
-      const Color(0xFF37383C).withValues(alpha: 0.61);
-  static Color get darkInverseLabelAssistive =>
-      const Color(0xFF37383C).withValues(alpha: 0.35);
-  static Color get darkInverseLabelDisable =>
-      const Color(0xFF37383C).withValues(alpha: 0.16);
+  static final Color darkInversePrimary = colorGlobalViolet50;
+  static final Color darkInverseBackground = colorGlobalCommon100;
+  static final Color darkInverseLabelNormal = colorGlobalCoolNeutral10;
+  static final Color darkInverseLabelStrong = colorGlobalCommon0;
+  static final Color darkInverseLabelNeutral = const Color(0xFF2E2F33).withValues(alpha: 0.88);
+  static final Color darkInverseLabelAlternative = const Color(0xFF37383C).withValues(alpha: 0.61);
+  static final Color darkInverseLabelAssistive = const Color(0xFF37383C).withValues(alpha: 0.35);
+  static final Color darkInverseLabelDisable = const Color(0xFF37383C).withValues(alpha: 0.16);
 }

@@ -274,7 +274,12 @@ class AppTopNavigation extends StatelessWidget {
   }
 
   // ═══════════════════════════════════════════════════════════
-  // FLOATING — 투명 + 0 높이 nav (콘텐츠 위에 떠 있음)
+  // FLOATING — 레이아웃 높이 0, 콘텐츠는 위로 떠서 렌더 (clipBehavior로 자르지 않음)
+  //
+  // SizedBox(height: 0) + OverflowBox 조합은 "이 위젯은 레이아웃 흐름상 0px이지만
+  // 시각적으로는 nav 높이만큼 렌더되며 부모 영역 밖으로 오버플로해도 자르지 않는다"
+  // 는 의도를 표현하는 Flutter 표준 패턴. 호출자가 Stack 등을 강제하지 않고도
+  // 그대로 Column 안에 둘 수 있도록 만든 트릭이다.
   // ═══════════════════════════════════════════════════════════
   Widget _buildFloating(BuildContext context) {
     return SizedBox(
