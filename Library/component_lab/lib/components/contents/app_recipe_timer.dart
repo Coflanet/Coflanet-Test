@@ -140,7 +140,9 @@ class AppRecipeCard extends StatelessWidget {
   });
 
   final String title;
-  final List<AppRecipeStepper> steppers;
+
+  /// 내부에 표시할 단계 위젯들. `AppRecipeStepper` 권장이지만 임의의 위젯 주입 가능.
+  final List<Widget> steppers;
   final VoidCallback? onDelete;
 
   @override
