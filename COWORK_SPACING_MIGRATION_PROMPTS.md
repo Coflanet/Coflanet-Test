@@ -14,11 +14,33 @@
 - 산출물 루트: `Library/component_lab/docs/spacing-migration/`
 
 ### Figma 사전 조사 결과 (사용자 사전 확인 완료)
-- 확인된 페이지: `2636:31292` = "📺 Thumbnail"
-- 파일이 구독 중인 팀 라이브러리: **"📚 Library"**
-  - libraryKey: `lk-815f401460b7d0ab754d9cf97c4605e325b2a60f81c3217bde074e33ceb1fff6b427f5436acd34f4dbb0765fca7d46e0b6ba27b41fde40c8a1c054eecfd7adfe`
-- ⚠️ 스페이싱 토큰(변수)이 위 "📚 Library" 파일에 정의되어 있고 q7yBPcHrid1CGQqFWEPwnR 는 이를 소비하는 구조일 수 있다. Task 01 에서 변수 출처를 반드시 확인할 것
-- ⚠️ get_metadata 로 문서 루트(0:0/0:1) 단일 호출 페이지 열거는 불가. Task 01 에서 사용자가 제공한 페이지 URL 목록을 받아 처리하는 단계 포함
+- 전체 페이지 수: **39** (콘텐츠 페이지 30 + 빈 헤더 4 + 구분선 4 + Archive 1)
+- 감사 대상: **28개 그룹** (FIGMA_INVENTORY.md 기반)
+- 파일이 구독 중인 팀 라이브러리: **"📚 Library" (self)** — 본 파일 자체가 토큰 정의 + 컴포넌트 라이브러리
+- ⭐ 최우선 페이지: **📐 Space (`2485:8842`)** — 스페이싱 토큰 정의 페이지
+- 페이지 인벤토리 원본: `FIGMA_INVENTORY.md` (저장소 루트)
+- 변환된 페이지 메타: `Library/component_lab/docs/spacing-migration/01-audit/figma-pages.json` (Task 01 사전완료)
+
+### 페이지 ↔ 코드 디렉터리 매핑 요약
+| Figma 페이지 (group) | Code dir |
+|---|---|
+| component-button | buttons |
+| component-chip | chips |
+| component-ratio | ratio |
+| component-thumbnail | thumbnails |
+| component-scroll | scrolls |
+| component-avatar | avatars |
+| component-indicators + module-progress-indicators | indicators |
+| component-divider | dividers |
+| module-navigation | navigation |
+| module-tab | tabs |
+| module-pagination | pagination |
+| module-selection-input | selection, forms, controls |
+| module-control-box | control_box |
+| module-gauge | gauge |
+| module-feedback | feedback |
+| module-presentation | presentation, modals |
+| module-contents | contents, cards |
 
 ## 공통 규칙 (모든 Task 적용)
 
@@ -28,6 +50,15 @@
 4. 본 Task에 명시된 입력/대상 외의 파일은 절대 수정하지 말 것
 5. 빌드/테스트 명령: `cd Library/component_lab && flutter analyze` (Phase 5에서만)
 6. 실패하더라도 부분 산출물은 반드시 저장하고 끝낼 것
+
+## ⚠️ Figma 도구 사용 규칙 (사용자 사전 확인)
+
+**이 파일에서는 `mcp__figma__use_figma` 만 사용 가능. 다른 Figma 도구(`get_metadata`, `get_design_context` 등)는 타임아웃 발생.**
+
+- 페이지/노드 순회는 모두 `use_figma` 의 Plugin API 호출로 처리
+- `get_libraries`, `whoami` 등 메타 도구만 보조로 사용
+- Plugin API 호출 시 노드 트리 깊이를 제한하고 batch 로 끊어서 처리
+- 한 번 호출에 너무 많은 노드를 요청하면 응답이 잘리거나 타임아웃 — 50~100 노드 단위로 분할
 
 ---
 
@@ -56,73 +87,30 @@
 
 ---
 
-# 🆕 Task 01 · Phase 1-A-0 — Figma 페이지 정찰
+# Task 01 · Phase 1-A-0 — Figma 페이지 정찰 [✅ 사전완료]
 
-## ⚠️ 전제 조건 (사전 조사 결과)
-- Figma MCP `get_metadata` 로 문서 루트(0:0/0:1) 호출 시 **invalid node ID** 에러 발생
-- 따라서 페이지 일괄 열거 불가 → 사용자 페이지 URL 목록 입력 필수
+## 상태
+사용자가 Figma Plugin API 로 사전 수집한 데이터(`FIGMA_INVENTORY.md`)를 기반으로 변환 완료.
+산출물: `Library/component_lab/docs/spacing-migration/01-audit/figma-pages.json`
 
-## 입력
-- Figma fileKey: `q7yBPcHrid1CGQqFWEPwnR`
-- **사용자 제공**: 감사 대상 페이지 URL 목록 (또는 `node-id` 값들). 형식 예:
-  ```
-  2636:31292   # 📺 Thumbnail (사전 확인됨)
-  X:Y          # 페이지명
-  ...
-  ```
-- 사용자가 페이지 URL 목록을 제공하지 않으면 → 이 Task 의 첫 단계에서 사용자에게 요청:
-  > Figma 파일을 열어 사이드바의 각 페이지를 우클릭 → "Copy link" → URL 의 `node-id=A-B` 값을 모두 모아 한 줄씩 알려주세요.
-
-## 처리
-1. 사용자 제공 페이지 ID 각각에 대해 `mcp__figma__get_metadata` 호출
-2. 각 페이지의 루트 노드(canvas) 응답에서:
-   - `id` → `pageId`
-   - `name` → `pageName`
-   - 자식 frame/instance 수 → `nodeCount`
-3. `pageName` 키워드로 `suspectedCategory` 추정:
-   - `foundation|token|primitive|style|color|spacing|grid` → Foundation
-   - `component|atom|button|input|card|chip` → Component
-   - `module|pattern|template|section` → Module
-   - `page|screen|flow` → Template
-   - `thumbnail|cover|intro|change ?log` → Etc
-   - 그 외 → Etc
-4. URL-safe `pageSlug` 생성 (이모지 제거 → 소문자 → 공백/특수문자 `-` 로 치환 → 중복 `-` 정리)
-5. 동시에 라이브러리 변수 의존성 점검:
-   - `mcp__figma__get_libraries` 호출하여 `libraries_added_to_file` 의 라이브러리 키 기록
-   - 본 파일과 별도로 토큰을 가진 라이브러리 파일(예: "📚 Library")이 있으면 `relatedLibraryFiles` 배열에 명시
-
-## 산출물
-`Library/component_lab/docs/spacing-migration/01-audit/figma-pages.json`
-```json
-{
-  "fileKey": "q7yBPcHrid1CGQqFWEPwnR",
-  "generatedAt": "...",
-  "pages": [
-    { "pageId": "2636:31292", "pageName": "📺 Thumbnail", "pageSlug": "thumbnail", "nodeCount": 1, "suspectedCategory": "Etc" }
-  ],
-  "relatedLibraryFiles": [
-    { "name": "📚 Library", "libraryKey": "lk-815f401460b7d0ab754d9cf97c4605e325b2a60f81c3217bde074e33ceb1fff6b427f5436acd34f4dbb0765fca7d46e0b6ba27b41fde40c8a1c054eecfd7adfe", "note": "스페이싱 토큰 정의 가능성 — 별도 조사 필요" }
-  ]
-}
-```
-
-## 커밋 & 푸시
-`chore(spacing-migration): figma page inventory`
-
-## 성공 기준
-- `figma-pages.json` 에 페이지 1개 이상 기록
-- 각 페이지에 5개 필드 (pageId, pageName, pageSlug, nodeCount, suspectedCategory) 모두 존재
-- `relatedLibraryFiles` 에 "📚 Library" 항목 포함 (libraryKey 일치)
-
-## 실패 처리
-- Figma MCP 세션 만료 시: `mcp__figma__whoami` 호출 후 재시도. 그래도 실패하면 사용자에게 보고 후 종료
-- 페이지 ID 가 invalid 로 반환되면: 해당 페이지를 `failed` 배열로 분리하고 사용자에게 정확한 URL 재요청
-- 페이지 수 30개 초과 시: 작업 멈추고 사용자에게 그룹핑 의견 요청
+이 산출물에는 다음이 포함되어 있어 Task 02 부터 바로 진입 가능:
+- 39개 전체 페이지 메타
+- 감사 대상 28개 그룹의 `pageId`, `pageSlug`, `group`, `codeDir`, `suspectedCategory`
+- `auditOrder` (1-A 처리 순서)
+- `phase4ApplyGroups` (Phase 4 적용 순서 + priority)
+- `codeDirToFigmaPage` (Phase 5 에서 사용)
 
 ## 📌 사람 검수 #1
-- `figma-pages.json` 확인 후 `suspectedCategory` 수정 또는 페이지 제외 결정
-- `relatedLibraryFiles` 의 라이브러리 파일을 별도 fileKey 로 추가 감사할지 결정 (스페이싱 변수가 라이브러리에 있는 경우)
-- Phase 1-A 대상 페이지 목록 확정
+- `figma-pages.json` 의 `auditOrder` 확인 — 최우선이 `foundation-space` 인지
+- 빠진 페이지가 없는지 (39 = 30 audit + 4 header + 4 separator + 1 archive)
+- `codeDirToFigmaPage` 매핑 검토 (특히 `controls`, `forms`, `selection` → 동일 페이지 매핑 적절성)
+
+## 만약 figma-pages.json 이 존재하지 않으면 (재생성 절차)
+1. 저장소 루트의 `FIGMA_INVENTORY.md` 를 읽는다
+2. 각 `## {emoji} {name}` 헤더 + `**pageId**: ...` 행을 파싱
+3. 빈 페이지/구분선은 `audit=false` 로 분류
+4. 코드 디렉터리와 매칭되는 페이지는 `codeDir` 필드 부여
+5. 본 문서 상단 "페이지 ↔ 코드 디렉터리 매핑 요약" 표 사용
 
 ---
 
@@ -216,10 +204,40 @@
 
 ---
 
-# 🆕 Task 03..N · Phase 1-A — Figma 페이지별 spacing 감사
+# 🆕 Task 03..30 · Phase 1-A — Figma 페이지별 spacing 감사 (28개)
 
-> Task 01 의 `figma-pages.json` 에서 페이지 1개 = Task 1개. 페이지 N개면 Task N개를 만든다.
-> 아래 템플릿에서 `{pageId}`, `{pageSlug}` 를 페이지마다 치환해 등록.
+> `figma-pages.json` 의 `auditOrder` 배열에 따라 페이지 1개 = Task 1개. 총 28개 Task.
+> 등록 순서(`auditOrder` 그대로):
+> 1. foundation-space (pageId `2485:8842`) ⭐ CRITICAL
+> 2. foundation-logo (`0:1`)
+> 3. foundation-typography (`2414:9843`)
+> 4. foundation-colors (`2414:11941`)
+> 5. foundation-gradient (`2452:6035`)
+> 6. foundation-decorate (`2452:6034`)
+> 7. foundation-icon (`2414:34422`)
+> 8. foundation-3d-illustration (`2941:667`)
+> 9. foundation-product (`2941:684`)
+> 10. component-button (`2414:32026`) → buttons
+> 11. component-chip (`2546:166598`) → chips
+> 12. component-ratio (`2452:6033`) → ratio
+> 13. component-thumbnail (`2452:6037`) → thumbnails
+> 14. component-scroll (`2452:7600`) → scrolls
+> 15. component-avatar (`2452:6039`) → avatars
+> 16. component-indicators (`2442:16180`) → indicators
+> 17. component-divider (`2452:6032`) → dividers
+> 18. module-navigation (`2452:3459`) → navigation
+> 19. module-tab (`2414:34400`) → tabs
+> 20. module-pagination (`2452:6038`) → pagination
+> 21. module-progress-indicators (`2449:415`) → indicators
+> 22. module-selection-input (`2442:7603`) → selection,forms,controls
+> 23. module-control-box (`2537:62051`) → control_box
+> 24. module-gauge (`2442:15568`) → gauge
+> 25. module-feedback (`2546:36834`) → feedback
+> 26. module-presentation (`2546:42535`) → presentation,modals
+> 27. module-contents (`2573:404660`) → contents,cards
+> 28. etc-design-components (`2643:8531`)
+>
+> 아래 템플릿에서 `{pageId}`, `{pageSlug}`, `{group}` 을 페이지마다 치환해 등록.
 
 ## 입력
 - Figma fileKey: `q7yBPcHrid1CGQqFWEPwnR`
@@ -227,7 +245,7 @@
 - `01-audit/figma-pages.json` (대상 페이지의 메타 확인용)
 
 ## 처리
-1. `mcp__figma__get_metadata` 로 `{pageId}` 의 자식 노드 트리를 얕게 가져와 컴포넌트 단위 노드 ID 목록 확보
+1. `mcp__figma__use_figma` (Plugin API 트리 순회) 로 `{pageId}` 의 자식 노드 트리를 얕게 가져와 컴포넌트 단위 노드 ID 목록 확보
 2. 노드를 50개씩 배치로 묶어 순회. 각 배치마다:
    - 해당 노드의 spacing 관련 속성 추출
      - `itemSpacing`, `paddingTop|Left|Right|Bottom`, `counterAxisSpacing`
@@ -443,10 +461,26 @@
 
 ---
 
-# 🆕 Task 07..N · Phase 4 — Figma 적용 (그룹별)
+# 🆕 Task 07..34 · Phase 4 — Figma 적용 (28개 그룹)
 
-> `figma-node-to-token.csv` 의 `group` 컬럼 distinct 값마다 1개 Task.
-> 예상 그룹: `foundation`, `avatars`, `buttons`, ..., `thumbnails`, `Module`, `Template`, `Etc` 등
+> `figma-pages.json` 의 `phase4ApplyGroups` 우선순위에 따라 28개 Task 등록.
+>
+> **Priority 1 (먼저 적용 — 토큰 소스)**
+> - foundation-space (`2485:8842`)
+>
+> **Priority 2 (Component — 코드 디렉터리 1:1 매칭)**
+> - component-button, component-chip, component-ratio, component-thumbnail, component-scroll, component-avatar, component-indicators, component-divider
+>
+> **Priority 3 (Module — 코드 디렉터리 1:N 매칭)**
+> - module-navigation, module-tab, module-pagination, module-progress-indicators, module-selection-input, module-control-box, module-gauge, module-feedback, module-presentation, module-contents
+>
+> **Priority 4 (다른 Foundation — 스페이싱 사용 적음)**
+> - foundation-logo, foundation-typography, foundation-colors, foundation-gradient, foundation-decorate, foundation-icon, foundation-3d-illustration, foundation-product
+>
+> **Priority 5 (Etc)**
+> - etc-design-components
+>
+> 한 Task = 한 그룹.
 
 ## 입력
 - `03-mapping/figma-node-to-token.csv`
@@ -527,31 +561,30 @@
 
 > 21개 컴포넌트 디렉터리 각각에 1개 Task. 아래 목록 그대로 21개 Task 등록.
 
-## 디렉터리 목록 (Task 등록 순서 — 의존도가 낮은 순)
-1. avatars
-2. dividers
-3. ratio
-4. thumbnails
-5. chips
-6. buttons
-7. controls
-8. selection
-9. indicators
-10. gauge
-11. pagination
-12. tabs
-13. scrolls
-14. dividers (이미 처리 — skip)
-15. cards
-16. contents
-17. presentation
-18. control_box
-19. forms
-20. feedback
-21. modals
-22. navigation
+## 디렉터리 목록 (Task 등록 순서 — 의존도 낮은 순, 총 21개)
+각 항목 옆은 해당 Figma 페이지 (`figma-pages.json` 의 `codeDirToFigmaPage` 기준)
 
-> 실제 21개. 14번 중복은 제거하고 등록.
+1. avatars → `2452:6039` 👤 Avatar
+2. dividers → `2452:6032` ➗ Divider
+3. ratio → `2452:6033` 📏 Ratio
+4. thumbnails → `2452:6037` 🖼️ Thumbnail
+5. chips → `2546:166598` 🍪 Chip
+6. buttons → `2414:32026` ⏹️ Button
+7. controls → `2442:7603` ☑️ Selection and Input
+8. selection → `2442:7603` ☑️ Selection and Input
+9. indicators → `2442:16180` 💡 Indicators + `2449:415` ⏳ Progress Indicators
+10. gauge → `2442:15568` 🌡️ Gauge
+11. pagination → `2452:6038` 🔢 Pagination
+12. tabs → `2414:34400` 📑 Tab
+13. scrolls → `2452:7600` 🖱️ Scroll
+14. cards → `2573:404660` 📑 Contents
+15. contents → `2573:404660` 📑 Contents
+16. presentation → `2546:42535` 📣 Presentation
+17. control_box → `2537:62051` 🕹️ Control Box
+18. forms → `2442:7603` ☑️ Selection and Input
+19. feedback → `2546:36834` 🪞 Feedback
+20. modals → `2546:42535` 📣 Presentation
+21. navigation → `2452:3459` 🧭 Navigation
 
 ## 공통 입력
 - `03-mapping/code-usage-to-token.csv`
@@ -630,29 +663,30 @@ analyze 실패 / 테스트 실패:
 # 부록 A · Task 등록 체크리스트 (Cowork 운영자용)
 
 ```
-[ ] Task 00  — Phase 0
-    📌 검수 후 ──
-[ ] Task 01  — Phase 1-A-0 (Figma 페이지 정찰)
-    📌 검수 #1: figma-pages.json
+[ ] Task 00  — Phase 0  Bootstrap
+[✅] Task 01 — Phase 1-A-0 (사전완료, figma-pages.json 존재)
+    📌 검수 #1: figma-pages.json 의 auditOrder/codeDirToFigmaPage 확인
 [ ] Task 02  — Phase 1-B (코드 감사, 22개 서브 작업 1세션)
-[ ] Task 03..N — Phase 1-A (Figma 페이지별, N=페이지수)
+[ ] Task 03..30 — Phase 1-A (Figma 페이지별, 총 28개)
 [ ] Task LAST-1A — Phase 1-A INDEX
-[ ] Task 04  — Phase 1-C 갭 분석
+[ ] Task 31  — Phase 1-C 갭 분석
     📌 검수 #2: gap-analysis.md → palette 후보안 결정
-[ ] Task 05  — Phase 2 토큰 설계
+[ ] Task 32  — Phase 2 토큰 설계
     📌 검수 #3: palette/semantic 승인
-[ ] Task 06  — Phase 3 매핑
+[ ] Task 33  — Phase 3 매핑
     📌 검수 #4: REVIEW_QUEUE.md 해소
-[ ] Task 07..N — Phase 4 Figma 적용 (그룹별)
+[ ] Task 34..61 — Phase 4 Figma 적용 (28개 그룹)
     📌 검수 #5 (그룹마다)
 [ ] Task LAST-4 — Phase 4 INDEX
-[ ] Task 08  — Phase 5-Pre 토큰 코드 반영
+[ ] Task 62  — Phase 5-Pre 토큰 코드 반영
     📌 검수 #6: app_spacing.dart diff
-[ ] Task 09..29 — Phase 5 디렉터리별 적용 (21개)
+[ ] Task 63..83 — Phase 5 디렉터리별 적용 (21개)
     📌 검수 #7 (디렉터리마다)
-[ ] Task 30  — Phase 6 최종 검증
+[ ] Task 84  — Phase 6 최종 검증
     📌 검수 #8: SUMMARY.md 최종 승인
 ```
+
+총 84개 Task. 사람 검수 게이트 8개.
 
 # 부록 B · 의존성 그래프
 
