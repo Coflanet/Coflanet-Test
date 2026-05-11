@@ -1,0 +1,669 @@
+{
+  "_meta": {
+    "dir": "foundation",
+    "file": "lib/foundation/app_spacing.dart",
+    "purpose": "Spacing 토큰 정의 추출 (Palette + Semantic + EdgeInsets consts/helpers)",
+    "phase": "Phase 1-B audit"
+  },
+  "palette": [
+    {
+      "name": "space4",
+      "type": "double",
+      "valueExpr": "4.0",
+      "line": 16,
+      "section": "PALETTE",
+      "subsection": null,
+      "doc": "4px",
+      "value": 4.0
+    },
+    {
+      "name": "space8",
+      "type": "double",
+      "valueExpr": "8.0",
+      "line": 19,
+      "section": "PALETTE",
+      "subsection": null,
+      "doc": "8px — Figma `Spacing.Button.hor`",
+      "value": 8.0
+    },
+    {
+      "name": "space12",
+      "type": "double",
+      "valueExpr": "12.0",
+      "line": 22,
+      "section": "PALETTE",
+      "subsection": null,
+      "doc": "12px — Figma `Spacing.12 (Item Space)` / `Spacing.Button.ver`",
+      "value": 12.0
+    },
+    {
+      "name": "space14",
+      "type": "double",
+      "valueExpr": "14.0",
+      "line": 25,
+      "section": "PALETTE",
+      "subsection": null,
+      "doc": "14px — Safe Area Bottom (Android)",
+      "value": 14.0
+    },
+    {
+      "name": "space16",
+      "type": "double",
+      "valueExpr": "16.0",
+      "line": 28,
+      "section": "PALETTE",
+      "subsection": null,
+      "doc": "16px — Figma `Spacing.16 (Text Contents space)` / `Padding.Box in Box`",
+      "value": 16.0
+    },
+    {
+      "name": "space20",
+      "type": "double",
+      "valueExpr": "20.0",
+      "line": 31,
+      "section": "PALETTE",
+      "subsection": null,
+      "doc": "20px",
+      "value": 20.0
+    },
+    {
+      "name": "space24",
+      "type": "double",
+      "valueExpr": "24.0",
+      "line": 34,
+      "section": "PALETTE",
+      "subsection": null,
+      "doc": "24px — Figma `Padding.Contents in Box`",
+      "value": 24.0
+    },
+    {
+      "name": "space32",
+      "type": "double",
+      "valueExpr": "32.0",
+      "line": 37,
+      "section": "PALETTE",
+      "subsection": null,
+      "doc": "32px",
+      "value": 32.0
+    },
+    {
+      "name": "space34",
+      "type": "double",
+      "valueExpr": "34.0",
+      "line": 40,
+      "section": "PALETTE",
+      "subsection": null,
+      "doc": "34px — Safe Area Bottom (iOS)",
+      "value": 34.0
+    },
+    {
+      "name": "space36",
+      "type": "double",
+      "valueExpr": "36.0",
+      "line": 43,
+      "section": "PALETTE",
+      "subsection": null,
+      "doc": "36px — Safe Area Status (Android)",
+      "value": 36.0
+    },
+    {
+      "name": "space40",
+      "type": "double",
+      "valueExpr": "40.0",
+      "line": 46,
+      "section": "PALETTE",
+      "subsection": null,
+      "doc": "40px",
+      "value": 40.0
+    },
+    {
+      "name": "space44",
+      "type": "double",
+      "valueExpr": "44.0",
+      "line": 49,
+      "section": "PALETTE",
+      "subsection": null,
+      "doc": "44px — Safe Area Status (iOS)",
+      "value": 44.0
+    },
+    {
+      "name": "space48",
+      "type": "double",
+      "valueExpr": "48.0",
+      "line": 52,
+      "section": "PALETTE",
+      "subsection": null,
+      "doc": "48px",
+      "value": 48.0
+    }
+  ],
+  "semantic": [
+    {
+      "name": "containerVerticalPadding",
+      "type": "double",
+      "valueExpr": "space32",
+      "line": 59,
+      "section": "SEMANTIC",
+      "subsection": "Container / Box Padding",
+      "doc": null,
+      "value": null,
+      "references": "space32",
+      "resolvedValue": 32.0
+    },
+    {
+      "name": "containerHorizontalPadding",
+      "type": "double",
+      "valueExpr": "space24",
+      "line": 60,
+      "section": "SEMANTIC",
+      "subsection": "Container / Box Padding",
+      "doc": null,
+      "value": null,
+      "references": "space24",
+      "resolvedValue": 24.0
+    },
+    {
+      "name": "inBoxTopPadding",
+      "type": "double",
+      "valueExpr": "space16",
+      "line": 61,
+      "section": "SEMANTIC",
+      "subsection": "Container / Box Padding",
+      "doc": null,
+      "value": null,
+      "references": "space16",
+      "resolvedValue": 16.0
+    },
+    {
+      "name": "bottomAfterBox",
+      "type": "double",
+      "valueExpr": "space16",
+      "line": 62,
+      "section": "SEMANTIC",
+      "subsection": "Container / Box Padding",
+      "doc": null,
+      "value": null,
+      "references": "space16",
+      "resolvedValue": 16.0
+    },
+    {
+      "name": "bottomAfterText",
+      "type": "double",
+      "valueExpr": "space32",
+      "line": 63,
+      "section": "SEMANTIC",
+      "subsection": "Container / Box Padding",
+      "doc": null,
+      "value": null,
+      "references": "space32",
+      "resolvedValue": 32.0
+    },
+    {
+      "name": "itemSpacing",
+      "type": "double",
+      "valueExpr": "space12",
+      "line": 66,
+      "section": "SEMANTIC",
+      "subsection": "요소 간 간격",
+      "doc": null,
+      "value": null,
+      "references": "space12",
+      "resolvedValue": 12.0
+    },
+    {
+      "name": "textContentsSpacing",
+      "type": "double",
+      "valueExpr": "space16",
+      "line": 67,
+      "section": "SEMANTIC",
+      "subsection": "요소 간 간격",
+      "doc": null,
+      "value": null,
+      "references": "space16",
+      "resolvedValue": 16.0
+    },
+    {
+      "name": "textToBoxSpacing",
+      "type": "double",
+      "valueExpr": "space16",
+      "line": 68,
+      "section": "SEMANTIC",
+      "subsection": "요소 간 간격",
+      "doc": null,
+      "value": null,
+      "references": "space16",
+      "resolvedValue": 16.0
+    },
+    {
+      "name": "betweenBoxesSpacing",
+      "type": "double",
+      "valueExpr": "space20",
+      "line": 69,
+      "section": "SEMANTIC",
+      "subsection": "요소 간 간격",
+      "doc": null,
+      "value": null,
+      "references": "space20",
+      "resolvedValue": 20.0
+    },
+    {
+      "name": "paddingContentsInBox",
+      "type": "double",
+      "valueExpr": "space24",
+      "line": 72,
+      "section": "SEMANTIC",
+      "subsection": "Padding 카테고리",
+      "doc": null,
+      "value": null,
+      "references": "space24",
+      "resolvedValue": 24.0
+    },
+    {
+      "name": "paddingBoxInBox",
+      "type": "double",
+      "valueExpr": "space16",
+      "line": 73,
+      "section": "SEMANTIC",
+      "subsection": "Padding 카테고리",
+      "doc": null,
+      "value": null,
+      "references": "space16",
+      "resolvedValue": 16.0
+    },
+    {
+      "name": "paddingContentsInBoxSmall",
+      "type": "double",
+      "valueExpr": "space8",
+      "line": 74,
+      "section": "SEMANTIC",
+      "subsection": "Padding 카테고리",
+      "doc": null,
+      "value": null,
+      "references": "space8",
+      "resolvedValue": 8.0
+    },
+    {
+      "name": "buttonPaddingHorizontal",
+      "type": "double",
+      "valueExpr": "space8",
+      "line": 77,
+      "section": "SEMANTIC",
+      "subsection": "Button",
+      "doc": null,
+      "value": null,
+      "references": "space8",
+      "resolvedValue": 8.0
+    },
+    {
+      "name": "buttonPaddingVertical",
+      "type": "double",
+      "valueExpr": "space12",
+      "line": 78,
+      "section": "SEMANTIC",
+      "subsection": "Button",
+      "doc": null,
+      "value": null,
+      "references": "space12",
+      "resolvedValue": 12.0
+    },
+    {
+      "name": "safeAreaStatusIos",
+      "type": "double",
+      "valueExpr": "space44",
+      "line": 81,
+      "section": "SEMANTIC",
+      "subsection": "Safe Area (디자이너 시안 기준값)",
+      "doc": null,
+      "value": null,
+      "references": "space44",
+      "resolvedValue": 44.0
+    },
+    {
+      "name": "safeAreaStatusAndroid",
+      "type": "double",
+      "valueExpr": "space36",
+      "line": 82,
+      "section": "SEMANTIC",
+      "subsection": "Safe Area (디자이너 시안 기준값)",
+      "doc": null,
+      "value": null,
+      "references": "space36",
+      "resolvedValue": 36.0
+    },
+    {
+      "name": "safeAreaStatusWeb",
+      "type": "double",
+      "valueExpr": "0",
+      "line": 83,
+      "section": "SEMANTIC",
+      "subsection": "Safe Area (디자이너 시안 기준값)",
+      "doc": null,
+      "value": 0.0
+    },
+    {
+      "name": "safeAreaBottomIos",
+      "type": "double",
+      "valueExpr": "space34",
+      "line": 84,
+      "section": "SEMANTIC",
+      "subsection": "Safe Area (디자이너 시안 기준값)",
+      "doc": null,
+      "value": null,
+      "references": "space34",
+      "resolvedValue": 34.0
+    },
+    {
+      "name": "safeAreaBottomAndroid",
+      "type": "double",
+      "valueExpr": "space14",
+      "line": 85,
+      "section": "SEMANTIC",
+      "subsection": "Safe Area (디자이너 시안 기준값)",
+      "doc": null,
+      "value": null,
+      "references": "space14",
+      "resolvedValue": 14.0
+    },
+    {
+      "name": "safeAreaBottomWeb",
+      "type": "double",
+      "valueExpr": "0",
+      "line": 86,
+      "section": "SEMANTIC",
+      "subsection": "Safe Area (디자이너 시안 기준값)",
+      "doc": null,
+      "value": 0.0
+    }
+  ],
+  "edgeInsetsConsts": [
+    {
+      "name": "containerPadding",
+      "type": "EdgeInsets",
+      "valueExpr": "EdgeInsets.symmetric( horizontal: space24, vertical: space32, )",
+      "line": 100,
+      "section": "EDGE INSETS HELPERS",
+      "subsection": null,
+      "doc": null
+    },
+    {
+      "name": "buttonPadding",
+      "type": "EdgeInsets",
+      "valueExpr": "EdgeInsets.symmetric( horizontal: space8, vertical: space12, )",
+      "line": 105,
+      "section": "EDGE INSETS HELPERS",
+      "subsection": null,
+      "doc": null
+    }
+  ],
+  "helperFunctions": [
+    {
+      "name": "all",
+      "params": "double value",
+      "body": "EdgeInsets.all(value)",
+      "line": 92
+    },
+    {
+      "name": "horizontal",
+      "params": "double value",
+      "body": "EdgeInsets.symmetric(horizontal: value)",
+      "line": 93
+    },
+    {
+      "name": "vertical",
+      "params": "double value",
+      "body": "EdgeInsets.symmetric(vertical: value)",
+      "line": 95
+    },
+    {
+      "name": "symmetric",
+      "params": "{double h = 0, double v = 0}",
+      "body": "EdgeInsets.symmetric(horizontal: h, vertical: v)",
+      "line": 97
+    }
+  ],
+  "spacingUseCases": {
+    "file": "lib/foundation/spacing_use_cases.dart",
+    "groups": [
+      {
+        "groupName": "Palette",
+        "line": 17
+      },
+      {
+        "groupName": "Container & Box Padding",
+        "line": 40
+      },
+      {
+        "groupName": "Element Gap",
+        "line": 59
+      },
+      {
+        "groupName": "Padding Category",
+        "line": 76
+      },
+      {
+        "groupName": "Button",
+        "line": 92
+      },
+      {
+        "groupName": "Safe Area",
+        "line": 106
+      }
+    ],
+    "showcasedTokens": [
+      {
+        "displayName": "space4",
+        "tokenRef": "space4",
+        "line": 23
+      },
+      {
+        "displayName": "space8",
+        "tokenRef": "space8",
+        "line": 24
+      },
+      {
+        "displayName": "space12",
+        "tokenRef": "space12",
+        "line": 25
+      },
+      {
+        "displayName": "space14",
+        "tokenRef": "space14",
+        "line": 26
+      },
+      {
+        "displayName": "space16",
+        "tokenRef": "space16",
+        "line": 27
+      },
+      {
+        "displayName": "space20",
+        "tokenRef": "space20",
+        "line": 28
+      },
+      {
+        "displayName": "space24",
+        "tokenRef": "space24",
+        "line": 29
+      },
+      {
+        "displayName": "space32",
+        "tokenRef": "space32",
+        "line": 30
+      },
+      {
+        "displayName": "space34",
+        "tokenRef": "space34",
+        "line": 31
+      },
+      {
+        "displayName": "space36",
+        "tokenRef": "space36",
+        "line": 32
+      },
+      {
+        "displayName": "space40",
+        "tokenRef": "space40",
+        "line": 33
+      },
+      {
+        "displayName": "space44",
+        "tokenRef": "space44",
+        "line": 34
+      },
+      {
+        "displayName": "space48",
+        "tokenRef": "space48",
+        "line": 35
+      },
+      {
+        "displayName": "containerVerticalPadding",
+        "tokenRef": "containerVerticalPadding",
+        "line": 46
+      },
+      {
+        "displayName": "inBoxTopPadding",
+        "tokenRef": "inBoxTopPadding",
+        "line": 50
+      },
+      {
+        "displayName": "bottomAfterBox",
+        "tokenRef": "bottomAfterBox",
+        "line": 51
+      },
+      {
+        "displayName": "bottomAfterText",
+        "tokenRef": "bottomAfterText",
+        "line": 53
+      },
+      {
+        "displayName": "itemSpacing",
+        "tokenRef": "itemSpacing",
+        "line": 65
+      },
+      {
+        "displayName": "textContentsSpacing",
+        "tokenRef": "textContentsSpacing",
+        "line": 66
+      },
+      {
+        "displayName": "textToBoxSpacing",
+        "tokenRef": "textToBoxSpacing",
+        "line": 68
+      },
+      {
+        "displayName": "betweenBoxesSpacing",
+        "tokenRef": "betweenBoxesSpacing",
+        "line": 70
+      },
+      {
+        "displayName": "paddingContentsInBox",
+        "tokenRef": "paddingContentsInBox",
+        "line": 82
+      },
+      {
+        "displayName": "paddingBoxInBox",
+        "tokenRef": "paddingBoxInBox",
+        "line": 84
+      },
+      {
+        "displayName": "buttonPaddingHorizontal",
+        "tokenRef": "buttonPaddingHorizontal",
+        "line": 98
+      },
+      {
+        "displayName": "buttonPaddingVertical",
+        "tokenRef": "buttonPaddingVertical",
+        "line": 100
+      },
+      {
+        "displayName": "safeAreaStatusIos",
+        "tokenRef": "safeAreaStatusIos",
+        "line": 112
+      },
+      {
+        "displayName": "safeAreaStatusAndroid",
+        "tokenRef": "safeAreaStatusAndroid",
+        "line": 114
+      },
+      {
+        "displayName": "safeAreaStatusWeb",
+        "tokenRef": "safeAreaStatusWeb",
+        "line": 116
+      },
+      {
+        "displayName": "safeAreaBottomIos",
+        "tokenRef": "safeAreaBottomIos",
+        "line": 117
+      },
+      {
+        "displayName": "safeAreaBottomAndroid",
+        "tokenRef": "safeAreaBottomAndroid",
+        "line": 119
+      },
+      {
+        "displayName": "safeAreaBottomWeb",
+        "tokenRef": "safeAreaBottomWeb",
+        "line": 121
+      }
+    ],
+    "hardCodedEdgeInsetsInDemo": [
+      {
+        "line": 140,
+        "kind": "EdgeInsets.all",
+        "args": "16",
+        "snippet": "padding: const EdgeInsets.all(16),"
+      },
+      {
+        "line": 145,
+        "kind": "EdgeInsets.symmetric",
+        "args": "vertical: 6",
+        "snippet": "margin: const EdgeInsets.symmetric(vertical: 6),"
+      },
+      {
+        "line": 146,
+        "kind": "EdgeInsets.symmetric",
+        "args": "horizontal: 16, vertical: 12",
+        "snippet": "padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),"
+      }
+    ]
+  },
+  "_summary": {
+    "dir": "foundation",
+    "paletteCount": 13,
+    "semanticCount": 20,
+    "edgeInsetsConstCount": 2,
+    "helperFunctionCount": 4,
+    "paletteValues": [
+      4.0,
+      8.0,
+      12.0,
+      14.0,
+      16.0,
+      20.0,
+      24.0,
+      32.0,
+      34.0,
+      36.0,
+      40.0,
+      44.0,
+      48.0
+    ],
+    "distinctSemanticPaletteRefs": [
+      "space12",
+      "space14",
+      "space16",
+      "space20",
+      "space24",
+      "space32",
+      "space34",
+      "space36",
+      "space44",
+      "space8"
+    ],
+    "useCases": {
+      "groupCount": 6,
+      "showcasedTokenCount": 31,
+      "hardCodedEdgeInsetsInDemoCount": 3
+    }
+  }
+}
