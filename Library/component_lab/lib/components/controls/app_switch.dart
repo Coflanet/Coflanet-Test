@@ -12,11 +12,15 @@ class AppSwitch extends StatelessWidget {
   final ValueChanged<bool>? onChanged;
   final AppSwitchSize size;
 
+  /// 접근성 — 스크린 리더가 읽을 라벨 (예: "다크 모드"). null이면 일반 'switch'.
+  final String? semanticLabel;
+
   const AppSwitch({
     super.key,
     required this.value,
     this.onChanged,
     this.size = AppSwitchSize.md,
+    this.semanticLabel,
   });
 
   @override
@@ -33,9 +37,15 @@ class AppSwitch extends StatelessWidget {
         : (c.primaryNormal);
     final trackOff = c.componentFillStrong;
 
-    return GestureDetector(
+    return Semantics(
+      label: semanticLabel,
+      toggled: value,
+      enabled: !disabled,
+      excludeSemantics: true,
       onTap: disabled ? null : () => onChanged!(!value),
-      child: AnimatedContainer(
+      child: GestureDetector(
+        onTap: disabled ? null : () => onChanged!(!value),
+        child: AnimatedContainer(
         duration: const Duration(milliseconds: 180),
         curve: Curves.easeOut,
         width: width,
@@ -64,6 +74,7 @@ class AppSwitch extends StatelessWidget {
               ],
             ),
           ),
+        ),
         ),
       ),
     );

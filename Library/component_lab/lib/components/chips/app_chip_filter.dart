@@ -213,7 +213,7 @@ class AppChipFilter extends StatelessWidget {
       color: c.fg,
     );
 
-    return Material(
+    final material = Material(
       color: c.bg,
       shape: shape,
       child: InkWell(
@@ -236,6 +236,23 @@ class AppChipFilter extends StatelessWidget {
           ),
         ),
       ),
+    );
+
+    // 접근성 — Tap target 48dp WCAG 보강 (xsmall만 외곽 투명 padding).
+    final tapBoost = size == AppChipSize.xsmall ? 6.0 : 0.0;
+    final wrapped = tapBoost > 0
+        ? Padding(padding: EdgeInsets.all(tapBoost), child: material)
+        : material;
+
+    return Semantics(
+      label: count != null ? '$label, $count개' : label,
+      button: true,
+      enabled: onPressed != null,
+      selected: isActive,
+      expanded: state == AppChipFilterState.expand,
+      excludeSemantics: true,
+      onTap: onPressed,
+      child: wrapped,
     );
   }
 }

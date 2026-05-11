@@ -13,6 +13,8 @@ dependencies:
   cupertino_icons: ^1.0.8
   widgetbook: ^3.11.0
   flutter_svg: ^2.0.10+1
+  cached_network_image: ^3.3.1
+  shimmer: ^3.0.0
 
   # Coflanet 앱을 path dependency로 등록 → 토큰·테마 그대로 import 가능.
   # 이렇게 하면 토큰 정의는 한 곳(coflanet-app/lib/constants)에서만 관리.
