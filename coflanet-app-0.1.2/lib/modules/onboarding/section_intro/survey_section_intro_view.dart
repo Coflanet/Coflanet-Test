@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:component_lab/component_lab.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
 import 'package:coflanet/constants/asset_constant.dart';
@@ -117,7 +118,8 @@ class SurveySectionIntroView extends GetView<SurveyController> {
       elevation: 0,
       leading: IconButton(
         icon: SvgPicture.asset(
-          AssetPath.iconArrowBack,
+          CoflanetIcons.arrowLeft,
+            package: 'component_lab',
           width: 24,
           height: 24,
           colorFilter: ColorFilter.mode(AppColor.labelNormal, BlendMode.srcIn),
@@ -135,7 +137,8 @@ class SurveySectionIntroView extends GetView<SurveyController> {
         // X 닫기 버튼 (건너뛰기)
         IconButton(
           icon: SvgPicture.asset(
-            AssetPath.iconClose,
+            CoflanetIcons.close,
+            package: 'component_lab',
             width: 24,
             height: 24,
             colorFilter: ColorFilter.mode(
@@ -253,7 +256,8 @@ class SurveySectionIntroView extends GetView<SurveyController> {
           child: Center(
             child: state == _StepState.completed
                 ? SvgPicture.asset(
-                    AssetPath.iconCheck,
+                    CoflanetIcons.check,
+            package: 'component_lab',
                     width: 16,
                     height: 16,
                     colorFilter: ColorFilter.mode(
