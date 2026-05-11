@@ -295,6 +295,7 @@ class CoflanetIcon extends StatelessWidget {
     this.size = CoflanetIconSize.normal,
     this.color,
     this.package,
+    this.semanticLabel,
   });
 
   /// SVG 에셋 경로 (CoflanetIcons의 상수 사용)
@@ -309,6 +310,9 @@ class CoflanetIcon extends StatelessWidget {
   /// 패키지 이름 (외부 패키지에서 사용 시)
   final String? package;
 
+  /// 접근성 — 스크린 리더가 읽을 라벨. null이면 장식 아이콘으로 처리(읽지 않음).
+  final String? semanticLabel;
+
   @override
   Widget build(BuildContext context) {
     return SvgPicture.asset(
@@ -319,6 +323,8 @@ class CoflanetIcon extends StatelessWidget {
           ? ColorFilter.mode(color!, BlendMode.srcIn)
           : null,
       package: package,
+      semanticsLabel: semanticLabel,
+      excludeFromSemantics: semanticLabel == null,
     );
   }
 }

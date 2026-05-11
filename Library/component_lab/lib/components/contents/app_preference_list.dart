@@ -231,40 +231,52 @@ class _AppPreferenceItemState extends State<AppPreferenceItem> {
                     .toList(),
               ),
             ],
-            if (_expanded) ...[
-              if (widget.tasteChips != null &&
-                  widget.tasteChips!.isNotEmpty) ...[
-                const SizedBox(height: AppSpacing.space16),
-                Text(
-                  '맛 선호도',
-                  style: AppTextStyles.label2Regular.copyWith(
-                    color: AppColor.labelAlternative,
-                  ),
-                ),
-                const SizedBox(height: AppSpacing.space8),
-                Wrap(
-                  spacing: AppSpacing.space8,
-                  runSpacing: AppSpacing.space8,
-                  children: widget.tasteChips!,
-                ),
-              ],
-              if (widget.flavorChips != null &&
-                  widget.flavorChips!.isNotEmpty) ...[
-                const SizedBox(height: AppSpacing.space16),
-                Text(
-                  '좋아하는 향',
-                  style: AppTextStyles.label2Regular.copyWith(
-                    color: AppColor.labelAlternative,
-                  ),
-                ),
-                const SizedBox(height: AppSpacing.space8),
-                Wrap(
-                  spacing: AppSpacing.space8,
-                  runSpacing: AppSpacing.space8,
-                  children: widget.flavorChips!,
-                ),
-              ],
-            ],
+            // Expand 영역 — AnimatedSize로 AppAccordion과 동일한 부드러운 토글.
+            AnimatedSize(
+              duration: const Duration(milliseconds: 200),
+              curve: Curves.easeInOut,
+              alignment: Alignment.topCenter,
+              child: _expanded
+                  ? Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      mainAxisSize: MainAxisSize.min,
+                      children: [
+                        if (widget.tasteChips != null &&
+                            widget.tasteChips!.isNotEmpty) ...[
+                          const SizedBox(height: AppSpacing.space16),
+                          Text(
+                            '맛 선호도',
+                            style: AppTextStyles.label2Regular.copyWith(
+                              color: AppColor.labelAlternative,
+                            ),
+                          ),
+                          const SizedBox(height: AppSpacing.space8),
+                          Wrap(
+                            spacing: AppSpacing.space8,
+                            runSpacing: AppSpacing.space8,
+                            children: widget.tasteChips!,
+                          ),
+                        ],
+                        if (widget.flavorChips != null &&
+                            widget.flavorChips!.isNotEmpty) ...[
+                          const SizedBox(height: AppSpacing.space16),
+                          Text(
+                            '좋아하는 향',
+                            style: AppTextStyles.label2Regular.copyWith(
+                              color: AppColor.labelAlternative,
+                            ),
+                          ),
+                          const SizedBox(height: AppSpacing.space8),
+                          Wrap(
+                            spacing: AppSpacing.space8,
+                            runSpacing: AppSpacing.space8,
+                            children: widget.flavorChips!,
+                          ),
+                        ],
+                      ],
+                    )
+                  : const SizedBox(width: double.infinity, height: 0),
+            ),
           ],
         ),
       ),

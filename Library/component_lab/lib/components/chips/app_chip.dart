@@ -144,10 +144,21 @@ class AppChip extends StatelessWidget {
         Text(label, style: textStyle.copyWith(color: colors.fg)),
         if (onDelete != null) ...[
           SizedBox(width: isSm ? 4 : AppSpacing.space4),
-          GestureDetector(
+          // Tap target 보강 — 시각 아이콘은 작지만 hit-test 영역은 24×24 이상.
+          Semantics(
+            label: '$label 삭제',
+            button: true,
             onTap: onDelete,
-            child: Icon(Icons.close_rounded,
-                size: iconSize, color: colors.fg),
+            excludeSemantics: true,
+            child: GestureDetector(
+              behavior: HitTestBehavior.opaque,
+              onTap: onDelete,
+              child: Padding(
+                padding: const EdgeInsets.all(4),
+                child: Icon(Icons.close_rounded,
+                    size: iconSize, color: colors.fg),
+              ),
+            ),
           ),
         ],
       ],

@@ -183,7 +183,7 @@ class AppChipAction extends StatelessWidget {
         Icon(trailingIcon, size: m.iconSize, color: c.fg),
     ];
 
-    return Material(
+    final material = Material(
       color: c.bg,
       shape: shape,
       child: InkWell(
@@ -205,6 +205,23 @@ class AppChipAction extends StatelessWidget {
           ),
         ),
       ),
+    );
+
+    // 접근성 — Tap target 48dp WCAG 보강. xsmall은 시각 사이즈가 24px 수준이라
+    // 외곽에 투명 padding으로 hit area를 키운다. 시각은 유지.
+    final tapBoost = size == AppChipSize.xsmall ? 6.0 : 0.0;
+    final wrapped = tapBoost > 0
+        ? Padding(padding: EdgeInsets.all(tapBoost), child: material)
+        : material;
+
+    return Semantics(
+      label: label,
+      button: true,
+      enabled: onPressed != null,
+      selected: isActive,
+      excludeSemantics: true,
+      onTap: onPressed,
+      child: wrapped,
     );
   }
 }

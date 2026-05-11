@@ -1,5 +1,8 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
+import 'package:shimmer/shimmer.dart';
 
+import '../../foundation/app_color.dart';
 import '../../foundation/app_color_theme.dart';
 import '../../foundation/app_radius.dart';
 import '../../foundation/app_text_style.dart';
@@ -64,6 +67,9 @@ class AppAvatar extends StatelessWidget {
   /// 탭 핸들러.
   final VoidCallback? onTap;
 
+  /// 접근성 — 스크린 리더가 읽을 라벨. null이면 initials 또는 type 기반으로 자동 생성.
+  final String? semanticLabel;
+
   const AppAvatar({
     super.key,
     this.imageUrl,
@@ -72,7 +78,18 @@ class AppAvatar extends StatelessWidget {
     this.customDiameter,
     this.type = AppAvatarType.person,
     this.onTap,
+    this.semanticLabel,
   });
+
+  String get _autoSemanticLabel {
+    if (semanticLabel != null) return semanticLabel!;
+    if (initials != null && initials!.isNotEmpty) return '$initials 아바타';
+    return switch (type) {
+      AppAvatarType.person => '프로필 사진',
+      AppAvatarType.company => '회사 로고',
+      AppAvatarType.academic => '학교 로고',
+    };
+  }
 
   double get _diameter => customDiameter ?? size.diameter;
 
@@ -121,12 +138,13 @@ class AppAvatar extends StatelessWidget {
 
     Widget content;
     if (imageUrl != null && imageUrl!.isNotEmpty) {
-      content = Image.network(
-        imageUrl!,
+      content = CachedNetworkImage(
+        imageUrl: imageUrl!,
         width: diameter,
         height: diameter,
         fit: BoxFit.cover,
-        errorBuilder: (_, __, ___) => _fallback(diameter, bg, fg),
+        placeholder: (_, __) => _shimmer(diameter, bg),
+        errorWidget: (_, __, ___) => _fallback(diameter, bg, fg),
       );
     } else {
       content = _fallback(diameter, bg, fg);
@@ -141,17 +159,31 @@ class AppAvatar extends StatelessWidget {
       ),
     );
 
-    if (onTap != null) {
-      return Material(
-        color: Colors.transparent,
-        child: InkWell(
-          onTap: onTap,
-          borderRadius: radius,
-          child: body,
-        ),
-      );
-    }
-    return body;
+    final tappable = onTap != null
+        ? Material(
+            color: Colors.transparent,
+            child: InkWell(
+              onTap: onTap,
+              borderRadius: radius,
+              child: body,
+            ),
+          )
+        : body;
+
+    return Semantics(
+      label: _autoSemanticLabel,
+      image: imageUrl != null,
+      button: onTap != null,
+      child: tappable,
+    );
+  }
+
+  Widget _shimmer(double diameter, Color bg) {
+    return Shimmer.fromColors(
+      baseColor: bg,
+      highlightColor: AppColor.colorGlobalCoolNeutral95,
+      child: Container(width: diameter, height: diameter, color: bg),
+    );
   }
 
   Widget _fallback(double diameter, Color bg, Color fg) {
@@ -221,28 +253,90 @@ class AppAvatarButton extends StatelessWidget {
 /// 겹쳐 보이는 아바타 그룹 — Figma `Avatar Group`.
 ///
 /// 피그마: Size=XSmall/Small, Variant=Person/Company.
+/// `maxCount`를 지정하면 초과분은 `+N` 카운트 인디케이터로 표시.
 class AppAvatarGroup extends StatelessWidget {
   final List<AppAvatar> avatars;
 
   /// 겹치는 정도 (0이면 안 겹침, 기본 -8).
   final double overlap;
 
+  /// 최대 표시 개수. null이면 전부 표시. 초과분은 `+N` 카운터로 표시.
+  final int? maxCount;
+
+  /// `+N` 카운터 위젯 커스터마이즈. null이면 기본 회색 원형 카운터.
+  final Widget Function(int remaining)? overflowBuilder;
+
   const AppAvatarGroup({
     super.key,
     required this.avatars,
     this.overlap = -8,
+    this.maxCount,
+    this.overflowBuilder,
   });
 
   @override
   Widget build(BuildContext context) {
-    return Row(
-      mainAxisSize: MainAxisSize.min,
-      children: List.generate(avatars.length, (i) {
-        return Padding(
-          padding: EdgeInsets.only(left: i == 0 ? 0 : overlap),
-          child: avatars[i],
-        );
-      }),
+    final visibleCount = maxCount == null
+        ? avatars.length
+        : (maxCount! < avatars.length ? maxCount! : avatars.length);
+    final overflow = avatars.length - visibleCount;
+    final visible = avatars.take(visibleCount).toList();
+
+    return Semantics(
+      label: '아바타 그룹 ${avatars.length}명',
+      child: Row(
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          for (var i = 0; i < visible.length; i++)
+            Padding(
+              padding: EdgeInsets.only(left: i == 0 ? 0 : overlap),
+              child: visible[i],
+            ),
+          if (overflow > 0)
+            Padding(
+              padding: EdgeInsets.only(left: overlap),
+              child: overflowBuilder?.call(overflow) ??
+                  _OverflowCounter(
+                    remaining: overflow,
+                    diameter:
+                        avatars.isEmpty ? 32 : avatars.first._diameter,
+                  ),
+            ),
+        ],
+      ),
+    );
+  }
+}
+
+class _OverflowCounter extends StatelessWidget {
+  const _OverflowCounter({required this.remaining, required this.diameter});
+
+  final int remaining;
+  final double diameter;
+
+  @override
+  Widget build(BuildContext context) {
+    final c = context.appColors;
+    final textStyle = diameter <= 24
+        ? AppTextStyles.caption2Bold
+        : (diameter <= 32
+            ? AppTextStyles.caption1Bold
+            : AppTextStyles.label2Bold);
+    return Semantics(
+      label: '$remaining명 더',
+      child: Container(
+        width: diameter,
+        height: diameter,
+        decoration: BoxDecoration(
+          color: c.componentFillNormal,
+          shape: BoxShape.circle,
+        ),
+        alignment: Alignment.center,
+        child: Text(
+          '+$remaining',
+          style: textStyle.copyWith(color: c.labelNeutral),
+        ),
+      ),
     );
   }
 }

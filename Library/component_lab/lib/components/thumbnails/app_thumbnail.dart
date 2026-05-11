@@ -1,5 +1,8 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
+import 'package:shimmer/shimmer.dart';
 
+import '../../foundation/app_color.dart';
 import '../../foundation/app_color_theme.dart';
 import '../../foundation/app_radius.dart';
 import '../ratio/app_ratio.dart';
@@ -62,10 +65,15 @@ class AppThumbnail extends StatelessWidget {
 
     // 이미지 또는 fallback
     final image = imageUrl != null && imageUrl!.isNotEmpty
-        ? Image.network(
-            imageUrl!,
+        ? CachedNetworkImage(
+            imageUrl: imageUrl!,
             fit: BoxFit.cover,
-            errorBuilder: (_, __, ___) =>
+            placeholder: (_, __) => Shimmer.fromColors(
+              baseColor: fallbackBg,
+              highlightColor: AppColor.colorGlobalCoolNeutral95,
+              child: Container(color: fallbackBg),
+            ),
+            errorWidget: (_, __, ___) =>
                 _fallback(fallbackBg, fallbackFg),
           )
         : _fallback(fallbackBg, fallbackFg);
