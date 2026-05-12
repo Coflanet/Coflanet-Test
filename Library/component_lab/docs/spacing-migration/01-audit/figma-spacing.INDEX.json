@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-05-12T22:58:48.784Z",
+  "generatedAt": "2026-05-12T23:26:47.932Z",
   "fileKey": "q7yBPcHrid1CGQqFWEPwnR",
   "fileName": "📚 Library",
   "totalAuditedPages": 27,
@@ -853,13 +853,14 @@
       "files": [
         "figma-spacing-raw.module-navigation-part1.json",
         "figma-spacing-raw.module-navigation-part2.json",
+        "figma-spacing-raw.module-navigation-part3.json",
         "figma-spacing-raw.module-navigation.errors.json"
       ],
       "summary": {
         "pageId": "2452:3459",
         "pageName": "  🧭 Navigation",
-        "totalNodesScanned": 2884,
-        "spacingOccurrences": 1238,
+        "totalNodesScanned": 6628,
+        "spacingOccurrences": 2730,
         "distinctValues": [
           0.33000001311302185,
           0.6700000166893005,
@@ -877,8 +878,11 @@
           16,
           20,
           24,
+          44,
           48,
-          64
+          56,
+          64,
+          68
         ],
         "rawValues": [
           0.33000001311302185,
@@ -897,28 +901,78 @@
           16,
           20,
           24,
+          44,
           48,
-          64
+          56,
+          64,
+          68
         ],
         "boundToVariable": {
           "yes": 0,
-          "no": 1238
+          "no": 2730
         },
         "distinctVariables": 0,
         "_part": 1,
-        "_ofParts": 2
+        "_ofParts": 3
       },
       "status": "complete",
-      "items": 1238
+      "items": 2730
     },
     {
       "pageSlug": "module-tab",
       "files": [
+        "figma-spacing-raw.module-tab-part1.json",
+        "figma-spacing-raw.module-tab-part2.json",
+        "figma-spacing-raw.module-tab-part3.json",
         "figma-spacing-raw.module-tab.errors.json"
       ],
-      "summary": null,
-      "status": "deferred",
-      "items": 0
+      "summary": {
+        "pageId": "2414:34400",
+        "pageName": "       📑 Tab",
+        "totalNodesScanned": 7459,
+        "spacingOccurrences": 2930,
+        "distinctValues": [
+          1,
+          2,
+          3,
+          4,
+          6,
+          7,
+          8,
+          9,
+          10,
+          11,
+          12,
+          16,
+          20,
+          24
+        ],
+        "rawValues": [
+          1,
+          2,
+          3,
+          4,
+          6,
+          7,
+          8,
+          9,
+          10,
+          11,
+          12,
+          16,
+          20,
+          24
+        ],
+        "boundToVariable": {
+          "yes": 0,
+          "no": 2930
+        },
+        "distinctVariables": 0,
+        "_part": 1,
+        "_ofParts": 3
+      },
+      "status": "complete",
+      "items": 2930
     },
     {
       "pageSlug": "module-pagination",
@@ -1030,14 +1084,50 @@
     {
       "pageSlug": "module-selection-input",
       "files": [
-        "figma-spacing-raw.module-selection-input.errors.json"
+        "figma-spacing-raw.module-selection-input.errors.json",
+        "figma-spacing-raw.module-selection-input.json"
       ],
       "summary": {
         "pageId": "2442:7603",
-        "pageName": "☑️ Selection and 📝 Input"
+        "pageName": "  ☑️ Selection and 📝 Input",
+        "totalNodesScanned": 1381,
+        "spacingOccurrences": 757,
+        "distinctValues": [
+          1,
+          2,
+          3,
+          4,
+          6,
+          8,
+          10,
+          12,
+          16,
+          20,
+          24,
+          32
+        ],
+        "rawValues": [
+          1,
+          2,
+          3,
+          4,
+          6,
+          8,
+          10,
+          12,
+          16,
+          20,
+          24,
+          32
+        ],
+        "boundToVariable": {
+          "yes": 0,
+          "no": 757
+        },
+        "distinctVariables": 0
       },
-      "status": "deferred",
-      "items": 0
+      "status": "complete",
+      "items": 757
     },
     {
       "pageSlug": "module-control-box",
@@ -1210,67 +1300,160 @@
     {
       "pageSlug": "module-presentation",
       "files": [
-        "figma-spacing-raw.module-presentation.errors.json"
+        "figma-spacing-raw.module-presentation.errors.json",
+        "figma-spacing-raw.module-presentation.json"
       ],
       "summary": {
         "pageId": "2546:42535",
-        "pageName": "📣 Presentation"
+        "pageName": "   📣 Presentation",
+        "totalNodesScanned": 1000,
+        "spacingOccurrences": 443,
+        "distinctValues": [
+          1,
+          2,
+          3,
+          4,
+          6,
+          7,
+          8,
+          10,
+          12,
+          12.5,
+          14,
+          16,
+          17,
+          20,
+          24,
+          34,
+          36
+        ],
+        "rawValues": [
+          1,
+          2,
+          3,
+          4,
+          6,
+          7,
+          8,
+          10,
+          12,
+          12.5,
+          14,
+          16,
+          17,
+          20,
+          24,
+          34,
+          36
+        ],
+        "boundToVariable": {
+          "yes": 0,
+          "no": 443
+        },
+        "distinctVariables": 0
       },
-      "status": "deferred",
-      "items": 0
+      "status": "complete",
+      "items": 443
     },
     {
       "pageSlug": "module-contents",
       "files": [
-        "figma-spacing-raw.module-contents.errors.json"
+        "figma-spacing-raw.module-contents.errors.json",
+        "figma-spacing-raw.module-contents.json"
       ],
-      "summary": null,
-      "status": "deferred",
-      "items": 0
+      "summary": {
+        "pageId": "2573:404660",
+        "pageName": "   📑 Contents",
+        "totalNodesScanned": 2195,
+        "spacingOccurrences": 907,
+        "distinctValues": [
+          -2,
+          1,
+          2,
+          3,
+          4,
+          6,
+          8,
+          10,
+          12,
+          16,
+          20,
+          24,
+          49,
+          64
+        ],
+        "rawValues": [
+          -2,
+          1,
+          2,
+          3,
+          4,
+          6,
+          8,
+          10,
+          12,
+          16,
+          20,
+          24,
+          49,
+          64
+        ],
+        "boundToVariable": {
+          "yes": 24,
+          "no": 883
+        },
+        "distinctVariables": 7
+      },
+      "status": "complete",
+      "items": 907
     }
   ],
   "totals": {
     "pagesAudited": 27,
-    "pagesComplete": 23,
-    "pagesDeferred": 4,
-    "spacingOccurrencesComplete": 21230,
+    "pagesComplete": 27,
+    "pagesDeferred": 0,
+    "spacingOccurrencesComplete": 27759,
     "globalValueFrequency": {
-      "1": 303,
-      "2": 2787,
-      "3": 459,
-      "4": 2393,
+      "1": 461,
+      "2": 3960,
+      "3": 1338,
+      "4": 3038,
       "5": 112,
-      "6": 2785,
-      "7": 337,
-      "8": 1489,
-      "9": 351,
-      "10": 1691,
-      "11": 189,
-      "12": 1520,
+      "6": 3770,
+      "7": 465,
+      "8": 2059,
+      "9": 623,
+      "10": 2149,
+      "11": 253,
+      "12": 1832,
       "13": 28,
-      "14": 103,
+      "14": 105,
       "15": 105,
-      "16": 1639,
+      "16": 1980,
+      "17": 32,
       "18": 5,
       "19": 4,
-      "20": 1026,
+      "20": 1160,
       "22": 16,
       "23": 1,
-      "24": 2090,
+      "24": 2394,
       "28": 414,
       "30": 5,
       "31": 5,
-      "32": 393,
-      "34": 1,
-      "36": 1,
+      "32": 415,
+      "34": 3,
+      "36": 3,
       "40": 39,
-      "44": 1,
+      "44": 2,
       "46": 2,
       "48": 270,
+      "49": 1,
       "50": 9,
       "54": 1,
+      "56": 2,
       "60": 8,
-      "64": 509,
+      "64": 531,
+      "68": 1,
       "70": 16,
       "72": 1,
       "76": 2,
@@ -1281,13 +1464,15 @@
       "128": 6,
       "160": 24,
       "200": 23,
-      "1.3300000429153442": 6,
-      "0.6700000166893005": 6,
-      "1.333299994468689": 6,
-      "0.33000001311302185": 6,
+      "1.3300000429153442": 10,
+      "0.6700000166893005": 10,
+      "1.333299994468689": 10,
+      "0.33000001311302185": 10,
       "-6": 5,
       "-8": 5,
-      "52.5": 4
+      "52.5": 4,
+      "12.5": 2,
+      "-2": 1
     }
   }
 }
