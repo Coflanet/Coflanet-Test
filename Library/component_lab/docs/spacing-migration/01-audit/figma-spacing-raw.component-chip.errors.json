@@ -1,0 +1,17 @@
+{
+  "pageId": "2546:166598",
+  "pageName": "  🍪 Chip",
+  "pageSlug": "component-chip",
+  "status": "deferred",
+  "reason": "Page has 737 spacing-bearing nodes / 1868 spacing occurrences. Single use_figma call truncates at 20KB due to long instance node paths. Deferred to a follow-up commit on this branch.",
+  "_summary": {
+    "totalNodesScanned": 3764,
+    "totalRows": 737,
+    "distinctValues": [1,2,3,4,5,6,7,8,9,10,11,12,16,24],
+    "rawValues": [1,2,3,4,5,6,7,8,9,10,11,12,16,24],
+    "boundToVariable": { "yes": 0, "no": 1868 },
+    "distinctVariables": 0,
+    "variableMap": {}
+  },
+  "nextSteps": "Re-run audit with LIMIT<=300 row chunks and merge."
+}
