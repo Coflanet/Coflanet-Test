@@ -2,16 +2,20 @@
   "pageId": "2452:6038",
   "pageName": "       🔢 Pagination",
   "pageSlug": "module-pagination",
-  "status": "deferred",
-  "reason": "Page has 1456 spacing-bearing nodes / 2574 spacing occurrences. Single use_figma call truncates at 20KB. Deferred to a follow-up commit on this branch.",
+  "status": "partial",
+  "reason": "Figma MCP tool call limit (Professional plan) reached mid-audit. First bucket (8 of 22 top-level subtrees, covering Pagination Dot + first Counter variant) captured in figma-spacing-raw.module-pagination.json (634 items / ~44% of 1448 spacing rows).",
   "_summary": {
     "totalNodesScanned": 8028,
-    "totalRows": 1456,
+    "totalRows": 1448,
+    "totalBuckets": 22,
+    "bucketsCompleted": 8,
+    "rowsCaptured": 318,
     "distinctValues": [1,2,3,4,6,8,10,12,16,20,24,50,64],
     "rawValues": [1,2,3,4,6,8,10,12,16,20,24,50,64],
     "boundToVariable": { "yes": 0, "no": 2574 },
     "distinctVariables": 0,
     "variableMap": {}
   },
-  "nextSteps": "Re-run with LIMIT<=300 row chunks."
+  "remainingBucketIds": ["2581:196948","2581:196949","2581:196951","2581:196954","2581:196955","2581:196956","2581:196958","2581:196962","2581:196963","2581:196964","2581:196965","2581:196969","2563:339750","2581:196973"],
+  "nextSteps": "Resume by feeding remainingBucketIds (above) into the same compact-row use_figma audit pattern (see prior commits) and merging via /tmp/figma-audit/merge-buckets.js."
 }

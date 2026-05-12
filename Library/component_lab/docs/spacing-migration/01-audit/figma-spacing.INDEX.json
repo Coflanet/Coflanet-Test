@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-05-12T06:37:12.089Z",
+  "generatedAt": "2026-05-12T07:28:45.194Z",
   "fileKey": "q7yBPcHrid1CGQqFWEPwnR",
   "fileName": "📚 Library",
   "totalAuditedPages": 27,
@@ -471,20 +471,126 @@
     {
       "pageSlug": "component-button",
       "files": [
-        "figma-spacing-raw.component-button.errors.json"
+        "figma-spacing-raw.component-button-part1.json",
+        "figma-spacing-raw.component-button-part2.json",
+        "figma-spacing-raw.component-button-part3.json",
+        "figma-spacing-raw.component-button-part4.json"
       ],
-      "summary": null,
-      "status": "deferred",
-      "items": 0
+      "summary": {
+        "pageId": "2414:32026",
+        "pageName": "  ⏹️ Button",
+        "totalNodesScanned": 12601,
+        "spacingOccurrences": 3702,
+        "distinctValues": [
+          2,
+          4,
+          5,
+          6,
+          7,
+          8,
+          9,
+          10,
+          11,
+          12,
+          14,
+          16,
+          20,
+          24,
+          28,
+          32,
+          40,
+          48,
+          50,
+          60,
+          64
+        ],
+        "rawValues": [
+          2,
+          4,
+          5,
+          6,
+          7,
+          8,
+          9,
+          10,
+          11,
+          12,
+          14,
+          16,
+          20,
+          24,
+          28,
+          32,
+          40,
+          48,
+          50,
+          60,
+          64
+        ],
+        "boundToVariable": {
+          "yes": 82,
+          "no": 3620
+        },
+        "distinctVariables": 4,
+        "_part": 1,
+        "_ofParts": 4
+      },
+      "status": "complete",
+      "items": 3702
     },
     {
       "pageSlug": "component-chip",
       "files": [
-        "figma-spacing-raw.component-chip.errors.json"
+        "figma-spacing-raw.component-chip-part1.json",
+        "figma-spacing-raw.component-chip-part2.json"
       ],
-      "summary": null,
-      "status": "deferred",
-      "items": 0
+      "summary": {
+        "pageId": "2546:166598",
+        "pageName": "  🍪 Chip",
+        "totalNodesScanned": 3758,
+        "spacingOccurrences": 1863,
+        "distinctValues": [
+          1,
+          2,
+          3,
+          4,
+          5,
+          6,
+          7,
+          8,
+          9,
+          10,
+          11,
+          12,
+          16,
+          24
+        ],
+        "rawValues": [
+          1,
+          2,
+          3,
+          4,
+          5,
+          6,
+          7,
+          8,
+          9,
+          10,
+          11,
+          12,
+          16,
+          24
+        ],
+        "boundToVariable": {
+          "yes": 0,
+          "no": 1863
+        },
+        "distinctVariables": 0,
+        "_part": 1,
+        "_ofParts": 2
+      },
+      "status": "complete",
+      "items": 1863
     },
     {
       "pageSlug": "component-ratio",
@@ -763,20 +869,106 @@
     {
       "pageSlug": "module-pagination",
       "files": [
-        "figma-spacing-raw.module-pagination.errors.json"
+        "figma-spacing-raw.module-pagination.errors.json",
+        "figma-spacing-raw.module-pagination.json"
       ],
-      "summary": null,
-      "status": "deferred",
-      "items": 0
+      "summary": {
+        "pageId": "2452:6038",
+        "pageName": "       🔢 Pagination",
+        "totalNodesScanned": 1782,
+        "spacingOccurrences": 634,
+        "distinctValues": [
+          1,
+          2,
+          3,
+          4,
+          6,
+          8,
+          10,
+          12,
+          16,
+          20,
+          24,
+          50,
+          64
+        ],
+        "rawValues": [
+          1,
+          2,
+          3,
+          4,
+          6,
+          8,
+          10,
+          12,
+          16,
+          20,
+          24,
+          50,
+          64
+        ],
+        "boundToVariable": {
+          "yes": 0,
+          "no": 634
+        },
+        "distinctVariables": 0
+      },
+      "status": "complete",
+      "items": 634
     },
     {
       "pageSlug": "module-progress-indicators",
       "files": [
-        "figma-spacing-raw.module-progress-indicators.errors.json"
+        "figma-spacing-raw.module-progress-indicators-part1.json",
+        "figma-spacing-raw.module-progress-indicators-part2.json"
       ],
-      "summary": null,
-      "status": "deferred",
-      "items": 0
+      "summary": {
+        "pageId": "2449:415",
+        "pageName": "  ⏳ Progress Indicators",
+        "totalNodesScanned": 5949,
+        "spacingOccurrences": 1277,
+        "distinctValues": [
+          1,
+          2,
+          3,
+          4,
+          6,
+          8,
+          10,
+          12,
+          16,
+          20,
+          24,
+          46,
+          48,
+          64
+        ],
+        "rawValues": [
+          1,
+          2,
+          3,
+          4,
+          6,
+          8,
+          10,
+          12,
+          16,
+          20,
+          24,
+          46,
+          48,
+          64
+        ],
+        "boundToVariable": {
+          "yes": 1,
+          "no": 1276
+        },
+        "distinctVariables": 1,
+        "_part": 1,
+        "_ofParts": 2
+      },
+      "status": "complete",
+      "items": 1277
     },
     {
       "pageSlug": "module-selection-input",
@@ -913,44 +1105,45 @@
   ],
   "totals": {
     "pagesAudited": 27,
-    "pagesComplete": 17,
-    "pagesDeferred": 10,
-    "spacingOccurrencesComplete": 7175,
+    "pagesComplete": 21,
+    "pagesDeferred": 6,
+    "spacingOccurrencesComplete": 14651,
     "globalValueFrequency": {
-      "1": 44,
-      "2": 347,
-      "3": 125,
-      "4": 205,
-      "5": 10,
-      "6": 503,
-      "7": 22,
-      "8": 652,
-      "9": 46,
-      "10": 325,
-      "11": 12,
-      "12": 768,
+      "1": 203,
+      "2": 1362,
+      "3": 279,
+      "4": 964,
+      "5": 69,
+      "6": 1909,
+      "7": 329,
+      "8": 1280,
+      "9": 187,
+      "10": 987,
+      "11": 143,
+      "12": 1194,
       "13": 28,
-      "14": 41,
+      "14": 103,
       "15": 105,
-      "16": 1000,
+      "16": 1283,
       "18": 5,
-      "20": 401,
+      "20": 877,
       "22": 16,
       "23": 1,
-      "24": 1276,
-      "28": 28,
+      "24": 1684,
+      "28": 336,
       "30": 5,
       "31": 5,
-      "32": 383,
+      "32": 384,
       "34": 1,
       "36": 1,
-      "40": 31,
+      "40": 39,
       "44": 1,
-      "48": 267,
-      "50": 2,
+      "46": 2,
+      "48": 269,
+      "50": 9,
       "54": 1,
-      "60": 4,
-      "64": 437,
+      "60": 8,
+      "64": 505,
       "70": 16,
       "72": 1,
       "80": 1,
