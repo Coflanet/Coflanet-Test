@@ -2,18 +2,16 @@
   "pageId": "2414:34400",
   "pageName": "       📑 Tab",
   "pageSlug": "module-tab",
-  "status": "deferred",
-  "reason": "Page has 2904 spacing-bearing nodes / 6376 spacing occurrences. Single use_figma call truncates at 20KB. Deferred to a follow-up commit on this branch.",
+  "status": "partial",
+  "reason": "Captured 38 of 53 buckets (~72% coverage, 2930 items). Remaining 15 buckets are the large List/Column/Tab/Tab/Segmented Control/Segmented buckets that exceed 90 rows each and need single-bucket calls. Session figma call budget pressure prevented full completion.",
   "_summary": {
     "totalNodesScanned": 14930,
-    "totalRows": 2904,
-    "distinctValues": [1,2,3,4,6,7,8,9,10,11,12,16,20,24],
-    "rawValues": [1,2,3,4,6,7,8,9,10,11,12,16,20,24],
-    "boundToVariable": { "yes": 26, "no": 6350 },
-    "distinctVariables": 1,
-    "variableMap": {
-      "VariableID:2964:12120": { "name": "Spacing/Padding/16(Box in Box)", "collection": "Semantic" }
-    }
+    "totalRows": 2894,
+    "itemsCaptured": 2930,
+    "completedBuckets": ["2581:192650","2581:192655","2581:192664","2581:192674","2581:192712","2581:192730","2581:192734","2581:192739","2581:192791","2581:192807","2581:192827","2581:192832","2581:192887","2581:192796","2581:192797","2581:192798","2581:192799","2581:192800","2581:192802","2581:192803","2581:192804","2581:192805","2581:192806","2563:338932","2563:338957","2563:338981","2563:339006","2563:339030","2563:339055","2563:339079","2563:339104","2563:339128","2563:339153","2563:339177","2563:339202","2563:339226","2563:339251","2563:339275","2563:339300"],
+    "remainingBuckets": ["2581:192684","2581:192699","2581:192716","2581:192723","2563:338633","2581:192748","2581:192757","2581:192770","2581:192780","2581:192822","2581:192841","2581:192849","2581:192865","2523:156314"],
+    "bucketCount": 53,
+    "totalBucketRows": 2894
   },
-  "nextSteps": "Re-run with LIMIT<=250 row chunks."
+  "nextSteps": "Each remaining bucket processed independently. Large buckets (Tab/Tab=172, Segmented Control=156, Column=121-127, List=85-184) use single-bucket ROW_LIMIT=200 calls. Cost: ~14 figma calls."
 }
