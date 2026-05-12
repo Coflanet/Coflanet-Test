@@ -12,14 +12,15 @@ class _S {
   const _S(this.name, this.value, [this.description]);
 }
 
-/// Spacing use_cases — Palette 13단계 + Semantic 의미 토큰 + Safe Area.
+/// Spacing use_cases — Palette 16단계 + Semantic 의미 토큰 + Safe Area.
 final List<WidgetbookComponent> spacingUseCases = [
   WidgetbookComponent(
     name: 'Palette',
     useCases: [
       WidgetbookUseCase(
-        name: '원시 값 13단계 (Figma Spacing 토큰)',
+        name: '원시 값 16단계 (Figma Spacing 토큰 + Phase 1-C 신규)',
         builder: (context) => _bars(context, const [
+          _S('space0', AppSpacing.space0, 'zero padding (Phase 1-C 신규)'),
           _S('space4', AppSpacing.space4),
           _S('space8', AppSpacing.space8),
           _S('space12', AppSpacing.space12),
@@ -27,12 +28,14 @@ final List<WidgetbookComponent> spacingUseCases = [
           _S('space16', AppSpacing.space16),
           _S('space20', AppSpacing.space20),
           _S('space24', AppSpacing.space24),
+          _S('space28', AppSpacing.space28, 'button bottom / GNB logo (Phase 1-C 신규)'),
           _S('space32', AppSpacing.space32),
           _S('space34', AppSpacing.space34),
           _S('space36', AppSpacing.space36),
           _S('space40', AppSpacing.space40),
           _S('space44', AppSpacing.space44),
           _S('space48', AppSpacing.space48),
+          _S('space56', AppSpacing.space56, 'banner (Phase 1-C 신규)'),
         ]),
       ),
     ],
