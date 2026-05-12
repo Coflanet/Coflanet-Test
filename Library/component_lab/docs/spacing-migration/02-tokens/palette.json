@@ -1,0 +1,21 @@
+{
+  "version": "0.1.0-phase2",
+  "tokens": [
+    { "name": "spacing-0",  "value": 0,  "unit": "px" },
+    { "name": "spacing-4",  "value": 4,  "unit": "px" },
+    { "name": "spacing-8",  "value": 8,  "unit": "px" },
+    { "name": "spacing-12", "value": 12, "unit": "px" },
+    { "name": "spacing-14", "value": 14, "unit": "px" },
+    { "name": "spacing-16", "value": 16, "unit": "px" },
+    { "name": "spacing-20", "value": 20, "unit": "px" },
+    { "name": "spacing-24", "value": 24, "unit": "px" },
+    { "name": "spacing-28", "value": 28, "unit": "px" },
+    { "name": "spacing-32", "value": 32, "unit": "px" },
+    { "name": "spacing-34", "value": 34, "unit": "px" },
+    { "name": "spacing-36", "value": 36, "unit": "px" },
+    { "name": "spacing-40", "value": 40, "unit": "px" },
+    { "name": "spacing-44", "value": 44, "unit": "px" },
+    { "name": "spacing-48", "value": 48, "unit": "px" },
+    { "name": "spacing-56", "value": 56, "unit": "px" }
+  ]
+}
