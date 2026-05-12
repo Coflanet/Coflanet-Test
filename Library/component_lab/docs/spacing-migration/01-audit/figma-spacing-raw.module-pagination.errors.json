@@ -1,0 +1,17 @@
+{
+  "pageId": "2452:6038",
+  "pageName": "       🔢 Pagination",
+  "pageSlug": "module-pagination",
+  "status": "deferred",
+  "reason": "Page has 1456 spacing-bearing nodes / 2574 spacing occurrences. Single use_figma call truncates at 20KB. Deferred to a follow-up commit on this branch.",
+  "_summary": {
+    "totalNodesScanned": 8028,
+    "totalRows": 1456,
+    "distinctValues": [1,2,3,4,6,8,10,12,16,20,24,50,64],
+    "rawValues": [1,2,3,4,6,8,10,12,16,20,24,50,64],
+    "boundToVariable": { "yes": 0, "no": 2574 },
+    "distinctVariables": 0,
+    "variableMap": {}
+  },
+  "nextSteps": "Re-run with LIMIT<=300 row chunks."
+}
