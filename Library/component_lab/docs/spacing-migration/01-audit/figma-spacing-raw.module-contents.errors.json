@@ -1,0 +1,17 @@
+{
+  "pageId": "2573:404660",
+  "pageName": "   📑 Contents",
+  "pageSlug": "module-contents",
+  "status": "deferred",
+  "reason": "Page has 6077 spacing-bearing nodes / 11769 spacing occurrences across 36547 scanned nodes. Single use_figma call cannot return full data. Deferred to a follow-up commit on this branch.",
+  "_summary": {
+    "totalNodesScanned": 36547,
+    "totalRows": 6077,
+    "distinctValues": [-8,-6,-2,1,2,3,4,5,6,7,8,9,10,12,14,16,20,24,32,40,48,49,50,64],
+    "rawValues": [-8,-6,-2,1,2,3,4,5,6,7,8,9,10,12,14,16,20,24,32,40,48,49,50,64],
+    "boundToVariable": { "yes": 323, "no": 11446 },
+    "distinctVariables": 13,
+    "variableMap": {}
+  },
+  "nextSteps": "Re-run audit with LIMIT<=200 row chunks; 30+ chunks expected. Variable IDs not resolved here — fetch them in chunk 1 by querying figma.variables.getVariableByIdAsync."
+}
