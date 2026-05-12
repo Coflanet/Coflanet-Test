@@ -1,0 +1,19 @@
+{
+  "pageId": "2449:415",
+  "pageName": "  ⏳ Progress Indicators",
+  "pageSlug": "module-progress-indicators",
+  "status": "deferred",
+  "reason": "Page has 799 spacing-bearing nodes / 1282 spacing occurrences. Single use_figma call truncates at 20KB. Deferred to a follow-up commit on this branch.",
+  "_summary": {
+    "totalNodesScanned": 5958,
+    "totalRows": 799,
+    "distinctValues": [1,2,3,4,6,8,10,12,16,20,24,46,48,64],
+    "rawValues": [1,2,3,4,6,8,10,12,16,20,24,46,48,64],
+    "boundToVariable": { "yes": 1, "no": 1281 },
+    "distinctVariables": 1,
+    "variableMap": {
+      "VariableID:81bcefb620b39057224d2d2da8b7588ee7446727/265:33": { "name": "Spacing/4", "collection": "1_Semantic" }
+    }
+  },
+  "nextSteps": "Re-run with LIMIT<=400 row chunks."
+}
