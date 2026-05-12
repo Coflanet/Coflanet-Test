@@ -1,0 +1,22 @@
+{
+  "pageId": "2414:32026",
+  "pageName": "  ⏹️ Button",
+  "pageSlug": "component-button",
+  "status": "deferred",
+  "reason": "Page has 1466 spacing-bearing nodes / 3728 spacing occurrences. Single use_figma call truncates at 20KB; requires multi-chunk fetch + manual transcription. Deferred to a follow-up commit on this branch.",
+  "_summary": {
+    "totalNodesScanned": 12612,
+    "totalRows": 1466,
+    "distinctValues": [2,4,5,6,7,8,9,10,11,12,14,16,20,24,28,32,40,48,50,60,64],
+    "rawValues": [2,4,5,6,7,8,9,10,11,12,14,16,20,24,28,32,40,48,50,60,64],
+    "boundToVariable": { "yes": 82, "no": 3646 },
+    "distinctVariables": 4,
+    "variableMap": {
+      "VariableID:2464:10680": { "name": "Spacing/24", "collection": "Semantic" },
+      "VariableID:2464:10668": { "name": "Spacing/12", "collection": "Semantic" },
+      "VariableID:2964:12120": { "name": "Spacing/Padding/16(Box in Box)", "collection": "Semantic" },
+      "VariableID:c7b5baba26082c24a5bccc146ada109d9aec76b3/410:28": { "name": "Spacing/Button/hor", "collection": "1_Semantic" }
+    }
+  },
+  "nextSteps": "Re-run audit with chunked offset paging (LIMIT<=400 per call) and merge via convert.js dict+rows form. See /tmp/figma-audit/single.js + convert.js."
+}
