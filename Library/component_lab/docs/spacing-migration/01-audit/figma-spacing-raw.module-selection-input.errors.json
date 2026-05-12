@@ -1,9 +1,22 @@
 {
   "pageId": "2442:7603",
-  "pageName": "☑️ Selection and 📝 Input",
+  "pageName": "  ☑️ Selection and 📝 Input",
   "pageSlug": "module-selection-input",
-  "status": "deferred",
-  "reason": "use_figma call timed out after 60s while scanning page (likely very large node tree). Deferred to a follow-up commit on this branch.",
-  "_summary": null,
-  "nextSteps": "Re-run audit with bounded traversal (skip instance-child recursion, only count top-level COMPONENT/COMPONENT_SET nodes, then chunked retrieval)."
+  "status": "partial",
+  "reason": "Page top-level traversal previously timed out. Diagnosis: 8 nested SECTION subsections; the first 3 (2523:151600, 2523:152531, 2523:154313) each contain >2000 spacing-bearing nodes (8000+ scanned nodes, traversal capped). Captured 757 items from the smaller subsections (2523:155040 size=57, 2523:156457 size=194, 2523:155113 size=435). Remaining 5559+ rows in the 3 large subsections (151600/152531/154313) and partial 155113 deferred to follow-up due to session figma call budget.",
+  "_summary": {
+    "totalSubsections": 8,
+    "completedSubsections": ["2523:155040","2523:156457","2523:155113"],
+    "remainingLargeSubsections": [
+      {"id":"2523:151600","spacingRowEstimate":">=2098","note":"countSpacing hit 8000-node cap, real total likely much higher"},
+      {"id":"2523:152531","spacingRowEstimate":">=1510"},
+      {"id":"2523:154313","spacingRowEstimate":">=1930"}
+    ],
+    "remainingSmallSubsections": [
+      {"id":"2523:155628","spacingRowEstimate":"368"}
+    ],
+    "itemsCaptured": 757,
+    "boundToVariable": {"yes": 0, "no": 757}
+  },
+  "nextSteps": "For each remaining large subsection: re-run bucketize on its children to find sub-buckets <=200 rows, then fetch each (deep instance paths expected, single bucket per call). Cost: ~40-50 figma calls total."
 }

@@ -1,9 +1,20 @@
 {
   "pageId": "2546:42535",
-  "pageName": "📣 Presentation",
+  "pageName": "   📣 Presentation",
   "pageSlug": "module-presentation",
-  "status": "deferred",
-  "reason": "use_figma call timed out after 60s while scanning page (likely very large node tree). Deferred to a follow-up commit on this branch.",
-  "_summary": null,
-  "nextSteps": "Re-run audit with bounded traversal (skip instance-child recursion, only count top-level COMPONENT/COMPONENT_SET nodes, then chunked retrieval)."
+  "status": "partial",
+  "reason": "Page top-level traversal previously timed out. Diagnosis: 7 nested SECTION subsections; the first 3 (2546:93597, 2546:94286, 2546:94564) each contain 1456-1934+ spacing-bearing nodes (8000-node traversal cap hit). Captured 443 items from the smallest subsections (2546:93589 size=10, 2546:94861 size=85, 2546:94925 size=50). Remaining 5400+ rows in the 4 larger subsections deferred to follow-up due to session figma call budget.",
+  "_summary": {
+    "totalSubsections": 7,
+    "completedSubsections": ["2546:93589","2546:94861","2546:94925"],
+    "remainingLargeSubsections": [
+      {"id":"2546:93597","spacingRowEstimate":">=1456"},
+      {"id":"2546:94286","spacingRowEstimate":">=1934"},
+      {"id":"2546:94564","spacingRowEstimate":">=1561"},
+      {"id":"2546:94881","spacingRowEstimate":"738","note":"partially attempted in session but response truncation at 20KB; needs single-bucket call"}
+    ],
+    "itemsCaptured": 443,
+    "boundToVariable": {"yes": 0, "no": 300}
+  },
+  "nextSteps": "For each remaining subsection: re-run bucketize on its children to find sub-buckets <=200 rows, then fetch (deep instance paths expected, single bucket per call). Bucket 2546:94881 (738 rows) needs ~5 separate calls. Cost: ~30-40 figma calls total."
 }
