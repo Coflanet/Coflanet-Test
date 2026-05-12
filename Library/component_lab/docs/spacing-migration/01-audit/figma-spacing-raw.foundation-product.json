@@ -1,0 +1,188 @@
+{
+  "_summary": {
+    "pageId": "2941:684",
+    "pageSlug": "foundation-product",
+    "pageName": "  ☕️ Product",
+    "totalNodesScanned": 7,
+    "totalDescendants": 10,
+    "instanceChildrenSkipped": 0,
+    "spacingOccurrences": 13,
+    "itemsInFile": 13,
+    "distinctValues": [
+      24,
+      32,
+      94,
+      100,
+      200
+    ],
+    "boundToVariable": 0,
+    "rawValues": 13,
+    "suspiciousItems": 13,
+    "valueFrequency": {
+      "24": 1,
+      "32": 1,
+      "94": 1,
+      "100": 1,
+      "200": 9
+    },
+    "variablesUsed": 0
+  },
+  "items": [
+    {
+      "tokenName": null,
+      "value": 200,
+      "unit": "px",
+      "property": "itemSpacing",
+      "aliasGroup": null,
+      "usageNote": null,
+      "sourceNodeId": "2941:685",
+      "sourceNodeName": "Illustration",
+      "sourceNodeType": "FRAME",
+      "pageId": "2941:684"
+    },
+    {
+      "tokenName": null,
+      "value": 200,
+      "unit": "px",
+      "property": "padding-top",
+      "aliasGroup": null,
+      "usageNote": null,
+      "sourceNodeId": "2941:685",
+      "sourceNodeName": "Illustration",
+      "sourceNodeType": "FRAME",
+      "pageId": "2941:684"
+    },
+    {
+      "tokenName": null,
+      "value": 200,
+      "unit": "px",
+      "property": "padding-bottom",
+      "aliasGroup": null,
+      "usageNote": null,
+      "sourceNodeId": "2941:685",
+      "sourceNodeName": "Illustration",
+      "sourceNodeType": "FRAME",
+      "pageId": "2941:684"
+    },
+    {
+      "tokenName": null,
+      "value": 200,
+      "unit": "px",
+      "property": "padding-left",
+      "aliasGroup": null,
+      "usageNote": null,
+      "sourceNodeId": "2941:685",
+      "sourceNodeName": "Illustration",
+      "sourceNodeType": "FRAME",
+      "pageId": "2941:684"
+    },
+    {
+      "tokenName": null,
+      "value": 200,
+      "unit": "px",
+      "property": "padding-right",
+      "aliasGroup": null,
+      "usageNote": null,
+      "sourceNodeId": "2941:685",
+      "sourceNodeName": "Illustration",
+      "sourceNodeType": "FRAME",
+      "pageId": "2941:684"
+    },
+    {
+      "tokenName": null,
+      "value": 32,
+      "unit": "px",
+      "property": "itemSpacing",
+      "aliasGroup": null,
+      "usageNote": null,
+      "sourceNodeId": "2941:686",
+      "sourceNodeName": "Heading",
+      "sourceNodeType": "FRAME",
+      "pageId": "2941:684"
+    },
+    {
+      "tokenName": null,
+      "value": 24,
+      "unit": "px",
+      "property": "itemSpacing",
+      "aliasGroup": null,
+      "usageNote": null,
+      "sourceNodeId": "2941:687",
+      "sourceNodeName": "Content",
+      "sourceNodeType": "FRAME",
+      "pageId": "2941:684"
+    },
+    {
+      "tokenName": null,
+      "value": 100,
+      "unit": "px",
+      "property": "itemSpacing",
+      "aliasGroup": null,
+      "usageNote": null,
+      "sourceNodeId": "2941:692",
+      "sourceNodeName": "Image/Product",
+      "sourceNodeType": "FRAME",
+      "pageId": "2941:684"
+    },
+    {
+      "tokenName": null,
+      "value": 94,
+      "unit": "px",
+      "property": "counterAxisSpacing",
+      "aliasGroup": null,
+      "usageNote": null,
+      "sourceNodeId": "2941:692",
+      "sourceNodeName": "Image/Product",
+      "sourceNodeType": "FRAME",
+      "pageId": "2941:684"
+    },
+    {
+      "tokenName": null,
+      "value": 200,
+      "unit": "px",
+      "property": "padding-top",
+      "aliasGroup": null,
+      "usageNote": null,
+      "sourceNodeId": "2941:692",
+      "sourceNodeName": "Image/Product",
+      "sourceNodeType": "FRAME",
+      "pageId": "2941:684"
+    },
+    {
+      "tokenName": null,
+      "value": 200,
+      "unit": "px",
+      "property": "padding-bottom",
+      "aliasGroup": null,
+      "usageNote": null,
+      "sourceNodeId": "2941:692",
+      "sourceNodeName": "Image/Product",
+      "sourceNodeType": "FRAME",
+      "pageId": "2941:684"
+    },
+    {
+      "tokenName": null,
+      "value": 200,
+      "unit": "px",
+      "property": "padding-left",
+      "aliasGroup": null,
+      "usageNote": null,
+      "sourceNodeId": "2941:692",
+      "sourceNodeName": "Image/Product",
+      "sourceNodeType": "FRAME",
+      "pageId": "2941:684"
+    },
+    {
+      "tokenName": null,
+      "value": 200,
+      "unit": "px",
+      "property": "padding-right",
+      "aliasGroup": null,
+      "usageNote": null,
+      "sourceNodeId": "2941:692",
+      "sourceNodeName": "Image/Product",
+      "sourceNodeType": "FRAME",
+      "pageId": "2941:684"
+    }
+  ]
+}
