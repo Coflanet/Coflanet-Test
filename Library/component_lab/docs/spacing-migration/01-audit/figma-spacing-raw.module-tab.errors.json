@@ -1,0 +1,19 @@
+{
+  "pageId": "2414:34400",
+  "pageName": "       📑 Tab",
+  "pageSlug": "module-tab",
+  "status": "deferred",
+  "reason": "Page has 2904 spacing-bearing nodes / 6376 spacing occurrences. Single use_figma call truncates at 20KB. Deferred to a follow-up commit on this branch.",
+  "_summary": {
+    "totalNodesScanned": 14930,
+    "totalRows": 2904,
+    "distinctValues": [1,2,3,4,6,7,8,9,10,11,12,16,20,24],
+    "rawValues": [1,2,3,4,6,7,8,9,10,11,12,16,20,24],
+    "boundToVariable": { "yes": 26, "no": 6350 },
+    "distinctVariables": 1,
+    "variableMap": {
+      "VariableID:2964:12120": { "name": "Spacing/Padding/16(Box in Box)", "collection": "Semantic" }
+    }
+  },
+  "nextSteps": "Re-run with LIMIT<=250 row chunks."
+}
