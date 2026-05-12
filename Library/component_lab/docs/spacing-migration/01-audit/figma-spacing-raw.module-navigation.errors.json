@@ -1,0 +1,17 @@
+{
+  "pageId": "2452:3459",
+  "pageName": "  🧭 Navigation",
+  "pageSlug": "module-navigation",
+  "status": "deferred",
+  "reason": "Page has 2524 spacing-bearing nodes / 6101 spacing occurrences. Single use_figma call truncates at 20KB; long deep instance paths inflate row size. Deferred to a follow-up commit on this branch.",
+  "_summary": {
+    "totalNodesScanned": 15035,
+    "totalRows": 2524,
+    "distinctValues": [0.33000001311302185,0.6700000166893005,1,1.3300000429153442,1.333299994468689,2,3,4,5,6,8,9,10,12,16,20,24,28,32,40,44,48,56,64,68,72,76],
+    "rawValues": [0.33000001311302185,0.6700000166893005,1,1.3300000429153442,1.333299994468689,2,3,4,5,6,8,9,10,12,16,20,24,28,32,40,44,48,56,64,68,72,76],
+    "boundToVariable": { "yes": 0, "no": 6101 },
+    "distinctVariables": 0,
+    "variableMap": {}
+  },
+  "nextSteps": "Re-run audit with LIMIT<=250 row chunks (deep instance paths inflate per-row size to ~80B). Merge via convert.js dict+rows form."
+}
