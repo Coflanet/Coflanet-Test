@@ -3,8 +3,8 @@
   "fileName": "📚 Library",
   "source": "FIGMA_INVENTORY.md (Plugin API 직접 검증)",
   "totalPages": 39,
-  "auditTargetCount": 30,
-  "skippedCount": 9,
+  "auditTargetCount": 27,
+  "skippedCount": 12,
   "relatedLibraryFiles": [
     {
       "name": "📚 Library (self)",
@@ -14,7 +14,7 @@
   ],
   "pages": [
     { "pageId": "2636:31292", "pageName": "📺 Thumbnail", "pageSlug": "thumbnail-cover", "suspectedCategory": "Etc", "audit": false, "skipReason": "표지 1프레임만, 스페이싱 사용 거의 없음" },
-    { "pageId": "2643:8531", "pageName": "⚙️ Components", "pageSlug": "design-components", "suspectedCategory": "Etc", "audit": true, "group": "etc-design-components", "note": "디자인용 컴포넌트(Charge 등)" },
+    { "pageId": "2643:8531", "pageName": "⚙️ Components", "pageSlug": "design-components", "suspectedCategory": "Etc", "audit": false, "skipReason": "Figma 파일 썸네일용 컴포넌트 — 코드/토큰 적용 대상 아님" },
     { "pageId": "2925:192", "pageName": "🗂️ 피그마 파일관리 규칙", "pageSlug": "file-mgmt-rules", "suspectedCategory": "Etc", "audit": false, "skipReason": "메타 페이지" },
     { "pageId": "2636:31293", "pageName": "-----------", "pageSlug": "separator-1", "suspectedCategory": "Separator", "audit": false, "skipReason": "사이드바 구분선" },
     { "pageId": "0:1", "pageName": "🏷️ Logo", "pageSlug": "logo", "suspectedCategory": "Foundation", "audit": true, "group": "foundation-logo" },
@@ -80,8 +80,7 @@
     "module-gauge",
     "module-feedback",
     "module-presentation",
-    "module-contents",
-    "etc-design-components"
+    "module-contents"
   ],
   "phase4ApplyGroups": [
     { "group": "foundation-space", "priority": 1, "note": "토큰 정의 자체. 다른 그룹의 토큰 alias 출처가 되므로 가장 먼저" },
@@ -110,8 +109,7 @@
     { "group": "foundation-decorate", "priority": 4 },
     { "group": "foundation-icon", "priority": 4 },
     { "group": "foundation-3d-illustration", "priority": 4 },
-    { "group": "foundation-product", "priority": 4 },
-    { "group": "etc-design-components", "priority": 5 }
+    { "group": "foundation-product", "priority": 4 }
   ],
   "codeDirToFigmaPage": {
     "avatars": ["2452:6039"],
