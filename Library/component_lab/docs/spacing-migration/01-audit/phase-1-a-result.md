@@ -127,3 +127,105 @@ Library 의 `Semantic.Spacing/*` 변수 — Flutter `AppSpacing` 직접 매핑:
    - 앱: `coflanet-app-0.1.2/lib/constants/spacing_constant.dart` (Figma 변수 description 이 가리키는 원본)
    - 라이브러리: `Library/component_lab/lib/foundation/spacing_use_cases.dart`
 4. Phase 1-B 시작 시 브랜치 그대로 사용: `claude/spacing-tokens-organization-NwPFO`
+
+---
+
+## 7. Phase 1-A (Task 03..30 + LAST-1A) — Figma 페이지별 spacing 감사 ✅
+
+**완료 일시**: 2026-05-12
+**처리 페이지**: 27/27 (실패 0)
+**총 spacing occurrences**: 30,879
+**산출 파일**: `figma-spacing-raw.{slug}.json` × 27 + `figma-spacing.INDEX.json`
+
+### 7-1. 페이지별 결과 요약
+
+| Page | True occurrences | Items in file | Bound | Strategy |
+|---|---:|---:|---:|---|
+| foundation-space | 107 | 107 | 1 | full |
+| foundation-logo | 45 | 45 | 0 | full |
+| foundation-typography | 949 | 949 | 23 | full |
+| foundation-colors | 3,133 | 465 | 0 | **dedup** |
+| foundation-gradient | 175 | 175 | 2 | full |
+| foundation-decorate | 214 | 214 | 0 | full |
+| foundation-icon | 894 | 126 | 0 | **dedup** |
+| foundation-3d-illustration | 33 | 33 | 0 | full |
+| foundation-product | 13 | 13 | 0 | full |
+| component-button | 3,243 | 474 | 30 | **dedup** |
+| component-chip | 1,449 | 326 | 0 | **dedup** |
+| component-ratio | 139 | 139 | 0 | full |
+| component-thumbnail | 87 | 87 | 0 | full |
+| component-scroll | 177 | 177 | 0 | full |
+| component-avatar | 542 | 542 | 0 | full |
+| component-indicators | 27 | 27 | 0 | full |
+| component-divider | 44 | 44 | 0 | full |
+| module-navigation | 495 | 495 | 0 | full |
+| module-tab | 1,338 | 376 | 16 | **dedup** |
+| module-pagination | 303 | 303 | 0 | full |
+| module-progress-indicators | 1,120 | 225 | 1 | **dedup** |
+| module-selection-input | 7,401 | 363 | 20 | **dedup** |
+| module-control-box | 225 | 225 | 16 | full |
+| module-gauge | 49 | 49 | 0 | full |
+| module-feedback | 1,532 | 408 | 1 | **dedup** |
+| module-presentation | 1,791 | 315 | 58 | **dedup** |
+| module-contents | 5,354 | 430 | 99 | **dedup** |
+
+### 7-2. Top spacing values (전체 30,879개 중 빈도 상위)
+
+| Value | Count |
+|---:|---:|
+| 24 px | 819 |
+| 6 px | 771 |
+| 20 px | 757 |
+| 16 px | 704 |
+| 2 px | 578 |
+| 12 px | 446 |
+| 64 px | 438 |
+| 4 px | 431 |
+| 8 px | 412 |
+| 10 px | 312 |
+
+### 7-3. ⚠️ Dedup 전략 — Phase 1-C/Phase 3/Phase 4 인계 사항
+
+13개 큰 페이지(>600 occurrences)는 Figma plugin output 20KB 제한으로 **전체 occurrence 를 capture 하지 못함**. 대신 deduplicated 형태로 저장:
+
+- **Schema 변경**: 각 item 에 `occurrenceGroupCount` (해당 (property, value, varId) 조합의 실제 발생 횟수) + `isSampleOfDedupGroup: true` 필드 추가
+- **Sample 보존**: (property, value, variableId) 그룹별로 5~8개의 sourceNodeId만 items 에 포함
+- **_summary 보존**: `spacingOccurrences` 는 진짜 총 개수, `valueFrequency` 도 진짜 빈도 → **Task 31 통계 분석에는 영향 없음**
+- **Sampling limit 명시**: dedup 페이지의 `_summary` 에 `dedupStrategy`, `samplingLimit` 필드 포함
+
+### 7-4. 🚨 Task 33/34 시점 주의사항 (Phase 3 매핑 / Phase 4 적용)
+
+- **Task 33 (figma-node-to-token.csv)**: dedup 페이지의 경우 sample nodeId만 CSV 행으로 들어감. 각 행은 실제로는 N개 노드를 대표함 → `count` 컬럼을 추가하거나 별도 dedupStrategy 처리 로직 필요.
+- **Task 34 (Figma 적용)**: sample node 만 변수 바인딩하면 나머지 그룹 노드는 미적용 상태로 남음. 적용 스크립트가 (property, value) 패턴으로 페이지를 다시 스캔해 같은 그룹 노드를 일괄 적용하도록 설계해야 함.
+- 권장 보강: Task 34 프롬프트에 다음 추가
+  > "dedup 페이지의 경우, CSV 의 sample nodeId 만 처리하지 말고, 같은 페이지 내 동일 (property, value) 패턴 노드를 use_figma 로 다시 찾아 일괄 적용한다."
+
+### 7-5. 그 외 처리 결정
+
+- **Instance subnode 제외**: nodeId 에 `;` 포함된 노드(instance descendants) 는 모든 페이지에서 audit 에서 제외. 사유: 이들의 spacing 은 master component 에서 상속 → 해당 component 페이지에서 audit 됨. (예: `2546:166613;...` 같은 instance 자식)
+- **0 값 + variable bind 없음**: 의미 없는 0 padding 은 제외 (variable bind 가 있으면 0이어도 포함)
+- **Variable resolution 시 timeout**: `module-selection-input`, `module-contents` 등 너무 큰 페이지는 variable resolve 단계 분리 호출 필요했음
+- **node name truncation**: 길이 30~40 chars 로 truncate 하여 CSV 호환성 확보
+
+### 7-6. 산출물 위치 (Phase 1-A 추가)
+
+- `Library/component_lab/docs/spacing-migration/01-audit/figma-spacing-raw.{27 slugs}.json`
+- `Library/component_lab/docs/spacing-migration/01-audit/figma-spacing.INDEX.json` — 전체 색인 + globalValueFrequency
+
+### 7-7. ⚠️ 다음 세션을 위한 사전 준비 (Task 31 시작 전 필수)
+
+**현재 NwPFO 브랜치에는 Task 02 (코드 감사) 결과 파일이 없음**. 코드 감사는 `claude/audit-figma-spacing-Uj2RM` 브랜치에 있음.
+
+```bash
+# Task 31 진행 전 코드 감사 파일들을 NwPFO 로 가져와야 함
+git checkout claude/audit-figma-spacing-Uj2RM -- \
+  Library/component_lab/docs/spacing-migration/01-audit/code-*.json \
+  COWORK_SPACING_MIGRATION_PROMPTS.md
+git commit -m "chore(spacing-migration): bring code audit files from Uj2RM branch"
+git push origin claude/spacing-tokens-organization-NwPFO
+```
+
+가져와야 할 파일들:
+- `code-audit.INDEX.json`
+- `code-hardcoded-usages.{22 dirs}.json` (avatars, buttons, cards, chips, contents-part1/part2, control_box, controls, dividers, feedback, forms, gauge, indicators, modals, navigation, pagination, presentation, ratio, scrolls, selection, tabs, thumbnails)
+- `code-token-defs.foundation.json`
