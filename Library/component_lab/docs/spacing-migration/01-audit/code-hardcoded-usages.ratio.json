@@ -1,0 +1,280 @@
+{
+  "_meta": {
+    "dir": "ratio",
+    "scannedRoot": "lib/components/ratio",
+    "fileCount": 2,
+    "files": [
+      "lib/components/ratio/app_ratio.dart",
+      "lib/components/ratio/ratio_use_cases.dart"
+    ],
+    "patterns": [
+      "EdgeInsets.(all|symmetric|only|fromLTRB)(",
+      "Padding(padding:",
+      "SizedBox((width|height|.square dimension):",
+      "Gap(",
+      "margin:/padding:/spacing:/gap:/... numeric literal",
+      "AppSpacing.<token>"
+    ],
+    "phase": "Phase 1-B audit"
+  },
+  "usages": [
+    {
+      "file": "lib/components/ratio/app_ratio.dart",
+      "line": 192,
+      "snippet": "return SizedBox(",
+      "values": [
+        {
+          "arg": "width",
+          "expr": "width",
+          "kind": "non-numeric"
+        },
+        {
+          "arg": "height",
+          "expr": "height",
+          "kind": "non-numeric"
+        }
+      ],
+      "unit": "px",
+      "kind": "SizedBox",
+      "contextHint": [
+        "sizedBox"
+      ]
+    },
+    {
+      "file": "lib/components/ratio/ratio_use_cases.dart",
+      "line": 189,
+      "snippet": "padding: const EdgeInsets.all(24),",
+      "values": [
+        {
+          "arg": "#0",
+          "expr": "24",
+          "value": 24,
+          "kind": "literal"
+        }
+      ],
+      "unit": "px",
+      "kind": "EdgeInsets.all",
+      "contextHint": [
+        "edgeInsets"
+      ]
+    },
+    {
+      "file": "lib/components/ratio/ratio_use_cases.dart",
+      "line": 58,
+      "snippet": "SizedBox(",
+      "values": [
+        {
+          "arg": "width",
+          "expr": "280",
+          "value": 280,
+          "kind": "literal"
+        }
+      ],
+      "unit": "px",
+      "kind": "SizedBox",
+      "contextHint": [
+        "sizedBox"
+      ]
+    },
+    {
+      "file": "lib/components/ratio/ratio_use_cases.dart",
+      "line": 95,
+      "snippet": "SizedBox(",
+      "values": [
+        {
+          "arg": "height",
+          "expr": "200",
+          "value": 200,
+          "kind": "literal"
+        }
+      ],
+      "unit": "px",
+      "kind": "SizedBox",
+      "contextHint": [
+        "sizedBox"
+      ]
+    },
+    {
+      "file": "lib/components/ratio/ratio_use_cases.dart",
+      "line": 101,
+      "snippet": "const SizedBox(width: 16),",
+      "values": [
+        {
+          "arg": "width",
+          "expr": "16",
+          "value": 16,
+          "kind": "literal"
+        }
+      ],
+      "unit": "px",
+      "kind": "SizedBox",
+      "contextHint": [
+        "sizedBox"
+      ]
+    },
+    {
+      "file": "lib/components/ratio/ratio_use_cases.dart",
+      "line": 130,
+      "snippet": "return SizedBox(",
+      "values": [
+        {
+          "arg": "width",
+          "expr": "width",
+          "kind": "non-numeric"
+        }
+      ],
+      "unit": "px",
+      "kind": "SizedBox",
+      "contextHint": [
+        "sizedBox"
+      ]
+    },
+    {
+      "file": "lib/components/ratio/ratio_use_cases.dart",
+      "line": 142,
+      "snippet": "const SizedBox(height: 8),",
+      "values": [
+        {
+          "arg": "height",
+          "expr": "8",
+          "value": 8,
+          "kind": "literal"
+        }
+      ],
+      "unit": "px",
+      "kind": "SizedBox",
+      "contextHint": [
+        "sizedBox"
+      ]
+    },
+    {
+      "file": "lib/components/ratio/ratio_use_cases.dart",
+      "line": 173,
+      "snippet": "const SizedBox(height: 8),",
+      "values": [
+        {
+          "arg": "height",
+          "expr": "8",
+          "value": 8,
+          "kind": "literal"
+        }
+      ],
+      "unit": "px",
+      "kind": "SizedBox",
+      "contextHint": [
+        "sizedBox"
+      ]
+    },
+    {
+      "file": "lib/components/ratio/ratio_use_cases.dart",
+      "line": 18,
+      "snippet": "spacing: 16,",
+      "values": [
+        {
+          "arg": "spacing",
+          "expr": "16",
+          "value": 16,
+          "kind": "literal"
+        }
+      ],
+      "unit": "px",
+      "kind": "PropLiteral:spacing",
+      "contextHint": [
+        "rawPropLiteral"
+      ]
+    },
+    {
+      "file": "lib/components/ratio/ratio_use_cases.dart",
+      "line": 19,
+      "snippet": "runSpacing: 24,",
+      "values": [
+        {
+          "arg": "runSpacing",
+          "expr": "24",
+          "value": 24,
+          "kind": "literal"
+        }
+      ],
+      "unit": "px",
+      "kind": "PropLiteral:runSpacing",
+      "contextHint": [
+        "rawPropLiteral"
+      ]
+    },
+    {
+      "file": "lib/components/ratio/ratio_use_cases.dart",
+      "line": 39,
+      "snippet": "spacing: 16,",
+      "values": [
+        {
+          "arg": "spacing",
+          "expr": "16",
+          "value": 16,
+          "kind": "literal"
+        }
+      ],
+      "unit": "px",
+      "kind": "PropLiteral:spacing",
+      "contextHint": [
+        "rawPropLiteral"
+      ]
+    },
+    {
+      "file": "lib/components/ratio/ratio_use_cases.dart",
+      "line": 40,
+      "snippet": "runSpacing: 24,",
+      "values": [
+        {
+          "arg": "runSpacing",
+          "expr": "24",
+          "value": 24,
+          "kind": "literal"
+        }
+      ],
+      "unit": "px",
+      "kind": "PropLiteral:runSpacing",
+      "contextHint": [
+        "rawPropLiteral"
+      ]
+    }
+  ],
+  "_summary": {
+    "dir": "ratio",
+    "fileCount": 2,
+    "totalUsages": 12,
+    "distinctValues": [
+      8,
+      16,
+      24,
+      200,
+      280
+    ],
+    "valueFrequency": {
+      "16": 3,
+      "24": 3,
+      "8": 2,
+      "200": 1,
+      "280": 1
+    },
+    "tokenRefFrequency": {},
+    "suspiciousItems": [
+      {
+        "file": "lib/components/ratio/ratio_use_cases.dart",
+        "line": 58,
+        "kind": "SizedBox",
+        "value": 280,
+        "reason": "off-scale literal",
+        "snippet": "SizedBox("
+      },
+      {
+        "file": "lib/components/ratio/ratio_use_cases.dart",
+        "line": 95,
+        "kind": "SizedBox",
+        "value": 200,
+        "reason": "off-scale literal",
+        "snippet": "SizedBox("
+      }
+    ],
+    "suspiciousCount": 2
+  }
+}

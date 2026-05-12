@@ -1,0 +1,1298 @@
+{
+  "_meta": {
+    "dir": "buttons",
+    "scannedRoot": "lib/components/buttons",
+    "fileCount": 8,
+    "files": [
+      "lib/components/buttons/app_floating_action_button.dart",
+      "lib/components/buttons/app_icon_button.dart",
+      "lib/components/buttons/app_outlined_button.dart",
+      "lib/components/buttons/app_section_bottom_button.dart",
+      "lib/components/buttons/app_social_button.dart",
+      "lib/components/buttons/app_solid_button.dart",
+      "lib/components/buttons/app_text_button.dart",
+      "lib/components/buttons/button_use_cases.dart"
+    ],
+    "patterns": [
+      "EdgeInsets.(all|symmetric|only|fromLTRB)(",
+      "Padding(padding:",
+      "SizedBox((width|height|.square dimension):",
+      "Gap(",
+      "margin:/padding:/spacing:/gap:/... numeric literal",
+      "AppSpacing.<token>"
+    ],
+    "phase": "Phase 1-B audit"
+  },
+  "usages": [
+    {
+      "file": "lib/components/buttons/app_floating_action_button.dart",
+      "line": 37,
+      "snippet": "padding: const EdgeInsets.all(AppSpacing.space16),",
+      "values": [
+        {
+          "arg": "#0",
+          "expr": "AppSpacing.space16",
+          "tokenRef": "space16",
+          "kind": "tokenRef"
+        }
+      ],
+      "unit": "px",
+      "kind": "EdgeInsets.all",
+      "contextHint": [
+        "edgeInsets",
+        "appSpacingRef"
+      ]
+    },
+    {
+      "file": "lib/components/buttons/app_floating_action_button.dart",
+      "line": 37,
+      "snippet": "padding: const EdgeInsets.all(AppSpacing.space16),",
+      "values": [
+        {
+          "arg": null,
+          "expr": "AppSpacing.space16",
+          "tokenRef": "space16",
+          "kind": "tokenRef"
+        }
+      ],
+      "unit": "px",
+      "kind": "AppSpacingRef",
+      "contextHint": [
+        "appSpacingRef"
+      ]
+    },
+    {
+      "file": "lib/components/buttons/app_icon_button.dart",
+      "line": 225,
+      "snippet": "padding: EdgeInsets.all(_padding),",
+      "values": [
+        {
+          "arg": "#0",
+          "expr": "_padding",
+          "kind": "non-numeric"
+        }
+      ],
+      "unit": "px",
+      "kind": "EdgeInsets.all",
+      "contextHint": [
+        "edgeInsets"
+      ]
+    },
+    {
+      "file": "lib/components/buttons/app_icon_button.dart",
+      "line": 221,
+      "snippet": "child: SizedBox(",
+      "values": [
+        {
+          "arg": "width",
+          "expr": "box",
+          "kind": "non-numeric"
+        },
+        {
+          "arg": "height",
+          "expr": "box",
+          "kind": "non-numeric"
+        }
+      ],
+      "unit": "px",
+      "kind": "SizedBox",
+      "contextHint": [
+        "sizedBox"
+      ]
+    },
+    {
+      "file": "lib/components/buttons/app_icon_button.dart",
+      "line": 270,
+      "snippet": "final tappable = SizedBox(width: box, height: box, child: surface);",
+      "values": [
+        {
+          "arg": "width",
+          "expr": "box",
+          "kind": "non-numeric"
+        },
+        {
+          "arg": "height",
+          "expr": "box",
+          "kind": "non-numeric"
+        }
+      ],
+      "unit": "px",
+      "kind": "SizedBox",
+      "contextHint": [
+        "sizedBox"
+      ]
+    },
+    {
+      "file": "lib/components/buttons/app_outlined_button.dart",
+      "line": 80,
+      "snippet": "return EdgeInsets.symmetric(",
+      "values": [
+        {
+          "arg": "horizontal",
+          "expr": "base.left",
+          "kind": "non-numeric"
+        }
+      ],
+      "unit": "px",
+      "kind": "EdgeInsets.symmetric",
+      "contextHint": [
+        "edgeInsets"
+      ]
+    },
+    {
+      "file": "lib/components/buttons/app_outlined_button.dart",
+      "line": 91,
+      "snippet": "return SizedBox(",
+      "values": [
+        {
+          "arg": "width",
+          "expr": "width",
+          "kind": "non-numeric"
+        },
+        {
+          "arg": "height",
+          "expr": "_height",
+          "kind": "non-numeric"
+        }
+      ],
+      "unit": "px",
+      "kind": "SizedBox",
+      "contextHint": [
+        "sizedBox"
+      ]
+    },
+    {
+      "file": "lib/components/buttons/app_outlined_button.dart",
+      "line": 113,
+      "snippet": "SizedBox(width: _gap),",
+      "values": [
+        {
+          "arg": "width",
+          "expr": "_gap",
+          "kind": "non-numeric"
+        }
+      ],
+      "unit": "px",
+      "kind": "SizedBox",
+      "contextHint": [
+        "sizedBox"
+      ]
+    },
+    {
+      "file": "lib/components/buttons/app_outlined_button.dart",
+      "line": 117,
+      "snippet": "SizedBox(width: _gap),",
+      "values": [
+        {
+          "arg": "width",
+          "expr": "_gap",
+          "kind": "non-numeric"
+        }
+      ],
+      "unit": "px",
+      "kind": "SizedBox",
+      "contextHint": [
+        "sizedBox"
+      ]
+    },
+    {
+      "file": "lib/components/buttons/app_section_bottom_button.dart",
+      "line": 66,
+      "snippet": "padding: const EdgeInsets.symmetric(horizontal: 28, vertical: 11),",
+      "values": [
+        {
+          "arg": "horizontal",
+          "expr": "28",
+          "value": 28,
+          "kind": "literal"
+        },
+        {
+          "arg": "vertical",
+          "expr": "11",
+          "value": 11,
+          "kind": "literal"
+        }
+      ],
+      "unit": "px",
+      "kind": "EdgeInsets.symmetric",
+      "contextHint": [
+        "edgeInsets"
+      ]
+    },
+    {
+      "file": "lib/components/buttons/app_section_bottom_button.dart",
+      "line": 100,
+      "snippet": "padding: const EdgeInsets.symmetric(horizontal: AppSpacing.space24, vertical: AppSpacing.space4),",
+      "values": [
+        {
+          "arg": "horizontal",
+          "expr": "AppSpacing.space24",
+          "tokenRef": "space24",
+          "kind": "tokenRef"
+        },
+        {
+          "arg": "vertical",
+          "expr": "AppSpacing.space4",
+          "tokenRef": "space4",
+          "kind": "tokenRef"
+        }
+      ],
+      "unit": "px",
+      "kind": "EdgeInsets.symmetric",
+      "contextHint": [
+        "edgeInsets",
+        "appSpacingRef"
+      ]
+    },
+    {
+      "file": "lib/components/buttons/app_section_bottom_button.dart",
+      "line": 72,
+      "snippet": "const SizedBox(width: 6),",
+      "values": [
+        {
+          "arg": "width",
+          "expr": "6",
+          "value": 6,
+          "kind": "literal"
+        }
+      ],
+      "unit": "px",
+      "kind": "SizedBox",
+      "contextHint": [
+        "sizedBox"
+      ]
+    },
+    {
+      "file": "lib/components/buttons/app_section_bottom_button.dart",
+      "line": 80,
+      "snippet": "const SizedBox(width: 6),",
+      "values": [
+        {
+          "arg": "width",
+          "expr": "6",
+          "value": 6,
+          "kind": "literal"
+        }
+      ],
+      "unit": "px",
+      "kind": "SizedBox",
+      "contextHint": [
+        "sizedBox"
+      ]
+    },
+    {
+      "file": "lib/components/buttons/app_section_bottom_button.dart",
+      "line": 112,
+      "snippet": "const SizedBox(width: 10),",
+      "values": [
+        {
+          "arg": "width",
+          "expr": "10",
+          "value": 10,
+          "kind": "literal"
+        }
+      ],
+      "unit": "px",
+      "kind": "SizedBox",
+      "contextHint": [
+        "sizedBox"
+      ]
+    },
+    {
+      "file": "lib/components/buttons/app_section_bottom_button.dart",
+      "line": 121,
+      "snippet": "const SizedBox(width: 10),",
+      "values": [
+        {
+          "arg": "width",
+          "expr": "10",
+          "value": 10,
+          "kind": "literal"
+        }
+      ],
+      "unit": "px",
+      "kind": "SizedBox",
+      "contextHint": [
+        "sizedBox"
+      ]
+    },
+    {
+      "file": "lib/components/buttons/app_section_bottom_button.dart",
+      "line": 157,
+      "snippet": "const SizedBox(width: AppSpacing.space4),",
+      "values": [
+        {
+          "arg": "width",
+          "expr": "AppSpacing.space4",
+          "tokenRef": "space4",
+          "kind": "tokenRef"
+        }
+      ],
+      "unit": "px",
+      "kind": "SizedBox",
+      "contextHint": [
+        "sizedBox",
+        "appSpacingRef"
+      ]
+    },
+    {
+      "file": "lib/components/buttons/app_section_bottom_button.dart",
+      "line": 100,
+      "snippet": "padding: const EdgeInsets.symmetric(horizontal: AppSpacing.space24, vertical: AppSpacing.space4),",
+      "values": [
+        {
+          "arg": null,
+          "expr": "AppSpacing.space24",
+          "tokenRef": "space24",
+          "kind": "tokenRef"
+        }
+      ],
+      "unit": "px",
+      "kind": "AppSpacingRef",
+      "contextHint": [
+        "appSpacingRef"
+      ]
+    },
+    {
+      "file": "lib/components/buttons/app_section_bottom_button.dart",
+      "line": 100,
+      "snippet": "padding: const EdgeInsets.symmetric(horizontal: AppSpacing.space24, vertical: AppSpacing.space4),",
+      "values": [
+        {
+          "arg": null,
+          "expr": "AppSpacing.space4",
+          "tokenRef": "space4",
+          "kind": "tokenRef"
+        }
+      ],
+      "unit": "px",
+      "kind": "AppSpacingRef",
+      "contextHint": [
+        "appSpacingRef"
+      ]
+    },
+    {
+      "file": "lib/components/buttons/app_section_bottom_button.dart",
+      "line": 157,
+      "snippet": "const SizedBox(width: AppSpacing.space4),",
+      "values": [
+        {
+          "arg": null,
+          "expr": "AppSpacing.space4",
+          "tokenRef": "space4",
+          "kind": "tokenRef"
+        }
+      ],
+      "unit": "px",
+      "kind": "AppSpacingRef",
+      "contextHint": [
+        "appSpacingRef"
+      ]
+    },
+    {
+      "file": "lib/components/buttons/app_social_button.dart",
+      "line": 78,
+      "snippet": "return SizedBox(",
+      "values": [
+        {
+          "arg": "width",
+          "expr": "width ?? double.infinity",
+          "kind": "non-numeric"
+        },
+        {
+          "arg": "height",
+          "expr": "height",
+          "kind": "non-numeric"
+        }
+      ],
+      "unit": "px",
+      "kind": "SizedBox",
+      "contextHint": [
+        "sizedBox"
+      ]
+    },
+    {
+      "file": "lib/components/buttons/app_social_button.dart",
+      "line": 102,
+      "snippet": "const SizedBox(width: AppSpacing.space8),",
+      "values": [
+        {
+          "arg": "width",
+          "expr": "AppSpacing.space8",
+          "tokenRef": "space8",
+          "kind": "tokenRef"
+        }
+      ],
+      "unit": "px",
+      "kind": "SizedBox",
+      "contextHint": [
+        "sizedBox",
+        "appSpacingRef"
+      ]
+    },
+    {
+      "file": "lib/components/buttons/app_social_button.dart",
+      "line": 102,
+      "snippet": "const SizedBox(width: AppSpacing.space8),",
+      "values": [
+        {
+          "arg": null,
+          "expr": "AppSpacing.space8",
+          "tokenRef": "space8",
+          "kind": "tokenRef"
+        }
+      ],
+      "unit": "px",
+      "kind": "AppSpacingRef",
+      "contextHint": [
+        "appSpacingRef"
+      ]
+    },
+    {
+      "file": "lib/components/buttons/app_solid_button.dart",
+      "line": 151,
+      "snippet": "SizedBox(width: _gap),",
+      "values": [
+        {
+          "arg": "width",
+          "expr": "_gap",
+          "kind": "non-numeric"
+        }
+      ],
+      "unit": "px",
+      "kind": "SizedBox",
+      "contextHint": [
+        "sizedBox"
+      ]
+    },
+    {
+      "file": "lib/components/buttons/app_solid_button.dart",
+      "line": 155,
+      "snippet": "SizedBox(width: _gap),",
+      "values": [
+        {
+          "arg": "width",
+          "expr": "_gap",
+          "kind": "non-numeric"
+        }
+      ],
+      "unit": "px",
+      "kind": "SizedBox",
+      "contextHint": [
+        "sizedBox"
+      ]
+    },
+    {
+      "file": "lib/components/buttons/app_solid_button.dart",
+      "line": 182,
+      "snippet": "return SizedBox(",
+      "values": [
+        {
+          "arg": "width",
+          "expr": "width",
+          "kind": "non-numeric"
+        },
+        {
+          "arg": "height",
+          "expr": "_height",
+          "kind": "non-numeric"
+        }
+      ],
+      "unit": "px",
+      "kind": "SizedBox",
+      "contextHint": [
+        "sizedBox"
+      ]
+    },
+    {
+      "file": "lib/components/buttons/app_text_button.dart",
+      "line": 43,
+      "snippet": "EdgeInsets get _padding => const EdgeInsets.symmetric(vertical: AppSpacing.space4);",
+      "values": [
+        {
+          "arg": "vertical",
+          "expr": "AppSpacing.space4",
+          "tokenRef": "space4",
+          "kind": "tokenRef"
+        }
+      ],
+      "unit": "px",
+      "kind": "EdgeInsets.symmetric",
+      "contextHint": [
+        "edgeInsets",
+        "appSpacingRef"
+      ]
+    },
+    {
+      "file": "lib/components/buttons/app_text_button.dart",
+      "line": 82,
+      "snippet": "SizedBox(width: _gap),",
+      "values": [
+        {
+          "arg": "width",
+          "expr": "_gap",
+          "kind": "non-numeric"
+        }
+      ],
+      "unit": "px",
+      "kind": "SizedBox",
+      "contextHint": [
+        "sizedBox"
+      ]
+    },
+    {
+      "file": "lib/components/buttons/app_text_button.dart",
+      "line": 86,
+      "snippet": "SizedBox(width: _gap),",
+      "values": [
+        {
+          "arg": "width",
+          "expr": "_gap",
+          "kind": "non-numeric"
+        }
+      ],
+      "unit": "px",
+      "kind": "SizedBox",
+      "contextHint": [
+        "sizedBox"
+      ]
+    },
+    {
+      "file": "lib/components/buttons/app_text_button.dart",
+      "line": 43,
+      "snippet": "EdgeInsets get _padding => const EdgeInsets.symmetric(vertical: AppSpacing.space4);",
+      "values": [
+        {
+          "arg": null,
+          "expr": "AppSpacing.space4",
+          "tokenRef": "space4",
+          "kind": "tokenRef"
+        }
+      ],
+      "unit": "px",
+      "kind": "AppSpacingRef",
+      "contextHint": [
+        "appSpacingRef"
+      ]
+    },
+    {
+      "file": "lib/components/buttons/button_use_cases.dart",
+      "line": 468,
+      "snippet": "padding: const EdgeInsets.all(24),",
+      "values": [
+        {
+          "arg": "#0",
+          "expr": "24",
+          "value": 24,
+          "kind": "literal"
+        }
+      ],
+      "unit": "px",
+      "kind": "EdgeInsets.all",
+      "contextHint": [
+        "edgeInsets"
+      ]
+    },
+    {
+      "file": "lib/components/buttons/button_use_cases.dart",
+      "line": 490,
+      "snippet": "padding: const EdgeInsets.all(24),",
+      "values": [
+        {
+          "arg": "#0",
+          "expr": "24",
+          "value": 24,
+          "kind": "literal"
+        }
+      ],
+      "unit": "px",
+      "kind": "EdgeInsets.all",
+      "contextHint": [
+        "edgeInsets"
+      ]
+    },
+    {
+      "file": "lib/components/buttons/button_use_cases.dart",
+      "line": 97,
+      "snippet": "const SizedBox(height: AppSpacing.space12),",
+      "values": [
+        {
+          "arg": "height",
+          "expr": "AppSpacing.space12",
+          "tokenRef": "space12",
+          "kind": "tokenRef"
+        }
+      ],
+      "unit": "px",
+      "kind": "SizedBox",
+      "contextHint": [
+        "sizedBox",
+        "appSpacingRef"
+      ]
+    },
+    {
+      "file": "lib/components/buttons/button_use_cases.dart",
+      "line": 201,
+      "snippet": "const SizedBox(height: AppSpacing.space8),",
+      "values": [
+        {
+          "arg": "height",
+          "expr": "AppSpacing.space8",
+          "tokenRef": "space8",
+          "kind": "tokenRef"
+        }
+      ],
+      "unit": "px",
+      "kind": "SizedBox",
+      "contextHint": [
+        "sizedBox",
+        "appSpacingRef"
+      ]
+    },
+    {
+      "file": "lib/components/buttons/button_use_cases.dart",
+      "line": 209,
+      "snippet": "const SizedBox(height: AppSpacing.space24),",
+      "values": [
+        {
+          "arg": "height",
+          "expr": "AppSpacing.space24",
+          "tokenRef": "space24",
+          "kind": "tokenRef"
+        }
+      ],
+      "unit": "px",
+      "kind": "SizedBox",
+      "contextHint": [
+        "sizedBox",
+        "appSpacingRef"
+      ]
+    },
+    {
+      "file": "lib/components/buttons/button_use_cases.dart",
+      "line": 211,
+      "snippet": "const SizedBox(height: AppSpacing.space8),",
+      "values": [
+        {
+          "arg": "height",
+          "expr": "AppSpacing.space8",
+          "tokenRef": "space8",
+          "kind": "tokenRef"
+        }
+      ],
+      "unit": "px",
+      "kind": "SizedBox",
+      "contextHint": [
+        "sizedBox",
+        "appSpacingRef"
+      ]
+    },
+    {
+      "file": "lib/components/buttons/button_use_cases.dart",
+      "line": 289,
+      "snippet": "const SizedBox(height: 4),",
+      "values": [
+        {
+          "arg": "height",
+          "expr": "4",
+          "value": 4,
+          "kind": "literal"
+        }
+      ],
+      "unit": "px",
+      "kind": "SizedBox",
+      "contextHint": [
+        "sizedBox"
+      ]
+    },
+    {
+      "file": "lib/components/buttons/button_use_cases.dart",
+      "line": 25,
+      "snippet": "spacing: 12,",
+      "values": [
+        {
+          "arg": "spacing",
+          "expr": "12",
+          "value": 12,
+          "kind": "literal"
+        }
+      ],
+      "unit": "px",
+      "kind": "PropLiteral:spacing",
+      "contextHint": [
+        "rawPropLiteral"
+      ]
+    },
+    {
+      "file": "lib/components/buttons/button_use_cases.dart",
+      "line": 26,
+      "snippet": "runSpacing: 12,",
+      "values": [
+        {
+          "arg": "runSpacing",
+          "expr": "12",
+          "value": 12,
+          "kind": "literal"
+        }
+      ],
+      "unit": "px",
+      "kind": "PropLiteral:runSpacing",
+      "contextHint": [
+        "rawPropLiteral"
+      ]
+    },
+    {
+      "file": "lib/components/buttons/button_use_cases.dart",
+      "line": 39,
+      "snippet": "spacing: 12,",
+      "values": [
+        {
+          "arg": "spacing",
+          "expr": "12",
+          "value": 12,
+          "kind": "literal"
+        }
+      ],
+      "unit": "px",
+      "kind": "PropLiteral:spacing",
+      "contextHint": [
+        "rawPropLiteral"
+      ]
+    },
+    {
+      "file": "lib/components/buttons/button_use_cases.dart",
+      "line": 40,
+      "snippet": "runSpacing: 12,",
+      "values": [
+        {
+          "arg": "runSpacing",
+          "expr": "12",
+          "value": 12,
+          "kind": "literal"
+        }
+      ],
+      "unit": "px",
+      "kind": "PropLiteral:runSpacing",
+      "contextHint": [
+        "rawPropLiteral"
+      ]
+    },
+    {
+      "file": "lib/components/buttons/button_use_cases.dart",
+      "line": 56,
+      "snippet": "spacing: 12,",
+      "values": [
+        {
+          "arg": "spacing",
+          "expr": "12",
+          "value": 12,
+          "kind": "literal"
+        }
+      ],
+      "unit": "px",
+      "kind": "PropLiteral:spacing",
+      "contextHint": [
+        "rawPropLiteral"
+      ]
+    },
+    {
+      "file": "lib/components/buttons/button_use_cases.dart",
+      "line": 57,
+      "snippet": "runSpacing: 12,",
+      "values": [
+        {
+          "arg": "runSpacing",
+          "expr": "12",
+          "value": 12,
+          "kind": "literal"
+        }
+      ],
+      "unit": "px",
+      "kind": "PropLiteral:runSpacing",
+      "contextHint": [
+        "rawPropLiteral"
+      ]
+    },
+    {
+      "file": "lib/components/buttons/button_use_cases.dart",
+      "line": 75,
+      "snippet": "spacing: 12,",
+      "values": [
+        {
+          "arg": "spacing",
+          "expr": "12",
+          "value": 12,
+          "kind": "literal"
+        }
+      ],
+      "unit": "px",
+      "kind": "PropLiteral:spacing",
+      "contextHint": [
+        "rawPropLiteral"
+      ]
+    },
+    {
+      "file": "lib/components/buttons/button_use_cases.dart",
+      "line": 76,
+      "snippet": "runSpacing: 12,",
+      "values": [
+        {
+          "arg": "runSpacing",
+          "expr": "12",
+          "value": 12,
+          "kind": "literal"
+        }
+      ],
+      "unit": "px",
+      "kind": "PropLiteral:runSpacing",
+      "contextHint": [
+        "rawPropLiteral"
+      ]
+    },
+    {
+      "file": "lib/components/buttons/button_use_cases.dart",
+      "line": 124,
+      "snippet": "spacing: 12,",
+      "values": [
+        {
+          "arg": "spacing",
+          "expr": "12",
+          "value": 12,
+          "kind": "literal"
+        }
+      ],
+      "unit": "px",
+      "kind": "PropLiteral:spacing",
+      "contextHint": [
+        "rawPropLiteral"
+      ]
+    },
+    {
+      "file": "lib/components/buttons/button_use_cases.dart",
+      "line": 125,
+      "snippet": "runSpacing: 12,",
+      "values": [
+        {
+          "arg": "runSpacing",
+          "expr": "12",
+          "value": 12,
+          "kind": "literal"
+        }
+      ],
+      "unit": "px",
+      "kind": "PropLiteral:runSpacing",
+      "contextHint": [
+        "rawPropLiteral"
+      ]
+    },
+    {
+      "file": "lib/components/buttons/button_use_cases.dart",
+      "line": 138,
+      "snippet": "spacing: 12,",
+      "values": [
+        {
+          "arg": "spacing",
+          "expr": "12",
+          "value": 12,
+          "kind": "literal"
+        }
+      ],
+      "unit": "px",
+      "kind": "PropLiteral:spacing",
+      "contextHint": [
+        "rawPropLiteral"
+      ]
+    },
+    {
+      "file": "lib/components/buttons/button_use_cases.dart",
+      "line": 139,
+      "snippet": "runSpacing: 12,",
+      "values": [
+        {
+          "arg": "runSpacing",
+          "expr": "12",
+          "value": 12,
+          "kind": "literal"
+        }
+      ],
+      "unit": "px",
+      "kind": "PropLiteral:runSpacing",
+      "contextHint": [
+        "rawPropLiteral"
+      ]
+    },
+    {
+      "file": "lib/components/buttons/button_use_cases.dart",
+      "line": 153,
+      "snippet": "spacing: 12,",
+      "values": [
+        {
+          "arg": "spacing",
+          "expr": "12",
+          "value": 12,
+          "kind": "literal"
+        }
+      ],
+      "unit": "px",
+      "kind": "PropLiteral:spacing",
+      "contextHint": [
+        "rawPropLiteral"
+      ]
+    },
+    {
+      "file": "lib/components/buttons/button_use_cases.dart",
+      "line": 154,
+      "snippet": "runSpacing: 12,",
+      "values": [
+        {
+          "arg": "runSpacing",
+          "expr": "12",
+          "value": 12,
+          "kind": "literal"
+        }
+      ],
+      "unit": "px",
+      "kind": "PropLiteral:runSpacing",
+      "contextHint": [
+        "rawPropLiteral"
+      ]
+    },
+    {
+      "file": "lib/components/buttons/button_use_cases.dart",
+      "line": 171,
+      "snippet": "spacing: 12,",
+      "values": [
+        {
+          "arg": "spacing",
+          "expr": "12",
+          "value": 12,
+          "kind": "literal"
+        }
+      ],
+      "unit": "px",
+      "kind": "PropLiteral:spacing",
+      "contextHint": [
+        "rawPropLiteral"
+      ]
+    },
+    {
+      "file": "lib/components/buttons/button_use_cases.dart",
+      "line": 203,
+      "snippet": "spacing: 16,",
+      "values": [
+        {
+          "arg": "spacing",
+          "expr": "16",
+          "value": 16,
+          "kind": "literal"
+        }
+      ],
+      "unit": "px",
+      "kind": "PropLiteral:spacing",
+      "contextHint": [
+        "rawPropLiteral"
+      ]
+    },
+    {
+      "file": "lib/components/buttons/button_use_cases.dart",
+      "line": 213,
+      "snippet": "spacing: 16,",
+      "values": [
+        {
+          "arg": "spacing",
+          "expr": "16",
+          "value": 16,
+          "kind": "literal"
+        }
+      ],
+      "unit": "px",
+      "kind": "PropLiteral:spacing",
+      "contextHint": [
+        "rawPropLiteral"
+      ]
+    },
+    {
+      "file": "lib/components/buttons/button_use_cases.dart",
+      "line": 232,
+      "snippet": "spacing: 16,",
+      "values": [
+        {
+          "arg": "spacing",
+          "expr": "16",
+          "value": 16,
+          "kind": "literal"
+        }
+      ],
+      "unit": "px",
+      "kind": "PropLiteral:spacing",
+      "contextHint": [
+        "rawPropLiteral"
+      ]
+    },
+    {
+      "file": "lib/components/buttons/button_use_cases.dart",
+      "line": 233,
+      "snippet": "runSpacing: 8,",
+      "values": [
+        {
+          "arg": "runSpacing",
+          "expr": "8",
+          "value": 8,
+          "kind": "literal"
+        }
+      ],
+      "unit": "px",
+      "kind": "PropLiteral:runSpacing",
+      "contextHint": [
+        "rawPropLiteral"
+      ]
+    },
+    {
+      "file": "lib/components/buttons/button_use_cases.dart",
+      "line": 272,
+      "snippet": "spacing: 12,",
+      "values": [
+        {
+          "arg": "spacing",
+          "expr": "12",
+          "value": 12,
+          "kind": "literal"
+        }
+      ],
+      "unit": "px",
+      "kind": "PropLiteral:spacing",
+      "contextHint": [
+        "rawPropLiteral"
+      ]
+    },
+    {
+      "file": "lib/components/buttons/button_use_cases.dart",
+      "line": 273,
+      "snippet": "runSpacing: 12,",
+      "values": [
+        {
+          "arg": "runSpacing",
+          "expr": "12",
+          "value": 12,
+          "kind": "literal"
+        }
+      ],
+      "unit": "px",
+      "kind": "PropLiteral:runSpacing",
+      "contextHint": [
+        "rawPropLiteral"
+      ]
+    },
+    {
+      "file": "lib/components/buttons/button_use_cases.dart",
+      "line": 306,
+      "snippet": "spacing: 12,",
+      "values": [
+        {
+          "arg": "spacing",
+          "expr": "12",
+          "value": 12,
+          "kind": "literal"
+        }
+      ],
+      "unit": "px",
+      "kind": "PropLiteral:spacing",
+      "contextHint": [
+        "rawPropLiteral"
+      ]
+    },
+    {
+      "file": "lib/components/buttons/button_use_cases.dart",
+      "line": 336,
+      "snippet": "spacing: 24,",
+      "values": [
+        {
+          "arg": "spacing",
+          "expr": "24",
+          "value": 24,
+          "kind": "literal"
+        }
+      ],
+      "unit": "px",
+      "kind": "PropLiteral:spacing",
+      "contextHint": [
+        "rawPropLiteral"
+      ]
+    },
+    {
+      "file": "lib/components/buttons/button_use_cases.dart",
+      "line": 372,
+      "snippet": "spacing: 24,",
+      "values": [
+        {
+          "arg": "spacing",
+          "expr": "24",
+          "value": 24,
+          "kind": "literal"
+        }
+      ],
+      "unit": "px",
+      "kind": "PropLiteral:spacing",
+      "contextHint": [
+        "rawPropLiteral"
+      ]
+    },
+    {
+      "file": "lib/components/buttons/button_use_cases.dart",
+      "line": 97,
+      "snippet": "const SizedBox(height: AppSpacing.space12),",
+      "values": [
+        {
+          "arg": null,
+          "expr": "AppSpacing.space12",
+          "tokenRef": "space12",
+          "kind": "tokenRef"
+        }
+      ],
+      "unit": "px",
+      "kind": "AppSpacingRef",
+      "contextHint": [
+        "appSpacingRef"
+      ]
+    },
+    {
+      "file": "lib/components/buttons/button_use_cases.dart",
+      "line": 201,
+      "snippet": "const SizedBox(height: AppSpacing.space8),",
+      "values": [
+        {
+          "arg": null,
+          "expr": "AppSpacing.space8",
+          "tokenRef": "space8",
+          "kind": "tokenRef"
+        }
+      ],
+      "unit": "px",
+      "kind": "AppSpacingRef",
+      "contextHint": [
+        "appSpacingRef"
+      ]
+    },
+    {
+      "file": "lib/components/buttons/button_use_cases.dart",
+      "line": 209,
+      "snippet": "const SizedBox(height: AppSpacing.space24),",
+      "values": [
+        {
+          "arg": null,
+          "expr": "AppSpacing.space24",
+          "tokenRef": "space24",
+          "kind": "tokenRef"
+        }
+      ],
+      "unit": "px",
+      "kind": "AppSpacingRef",
+      "contextHint": [
+        "appSpacingRef"
+      ]
+    },
+    {
+      "file": "lib/components/buttons/button_use_cases.dart",
+      "line": 211,
+      "snippet": "const SizedBox(height: AppSpacing.space8),",
+      "values": [
+        {
+          "arg": null,
+          "expr": "AppSpacing.space8",
+          "tokenRef": "space8",
+          "kind": "tokenRef"
+        }
+      ],
+      "unit": "px",
+      "kind": "AppSpacingRef",
+      "contextHint": [
+        "appSpacingRef"
+      ]
+    }
+  ],
+  "_summary": {
+    "dir": "buttons",
+    "fileCount": 8,
+    "totalUsages": 64,
+    "distinctValues": [
+      4,
+      6,
+      8,
+      10,
+      11,
+      12,
+      16,
+      24,
+      28
+    ],
+    "valueFrequency": {
+      "12": 18,
+      "24": 4,
+      "16": 3,
+      "6": 2,
+      "10": 2,
+      "4": 1,
+      "8": 1,
+      "11": 1,
+      "28": 1
+    },
+    "tokenRefFrequency": {
+      "space4": 6,
+      "space8": 6,
+      "space24": 4,
+      "space12": 2,
+      "space16": 2
+    },
+    "suspiciousItems": [
+      {
+        "file": "lib/components/buttons/app_section_bottom_button.dart",
+        "line": 66,
+        "kind": "EdgeInsets.symmetric",
+        "value": 28,
+        "reason": "off-scale literal",
+        "snippet": "padding: const EdgeInsets.symmetric(horizontal: 28, vertical: 11),"
+      },
+      {
+        "file": "lib/components/buttons/app_section_bottom_button.dart",
+        "line": 66,
+        "kind": "EdgeInsets.symmetric",
+        "value": 11,
+        "reason": "off-scale literal",
+        "snippet": "padding: const EdgeInsets.symmetric(horizontal: 28, vertical: 11),"
+      },
+      {
+        "file": "lib/components/buttons/app_section_bottom_button.dart",
+        "line": 72,
+        "kind": "SizedBox",
+        "value": 6,
+        "reason": "off-scale literal",
+        "snippet": "const SizedBox(width: 6),"
+      },
+      {
+        "file": "lib/components/buttons/app_section_bottom_button.dart",
+        "line": 80,
+        "kind": "SizedBox",
+        "value": 6,
+        "reason": "off-scale literal",
+        "snippet": "const SizedBox(width: 6),"
+      },
+      {
+        "file": "lib/components/buttons/app_section_bottom_button.dart",
+        "line": 112,
+        "kind": "SizedBox",
+        "value": 10,
+        "reason": "off-scale literal",
+        "snippet": "const SizedBox(width: 10),"
+      },
+      {
+        "file": "lib/components/buttons/app_section_bottom_button.dart",
+        "line": 121,
+        "kind": "SizedBox",
+        "value": 10,
+        "reason": "off-scale literal",
+        "snippet": "const SizedBox(width: 10),"
+      }
+    ],
+    "suspiciousCount": 6
+  }
+}

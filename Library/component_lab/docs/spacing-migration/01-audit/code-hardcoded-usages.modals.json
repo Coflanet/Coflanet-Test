@@ -1,0 +1,279 @@
+{
+  "_meta": {
+    "dir": "modals",
+    "scannedRoot": "lib/components/modals",
+    "fileCount": 2,
+    "files": [
+      "lib/components/modals/app_confirm_dialog.dart",
+      "lib/components/modals/modal_use_cases.dart"
+    ],
+    "patterns": [
+      "EdgeInsets.(all|symmetric|only|fromLTRB)(",
+      "Padding(padding:",
+      "SizedBox((width|height|.square dimension):",
+      "Gap(",
+      "margin:/padding:/spacing:/gap:/... numeric literal",
+      "AppSpacing.<token>"
+    ],
+    "phase": "Phase 1-B audit"
+  },
+  "usages": [
+    {
+      "file": "lib/components/modals/app_confirm_dialog.dart",
+      "line": 59,
+      "snippet": "margin: const EdgeInsets.all(AppSpacing.space24),",
+      "values": [
+        {
+          "arg": "#0",
+          "expr": "AppSpacing.space24",
+          "tokenRef": "space24",
+          "kind": "tokenRef"
+        }
+      ],
+      "unit": "px",
+      "kind": "EdgeInsets.all",
+      "contextHint": [
+        "edgeInsets",
+        "appSpacingRef"
+      ]
+    },
+    {
+      "file": "lib/components/modals/app_confirm_dialog.dart",
+      "line": 65,
+      "snippet": "padding: const EdgeInsets.all(AppSpacing.space24),",
+      "values": [
+        {
+          "arg": "#0",
+          "expr": "AppSpacing.space24",
+          "tokenRef": "space24",
+          "kind": "tokenRef"
+        }
+      ],
+      "unit": "px",
+      "kind": "EdgeInsets.all",
+      "contextHint": [
+        "edgeInsets",
+        "appSpacingRef"
+      ]
+    },
+    {
+      "file": "lib/components/modals/app_confirm_dialog.dart",
+      "line": 75,
+      "snippet": "const SizedBox(height: AppSpacing.space8),",
+      "values": [
+        {
+          "arg": "height",
+          "expr": "AppSpacing.space8",
+          "tokenRef": "space8",
+          "kind": "tokenRef"
+        }
+      ],
+      "unit": "px",
+      "kind": "SizedBox",
+      "contextHint": [
+        "sizedBox",
+        "appSpacingRef"
+      ]
+    },
+    {
+      "file": "lib/components/modals/app_confirm_dialog.dart",
+      "line": 83,
+      "snippet": "const SizedBox(height: AppSpacing.space24),",
+      "values": [
+        {
+          "arg": "height",
+          "expr": "AppSpacing.space24",
+          "tokenRef": "space24",
+          "kind": "tokenRef"
+        }
+      ],
+      "unit": "px",
+      "kind": "SizedBox",
+      "contextHint": [
+        "sizedBox",
+        "appSpacingRef"
+      ]
+    },
+    {
+      "file": "lib/components/modals/app_confirm_dialog.dart",
+      "line": 95,
+      "snippet": "const SizedBox(width: AppSpacing.space8),",
+      "values": [
+        {
+          "arg": "width",
+          "expr": "AppSpacing.space8",
+          "tokenRef": "space8",
+          "kind": "tokenRef"
+        }
+      ],
+      "unit": "px",
+      "kind": "SizedBox",
+      "contextHint": [
+        "sizedBox",
+        "appSpacingRef"
+      ]
+    },
+    {
+      "file": "lib/components/modals/app_confirm_dialog.dart",
+      "line": 59,
+      "snippet": "margin: const EdgeInsets.all(AppSpacing.space24),",
+      "values": [
+        {
+          "arg": null,
+          "expr": "AppSpacing.space24",
+          "tokenRef": "space24",
+          "kind": "tokenRef"
+        }
+      ],
+      "unit": "px",
+      "kind": "AppSpacingRef",
+      "contextHint": [
+        "appSpacingRef"
+      ]
+    },
+    {
+      "file": "lib/components/modals/app_confirm_dialog.dart",
+      "line": 65,
+      "snippet": "padding: const EdgeInsets.all(AppSpacing.space24),",
+      "values": [
+        {
+          "arg": null,
+          "expr": "AppSpacing.space24",
+          "tokenRef": "space24",
+          "kind": "tokenRef"
+        }
+      ],
+      "unit": "px",
+      "kind": "AppSpacingRef",
+      "contextHint": [
+        "appSpacingRef"
+      ]
+    },
+    {
+      "file": "lib/components/modals/app_confirm_dialog.dart",
+      "line": 75,
+      "snippet": "const SizedBox(height: AppSpacing.space8),",
+      "values": [
+        {
+          "arg": null,
+          "expr": "AppSpacing.space8",
+          "tokenRef": "space8",
+          "kind": "tokenRef"
+        }
+      ],
+      "unit": "px",
+      "kind": "AppSpacingRef",
+      "contextHint": [
+        "appSpacingRef"
+      ]
+    },
+    {
+      "file": "lib/components/modals/app_confirm_dialog.dart",
+      "line": 83,
+      "snippet": "const SizedBox(height: AppSpacing.space24),",
+      "values": [
+        {
+          "arg": null,
+          "expr": "AppSpacing.space24",
+          "tokenRef": "space24",
+          "kind": "tokenRef"
+        }
+      ],
+      "unit": "px",
+      "kind": "AppSpacingRef",
+      "contextHint": [
+        "appSpacingRef"
+      ]
+    },
+    {
+      "file": "lib/components/modals/app_confirm_dialog.dart",
+      "line": 95,
+      "snippet": "const SizedBox(width: AppSpacing.space8),",
+      "values": [
+        {
+          "arg": null,
+          "expr": "AppSpacing.space8",
+          "tokenRef": "space8",
+          "kind": "tokenRef"
+        }
+      ],
+      "unit": "px",
+      "kind": "AppSpacingRef",
+      "contextHint": [
+        "appSpacingRef"
+      ]
+    },
+    {
+      "file": "lib/components/modals/modal_use_cases.dart",
+      "line": 60,
+      "snippet": "padding: const EdgeInsets.all(24),",
+      "values": [
+        {
+          "arg": "#0",
+          "expr": "24",
+          "value": 24,
+          "kind": "literal"
+        }
+      ],
+      "unit": "px",
+      "kind": "EdgeInsets.all",
+      "contextHint": [
+        "edgeInsets"
+      ]
+    },
+    {
+      "file": "lib/components/modals/modal_use_cases.dart",
+      "line": 97,
+      "snippet": "padding: const EdgeInsets.symmetric(vertical: AppSpacing.space24),",
+      "values": [
+        {
+          "arg": "vertical",
+          "expr": "AppSpacing.space24",
+          "tokenRef": "space24",
+          "kind": "tokenRef"
+        }
+      ],
+      "unit": "px",
+      "kind": "EdgeInsets.symmetric",
+      "contextHint": [
+        "edgeInsets",
+        "appSpacingRef"
+      ]
+    },
+    {
+      "file": "lib/components/modals/modal_use_cases.dart",
+      "line": 97,
+      "snippet": "padding: const EdgeInsets.symmetric(vertical: AppSpacing.space24),",
+      "values": [
+        {
+          "arg": null,
+          "expr": "AppSpacing.space24",
+          "tokenRef": "space24",
+          "kind": "tokenRef"
+        }
+      ],
+      "unit": "px",
+      "kind": "AppSpacingRef",
+      "contextHint": [
+        "appSpacingRef"
+      ]
+    }
+  ],
+  "_summary": {
+    "dir": "modals",
+    "fileCount": 2,
+    "totalUsages": 13,
+    "distinctValues": [
+      24
+    ],
+    "valueFrequency": {
+      "24": 1
+    },
+    "tokenRefFrequency": {
+      "space24": 8,
+      "space8": 4
+    },
+    "suspiciousItems": [],
+    "suspiciousCount": 0
+  }
+}

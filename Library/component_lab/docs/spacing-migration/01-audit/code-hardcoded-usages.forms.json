@@ -1,0 +1,323 @@
+{
+  "_meta": {
+    "dir": "forms",
+    "scannedRoot": "lib/components/forms",
+    "fileCount": 4,
+    "files": [
+      "lib/components/forms/app_search_input.dart",
+      "lib/components/forms/app_search_input_use_cases.dart",
+      "lib/components/forms/app_text_field.dart",
+      "lib/components/forms/text_field_use_cases.dart"
+    ],
+    "patterns": [
+      "EdgeInsets.(all|symmetric|only|fromLTRB)(",
+      "Padding(padding:",
+      "SizedBox((width|height|.square dimension):",
+      "Gap(",
+      "margin:/padding:/spacing:/gap:/... numeric literal",
+      "AppSpacing.<token>"
+    ],
+    "phase": "Phase 1-B audit"
+  },
+  "usages": [
+    {
+      "file": "lib/components/forms/app_search_input_use_cases.dart",
+      "line": 47,
+      "snippet": "padding: const EdgeInsets.all(AppSpacing.space16),",
+      "values": [
+        {
+          "arg": "#0",
+          "expr": "AppSpacing.space16",
+          "tokenRef": "space16",
+          "kind": "tokenRef"
+        }
+      ],
+      "unit": "px",
+      "kind": "EdgeInsets.all",
+      "contextHint": [
+        "edgeInsets",
+        "appSpacingRef"
+      ]
+    },
+    {
+      "file": "lib/components/forms/app_search_input_use_cases.dart",
+      "line": 53,
+      "snippet": "if (i > 0) const SizedBox(height: AppSpacing.space16),",
+      "values": [
+        {
+          "arg": "height",
+          "expr": "AppSpacing.space16",
+          "tokenRef": "space16",
+          "kind": "tokenRef"
+        }
+      ],
+      "unit": "px",
+      "kind": "SizedBox",
+      "contextHint": [
+        "sizedBox",
+        "appSpacingRef"
+      ]
+    },
+    {
+      "file": "lib/components/forms/app_search_input_use_cases.dart",
+      "line": 47,
+      "snippet": "padding: const EdgeInsets.all(AppSpacing.space16),",
+      "values": [
+        {
+          "arg": null,
+          "expr": "AppSpacing.space16",
+          "tokenRef": "space16",
+          "kind": "tokenRef"
+        }
+      ],
+      "unit": "px",
+      "kind": "AppSpacingRef",
+      "contextHint": [
+        "appSpacingRef"
+      ]
+    },
+    {
+      "file": "lib/components/forms/app_search_input_use_cases.dart",
+      "line": 53,
+      "snippet": "if (i > 0) const SizedBox(height: AppSpacing.space16),",
+      "values": [
+        {
+          "arg": null,
+          "expr": "AppSpacing.space16",
+          "tokenRef": "space16",
+          "kind": "tokenRef"
+        }
+      ],
+      "unit": "px",
+      "kind": "AppSpacingRef",
+      "contextHint": [
+        "appSpacingRef"
+      ]
+    },
+    {
+      "file": "lib/components/forms/app_text_field.dart",
+      "line": 181,
+      "snippet": "EdgeInsets get _contentPadding => const EdgeInsets.symmetric(",
+      "values": [
+        {
+          "arg": "horizontal",
+          "expr": "AppSpacing.space16",
+          "tokenRef": "space16",
+          "kind": "tokenRef"
+        }
+      ],
+      "unit": "px",
+      "kind": "EdgeInsets.symmetric",
+      "contextHint": [
+        "edgeInsets"
+      ]
+    },
+    {
+      "file": "lib/components/forms/app_text_field.dart",
+      "line": 212,
+      "snippet": "const SizedBox(height: AppSpacing.space8),",
+      "values": [
+        {
+          "arg": "height",
+          "expr": "AppSpacing.space8",
+          "tokenRef": "space8",
+          "kind": "tokenRef"
+        }
+      ],
+      "unit": "px",
+      "kind": "SizedBox",
+      "contextHint": [
+        "sizedBox",
+        "appSpacingRef"
+      ]
+    },
+    {
+      "file": "lib/components/forms/app_text_field.dart",
+      "line": 214,
+      "snippet": "SizedBox(",
+      "values": [
+        {
+          "arg": "height",
+          "expr": "widget.maxLines > 1 ? null : _height",
+          "embeddedLiterals": [
+            1
+          ],
+          "kind": "expression-with-literal"
+        }
+      ],
+      "unit": "px",
+      "kind": "SizedBox",
+      "contextHint": [
+        "sizedBox"
+      ]
+    },
+    {
+      "file": "lib/components/forms/app_text_field.dart",
+      "line": 274,
+      "snippet": "const SizedBox(height: AppSpacing.space4),",
+      "values": [
+        {
+          "arg": "height",
+          "expr": "AppSpacing.space4",
+          "tokenRef": "space4",
+          "kind": "tokenRef"
+        }
+      ],
+      "unit": "px",
+      "kind": "SizedBox",
+      "contextHint": [
+        "sizedBox",
+        "appSpacingRef"
+      ]
+    },
+    {
+      "file": "lib/components/forms/app_text_field.dart",
+      "line": 182,
+      "snippet": "horizontal: AppSpacing.space16,",
+      "values": [
+        {
+          "arg": null,
+          "expr": "AppSpacing.space16",
+          "tokenRef": "space16",
+          "kind": "tokenRef"
+        }
+      ],
+      "unit": "px",
+      "kind": "AppSpacingRef",
+      "contextHint": [
+        "appSpacingRef"
+      ]
+    },
+    {
+      "file": "lib/components/forms/app_text_field.dart",
+      "line": 183,
+      "snippet": "vertical: AppSpacing.space12,",
+      "values": [
+        {
+          "arg": null,
+          "expr": "AppSpacing.space12",
+          "tokenRef": "space12",
+          "kind": "tokenRef"
+        }
+      ],
+      "unit": "px",
+      "kind": "AppSpacingRef",
+      "contextHint": [
+        "appSpacingRef"
+      ]
+    },
+    {
+      "file": "lib/components/forms/app_text_field.dart",
+      "line": 212,
+      "snippet": "const SizedBox(height: AppSpacing.space8),",
+      "values": [
+        {
+          "arg": null,
+          "expr": "AppSpacing.space8",
+          "tokenRef": "space8",
+          "kind": "tokenRef"
+        }
+      ],
+      "unit": "px",
+      "kind": "AppSpacingRef",
+      "contextHint": [
+        "appSpacingRef"
+      ]
+    },
+    {
+      "file": "lib/components/forms/app_text_field.dart",
+      "line": 274,
+      "snippet": "const SizedBox(height: AppSpacing.space4),",
+      "values": [
+        {
+          "arg": null,
+          "expr": "AppSpacing.space4",
+          "tokenRef": "space4",
+          "kind": "tokenRef"
+        }
+      ],
+      "unit": "px",
+      "kind": "AppSpacingRef",
+      "contextHint": [
+        "appSpacingRef"
+      ]
+    },
+    {
+      "file": "lib/components/forms/text_field_use_cases.dart",
+      "line": 158,
+      "snippet": "padding: const EdgeInsets.all(24),",
+      "values": [
+        {
+          "arg": "#0",
+          "expr": "24",
+          "value": 24,
+          "kind": "literal"
+        }
+      ],
+      "unit": "px",
+      "kind": "EdgeInsets.all",
+      "contextHint": [
+        "edgeInsets"
+      ]
+    },
+    {
+      "file": "lib/components/forms/text_field_use_cases.dart",
+      "line": 164,
+      "snippet": "const SizedBox(height: AppSpacing.space20),",
+      "values": [
+        {
+          "arg": "height",
+          "expr": "AppSpacing.space20",
+          "tokenRef": "space20",
+          "kind": "tokenRef"
+        }
+      ],
+      "unit": "px",
+      "kind": "SizedBox",
+      "contextHint": [
+        "sizedBox",
+        "appSpacingRef"
+      ]
+    },
+    {
+      "file": "lib/components/forms/text_field_use_cases.dart",
+      "line": 164,
+      "snippet": "const SizedBox(height: AppSpacing.space20),",
+      "values": [
+        {
+          "arg": null,
+          "expr": "AppSpacing.space20",
+          "tokenRef": "space20",
+          "kind": "tokenRef"
+        }
+      ],
+      "unit": "px",
+      "kind": "AppSpacingRef",
+      "contextHint": [
+        "appSpacingRef"
+      ]
+    }
+  ],
+  "_summary": {
+    "dir": "forms",
+    "fileCount": 4,
+    "totalUsages": 15,
+    "distinctValues": [
+      1,
+      24
+    ],
+    "valueFrequency": {
+      "1": 1,
+      "24": 1
+    },
+    "tokenRefFrequency": {
+      "space16": 6,
+      "space20": 2,
+      "space4": 2,
+      "space8": 2,
+      "space12": 1
+    },
+    "suspiciousItems": [],
+    "suspiciousCount": 0
+  }
+}

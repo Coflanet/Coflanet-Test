@@ -1,0 +1,251 @@
+{
+  "_meta": {
+    "dir": "dividers",
+    "scannedRoot": "lib/components/dividers",
+    "fileCount": 2,
+    "files": [
+      "lib/components/dividers/app_divider.dart",
+      "lib/components/dividers/divider_use_cases.dart"
+    ],
+    "patterns": [
+      "EdgeInsets.(all|symmetric|only|fromLTRB)(",
+      "Padding(padding:",
+      "SizedBox((width|height|.square dimension):",
+      "Gap(",
+      "margin:/padding:/spacing:/gap:/... numeric literal",
+      "AppSpacing.<token>"
+    ],
+    "phase": "Phase 1-B audit"
+  },
+  "usages": [
+    {
+      "file": "lib/components/dividers/app_divider.dart",
+      "line": 49,
+      "snippet": "padding: EdgeInsets.only(top: indent, bottom: endIndent),",
+      "values": [
+        {
+          "arg": "top",
+          "expr": "indent",
+          "kind": "non-numeric"
+        },
+        {
+          "arg": "bottom",
+          "expr": "endIndent",
+          "kind": "non-numeric"
+        }
+      ],
+      "unit": "px",
+      "kind": "EdgeInsets.only",
+      "contextHint": [
+        "edgeInsets"
+      ]
+    },
+    {
+      "file": "lib/components/dividers/app_divider.dart",
+      "line": 57,
+      "snippet": "padding: EdgeInsets.only(left: indent, right: endIndent),",
+      "values": [
+        {
+          "arg": "left",
+          "expr": "indent",
+          "kind": "non-numeric"
+        },
+        {
+          "arg": "right",
+          "expr": "endIndent",
+          "kind": "non-numeric"
+        }
+      ],
+      "unit": "px",
+      "kind": "EdgeInsets.only",
+      "contextHint": [
+        "edgeInsets"
+      ]
+    },
+    {
+      "file": "lib/components/dividers/divider_use_cases.dart",
+      "line": 47,
+      "snippet": "padding: const EdgeInsets.all(24),",
+      "values": [
+        {
+          "arg": "#0",
+          "expr": "24",
+          "value": 24,
+          "kind": "literal"
+        }
+      ],
+      "unit": "px",
+      "kind": "EdgeInsets.all",
+      "contextHint": [
+        "edgeInsets"
+      ]
+    },
+    {
+      "file": "lib/components/dividers/divider_use_cases.dart",
+      "line": 68,
+      "snippet": "padding: const EdgeInsets.all(24),",
+      "values": [
+        {
+          "arg": "#0",
+          "expr": "24",
+          "value": 24,
+          "kind": "literal"
+        }
+      ],
+      "unit": "px",
+      "kind": "EdgeInsets.all",
+      "contextHint": [
+        "edgeInsets"
+      ]
+    },
+    {
+      "file": "lib/components/dividers/divider_use_cases.dart",
+      "line": 32,
+      "snippet": "const SizedBox(height: AppSpacing.space8),",
+      "values": [
+        {
+          "arg": "height",
+          "expr": "AppSpacing.space8",
+          "tokenRef": "space8",
+          "kind": "tokenRef"
+        }
+      ],
+      "unit": "px",
+      "kind": "SizedBox",
+      "contextHint": [
+        "sizedBox",
+        "appSpacingRef"
+      ]
+    },
+    {
+      "file": "lib/components/dividers/divider_use_cases.dart",
+      "line": 34,
+      "snippet": "SizedBox(",
+      "values": [
+        {
+          "arg": "height",
+          "expr": "48",
+          "value": 48,
+          "kind": "literal"
+        }
+      ],
+      "unit": "px",
+      "kind": "SizedBox",
+      "contextHint": [
+        "sizedBox"
+      ]
+    },
+    {
+      "file": "lib/components/dividers/divider_use_cases.dart",
+      "line": 40,
+      "snippet": "const SizedBox(height: AppSpacing.space24),",
+      "values": [
+        {
+          "arg": "height",
+          "expr": "AppSpacing.space24",
+          "tokenRef": "space24",
+          "kind": "tokenRef"
+        }
+      ],
+      "unit": "px",
+      "kind": "SizedBox",
+      "contextHint": [
+        "sizedBox",
+        "appSpacingRef"
+      ]
+    },
+    {
+      "file": "lib/components/dividers/divider_use_cases.dart",
+      "line": 73,
+      "snippet": "SizedBox(height: 16),",
+      "values": [
+        {
+          "arg": "height",
+          "expr": "16",
+          "value": 16,
+          "kind": "literal"
+        }
+      ],
+      "unit": "px",
+      "kind": "SizedBox",
+      "contextHint": [
+        "sizedBox"
+      ]
+    },
+    {
+      "file": "lib/components/dividers/divider_use_cases.dart",
+      "line": 75,
+      "snippet": "SizedBox(height: 16),",
+      "values": [
+        {
+          "arg": "height",
+          "expr": "16",
+          "value": 16,
+          "kind": "literal"
+        }
+      ],
+      "unit": "px",
+      "kind": "SizedBox",
+      "contextHint": [
+        "sizedBox"
+      ]
+    },
+    {
+      "file": "lib/components/dividers/divider_use_cases.dart",
+      "line": 32,
+      "snippet": "const SizedBox(height: AppSpacing.space8),",
+      "values": [
+        {
+          "arg": null,
+          "expr": "AppSpacing.space8",
+          "tokenRef": "space8",
+          "kind": "tokenRef"
+        }
+      ],
+      "unit": "px",
+      "kind": "AppSpacingRef",
+      "contextHint": [
+        "appSpacingRef"
+      ]
+    },
+    {
+      "file": "lib/components/dividers/divider_use_cases.dart",
+      "line": 40,
+      "snippet": "const SizedBox(height: AppSpacing.space24),",
+      "values": [
+        {
+          "arg": null,
+          "expr": "AppSpacing.space24",
+          "tokenRef": "space24",
+          "kind": "tokenRef"
+        }
+      ],
+      "unit": "px",
+      "kind": "AppSpacingRef",
+      "contextHint": [
+        "appSpacingRef"
+      ]
+    }
+  ],
+  "_summary": {
+    "dir": "dividers",
+    "fileCount": 2,
+    "totalUsages": 11,
+    "distinctValues": [
+      16,
+      24,
+      48
+    ],
+    "valueFrequency": {
+      "16": 2,
+      "24": 2,
+      "48": 1
+    },
+    "tokenRefFrequency": {
+      "space24": 2,
+      "space8": 2
+    },
+    "suspiciousItems": [],
+    "suspiciousCount": 0
+  }
+}

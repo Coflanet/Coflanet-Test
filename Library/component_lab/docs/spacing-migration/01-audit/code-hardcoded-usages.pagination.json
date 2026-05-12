@@ -1,0 +1,102 @@
+{
+  "_meta": {
+    "dir": "pagination",
+    "scannedRoot": "lib/components/pagination",
+    "fileCount": 2,
+    "files": [
+      "lib/components/pagination/app_pagination.dart",
+      "lib/components/pagination/app_pagination_use_cases.dart"
+    ],
+    "patterns": [
+      "EdgeInsets.(all|symmetric|only|fromLTRB)(",
+      "Padding(padding:",
+      "SizedBox((width|height|.square dimension):",
+      "Gap(",
+      "margin:/padding:/spacing:/gap:/... numeric literal",
+      "AppSpacing.<token>"
+    ],
+    "phase": "Phase 1-B audit"
+  },
+  "usages": [
+    {
+      "file": "lib/components/pagination/app_pagination.dart",
+      "line": 68,
+      "snippet": "padding: EdgeInsets.symmetric(horizontal: 3),",
+      "values": [
+        {
+          "arg": "horizontal",
+          "expr": "3",
+          "value": 3,
+          "kind": "literal"
+        }
+      ],
+      "unit": "px",
+      "kind": "EdgeInsets.symmetric",
+      "contextHint": [
+        "edgeInsets"
+      ]
+    },
+    {
+      "file": "lib/components/pagination/app_pagination_use_cases.dart",
+      "line": 158,
+      "snippet": "padding: const EdgeInsets.all(AppSpacing.space16),",
+      "values": [
+        {
+          "arg": "#0",
+          "expr": "AppSpacing.space16",
+          "tokenRef": "space16",
+          "kind": "tokenRef"
+        }
+      ],
+      "unit": "px",
+      "kind": "EdgeInsets.all",
+      "contextHint": [
+        "edgeInsets",
+        "appSpacingRef"
+      ]
+    },
+    {
+      "file": "lib/components/pagination/app_pagination_use_cases.dart",
+      "line": 158,
+      "snippet": "padding: const EdgeInsets.all(AppSpacing.space16),",
+      "values": [
+        {
+          "arg": null,
+          "expr": "AppSpacing.space16",
+          "tokenRef": "space16",
+          "kind": "tokenRef"
+        }
+      ],
+      "unit": "px",
+      "kind": "AppSpacingRef",
+      "contextHint": [
+        "appSpacingRef"
+      ]
+    }
+  ],
+  "_summary": {
+    "dir": "pagination",
+    "fileCount": 2,
+    "totalUsages": 3,
+    "distinctValues": [
+      3
+    ],
+    "valueFrequency": {
+      "3": 1
+    },
+    "tokenRefFrequency": {
+      "space16": 2
+    },
+    "suspiciousItems": [
+      {
+        "file": "lib/components/pagination/app_pagination.dart",
+        "line": 68,
+        "kind": "EdgeInsets.symmetric",
+        "value": 3,
+        "reason": "off-scale literal",
+        "snippet": "padding: EdgeInsets.symmetric(horizontal: 3),"
+      }
+    ],
+    "suspiciousCount": 1
+  }
+}

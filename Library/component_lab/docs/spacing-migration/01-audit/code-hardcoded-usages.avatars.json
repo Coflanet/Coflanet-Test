@@ -1,0 +1,154 @@
+{
+  "_meta": {
+    "dir": "avatars",
+    "scannedRoot": "lib/components/avatars",
+    "fileCount": 2,
+    "files": [
+      "lib/components/avatars/app_avatar.dart",
+      "lib/components/avatars/avatar_use_cases.dart"
+    ],
+    "patterns": [
+      "EdgeInsets.(all|symmetric|only|fromLTRB)(",
+      "Padding(padding:",
+      "SizedBox((width|height|.square dimension):",
+      "Gap(",
+      "margin:/padding:/spacing:/gap:/... numeric literal",
+      "AppSpacing.<token>"
+    ],
+    "phase": "Phase 1-B audit"
+  },
+  "usages": [
+    {
+      "file": "lib/components/avatars/app_avatar.dart",
+      "line": 292,
+      "snippet": "padding: EdgeInsets.only(left: i == 0 ? 0 : overlap),",
+      "values": [
+        {
+          "arg": "left",
+          "expr": "i == 0 ? 0 : overlap",
+          "embeddedLiterals": [
+            0,
+            0
+          ],
+          "kind": "expression-with-literal"
+        }
+      ],
+      "unit": "px",
+      "kind": "EdgeInsets.only",
+      "contextHint": [
+        "edgeInsets"
+      ]
+    },
+    {
+      "file": "lib/components/avatars/app_avatar.dart",
+      "line": 297,
+      "snippet": "padding: EdgeInsets.only(left: overlap),",
+      "values": [
+        {
+          "arg": "left",
+          "expr": "overlap",
+          "kind": "non-numeric"
+        }
+      ],
+      "unit": "px",
+      "kind": "EdgeInsets.only",
+      "contextHint": [
+        "edgeInsets"
+      ]
+    },
+    {
+      "file": "lib/components/avatars/app_avatar.dart",
+      "line": 155,
+      "snippet": "child: SizedBox(",
+      "values": [
+        {
+          "arg": "width",
+          "expr": "diameter",
+          "kind": "non-numeric"
+        },
+        {
+          "arg": "height",
+          "expr": "diameter",
+          "kind": "non-numeric"
+        }
+      ],
+      "unit": "px",
+      "kind": "SizedBox",
+      "contextHint": [
+        "sizedBox"
+      ]
+    },
+    {
+      "file": "lib/components/avatars/avatar_use_cases.dart",
+      "line": 117,
+      "snippet": "padding: const EdgeInsets.all(24),",
+      "values": [
+        {
+          "arg": "#0",
+          "expr": "24",
+          "value": 24,
+          "kind": "literal"
+        }
+      ],
+      "unit": "px",
+      "kind": "EdgeInsets.all",
+      "contextHint": [
+        "edgeInsets"
+      ]
+    },
+    {
+      "file": "lib/components/avatars/avatar_use_cases.dart",
+      "line": 119,
+      "snippet": "spacing: 16,",
+      "values": [
+        {
+          "arg": "spacing",
+          "expr": "16",
+          "value": 16,
+          "kind": "literal"
+        }
+      ],
+      "unit": "px",
+      "kind": "PropLiteral:spacing",
+      "contextHint": [
+        "rawPropLiteral"
+      ]
+    },
+    {
+      "file": "lib/components/avatars/avatar_use_cases.dart",
+      "line": 120,
+      "snippet": "runSpacing: 16,",
+      "values": [
+        {
+          "arg": "runSpacing",
+          "expr": "16",
+          "value": 16,
+          "kind": "literal"
+        }
+      ],
+      "unit": "px",
+      "kind": "PropLiteral:runSpacing",
+      "contextHint": [
+        "rawPropLiteral"
+      ]
+    }
+  ],
+  "_summary": {
+    "dir": "avatars",
+    "fileCount": 2,
+    "totalUsages": 6,
+    "distinctValues": [
+      0,
+      16,
+      24
+    ],
+    "valueFrequency": {
+      "0": 2,
+      "16": 2,
+      "24": 1
+    },
+    "tokenRefFrequency": {},
+    "suspiciousItems": [],
+    "suspiciousCount": 0
+  }
+}
