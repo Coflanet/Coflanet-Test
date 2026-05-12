@@ -1,0 +1,9 @@
+{
+  "pageId": "2546:42535",
+  "pageName": "📣 Presentation",
+  "pageSlug": "module-presentation",
+  "status": "deferred",
+  "reason": "use_figma call timed out after 60s while scanning page (likely very large node tree). Deferred to a follow-up commit on this branch.",
+  "_summary": null,
+  "nextSteps": "Re-run audit with bounded traversal (skip instance-child recursion, only count top-level COMPONENT/COMPONENT_SET nodes, then chunked retrieval)."
+}
