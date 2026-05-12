@@ -3,8 +3,8 @@
     "pageId": "2452:3459",
     "pageName": "  🧭 Navigation",
     "pageSlug": "module-navigation",
-    "totalNodesScanned": 2884,
-    "spacingOccurrences": 1238,
+    "totalNodesScanned": 6628,
+    "spacingOccurrences": 2730,
     "distinctValues": [
       0.33000001311302185,
       0.6700000166893005,
@@ -22,8 +22,11 @@
       16,
       20,
       24,
+      44,
       48,
-      64
+      56,
+      64,
+      68
     ],
     "rawValues": [
       0.33000001311302185,
@@ -42,19 +45,22 @@
       16,
       20,
       24,
+      44,
       48,
-      64
+      56,
+      64,
+      68
     ],
     "boundToVariable": {
       "yes": 0,
-      "no": 1238
+      "no": 2730
     },
     "distinctVariables": 0,
     "variableMap": {},
     "suspiciousItemCount": 50,
-    "_bucketCount": 5,
+    "_bucketCount": 10,
     "_part": 1,
-    "_ofParts": 2,
+    "_ofParts": 3,
     "_partRange": [
       0,
       1000
