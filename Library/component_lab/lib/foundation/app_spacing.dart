@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 /// Spacing 토큰 — Figma 디자인 시스템 기준.
 ///
 /// 2계층 구조:
-/// - **Palette** (`space{N}`): 원시 값. Figma JSON `Spacing` 13단계.
+/// - **Palette** (`space{N}`): 원시 값. Figma JSON `Spacing` 13단계 + Phase 1-C 갭 분석 신규 3단계 (`space0`, `space28`, `space56`).
 /// - **Semantic**: 의미 토큰. Palette를 참조해 사용 의도 명시.
 class AppSpacing {
   AppSpacing._();
@@ -11,6 +11,9 @@ class AppSpacing {
   // ═══════════════════════════════════════════════════════════════
   // PALETTE
   // ═══════════════════════════════════════════════════════════════
+
+  /// 0px — zero padding 명시 (Phase 1-C 신규)
+  static const double space0 = 0.0;
 
   /// 4px
   static const double space4 = 4.0;
@@ -33,6 +36,9 @@ class AppSpacing {
   /// 24px — Figma `Padding.Contents in Box`
   static const double space24 = 24.0;
 
+  /// 28px — Phase 1-C 신규 (button bottom / GNB logo off-scale 통합)
+  static const double space28 = 28.0;
+
   /// 32px
   static const double space32 = 32.0;
 
@@ -50,6 +56,9 @@ class AppSpacing {
 
   /// 48px
   static const double space48 = 48.0;
+
+  /// 56px — Phase 1-C 신규 (banner off-scale 통합)
+  static const double space56 = 56.0;
 
   // ═══════════════════════════════════════════════════════════════
   // SEMANTIC
