@@ -237,124 +237,107 @@ Claude Code 는 동일 세션 내에서 **서브에이전트를 병렬로 스폰
 
 ---
 
-# 🆕 Task 03..30 · Phase 1-A — Figma 페이지별 spacing 감사 (28개)
+# 🆕 Phase 1-A · Figma 페이지별 spacing 감사 (28개 자동 순차)
 
-> `figma-pages.json` 의 `auditOrder` 배열에 따라 페이지 1개 = Task 1개. 총 28개 Task.
-> 등록 순서(`auditOrder` 그대로):
-> 1. foundation-space (pageId `2485:8842`) ⭐ CRITICAL
-> 2. foundation-logo (`0:1`)
-> 3. foundation-typography (`2414:9843`)
-> 4. foundation-colors (`2414:11941`)
-> 5. foundation-gradient (`2452:6035`)
-> 6. foundation-decorate (`2452:6034`)
-> 7. foundation-icon (`2414:34422`)
-> 8. foundation-3d-illustration (`2941:667`)
-> 9. foundation-product (`2941:684`)
-> 10. component-button (`2414:32026`) → buttons
-> 11. component-chip (`2546:166598`) → chips
-> 12. component-ratio (`2452:6033`) → ratio
-> 13. component-thumbnail (`2452:6037`) → thumbnails
-> 14. component-scroll (`2452:7600`) → scrolls
-> 15. component-avatar (`2452:6039`) → avatars
-> 16. component-indicators (`2442:16180`) → indicators
-> 17. component-divider (`2452:6032`) → dividers
-> 18. module-navigation (`2452:3459`) → navigation
-> 19. module-tab (`2414:34400`) → tabs
-> 20. module-pagination (`2452:6038`) → pagination
-> 21. module-progress-indicators (`2449:415`) → indicators
-> 22. module-selection-input (`2442:7603`) → selection,forms,controls
-> 23. module-control-box (`2537:62051`) → control_box
-> 24. module-gauge (`2442:15568`) → gauge
-> 25. module-feedback (`2546:36834`) → feedback
-> 26. module-presentation (`2546:42535`) → presentation,modals
-> 27. module-contents (`2573:404660`) → contents,cards
-> 28. etc-design-components (`2643:8531`)
->
-> 아래 템플릿에서 `{pageId}`, `{pageSlug}`, `{group}` 을 페이지마다 치환해 등록.
+> 1세션에 그대로 붙여넣으면 Claude Code 가 `figma-pages.json` 의 `auditOrder` 를 읽어 28개 페이지를 우선순위 순으로 자동 순회. 이미 처리된 페이지는 skip 되므로 중간에 끊겨도 재실행하면 이어 진행.
 
-## 입력
-- Figma fileKey: `q7yBPcHrid1CGQqFWEPwnR`
-- 처리 대상 페이지: `pageId={pageId}`, `pageSlug={pageSlug}`
-- `01-audit/figma-pages.json` (대상 페이지의 메타 확인용)
+## 자동 순차 진행 프롬프트
 
-## 처리
-1. `mcp__figma__use_figma` (Plugin API 트리 순회) 로 `{pageId}` 의 자식 노드 트리를 얕게 가져와 컴포넌트 단위 노드 ID 목록 확보
-2. 노드를 50개씩 배치로 묶어 순회. 각 배치마다:
-   - 해당 노드의 spacing 관련 속성 추출
-     - `itemSpacing`, `paddingTop|Left|Right|Bottom`, `counterAxisSpacing`
-     - Auto Layout gap 값
-     - 변수 바인딩이 있는지 (있으면 `variableId` 기록)
-3. 각 spacing 발생 지점을 다음 스키마로 기록:
-   ```json
+```
+Phase 1-A — Figma 페이지별 spacing 감사 (28개 자동 순차)
+
+전제:
+- Library/component_lab/docs/spacing-migration/01-audit/figma-pages.json 존재
+- 작업 브랜치: claude/spacing-tokens-organization-NwPFO
+- 도구: mcp__figma__use_figma 만 사용 (다른 Figma 도구 타임아웃)
+- Figma fileKey: q7yBPcHrid1CGQqFWEPwnR
+
+진행 절차:
+
+1. figma-pages.json 의 auditOrder 배열 읽기
+2. 각 group 에 대해 pages 배열에서 audit=true 항목 매칭
+3. auditOrder 순서대로 페이지 1개씩 다음 반복:
+
+   a. 이미 figma-spacing-raw.{pageSlug}.json 이 존재하면 skip (재개 지원)
+   b. use_figma 로 {pageId} 의 자식 노드 트리 얕게 가져와 컴포넌트 노드 ID 목록 확보
+   c. 노드 50개 batch 로 순회, 각 노드의 spacing 속성 추출:
+      - itemSpacing, paddingTop|Left|Right|Bottom, counterAxisSpacing
+      - Auto Layout gap 값
+      - 변수 바인딩 여부 (있으면 variableId 기록)
+   d. 각 spacing 발생 지점을 다음 스키마로 기록:
+      {
+        tokenName: (바인딩된 변수명 or null),
+        value: 12,
+        unit: "px",
+        property: "itemSpacing | padding-x | ...",
+        aliasGroup: (변수 컬렉션 그룹명 or null),
+        usageNote: (괄호 안 메모 or 노드 이름에서 추정),
+        sourceNodeId: "X:Y",
+        sourceNodeName: "...",
+        pageId: "{pageId}"
+      }
+   e. 저장: 01-audit/figma-spacing-raw.{pageSlug}.json
+      {
+        _summary: { pageId, pageSlug, totalNodesScanned, spacingOccurrences,
+          distinctValues, boundToVariable, rawValues, suspiciousItems },
+        items: [ ... ]
+      }
+      items 1000개 초과 시 -part1.json, -part2.json 분할
+   f. git add + commit: chore(spacing-migration): audit figma spacing - {pageSlug}
+   g. git push origin claude/spacing-tokens-organization-NwPFO
+   h. 진행률 출력: "[X/28] {pageSlug} done — items: N"
+
+4. 28개 완료 후 INDEX 생성:
+   01-audit/figma-spacing.INDEX.json
    {
-     "tokenName": "(있다면 바인딩된 변수 이름, 없으면 null)",
-     "value": 12,
-     "unit": "px",
-     "property": "itemSpacing | padding-x | padding-y | ...",
-     "aliasGroup": "(변수 컬렉션 그룹명, 없으면 null)",
-     "usageNote": "(괄호 안 메모나 노드 이름에서 추정한 용도)",
-     "sourceNodeId": "X:Y",
-     "sourceNodeName": "...",
-     "pageId": "{pageId}"
+     generatedAt, pages: [{ pageSlug, files, summary }],
+     totals: { spacingOccurrences, globalValueFrequency }
    }
-   ```
+   commit: chore(spacing-migration): build figma audit index
+   push
 
-## 산출물
-`Library/component_lab/docs/spacing-migration/01-audit/figma-spacing-raw.{pageSlug}.json`
-```json
-{
-  "_summary": {
-    "pageId": "{pageId}",
-    "pageSlug": "{pageSlug}",
-    "totalNodesScanned": 0,
-    "spacingOccurrences": 0,
-    "distinctValues": [],
-    "boundToVariable": 0,
-    "rawValues": 0,
-    "suspiciousItems": 0
-  },
-  "items": [ /* 위 스키마 객체 배열 */ ]
-}
+5. 최종 상태 보고:
+   - 성공 페이지 수 / 실패 페이지 수
+   - 실패한 페이지 목록과 원인
+
+⛔ 한 페이지 처리 도중 에러:
+   - 부분 산출물 저장
+   - figma-spacing-raw.{pageSlug}.errors.json 에 원인 기록
+   - 다음 페이지로 계속 진행 (전체 멈추지 말 것)
+⛔ Figma 노드 수정 금지
+⛔ 페이지 간 데이터 병합 금지
+⛔ use_figma 외 Figma 도구 사용 금지 (타임아웃)
 ```
 
-- items 가 1000개 초과 시 `-part1.json`, `-part2.json` 분할
-
-## 커밋 & 푸시
-`chore(spacing-migration): audit figma spacing - {pageSlug}`
-
-## 성공 기준
-- `figma-spacing-raw.{pageSlug}.json` 파일 1개(또는 파트들) 생성
-- `_summary.spacingOccurrences == items.length` (파트 분할 시 합계)
-
-## ⛔ 금지
-- Figma 노드 수정 금지 (read-only)
-- 페이지 간 데이터 병합 금지
-
-## 실패 처리
-- 노드 처리 실패 시 `_summary.suspiciousItems` 증가 + 별도 `figma-spacing-raw.{pageSlug}.errors.json` 에 기록
-
----
-
-# 🆕 Task LAST-1A · Phase 1-A 통합 색인
-
-> Task 03..N (페이지별 감사) 가 모두 끝난 후 1회 실행
-
-## 처리
-모든 `figma-spacing-raw.*.json` 의 `_summary` 만 모아 INDEX 생성:
-
-`Library/component_lab/docs/spacing-migration/01-audit/figma-spacing.INDEX.json`
-```json
-{
-  "generatedAt": "...",
-  "pages": [
-    { "pageSlug": "...", "files": ["..."], "summary": {...} }
-  ],
-  "totals": { "spacingOccurrences": 0, "globalValueFrequency": {} }
-}
-```
-
-## 커밋 & 푸시
-`chore(spacing-migration): build figma audit index`
+## 등록 순서 (참고용 — 프롬프트가 자동 처리)
+1. foundation-space (`2485:8842`) ⭐ CRITICAL
+2. foundation-logo (`0:1`)
+3. foundation-typography (`2414:9843`)
+4. foundation-colors (`2414:11941`)
+5. foundation-gradient (`2452:6035`)
+6. foundation-decorate (`2452:6034`)
+7. foundation-icon (`2414:34422`)
+8. foundation-3d-illustration (`2941:667`)
+9. foundation-product (`2941:684`)
+10. component-button (`2414:32026`) → buttons
+11. component-chip (`2546:166598`) → chips
+12. component-ratio (`2452:6033`) → ratio
+13. component-thumbnail (`2452:6037`) → thumbnails
+14. component-scroll (`2452:7600`) → scrolls
+15. component-avatar (`2452:6039`) → avatars
+16. component-indicators (`2442:16180`) → indicators
+17. component-divider (`2452:6032`) → dividers
+18. module-navigation (`2452:3459`) → navigation
+19. module-tab (`2414:34400`) → tabs
+20. module-pagination (`2452:6038`) → pagination
+21. module-progress-indicators (`2449:415`) → indicators
+22. module-selection-input (`2442:7603`) → selection,forms,controls
+23. module-control-box (`2537:62051`) → control_box
+24. module-gauge (`2442:15568`) → gauge
+25. module-feedback (`2546:36834`) → feedback
+26. module-presentation (`2546:42535`) → presentation,modals
+27. module-contents (`2573:404660`) → contents,cards
+28. etc-design-components (`2643:8531`)
 
 ---
 
@@ -494,68 +477,64 @@ Claude Code 는 동일 세션 내에서 **서브에이전트를 병렬로 스폰
 
 ---
 
-# 🆕 Task 07..34 · Phase 4 — Figma 적용 (28개 그룹)
+# 🆕 Phase 4 · Figma 적용 (28개 그룹 자동 순차)
 
-> `figma-pages.json` 의 `phase4ApplyGroups` 우선순위에 따라 28개 Task 등록.
->
-> **Priority 1 (먼저 적용 — 토큰 소스)**
-> - foundation-space (`2485:8842`)
->
-> **Priority 2 (Component — 코드 디렉터리 1:1 매칭)**
-> - component-button, component-chip, component-ratio, component-thumbnail, component-scroll, component-avatar, component-indicators, component-divider
->
-> **Priority 3 (Module — 코드 디렉터리 1:N 매칭)**
-> - module-navigation, module-tab, module-pagination, module-progress-indicators, module-selection-input, module-control-box, module-gauge, module-feedback, module-presentation, module-contents
->
-> **Priority 4 (다른 Foundation — 스페이싱 사용 적음)**
-> - foundation-logo, foundation-typography, foundation-colors, foundation-gradient, foundation-decorate, foundation-icon, foundation-3d-illustration, foundation-product
->
-> **Priority 5 (Etc)**
-> - etc-design-components
->
-> 한 Task = 한 그룹.
+> 1세션에 그대로 붙여넣으면 Claude Code 가 `phase4ApplyGroups` 우선순위 순으로 28개 그룹을 자동 적용. 이미 처리된 그룹은 skip.
 
-## 입력
-- `03-mapping/figma-node-to-token.csv`
-- 처리 대상 그룹: `{group}`
+## 자동 순차 진행 프롬프트
 
-## 처리
-1. CSV 에서 `group={group}` 이면서 `status=READY` 인 행만 필터링
-2. 행 수와 대상 nodeId 목록을 콘솔에 출력 (먼저 보여주기)
-3. 노드 1개씩 순회:
-   - `mcp__figma__use_figma` 또는 변수 바인딩 도구로 `suggestedToken` 을 노드 속성에 적용
-   - 결과: `success | already-applied | failed`
-4. 결과 로그: `04-apply-log/figma-{group}.md`
-   ```
-   | nodeId | nodeName | property | from | to | result |
-   ```
-5. 실패 노드만: `04-apply-log/figma-{group}-failed.json`
+```
+Phase 4 — Figma 토큰 적용 (28개 그룹 자동 순차)
 
-## 커밋 & 푸시
-`refactor(figma-spacing): apply tokens to {group}`
+전제:
+- 03-mapping/figma-node-to-token.csv 존재 (Phase 3 완료)
+- 01-audit/figma-pages.json 의 phase4ApplyGroups 존재
+- 도구: mcp__figma__use_figma 만 사용
 
-## ⛔ 금지
-- `status` 가 READY 가 아닌 행 처리 금지
-- 다른 그룹 노드 건드리지 말 것
-- 한 Task = 한 그룹 = 한 커밋
+진행 절차:
 
-## 📌 사람 검수 #5 (그룹마다)
-- Figma 비주얼 스폿체크
-- failed.json 처리 방침 결정
-- 다음 그룹 Task 진행 OK
+1. figma-pages.json 의 phase4ApplyGroups 배열 읽기 (priority 오름차순)
+2. 각 group 에 대해:
 
----
+   a. 이미 04-apply-log/figma-{group}.md 가 존재하면 skip (재개 지원)
+   b. CSV 에서 group={group} AND status=READY 인 행만 필터링
+   c. 행 수와 nodeId 목록 먼저 콘솔 출력
+   d. 노드 1개씩 순회:
+      - use_figma 로 suggestedToken 을 노드 속성에 변수 바인딩으로 적용
+      - 결과 기록: success | already-applied | failed
+   e. 04-apply-log/figma-{group}.md 작성
+      | nodeId | nodeName | property | from | to | result |
+   f. 실패 노드 → 04-apply-log/figma-{group}-failed.json
+   g. commit: refactor(figma-spacing): apply tokens to {group}
+   h. push
+   i. 진행률 출력: "[X/28] {group} — success: N, failed: M"
 
-# 🆕 Task LAST-4 · Phase 4 종료 — Figma 결과 INDEX
+3. 28개 완료 후 INDEX 생성:
+   04-apply-log/figma-apply.INDEX.md
+   - 그룹별 처리 노드 수, 성공/실패 수, 미적용 사유 요약
+   commit: docs(spacing-migration): figma apply summary
+   push
 
-## 처리
-모든 `figma-{group}.md` 와 `figma-{group}-failed.json` 를 모아 INDEX 작성:
+4. 최종 보고: 성공/실패 그룹 수, 주요 실패 원인
 
-`04-apply-log/figma-apply.INDEX.md`
-- 그룹별 처리 노드 수, 성공/실패 수, 미적용 사유 요약
+📌 그룹 1개 단위로 사람 검수 가능: 특정 그룹만 실행하려면 "only={group}" 인자 추가.
 
-## 커밋 & 푸시
-`docs(spacing-migration): figma apply summary`
+⛔ status 가 READY 가 아닌 행 처리 금지
+⛔ 다른 그룹 노드 건드리지 말 것
+⛔ 한 그룹 = 한 커밋
+⛔ use_figma 외 Figma 도구 사용 금지
+```
+
+## 적용 우선순위 (참고 — 프롬프트가 자동 처리)
+- **Priority 1**: foundation-space (`2485:8842`)
+- **Priority 2** (Component): button, chip, ratio, thumbnail, scroll, avatar, indicators, divider
+- **Priority 3** (Module): navigation, tab, pagination, progress-indicators, selection-input, control-box, gauge, feedback, presentation, contents
+- **Priority 4** (다른 Foundation): logo, typography, colors, gradient, decorate, icon, 3d-illustration, product
+- **Priority 5**: etc-design-components
+
+## 📌 사람 검수 #5
+- 28개 완료 후 Figma 비주얼 스폿체크
+- 중간에 멈추고 싶으면 진행률 보고 후 사용자 컨펌
 
 ---
 
@@ -594,9 +573,54 @@ Claude Code 는 동일 세션 내에서 **서브에이전트를 병렬로 스폰
 
 > 21개 컴포넌트 디렉터리 각각에 1개 Task = 1 세션 = 1 PR. 실제 코드 치환은 직렬(Agent 병렬 금지). 단, 디렉터리 진입 직전 컨텍스트 파악용 Explore 서브에이전트는 병렬 가능.
 
-## 디렉터리 목록 (Task 등록 순서 — 의존도 낮은 순, 총 21개)
-각 항목 옆은 해당 Figma 페이지 (`figma-pages.json` 의 `codeDirToFigmaPage` 기준)
+## 자동 순차 진행 프롬프트
 
+```
+Phase 5 — 코드 디렉터리별 적용 (21개 자동 순차)
+
+전제:
+- 03-mapping/code-usage-to-token.csv 존재 (Phase 3 완료)
+- Task 62 (Phase 5-Pre) 머지된 최신 브랜치 상태
+
+처리 순서 (의존도 낮은 순):
+avatars, dividers, ratio, thumbnails, chips, buttons, controls,
+selection, indicators, gauge, pagination, tabs, scrolls, cards,
+contents, presentation, control_box, forms, feedback, modals, navigation
+
+각 디렉터리마다:
+
+   a. 이미 04-apply-log/code-{dir}.md 가 존재하면 skip (재개 지원)
+   b. CSV 에서 file LIKE Library/component_lab/lib/{dir}/% AND status=READY 인 행만 필터
+   c. 대상 파일 목록 먼저 출력
+   d. 파일 1개씩 Edit 도구로 hardcoded value 를
+      AppSpacing.{token} 또는 AppSpacingSemantic.{token} 으로 치환
+   e. cd Library/component_lab && flutter analyze --no-fatal-infos
+      → 분석 에러 0개여야 함
+   f. (있는 경우) flutter test test/{dir}/
+   g. 결과 로그: 04-apply-log/code-{dir}.md
+      | file | line | from | to | result |
+   h. 실패 항목: 04-apply-log/code-{dir}-failed.json
+   i. commit: refactor(spacing): apply tokens to {dir}
+   j. push
+   k. 진행률 출력: "[X/21] {dir} — changed: N, analyze: pass"
+
+⚠️ analyze 실패 시:
+   - 원인 명확한 단일 파일이면 그 파일만 롤백 후 failed.json 기록, 다음 파일 계속
+   - 광범위 실패면 해당 디렉터리 전체 롤백, 대기 목록에 추가하고 다음 디렉터리로
+
+최종 보고:
+- 성공 디렉터리 수 / 실패 디렉터리 수
+- 다음 세션에서 재시도해야 할 디렉터리 목록
+
+📌 디렉터리 1개 단위로 사람 검수 가능: "only={dir}" 인자 추가하면 1개만 처리.
+
+⛔ 하나의 디렉터리 처리 중에 다른 디렉터리 수정 금지
+⛔ foundation/ 재수정 금지
+⛔ analyze 실패한 채로 커밋 금지
+⛔ 한 디렉터리 = 한 커밋 (1세션에서 21개 커밋이 생성됨)
+```
+
+## 디렉터리 ↔ Figma 페이지 매핑 (참고 — 프롬프트가 자동 처리)
 1. avatars → `2452:6039` 👤 Avatar
 2. dividers → `2452:6032` ➗ Divider
 3. ratio → `2452:6033` 📏 Ratio
@@ -605,7 +629,7 @@ Claude Code 는 동일 세션 내에서 **서브에이전트를 병렬로 스폰
 6. buttons → `2414:32026` ⏹️ Button
 7. controls → `2442:7603` ☑️ Selection and Input
 8. selection → `2442:7603` ☑️ Selection and Input
-9. indicators → `2442:16180` 💡 Indicators + `2449:415` ⏳ Progress Indicators
+9. indicators → `2442:16180` 💡 Indicators + `2449:415` ⏳ Progress
 10. gauge → `2442:15568` 🌡️ Gauge
 11. pagination → `2452:6038` 🔢 Pagination
 12. tabs → `2414:34400` 📑 Tab
@@ -619,43 +643,9 @@ Claude Code 는 동일 세션 내에서 **서브에이전트를 병렬로 스폰
 20. modals → `2546:42535` 📣 Presentation
 21. navigation → `2452:3459` 🧭 Navigation
 
-## 공통 입력
-- `03-mapping/code-usage-to-token.csv`
-- 처리 대상 디렉터리: `{dir}`
-- Phase 5-Pre 가 머지된 최신 브랜치 상태
-
-## 처리
-1. CSV 에서 `file LIKE 'Library/component_lab/lib/{dir}/%'` 이면서 `status=READY` 인 행만 필터
-2. 행 수와 대상 파일 목록 출력
-3. 파일 1개씩 순회하여 `Edit` 도구로 hardcoded value → `AppSpacing.{token}` 또는 `AppSpacingSemantic.{token}` 으로 치환
-4. 디렉터리 전체 처리 끝나면:
-   - `cd Library/component_lab && flutter analyze --no-fatal-infos`
-   - 분석 에러 0개여야 함
-5. (있는 경우) 골든/위젯 테스트 실행: `flutter test test/{dir}/`
-6. 결과 로그: `04-apply-log/code-{dir}.md`
-   ```
-   | file | line | from | to | result |
-   ```
-7. 실패 항목: `04-apply-log/code-{dir}-failed.json`
-
-## 커밋 & 푸시
-`refactor(spacing): apply tokens to {dir}`
-
-## ⛔ 금지
-- `{dir}` 외 디렉터리 수정 금지
-- foundation/ 재수정 금지 (Task 08 의 결과 사용)
-- analyze 실패한 채로 커밋 금지 — 실패 시 해당 파일 롤백 후 failed.json 에 기록
-- 한 PR = 한 디렉터리
-
-## 📌 사람 검수 #7 (디렉터리마다)
-- diff 리뷰
-- 비주얼 회귀(스토리북/샘플 스크린)
-- 다음 디렉터리 Task 진행 OK
-
-## 실패 처리
-analyze 실패 / 테스트 실패:
-- 실패 원인이 명백한 단일 파일이면 그 파일만 롤백 후 failed.json 기록
-- 광범위 실패면 디렉터리 전체 롤백, 사용자에게 보고
+## 📌 사람 검수 #7
+- 21개 완료 후 PR diff 리뷰
+- 디렉터리별 비주얼 회귀 (sample_screen / 위젯 테스트)
 
 ---
 
