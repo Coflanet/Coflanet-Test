@@ -48,7 +48,7 @@ Claude Code 는 동일 세션 내에서 **서브에이전트를 병렬로 스폰
 
 ### Figma 사전 조사 결과 (사용자 사전 확인 완료)
 - 전체 페이지 수: **39** (콘텐츠 페이지 30 + 빈 헤더 4 + 구분선 4 + Archive 1)
-- 감사 대상: **28개 그룹** (FIGMA_INVENTORY.md 기반)
+- 감사 대상: **27개 그룹** (FIGMA_INVENTORY.md 기반)
 - 파일이 구독 중인 팀 라이브러리: **"📚 Library" (self)** — 본 파일 자체가 토큰 정의 + 컴포넌트 라이브러리
 - ⭐ 최우선 페이지: **📐 Space (`2485:8842`)** — 스페이싱 토큰 정의 페이지
 - 페이지 인벤토리 원본: `FIGMA_INVENTORY.md` (저장소 루트)
@@ -128,7 +128,7 @@ Claude Code 는 동일 세션 내에서 **서브에이전트를 병렬로 스폰
 
 이 산출물에는 다음이 포함되어 있어 Task 02 부터 바로 진입 가능:
 - 39개 전체 페이지 메타
-- 감사 대상 28개 그룹의 `pageId`, `pageSlug`, `group`, `codeDir`, `suspectedCategory`
+- 감사 대상 27개 그룹의 `pageId`, `pageSlug`, `group`, `codeDir`, `suspectedCategory`
 - `auditOrder` (1-A 처리 순서)
 - `phase4ApplyGroups` (Phase 4 적용 순서 + priority)
 - `codeDirToFigmaPage` (Phase 5 에서 사용)
@@ -237,14 +237,14 @@ Claude Code 는 동일 세션 내에서 **서브에이전트를 병렬로 스폰
 
 ---
 
-# 🆕 Phase 1-A · Figma 페이지별 spacing 감사 (28개 자동 순차)
+# 🆕 Phase 1-A · Figma 페이지별 spacing 감사 (27개 자동 순차)
 
-> 1세션에 그대로 붙여넣으면 Claude Code 가 `figma-pages.json` 의 `auditOrder` 를 읽어 28개 페이지를 우선순위 순으로 자동 순회. 이미 처리된 페이지는 skip 되므로 중간에 끊겨도 재실행하면 이어 진행.
+> 1세션에 그대로 붙여넣으면 Claude Code 가 `figma-pages.json` 의 `auditOrder` 를 읽어 27개 페이지를 우선순위 순으로 자동 순회. 이미 처리된 페이지는 skip 되므로 중간에 끊겨도 재실행하면 이어 진행.
 
 ## 자동 순차 진행 프롬프트
 
 ```
-Phase 1-A — Figma 페이지별 spacing 감사 (28개 자동 순차)
+Phase 1-A — Figma 페이지별 spacing 감사 (27개 자동 순차)
 
 전제:
 - Library/component_lab/docs/spacing-migration/01-audit/figma-pages.json 존재
@@ -287,7 +287,7 @@ Phase 1-A — Figma 페이지별 spacing 감사 (28개 자동 순차)
    g. git push origin claude/spacing-tokens-organization-NwPFO
    h. 진행률 출력: "[X/28] {pageSlug} done — items: N"
 
-4. 28개 완료 후 INDEX 생성:
+4. 27개 완료 후 INDEX 생성:
    01-audit/figma-spacing.INDEX.json
    {
      generatedAt, pages: [{ pageSlug, files, summary }],
@@ -477,14 +477,14 @@ Phase 1-A — Figma 페이지별 spacing 감사 (28개 자동 순차)
 
 ---
 
-# 🆕 Phase 4 · Figma 적용 (28개 그룹 자동 순차)
+# 🆕 Phase 4 · Figma 적용 (27개 그룹 자동 순차)
 
-> 1세션에 그대로 붙여넣으면 Claude Code 가 `phase4ApplyGroups` 우선순위 순으로 28개 그룹을 자동 적용. 이미 처리된 그룹은 skip.
+> 1세션에 그대로 붙여넣으면 Claude Code 가 `phase4ApplyGroups` 우선순위 순으로 27개 그룹을 자동 적용. 이미 처리된 그룹은 skip.
 
 ## 자동 순차 진행 프롬프트
 
 ```
-Phase 4 — Figma 토큰 적용 (28개 그룹 자동 순차)
+Phase 4 — Figma 토큰 적용 (27개 그룹 자동 순차)
 
 전제:
 - 03-mapping/figma-node-to-token.csv 존재 (Phase 3 완료)
@@ -509,7 +509,7 @@ Phase 4 — Figma 토큰 적용 (28개 그룹 자동 순차)
    h. push
    i. 진행률 출력: "[X/28] {group} — success: N, failed: M"
 
-3. 28개 완료 후 INDEX 생성:
+3. 27개 완료 후 INDEX 생성:
    04-apply-log/figma-apply.INDEX.md
    - 그룹별 처리 노드 수, 성공/실패 수, 미적용 사유 요약
    commit: docs(spacing-migration): figma apply summary
@@ -533,7 +533,7 @@ Phase 4 — Figma 토큰 적용 (28개 그룹 자동 순차)
 - **Priority 5**: etc-design-components
 
 ## 📌 사람 검수 #5
-- 28개 완료 후 Figma 비주얼 스폿체크
+- 27개 완료 후 Figma 비주얼 스폿체크
 - 중간에 멈추고 싶으면 진행률 보고 후 사용자 컨펌
 
 ---
@@ -690,7 +690,7 @@ contents, presentation, control_box, forms, feedback, modals, navigation
 [✅] Task 01 — Phase 1-A-0 (사전완료, figma-pages.json 존재)
     📌 검수 #1: figma-pages.json 의 auditOrder/codeDirToFigmaPage 확인
 [ ] Task 02  — Phase 1-B (코드 감사, 22개 서브 작업 1세션)
-[ ] Task 03..30 — Phase 1-A (Figma 페이지별, 총 28개)
+[ ] Task 03..30 — Phase 1-A (Figma 페이지별, 총 27개)
 [ ] Task LAST-1A — Phase 1-A INDEX
 [ ] Task 31  — Phase 1-C 갭 분석
     📌 검수 #2: gap-analysis.md → palette 후보안 결정
@@ -698,7 +698,7 @@ contents, presentation, control_box, forms, feedback, modals, navigation
     📌 검수 #3: palette/semantic 승인
 [ ] Task 33  — Phase 3 매핑
     📌 검수 #4: REVIEW_QUEUE.md 해소
-[ ] Task 34..61 — Phase 4 Figma 적용 (28개 그룹)
+[ ] Task 34..61 — Phase 4 Figma 적용 (27개 그룹)
     📌 검수 #5 (그룹마다)
 [ ] Task LAST-4 — Phase 4 INDEX
 [ ] Task 62  — Phase 5-Pre 토큰 코드 반영
