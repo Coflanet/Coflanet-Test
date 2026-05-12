@@ -1,0 +1,136 @@
+{
+  "version": "0.1.0-phase2",
+  "tokens": [
+    {
+      "name": "spacing-layout-safe-area-status-ios",
+      "aliasOf": "spacing-44",
+      "category": "layout",
+      "role": "iOS status bar safe area height"
+    },
+    {
+      "name": "spacing-layout-safe-area-status-android",
+      "aliasOf": "spacing-36",
+      "category": "layout",
+      "role": "Android status bar safe area height"
+    },
+    {
+      "name": "spacing-layout-safe-area-status-web",
+      "aliasOf": "spacing-0",
+      "category": "layout",
+      "role": "Web status bar safe area (none)"
+    },
+    {
+      "name": "spacing-layout-safe-area-bottom-ios",
+      "aliasOf": "spacing-34",
+      "category": "layout",
+      "role": "iOS home indicator safe area"
+    },
+    {
+      "name": "spacing-layout-safe-area-bottom-android",
+      "aliasOf": "spacing-14",
+      "category": "layout",
+      "role": "Android bottom gesture safe area"
+    },
+    {
+      "name": "spacing-layout-safe-area-bottom-web",
+      "aliasOf": "spacing-0",
+      "category": "layout",
+      "role": "Web bottom safe area (none)"
+    },
+
+    {
+      "name": "spacing-container-padding-horizontal",
+      "aliasOf": "spacing-24",
+      "category": "container",
+      "role": "Outer container horizontal padding (page-level)"
+    },
+    {
+      "name": "spacing-container-padding-vertical",
+      "aliasOf": "spacing-32",
+      "category": "container",
+      "role": "Outer container vertical padding (page-level)"
+    },
+
+    {
+      "name": "spacing-inline-icon-text",
+      "aliasOf": "spacing-8",
+      "category": "inline",
+      "role": "Horizontal gap between icon and adjacent text"
+    },
+
+    {
+      "name": "spacing-stack-item",
+      "aliasOf": "spacing-12",
+      "category": "stack",
+      "role": "Vertical gap between list items"
+    },
+    {
+      "name": "spacing-stack-text",
+      "aliasOf": "spacing-16",
+      "category": "stack",
+      "role": "Vertical gap between adjacent text blocks"
+    },
+    {
+      "name": "spacing-stack-text-to-box",
+      "aliasOf": "spacing-16",
+      "category": "stack",
+      "role": "Vertical gap from text to an adjacent box"
+    },
+    {
+      "name": "spacing-stack-between-boxes",
+      "aliasOf": "spacing-20",
+      "category": "stack",
+      "role": "Vertical gap between sibling boxes"
+    },
+    {
+      "name": "spacing-stack-after-box",
+      "aliasOf": "spacing-16",
+      "category": "stack",
+      "role": "Trailing vertical gap after a box"
+    },
+    {
+      "name": "spacing-stack-after-text",
+      "aliasOf": "spacing-32",
+      "category": "stack",
+      "role": "Trailing vertical gap after a text block"
+    },
+
+    {
+      "name": "spacing-inset-contents-in-box",
+      "aliasOf": "spacing-24",
+      "category": "inset",
+      "role": "Inner padding when a box contains content"
+    },
+    {
+      "name": "spacing-inset-contents-in-box-small",
+      "aliasOf": "spacing-8",
+      "category": "inset",
+      "role": "Compact inner padding when a box contains content"
+    },
+    {
+      "name": "spacing-inset-box-in-box",
+      "aliasOf": "spacing-16",
+      "category": "inset",
+      "role": "Inner padding when a box nests another box"
+    },
+    {
+      "name": "spacing-inset-top",
+      "aliasOf": "spacing-16",
+      "category": "inset",
+      "role": "Top inner padding inside a generic box"
+    },
+
+    {
+      "name": "spacing-component-button-padding-horizontal",
+      "aliasOf": "spacing-8",
+      "category": "component-button",
+      "role": "Button horizontal inner padding (code SoT, Figma SoT pending Phase 1-D)"
+    },
+    {
+      "name": "spacing-component-button-padding-vertical",
+      "aliasOf": "spacing-12",
+      "category": "component-button",
+      "role": "Button vertical inner padding (code SoT, Figma SoT pending Phase 1-D)"
+    }
+  ]
+}
