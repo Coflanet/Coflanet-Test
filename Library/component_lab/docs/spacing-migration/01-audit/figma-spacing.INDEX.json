@@ -1,0 +1,1001 @@
+{
+  "generatedAt": "2026-05-12T02:56:59.078Z",
+  "fileKey": "q7yBPcHrid1CGQqFWEPwnR",
+  "fileName": "📚 Library",
+  "totalAuditedPages": 27,
+  "successCount": 27,
+  "missingCount": 0,
+  "pages": [
+    {
+      "pageSlug": "foundation-space",
+      "files": [
+        "figma-spacing-raw.foundation-space.json"
+      ],
+      "summary": {
+        "pageId": "2485:8842",
+        "pageName": "  📐 Space",
+        "totalNodesScanned": 58,
+        "totalDescendants": 599,
+        "spacingOccurrences": 107,
+        "distinctValues": [
+          4,
+          10,
+          12,
+          16,
+          20,
+          24,
+          28,
+          32,
+          60,
+          64
+        ],
+        "boundToVariable": 1,
+        "rawValues": 106,
+        "suspiciousItems": 106,
+        "variablesUsed": 1
+      }
+    },
+    {
+      "pageSlug": "foundation-logo",
+      "files": [
+        "figma-spacing-raw.foundation-logo.json"
+      ],
+      "summary": {
+        "pageId": "0:1",
+        "pageName": "🏷️ Logo",
+        "totalNodesScanned": 57,
+        "totalDescendants": 370,
+        "spacingOccurrences": 45,
+        "distinctValues": [
+          3,
+          10,
+          16,
+          20,
+          24,
+          30,
+          32,
+          40,
+          64
+        ],
+        "boundToVariable": 0,
+        "rawValues": 45,
+        "suspiciousItems": 45,
+        "variablesUsed": 0
+      }
+    },
+    {
+      "pageSlug": "foundation-typography",
+      "files": [
+        "figma-spacing-raw.foundation-typography.json"
+      ],
+      "summary": {
+        "pageId": "2414:9843",
+        "pageName": "  🔠 Typography",
+        "totalNodesScanned": 869,
+        "totalDescendants": 2461,
+        "spacingOccurrences": 949,
+        "distinctValues": [
+          1,
+          2,
+          3,
+          4,
+          6,
+          8,
+          10,
+          12,
+          14,
+          15,
+          16,
+          18,
+          20,
+          23,
+          24,
+          28,
+          30,
+          32,
+          40,
+          48,
+          50,
+          64,
+          72,
+          80,
+          128
+        ],
+        "boundToVariable": 23,
+        "rawValues": 926,
+        "suspiciousItems": 926,
+        "variablesUsed": 5
+      }
+    },
+    {
+      "pageSlug": "foundation-colors",
+      "files": [
+        "figma-spacing-raw.foundation-colors.json"
+      ],
+      "summary": {
+        "pageId": "2414:11941",
+        "pageName": "  🎨 Colors",
+        "totalNodesScanned": 5553,
+        "totalDescendants": 20435,
+        "spacingOccurrences": 3133,
+        "itemsInFile": 465,
+        "distinctValues": [
+          1,
+          2,
+          4,
+          6,
+          7,
+          8,
+          9,
+          10,
+          11,
+          12,
+          13,
+          14,
+          15,
+          16,
+          20,
+          22,
+          24,
+          28,
+          32,
+          40,
+          48,
+          54,
+          64,
+          70
+        ],
+        "boundToVariable": 0,
+        "rawValues": 465,
+        "suspiciousItems": 465,
+        "variablesUsed": 0,
+        "dedupStrategy": "Items deduplicated by (property, value, variableId) to fit within Figma plugin output size limit. Each group lists count and up to 8 sample sourceNodeIds.",
+        "samplingLimit": 8
+      }
+    },
+    {
+      "pageSlug": "foundation-gradient",
+      "files": [
+        "figma-spacing-raw.foundation-gradient.json"
+      ],
+      "summary": {
+        "pageId": "2452:6035",
+        "pageName": "  🌈 Gradient",
+        "totalNodesScanned": 107,
+        "totalDescendants": 254,
+        "spacingOccurrences": 175,
+        "itemsInFile": 175,
+        "distinctValues": [
+          2,
+          4,
+          6,
+          7,
+          10,
+          12,
+          14,
+          16,
+          20,
+          24,
+          32,
+          50,
+          64
+        ],
+        "boundToVariable": 2,
+        "rawValues": 173,
+        "suspiciousItems": 173,
+        "variablesUsed": 1
+      }
+    },
+    {
+      "pageSlug": "foundation-decorate",
+      "files": [
+        "figma-spacing-raw.foundation-decorate.json"
+      ],
+      "summary": {
+        "pageId": "2452:6034",
+        "pageName": "  💅 Decorate",
+        "totalNodesScanned": 172,
+        "totalDescendants": 330,
+        "spacingOccurrences": 214,
+        "itemsInFile": 214,
+        "distinctValues": [
+          2,
+          6,
+          7,
+          10,
+          14,
+          16,
+          20,
+          24,
+          32,
+          40,
+          64,
+          100
+        ],
+        "boundToVariable": 0,
+        "rawValues": 214,
+        "suspiciousItems": 214,
+        "variablesUsed": 0
+      }
+    },
+    {
+      "pageSlug": "foundation-icon",
+      "files": [
+        "figma-spacing-raw.foundation-icon.json"
+      ],
+      "summary": {
+        "pageId": "2414:34422",
+        "pageName": "  🔘 Icon",
+        "totalNodesScanned": 1046,
+        "totalDescendants": 3065,
+        "spacingOccurrences": 894,
+        "itemsInFile": 126,
+        "distinctValues": [
+          2,
+          4,
+          7,
+          8,
+          14,
+          20,
+          24,
+          32,
+          64
+        ],
+        "boundToVariable": 0,
+        "rawValues": 126,
+        "suspiciousItems": 126,
+        "variablesUsed": 0,
+        "dedupStrategy": "Dedup by (property, value, variableId); up to 8 sample sourceNodeIds per group.",
+        "samplingLimit": 8
+      }
+    },
+    {
+      "pageSlug": "foundation-3d-illustration",
+      "files": [
+        "figma-spacing-raw.foundation-3d-illustration.json"
+      ],
+      "summary": {
+        "pageId": "2941:667",
+        "pageName": "  3️⃣ 3D Illustration",
+        "totalNodesScanned": 26,
+        "totalDescendants": 41,
+        "spacingOccurrences": 33,
+        "itemsInFile": 33,
+        "distinctValues": [
+          20,
+          24,
+          32,
+          40,
+          94,
+          100,
+          200
+        ],
+        "boundToVariable": 0,
+        "rawValues": 33,
+        "suspiciousItems": 33,
+        "variablesUsed": 0
+      }
+    },
+    {
+      "pageSlug": "foundation-product",
+      "files": [
+        "figma-spacing-raw.foundation-product.json"
+      ],
+      "summary": {
+        "pageId": "2941:684",
+        "pageName": "  ☕️ Product",
+        "totalNodesScanned": 7,
+        "totalDescendants": 10,
+        "spacingOccurrences": 13,
+        "itemsInFile": 13,
+        "distinctValues": [
+          24,
+          32,
+          94,
+          100,
+          200
+        ],
+        "boundToVariable": 0,
+        "rawValues": 13,
+        "suspiciousItems": 13,
+        "variablesUsed": 0
+      }
+    },
+    {
+      "pageSlug": "component-button",
+      "files": [
+        "figma-spacing-raw.component-button.json"
+      ],
+      "summary": {
+        "pageId": "2414:32026",
+        "pageName": "  ⏹️ Button",
+        "totalNodesScanned": 1709,
+        "totalDescendants": 12611,
+        "spacingOccurrences": 3243,
+        "itemsInFile": 474,
+        "distinctValues": [
+          2,
+          4,
+          5,
+          6,
+          7,
+          8,
+          9,
+          10,
+          11,
+          12,
+          14,
+          16,
+          20,
+          24,
+          28,
+          32,
+          40,
+          48,
+          50,
+          60,
+          64
+        ],
+        "boundToVariable": 30,
+        "rawValues": 444,
+        "suspiciousItems": 444,
+        "variablesUsed": 4,
+        "dedupStrategy": "Dedup by (property, value, variableId); up to 8 sample sourceNodeIds per group.",
+        "samplingLimit": 8
+      }
+    },
+    {
+      "pageSlug": "component-chip",
+      "files": [
+        "figma-spacing-raw.component-chip.json"
+      ],
+      "summary": {
+        "pageId": "2546:166598",
+        "pageName": "  🍪 Chip",
+        "totalNodesScanned": 809,
+        "totalDescendants": 3763,
+        "spacingOccurrences": 1449,
+        "itemsInFile": 326,
+        "distinctValues": [
+          1,
+          2,
+          3,
+          4,
+          5,
+          6,
+          7,
+          8,
+          9,
+          10,
+          11,
+          12,
+          16,
+          24
+        ],
+        "boundToVariable": 0,
+        "rawValues": 326,
+        "suspiciousItems": 326,
+        "variablesUsed": 0,
+        "dedupStrategy": "Dedup by (property, value, variableId); up to 8 sample sourceNodeIds per group.",
+        "samplingLimit": 8
+      }
+    },
+    {
+      "pageSlug": "component-ratio",
+      "files": [
+        "figma-spacing-raw.component-ratio.json"
+      ],
+      "summary": {
+        "pageId": "2452:6033",
+        "pageName": "  📏 Ratio",
+        "totalNodesScanned": 137,
+        "totalDescendants": 240,
+        "spacingOccurrences": 139,
+        "itemsInFile": 139,
+        "distinctValues": [
+          2,
+          6,
+          7,
+          10,
+          14,
+          16,
+          20,
+          24,
+          32,
+          64
+        ],
+        "boundToVariable": 0,
+        "rawValues": 139,
+        "suspiciousItems": 139,
+        "variablesUsed": 0
+      }
+    },
+    {
+      "pageSlug": "component-thumbnail",
+      "files": [
+        "figma-spacing-raw.component-thumbnail.json"
+      ],
+      "summary": {
+        "pageId": "2452:6037",
+        "pageName": "  🖼️ Thumbnail",
+        "totalNodesScanned": 88,
+        "totalDescendants": 229,
+        "spacingOccurrences": 87,
+        "itemsInFile": 87,
+        "distinctValues": [
+          2,
+          6,
+          7,
+          14,
+          16,
+          20,
+          24,
+          32,
+          48,
+          64
+        ],
+        "boundToVariable": 0,
+        "rawValues": 87,
+        "suspiciousItems": 87,
+        "variablesUsed": 0
+      }
+    },
+    {
+      "pageSlug": "component-scroll",
+      "files": [
+        "figma-spacing-raw.component-scroll.json"
+      ],
+      "summary": {
+        "pageId": "2452:7600",
+        "pageName": "  🖱️ Scroll",
+        "totalNodesScanned": 149,
+        "totalDescendants": 216,
+        "spacingOccurrences": 177,
+        "itemsInFile": 177,
+        "distinctValues": [
+          2,
+          3,
+          6,
+          16,
+          20,
+          24,
+          32,
+          64
+        ],
+        "boundToVariable": 0,
+        "rawValues": 177,
+        "suspiciousItems": 177,
+        "variablesUsed": 0
+      }
+    },
+    {
+      "pageSlug": "component-avatar",
+      "files": [
+        "figma-spacing-raw.component-avatar.json"
+      ],
+      "summary": {
+        "pageId": "2452:6039",
+        "pageName": "  👤 Avatar",
+        "totalNodesScanned": 536,
+        "totalDescendants": 1990,
+        "spacingOccurrences": 542,
+        "itemsInFile": 542,
+        "distinctValues": [
+          -8,
+          -6,
+          2,
+          4,
+          6,
+          7,
+          8,
+          10,
+          12,
+          14,
+          16,
+          20,
+          24,
+          28,
+          32,
+          48,
+          64
+        ],
+        "boundToVariable": 0,
+        "rawValues": 542,
+        "suspiciousItems": 532,
+        "variablesUsed": 0
+      }
+    },
+    {
+      "pageSlug": "component-indicators",
+      "files": [
+        "figma-spacing-raw.component-indicators.json"
+      ],
+      "summary": {
+        "pageId": "2442:16180",
+        "pageName": "  💡 Indicators",
+        "totalNodesScanned": 18,
+        "totalDescendants": 31,
+        "spacingOccurrences": 27,
+        "itemsInFile": 27,
+        "distinctValues": [
+          16,
+          20,
+          24,
+          32,
+          64
+        ],
+        "boundToVariable": 0,
+        "rawValues": 27,
+        "suspiciousItems": 27,
+        "variablesUsed": 0
+      }
+    },
+    {
+      "pageSlug": "component-divider",
+      "files": [
+        "figma-spacing-raw.component-divider.json"
+      ],
+      "summary": {
+        "pageId": "2452:6032",
+        "pageName": "  ➗ Divider",
+        "totalNodesScanned": 23,
+        "totalDescendants": 34,
+        "spacingOccurrences": 44,
+        "itemsInFile": 44,
+        "distinctValues": [
+          2,
+          6,
+          16,
+          20,
+          24,
+          64
+        ],
+        "boundToVariable": 0,
+        "rawValues": 44,
+        "suspiciousItems": 44,
+        "variablesUsed": 0
+      }
+    },
+    {
+      "pageSlug": "module-navigation",
+      "files": [
+        "figma-spacing-raw.module-navigation.json"
+      ],
+      "summary": {
+        "pageId": "2452:3459",
+        "pageName": "  🧭 Navigation",
+        "totalNodesScanned": 274,
+        "totalDescendants": 15034,
+        "spacingOccurrences": 495,
+        "itemsInFile": 495,
+        "distinctValues": [
+          2,
+          3,
+          4,
+          5,
+          6,
+          8,
+          10,
+          12,
+          16,
+          20,
+          24,
+          32,
+          40,
+          44,
+          48,
+          56,
+          64,
+          68,
+          72,
+          76
+        ],
+        "boundToVariable": 0,
+        "rawValues": 495,
+        "suspiciousItems": 495,
+        "variablesUsed": 0
+      }
+    },
+    {
+      "pageSlug": "module-tab",
+      "files": [
+        "figma-spacing-raw.module-tab.json"
+      ],
+      "summary": {
+        "pageId": "2414:34400",
+        "pageName": "       📑 Tab",
+        "totalNodesScanned": 942,
+        "totalDescendants": 14929,
+        "spacingOccurrences": 1338,
+        "itemsInFile": 376,
+        "distinctValues": [
+          1,
+          2,
+          3,
+          4,
+          6,
+          7,
+          8,
+          9,
+          10,
+          11,
+          12,
+          16,
+          20,
+          24
+        ],
+        "boundToVariable": 16,
+        "rawValues": 360,
+        "suspiciousItems": 360,
+        "variablesUsed": 1,
+        "dedupStrategy": "Dedup by (property, value, variableId); up to 8 sample sourceNodeIds per group.",
+        "samplingLimit": 8
+      }
+    },
+    {
+      "pageSlug": "module-pagination",
+      "files": [
+        "figma-spacing-raw.module-pagination.json"
+      ],
+      "summary": {
+        "pageId": "2452:6038",
+        "pageName": "       🔢 Pagination",
+        "totalNodesScanned": 249,
+        "totalDescendants": 8027,
+        "spacingOccurrences": 303,
+        "itemsInFile": 303,
+        "distinctValues": [
+          2,
+          3,
+          4,
+          6,
+          8,
+          10,
+          12,
+          16,
+          20,
+          24,
+          50,
+          64
+        ],
+        "boundToVariable": 0,
+        "rawValues": 303,
+        "suspiciousItems": 303,
+        "variablesUsed": 0
+      }
+    },
+    {
+      "pageSlug": "module-progress-indicators",
+      "files": [
+        "figma-spacing-raw.module-progress-indicators.json"
+      ],
+      "summary": {
+        "pageId": "2449:415",
+        "pageName": "  ⏳ Progress Indicators",
+        "totalNodesScanned": 1847,
+        "totalDescendants": 5957,
+        "spacingOccurrences": 1120,
+        "itemsInFile": 225,
+        "distinctValues": [
+          2,
+          3,
+          4,
+          6,
+          8,
+          10,
+          12,
+          16,
+          20,
+          24,
+          46,
+          48,
+          64
+        ],
+        "boundToVariable": 1,
+        "rawValues": 224,
+        "suspiciousItems": 224,
+        "variablesUsed": 1,
+        "dedupStrategy": "Dedup by (property, value, variableId); up to 8 sample sourceNodeIds per group.",
+        "samplingLimit": 8
+      }
+    },
+    {
+      "pageSlug": "module-selection-input",
+      "files": [
+        "figma-spacing-raw.module-selection-input.json"
+      ],
+      "summary": {
+        "pageId": "2442:7603",
+        "pageName": "  ☑️ Selection and 📝 Input",
+        "totalNodesScanned": 4078,
+        "totalDescendants": 24995,
+        "spacingOccurrences": 7401,
+        "itemsInFile": 363,
+        "distinctValues": [
+          1,
+          2,
+          3,
+          4,
+          6,
+          7,
+          7.5,
+          8,
+          9,
+          10,
+          11,
+          12,
+          13,
+          14,
+          16,
+          20,
+          24,
+          32,
+          36,
+          37
+        ],
+        "boundToVariable": 20,
+        "rawValues": 343,
+        "suspiciousItems": 343,
+        "variablesUsed": 2,
+        "dedupStrategy": "Dedup by (property, value, variableId); up to 5 sample sourceNodeIds per group. Variable map deferred (large page).",
+        "samplingLimit": 5
+      }
+    },
+    {
+      "pageSlug": "module-control-box",
+      "files": [
+        "figma-spacing-raw.module-control-box.json"
+      ],
+      "summary": {
+        "pageId": "2537:62051",
+        "pageName": "  🕹️ Control Box",
+        "totalNodesScanned": 82,
+        "totalDescendants": 338,
+        "spacingOccurrences": 225,
+        "itemsInFile": 225,
+        "distinctValues": [
+          2,
+          4,
+          6,
+          8,
+          10,
+          12,
+          16,
+          20,
+          24,
+          28,
+          32,
+          64
+        ],
+        "boundToVariable": 16,
+        "rawValues": 209,
+        "suspiciousItems": 209,
+        "variablesUsed": 2
+      }
+    },
+    {
+      "pageSlug": "module-gauge",
+      "files": [
+        "figma-spacing-raw.module-gauge.json"
+      ],
+      "summary": {
+        "pageId": "2442:15568",
+        "pageName": "  🌡️ Gauge",
+        "totalNodesScanned": 34,
+        "totalDescendants": 92,
+        "spacingOccurrences": 49,
+        "itemsInFile": 49,
+        "distinctValues": [
+          8,
+          10,
+          12,
+          16,
+          20,
+          24,
+          31,
+          32,
+          64
+        ],
+        "boundToVariable": 0,
+        "rawValues": 49,
+        "suspiciousItems": 49,
+        "variablesUsed": 0
+      }
+    },
+    {
+      "pageSlug": "module-feedback",
+      "files": [
+        "figma-spacing-raw.module-feedback.json"
+      ],
+      "summary": {
+        "pageId": "2546:36834",
+        "pageName": "  🪞 Feedback",
+        "totalNodesScanned": 678,
+        "totalDescendants": 2802,
+        "spacingOccurrences": 1532,
+        "itemsInFile": 408,
+        "distinctValues": [
+          1,
+          2,
+          3,
+          4,
+          5,
+          6,
+          7,
+          8,
+          9,
+          10,
+          11,
+          12,
+          16,
+          20,
+          24,
+          28,
+          32,
+          52.5,
+          76,
+          80,
+          87,
+          94,
+          100,
+          160
+        ],
+        "boundToVariable": 1,
+        "rawValues": 407,
+        "suspiciousItems": 407,
+        "variablesUsed": 1,
+        "dedupStrategy": "Dedup by (property, value, variableId); up to 8 sample sourceNodeIds per group.",
+        "samplingLimit": 8
+      }
+    },
+    {
+      "pageSlug": "module-presentation",
+      "files": [
+        "figma-spacing-raw.module-presentation.json"
+      ],
+      "summary": {
+        "pageId": "2546:42535",
+        "pageName": "   📣 Presentation",
+        "totalNodesScanned": 1294,
+        "totalDescendants": 25238,
+        "spacingOccurrences": 1791,
+        "itemsInFile": 315,
+        "distinctValues": [
+          1,
+          2,
+          3,
+          4,
+          6,
+          7,
+          8,
+          10,
+          12,
+          14,
+          16,
+          20,
+          24,
+          28,
+          32,
+          40,
+          72,
+          84
+        ],
+        "boundToVariable": 58,
+        "rawValues": 257,
+        "suspiciousItems": 257,
+        "variablesUsed": 5,
+        "dedupStrategy": "Dedup by (property, value, variableId); up to 6 sample sourceNodeIds per group.",
+        "samplingLimit": 6
+      }
+    },
+    {
+      "pageSlug": "module-contents",
+      "files": [
+        "figma-spacing-raw.module-contents.json"
+      ],
+      "summary": {
+        "pageId": "2573:404660",
+        "pageName": "   📑 Contents",
+        "totalNodesScanned": 4258,
+        "totalDescendants": 18965,
+        "spacingOccurrences": 5354,
+        "itemsInFile": 430,
+        "distinctValues": [
+          -8,
+          -6,
+          -2,
+          1,
+          2,
+          3,
+          4,
+          6,
+          7,
+          8,
+          9,
+          10,
+          12,
+          14,
+          16,
+          20,
+          24,
+          32,
+          40,
+          48,
+          49,
+          50,
+          64
+        ],
+        "boundToVariable": 99,
+        "rawValues": 331,
+        "suspiciousItems": 323,
+        "variablesUsed": 13,
+        "dedupStrategy": "Dedup by (property, value, variableId); up to 5 sample sourceNodeIds per group. Variable map deferred (large page).",
+        "samplingLimit": 5
+      }
+    }
+  ],
+  "totals": {
+    "spacingOccurrences": 30879,
+    "globalValueFrequency": {
+      "1": 102,
+      "2": 578,
+      "3": 293,
+      "4": 431,
+      "5": 27,
+      "6": 771,
+      "7": 153,
+      "8": 412,
+      "9": 98,
+      "10": 312,
+      "11": 86,
+      "12": 446,
+      "13": 20,
+      "14": 64,
+      "15": 40,
+      "16": 704,
+      "18": 5,
+      "20": 757,
+      "22": 8,
+      "23": 1,
+      "24": 819,
+      "28": 60,
+      "30": 5,
+      "31": 5,
+      "32": 153,
+      "36": 5,
+      "37": 2,
+      "40": 57,
+      "44": 1,
+      "46": 2,
+      "48": 135,
+      "49": 1,
+      "50": 13,
+      "54": 1,
+      "56": 2,
+      "60": 8,
+      "64": 438,
+      "68": 1,
+      "70": 8,
+      "72": 3,
+      "76": 3,
+      "80": 9,
+      "84": 1,
+      "87": 1,
+      "94": 4,
+      "100": 18,
+      "128": 6,
+      "160": 16,
+      "200": 23,
+      "-6": 8,
+      "-8": 8,
+      "7.5": 4,
+      "52.5": 2,
+      "-2": 2
+    }
+  },
+  "notes": [
+    "Pages with totalOccurrences > ~600 use a deduplicated representation (per spec): items list contains representative samples per (property, value, variableId) group due to Figma plugin output size limits. The _summary.spacingOccurrences field reports the true total occurrence count.",
+    "Pages with totalOccurrences <= 600 contain full per-occurrence items.",
+    "Instance subnode IDs (containing ';') were excluded; their spacing is inherited from master components which are audited on their own component pages."
+  ]
+}
