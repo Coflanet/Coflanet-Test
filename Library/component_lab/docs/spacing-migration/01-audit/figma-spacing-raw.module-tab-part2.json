@@ -4,7 +4,7 @@
     "pageName": "       📑 Tab",
     "pageSlug": "module-tab",
     "totalNodesScanned": 7459,
-    "spacingOccurrences": 2930,
+    "spacingOccurrences": 6347,
     "distinctValues": [
       1,
       2,
@@ -38,20 +38,21 @@
       24
     ],
     "boundToVariable": {
-      "yes": 0,
-      "no": 2930
+      "yes": 26,
+      "no": 6321
     },
-    "distinctVariables": 0,
+    "distinctVariables": 1,
     "variableMap": {},
-    "suspiciousItemCount": 50,
-    "_bucketCount": 7,
+    "suspiciousItemCount": 0,
+    "_bucketCount": 778,
     "_part": 2,
-    "_ofParts": 3,
+    "_ofParts": 7,
     "_partRange": [
       1000,
       2000
     ]
   },
+  "_suspiciousSample": [],
   "items": [
     {
       "tokenName": null,
