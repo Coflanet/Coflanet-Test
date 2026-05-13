@@ -3,7 +3,7 @@
   "pageName": "   📣 Presentation",
   "pageSlug": "module-presentation",
   "status": "partial",
-  "reason": "Captured 8359 items across 319 unique buckets (4584 new this session). Remaining: 93990 (149+ items rem from 374), 93972 done, 93981 done, plus 94012 leaves (94014/94019/94025/94036 done, 94042/94045/94048/94051/94055/94059/94062/94065/94068/94072/94074/94081/94106/94180/94188 pending), 94286 leaves (16 leaves pending), 94564 leaves (22 leaves pending), 94881 leaves (4 leaves pending). Session token/budget exhausted while iterating large component-sets (93789, 93813, 93835, 93930, 93972, 93981 each consumed full 600-row calls).",
+  "reason": "Captured 18207 items across 805 unique buckets (9848 new this session). Completed: all 94012 leaves, all 94286 leaves, 94424 split, 94541, 94566/94569/94579/94582/94588/94596. Remaining: 94609, 94615, 94621, 94642, 94663, 94668, 94684, 94700, 94716, 94732, 94748, 94764, 94780, 94796, 94812, 94828, plus all 94881 leaves (94884, 94892, 94904, 94916).",
   "_summary": {
     "totalSubsections": 7,
     "completedSubsections": [
@@ -14,26 +14,38 @@
     "partiallyCompletedSubsections": [
       {
         "id": "2546:93597",
-        "extractedSoFar": "~7400 items captured (cumulative across two sessions). 2546:93698 sub-frames now done: 93703,93712(children 93713/93721/93725/93734/93743/93751),93780,93789,93813,93835 captured. 2546:93930 partial: 93931,93935,93945,93950,93959,93969,93972,93981 done; 93990 partial (149 of ~374 captured); 94012 partial.",
-        "note": "Large component-sets consume many rows; budget exhaustion."
+        "extractedSoFar": "18207 items captured cumulative (9848 new this session). 94012/94286/94424/94541 complete. 94564 partial: 94566/94569/94579/94582/94588/94596 done; 16 leaves remaining. 94881: all 4 leaves remaining.",
+        "note": "Continuing through 94564 and 94881 leaves."
       }
     ],
     "remainingLargeSubsections": [
-      {"id":"2546:93990","spacingRowEstimate":"~225 remaining","note":"Modal/Full COMPONENT_SET, started offset 0, captured 149"},
-      {"id":"2546:94012","spacingRowEstimate":"~4000 remaining","note":"deep tree with many leaves still pending"},
-      {"id":"2546:94286","spacingRowEstimate":"1934","note":"all 16 leaves pending"},
-      {"id":"2546:94564","spacingRowEstimate":"1561","note":"all 22 leaves pending"},
-      {"id":"2546:94881","spacingRowEstimate":"738","note":"all 4 leaves pending"}
+      {"id":"2546:94609","spacingRowEstimate":"363","note":"94564 leaf"},
+      {"id":"2546:94615","spacingRowEstimate":"363","note":"94564 leaf"},
+      {"id":"2546:94621","spacingRowEstimate":"195","note":"94564 leaf"},
+      {"id":"2546:94642","spacingRowEstimate":"195","note":"94564 leaf"},
+      {"id":"2546:94663","spacingRowEstimate":"7","note":"94564 leaf"},
+      {"id":"2546:94668","spacingRowEstimate":"178","note":"94564 leaf"},
+      {"id":"2546:94684","spacingRowEstimate":"178","note":"94564 leaf"},
+      {"id":"2546:94700","spacingRowEstimate":"187","note":"94564 leaf"},
+      {"id":"2546:94716","spacingRowEstimate":"214","note":"94564 leaf"},
+      {"id":"2546:94732","spacingRowEstimate":"187","note":"94564 leaf"},
+      {"id":"2546:94748","spacingRowEstimate":"178","note":"94564 leaf"},
+      {"id":"2546:94764","spacingRowEstimate":"178","note":"94564 leaf"},
+      {"id":"2546:94780","spacingRowEstimate":"187","note":"94564 leaf"},
+      {"id":"2546:94796","spacingRowEstimate":"214","note":"94564 leaf"},
+      {"id":"2546:94812","spacingRowEstimate":"187","note":"94564 leaf"},
+      {"id":"2546:94828","spacingRowEstimate":"210","note":"94564 leaf"},
+      {"id":"2546:94884","spacingRowEstimate":"153","note":"94881 leaf"},
+      {"id":"2546:94892","spacingRowEstimate":"270","note":"94881 leaf"},
+      {"id":"2546:94904","spacingRowEstimate":"317","note":"94881 leaf"},
+      {"id":"2546:94916","spacingRowEstimate":"168","note":"94881 leaf"}
     ],
-    "itemsCaptured": 8359,
-    "newItemsThisSession": 4584
+    "itemsCaptured": 18207,
+    "newItemsThisSession": 9848
   },
   "leafBuckets": {
-    "2546:93990_continue": [{"id":"2546:93990","offset":149}],
-    "2546:94012_leaves": ["2546:94042","2546:94045","2546:94048","2546:94051","2546:94055","2546:94059","2546:94062","2546:94065","2546:94068","2546:94072","2546:94074","2546:94081","2546:94106","2546:94180","2546:94188"],
-    "2546:94286_leaves": ["2546:94288","2546:94291","2546:94300","2546:94310","2546:94318","2546:94325","2546:94341","2546:94357","2546:94373","2546:94389","2546:94405","2546:94422","2546:94424","2546:94521","2546:94523","2546:94541"],
-    "2546:94564_leaves": ["2546:94566","2546:94569","2546:94579","2546:94582","2546:94588","2546:94596","2546:94609","2546:94615","2546:94621","2546:94642","2546:94663","2546:94668","2546:94684","2546:94700","2546:94716","2546:94732","2546:94748","2546:94764","2546:94780","2546:94796","2546:94812","2546:94828"],
+    "2546:94564_leaves_remaining": ["2546:94609","2546:94615","2546:94621","2546:94642","2546:94663","2546:94668","2546:94684","2546:94700","2546:94716","2546:94732","2546:94748","2546:94764","2546:94780","2546:94796","2546:94812","2546:94828"],
     "2546:94881_leaves": ["2546:94884","2546:94892","2546:94904","2546:94916"]
   },
-  "nextSteps": "Continue with leafBuckets ids using extractor template (MAX_ITEMS=500-600). Estimated 15-20 more figma calls for the remaining ~8000 items. After each call, Write the response JSON to /tmp/figma-audit/module-presentation.bucket-pNN.cmp.json (start p19+) then run merge-buckets.js. Component-sets tend to produce ~600 rows per call so plan accordingly."
+  "nextSteps": "Continue with leafBuckets ids using extractor template (MAX_ITEMS=400-600). Estimated ~8 more figma calls for the remaining ~3700 items. Save bucket-pNN.cmp.json starting at p46+ then merge."
 }
