@@ -4,7 +4,7 @@
     "pageName": "  🧭 Navigation",
     "pageSlug": "module-navigation",
     "totalNodesScanned": 6628,
-    "spacingOccurrences": 2730,
+    "spacingOccurrences": 6142,
     "distinctValues": [
       0.33000001311302185,
       0.6700000166893005,
@@ -14,6 +14,7 @@
       2,
       3,
       4,
+      5,
       6,
       8,
       9,
@@ -22,11 +23,18 @@
       16,
       20,
       24,
+      28,
+      32,
+      40,
       44,
       48,
       56,
       64,
-      68
+      68,
+      72,
+      76,
+      127,
+      489
     ],
     "rawValues": [
       0.33000001311302185,
@@ -37,6 +45,7 @@
       2,
       3,
       4,
+      5,
       6,
       8,
       9,
@@ -45,22 +54,29 @@
       16,
       20,
       24,
+      28,
+      32,
+      40,
       44,
       48,
       56,
       64,
-      68
+      68,
+      72,
+      76,
+      127,
+      489
     ],
     "boundToVariable": {
       "yes": 0,
-      "no": 2730
+      "no": 6142
     },
     "distinctVariables": 0,
     "variableMap": {},
-    "suspiciousItemCount": 50,
-    "_bucketCount": 10,
+    "suspiciousItemCount": 0,
+    "_bucketCount": 249,
     "_part": 1,
-    "_ofParts": 3,
+    "_ofParts": 7,
     "_partRange": [
       0,
       1000
