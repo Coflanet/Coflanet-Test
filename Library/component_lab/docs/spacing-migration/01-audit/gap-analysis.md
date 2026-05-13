@@ -299,8 +299,84 @@
 
 ## 7. Phase 1-D 인계 사항
 
-1. **Sem-mismatch 우선 해결**: Button hor/ver 두 건. Figma 컴포넌트 인스턴스(예: `2414:32026` Primary Button) 의 padding 을 `get_metadata` 또는 디자이너 확인으로 SoT 결정.
+1. ~~**Sem-mismatch 우선 해결**~~ → **§8 에서 해소**. Button 은 단일 토큰이 아닌 사이즈별 padding 세트로 판명.
 2. **`figma-spacing.INDEX.json` 부재 해소**: 페이지별 spacing raw 수집이 없음. Phase 1-B 의 컴포넌트 프레임 ID 수집과 병행하여 페이지별 사용 빈도 확보 시 §2 히스토그램의 Figma 측 막대를 채울 수 있음.
 3. **Dimension 시스템 분리 결정**: Safe Area 4종 + Component-size 9종 합계 13건을 `AppSpacing` 에서 분리할지 검수 안건.
 4. **Off-scale 81 건의 토큰 치환 매핑**: §5-3 카테고리 표 기준으로 1:1 치환 후보 자동 생성 — Phase 2 마이그레이션 PR 사이즈 산정 입력.
-5. **신규 토큰 후보 확정**: `space0`, `space28`, `space56` — 디자이너와 4 배수 스케일 정합성 합의 필요.
+5. **신규 토큰 후보 확정**: `space0`, `space28`, `space56` — 디자이너와 4 배수 스케일 정합성 합의 필요. (§8 확인 결과 `space28` 은 Primary L Button hor padding 으로 실제 사용 중)
+
+---
+
+## 8. Sem-mismatch 해소 — Button 페이지 타겟 조사 결과
+
+**조사 범위**: Figma `q7yBPcHrid1CGQqFWEPwnR` / 페이지 `2414:32026 (⏹️ Button)`
+**방법**: `get_design_context` 로 4개 Button 인스턴스의 실제 렌더링 padding 추출 (Tailwind `px-/py-/gap-` 클래스 직접 읽음)
+
+### 8-1. 측정값
+
+| 노드 ID | 변형 | 사이즈 (W×H) | hor padding | ver padding | icon-text gap | 텍스트 | line-height |
+|---|---|---|---:|---:|---:|---:|---|
+| `3473:5515` | Solid/Primary L (label only) | 97×52 | **28** | **12** | 6 | 16px | 1.5 (24) |
+| `3473:5516` | Solid/Primary L (icon+label) | 123×48 | **28** | **12** | 6 | 16px | 1.5 |
+| `3473:5530` | Solid/Primary M | 149×48 | **20** | **9** | 5 | 15px | 1.467 (22) |
+| `3473:5531` | Solid/Primary S | 102×32 | **14** | **7** | 4 | 13px | 1.385 (18) |
+| `2414:32035` | Outlined/Secondary S | 112×32 | **14** | 6/7 비대칭 | 4 | 13px | 1.385 |
+
+### 8-2. Phase 1-A §4-2 매핑 재검증
+
+| Phase 1-A 주장 | 실제 Figma 렌더링 | 결론 |
+|---|---|---|
+| `Spacing/Button/hor = 16` → 코드 `space8` | 어떤 변형에서도 **16 사용 안함** (14/20/28 만 존재) | Phase 1-A 의 description 옮김이 **잘못됐다**. Figma 변수 description ≠ 실제 컴포넌트 바인딩 |
+| `Spacing/Button/ver = 14` → 코드 `space12` | 어떤 변형에서도 **14 사용 안함** (7/9/12 만 존재) | 동상. `Spacing/Button/ver=14` 변수는 정의돼 있어도 **Button 인스턴스에 바인딩 안됨** |
+
+### 8-3. 코드 ↔ Figma 정합성 재평가
+
+| 코드 현재값 | Figma 실측 (사이즈별) | 평가 |
+|---|---|---|
+| `buttonPaddingHorizontal = space8 = 8` | 14 (S) / 20 (M) / 28 (L) | ❌ **어떤 사이즈와도 불일치**. 단일 값으로 표현 불가 — 사이즈 토큰 분기 필요 |
+| `buttonPaddingVertical = space12 = 12` | 7 (S) / 9 (M) / 12 (L) | 🟡 **L 사이즈만 일치**. S/M 에서는 어긋남 |
+| `app_section_bottom_button.dart` off-scale literal `28` (4건) | Primary L hor padding | ✅ **실제 일치** — 토큰화만 누락. `space28` 신규 도입 시 단순 치환 |
+| 코드의 off-scale literal `6` 18건 | Primary L `gap=6`, Outlined `pb=6` | ✅ Figma 도 사용 — 4-배수 외 의도값. `space6` 또는 `gap` 전용 토큰 검토 |
+| 코드의 off-scale literal `9, 11` | Figma `ver=9` (M 사이즈) | 부분 일치 — 9 는 Figma 도 사용, 11 은 미발견 |
+
+### 8-4. 신규 권고 — Button 시맨틱 재설계
+
+**기존 (`app_spacing.dart:77-78`)**:
+```
+buttonPaddingHorizontal = space8   // 8
+buttonPaddingVertical   = space12  // 12
+```
+
+**제안 (사이즈별 분기)**:
+```
+buttonPaddingHorizontalS = space14  (또는 신규 space14sm)  // 14
+buttonPaddingHorizontalM = space20                          // 20
+buttonPaddingHorizontalL = space28  (신규)                  // 28
+buttonPaddingVerticalS   = 7  (off-scale 유지 또는 space8 통합)
+buttonPaddingVerticalM   = 9  (off-scale 유지 또는 space8 통합)
+buttonPaddingVerticalL   = space12                          // 12
+buttonGapS               = space4                           // 4
+buttonGapM               = 5  (off-scale)
+buttonGapL               = 6  (off-scale, banner/chip 과 공유)
+```
+
+> **결정 보류**: vertical padding 7/9 와 gap 5/6 은 4-배수 외 값. (a) Figma 가 의도적으로 line-height 계산값(예: 32-18=14→/2=7) 으로 두는 것인지, (b) 디자이너 수작업 fine-tune 인지 — 디자이너 확인 필요. (a) 이면 코드는 동적 계산식으로 표현하고 토큰화 안 함이 정답.
+
+### 8-5. §6-4 권장 팔레트 업데이트
+
+§6-4 의 **신규 검토** 섹션을 다음과 같이 격상:
+
+```
+· 신규 (off-scale 통합 + Figma 실증):
+   space28   28   (Primary L Button hor padding — 4건 literal + Figma 실측 매치)
+   space56   56   (banner — Figma 미확인, 코드 단독 2건)
+```
+
+> `space28` 은 이제 "신규 검토" 가 아닌 "신규 확정" 단계. `space56` 은 Figma 측 검증이 빠져있으므로 보류 유지.
+
+### 8-6. 후속 조치 (Phase 1-D 우선순위 재조정)
+
+1. ✅ **완료**: Button Sem-mismatch SoT 결정 — **Figma 가 SoT**, 코드의 `buttonPaddingHorizontal/Vertical` 단일 토큰 정의는 폐기 대상
+2. 🟡 **새로 발생**: Button 사이즈 시스템(S/M/L) 의 명시적 도입 필요 — 현재 코드는 단일 사이즈 가정
+3. 🟡 **새로 발생**: vertical 7/9, gap 5/6 의 처리 정책 디자이너 확인
+4. (기존) Dimension 시스템 분리, off-scale 81건 토큰 치환, `figma-spacing.INDEX.json` 페이지별 수집 — 풀스캔은 여전히 보류 가능 (Button 만큼 영향 큰 페이지가 더 있는지 의문)
