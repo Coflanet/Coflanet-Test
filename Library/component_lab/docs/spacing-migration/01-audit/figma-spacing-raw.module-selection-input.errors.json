@@ -3,20 +3,19 @@
   "pageName": "  ☑️ Selection and 📝 Input",
   "pageSlug": "module-selection-input",
   "status": "partial",
-  "reason": "Page top-level traversal previously timed out. Diagnosis: 8 nested SECTION subsections; the first 3 (2523:151600, 2523:152531, 2523:154313) each contain >2000 spacing-bearing nodes (8000+ scanned nodes, traversal capped). Captured 757 items from the smaller subsections (2523:155040 size=57, 2523:156457 size=194, 2523:155113 size=435). Remaining 5559+ rows in the 3 large subsections (151600/152531/154313) and partial 155113 deferred to follow-up due to session figma call budget.",
+  "reason": "Continued from previous partial run. Session captured 15028 new spacing rows via 21 figma calls covering sub-trees of subsections 2523:155628 (complete), 2523:151600 (complete), 2523:152531 (partial - 152532 sub-tree fully done; 153416 sub-tree partially done: 153417/153420/153429/153441/153451/153459/153467/153479/153487 captured, 153495 partially captured offset 106). Remaining: 2523:153495 from offset 106, 2523:153503 subtree (153504/153508/153512/153514/153532/153552), 2523:153568, 2523:153573 component-set (30 components), 2523:154272, and entire 2523:154313 subsection (~6149 rows: 154315/154323-tree/154424/154430-component-set/155018). Merged with existing 757 items, total now 15785 unique items split across 16 part files.",
   "_summary": {
     "totalSubsections": 8,
-    "completedSubsections": ["2523:155040","2523:156457","2523:155113"],
+    "completedSubsections": ["2523:155040","2523:156457","2523:155113","2523:155628","2523:151600"],
+    "partialSubsections": [
+      {"id":"2523:152531","completedLeaves":["2523:152532-full-tree","2523:153417","2523:153420","2523:153429","2523:153441","2523:153451","2523:153459","2523:153467","2523:153479","2523:153487"],"remainingLeaves":[{"id":"2523:153495","offset":106,"remainingRows":47},{"id":"2523:153504","rows":11},{"id":"2523:153508","rows":141},{"id":"2523:153512","rows":6},{"id":"2523:153514","rows":476},{"id":"2523:153532","rows":481},{"id":"2523:153552","rows":156},{"id":"2523:153568","rows":3},{"id":"2523:153573","rows":1745,"note":"component-set with 30 components"},{"id":"2523:154272","rows":94}]}
+    ],
     "remainingLargeSubsections": [
-      {"id":"2523:151600","spacingRowEstimate":">=2098","note":"countSpacing hit 8000-node cap, real total likely much higher"},
-      {"id":"2523:152531","spacingRowEstimate":">=1510"},
-      {"id":"2523:154313","spacingRowEstimate":">=1930"}
+      {"id":"2523:154313","spacingRowEstimate":"6149","note":"entire subsection deferred: 154315 (30), 154323-tree (2223), 154424 (3), 154430 component-set (3827, 30 components), 155018 (66)"}
     ],
-    "remainingSmallSubsections": [
-      {"id":"2523:155628","spacingRowEstimate":"368"}
-    ],
-    "itemsCaptured": 757,
-    "boundToVariable": {"yes": 0, "no": 757}
+    "itemsCaptured": 15785,
+    "newItemsThisSession": 15028,
+    "boundToVariable": {"yes": "see part files for actual counts", "no": "see part files"}
   },
-  "nextSteps": "For each remaining large subsection: re-run bucketize on its children to find sub-buckets <=200 rows, then fetch each (deep instance paths expected, single bucket per call). Cost: ~40-50 figma calls total."
+  "nextSteps": "Follow-up session: extract remaining leaves of 153416 sub-tree (153495 offset 106, 153503 sub-children, 153568, 153573 30 components, 154272), then full 154313 tree (154315, 154323-tree with 11 leaves, 154424, 154430 30 components, 155018). Estimated ~9-12 more figma calls needed."
 }
