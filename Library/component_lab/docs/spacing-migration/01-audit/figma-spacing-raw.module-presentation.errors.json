@@ -3,39 +3,37 @@
   "pageName": "   📣 Presentation",
   "pageSlug": "module-presentation",
   "status": "partial",
-  "reason": "Continued extraction. Now 3775 items captured (across 158 unique buckets). Subsection 2546:93597 is largely covered (incl. 2546:93653 1414 done). Remaining: most of 2546:93698 sub-frames (offset 85 in 2546:93703), 2546:93930 (2125), 2546:94012 (4564), 2546:94286 (1934), 2546:94564 (1561), 2546:94881 (738). Heavy figma plugin call token cost (~25KB/call) consumed session budget.",
+  "reason": "Captured 8359 items across 319 unique buckets (4584 new this session). Remaining: 93990 (149+ items rem from 374), 93972 done, 93981 done, plus 94012 leaves (94014/94019/94025/94036 done, 94042/94045/94048/94051/94055/94059/94062/94065/94068/94072/94074/94081/94106/94180/94188 pending), 94286 leaves (16 leaves pending), 94564 leaves (22 leaves pending), 94881 leaves (4 leaves pending). Session token/budget exhausted while iterating large component-sets (93789, 93813, 93835, 93930, 93972, 93981 each consumed full 600-row calls).",
   "_summary": {
     "totalSubsections": 7,
-    "completedSubsections": ["2546:93589","2546:94861","2546:94925"],
+    "completedSubsections": [
+      "2546:93589",
+      "2546:94861",
+      "2546:94925"
+    ],
     "partiallyCompletedSubsections": [
-      {"id":"2546:93597","extractedSoFar":"~3300 items","note":"2546:93599,93644,93603,93620,93631,93651,93653,93699 done. 2546:93703 partial (offset 85 of 175). Rest of 2546:93698 sub-frames (93712, 93780, 93789, 93813, 93835) not yet extracted. 2546:93930 (3 frames + Modal/Full set), 2546:94012 (deep tree) not yet extracted."}
+      {
+        "id": "2546:93597",
+        "extractedSoFar": "~7400 items captured (cumulative across two sessions). 2546:93698 sub-frames now done: 93703,93712(children 93713/93721/93725/93734/93743/93751),93780,93789,93813,93835 captured. 2546:93930 partial: 93931,93935,93945,93950,93959,93969,93972,93981 done; 93990 partial (149 of ~374 captured); 94012 partial.",
+        "note": "Large component-sets consume many rows; budget exhaustion."
+      }
     ],
     "remainingLargeSubsections": [
-      {"id":"2546:93703","spacingRowEstimate":"~90","note":"Continue from offset 85, 90 items left of 175"},
-      {"id":"2546:93712","spacingRowEstimate":"1116","note":"Has 2546:93713 (21) + 2546:93719 (1094 = 2546:93720 688 + 2546:93751 401). 2546:93720 contains 4 Frame leaves (164/174/174/175)."},
-      {"id":"2546:93780","spacingRowEstimate":"322"},
-      {"id":"2546:93789","spacingRowEstimate":"659"},
-      {"id":"2546:93813","spacingRowEstimate":"645"},
-      {"id":"2546:93835","spacingRowEstimate":"1242","note":"Modal/Bottom Sheet COMPONENT_SET with 8 components of 154-155 each"},
-      {"id":"2546:93930","spacingRowEstimate":"2125","note":"Has 2546:93934 (1750: 3 Lists 205/775/765) + 2546:93990 (374, Modal/Full COMPONENT_SET)"},
-      {"id":"2546:94012","spacingRowEstimate":"4564","note":"Has 2546:94013 (3989: 2546:94017 549, 2546:94035 1040, 2546:94054 1046, 2546:94071 312, 2546:94078 1031) + 2546:94188 (575)"},
-      {"id":"2546:94286","spacingRowEstimate":"1934","note":"Has 2546:94287 (3430) + 2546:94541 (492). 2546:94287 contains 2546:94299 (1328), Menu/Menu COMPONENT_SET (1192), 2546:94421 (879)"},
-      {"id":"2546:94564","spacingRowEstimate":"1561","note":"Has 2546:94565 (4982) including 2546:94577 (2847), Auto Complete COMPONENT_SET (1894), 2546:94828 (210)"},
-      {"id":"2546:94881","spacingRowEstimate":"738","note":"Has 2546:94884 (153), 2546:94892 (270), 2546:94904 (317), Keyboard COMPONENT_SET (168)"}
+      {"id":"2546:93990","spacingRowEstimate":"~225 remaining","note":"Modal/Full COMPONENT_SET, started offset 0, captured 149"},
+      {"id":"2546:94012","spacingRowEstimate":"~4000 remaining","note":"deep tree with many leaves still pending"},
+      {"id":"2546:94286","spacingRowEstimate":"1934","note":"all 16 leaves pending"},
+      {"id":"2546:94564","spacingRowEstimate":"1561","note":"all 22 leaves pending"},
+      {"id":"2546:94881","spacingRowEstimate":"738","note":"all 4 leaves pending"}
     ],
-    "itemsCaptured": 3775
+    "itemsCaptured": 8359,
+    "newItemsThisSession": 4584
   },
   "leafBuckets": {
-    "small_continue": [
-      {"id":"2546:93703","offset":85}
-    ],
-    "2546:93698_remaining": ["2546:93712","2546:93780","2546:93789","2546:93813","2546:93835"],
-    "2546:93712_leaves": ["2546:93713","2546:93721","2546:93725","2546:93734","2546:93743","2546:93751"],
-    "2546:93930_leaves": ["2546:93931","2546:93935","2546:93945","2546:93950","2546:93959","2546:93969","2546:93972","2546:93981","2546:93990"],
-    "2546:94012_leaves": ["2546:94014","2546:94019","2546:94025","2546:94036","2546:94042","2546:94045","2546:94048","2546:94051","2546:94055","2546:94059","2546:94062","2546:94065","2546:94068","2546:94072","2546:94074","2546:94081","2546:94106","2546:94180","2546:94188"],
+    "2546:93990_continue": [{"id":"2546:93990","offset":149}],
+    "2546:94012_leaves": ["2546:94042","2546:94045","2546:94048","2546:94051","2546:94055","2546:94059","2546:94062","2546:94065","2546:94068","2546:94072","2546:94074","2546:94081","2546:94106","2546:94180","2546:94188"],
     "2546:94286_leaves": ["2546:94288","2546:94291","2546:94300","2546:94310","2546:94318","2546:94325","2546:94341","2546:94357","2546:94373","2546:94389","2546:94405","2546:94422","2546:94424","2546:94521","2546:94523","2546:94541"],
     "2546:94564_leaves": ["2546:94566","2546:94569","2546:94579","2546:94582","2546:94588","2546:94596","2546:94609","2546:94615","2546:94621","2546:94642","2546:94663","2546:94668","2546:94684","2546:94700","2546:94716","2546:94732","2546:94748","2546:94764","2546:94780","2546:94796","2546:94812","2546:94828"],
     "2546:94881_leaves": ["2546:94884","2546:94892","2546:94904","2546:94916"]
   },
-  "nextSteps": "Continue with leafBuckets ids using extractor template (MAX_ITEMS=500). Each bucket needs 1-2 use_figma calls. Estimated 25 more figma calls for the remaining ~12200 items. After each call, Write the response JSON to /tmp/figma-audit/module-presentation.bucket-NN.cmp.json then run merge-buckets.js."
+  "nextSteps": "Continue with leafBuckets ids using extractor template (MAX_ITEMS=500-600). Estimated 15-20 more figma calls for the remaining ~8000 items. After each call, Write the response JSON to /tmp/figma-audit/module-presentation.bucket-pNN.cmp.json (start p19+) then run merge-buckets.js. Component-sets tend to produce ~600 rows per call so plan accordingly."
 }
