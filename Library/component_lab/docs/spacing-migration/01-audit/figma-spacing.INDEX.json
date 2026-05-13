@@ -1,29 +1,30 @@
 {
-  "generatedAt": "2026-05-12T23:26:47.932Z",
+  "generatedAt": "2026-05-13T00:31:07.654Z",
   "fileKey": "q7yBPcHrid1CGQqFWEPwnR",
   "fileName": "📚 Library",
   "totalAuditedPages": 27,
+  "completePages": 24,
+  "partialPages": 3,
   "pages": [
     {
-      "pageSlug": "foundation-space",
+      "pageSlug": "component-avatar",
       "files": [
-        "figma-spacing-raw.foundation-space.json"
+        "figma-spacing-raw.component-avatar.json"
       ],
       "summary": {
-        "pageId": "2485:8842",
-        "pageName": "  📐 Space",
-        "totalNodesScanned": 600,
-        "spacingOccurrences": 286,
+        "pageId": "2452:6039",
+        "pageName": "  👤 Avatar",
+        "pageSlug": "component-avatar",
+        "totalNodesScanned": 1991,
+        "spacingOccurrences": 556,
         "distinctValues": [
-          0.33000001311302185,
-          0.6700000166893005,
-          1.3300000429153442,
-          1.333299994468689,
+          -8,
+          -6,
           2,
           4,
           6,
+          7,
           8,
-          9,
           10,
           12,
           14,
@@ -32,22 +33,17 @@
           24,
           28,
           32,
-          34,
-          36,
-          44,
-          60,
+          48,
           64
         ],
         "rawValues": [
-          0.33000001311302185,
-          0.6700000166893005,
-          1.3300000429153442,
-          1.333299994468689,
+          -8,
+          -6,
           2,
           4,
           6,
+          7,
           8,
-          9,
           10,
           12,
           14,
@@ -56,134 +52,416 @@
           24,
           28,
           32,
-          34,
-          36,
-          44,
-          60,
-          64
-        ],
-        "boundToVariable": {
-          "yes": 4,
-          "no": 282
-        },
-        "distinctVariables": 3
-      },
-      "status": "complete",
-      "items": 286
-    },
-    {
-      "pageSlug": "foundation-logo",
-      "files": [
-        "figma-spacing-raw.foundation-logo.json"
-      ],
-      "summary": {
-        "pageId": "0:1",
-        "pageName": "🏷️ Logo",
-        "totalNodesScanned": 371,
-        "spacingOccurrences": 45,
-        "distinctValues": [
-          3,
-          10,
-          16,
-          20,
-          24,
-          30,
-          32,
-          40,
-          64
-        ],
-        "rawValues": [
-          3,
-          10,
-          16,
-          20,
-          24,
-          30,
-          32,
-          40,
+          48,
           64
         ],
         "boundToVariable": {
           "yes": 0,
-          "no": 45
+          "no": 556
         },
-        "distinctVariables": 0
+        "distinctVariables": 0,
+        "variableMap": {},
+        "suspiciousItemCount": 2
       },
       "status": "complete",
-      "items": 45
+      "items": 556
     },
     {
-      "pageSlug": "foundation-typography",
+      "pageSlug": "component-button",
       "files": [
-        "figma-spacing-raw.foundation-typography.json"
+        "figma-spacing-raw.component-button-part1.json",
+        "figma-spacing-raw.component-button-part2.json",
+        "figma-spacing-raw.component-button-part3.json",
+        "figma-spacing-raw.component-button-part4.json"
       ],
       "summary": {
-        "pageId": "2414:9843",
-        "pageName": "  🔠 Typography",
-        "totalNodesScanned": 2462,
-        "spacingOccurrences": 989,
+        "pageId": "2414:32026",
+        "pageName": "  ⏹️ Button",
+        "pageSlug": "component-button",
+        "totalNodesScanned": 12601,
+        "spacingOccurrences": 3702,
+        "distinctValues": [
+          2,
+          4,
+          5,
+          6,
+          7,
+          8,
+          9,
+          10,
+          11,
+          12,
+          14,
+          16,
+          20,
+          24,
+          28,
+          32,
+          40,
+          48,
+          50,
+          60,
+          64
+        ],
+        "rawValues": [
+          2,
+          4,
+          5,
+          6,
+          7,
+          8,
+          9,
+          10,
+          11,
+          12,
+          14,
+          16,
+          20,
+          24,
+          28,
+          32,
+          40,
+          48,
+          50,
+          60,
+          64
+        ],
+        "boundToVariable": {
+          "yes": 82,
+          "no": 3620
+        },
+        "distinctVariables": 4,
+        "variableMap": {
+          "VariableID:2464:10680": {
+            "name": "Spacing/24",
+            "collection": "Semantic"
+          },
+          "VariableID:2464:10668": {
+            "name": "Spacing/12",
+            "collection": "Semantic"
+          },
+          "VariableID:2964:12120": {
+            "name": "Spacing/Padding/16(Box in Box)",
+            "collection": "Semantic"
+          },
+          "VariableID:c7b5baba26082c24a5bccc146ada109d9aec76b3/410:28": {
+            "name": "Spacing/Button/hor",
+            "collection": "1_Semantic"
+          }
+        },
+        "suspiciousItemCount": 50,
+        "_bucketCount": 5
+      },
+      "status": "complete",
+      "items": 3702
+    },
+    {
+      "pageSlug": "component-chip",
+      "files": [
+        "figma-spacing-raw.component-chip-part1.json",
+        "figma-spacing-raw.component-chip-part2.json"
+      ],
+      "summary": {
+        "pageId": "2546:166598",
+        "pageName": "  🍪 Chip",
+        "pageSlug": "component-chip",
+        "totalNodesScanned": 3758,
+        "spacingOccurrences": 1863,
         "distinctValues": [
           1,
           2,
           3,
           4,
+          5,
           6,
+          7,
           8,
+          9,
           10,
+          11,
           12,
-          14,
-          15,
           16,
-          18,
-          20,
-          23,
-          24,
-          28,
-          30,
-          32,
-          40,
-          48,
-          50,
-          64,
-          72,
-          80,
-          128
+          24
         ],
         "rawValues": [
           1,
           2,
           3,
           4,
+          5,
           6,
+          7,
           8,
+          9,
           10,
+          11,
           12,
-          14,
-          15,
           16,
-          18,
-          20,
-          23,
-          24,
-          28,
-          30,
-          32,
-          40,
-          48,
-          50,
-          64,
-          72,
-          80,
-          128
+          24
         ],
         "boundToVariable": {
-          "yes": 23,
-          "no": 966
+          "yes": 0,
+          "no": 1863
         },
-        "distinctVariables": 5
+        "distinctVariables": 0,
+        "variableMap": {},
+        "suspiciousItemCount": 50,
+        "_bucketCount": 3
       },
       "status": "complete",
-      "items": 989
+      "items": 1863
+    },
+    {
+      "pageSlug": "component-divider",
+      "files": [
+        "figma-spacing-raw.component-divider.json"
+      ],
+      "summary": {
+        "pageId": "2452:6032",
+        "pageName": "  ➗ Divider",
+        "pageSlug": "component-divider",
+        "totalNodesScanned": 35,
+        "spacingOccurrences": 44,
+        "distinctValues": [
+          2,
+          6,
+          16,
+          20,
+          24,
+          64
+        ],
+        "rawValues": [
+          2,
+          6,
+          16,
+          20,
+          24,
+          64
+        ],
+        "boundToVariable": {
+          "yes": 0,
+          "no": 44
+        },
+        "distinctVariables": 0,
+        "variableMap": {},
+        "suspiciousItemCount": 0
+      },
+      "status": "complete",
+      "items": 44
+    },
+    {
+      "pageSlug": "component-indicators",
+      "files": [
+        "figma-spacing-raw.component-indicators.json"
+      ],
+      "summary": {
+        "pageId": "2442:16180",
+        "pageName": "  💡 Indicators",
+        "pageSlug": "component-indicators",
+        "totalNodesScanned": 32,
+        "spacingOccurrences": 27,
+        "distinctValues": [
+          16,
+          20,
+          24,
+          32,
+          64
+        ],
+        "rawValues": [
+          16,
+          20,
+          24,
+          32,
+          64
+        ],
+        "boundToVariable": {
+          "yes": 0,
+          "no": 27
+        },
+        "distinctVariables": 0,
+        "variableMap": {},
+        "suspiciousItemCount": 0
+      },
+      "status": "complete",
+      "items": 27
+    },
+    {
+      "pageSlug": "component-ratio",
+      "files": [
+        "figma-spacing-raw.component-ratio.json"
+      ],
+      "summary": {
+        "pageId": "2452:6033",
+        "pageName": "  📏 Ratio",
+        "pageSlug": "component-ratio",
+        "totalNodesScanned": 241,
+        "spacingOccurrences": 148,
+        "distinctValues": [
+          2,
+          4,
+          6,
+          7,
+          10,
+          14,
+          16,
+          20,
+          24,
+          32,
+          64
+        ],
+        "rawValues": [
+          2,
+          4,
+          6,
+          7,
+          10,
+          14,
+          16,
+          20,
+          24,
+          32,
+          64
+        ],
+        "boundToVariable": {
+          "yes": 0,
+          "no": 148
+        },
+        "distinctVariables": 0,
+        "variableMap": {},
+        "suspiciousItemCount": 2
+      },
+      "status": "complete",
+      "items": 148
+    },
+    {
+      "pageSlug": "component-scroll",
+      "files": [
+        "figma-spacing-raw.component-scroll.json"
+      ],
+      "summary": {
+        "pageId": "2452:7600",
+        "pageName": "  🖱️ Scroll",
+        "pageSlug": "component-scroll",
+        "totalNodesScanned": 217,
+        "spacingOccurrences": 177,
+        "distinctValues": [
+          2,
+          3,
+          6,
+          16,
+          20,
+          24,
+          32,
+          64
+        ],
+        "rawValues": [
+          2,
+          3,
+          6,
+          16,
+          20,
+          24,
+          32,
+          64
+        ],
+        "boundToVariable": {
+          "yes": 0,
+          "no": 177
+        },
+        "distinctVariables": 0,
+        "variableMap": {},
+        "suspiciousItemCount": 50
+      },
+      "status": "complete",
+      "items": 177
+    },
+    {
+      "pageSlug": "component-thumbnail",
+      "files": [
+        "figma-spacing-raw.component-thumbnail.json"
+      ],
+      "summary": {
+        "pageId": "2452:6037",
+        "pageName": "  🖼️ Thumbnail",
+        "pageSlug": "component-thumbnail",
+        "totalNodesScanned": 230,
+        "spacingOccurrences": 96,
+        "distinctValues": [
+          2,
+          4,
+          6,
+          7,
+          10,
+          14,
+          16,
+          20,
+          24,
+          32,
+          48,
+          64
+        ],
+        "rawValues": [
+          2,
+          4,
+          6,
+          7,
+          10,
+          14,
+          16,
+          20,
+          24,
+          32,
+          48,
+          64
+        ],
+        "boundToVariable": {
+          "yes": 0,
+          "no": 96
+        },
+        "distinctVariables": 0,
+        "variableMap": {},
+        "suspiciousItemCount": 2
+      },
+      "status": "complete",
+      "items": 96
+    },
+    {
+      "pageSlug": "foundation-3d-illustration",
+      "files": [
+        "figma-spacing-raw.foundation-3d-illustration.json"
+      ],
+      "summary": {
+        "pageId": "2941:667",
+        "pageName": "  3️⃣ 3D Illustration",
+        "pageSlug": "foundation-3d-illustration",
+        "totalNodesScanned": 42,
+        "spacingOccurrences": 31,
+        "distinctValues": [
+          20,
+          24,
+          32,
+          40,
+          100,
+          200
+        ],
+        "rawValues": [
+          20,
+          24,
+          32,
+          40,
+          100,
+          200
+        ],
+        "boundToVariable": {
+          "yes": 0,
+          "no": 31
+        },
+        "distinctVariables": 0,
+        "variableMap": {},
+        "suspiciousItemCount": 16
+      },
+      "status": "complete",
+      "items": 31
     },
     {
       "pageSlug": "foundation-colors",
@@ -196,6 +474,7 @@
       "summary": {
         "pageId": "2414:11941",
         "pageName": "  🎨 Colors",
+        "pageSlug": "foundation-colors",
         "totalNodesScanned": 20436,
         "spacingOccurrences": 3191,
         "distinctValues": [
@@ -257,60 +536,16 @@
           "no": 3161
         },
         "distinctVariables": 1,
-        "_part": 1,
-        "_ofParts": 4
+        "variableMap": {
+          "VariableID:bb37b20eaa2906ae0c21fd9132d2408ed05e267e/746:9": {
+            "name": "Margin/Navigation",
+            "collection": "Modal"
+          }
+        },
+        "suspiciousItemCount": 50
       },
       "status": "complete",
       "items": 3191
-    },
-    {
-      "pageSlug": "foundation-gradient",
-      "files": [
-        "figma-spacing-raw.foundation-gradient.json"
-      ],
-      "summary": {
-        "pageId": "2452:6035",
-        "pageName": "  🌈 Gradient",
-        "totalNodesScanned": 255,
-        "spacingOccurrences": 178,
-        "distinctValues": [
-          2,
-          4,
-          6,
-          7,
-          10,
-          12,
-          14,
-          16,
-          20,
-          24,
-          32,
-          50,
-          64
-        ],
-        "rawValues": [
-          2,
-          4,
-          6,
-          7,
-          10,
-          12,
-          14,
-          16,
-          20,
-          24,
-          32,
-          50,
-          64
-        ],
-        "boundToVariable": {
-          "yes": 2,
-          "no": 176
-        },
-        "distinctVariables": 1
-      },
-      "status": "complete",
-      "items": 178
     },
     {
       "pageSlug": "foundation-decorate",
@@ -320,6 +555,7 @@
       "summary": {
         "pageId": "2452:6034",
         "pageName": "  💅 Decorate",
+        "pageSlug": "foundation-decorate",
         "totalNodesScanned": 331,
         "spacingOccurrences": 219,
         "distinctValues": [
@@ -356,10 +592,69 @@
           "yes": 0,
           "no": 219
         },
-        "distinctVariables": 0
+        "distinctVariables": 0,
+        "variableMap": {},
+        "suspiciousItemCount": 15
       },
       "status": "complete",
       "items": 219
+    },
+    {
+      "pageSlug": "foundation-gradient",
+      "files": [
+        "figma-spacing-raw.foundation-gradient.json"
+      ],
+      "summary": {
+        "pageId": "2452:6035",
+        "pageName": "  🌈 Gradient",
+        "pageSlug": "foundation-gradient",
+        "totalNodesScanned": 255,
+        "spacingOccurrences": 178,
+        "distinctValues": [
+          2,
+          4,
+          6,
+          7,
+          10,
+          12,
+          14,
+          16,
+          20,
+          24,
+          32,
+          50,
+          64
+        ],
+        "rawValues": [
+          2,
+          4,
+          6,
+          7,
+          10,
+          12,
+          14,
+          16,
+          20,
+          24,
+          32,
+          50,
+          64
+        ],
+        "boundToVariable": {
+          "yes": 2,
+          "no": 176
+        },
+        "distinctVariables": 1,
+        "variableMap": {
+          "VariableID:2464:10680": {
+            "name": "Spacing/24",
+            "collection": "Semantic"
+          }
+        },
+        "suspiciousItemCount": 3
+      },
+      "status": "complete",
+      "items": 178
     },
     {
       "pageSlug": "foundation-icon",
@@ -369,6 +664,7 @@
       "summary": {
         "pageId": "2414:34422",
         "pageName": "  🔘 Icon",
+        "pageSlug": "foundation-icon",
         "totalNodesScanned": 3066,
         "spacingOccurrences": 894,
         "distinctValues": [
@@ -397,45 +693,56 @@
           "yes": 0,
           "no": 894
         },
-        "distinctVariables": 0
+        "distinctVariables": 0,
+        "variableMap": {},
+        "suspiciousItemCount": 2
       },
       "status": "complete",
       "items": 894
     },
     {
-      "pageSlug": "foundation-3d-illustration",
+      "pageSlug": "foundation-logo",
       "files": [
-        "figma-spacing-raw.foundation-3d-illustration.json"
+        "figma-spacing-raw.foundation-logo.json"
       ],
       "summary": {
-        "pageId": "2941:667",
-        "pageName": "  3️⃣ 3D Illustration",
-        "totalNodesScanned": 42,
-        "spacingOccurrences": 31,
+        "pageId": "0:1",
+        "pageName": "🏷️ Logo",
+        "pageSlug": "foundation-logo",
+        "totalNodesScanned": 371,
+        "spacingOccurrences": 45,
         "distinctValues": [
+          3,
+          10,
+          16,
           20,
           24,
+          30,
           32,
           40,
-          100,
-          200
+          64
         ],
         "rawValues": [
+          3,
+          10,
+          16,
           20,
           24,
+          30,
           32,
           40,
-          100,
-          200
+          64
         ],
         "boundToVariable": {
           "yes": 0,
-          "no": 31
+          "no": 45
         },
-        "distinctVariables": 0
+        "distinctVariables": 0,
+        "variableMap": {},
+        "suspiciousItemCount": 2
       },
       "status": "complete",
-      "items": 31
+      "items": 45
     },
     {
       "pageSlug": "foundation-product",
@@ -445,6 +752,7 @@
       "summary": {
         "pageId": "2941:684",
         "pageName": "  ☕️ Product",
+        "pageSlug": "foundation-product",
         "totalNodesScanned": 11,
         "spacingOccurrences": 12,
         "distinctValues": [
@@ -463,34 +771,35 @@
           "yes": 0,
           "no": 12
         },
-        "distinctVariables": 0
+        "distinctVariables": 0,
+        "variableMap": {},
+        "suspiciousItemCount": 10
       },
       "status": "complete",
       "items": 12
     },
     {
-      "pageSlug": "component-button",
+      "pageSlug": "foundation-space",
       "files": [
-        "figma-spacing-raw.component-button-part1.json",
-        "figma-spacing-raw.component-button-part2.json",
-        "figma-spacing-raw.component-button-part3.json",
-        "figma-spacing-raw.component-button-part4.json"
+        "figma-spacing-raw.foundation-space.json"
       ],
       "summary": {
-        "pageId": "2414:32026",
-        "pageName": "  ⏹️ Button",
-        "totalNodesScanned": 12601,
-        "spacingOccurrences": 3702,
+        "pageId": "2485:8842",
+        "pageName": "  📐 Space",
+        "pageSlug": "foundation-space",
+        "totalNodesScanned": 600,
+        "spacingOccurrences": 286,
         "distinctValues": [
+          0.33000001311302185,
+          0.6700000166893005,
+          1.3300000429153442,
+          1.333299994468689,
           2,
           4,
-          5,
           6,
-          7,
           8,
           9,
           10,
-          11,
           12,
           14,
           16,
@@ -498,22 +807,23 @@
           24,
           28,
           32,
-          40,
-          48,
-          50,
+          34,
+          36,
+          44,
           60,
           64
         ],
         "rawValues": [
+          0.33000001311302185,
+          0.6700000166893005,
+          1.3300000429153442,
+          1.333299994468689,
           2,
           4,
-          5,
           6,
-          7,
           8,
           9,
           10,
-          11,
           12,
           14,
           16,
@@ -521,524 +831,146 @@
           24,
           28,
           32,
-          40,
-          48,
-          50,
+          34,
+          36,
+          44,
           60,
           64
         ],
         "boundToVariable": {
-          "yes": 82,
-          "no": 3620
+          "yes": 4,
+          "no": 282
         },
-        "distinctVariables": 4,
-        "_part": 1,
-        "_ofParts": 4
+        "distinctVariables": 3,
+        "variableMap": {
+          "VariableID:3210:5881": {
+            "name": "Spacing/List/Card/Large",
+            "collection": "Semantic"
+          },
+          "VariableID:2464:10668": {
+            "name": "Spacing/12",
+            "collection": "Semantic"
+          },
+          "VariableID:2964:12120": {
+            "name": "Spacing/Padding/16(Box in Box)",
+            "collection": "Semantic"
+          }
+        },
+        "suspiciousItemCount": 31
       },
       "status": "complete",
-      "items": 3702
+      "items": 286
     },
     {
-      "pageSlug": "component-chip",
+      "pageSlug": "foundation-typography",
       "files": [
-        "figma-spacing-raw.component-chip-part1.json",
-        "figma-spacing-raw.component-chip-part2.json"
+        "figma-spacing-raw.foundation-typography.json"
       ],
       "summary": {
-        "pageId": "2546:166598",
-        "pageName": "  🍪 Chip",
-        "totalNodesScanned": 3758,
-        "spacingOccurrences": 1863,
+        "pageId": "2414:9843",
+        "pageName": "  🔠 Typography",
+        "pageSlug": "foundation-typography",
+        "totalNodesScanned": 2462,
+        "spacingOccurrences": 989,
         "distinctValues": [
           1,
           2,
           3,
           4,
-          5,
           6,
-          7,
-          8,
-          9,
-          10,
-          11,
-          12,
-          16,
-          24
-        ],
-        "rawValues": [
-          1,
-          2,
-          3,
-          4,
-          5,
-          6,
-          7,
-          8,
-          9,
-          10,
-          11,
-          12,
-          16,
-          24
-        ],
-        "boundToVariable": {
-          "yes": 0,
-          "no": 1863
-        },
-        "distinctVariables": 0,
-        "_part": 1,
-        "_ofParts": 2
-      },
-      "status": "complete",
-      "items": 1863
-    },
-    {
-      "pageSlug": "component-ratio",
-      "files": [
-        "figma-spacing-raw.component-ratio.json"
-      ],
-      "summary": {
-        "pageId": "2452:6033",
-        "pageName": "  📏 Ratio",
-        "totalNodesScanned": 241,
-        "spacingOccurrences": 148,
-        "distinctValues": [
-          2,
-          4,
-          6,
-          7,
-          10,
-          14,
-          16,
-          20,
-          24,
-          32,
-          64
-        ],
-        "rawValues": [
-          2,
-          4,
-          6,
-          7,
-          10,
-          14,
-          16,
-          20,
-          24,
-          32,
-          64
-        ],
-        "boundToVariable": {
-          "yes": 0,
-          "no": 148
-        },
-        "distinctVariables": 0
-      },
-      "status": "complete",
-      "items": 148
-    },
-    {
-      "pageSlug": "component-thumbnail",
-      "files": [
-        "figma-spacing-raw.component-thumbnail.json"
-      ],
-      "summary": {
-        "pageId": "2452:6037",
-        "pageName": "  🖼️ Thumbnail",
-        "totalNodesScanned": 230,
-        "spacingOccurrences": 96,
-        "distinctValues": [
-          2,
-          4,
-          6,
-          7,
-          10,
-          14,
-          16,
-          20,
-          24,
-          32,
-          48,
-          64
-        ],
-        "rawValues": [
-          2,
-          4,
-          6,
-          7,
-          10,
-          14,
-          16,
-          20,
-          24,
-          32,
-          48,
-          64
-        ],
-        "boundToVariable": {
-          "yes": 0,
-          "no": 96
-        },
-        "distinctVariables": 0
-      },
-      "status": "complete",
-      "items": 96
-    },
-    {
-      "pageSlug": "component-scroll",
-      "files": [
-        "figma-spacing-raw.component-scroll.json"
-      ],
-      "summary": {
-        "pageId": "2452:7600",
-        "pageName": "  🖱️ Scroll",
-        "totalNodesScanned": 217,
-        "spacingOccurrences": 177,
-        "distinctValues": [
-          2,
-          3,
-          6,
-          16,
-          20,
-          24,
-          32,
-          64
-        ],
-        "rawValues": [
-          2,
-          3,
-          6,
-          16,
-          20,
-          24,
-          32,
-          64
-        ],
-        "boundToVariable": {
-          "yes": 0,
-          "no": 177
-        },
-        "distinctVariables": 0
-      },
-      "status": "complete",
-      "items": 177
-    },
-    {
-      "pageSlug": "component-avatar",
-      "files": [
-        "figma-spacing-raw.component-avatar.json"
-      ],
-      "summary": {
-        "pageId": "2452:6039",
-        "pageName": "  👤 Avatar",
-        "totalNodesScanned": 1991,
-        "spacingOccurrences": 556,
-        "distinctValues": [
-          -8,
-          -6,
-          2,
-          4,
-          6,
-          7,
           8,
           10,
           12,
           14,
+          15,
           16,
+          18,
           20,
+          23,
           24,
           28,
+          30,
           32,
+          40,
           48,
-          64
+          50,
+          64,
+          72,
+          80,
+          128
         ],
         "rawValues": [
-          -8,
-          -6,
+          1,
           2,
+          3,
           4,
           6,
-          7,
           8,
           10,
           12,
           14,
+          15,
           16,
+          18,
           20,
+          23,
           24,
           28,
+          30,
           32,
+          40,
           48,
-          64
-        ],
-        "boundToVariable": {
-          "yes": 0,
-          "no": 556
-        },
-        "distinctVariables": 0
-      },
-      "status": "complete",
-      "items": 556
-    },
-    {
-      "pageSlug": "component-indicators",
-      "files": [
-        "figma-spacing-raw.component-indicators.json"
-      ],
-      "summary": {
-        "pageId": "2442:16180",
-        "pageName": "  💡 Indicators",
-        "totalNodesScanned": 32,
-        "spacingOccurrences": 27,
-        "distinctValues": [
-          16,
-          20,
-          24,
-          32,
-          64
-        ],
-        "rawValues": [
-          16,
-          20,
-          24,
-          32,
-          64
-        ],
-        "boundToVariable": {
-          "yes": 0,
-          "no": 27
-        },
-        "distinctVariables": 0
-      },
-      "status": "complete",
-      "items": 27
-    },
-    {
-      "pageSlug": "component-divider",
-      "files": [
-        "figma-spacing-raw.component-divider.json"
-      ],
-      "summary": {
-        "pageId": "2452:6032",
-        "pageName": "  ➗ Divider",
-        "totalNodesScanned": 35,
-        "spacingOccurrences": 44,
-        "distinctValues": [
-          2,
-          6,
-          16,
-          20,
-          24,
-          64
-        ],
-        "rawValues": [
-          2,
-          6,
-          16,
-          20,
-          24,
-          64
-        ],
-        "boundToVariable": {
-          "yes": 0,
-          "no": 44
-        },
-        "distinctVariables": 0
-      },
-      "status": "complete",
-      "items": 44
-    },
-    {
-      "pageSlug": "module-navigation",
-      "files": [
-        "figma-spacing-raw.module-navigation-part1.json",
-        "figma-spacing-raw.module-navigation-part2.json",
-        "figma-spacing-raw.module-navigation-part3.json",
-        "figma-spacing-raw.module-navigation.errors.json"
-      ],
-      "summary": {
-        "pageId": "2452:3459",
-        "pageName": "  🧭 Navigation",
-        "totalNodesScanned": 6628,
-        "spacingOccurrences": 2730,
-        "distinctValues": [
-          0.33000001311302185,
-          0.6700000166893005,
-          1,
-          1.3300000429153442,
-          1.333299994468689,
-          2,
-          3,
-          4,
-          6,
-          8,
-          9,
-          10,
-          12,
-          16,
-          20,
-          24,
-          44,
-          48,
-          56,
-          64,
-          68
-        ],
-        "rawValues": [
-          0.33000001311302185,
-          0.6700000166893005,
-          1,
-          1.3300000429153442,
-          1.333299994468689,
-          2,
-          3,
-          4,
-          6,
-          8,
-          9,
-          10,
-          12,
-          16,
-          20,
-          24,
-          44,
-          48,
-          56,
-          64,
-          68
-        ],
-        "boundToVariable": {
-          "yes": 0,
-          "no": 2730
-        },
-        "distinctVariables": 0,
-        "_part": 1,
-        "_ofParts": 3
-      },
-      "status": "complete",
-      "items": 2730
-    },
-    {
-      "pageSlug": "module-tab",
-      "files": [
-        "figma-spacing-raw.module-tab-part1.json",
-        "figma-spacing-raw.module-tab-part2.json",
-        "figma-spacing-raw.module-tab-part3.json",
-        "figma-spacing-raw.module-tab.errors.json"
-      ],
-      "summary": {
-        "pageId": "2414:34400",
-        "pageName": "       📑 Tab",
-        "totalNodesScanned": 7459,
-        "spacingOccurrences": 2930,
-        "distinctValues": [
-          1,
-          2,
-          3,
-          4,
-          6,
-          7,
-          8,
-          9,
-          10,
-          11,
-          12,
-          16,
-          20,
-          24
-        ],
-        "rawValues": [
-          1,
-          2,
-          3,
-          4,
-          6,
-          7,
-          8,
-          9,
-          10,
-          11,
-          12,
-          16,
-          20,
-          24
-        ],
-        "boundToVariable": {
-          "yes": 0,
-          "no": 2930
-        },
-        "distinctVariables": 0,
-        "_part": 1,
-        "_ofParts": 3
-      },
-      "status": "complete",
-      "items": 2930
-    },
-    {
-      "pageSlug": "module-pagination",
-      "files": [
-        "figma-spacing-raw.module-pagination-part1.json",
-        "figma-spacing-raw.module-pagination-part2.json",
-        "figma-spacing-raw.module-pagination-part3.json"
-      ],
-      "summary": {
-        "pageId": "2452:6038",
-        "pageName": "       🔢 Pagination",
-        "totalNodesScanned": 8016,
-        "spacingOccurrences": 2550,
-        "distinctValues": [
-          1,
-          2,
-          3,
-          4,
-          6,
-          8,
-          10,
-          12,
-          16,
-          20,
-          24,
           50,
-          64
-        ],
-        "rawValues": [
-          1,
-          2,
-          3,
-          4,
-          6,
-          8,
-          10,
-          12,
-          16,
-          20,
-          24,
-          50,
-          64
+          64,
+          72,
+          80,
+          128
         ],
         "boundToVariable": {
-          "yes": 0,
-          "no": 2550
+          "yes": 23,
+          "no": 966
         },
-        "distinctVariables": 0,
-        "_part": 1,
-        "_ofParts": 3
+        "distinctVariables": 5,
+        "variableMap": {
+          "VariableID:c17ca6aa1b0b9ba715513d33e2a63d775438d8aa/15639:694": {
+            "name": "Value/Margin/Platform",
+            "collection": "Component"
+          },
+          "VariableID:e994182cc28bb8ccf269e467f150267209f36341/15639:696": {
+            "name": "Value/Space/Gap/Normal",
+            "collection": "Component"
+          },
+          "VariableID:bb37b20eaa2906ae0c21fd9132d2408ed05e267e/746:9": {
+            "name": "Margin/Navigation",
+            "collection": "Modal"
+          },
+          "VariableID:22933773f2426180183e45be14bd70841f6539bd/746:13": {
+            "name": "Margin/Content",
+            "collection": "Modal"
+          },
+          "VariableID:ec1bacd6a3535d8ff7ec5ea920ba58054380dbf8/746:12": {
+            "name": "Margin/Action/Single",
+            "collection": "Modal"
+          }
+        },
+        "suspiciousItemCount": 25
       },
       "status": "complete",
-      "items": 2550
+      "items": 989
     },
     {
-      "pageSlug": "module-progress-indicators",
+      "pageSlug": "module-contents",
       "files": [
-        "figma-spacing-raw.module-progress-indicators-part1.json",
-        "figma-spacing-raw.module-progress-indicators-part2.json"
+        "figma-spacing-raw.module-contents.json"
       ],
       "summary": {
-        "pageId": "2449:415",
-        "pageName": "  ⏳ Progress Indicators",
-        "totalNodesScanned": 5949,
-        "spacingOccurrences": 1277,
+        "pageId": "2573:404660",
+        "pageName": "   📑 Contents",
+        "pageSlug": "module-contents",
+        "totalNodesScanned": 2195,
+        "spacingOccurrences": 907,
         "distinctValues": [
+          -2,
           1,
           2,
           3,
@@ -1050,11 +982,11 @@
           16,
           20,
           24,
-          46,
-          48,
+          49,
           64
         ],
         "rawValues": [
+          -2,
           1,
           2,
           3,
@@ -1066,68 +998,50 @@
           16,
           20,
           24,
-          46,
-          48,
+          49,
           64
         ],
         "boundToVariable": {
-          "yes": 1,
-          "no": 1276
+          "yes": 24,
+          "no": 883
         },
-        "distinctVariables": 1,
-        "_part": 1,
-        "_ofParts": 2
-      },
-      "status": "complete",
-      "items": 1277
-    },
-    {
-      "pageSlug": "module-selection-input",
-      "files": [
-        "figma-spacing-raw.module-selection-input.errors.json",
-        "figma-spacing-raw.module-selection-input.json"
-      ],
-      "summary": {
-        "pageId": "2442:7603",
-        "pageName": "  ☑️ Selection and 📝 Input",
-        "totalNodesScanned": 1381,
-        "spacingOccurrences": 757,
-        "distinctValues": [
-          1,
-          2,
-          3,
-          4,
-          6,
-          8,
-          10,
-          12,
-          16,
-          20,
-          24,
-          32
-        ],
-        "rawValues": [
-          1,
-          2,
-          3,
-          4,
-          6,
-          8,
-          10,
-          12,
-          16,
-          20,
-          24,
-          32
-        ],
-        "boundToVariable": {
-          "yes": 0,
-          "no": 757
+        "distinctVariables": 7,
+        "variableMap": {
+          "VariableID:2464:10674": {
+            "name": "Spacing/16",
+            "collection": "Semantic"
+          },
+          "VariableID:2697:19100": {
+            "name": "Spacing/20",
+            "collection": "Semantic"
+          },
+          "VariableID:2464:10665": {
+            "name": "Spacing/8",
+            "collection": "Semantic"
+          },
+          "VariableID:628688df11fc0e93dbd873ca47d9e757039f300d/2465:2003": {
+            "name": "Spacing/8",
+            "collection": "Semantic"
+          },
+          "VariableID:2464:10661": {
+            "name": "Spacing/4",
+            "collection": "Semantic"
+          },
+          "VariableID:2464:10668": {
+            "name": "Spacing/12",
+            "collection": "Semantic"
+          },
+          "VariableID:716524ad0404e7165d3d9decc4dd1ff3250ffd9b/2465:2012": {
+            "name": "Spacing/4",
+            "collection": "Semantic"
+          }
         },
-        "distinctVariables": 0
+        "suspiciousItemCount": 30,
+        "_bucketCount": 1
       },
-      "status": "complete",
-      "items": 757
+      "status": "partial",
+      "items": 907,
+      "partialNote": "module-contents.errors.json — see remaining state"
     },
     {
       "pageSlug": "module-control-box",
@@ -1137,6 +1051,7 @@
       "summary": {
         "pageId": "2537:62051",
         "pageName": "  🕹️ Control Box",
+        "pageSlug": "module-control-box",
         "totalNodesScanned": 339,
         "spacingOccurrences": 233,
         "distinctValues": [
@@ -1173,51 +1088,21 @@
           "yes": 16,
           "no": 217
         },
-        "distinctVariables": 2
+        "distinctVariables": 2,
+        "variableMap": {
+          "VariableID:2464:10680": {
+            "name": "Spacing/24",
+            "collection": "Semantic"
+          },
+          "VariableID:2697:19100": {
+            "name": "Spacing/20",
+            "collection": "Semantic"
+          }
+        },
+        "suspiciousItemCount": 0
       },
       "status": "complete",
       "items": 233
-    },
-    {
-      "pageSlug": "module-gauge",
-      "files": [
-        "figma-spacing-raw.module-gauge.json"
-      ],
-      "summary": {
-        "pageId": "2442:15568",
-        "pageName": "  🌡️ Gauge",
-        "totalNodesScanned": 93,
-        "spacingOccurrences": 49,
-        "distinctValues": [
-          8,
-          10,
-          12,
-          16,
-          20,
-          24,
-          31,
-          32,
-          64
-        ],
-        "rawValues": [
-          8,
-          10,
-          12,
-          16,
-          20,
-          24,
-          31,
-          32,
-          64
-        ],
-        "boundToVariable": {
-          "yes": 0,
-          "no": 49
-        },
-        "distinctVariables": 0
-      },
-      "status": "complete",
-      "items": 49
     },
     {
       "pageSlug": "module-feedback",
@@ -1230,6 +1115,7 @@
       "summary": {
         "pageId": "2546:36834",
         "pageName": "  🪞 Feedback",
+        "pageSlug": "module-feedback",
         "totalNodesScanned": 7747,
         "spacingOccurrences": 3425,
         "distinctValues": [
@@ -1291,21 +1177,217 @@
           "no": 3420
         },
         "distinctVariables": 1,
-        "_part": 1,
-        "_ofParts": 4
+        "variableMap": {
+          "VariableID:2464:10688": {
+            "name": "Spacing/Button/hor",
+            "collection": "Semantic"
+          }
+        },
+        "suspiciousItemCount": 50,
+        "_bucketCount": 5
       },
       "status": "complete",
       "items": 3425
     },
     {
+      "pageSlug": "module-gauge",
+      "files": [
+        "figma-spacing-raw.module-gauge.json"
+      ],
+      "summary": {
+        "pageId": "2442:15568",
+        "pageName": "  🌡️ Gauge",
+        "pageSlug": "module-gauge",
+        "totalNodesScanned": 93,
+        "spacingOccurrences": 49,
+        "distinctValues": [
+          8,
+          10,
+          12,
+          16,
+          20,
+          24,
+          31,
+          32,
+          64
+        ],
+        "rawValues": [
+          8,
+          10,
+          12,
+          16,
+          20,
+          24,
+          31,
+          32,
+          64
+        ],
+        "boundToVariable": {
+          "yes": 0,
+          "no": 49
+        },
+        "distinctVariables": 0,
+        "variableMap": {},
+        "suspiciousItemCount": 5
+      },
+      "status": "complete",
+      "items": 49
+    },
+    {
+      "pageSlug": "module-navigation",
+      "files": [
+        "figma-spacing-raw.module-navigation-part1.json",
+        "figma-spacing-raw.module-navigation-part2.json",
+        "figma-spacing-raw.module-navigation-part3.json",
+        "figma-spacing-raw.module-navigation-part4.json",
+        "figma-spacing-raw.module-navigation-part5.json",
+        "figma-spacing-raw.module-navigation-part6.json",
+        "figma-spacing-raw.module-navigation-part7.json"
+      ],
+      "summary": {
+        "pageId": "2452:3459",
+        "pageName": "  🧭 Navigation",
+        "pageSlug": "module-navigation",
+        "totalNodesScanned": 6628,
+        "spacingOccurrences": 6142,
+        "distinctValues": [
+          0.33000001311302185,
+          0.6700000166893005,
+          1,
+          1.3300000429153442,
+          1.333299994468689,
+          2,
+          3,
+          4,
+          5,
+          6,
+          8,
+          9,
+          10,
+          12,
+          16,
+          20,
+          24,
+          28,
+          32,
+          40,
+          44,
+          48,
+          56,
+          64,
+          68,
+          72,
+          76,
+          127,
+          489
+        ],
+        "rawValues": [
+          0.33000001311302185,
+          0.6700000166893005,
+          1,
+          1.3300000429153442,
+          1.333299994468689,
+          2,
+          3,
+          4,
+          5,
+          6,
+          8,
+          9,
+          10,
+          12,
+          16,
+          20,
+          24,
+          28,
+          32,
+          40,
+          44,
+          48,
+          56,
+          64,
+          68,
+          72,
+          76,
+          127,
+          489
+        ],
+        "boundToVariable": {
+          "yes": 0,
+          "no": 6142
+        },
+        "distinctVariables": 0,
+        "variableMap": {},
+        "suspiciousItemCount": 0,
+        "_bucketCount": 249
+      },
+      "status": "complete",
+      "items": 6142
+    },
+    {
+      "pageSlug": "module-pagination",
+      "files": [
+        "figma-spacing-raw.module-pagination-part1.json",
+        "figma-spacing-raw.module-pagination-part2.json",
+        "figma-spacing-raw.module-pagination-part3.json"
+      ],
+      "summary": {
+        "pageId": "2452:6038",
+        "pageName": "       🔢 Pagination",
+        "pageSlug": "module-pagination",
+        "totalNodesScanned": 8016,
+        "spacingOccurrences": 2550,
+        "distinctValues": [
+          1,
+          2,
+          3,
+          4,
+          6,
+          8,
+          10,
+          12,
+          16,
+          20,
+          24,
+          50,
+          64
+        ],
+        "rawValues": [
+          1,
+          2,
+          3,
+          4,
+          6,
+          8,
+          10,
+          12,
+          16,
+          20,
+          24,
+          50,
+          64
+        ],
+        "boundToVariable": {
+          "yes": 0,
+          "no": 2550
+        },
+        "distinctVariables": 0,
+        "variableMap": {},
+        "suspiciousItemCount": 8,
+        "_bucketCount": 6
+      },
+      "status": "complete",
+      "items": 2550
+    },
+    {
       "pageSlug": "module-presentation",
       "files": [
-        "figma-spacing-raw.module-presentation.errors.json",
         "figma-spacing-raw.module-presentation.json"
       ],
       "summary": {
         "pageId": "2546:42535",
         "pageName": "   📣 Presentation",
+        "pageSlug": "module-presentation",
         "totalNodesScanned": 1000,
         "spacingOccurrences": 443,
         "distinctValues": [
@@ -1350,24 +1432,28 @@
           "yes": 0,
           "no": 443
         },
-        "distinctVariables": 0
+        "distinctVariables": 0,
+        "variableMap": {},
+        "suspiciousItemCount": 50,
+        "_bucketCount": 1
       },
-      "status": "complete",
-      "items": 443
+      "status": "partial",
+      "items": 443,
+      "partialNote": "module-presentation.errors.json — see remaining state"
     },
     {
-      "pageSlug": "module-contents",
+      "pageSlug": "module-progress-indicators",
       "files": [
-        "figma-spacing-raw.module-contents.errors.json",
-        "figma-spacing-raw.module-contents.json"
+        "figma-spacing-raw.module-progress-indicators-part1.json",
+        "figma-spacing-raw.module-progress-indicators-part2.json"
       ],
       "summary": {
-        "pageId": "2573:404660",
-        "pageName": "   📑 Contents",
-        "totalNodesScanned": 2195,
-        "spacingOccurrences": 907,
+        "pageId": "2449:415",
+        "pageName": "  ⏳ Progress Indicators",
+        "pageSlug": "module-progress-indicators",
+        "totalNodesScanned": 5949,
+        "spacingOccurrences": 1277,
         "distinctValues": [
-          -2,
           1,
           2,
           3,
@@ -1379,11 +1465,11 @@
           16,
           20,
           24,
-          49,
+          46,
+          48,
           64
         ],
         "rawValues": [
-          -2,
           1,
           2,
           3,
@@ -1395,84 +1481,139 @@
           16,
           20,
           24,
-          49,
+          46,
+          48,
           64
         ],
         "boundToVariable": {
-          "yes": 24,
-          "no": 883
+          "yes": 1,
+          "no": 1276
         },
-        "distinctVariables": 7
+        "distinctVariables": 1,
+        "variableMap": {
+          "VariableID:81bcefb620b39057224d2d2da8b7588ee7446727/265:33": {
+            "name": "Spacing/4",
+            "collection": "1_Semantic"
+          }
+        },
+        "suspiciousItemCount": 22,
+        "_bucketCount": 4
       },
       "status": "complete",
-      "items": 907
+      "items": 1277
+    },
+    {
+      "pageSlug": "module-selection-input",
+      "files": [
+        "figma-spacing-raw.module-selection-input.json"
+      ],
+      "summary": {
+        "pageId": "2442:7603",
+        "pageName": "  ☑️ Selection and 📝 Input",
+        "pageSlug": "module-selection-input",
+        "totalNodesScanned": 1381,
+        "spacingOccurrences": 757,
+        "distinctValues": [
+          1,
+          2,
+          3,
+          4,
+          6,
+          8,
+          10,
+          12,
+          16,
+          20,
+          24,
+          32
+        ],
+        "rawValues": [
+          1,
+          2,
+          3,
+          4,
+          6,
+          8,
+          10,
+          12,
+          16,
+          20,
+          24,
+          32
+        ],
+        "boundToVariable": {
+          "yes": 0,
+          "no": 757
+        },
+        "distinctVariables": 0,
+        "variableMap": {},
+        "suspiciousItemCount": 50,
+        "_bucketCount": 1
+      },
+      "status": "partial",
+      "items": 757,
+      "partialNote": "module-selection-input.errors.json — see remaining state"
+    },
+    {
+      "pageSlug": "module-tab",
+      "files": [
+        "figma-spacing-raw.module-tab-part1.json",
+        "figma-spacing-raw.module-tab-part2.json",
+        "figma-spacing-raw.module-tab-part3.json",
+        "figma-spacing-raw.module-tab-part4.json",
+        "figma-spacing-raw.module-tab-part5.json",
+        "figma-spacing-raw.module-tab-part6.json",
+        "figma-spacing-raw.module-tab-part7.json"
+      ],
+      "summary": {
+        "pageId": "2414:34400",
+        "pageName": "       📑 Tab",
+        "pageSlug": "module-tab",
+        "totalNodesScanned": 7459,
+        "spacingOccurrences": 6347,
+        "distinctValues": [
+          1,
+          2,
+          3,
+          4,
+          6,
+          7,
+          8,
+          9,
+          10,
+          11,
+          12,
+          16,
+          20,
+          24
+        ],
+        "rawValues": [
+          1,
+          2,
+          3,
+          4,
+          6,
+          7,
+          8,
+          9,
+          10,
+          11,
+          12,
+          16,
+          20,
+          24
+        ],
+        "boundToVariable": {
+          "yes": 26,
+          "no": 6321
+        },
+        "distinctVariables": 1,
+        "variableMap": {},
+        "suspiciousItemCount": 0,
+        "_bucketCount": 778
+      },
+      "status": "complete",
+      "items": 6347
     }
-  ],
-  "totals": {
-    "pagesAudited": 27,
-    "pagesComplete": 27,
-    "pagesDeferred": 0,
-    "spacingOccurrencesComplete": 27759,
-    "globalValueFrequency": {
-      "1": 461,
-      "2": 3960,
-      "3": 1338,
-      "4": 3038,
-      "5": 112,
-      "6": 3770,
-      "7": 465,
-      "8": 2059,
-      "9": 623,
-      "10": 2149,
-      "11": 253,
-      "12": 1832,
-      "13": 28,
-      "14": 105,
-      "15": 105,
-      "16": 1980,
-      "17": 32,
-      "18": 5,
-      "19": 4,
-      "20": 1160,
-      "22": 16,
-      "23": 1,
-      "24": 2394,
-      "28": 414,
-      "30": 5,
-      "31": 5,
-      "32": 415,
-      "34": 3,
-      "36": 3,
-      "40": 39,
-      "44": 2,
-      "46": 2,
-      "48": 270,
-      "49": 1,
-      "50": 9,
-      "54": 1,
-      "56": 2,
-      "60": 8,
-      "64": 531,
-      "68": 1,
-      "70": 16,
-      "72": 1,
-      "76": 2,
-      "80": 9,
-      "87": 1,
-      "94": 1,
-      "100": 18,
-      "128": 6,
-      "160": 24,
-      "200": 23,
-      "1.3300000429153442": 10,
-      "0.6700000166893005": 10,
-      "1.333299994468689": 10,
-      "0.33000001311302185": 10,
-      "-6": 5,
-      "-8": 5,
-      "52.5": 4,
-      "12.5": 2,
-      "-2": 1
-    }
-  }
+  ]
 }
