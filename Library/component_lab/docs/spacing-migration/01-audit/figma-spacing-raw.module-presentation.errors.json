@@ -3,18 +3,32 @@
   "pageName": "   📣 Presentation",
   "pageSlug": "module-presentation",
   "status": "partial",
-  "reason": "Page top-level traversal previously timed out. Diagnosis: 7 nested SECTION subsections; the first 3 (2546:93597, 2546:94286, 2546:94564) each contain 1456-1934+ spacing-bearing nodes (8000-node traversal cap hit). Captured 443 items from the smallest subsections (2546:93589 size=10, 2546:94861 size=85, 2546:94925 size=50). Remaining 5400+ rows in the 4 larger subsections deferred to follow-up due to session figma call budget.",
+  "reason": "Continued extraction from previous partial state. Captured 3275 total items (443 prior + 2832 new) across 141 unique buckets. Heavy figma plugin call cost (~25KB/call) consumed session budget faster than expected on the deeply nested instance trees. Subsection 2546:93597 is largely done; 2546:94286, 2546:94564, 2546:94881 plus tail of 2546:93653 remain.",
   "_summary": {
     "totalSubsections": 7,
     "completedSubsections": ["2546:93589","2546:94861","2546:94925"],
-    "remainingLargeSubsections": [
-      {"id":"2546:93597","spacingRowEstimate":">=1456"},
-      {"id":"2546:94286","spacingRowEstimate":">=1934"},
-      {"id":"2546:94564","spacingRowEstimate":">=1561"},
-      {"id":"2546:94881","spacingRowEstimate":"738","note":"partially attempted in session but response truncation at 20KB; needs single-bucket call"}
+    "partiallyCompletedSubsections": [
+      {"id":"2546:93597","extractedSoFar":"~2400 items","note":"covered 2546:93599, 2546:93644, 2546:93603 (732), 2546:93620 (366), 2546:93631 (551), 2546:93651 (0); 2546:93653 partially done up to offset 1000 of 1414"}
     ],
-    "itemsCaptured": 443,
-    "boundToVariable": {"yes": 0, "no": 300}
+    "remainingLargeSubsections": [
+      {"id":"2546:93653","spacingRowEstimate":"~414","note":"2546:93653 (Modal/Resource/Modal COMPONENT_SET, 8 component variants of 173-179 each). Continue from offset 1000."},
+      {"id":"2546:93698","spacingRowEstimate":"~4165","note":"Modal Bottom Sheet section. Children: 2546:93702 (2922, contains 5 List sub-frames), 2546:93835 (Modal/Bottom Sheet COMPONENT_SET 1242)"},
+      {"id":"2546:93930","spacingRowEstimate":"~2125","note":"3 List frames + Modal/Full COMPONENT_SET (374). Children listed: 2546:93934, 2546:93990"},
+      {"id":"2546:94012","spacingRowEstimate":"~4564","note":"Contains 2546:94013 (3989) and 2546:94188 (575); leaves include 2546:94042/45/48/51, 2546:94059/62/65/68, 2546:94081, 2546:94106, 2546:94180"},
+      {"id":"2546:94286","spacingRowEstimate":">=1934","note":"Has 2546:94299 (615+359+349), Menu/Menu COMPONENT_SET (1192 with 6 variants), 2546:94421 (779+11+84), 2546:94541 (492)"},
+      {"id":"2546:94564","spacingRowEstimate":">=1561","note":"Has 2546:94577 (956+373+390+363+363+195+195+7), Auto Complete/Auto Complete COMPONENT_SET (1894 with 10 variants), 2546:94828 (210)"},
+      {"id":"2546:94881","spacingRowEstimate":"738","note":"2546:94883 (3 List frames 153+270+317), Keyboard/Keyboard COMPONENT_SET (168). All bucketized."}
+    ],
+    "itemsCaptured": 3275,
+    "boundToVariable": {"yes": "see _summary.boundToVariable in parts", "no": "see _summary.boundToVariable in parts"}
   },
-  "nextSteps": "For each remaining subsection: re-run bucketize on its children to find sub-buckets <=200 rows, then fetch (deep instance paths expected, single bucket per call). Bucket 2546:94881 (738 rows) needs ~5 separate calls. Cost: ~30-40 figma calls total."
+  "leafBuckets": {
+    "2546:93698_children": ["2546:93699","2546:93703","2546:93713","2546:93720","2546:93751","2546:93780","2546:93789","2546:93813","2546:93835"],
+    "2546:93930_children": ["2546:93931","2546:93935","2546:93945","2546:93950","2546:93959","2546:93969","2546:93972","2546:93981","2546:93990"],
+    "2546:94012_children": ["2546:94014","2546:94019","2546:94025","2546:94036","2546:94042","2546:94045","2546:94048","2546:94051","2546:94055","2546:94059","2546:94062","2546:94065","2546:94068","2546:94072","2546:94074","2546:94081","2546:94106","2546:94180","2546:94188"],
+    "2546:94286_children": ["2546:94288","2546:94291","2546:94300","2546:94310","2546:94318","2546:94325","2546:94341","2546:94357","2546:94373","2546:94389","2546:94405","2546:94422","2546:94424","2546:94521","2546:94523","2546:94541"],
+    "2546:94564_children": ["2546:94566","2546:94569","2546:94579","2546:94582","2546:94588","2546:94596","2546:94609","2546:94615","2546:94621","2546:94642","2546:94663","2546:94668","2546:94684","2546:94700","2546:94716","2546:94732","2546:94748","2546:94764","2546:94780","2546:94796","2546:94812","2546:94828"],
+    "2546:94881_children": ["2546:94884","2546:94892","2546:94904","2546:94916"]
+  },
+  "nextSteps": "Use the extractor template with the leafBuckets ids listed above. Each subsection's buckets each need 1-3 use_figma calls (MAX_ITEMS=500). Estimated 25-30 more figma calls. After each, Write the response JSON to /tmp/figma-audit/module-presentation.bucket-NN.cmp.json, then run merge-buckets.js."
 }
