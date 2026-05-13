@@ -4,7 +4,7 @@
     "pageName": "   📣 Presentation",
     "pageSlug": "module-presentation",
     "totalNodesScanned": 1000,
-    "spacingOccurrences": 18207,
+    "spacingOccurrences": 22336,
     "distinctValues": [
       0.20999999344348907,
       0.33000001311302185,
@@ -16,6 +16,7 @@
       2.7899999618530273,
       3,
       4,
+      5,
       6,
       7,
       8,
@@ -55,6 +56,7 @@
       2.7899999618530273,
       3,
       4,
+      5,
       6,
       7,
       8,
@@ -85,14 +87,14 @@
     ],
     "boundToVariable": {
       "yes": 1177,
-      "no": 17030
+      "no": 21159
     },
     "distinctVariables": 9,
     "variableMap": {},
     "suspiciousItemCount": 0,
-    "_bucketCount": 805,
+    "_bucketCount": 1108,
     "_part": 1,
-    "_ofParts": 19,
+    "_ofParts": 23,
     "_partRange": [
       0,
       1000
