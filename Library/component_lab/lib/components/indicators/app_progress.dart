@@ -56,6 +56,7 @@ class AppCircularProgress extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final c = context.appColors;
     final fill = color ??
         (c.primaryNormal);
     final track = c.componentFillNormal;
@@ -88,6 +89,7 @@ class AppLabeledProgress extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final c = context.appColors;
     final labelColor =
         c.labelNormal;
     final altColor = c.labelAlternative;

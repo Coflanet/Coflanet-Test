@@ -3,7 +3,6 @@ import 'package:flutter/material.dart';
 import '../../foundation/_button_metrics.dart';
 import '../../foundation/app_color.dart';
 import '../../foundation/app_radius.dart';
-import '../../foundation/app_text_style.dart';
 
 enum AppOutlinedButtonSize { large, medium, small, xsmall }
 

@@ -5,7 +5,6 @@ import 'package:flutter/material.dart';
 import '../../foundation/_button_metrics.dart';
 import '../../foundation/app_color.dart';
 import '../../foundation/app_radius.dart';
-import '../../foundation/app_text_style.dart';
 
 /// Solid 버튼 사이즈 (Figma `Button/Solid/*` Size variant).
 enum AppSolidButtonSize { large, medium, small, xsmall }
