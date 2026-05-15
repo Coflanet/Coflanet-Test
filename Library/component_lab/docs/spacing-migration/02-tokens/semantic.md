@@ -1,195 +1,120 @@
-# Semantic Tokens — Phase 2 SoT
+# Semantic Tokens — Phase 2 SoT (Task 05)
 
-**버전**: `0.1.0-phase2`
-**입력**: `palette.json`, `01-audit/gap-analysis.md`, USER_DECISION 검수 #2
-**대응 코드**: `lib/foundation/app_spacing.dart` (SEMANTIC 섹션, l.68-95)
-
----
-
-## 1. 카테고리 정의
-
-| 카테고리 | 의미 | 적용 예 |
-|---|---|---|
-| `layout`           | 페이지/뷰포트 단위 외곽 치수. 디바이스 의존 상수 포함. | Safe Area, GNB/탭바 영역 |
-| `container`        | 페이지 컨테이너의 outer padding. | 화면 루트 컨테이너 좌우/상하 패딩 |
-| `inline`           | **가로** 형제 요소 사이 간격. | 아이콘-텍스트 갭, chip 사이 가로 갭 |
-| `stack`            | **세로** 형제 요소 사이 간격. | 리스트 아이템 사이, 텍스트 단락 사이 |
-| `inset`            | 임의 박스의 **내부** 패딩 (가로/세로 대칭 또는 단일 면). | 카드 내부 contents 패딩 |
-| `component-{name}` | 특정 컴포넌트 내부 토큰 — 다른 카테고리에 일반화하기 어렵거나 컴포넌트별 고유값. | `component-button-padding-*` |
-
-이름 규칙: `spacing-{category}-{role}` (kebab). `component-{name}` 의 경우 `spacing-component-{name}-{role}` (예: `spacing-component-button-padding-horizontal`).
+**버전**: `1.0.0`
+**입력**: `palette.json` (20 토큰), `semantic-roles-inventory.md` (Part B-0)
+**패턴**: 패턴 2 (Palette + 의도 시맨틱) — 컴포넌트별 토큰 없음.
 
 ---
 
-## 2. 토큰 목록 (22)
+## 1. 카테고리 정의 (5)
 
-### 2-1. `layout` (6)
+| 카테고리 | 의미 | 적용 신호 (raw) | 적용 예 |
+|---|---|---|---|
+| `stack`        | 수직 형제 간 간격 | `itemSpacing`+VERTICAL autoLayout | List item, Card 사이, Heading-Body |
+| `inline`       | 수평 형제 간 간격 | `itemSpacing`+HORIZONTAL autoLayout | Icon-text, Chip group |
+| `inset`        | 4방향 동일 내부 패딩 | T=R=B=L | Tag, FAB, Card |
+| `inset-squish` | T=B, L=R, T≠L | Button 패턴 | Solid/Outlined Button, Section Bottom |
+| `layout`       | 페이지 레벨 큰 간격 | itemSpacing(VERTICAL)+section gap | Section/Page gap |
 
-| 토큰 | alias | 값 | 역할 |
-|---|---|---:|---|
-| `spacing-layout-safe-area-status-ios`     | `spacing-44` | 44 | iOS 상태바 영역 |
-| `spacing-layout-safe-area-status-android` | `spacing-36` | 36 | Android 상태바 영역 |
-| `spacing-layout-safe-area-status-web`     | `spacing-0`  | 0  | Web 상태바 (없음) |
-| `spacing-layout-safe-area-bottom-ios`     | `spacing-34` | 34 | iOS 홈 인디케이터 영역 |
-| `spacing-layout-safe-area-bottom-android` | `spacing-14` | 14 | Android 하단 제스처 영역 |
-| `spacing-layout-safe-area-bottom-web`     | `spacing-0`  | 0  | Web 하단 (없음) |
-
-> Phase 2 Dimension 분리 결정 시 본 6개는 `AppDeviceMetrics.*` 로 이관 예정. 잠정 보존.
-
-### 2-2. `container` (2)
-
-| 토큰 | alias | 값 | 역할 |
-|---|---|---:|---|
-| `spacing-container-padding-horizontal` | `spacing-24` | 24 | 페이지 루트 가로 패딩 |
-| `spacing-container-padding-vertical`   | `spacing-32` | 32 | 페이지 루트 세로 패딩 |
-
-### 2-3. `inline` (1)
-
-| 토큰 | alias | 값 | 역할 |
-|---|---|---:|---|
-| `spacing-inline-icon-text` | `spacing-8` | 8 | 아이콘-텍스트 가로 갭 |
-
-### 2-4. `stack` (6)
-
-| 토큰 | alias | 값 | 역할 |
-|---|---|---:|---|
-| `spacing-stack-item`           | `spacing-12` | 12 | 리스트 아이템 간 세로 갭 |
-| `spacing-stack-text`           | `spacing-16` | 16 | 텍스트 블록 간 세로 갭 |
-| `spacing-stack-text-to-box`    | `spacing-16` | 16 | 텍스트 → 박스 세로 갭 |
-| `spacing-stack-between-boxes`  | `spacing-20` | 20 | 박스 형제 간 세로 갭 |
-| `spacing-stack-after-box`      | `spacing-16` | 16 | 박스 뒤 trailing 세로 갭 |
-| `spacing-stack-after-text`     | `spacing-32` | 32 | 텍스트 뒤 trailing 세로 갭 |
-
-### 2-5. `inset` (4)
-
-| 토큰 | alias | 값 | 역할 |
-|---|---|---:|---|
-| `spacing-inset-contents-in-box`        | `spacing-24` | 24 | 박스 내부 contents 패딩 |
-| `spacing-inset-contents-in-box-small`  | `spacing-8`  | 8  | 박스 내부 contents 패딩 (compact) |
-| `spacing-inset-box-in-box`             | `spacing-16` | 16 | 박스 내부 박스 패딩 |
-| `spacing-inset-top`                    | `spacing-16` | 16 | 박스 상단 내부 패딩 |
-
-### 2-6. `component-button` (2)
-
-| 토큰 | alias | 값 | 역할 |
-|---|---|---:|---|
-| `spacing-component-button-padding-horizontal` | `spacing-8`  | 8  | 버튼 가로 내부 패딩 — **Sem-mismatch** (Figma=16, 코드=8). Phase 1-D 결정 전. |
-| `spacing-component-button-padding-vertical`   | `spacing-12` | 12 | 버튼 세로 내부 패딩 — **Sem-mismatch** (Figma=14, 코드=12). Phase 1-D 결정 전. |
+이름 규칙: `spacing/{category}/{role}`. `inset-squish` 는 `{role}/vertical`, `{role}/horizontal` 페어.
 
 ---
 
-## 3. Alias 관계도
+## 2. 토큰 목록
+
+### 2-1. `stack` (5)
+
+| 토큰 | alias | 값 | 역할 |
+|---|---|---:|---|
+| `spacing/stack/xs` | `spacing/2` | 2 | Label-Value 미세 세로 간격 |
+| `spacing/stack/sm` | `spacing/4` | 4 | Heading-Description 세로 간격 |
+| `spacing/stack/md` | `spacing/8` | 8 | List item 사이 세로 간격 |
+| `spacing/stack/lg` | `spacing/16` | 16 | Card 사이, Heading-Body 세로 간격 |
+| `spacing/stack/xl` | `spacing/24` | 24 | Section 사이 세로 간격 |
+
+### 2-2. `inline` (4)
+
+| 토큰 | alias | 값 | 역할 |
+|---|---|---:|---|
+| `spacing/inline/xs` | `spacing/2` | 2 | 수평 미세 간격 |
+| `spacing/inline/sm` | `spacing/4` | 4 | Icon-text 표준 수평 간격 |
+| `spacing/inline/md` | `spacing/8` | 8 | Button/Chip group 수평 간격 |
+| `spacing/inline/lg` | `spacing/12` | 12 | 수평 강조 간격 |
+
+### 2-3. `inset` (5)
+
+| 토큰 | alias | 값 | 역할 |
+|---|---|---:|---|
+| `spacing/inset/xs` | `spacing/4` | 4 | Tag/Badge 4방향 패딩 |
+| `spacing/inset/sm` | `spacing/8` | 8 | 작은 컨테이너 4방향 패딩 |
+| `spacing/inset/md` | `spacing/12` | 12 | Icon Button 표준 4방향 패딩 |
+| `spacing/inset/lg` | `spacing/16` | 16 | FAB / Card 표준 4방향 패딩 |
+| `spacing/inset/xl` | `spacing/24` | 24 | Modal 4방향 패딩 |
+
+### 2-4. `inset-squish` (4 페어)
+
+| 토큰 | alias | 값 | 역할 |
+|---|---|---:|---|
+| `spacing/inset-squish/xs/vertical` | `spacing/2` | 2 | Badge 세로 |
+| `spacing/inset-squish/xs/horizontal` | `spacing/6` | 6 | Badge 가로 |
+| `spacing/inset-squish/sm/vertical` | `spacing/7` | 7 | Button Small 세로 |
+| `spacing/inset-squish/sm/horizontal` | `spacing/14` | 14 | Button Small 가로 |
+| `spacing/inset-squish/md/vertical` | `spacing/9` | 9 | Button Medium 세로 |
+| `spacing/inset-squish/md/horizontal` | `spacing/20` | 20 | Button Medium 가로 |
+| `spacing/inset-squish/lg/vertical` | `spacing/12` | 12 | Button Large 세로 |
+| `spacing/inset-squish/lg/horizontal` | `spacing/28` | 28 | Button Large 가로 |
+
+### 2-5. `layout` (4)
+
+| 토큰 | alias | 값 | 역할 |
+|---|---|---:|---|
+| `spacing/layout/sm` | `spacing/24` | 24 | Section 간격 |
+| `spacing/layout/md` | `spacing/32` | 32 | Section 큰 간격 |
+| `spacing/layout/lg` | `spacing/40` | 40 | Layout 큰 간격 |
+| `spacing/layout/xl` | `spacing/48` | 48 | Layout 최대 간격 |
+
+---
+
+## 3. Alias 관계도 (palette → semantic)
 
 ```
-PALETTE                                SEMANTIC
-─────────                              ────────────────────────────────────────────
-spacing-0   ──────────────┬─────────►  spacing-layout-safe-area-status-web
-                          └─────────►  spacing-layout-safe-area-bottom-web
-
-spacing-8   ──────────────┬─────────►  spacing-inline-icon-text
-                          ├─────────►  spacing-inset-contents-in-box-small
-                          └─────────►  spacing-component-button-padding-horizontal
-
-spacing-12  ──────────────┬─────────►  spacing-stack-item
-                          └─────────►  spacing-component-button-padding-vertical
-
-spacing-14  ──────────────────────►   spacing-layout-safe-area-bottom-android
-
-spacing-16  ──────────────┬─────────►  spacing-stack-text
-                          ├─────────►  spacing-stack-text-to-box
-                          ├─────────►  spacing-stack-after-box
-                          ├─────────►  spacing-inset-box-in-box
-                          └─────────►  spacing-inset-top
-
-spacing-20  ──────────────────────►   spacing-stack-between-boxes
-
-spacing-24  ──────────────┬─────────►  spacing-container-padding-horizontal
-                          └─────────►  spacing-inset-contents-in-box
-
-spacing-32  ──────────────┬─────────►  spacing-container-padding-vertical
-                          └─────────►  spacing-stack-after-text
-
-spacing-34  ──────────────────────►   spacing-layout-safe-area-bottom-ios
-
-spacing-36  ──────────────────────►   spacing-layout-safe-area-status-android
-
-spacing-44  ──────────────────────►   spacing-layout-safe-area-status-ios
-
-(unused as semantic alias targets in this version)
-spacing-4, spacing-28, spacing-40, spacing-48, spacing-56
+spacing/0   (palette 직접 호출만)
+spacing/1   (palette 직접 호출만)
+spacing/2   →  spacing/stack/xs, spacing/inline/xs, spacing/inset-squish/xs/vertical
+spacing/3   (palette 직접 호출만)
+spacing/4   →  spacing/stack/sm, spacing/inline/sm, spacing/inset/xs
+spacing/6   →  spacing/inset-squish/xs/horizontal
+spacing/7   →  spacing/inset-squish/sm/vertical
+spacing/8   →  spacing/stack/md, spacing/inline/md, spacing/inset/sm
+spacing/9   →  spacing/inset-squish/md/vertical
+spacing/10  (palette 직접 호출만)
+spacing/12  →  spacing/inline/lg, spacing/inset/md, spacing/inset-squish/lg/vertical
+spacing/14  →  spacing/inset-squish/sm/horizontal
+spacing/16  →  spacing/stack/lg, spacing/inset/lg
+spacing/20  →  spacing/inset-squish/md/horizontal
+spacing/24  →  spacing/stack/xl, spacing/inset/xl, spacing/layout/sm
+spacing/28  →  spacing/inset-squish/lg/horizontal
+spacing/32  →  spacing/layout/md
+spacing/40  →  spacing/layout/lg
+spacing/44  (palette 직접 호출만)
+spacing/48  →  spacing/layout/xl
 ```
-
-### 3-1. Palette → Semantic fan-out
-
-| Palette | Semantic alias 수 | 비고 |
-|---|---:|---|
-| `spacing-0`  | 2 | web safe-area (status, bottom) |
-| `spacing-4`  | 0 | 팔레트로만 직접 사용 |
-| `spacing-8`  | 3 | inline + inset-small + button-hor |
-| `spacing-12` | 2 | stack-item + button-ver |
-| `spacing-14` | 1 | safe-area-bottom-android |
-| `spacing-16` | 5 | stack 다수 + inset 다수 — **가장 fan-out 큼** |
-| `spacing-20` | 1 | stack-between-boxes |
-| `spacing-24` | 2 | container-hor + inset-contents |
-| `spacing-28` | 0 | off-scale 통합용 (semantic 미정) |
-| `spacing-32` | 2 | container-ver + stack-after-text |
-| `spacing-34` | 1 | safe-area-bottom-ios |
-| `spacing-36` | 1 | safe-area-status-android |
-| `spacing-40` | 0 | 팔레트로만 |
-| `spacing-44` | 1 | safe-area-status-ios |
-| `spacing-48` | 0 | 팔레트로만 |
-| `spacing-56` | 0 | off-scale 통합용 |
-
-palette **alias 없음** 인 5개 (`4, 28, 40, 48, 56`) 은 현 시점 직접 팔레트 호출 또는 마이그레이션 매핑 대상.
 
 ---
 
 ## 4. 규칙 준수 확인
 
-| 규칙 | 충족 | 검증 |
-|---|:--:|---|
-| 모든 semantic 은 palette **1개** 정확히 alias | ✅ | 22 토큰 전부 단일 `aliasOf` |
-| 동일 역할 → 동일 semantic 재사용 | ✅ | 역할 충돌 없음. `space16` 5회 fan-out 은 서로 다른 역할 |
-| 카테고리 6종 (layout/container/inline/stack/inset/component-{name}) 사용 | ✅ | 6 카테고리 전부 ≥1 토큰 |
-| 이름 규칙 `spacing-{category}-{role}` | ✅ | 22 토큰 전부 일치 |
+| 규칙 | 충족 |
+|---|:--:|
+| 5 카테고리 (stack/inline/inset/inset-squish/layout) 사용 | ✅ |
+| 모든 semantic 의 aliasOf 가 palette 1개 정확히 지칭 | ✅ (26 토큰 전부) |
+| 컴포넌트별 시맨틱 (`component-button` 등) 만들지 않음 | ✅ |
+| 이름 규칙 `spacing/{category}/{role}` | ✅ |
 
 ---
 
-## 5. 코드 매핑 (Dart 식별자)
+## 5. Sem-mismatch 처리 (Phase 1-C 인계)
 
-USER_DECISION #2 권장 — kebab 은 Dart 식별자 불가능이므로 본 표를 SoT 로 사용. 현재 코드 식별자는 **유지** (camelCase, 변경 시 PR #28 이후 별도 마이그레이션).
+- `Spacing/Button/hor` (Figma 16) vs 코드 `buttonPaddingHorizontal=8`: 본 시맨틱에서는 `spacing/inset-squish/md/horizontal = 20`(Button Medium) / `spacing/inset-squish/sm/horizontal = 14` (Button Small) 페어로 정리. 기존 코드의 `space8` 는 작은 Icon Button 등 별도 패턴.
+- `Spacing/Button/ver` (Figma 14) vs 코드 `buttonPaddingVertical=12`: `spacing/inset-squish/md/vertical = 9` / `spacing/inset-squish/lg/vertical = 12` 페어로 정리.
 
-| 문서 토큰 | 현재 Dart 식별자 (`AppSpacing.*`) | 권장 신규 식별자 (참고) |
-|---|---|---|
-| `spacing-layout-safe-area-status-ios`         | `safeAreaStatusIos`         | `layoutSafeAreaStatusIos` |
-| `spacing-layout-safe-area-status-android`     | `safeAreaStatusAndroid`     | `layoutSafeAreaStatusAndroid` |
-| `spacing-layout-safe-area-status-web`         | `safeAreaStatusWeb`         | `layoutSafeAreaStatusWeb` |
-| `spacing-layout-safe-area-bottom-ios`         | `safeAreaBottomIos`         | `layoutSafeAreaBottomIos` |
-| `spacing-layout-safe-area-bottom-android`     | `safeAreaBottomAndroid`     | `layoutSafeAreaBottomAndroid` |
-| `spacing-layout-safe-area-bottom-web`         | `safeAreaBottomWeb`         | `layoutSafeAreaBottomWeb` |
-| `spacing-container-padding-horizontal`        | `containerHorizontalPadding`| `containerPaddingHorizontal` |
-| `spacing-container-padding-vertical`          | `containerVerticalPadding`  | `containerPaddingVertical` |
-| `spacing-inline-icon-text`                    | *(신설)*                    | `inlineIconText` |
-| `spacing-stack-item`                          | `itemSpacing`               | `stackItem` |
-| `spacing-stack-text`                          | `textContentsSpacing`       | `stackText` |
-| `spacing-stack-text-to-box`                   | `textToBoxSpacing`          | `stackTextToBox` |
-| `spacing-stack-between-boxes`                 | `betweenBoxesSpacing`       | `stackBetweenBoxes` |
-| `spacing-stack-after-box`                     | `bottomAfterBox`            | `stackAfterBox` |
-| `spacing-stack-after-text`                    | `bottomAfterText`           | `stackAfterText` |
-| `spacing-inset-contents-in-box`               | `paddingContentsInBox`      | `insetContentsInBox` |
-| `spacing-inset-contents-in-box-small`         | `paddingContentsInBoxSmall` | `insetContentsInBoxSmall` |
-| `spacing-inset-box-in-box`                    | `paddingBoxInBox`           | `insetBoxInBox` |
-| `spacing-inset-top`                           | `inBoxTopPadding`           | `insetTop` |
-| `spacing-component-button-padding-horizontal` | `buttonPaddingHorizontal`   | `componentButtonPaddingHorizontal` |
-| `spacing-component-button-padding-vertical`   | `buttonPaddingVertical`     | `componentButtonPaddingVertical` |
-
-> 식별자 일괄 rename 은 USER_DECISION #2 §4 **미결 항목** — 본 세션 범위 밖.
-
----
-
-## 6. 미결 항목 인계
-
-1. **Sem-mismatch 2건** (`spacing-component-button-padding-horizontal/vertical`) — Phase 1-D 에서 Figma 인스턴스 재검증 후 alias 대상 (8 vs 16, 12 vs 14) 정정.
-2. **Safe Area 6 토큰의 Dimension 이관** — `AppDeviceMetrics.*` 분리 결정 시 본 카테고리(`layout`) 에서 제거.
-3. **Dart 식별자 일괄 rename** — §5 권장 신규 식별자로 변경 여부.
-4. **off-scale 통합** (`28`, `56` 의 semantic 부여) — `03-mapping/` 에서 통합 결과를 반영하면 semantic 추가 예정.
