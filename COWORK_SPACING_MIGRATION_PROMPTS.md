@@ -925,17 +925,17 @@ analyze 실패 / 테스트 실패:
 # 부록 A · Task 등록 체크리스트 (Cowork 운영자용)
 
 ```
-[ ] Task 00  — Phase 0  Bootstrap
-[✅] Task 01 — Phase 1-A-0 (사전완료, figma-pages.json 존재)
-    📌 검수 #1: figma-pages.json 의 auditOrder/codeDirToFigmaPage 확인
-[ ] Task 02  — Phase 1-B (코드 감사, 22개 서브 작업 1세션)
-[ ] Task 03..30 — Phase 1-A (Figma 페이지별, 총 28개)
-[ ] Task LAST-1A — Phase 1-A INDEX
-[ ] Task 31  — Phase 1-C 갭 분석
-    📌 검수 #2: gap-analysis.md → palette 후보안 결정
-[ ] Task 32  — Phase 2 토큰 설계
-    📌 검수 #3: palette/semantic 승인
-[ ] Task 33  — Phase 3 매핑
+[✅] Task 00  — Phase 0  Bootstrap
+[✅] Task 01  — Phase 1-A-0 (사전완료, figma-pages.json 존재)
+    📌 검수 #1: figma-pages.json 의 auditOrder/codeDirToFigmaPage 확인 (완료)
+[✅] Task 02  — Phase 1-B (코드 감사, 22개 디렉터리)
+[✅] Task 03..30 — Phase 1-A (Figma 페이지별, 27개 audit + 1 skip)
+[✅] Task LAST-1A — Phase 1-A INDEX
+[✅] Task 31  — Phase 1-C 갭 분석
+[✅] 📌 검수 #2: gap-analysis.md → palette 후보안 결정 (2026-05-14, 본 파일 Task 05 의 '결정 사항' 섹션 참조)
+[ ] Task 32 / 본 파일 Task 05 — Phase 2 토큰 설계 ← **결정 사항만 확정. 산출물 생성은 다음 세션**
+    📌 검수 #3: palette/semantic 승인 + usage-guide.md 검토
+[ ] Task 33 / 본 파일 Task 06 — Phase 3 매핑 (⚠️ Task 32 산출물 02-tokens/* 없으면 시작 불가)
     📌 검수 #4: REVIEW_QUEUE.md 해소
 [ ] Task 34..61 — Phase 4 Figma 적용 (28개 그룹)
     📌 검수 #5 (그룹마다)
@@ -948,9 +948,71 @@ analyze 실패 / 테스트 실패:
     📌 검수 #8: SUMMARY.md 최종 승인
 ```
 
-총 84개 Task. 사람 검수 게이트 8개.
+총 84개 Task. 사람 검수 게이트 8개. (현재 진행 위치: **검수 #2 통과, Task 05/32 시작 대기**)
 
-# 부록 B · 의존성 그래프
+---
+
+# 🔴 부록 C · 세션 시작 전 필수 확인 (모든 Task 공통)
+
+새 Claude Code 세션에서 Task 시작 전 **반드시 입력 파일 존재 여부를 먼저 확인**. 부재 시 바로 중단하고 이전 Task 부터 진행.
+
+## Task 별 필수 입력
+
+| Task | 필수 입력 |
+|---|---|
+| Task 04 / 31 (Phase 1-C) | `01-audit/figma-spacing.INDEX.json`, `01-audit/figma-spacing-raw.*.json` (110개 part), `01-audit/code-audit.INDEX.json`, `01-audit/code-hardcoded-usages.*.json` (22개), `01-audit/code-token-defs.foundation.json` |
+| **Task 05 / 32 (Phase 2)** | 위 모두 + `01-audit/gap-analysis.md`, `01-audit/figma-pages.json` |
+| **Task 06 / 33 (Phase 3)** | 위 모두 + `02-tokens/palette.json`, `02-tokens/semantic.json`, `02-tokens/name-mapping.csv`, `02-tokens/semantic-roles-inventory.md` |
+| Task 07..34 (Phase 4) | 위 모두 + `03-mapping/figma-node-to-token.csv` (status=READY 필터 가능) |
+| Task 08 / 62 (Phase 5-Pre) | `02-tokens/palette.json`, `02-tokens/semantic.json` |
+| Task 09..29 (Phase 5) | `03-mapping/code-usage-to-token.csv`, Task 08 머지 후 `lib/foundation/app_spacing.dart` 신버전 |
+
+## Figma raw 파일 이름 패턴 (검색 시 주의)
+
+저장소의 figma raw 는 두 패턴이 섞임:
+- `figma-spacing-raw.{slug}.json` (단일 파일, 작은 페이지)
+- `figma-spacing-raw.{slug}-part{N}.json` (분할 파일, 큰 페이지)
+
+예시:
+```
+figma-spacing-raw.foundation-space.json
+figma-spacing-raw.module-tab-part1.json
+figma-spacing-raw.module-tab-part2.json
+... 모듈 페이지는 보통 part1~part23 까지 분할
+```
+
+INDEX 는 단 1개: `figma-spacing.INDEX.json` (마침표 두 개).
+
+`.errors.json` 파일은 이전 부분 완료 시점 흔적이며 **현재 모두 제거됨** (0개). 보이면 outdated.
+
+## Code raw 파일 이름 패턴
+
+```
+code-hardcoded-usages.{dir}.json (22개)
+code-hardcoded-usages.{dir}-part{N}.json (일부 디렉터리 분할)
+code-audit.INDEX.json
+code-token-defs.foundation.json
+```
+
+## 입력 부재 시 처리 (자동 분기 의무)
+
+```
+if (입력 파일 X 부재) {
+  console.log('❌ 입력 부재:', X)
+  console.log('→ 먼저 <이전 Task> 를 완료하세요.')
+  return  // 현 세션 종료. 추정/빈 출력으로 진행 금지.
+}
+```
+
+## 절대 하지 말 것
+
+- 입력 부재를 이유로 "추정값" 또는 "빈 CSV" 같이 진행
+- 이전 Task 의 일부만 명시적 확인하고 다음 Task 시작
+- `gap-analysis.md` 의 옛 문구 ("figma-spacing.INDEX.json 부재" 같은 자가 진단) 를 현재 상태로 오해 — 현재 gap-analysis.md 는 91,882 items 캡처 완료된 신버전
+
+---
+
+# 부록 D · 의존성 그래프
 
 ```
 Task 00 ──┬─► Task 01 ──📌──► Task 03..N ──► LAST-1A ──┐
