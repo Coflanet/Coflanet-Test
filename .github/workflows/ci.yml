@@ -1,0 +1,51 @@
+name: CI
+
+on:
+  push:
+    branches: [main, 'claude/**']
+    paths-ignore:
+      - '**.md'
+      - '**/docs/**'
+      - 'LICENSE'
+      - 'App Icon/**'
+      - 'Logo/**'
+  pull_request:
+    branches: [main]
+    paths-ignore:
+      - '**.md'
+      - '**/docs/**'
+      - 'LICENSE'
+      - 'App Icon/**'
+      - 'Logo/**'
+
+jobs:
+  analyze:
+    name: Analyze
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: Library/component_lab
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: subosito/flutter-action@v2
+        with:
+          channel: stable
+          cache: true
+
+      - name: Create .env for path dependency
+        working-directory: ${{ github.workspace }}
+        run: |
+          cat > coflanet-app-0.1.2/.env <<EOT
+          NAVER_CLIENT_ID=${{ secrets.NAVER_CLIENT_ID }}
+          NAVER_CLIENT_SECRET=${{ secrets.NAVER_CLIENT_SECRET }}
+          KAKAO_NATIVE_APP_KEY=${{ secrets.KAKAO_NATIVE_APP_KEY }}
+          SUPABASE_URL=${{ secrets.SUPABASE_URL }}
+          SUPABASE_ANON_KEY=${{ secrets.SUPABASE_ANON_KEY }}
+          EOT
+
+      - name: Install dependencies
+        run: flutter pub get
+
+      - name: Analyze
+        run: flutter analyze --no-fatal-infos --no-fatal-warnings
