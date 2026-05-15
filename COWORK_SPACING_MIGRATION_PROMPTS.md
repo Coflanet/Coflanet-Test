@@ -41,7 +41,7 @@ Claude Code 는 동일 세션 내에서 **서브에이전트를 병렬로 스폰
 
 - 저장소: `coflanet/coflanet-test`
 - 코드 경로: `Library/component_lab`
-- 작업 브랜치: `claude/spacing-tokens-organization-NwPFO`
+- 작업 브랜치: `claude/audit-figma-spacing-uJuIo`
 - Figma 파일: https://www.figma.com/file/q7yBPcHrid1CGQqFWEPwnR?node-id=2636:31292
 - Figma fileKey: `q7yBPcHrid1CGQqFWEPwnR`
 - 산출물 루트: `Library/component_lab/docs/spacing-migration/`
@@ -101,7 +101,7 @@ Claude Code 는 동일 세션 내에서 **서브에이전트를 병렬로 스폰
 없음
 
 ## 처리
-1. 브랜치 `claude/spacing-tokens-organization-NwPFO` 가 없으면 생성, 있으면 체크아웃
+1. 브랜치 `claude/audit-figma-spacing-uJuIo` 가 없으면 생성, 있으면 체크아웃
 2. 다음 디렉터리에 `.gitkeep` 을 만들어 빈 상태로 커밋:
    - `Library/component_lab/docs/spacing-migration/01-audit/`
    - `Library/component_lab/docs/spacing-migration/02-tokens/`
