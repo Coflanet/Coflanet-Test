@@ -1,0 +1,2894 @@
+{
+  "_summary": {
+    "pageId": "2414:9843",
+    "pageName": "🔠 Typography",
+    "pageSlug": "foundation-typography",
+    "fileKey": "q7yBPcHrid1CGQqFWEPwnR",
+    "schemaVersion": "1A-2-sidecar.v1",
+    "purpose": "itemSpacing nodeId → layoutMode/layoutWrap 사이드카 (Phase 1-A-2)",
+    "sourceRaw": "figma-spacing-raw.foundation-typography.json",
+    "itemSpacingNodesTotal": 574,
+    "found": 574,
+    "notFound": 0,
+    "distribution": {
+      "VERTICAL": 318,
+      "HORIZONTAL": 256,
+      "NONE": 0
+    },
+    "autoLayoutCoverage": "100.0%",
+    "wrapNodes": 4,
+    "method": "mcp__figma__use_figma (Plugin API: figma.getNodeByIdAsync) — 6 batches of 100/100/100/100/100/74"
+  },
+  "nodes": {
+    "2414:9844": {
+      "layoutMode": "VERTICAL",
+      "layoutWrap": "NO_WRAP",
+      "pageSlug": "foundation-typography"
+    },
+    "2414:9845": {
+      "layoutMode": "VERTICAL",
+      "layoutWrap": "NO_WRAP",
+      "pageSlug": "foundation-typography"
+    },
+    "2414:9846": {
+      "layoutMode": "HORIZONTAL",
+      "layoutWrap": "NO_WRAP",
+      "pageSlug": "foundation-typography"
+    },
+    "2414:9849": {
+      "layoutMode": "VERTICAL",
+      "layoutWrap": "NO_WRAP",
+      "pageSlug": "foundation-typography"
+    },
+    "2414:9852": {
+      "layoutMode": "VERTICAL",
+      "layoutWrap": "NO_WRAP",
+      "pageSlug": "foundation-typography"
+    },
+    "2414:9853": {
+      "layoutMode": "VERTICAL",
+      "layoutWrap": "NO_WRAP",
+      "pageSlug": "foundation-typography"
+    },
+    "2414:9855": {
+      "layoutMode": "HORIZONTAL",
+      "layoutWrap": "NO_WRAP",
+      "pageSlug": "foundation-typography"
+    },
+    "2414:9858": {
+      "layoutMode": "VERTICAL",
+      "layoutWrap": "NO_WRAP",
+      "pageSlug": "foundation-typography"
+    },
+    "2414:9860": {
+      "layoutMode": "VERTICAL",
+      "layoutWrap": "NO_WRAP",
+      "pageSlug": "foundation-typography"
+    },
+    "2414:9861": {
+      "layoutMode": "VERTICAL",
+      "layoutWrap": "NO_WRAP",
+      "pageSlug": "foundation-typography"
+    },
+    "2414:9863": {
+      "layoutMode": "HORIZONTAL",
+      "layoutWrap": "NO_WRAP",
+      "pageSlug": "foundation-typography"
+    },
+    "2414:9865": {
+      "layoutMode": "VERTICAL",
+      "layoutWrap": "NO_WRAP",
+      "pageSlug": "foundation-typography"
+    },
+    "2414:9871": {
+      "layoutMode": "VERTICAL",
+      "layoutWrap": "NO_WRAP",
+      "pageSlug": "foundation-typography"
+    },
+    "2414:9875": {
+      "layoutMode": "HORIZONTAL",
+      "layoutWrap": "NO_WRAP",
+      "pageSlug": "foundation-typography"
+    },
+    "2414:9876": {
+      "layoutMode": "VERTICAL",
+      "layoutWrap": "NO_WRAP",
+      "pageSlug": "foundation-typography"
+    },
+    "2414:9877": {
+      "layoutMode": "VERTICAL",
+      "layoutWrap": "NO_WRAP",
+      "pageSlug": "foundation-typography"
+    },
+    "2414:9878": {
+      "layoutMode": "HORIZONTAL",
+      "layoutWrap": "NO_WRAP",
+      "pageSlug": "foundation-typography"
+    },
+    "2414:9880": {
+      "layoutMode": "VERTICAL",
+      "layoutWrap": "NO_WRAP",
+      "pageSlug": "foundation-typography"
+    },
+    "2414:9881": {
+      "layoutMode": "VERTICAL",
+      "layoutWrap": "NO_WRAP",
+      "pageSlug": "foundation-typography"
+    },
+    "2414:9883": {
+      "layoutMode": "HORIZONTAL",
+      "layoutWrap": "NO_WRAP",
+      "pageSlug": "foundation-typography"
+    },
+    "2414:9885": {
+      "layoutMode": "VERTICAL",
+      "layoutWrap": "NO_WRAP",
+      "pageSlug": "foundation-typography"
+    },
+    "2414:9891": {
+      "layoutMode": "VERTICAL",
+      "layoutWrap": "NO_WRAP",
+      "pageSlug": "foundation-typography"
+    },
+    "2414:9892": {
+      "layoutMode": "VERTICAL",
+      "layoutWrap": "NO_WRAP",
+      "pageSlug": "foundation-typography"
+    },
+    "2414:9893": {
+      "layoutMode": "VERTICAL",
+      "layoutWrap": "NO_WRAP",
+      "pageSlug": "foundation-typography"
+    },
+    "2414:9896": {
+      "layoutMode": "HORIZONTAL",
+      "layoutWrap": "NO_WRAP",
+      "pageSlug": "foundation-typography"
+    },
+    "2414:9907": {
+      "layoutMode": "HORIZONTAL",
+      "layoutWrap": "NO_WRAP",
+      "pageSlug": "foundation-typography"
+    },
+    "2414:9908": {
+      "layoutMode": "VERTICAL",
+      "layoutWrap": "NO_WRAP",
+      "pageSlug": "foundation-typography"
+    },
+    "2414:9909": {
+      "layoutMode": "VERTICAL",
+      "layoutWrap": "NO_WRAP",
+      "pageSlug": "foundation-typography"
+    },
+    "2414:9910": {
+      "layoutMode": "HORIZONTAL",
+      "layoutWrap": "NO_WRAP",
+      "pageSlug": "foundation-typography"
+    },
+    "2414:9912": {
+      "layoutMode": "VERTICAL",
+      "layoutWrap": "NO_WRAP",
+      "pageSlug": "foundation-typography"
+    },
+    "2414:9913": {
+      "layoutMode": "VERTICAL",
+      "layoutWrap": "NO_WRAP",
+      "pageSlug": "foundation-typography"
+    },
+    "2414:9915": {
+      "layoutMode": "HORIZONTAL",
+      "layoutWrap": "NO_WRAP",
+      "pageSlug": "foundation-typography"
+    },
+    "2414:9918": {
+      "layoutMode": "VERTICAL",
+      "layoutWrap": "NO_WRAP",
+      "pageSlug": "foundation-typography"
+    },
+    "2414:9920": {
+      "layoutMode": "VERTICAL",
+      "layoutWrap": "NO_WRAP",
+      "pageSlug": "foundation-typography"
+    },
+    "2414:9921": {
+      "layoutMode": "VERTICAL",
+      "layoutWrap": "NO_WRAP",
+      "pageSlug": "foundation-typography"
+    },
+    "2414:9923": {
+      "layoutMode": "HORIZONTAL",
+      "layoutWrap": "NO_WRAP",
+      "pageSlug": "foundation-typography"
+    },
+    "2414:9925": {
+      "layoutMode": "VERTICAL",
+      "layoutWrap": "NO_WRAP",
+      "pageSlug": "foundation-typography"
+    },
+    "2414:9926": {
+      "layoutMode": "VERTICAL",
+      "layoutWrap": "NO_WRAP",
+      "pageSlug": "foundation-typography"
+    },
+    "2414:9928": {
+      "layoutMode": "VERTICAL",
+      "layoutWrap": "NO_WRAP",
+      "pageSlug": "foundation-typography"
+    },
+    "2414:9933": {
+      "layoutMode": "VERTICAL",
+      "layoutWrap": "NO_WRAP",
+      "pageSlug": "foundation-typography"
+    },
+    "2414:9936": {
+      "layoutMode": "VERTICAL",
+      "layoutWrap": "NO_WRAP",
+      "pageSlug": "foundation-typography"
+    },
+    "2414:9937": {
+      "layoutMode": "VERTICAL",
+      "layoutWrap": "NO_WRAP",
+      "pageSlug": "foundation-typography"
+    },
+    "2414:9939": {
+      "layoutMode": "VERTICAL",
+      "layoutWrap": "NO_WRAP",
+      "pageSlug": "foundation-typography"
+    },
+    "2414:9940": {
+      "layoutMode": "HORIZONTAL",
+      "layoutWrap": "NO_WRAP",
+      "pageSlug": "foundation-typography"
+    },
+    "2414:9949": {
+      "layoutMode": "HORIZONTAL",
+      "layoutWrap": "NO_WRAP",
+      "pageSlug": "foundation-typography"
+    },
+    "2414:9961": {
+      "layoutMode": "HORIZONTAL",
+      "layoutWrap": "NO_WRAP",
+      "pageSlug": "foundation-typography"
+    },
+    "2414:9962": {
+      "layoutMode": "VERTICAL",
+      "layoutWrap": "NO_WRAP",
+      "pageSlug": "foundation-typography"
+    },
+    "2414:9963": {
+      "layoutMode": "VERTICAL",
+      "layoutWrap": "NO_WRAP",
+      "pageSlug": "foundation-typography"
+    },
+    "2414:9964": {
+      "layoutMode": "HORIZONTAL",
+      "layoutWrap": "NO_WRAP",
+      "pageSlug": "foundation-typography"
+    },
+    "2414:9966": {
+      "layoutMode": "VERTICAL",
+      "layoutWrap": "NO_WRAP",
+      "pageSlug": "foundation-typography"
+    },
+    "2414:9968": {
+      "layoutMode": "HORIZONTAL",
+      "layoutWrap": "NO_WRAP",
+      "pageSlug": "foundation-typography"
+    },
+    "2414:9975": {
+      "layoutMode": "VERTICAL",
+      "layoutWrap": "NO_WRAP",
+      "pageSlug": "foundation-typography"
+    },
+    "2414:9979": {
+      "layoutMode": "VERTICAL",
+      "layoutWrap": "NO_WRAP",
+      "pageSlug": "foundation-typography"
+    },
+    "2414:9980": {
+      "layoutMode": "HORIZONTAL",
+      "layoutWrap": "NO_WRAP",
+      "pageSlug": "foundation-typography"
+    },
+    "2414:9982": {
+      "layoutMode": "VERTICAL",
+      "layoutWrap": "NO_WRAP",
+      "pageSlug": "foundation-typography"
+    },
+    "2414:9983": {
+      "layoutMode": "VERTICAL",
+      "layoutWrap": "NO_WRAP",
+      "pageSlug": "foundation-typography"
+    },
+    "2414:9985": {
+      "layoutMode": "HORIZONTAL",
+      "layoutWrap": "NO_WRAP",
+      "pageSlug": "foundation-typography"
+    },
+    "2414:9987": {
+      "layoutMode": "VERTICAL",
+      "layoutWrap": "NO_WRAP",
+      "pageSlug": "foundation-typography"
+    },
+    "2414:9988": {
+      "layoutMode": "VERTICAL",
+      "layoutWrap": "NO_WRAP",
+      "pageSlug": "foundation-typography"
+    },
+    "2414:9990": {
+      "layoutMode": "VERTICAL",
+      "layoutWrap": "NO_WRAP",
+      "pageSlug": "foundation-typography"
+    },
+    "2414:9994": {
+      "layoutMode": "VERTICAL",
+      "layoutWrap": "NO_WRAP",
+      "pageSlug": "foundation-typography"
+    },
+    "2414:9995": {
+      "layoutMode": "HORIZONTAL",
+      "layoutWrap": "NO_WRAP",
+      "pageSlug": "foundation-typography"
+    },
+    "2414:9998": {
+      "layoutMode": "HORIZONTAL",
+      "layoutWrap": "NO_WRAP",
+      "pageSlug": "foundation-typography"
+    },
+    "2414:9999": {
+      "layoutMode": "VERTICAL",
+      "layoutWrap": "NO_WRAP",
+      "pageSlug": "foundation-typography"
+    },
+    "2414:10000": {
+      "layoutMode": "VERTICAL",
+      "layoutWrap": "NO_WRAP",
+      "pageSlug": "foundation-typography"
+    },
+    "2414:10001": {
+      "layoutMode": "VERTICAL",
+      "layoutWrap": "NO_WRAP",
+      "pageSlug": "foundation-typography"
+    },
+    "2414:10002": {
+      "layoutMode": "HORIZONTAL",
+      "layoutWrap": "NO_WRAP",
+      "pageSlug": "foundation-typography"
+    },
+    "2414:10003": {
+      "layoutMode": "HORIZONTAL",
+      "layoutWrap": "NO_WRAP",
+      "pageSlug": "foundation-typography"
+    },
+    "2414:10009": {
+      "layoutMode": "HORIZONTAL",
+      "layoutWrap": "NO_WRAP",
+      "pageSlug": "foundation-typography"
+    },
+    "2414:10010": {
+      "layoutMode": "VERTICAL",
+      "layoutWrap": "NO_WRAP",
+      "pageSlug": "foundation-typography"
+    },
+    "2414:10011": {
+      "layoutMode": "VERTICAL",
+      "layoutWrap": "NO_WRAP",
+      "pageSlug": "foundation-typography"
+    },
+    "2414:10012": {
+      "layoutMode": "VERTICAL",
+      "layoutWrap": "NO_WRAP",
+      "pageSlug": "foundation-typography"
+    },
+    "2414:10014": {
+      "layoutMode": "VERTICAL",
+      "layoutWrap": "NO_WRAP",
+      "pageSlug": "foundation-typography"
+    },
+    "2414:10016": {
+      "layoutMode": "VERTICAL",
+      "layoutWrap": "NO_WRAP",
+      "pageSlug": "foundation-typography"
+    },
+    "2414:10017": {
+      "layoutMode": "HORIZONTAL",
+      "layoutWrap": "NO_WRAP",
+      "pageSlug": "foundation-typography"
+    },
+    "2414:10018": {
+      "layoutMode": "HORIZONTAL",
+      "layoutWrap": "NO_WRAP",
+      "pageSlug": "foundation-typography"
+    },
+    "2414:10023": {
+      "layoutMode": "HORIZONTAL",
+      "layoutWrap": "NO_WRAP",
+      "pageSlug": "foundation-typography"
+    },
+    "2414:10025": {
+      "layoutMode": "HORIZONTAL",
+      "layoutWrap": "NO_WRAP",
+      "pageSlug": "foundation-typography"
+    },
+    "2414:10026": {
+      "layoutMode": "HORIZONTAL",
+      "layoutWrap": "NO_WRAP",
+      "pageSlug": "foundation-typography"
+    },
+    "2414:10031": {
+      "layoutMode": "HORIZONTAL",
+      "layoutWrap": "NO_WRAP",
+      "pageSlug": "foundation-typography"
+    },
+    "2414:10033": {
+      "layoutMode": "HORIZONTAL",
+      "layoutWrap": "NO_WRAP",
+      "pageSlug": "foundation-typography"
+    },
+    "2414:10034": {
+      "layoutMode": "HORIZONTAL",
+      "layoutWrap": "NO_WRAP",
+      "pageSlug": "foundation-typography"
+    },
+    "2414:10039": {
+      "layoutMode": "HORIZONTAL",
+      "layoutWrap": "NO_WRAP",
+      "pageSlug": "foundation-typography"
+    },
+    "2414:10042": {
+      "layoutMode": "VERTICAL",
+      "layoutWrap": "NO_WRAP",
+      "pageSlug": "foundation-typography"
+    },
+    "2414:10043": {
+      "layoutMode": "VERTICAL",
+      "layoutWrap": "NO_WRAP",
+      "pageSlug": "foundation-typography"
+    },
+    "2414:10046": {
+      "layoutMode": "VERTICAL",
+      "layoutWrap": "NO_WRAP",
+      "pageSlug": "foundation-typography"
+    },
+    "2414:10049": {
+      "layoutMode": "VERTICAL",
+      "layoutWrap": "NO_WRAP",
+      "pageSlug": "foundation-typography"
+    },
+    "2414:10052": {
+      "layoutMode": "VERTICAL",
+      "layoutWrap": "NO_WRAP",
+      "pageSlug": "foundation-typography"
+    },
+    "I2414:10053;438:6000": {
+      "layoutMode": "HORIZONTAL",
+      "layoutWrap": "NO_WRAP",
+      "pageSlug": "foundation-typography"
+    },
+    "2414:10054": {
+      "layoutMode": "VERTICAL",
+      "layoutWrap": "NO_WRAP",
+      "pageSlug": "foundation-typography"
+    },
+    "2414:10056": {
+      "layoutMode": "HORIZONTAL",
+      "layoutWrap": "NO_WRAP",
+      "pageSlug": "foundation-typography"
+    },
+    "2414:10059": {
+      "layoutMode": "HORIZONTAL",
+      "layoutWrap": "NO_WRAP",
+      "pageSlug": "foundation-typography"
+    },
+    "2414:10060": {
+      "layoutMode": "VERTICAL",
+      "layoutWrap": "NO_WRAP",
+      "pageSlug": "foundation-typography"
+    },
+    "2414:10061": {
+      "layoutMode": "VERTICAL",
+      "layoutWrap": "NO_WRAP",
+      "pageSlug": "foundation-typography"
+    },
+    "2414:10062": {
+      "layoutMode": "HORIZONTAL",
+      "layoutWrap": "NO_WRAP",
+      "pageSlug": "foundation-typography"
+    },
+    "2414:10064": {
+      "layoutMode": "VERTICAL",
+      "layoutWrap": "NO_WRAP",
+      "pageSlug": "foundation-typography"
+    },
+    "2414:10066": {
+      "layoutMode": "HORIZONTAL",
+      "layoutWrap": "NO_WRAP",
+      "pageSlug": "foundation-typography"
+    },
+    "2414:10072": {
+      "layoutMode": "VERTICAL",
+      "layoutWrap": "NO_WRAP",
+      "pageSlug": "foundation-typography"
+    },
+    "2414:10073": {
+      "layoutMode": "VERTICAL",
+      "layoutWrap": "NO_WRAP",
+      "pageSlug": "foundation-typography"
+    },
+    "2414:10074": {
+      "layoutMode": "VERTICAL",
+      "layoutWrap": "NO_WRAP",
+      "pageSlug": "foundation-typography"
+    },
+    "2414:10077": {
+      "layoutMode": "VERTICAL",
+      "layoutWrap": "NO_WRAP",
+      "pageSlug": "foundation-typography"
+    },
+    "2414:10088": {
+      "layoutMode": "VERTICAL",
+      "layoutWrap": "NO_WRAP",
+      "pageSlug": "foundation-typography"
+    },
+    "2414:10089": {
+      "layoutMode": "HORIZONTAL",
+      "layoutWrap": "NO_WRAP",
+      "pageSlug": "foundation-typography"
+    },
+    "2414:10091": {
+      "layoutMode": "VERTICAL",
+      "layoutWrap": "NO_WRAP",
+      "pageSlug": "foundation-typography"
+    },
+    "2414:10092": {
+      "layoutMode": "VERTICAL",
+      "layoutWrap": "NO_WRAP",
+      "pageSlug": "foundation-typography"
+    },
+    "2414:10094": {
+      "layoutMode": "HORIZONTAL",
+      "layoutWrap": "NO_WRAP",
+      "pageSlug": "foundation-typography"
+    },
+    "2414:10096": {
+      "layoutMode": "HORIZONTAL",
+      "layoutWrap": "NO_WRAP",
+      "pageSlug": "foundation-typography"
+    },
+    "2414:10103": {
+      "layoutMode": "VERTICAL",
+      "layoutWrap": "NO_WRAP",
+      "pageSlug": "foundation-typography"
+    },
+    "2414:10104": {
+      "layoutMode": "VERTICAL",
+      "layoutWrap": "NO_WRAP",
+      "pageSlug": "foundation-typography"
+    },
+    "2414:10105": {
+      "layoutMode": "VERTICAL",
+      "layoutWrap": "NO_WRAP",
+      "pageSlug": "foundation-typography"
+    },
+    "2414:10107": {
+      "layoutMode": "HORIZONTAL",
+      "layoutWrap": "NO_WRAP",
+      "pageSlug": "foundation-typography"
+    },
+    "2414:10113": {
+      "layoutMode": "VERTICAL",
+      "layoutWrap": "NO_WRAP",
+      "pageSlug": "foundation-typography"
+    },
+    "2414:10114": {
+      "layoutMode": "HORIZONTAL",
+      "layoutWrap": "NO_WRAP",
+      "pageSlug": "foundation-typography"
+    },
+    "2414:10115": {
+      "layoutMode": "HORIZONTAL",
+      "layoutWrap": "NO_WRAP",
+      "pageSlug": "foundation-typography"
+    },
+    "2414:10120": {
+      "layoutMode": "HORIZONTAL",
+      "layoutWrap": "NO_WRAP",
+      "pageSlug": "foundation-typography"
+    },
+    "2414:10122": {
+      "layoutMode": "HORIZONTAL",
+      "layoutWrap": "NO_WRAP",
+      "pageSlug": "foundation-typography"
+    },
+    "2414:10123": {
+      "layoutMode": "HORIZONTAL",
+      "layoutWrap": "NO_WRAP",
+      "pageSlug": "foundation-typography"
+    },
+    "2414:10128": {
+      "layoutMode": "HORIZONTAL",
+      "layoutWrap": "NO_WRAP",
+      "pageSlug": "foundation-typography"
+    },
+    "2414:10130": {
+      "layoutMode": "HORIZONTAL",
+      "layoutWrap": "NO_WRAP",
+      "pageSlug": "foundation-typography"
+    },
+    "2414:10131": {
+      "layoutMode": "HORIZONTAL",
+      "layoutWrap": "NO_WRAP",
+      "pageSlug": "foundation-typography"
+    },
+    "2414:10136": {
+      "layoutMode": "HORIZONTAL",
+      "layoutWrap": "NO_WRAP",
+      "pageSlug": "foundation-typography"
+    },
+    "2414:10138": {
+      "layoutMode": "VERTICAL",
+      "layoutWrap": "NO_WRAP",
+      "pageSlug": "foundation-typography"
+    },
+    "2414:10140": {
+      "layoutMode": "HORIZONTAL",
+      "layoutWrap": "NO_WRAP",
+      "pageSlug": "foundation-typography"
+    },
+    "2414:10143": {
+      "layoutMode": "VERTICAL",
+      "layoutWrap": "NO_WRAP",
+      "pageSlug": "foundation-typography"
+    },
+    "2414:10145": {
+      "layoutMode": "VERTICAL",
+      "layoutWrap": "NO_WRAP",
+      "pageSlug": "foundation-typography"
+    },
+    "2414:10146": {
+      "layoutMode": "VERTICAL",
+      "layoutWrap": "NO_WRAP",
+      "pageSlug": "foundation-typography"
+    },
+    "2414:10148": {
+      "layoutMode": "HORIZONTAL",
+      "layoutWrap": "NO_WRAP",
+      "pageSlug": "foundation-typography"
+    },
+    "2414:10151": {
+      "layoutMode": "VERTICAL",
+      "layoutWrap": "NO_WRAP",
+      "pageSlug": "foundation-typography"
+    },
+    "2414:10153": {
+      "layoutMode": "VERTICAL",
+      "layoutWrap": "NO_WRAP",
+      "pageSlug": "foundation-typography"
+    },
+    "2414:10154": {
+      "layoutMode": "VERTICAL",
+      "layoutWrap": "NO_WRAP",
+      "pageSlug": "foundation-typography"
+    },
+    "2414:10156": {
+      "layoutMode": "HORIZONTAL",
+      "layoutWrap": "NO_WRAP",
+      "pageSlug": "foundation-typography"
+    },
+    "2414:10158": {
+      "layoutMode": "VERTICAL",
+      "layoutWrap": "NO_WRAP",
+      "pageSlug": "foundation-typography"
+    },
+    "2414:10159": {
+      "layoutMode": "VERTICAL",
+      "layoutWrap": "NO_WRAP",
+      "pageSlug": "foundation-typography"
+    },
+    "2414:10161": {
+      "layoutMode": "VERTICAL",
+      "layoutWrap": "NO_WRAP",
+      "pageSlug": "foundation-typography"
+    },
+    "2414:10165": {
+      "layoutMode": "VERTICAL",
+      "layoutWrap": "NO_WRAP",
+      "pageSlug": "foundation-typography"
+    },
+    "2414:10166": {
+      "layoutMode": "VERTICAL",
+      "layoutWrap": "NO_WRAP",
+      "pageSlug": "foundation-typography"
+    },
+    "2414:10168": {
+      "layoutMode": "HORIZONTAL",
+      "layoutWrap": "NO_WRAP",
+      "pageSlug": "foundation-typography"
+    },
+    "2414:10170": {
+      "layoutMode": "VERTICAL",
+      "layoutWrap": "NO_WRAP",
+      "pageSlug": "foundation-typography"
+    },
+    "2414:10173": {
+      "layoutMode": "VERTICAL",
+      "layoutWrap": "NO_WRAP",
+      "pageSlug": "foundation-typography"
+    },
+    "2414:10176": {
+      "layoutMode": "VERTICAL",
+      "layoutWrap": "NO_WRAP",
+      "pageSlug": "foundation-typography"
+    },
+    "2414:10179": {
+      "layoutMode": "VERTICAL",
+      "layoutWrap": "NO_WRAP",
+      "pageSlug": "foundation-typography"
+    },
+    "2414:10182": {
+      "layoutMode": "VERTICAL",
+      "layoutWrap": "NO_WRAP",
+      "pageSlug": "foundation-typography"
+    },
+    "2414:10185": {
+      "layoutMode": "VERTICAL",
+      "layoutWrap": "NO_WRAP",
+      "pageSlug": "foundation-typography"
+    },
+    "2414:10188": {
+      "layoutMode": "VERTICAL",
+      "layoutWrap": "NO_WRAP",
+      "pageSlug": "foundation-typography"
+    },
+    "2414:10191": {
+      "layoutMode": "VERTICAL",
+      "layoutWrap": "NO_WRAP",
+      "pageSlug": "foundation-typography"
+    },
+    "2414:10194": {
+      "layoutMode": "VERTICAL",
+      "layoutWrap": "NO_WRAP",
+      "pageSlug": "foundation-typography"
+    },
+    "2414:10197": {
+      "layoutMode": "VERTICAL",
+      "layoutWrap": "NO_WRAP",
+      "pageSlug": "foundation-typography"
+    },
+    "2414:10198": {
+      "layoutMode": "VERTICAL",
+      "layoutWrap": "NO_WRAP",
+      "pageSlug": "foundation-typography"
+    },
+    "2414:10199": {
+      "layoutMode": "HORIZONTAL",
+      "layoutWrap": "NO_WRAP",
+      "pageSlug": "foundation-typography"
+    },
+    "2414:10203": {
+      "layoutMode": "HORIZONTAL",
+      "layoutWrap": "NO_WRAP",
+      "pageSlug": "foundation-typography"
+    },
+    "2414:10204": {
+      "layoutMode": "HORIZONTAL",
+      "layoutWrap": "NO_WRAP",
+      "pageSlug": "foundation-typography"
+    },
+    "2414:10206": {
+      "layoutMode": "HORIZONTAL",
+      "layoutWrap": "NO_WRAP",
+      "pageSlug": "foundation-typography"
+    },
+    "2414:10208": {
+      "layoutMode": "HORIZONTAL",
+      "layoutWrap": "NO_WRAP",
+      "pageSlug": "foundation-typography"
+    },
+    "2414:10209": {
+      "layoutMode": "HORIZONTAL",
+      "layoutWrap": "NO_WRAP",
+      "pageSlug": "foundation-typography"
+    },
+    "2414:10214": {
+      "layoutMode": "HORIZONTAL",
+      "layoutWrap": "NO_WRAP",
+      "pageSlug": "foundation-typography"
+    },
+    "2414:10215": {
+      "layoutMode": "VERTICAL",
+      "layoutWrap": "NO_WRAP",
+      "pageSlug": "foundation-typography"
+    },
+    "2414:10218": {
+      "layoutMode": "VERTICAL",
+      "layoutWrap": "NO_WRAP",
+      "pageSlug": "foundation-typography"
+    },
+    "2414:10219": {
+      "layoutMode": "VERTICAL",
+      "layoutWrap": "NO_WRAP",
+      "pageSlug": "foundation-typography"
+    },
+    "2414:10221": {
+      "layoutMode": "HORIZONTAL",
+      "layoutWrap": "NO_WRAP",
+      "pageSlug": "foundation-typography"
+    },
+    "2414:10223": {
+      "layoutMode": "VERTICAL",
+      "layoutWrap": "NO_WRAP",
+      "pageSlug": "foundation-typography"
+    },
+    "2414:10226": {
+      "layoutMode": "VERTICAL",
+      "layoutWrap": "NO_WRAP",
+      "pageSlug": "foundation-typography"
+    },
+    "2414:10227": {
+      "layoutMode": "VERTICAL",
+      "layoutWrap": "NO_WRAP",
+      "pageSlug": "foundation-typography"
+    },
+    "2414:10229": {
+      "layoutMode": "HORIZONTAL",
+      "layoutWrap": "NO_WRAP",
+      "pageSlug": "foundation-typography"
+    },
+    "2414:10231": {
+      "layoutMode": "VERTICAL",
+      "layoutWrap": "NO_WRAP",
+      "pageSlug": "foundation-typography"
+    },
+    "2414:10234": {
+      "layoutMode": "VERTICAL",
+      "layoutWrap": "NO_WRAP",
+      "pageSlug": "foundation-typography"
+    },
+    "2414:10235": {
+      "layoutMode": "VERTICAL",
+      "layoutWrap": "NO_WRAP",
+      "pageSlug": "foundation-typography"
+    },
+    "2414:10237": {
+      "layoutMode": "HORIZONTAL",
+      "layoutWrap": "NO_WRAP",
+      "pageSlug": "foundation-typography"
+    },
+    "2414:10239": {
+      "layoutMode": "VERTICAL",
+      "layoutWrap": "NO_WRAP",
+      "pageSlug": "foundation-typography"
+    },
+    "2414:10242": {
+      "layoutMode": "VERTICAL",
+      "layoutWrap": "NO_WRAP",
+      "pageSlug": "foundation-typography"
+    },
+    "2414:10243": {
+      "layoutMode": "VERTICAL",
+      "layoutWrap": "NO_WRAP",
+      "pageSlug": "foundation-typography"
+    },
+    "2414:10245": {
+      "layoutMode": "HORIZONTAL",
+      "layoutWrap": "NO_WRAP",
+      "pageSlug": "foundation-typography"
+    },
+    "2414:10249": {
+      "layoutMode": "HORIZONTAL",
+      "layoutWrap": "NO_WRAP",
+      "pageSlug": "foundation-typography"
+    },
+    "2414:10250": {
+      "layoutMode": "VERTICAL",
+      "layoutWrap": "NO_WRAP",
+      "pageSlug": "foundation-typography"
+    },
+    "2414:10251": {
+      "layoutMode": "VERTICAL",
+      "layoutWrap": "NO_WRAP",
+      "pageSlug": "foundation-typography"
+    },
+    "2414:10252": {
+      "layoutMode": "HORIZONTAL",
+      "layoutWrap": "NO_WRAP",
+      "pageSlug": "foundation-typography"
+    },
+    "2414:10254": {
+      "layoutMode": "VERTICAL",
+      "layoutWrap": "NO_WRAP",
+      "pageSlug": "foundation-typography"
+    },
+    "2414:10255": {
+      "layoutMode": "VERTICAL",
+      "layoutWrap": "NO_WRAP",
+      "pageSlug": "foundation-typography"
+    },
+    "2414:10257": {
+      "layoutMode": "HORIZONTAL",
+      "layoutWrap": "NO_WRAP",
+      "pageSlug": "foundation-typography"
+    },
+    "2414:10259": {
+      "layoutMode": "VERTICAL",
+      "layoutWrap": "NO_WRAP",
+      "pageSlug": "foundation-typography"
+    },
+    "2414:10260": {
+      "layoutMode": "VERTICAL",
+      "layoutWrap": "NO_WRAP",
+      "pageSlug": "foundation-typography"
+    },
+    "2414:10262": {
+      "layoutMode": "HORIZONTAL",
+      "layoutWrap": "NO_WRAP",
+      "pageSlug": "foundation-typography"
+    },
+    "2414:10266": {
+      "layoutMode": "VERTICAL",
+      "layoutWrap": "NO_WRAP",
+      "pageSlug": "foundation-typography"
+    },
+    "2414:10267": {
+      "layoutMode": "VERTICAL",
+      "layoutWrap": "NO_WRAP",
+      "pageSlug": "foundation-typography"
+    },
+    "2414:10269": {
+      "layoutMode": "VERTICAL",
+      "layoutWrap": "NO_WRAP",
+      "pageSlug": "foundation-typography"
+    },
+    "2414:10272": {
+      "layoutMode": "VERTICAL",
+      "layoutWrap": "NO_WRAP",
+      "pageSlug": "foundation-typography"
+    },
+    "2414:10275": {
+      "layoutMode": "VERTICAL",
+      "layoutWrap": "NO_WRAP",
+      "pageSlug": "foundation-typography"
+    },
+    "2414:10278": {
+      "layoutMode": "VERTICAL",
+      "layoutWrap": "NO_WRAP",
+      "pageSlug": "foundation-typography"
+    },
+    "2414:10281": {
+      "layoutMode": "VERTICAL",
+      "layoutWrap": "NO_WRAP",
+      "pageSlug": "foundation-typography"
+    },
+    "2414:10282": {
+      "layoutMode": "VERTICAL",
+      "layoutWrap": "NO_WRAP",
+      "pageSlug": "foundation-typography"
+    },
+    "2414:10283": {
+      "layoutMode": "HORIZONTAL",
+      "layoutWrap": "NO_WRAP",
+      "pageSlug": "foundation-typography"
+    },
+    "2414:10286": {
+      "layoutMode": "VERTICAL",
+      "layoutWrap": "NO_WRAP",
+      "pageSlug": "foundation-typography"
+    },
+    "2414:10287": {
+      "layoutMode": "HORIZONTAL",
+      "layoutWrap": "NO_WRAP",
+      "pageSlug": "foundation-typography"
+    },
+    "2414:10288": {
+      "layoutMode": "VERTICAL",
+      "layoutWrap": "NO_WRAP",
+      "pageSlug": "foundation-typography"
+    },
+    "2414:10291": {
+      "layoutMode": "VERTICAL",
+      "layoutWrap": "NO_WRAP",
+      "pageSlug": "foundation-typography"
+    },
+    "2414:10292": {
+      "layoutMode": "VERTICAL",
+      "layoutWrap": "NO_WRAP",
+      "pageSlug": "foundation-typography"
+    },
+    "2414:10294": {
+      "layoutMode": "HORIZONTAL",
+      "layoutWrap": "NO_WRAP",
+      "pageSlug": "foundation-typography"
+    },
+    "2414:10296": {
+      "layoutMode": "VERTICAL",
+      "layoutWrap": "NO_WRAP",
+      "pageSlug": "foundation-typography"
+    },
+    "2414:10299": {
+      "layoutMode": "VERTICAL",
+      "layoutWrap": "NO_WRAP",
+      "pageSlug": "foundation-typography"
+    },
+    "2414:10300": {
+      "layoutMode": "VERTICAL",
+      "layoutWrap": "NO_WRAP",
+      "pageSlug": "foundation-typography"
+    },
+    "2414:10302": {
+      "layoutMode": "HORIZONTAL",
+      "layoutWrap": "NO_WRAP",
+      "pageSlug": "foundation-typography"
+    },
+    "2414:10304": {
+      "layoutMode": "VERTICAL",
+      "layoutWrap": "NO_WRAP",
+      "pageSlug": "foundation-typography"
+    },
+    "2414:10307": {
+      "layoutMode": "VERTICAL",
+      "layoutWrap": "NO_WRAP",
+      "pageSlug": "foundation-typography"
+    },
+    "2414:10308": {
+      "layoutMode": "VERTICAL",
+      "layoutWrap": "NO_WRAP",
+      "pageSlug": "foundation-typography"
+    },
+    "2414:10310": {
+      "layoutMode": "HORIZONTAL",
+      "layoutWrap": "NO_WRAP",
+      "pageSlug": "foundation-typography"
+    },
+    "2414:10314": {
+      "layoutMode": "VERTICAL",
+      "layoutWrap": "NO_WRAP",
+      "pageSlug": "foundation-typography"
+    },
+    "2414:10317": {
+      "layoutMode": "VERTICAL",
+      "layoutWrap": "NO_WRAP",
+      "pageSlug": "foundation-typography"
+    },
+    "2414:10318": {
+      "layoutMode": "VERTICAL",
+      "layoutWrap": "NO_WRAP",
+      "pageSlug": "foundation-typography"
+    },
+    "2414:10320": {
+      "layoutMode": "HORIZONTAL",
+      "layoutWrap": "NO_WRAP",
+      "pageSlug": "foundation-typography"
+    },
+    "2414:10326": {
+      "layoutMode": "VERTICAL",
+      "layoutWrap": "NO_WRAP",
+      "pageSlug": "foundation-typography"
+    },
+    "2414:10328": {
+      "layoutMode": "VERTICAL",
+      "layoutWrap": "NO_WRAP",
+      "pageSlug": "foundation-typography"
+    },
+    "2414:10329": {
+      "layoutMode": "VERTICAL",
+      "layoutWrap": "NO_WRAP",
+      "pageSlug": "foundation-typography"
+    },
+    "2414:10331": {
+      "layoutMode": "HORIZONTAL",
+      "layoutWrap": "NO_WRAP",
+      "pageSlug": "foundation-typography"
+    },
+    "2414:10334": {
+      "layoutMode": "VERTICAL",
+      "layoutWrap": "NO_WRAP",
+      "pageSlug": "foundation-typography"
+    },
+    "2414:10336": {
+      "layoutMode": "VERTICAL",
+      "layoutWrap": "NO_WRAP",
+      "pageSlug": "foundation-typography"
+    },
+    "2414:10337": {
+      "layoutMode": "VERTICAL",
+      "layoutWrap": "NO_WRAP",
+      "pageSlug": "foundation-typography"
+    },
+    "2414:10339": {
+      "layoutMode": "HORIZONTAL",
+      "layoutWrap": "NO_WRAP",
+      "pageSlug": "foundation-typography"
+    },
+    "2414:10341": {
+      "layoutMode": "VERTICAL",
+      "layoutWrap": "NO_WRAP",
+      "pageSlug": "foundation-typography"
+    },
+    "2414:10342": {
+      "layoutMode": "VERTICAL",
+      "layoutWrap": "NO_WRAP",
+      "pageSlug": "foundation-typography"
+    },
+    "2414:10344": {
+      "layoutMode": "VERTICAL",
+      "layoutWrap": "NO_WRAP",
+      "pageSlug": "foundation-typography"
+    },
+    "2414:10351": {
+      "layoutMode": "VERTICAL",
+      "layoutWrap": "NO_WRAP",
+      "pageSlug": "foundation-typography"
+    },
+    "2414:10353": {
+      "layoutMode": "HORIZONTAL",
+      "layoutWrap": "NO_WRAP",
+      "pageSlug": "foundation-typography"
+    },
+    "2414:10356": {
+      "layoutMode": "HORIZONTAL",
+      "layoutWrap": "NO_WRAP",
+      "pageSlug": "foundation-typography"
+    },
+    "2414:10357": {
+      "layoutMode": "HORIZONTAL",
+      "layoutWrap": "NO_WRAP",
+      "pageSlug": "foundation-typography"
+    },
+    "2414:10358": {
+      "layoutMode": "VERTICAL",
+      "layoutWrap": "NO_WRAP",
+      "pageSlug": "foundation-typography"
+    },
+    "2414:10362": {
+      "layoutMode": "VERTICAL",
+      "layoutWrap": "NO_WRAP",
+      "pageSlug": "foundation-typography"
+    },
+    "2414:10365": {
+      "layoutMode": "VERTICAL",
+      "layoutWrap": "NO_WRAP",
+      "pageSlug": "foundation-typography"
+    },
+    "2414:10366": {
+      "layoutMode": "VERTICAL",
+      "layoutWrap": "NO_WRAP",
+      "pageSlug": "foundation-typography"
+    },
+    "I2414:10366;9150:14062": {
+      "layoutMode": "VERTICAL",
+      "layoutWrap": "NO_WRAP",
+      "pageSlug": "foundation-typography"
+    },
+    "2414:10368": {
+      "layoutMode": "VERTICAL",
+      "layoutWrap": "NO_WRAP",
+      "pageSlug": "foundation-typography"
+    },
+    "2414:10369": {
+      "layoutMode": "VERTICAL",
+      "layoutWrap": "NO_WRAP",
+      "pageSlug": "foundation-typography"
+    },
+    "2414:10370": {
+      "layoutMode": "VERTICAL",
+      "layoutWrap": "NO_WRAP",
+      "pageSlug": "foundation-typography"
+    },
+    "2414:10371": {
+      "layoutMode": "VERTICAL",
+      "layoutWrap": "NO_WRAP",
+      "pageSlug": "foundation-typography"
+    },
+    "2414:10372": {
+      "layoutMode": "HORIZONTAL",
+      "layoutWrap": "NO_WRAP",
+      "pageSlug": "foundation-typography"
+    },
+    "2414:10375": {
+      "layoutMode": "VERTICAL",
+      "layoutWrap": "NO_WRAP",
+      "pageSlug": "foundation-typography"
+    },
+    "2414:10376": {
+      "layoutMode": "HORIZONTAL",
+      "layoutWrap": "WRAP",
+      "pageSlug": "foundation-typography"
+    },
+    "2414:10377": {
+      "layoutMode": "HORIZONTAL",
+      "layoutWrap": "NO_WRAP",
+      "pageSlug": "foundation-typography"
+    },
+    "I2414:10377;2126:19058": {
+      "layoutMode": "HORIZONTAL",
+      "layoutWrap": "NO_WRAP",
+      "pageSlug": "foundation-typography"
+    },
+    "2414:10378": {
+      "layoutMode": "HORIZONTAL",
+      "layoutWrap": "NO_WRAP",
+      "pageSlug": "foundation-typography"
+    },
+    "I2414:10378;2126:19058": {
+      "layoutMode": "HORIZONTAL",
+      "layoutWrap": "NO_WRAP",
+      "pageSlug": "foundation-typography"
+    },
+    "2414:10379": {
+      "layoutMode": "HORIZONTAL",
+      "layoutWrap": "NO_WRAP",
+      "pageSlug": "foundation-typography"
+    },
+    "I2414:10379;2126:19058": {
+      "layoutMode": "HORIZONTAL",
+      "layoutWrap": "NO_WRAP",
+      "pageSlug": "foundation-typography"
+    },
+    "2414:10380": {
+      "layoutMode": "HORIZONTAL",
+      "layoutWrap": "NO_WRAP",
+      "pageSlug": "foundation-typography"
+    },
+    "I2414:10380;2126:19058": {
+      "layoutMode": "HORIZONTAL",
+      "layoutWrap": "NO_WRAP",
+      "pageSlug": "foundation-typography"
+    },
+    "2414:10381": {
+      "layoutMode": "HORIZONTAL",
+      "layoutWrap": "NO_WRAP",
+      "pageSlug": "foundation-typography"
+    },
+    "I2414:10381;2126:19058": {
+      "layoutMode": "HORIZONTAL",
+      "layoutWrap": "NO_WRAP",
+      "pageSlug": "foundation-typography"
+    },
+    "2414:10382": {
+      "layoutMode": "HORIZONTAL",
+      "layoutWrap": "NO_WRAP",
+      "pageSlug": "foundation-typography"
+    },
+    "I2414:10382;2126:19058": {
+      "layoutMode": "HORIZONTAL",
+      "layoutWrap": "NO_WRAP",
+      "pageSlug": "foundation-typography"
+    },
+    "2414:10383": {
+      "layoutMode": "VERTICAL",
+      "layoutWrap": "NO_WRAP",
+      "pageSlug": "foundation-typography"
+    },
+    "2414:10384": {
+      "layoutMode": "VERTICAL",
+      "layoutWrap": "NO_WRAP",
+      "pageSlug": "foundation-typography"
+    },
+    "2414:10385": {
+      "layoutMode": "HORIZONTAL",
+      "layoutWrap": "NO_WRAP",
+      "pageSlug": "foundation-typography"
+    },
+    "2414:10388": {
+      "layoutMode": "VERTICAL",
+      "layoutWrap": "NO_WRAP",
+      "pageSlug": "foundation-typography"
+    },
+    "2414:10389": {
+      "layoutMode": "HORIZONTAL",
+      "layoutWrap": "WRAP",
+      "pageSlug": "foundation-typography"
+    },
+    "2414:10390": {
+      "layoutMode": "HORIZONTAL",
+      "layoutWrap": "NO_WRAP",
+      "pageSlug": "foundation-typography"
+    },
+    "I2414:10390;2126:19058": {
+      "layoutMode": "HORIZONTAL",
+      "layoutWrap": "NO_WRAP",
+      "pageSlug": "foundation-typography"
+    },
+    "2414:10391": {
+      "layoutMode": "HORIZONTAL",
+      "layoutWrap": "NO_WRAP",
+      "pageSlug": "foundation-typography"
+    },
+    "I2414:10391;2126:19058": {
+      "layoutMode": "HORIZONTAL",
+      "layoutWrap": "NO_WRAP",
+      "pageSlug": "foundation-typography"
+    },
+    "2414:10392": {
+      "layoutMode": "HORIZONTAL",
+      "layoutWrap": "NO_WRAP",
+      "pageSlug": "foundation-typography"
+    },
+    "I2414:10392;2126:19058": {
+      "layoutMode": "HORIZONTAL",
+      "layoutWrap": "NO_WRAP",
+      "pageSlug": "foundation-typography"
+    },
+    "2414:10402": {
+      "layoutMode": "VERTICAL",
+      "layoutWrap": "NO_WRAP",
+      "pageSlug": "foundation-typography"
+    },
+    "I2414:10404;448:6114": {
+      "layoutMode": "HORIZONTAL",
+      "layoutWrap": "NO_WRAP",
+      "pageSlug": "foundation-typography"
+    },
+    "I2414:10406;448:6114": {
+      "layoutMode": "HORIZONTAL",
+      "layoutWrap": "NO_WRAP",
+      "pageSlug": "foundation-typography"
+    },
+    "2414:10407": {
+      "layoutMode": "VERTICAL",
+      "layoutWrap": "NO_WRAP",
+      "pageSlug": "foundation-typography"
+    },
+    "2414:10408": {
+      "layoutMode": "HORIZONTAL",
+      "layoutWrap": "NO_WRAP",
+      "pageSlug": "foundation-typography"
+    },
+    "I2414:10408;559:7096": {
+      "layoutMode": "HORIZONTAL",
+      "layoutWrap": "NO_WRAP",
+      "pageSlug": "foundation-typography"
+    },
+    "2414:10411": {
+      "layoutMode": "HORIZONTAL",
+      "layoutWrap": "NO_WRAP",
+      "pageSlug": "foundation-typography"
+    },
+    "2414:10412": {
+      "layoutMode": "VERTICAL",
+      "layoutWrap": "NO_WRAP",
+      "pageSlug": "foundation-typography"
+    },
+    "2414:10413": {
+      "layoutMode": "VERTICAL",
+      "layoutWrap": "NO_WRAP",
+      "pageSlug": "foundation-typography"
+    },
+    "2414:10414": {
+      "layoutMode": "HORIZONTAL",
+      "layoutWrap": "NO_WRAP",
+      "pageSlug": "foundation-typography"
+    },
+    "2414:10416": {
+      "layoutMode": "VERTICAL",
+      "layoutWrap": "NO_WRAP",
+      "pageSlug": "foundation-typography"
+    },
+    "2414:10417": {
+      "layoutMode": "VERTICAL",
+      "layoutWrap": "NO_WRAP",
+      "pageSlug": "foundation-typography"
+    },
+    "2414:10419": {
+      "layoutMode": "HORIZONTAL",
+      "layoutWrap": "NO_WRAP",
+      "pageSlug": "foundation-typography"
+    },
+    "2414:10421": {
+      "layoutMode": "VERTICAL",
+      "layoutWrap": "NO_WRAP",
+      "pageSlug": "foundation-typography"
+    },
+    "2414:10422": {
+      "layoutMode": "VERTICAL",
+      "layoutWrap": "NO_WRAP",
+      "pageSlug": "foundation-typography"
+    },
+    "2414:10424": {
+      "layoutMode": "HORIZONTAL",
+      "layoutWrap": "NO_WRAP",
+      "pageSlug": "foundation-typography"
+    },
+    "2414:10464": {
+      "layoutMode": "HORIZONTAL",
+      "layoutWrap": "NO_WRAP",
+      "pageSlug": "foundation-typography"
+    },
+    "2414:10468": {
+      "layoutMode": "VERTICAL",
+      "layoutWrap": "NO_WRAP",
+      "pageSlug": "foundation-typography"
+    },
+    "2414:10469": {
+      "layoutMode": "VERTICAL",
+      "layoutWrap": "NO_WRAP",
+      "pageSlug": "foundation-typography"
+    },
+    "2414:10470": {
+      "layoutMode": "VERTICAL",
+      "layoutWrap": "NO_WRAP",
+      "pageSlug": "foundation-typography"
+    },
+    "2414:10471": {
+      "layoutMode": "HORIZONTAL",
+      "layoutWrap": "NO_WRAP",
+      "pageSlug": "foundation-typography"
+    },
+    "2414:10474": {
+      "layoutMode": "VERTICAL",
+      "layoutWrap": "NO_WRAP",
+      "pageSlug": "foundation-typography"
+    },
+    "2414:10475": {
+      "layoutMode": "HORIZONTAL",
+      "layoutWrap": "WRAP",
+      "pageSlug": "foundation-typography"
+    },
+    "2414:10476": {
+      "layoutMode": "HORIZONTAL",
+      "layoutWrap": "NO_WRAP",
+      "pageSlug": "foundation-typography"
+    },
+    "I2414:10476;2126:19058": {
+      "layoutMode": "HORIZONTAL",
+      "layoutWrap": "NO_WRAP",
+      "pageSlug": "foundation-typography"
+    },
+    "2414:10477": {
+      "layoutMode": "HORIZONTAL",
+      "layoutWrap": "NO_WRAP",
+      "pageSlug": "foundation-typography"
+    },
+    "I2414:10477;2126:19058": {
+      "layoutMode": "HORIZONTAL",
+      "layoutWrap": "NO_WRAP",
+      "pageSlug": "foundation-typography"
+    },
+    "2414:10478": {
+      "layoutMode": "HORIZONTAL",
+      "layoutWrap": "NO_WRAP",
+      "pageSlug": "foundation-typography"
+    },
+    "I2414:10478;2126:19058": {
+      "layoutMode": "HORIZONTAL",
+      "layoutWrap": "NO_WRAP",
+      "pageSlug": "foundation-typography"
+    },
+    "2414:10479": {
+      "layoutMode": "HORIZONTAL",
+      "layoutWrap": "NO_WRAP",
+      "pageSlug": "foundation-typography"
+    },
+    "I2414:10479;2126:19058": {
+      "layoutMode": "HORIZONTAL",
+      "layoutWrap": "NO_WRAP",
+      "pageSlug": "foundation-typography"
+    },
+    "2414:10480": {
+      "layoutMode": "HORIZONTAL",
+      "layoutWrap": "NO_WRAP",
+      "pageSlug": "foundation-typography"
+    },
+    "I2414:10480;2126:19058": {
+      "layoutMode": "HORIZONTAL",
+      "layoutWrap": "NO_WRAP",
+      "pageSlug": "foundation-typography"
+    },
+    "2414:10481": {
+      "layoutMode": "HORIZONTAL",
+      "layoutWrap": "NO_WRAP",
+      "pageSlug": "foundation-typography"
+    },
+    "I2414:10481;2126:19058": {
+      "layoutMode": "HORIZONTAL",
+      "layoutWrap": "NO_WRAP",
+      "pageSlug": "foundation-typography"
+    },
+    "2414:10482": {
+      "layoutMode": "VERTICAL",
+      "layoutWrap": "NO_WRAP",
+      "pageSlug": "foundation-typography"
+    },
+    "2414:10483": {
+      "layoutMode": "VERTICAL",
+      "layoutWrap": "NO_WRAP",
+      "pageSlug": "foundation-typography"
+    },
+    "2414:10484": {
+      "layoutMode": "HORIZONTAL",
+      "layoutWrap": "NO_WRAP",
+      "pageSlug": "foundation-typography"
+    },
+    "2414:10487": {
+      "layoutMode": "VERTICAL",
+      "layoutWrap": "NO_WRAP",
+      "pageSlug": "foundation-typography"
+    },
+    "2414:10488": {
+      "layoutMode": "HORIZONTAL",
+      "layoutWrap": "WRAP",
+      "pageSlug": "foundation-typography"
+    },
+    "2414:10489": {
+      "layoutMode": "HORIZONTAL",
+      "layoutWrap": "NO_WRAP",
+      "pageSlug": "foundation-typography"
+    },
+    "I2414:10489;2126:19058": {
+      "layoutMode": "HORIZONTAL",
+      "layoutWrap": "NO_WRAP",
+      "pageSlug": "foundation-typography"
+    },
+    "2414:10490": {
+      "layoutMode": "HORIZONTAL",
+      "layoutWrap": "NO_WRAP",
+      "pageSlug": "foundation-typography"
+    },
+    "I2414:10490;2126:19058": {
+      "layoutMode": "HORIZONTAL",
+      "layoutWrap": "NO_WRAP",
+      "pageSlug": "foundation-typography"
+    },
+    "2414:10491": {
+      "layoutMode": "HORIZONTAL",
+      "layoutWrap": "NO_WRAP",
+      "pageSlug": "foundation-typography"
+    },
+    "I2414:10491;2126:19058": {
+      "layoutMode": "HORIZONTAL",
+      "layoutWrap": "NO_WRAP",
+      "pageSlug": "foundation-typography"
+    },
+    "2414:10494": {
+      "layoutMode": "VERTICAL",
+      "layoutWrap": "NO_WRAP",
+      "pageSlug": "foundation-typography"
+    },
+    "2414:10496": {
+      "layoutMode": "VERTICAL",
+      "layoutWrap": "NO_WRAP",
+      "pageSlug": "foundation-typography"
+    },
+    "2414:10497": {
+      "layoutMode": "VERTICAL",
+      "layoutWrap": "NO_WRAP",
+      "pageSlug": "foundation-typography"
+    },
+    "2414:10499": {
+      "layoutMode": "HORIZONTAL",
+      "layoutWrap": "NO_WRAP",
+      "pageSlug": "foundation-typography"
+    },
+    "2414:10502": {
+      "layoutMode": "VERTICAL",
+      "layoutWrap": "NO_WRAP",
+      "pageSlug": "foundation-typography"
+    },
+    "2414:10504": {
+      "layoutMode": "VERTICAL",
+      "layoutWrap": "NO_WRAP",
+      "pageSlug": "foundation-typography"
+    },
+    "2414:10505": {
+      "layoutMode": "VERTICAL",
+      "layoutWrap": "NO_WRAP",
+      "pageSlug": "foundation-typography"
+    },
+    "2414:10507": {
+      "layoutMode": "HORIZONTAL",
+      "layoutWrap": "NO_WRAP",
+      "pageSlug": "foundation-typography"
+    },
+    "2414:10509": {
+      "layoutMode": "VERTICAL",
+      "layoutWrap": "NO_WRAP",
+      "pageSlug": "foundation-typography"
+    },
+    "2414:10511": {
+      "layoutMode": "HORIZONTAL",
+      "layoutWrap": "NO_WRAP",
+      "pageSlug": "foundation-typography"
+    },
+    "2414:10515": {
+      "layoutMode": "VERTICAL",
+      "layoutWrap": "NO_WRAP",
+      "pageSlug": "foundation-typography"
+    },
+    "2414:10517": {
+      "layoutMode": "VERTICAL",
+      "layoutWrap": "NO_WRAP",
+      "pageSlug": "foundation-typography"
+    },
+    "2414:10519": {
+      "layoutMode": "VERTICAL",
+      "layoutWrap": "NO_WRAP",
+      "pageSlug": "foundation-typography"
+    },
+    "2414:10523": {
+      "layoutMode": "VERTICAL",
+      "layoutWrap": "NO_WRAP",
+      "pageSlug": "foundation-typography"
+    },
+    "2414:10526": {
+      "layoutMode": "HORIZONTAL",
+      "layoutWrap": "NO_WRAP",
+      "pageSlug": "foundation-typography"
+    },
+    "2414:10527": {
+      "layoutMode": "VERTICAL",
+      "layoutWrap": "NO_WRAP",
+      "pageSlug": "foundation-typography"
+    },
+    "2414:10529": {
+      "layoutMode": "HORIZONTAL",
+      "layoutWrap": "NO_WRAP",
+      "pageSlug": "foundation-typography"
+    },
+    "2414:10533": {
+      "layoutMode": "VERTICAL",
+      "layoutWrap": "NO_WRAP",
+      "pageSlug": "foundation-typography"
+    },
+    "2414:10534": {
+      "layoutMode": "HORIZONTAL",
+      "layoutWrap": "NO_WRAP",
+      "pageSlug": "foundation-typography"
+    },
+    "2414:10535": {
+      "layoutMode": "VERTICAL",
+      "layoutWrap": "NO_WRAP",
+      "pageSlug": "foundation-typography"
+    },
+    "2414:10537": {
+      "layoutMode": "HORIZONTAL",
+      "layoutWrap": "NO_WRAP",
+      "pageSlug": "foundation-typography"
+    },
+    "2414:10543": {
+      "layoutMode": "VERTICAL",
+      "layoutWrap": "NO_WRAP",
+      "pageSlug": "foundation-typography"
+    },
+    "2414:10546": {
+      "layoutMode": "HORIZONTAL",
+      "layoutWrap": "NO_WRAP",
+      "pageSlug": "foundation-typography"
+    },
+    "2414:10547": {
+      "layoutMode": "VERTICAL",
+      "layoutWrap": "NO_WRAP",
+      "pageSlug": "foundation-typography"
+    },
+    "2414:10549": {
+      "layoutMode": "VERTICAL",
+      "layoutWrap": "NO_WRAP",
+      "pageSlug": "foundation-typography"
+    },
+    "2414:10551": {
+      "layoutMode": "VERTICAL",
+      "layoutWrap": "NO_WRAP",
+      "pageSlug": "foundation-typography"
+    },
+    "2414:10553": {
+      "layoutMode": "HORIZONTAL",
+      "layoutWrap": "NO_WRAP",
+      "pageSlug": "foundation-typography"
+    },
+    "2414:10561": {
+      "layoutMode": "VERTICAL",
+      "layoutWrap": "NO_WRAP",
+      "pageSlug": "foundation-typography"
+    },
+    "2414:10562": {
+      "layoutMode": "VERTICAL",
+      "layoutWrap": "NO_WRAP",
+      "pageSlug": "foundation-typography"
+    },
+    "2414:10563": {
+      "layoutMode": "VERTICAL",
+      "layoutWrap": "NO_WRAP",
+      "pageSlug": "foundation-typography"
+    },
+    "2414:10564": {
+      "layoutMode": "VERTICAL",
+      "layoutWrap": "NO_WRAP",
+      "pageSlug": "foundation-typography"
+    },
+    "2414:10567": {
+      "layoutMode": "VERTICAL",
+      "layoutWrap": "NO_WRAP",
+      "pageSlug": "foundation-typography"
+    },
+    "2414:10570": {
+      "layoutMode": "VERTICAL",
+      "layoutWrap": "NO_WRAP",
+      "pageSlug": "foundation-typography"
+    },
+    "2414:10573": {
+      "layoutMode": "VERTICAL",
+      "layoutWrap": "NO_WRAP",
+      "pageSlug": "foundation-typography"
+    },
+    "2414:10575": {
+      "layoutMode": "VERTICAL",
+      "layoutWrap": "NO_WRAP",
+      "pageSlug": "foundation-typography"
+    },
+    "2414:10576": {
+      "layoutMode": "VERTICAL",
+      "layoutWrap": "NO_WRAP",
+      "pageSlug": "foundation-typography"
+    },
+    "2414:10578": {
+      "layoutMode": "HORIZONTAL",
+      "layoutWrap": "NO_WRAP",
+      "pageSlug": "foundation-typography"
+    },
+    "2414:10580": {
+      "layoutMode": "VERTICAL",
+      "layoutWrap": "NO_WRAP",
+      "pageSlug": "foundation-typography"
+    },
+    "2414:10582": {
+      "layoutMode": "HORIZONTAL",
+      "layoutWrap": "NO_WRAP",
+      "pageSlug": "foundation-typography"
+    },
+    "2414:10586": {
+      "layoutMode": "VERTICAL",
+      "layoutWrap": "NO_WRAP",
+      "pageSlug": "foundation-typography"
+    },
+    "2414:10588": {
+      "layoutMode": "VERTICAL",
+      "layoutWrap": "NO_WRAP",
+      "pageSlug": "foundation-typography"
+    },
+    "2414:10590": {
+      "layoutMode": "VERTICAL",
+      "layoutWrap": "NO_WRAP",
+      "pageSlug": "foundation-typography"
+    },
+    "2414:10594": {
+      "layoutMode": "VERTICAL",
+      "layoutWrap": "NO_WRAP",
+      "pageSlug": "foundation-typography"
+    },
+    "2414:10597": {
+      "layoutMode": "HORIZONTAL",
+      "layoutWrap": "NO_WRAP",
+      "pageSlug": "foundation-typography"
+    },
+    "2414:10598": {
+      "layoutMode": "VERTICAL",
+      "layoutWrap": "NO_WRAP",
+      "pageSlug": "foundation-typography"
+    },
+    "2414:10600": {
+      "layoutMode": "HORIZONTAL",
+      "layoutWrap": "NO_WRAP",
+      "pageSlug": "foundation-typography"
+    },
+    "2414:10604": {
+      "layoutMode": "VERTICAL",
+      "layoutWrap": "NO_WRAP",
+      "pageSlug": "foundation-typography"
+    },
+    "2414:10605": {
+      "layoutMode": "HORIZONTAL",
+      "layoutWrap": "NO_WRAP",
+      "pageSlug": "foundation-typography"
+    },
+    "2414:10606": {
+      "layoutMode": "VERTICAL",
+      "layoutWrap": "NO_WRAP",
+      "pageSlug": "foundation-typography"
+    },
+    "2414:10608": {
+      "layoutMode": "HORIZONTAL",
+      "layoutWrap": "NO_WRAP",
+      "pageSlug": "foundation-typography"
+    },
+    "2414:10614": {
+      "layoutMode": "VERTICAL",
+      "layoutWrap": "NO_WRAP",
+      "pageSlug": "foundation-typography"
+    },
+    "2414:10617": {
+      "layoutMode": "HORIZONTAL",
+      "layoutWrap": "NO_WRAP",
+      "pageSlug": "foundation-typography"
+    },
+    "2414:10618": {
+      "layoutMode": "VERTICAL",
+      "layoutWrap": "NO_WRAP",
+      "pageSlug": "foundation-typography"
+    },
+    "2414:10620": {
+      "layoutMode": "VERTICAL",
+      "layoutWrap": "NO_WRAP",
+      "pageSlug": "foundation-typography"
+    },
+    "2414:10622": {
+      "layoutMode": "VERTICAL",
+      "layoutWrap": "NO_WRAP",
+      "pageSlug": "foundation-typography"
+    },
+    "2414:10624": {
+      "layoutMode": "HORIZONTAL",
+      "layoutWrap": "NO_WRAP",
+      "pageSlug": "foundation-typography"
+    },
+    "2414:10635": {
+      "layoutMode": "VERTICAL",
+      "layoutWrap": "NO_WRAP",
+      "pageSlug": "foundation-typography"
+    },
+    "2414:10637": {
+      "layoutMode": "HORIZONTAL",
+      "layoutWrap": "NO_WRAP",
+      "pageSlug": "foundation-typography"
+    },
+    "2414:10640": {
+      "layoutMode": "HORIZONTAL",
+      "layoutWrap": "NO_WRAP",
+      "pageSlug": "foundation-typography"
+    },
+    "2414:10641": {
+      "layoutMode": "HORIZONTAL",
+      "layoutWrap": "NO_WRAP",
+      "pageSlug": "foundation-typography"
+    },
+    "I2414:10641;9150:14041": {
+      "layoutMode": "VERTICAL",
+      "layoutWrap": "NO_WRAP",
+      "pageSlug": "foundation-typography"
+    },
+    "2414:10644": {
+      "layoutMode": "VERTICAL",
+      "layoutWrap": "NO_WRAP",
+      "pageSlug": "foundation-typography"
+    },
+    "2414:10646": {
+      "layoutMode": "VERTICAL",
+      "layoutWrap": "NO_WRAP",
+      "pageSlug": "foundation-typography"
+    },
+    "2414:10647": {
+      "layoutMode": "VERTICAL",
+      "layoutWrap": "NO_WRAP",
+      "pageSlug": "foundation-typography"
+    },
+    "2414:10648": {
+      "layoutMode": "VERTICAL",
+      "layoutWrap": "NO_WRAP",
+      "pageSlug": "foundation-typography"
+    },
+    "2414:10649": {
+      "layoutMode": "VERTICAL",
+      "layoutWrap": "NO_WRAP",
+      "pageSlug": "foundation-typography"
+    },
+    "2414:10652": {
+      "layoutMode": "VERTICAL",
+      "layoutWrap": "NO_WRAP",
+      "pageSlug": "foundation-typography"
+    },
+    "2414:10656": {
+      "layoutMode": "VERTICAL",
+      "layoutWrap": "NO_WRAP",
+      "pageSlug": "foundation-typography"
+    },
+    "2414:10658": {
+      "layoutMode": "VERTICAL",
+      "layoutWrap": "NO_WRAP",
+      "pageSlug": "foundation-typography"
+    },
+    "2414:10659": {
+      "layoutMode": "VERTICAL",
+      "layoutWrap": "NO_WRAP",
+      "pageSlug": "foundation-typography"
+    },
+    "2414:10661": {
+      "layoutMode": "HORIZONTAL",
+      "layoutWrap": "NO_WRAP",
+      "pageSlug": "foundation-typography"
+    },
+    "2414:10664": {
+      "layoutMode": "VERTICAL",
+      "layoutWrap": "NO_WRAP",
+      "pageSlug": "foundation-typography"
+    },
+    "2414:10666": {
+      "layoutMode": "VERTICAL",
+      "layoutWrap": "NO_WRAP",
+      "pageSlug": "foundation-typography"
+    },
+    "2414:10667": {
+      "layoutMode": "VERTICAL",
+      "layoutWrap": "NO_WRAP",
+      "pageSlug": "foundation-typography"
+    },
+    "2414:10669": {
+      "layoutMode": "HORIZONTAL",
+      "layoutWrap": "NO_WRAP",
+      "pageSlug": "foundation-typography"
+    },
+    "2414:10671": {
+      "layoutMode": "HORIZONTAL",
+      "layoutWrap": "NO_WRAP",
+      "pageSlug": "foundation-typography"
+    },
+    "2414:10677": {
+      "layoutMode": "VERTICAL",
+      "layoutWrap": "NO_WRAP",
+      "pageSlug": "foundation-typography"
+    },
+    "2414:10678": {
+      "layoutMode": "VERTICAL",
+      "layoutWrap": "NO_WRAP",
+      "pageSlug": "foundation-typography"
+    },
+    "2414:10681": {
+      "layoutMode": "HORIZONTAL",
+      "layoutWrap": "NO_WRAP",
+      "pageSlug": "foundation-typography"
+    },
+    "2414:10682": {
+      "layoutMode": "HORIZONTAL",
+      "layoutWrap": "NO_WRAP",
+      "pageSlug": "foundation-typography"
+    },
+    "2414:10684": {
+      "layoutMode": "VERTICAL",
+      "layoutWrap": "NO_WRAP",
+      "pageSlug": "foundation-typography"
+    },
+    "2414:10687": {
+      "layoutMode": "HORIZONTAL",
+      "layoutWrap": "NO_WRAP",
+      "pageSlug": "foundation-typography"
+    },
+    "2414:10688": {
+      "layoutMode": "HORIZONTAL",
+      "layoutWrap": "NO_WRAP",
+      "pageSlug": "foundation-typography"
+    },
+    "2414:10690": {
+      "layoutMode": "VERTICAL",
+      "layoutWrap": "NO_WRAP",
+      "pageSlug": "foundation-typography"
+    },
+    "2414:10692": {
+      "layoutMode": "VERTICAL",
+      "layoutWrap": "NO_WRAP",
+      "pageSlug": "foundation-typography"
+    },
+    "2414:10693": {
+      "layoutMode": "VERTICAL",
+      "layoutWrap": "NO_WRAP",
+      "pageSlug": "foundation-typography"
+    },
+    "2414:10695": {
+      "layoutMode": "HORIZONTAL",
+      "layoutWrap": "NO_WRAP",
+      "pageSlug": "foundation-typography"
+    },
+    "2414:10697": {
+      "layoutMode": "HORIZONTAL",
+      "layoutWrap": "NO_WRAP",
+      "pageSlug": "foundation-typography"
+    },
+    "2414:10703": {
+      "layoutMode": "VERTICAL",
+      "layoutWrap": "NO_WRAP",
+      "pageSlug": "foundation-typography"
+    },
+    "2414:10704": {
+      "layoutMode": "VERTICAL",
+      "layoutWrap": "NO_WRAP",
+      "pageSlug": "foundation-typography"
+    },
+    "2414:10707": {
+      "layoutMode": "HORIZONTAL",
+      "layoutWrap": "NO_WRAP",
+      "pageSlug": "foundation-typography"
+    },
+    "2414:10708": {
+      "layoutMode": "HORIZONTAL",
+      "layoutWrap": "NO_WRAP",
+      "pageSlug": "foundation-typography"
+    },
+    "2414:10710": {
+      "layoutMode": "VERTICAL",
+      "layoutWrap": "NO_WRAP",
+      "pageSlug": "foundation-typography"
+    },
+    "2414:10713": {
+      "layoutMode": "HORIZONTAL",
+      "layoutWrap": "NO_WRAP",
+      "pageSlug": "foundation-typography"
+    },
+    "2414:10714": {
+      "layoutMode": "HORIZONTAL",
+      "layoutWrap": "NO_WRAP",
+      "pageSlug": "foundation-typography"
+    },
+    "2414:10718": {
+      "layoutMode": "VERTICAL",
+      "layoutWrap": "NO_WRAP",
+      "pageSlug": "foundation-typography"
+    },
+    "2414:10720": {
+      "layoutMode": "VERTICAL",
+      "layoutWrap": "NO_WRAP",
+      "pageSlug": "foundation-typography"
+    },
+    "2414:10721": {
+      "layoutMode": "VERTICAL",
+      "layoutWrap": "NO_WRAP",
+      "pageSlug": "foundation-typography"
+    },
+    "2414:10723": {
+      "layoutMode": "HORIZONTAL",
+      "layoutWrap": "NO_WRAP",
+      "pageSlug": "foundation-typography"
+    },
+    "2414:10726": {
+      "layoutMode": "VERTICAL",
+      "layoutWrap": "NO_WRAP",
+      "pageSlug": "foundation-typography"
+    },
+    "2414:10728": {
+      "layoutMode": "VERTICAL",
+      "layoutWrap": "NO_WRAP",
+      "pageSlug": "foundation-typography"
+    },
+    "2414:10729": {
+      "layoutMode": "VERTICAL",
+      "layoutWrap": "NO_WRAP",
+      "pageSlug": "foundation-typography"
+    },
+    "2414:10731": {
+      "layoutMode": "HORIZONTAL",
+      "layoutWrap": "NO_WRAP",
+      "pageSlug": "foundation-typography"
+    },
+    "2414:10733": {
+      "layoutMode": "HORIZONTAL",
+      "layoutWrap": "NO_WRAP",
+      "pageSlug": "foundation-typography"
+    },
+    "2414:10737": {
+      "layoutMode": "VERTICAL",
+      "layoutWrap": "NO_WRAP",
+      "pageSlug": "foundation-typography"
+    },
+    "2414:10738": {
+      "layoutMode": "VERTICAL",
+      "layoutWrap": "NO_WRAP",
+      "pageSlug": "foundation-typography"
+    },
+    "2414:10739": {
+      "layoutMode": "VERTICAL",
+      "layoutWrap": "NO_WRAP",
+      "pageSlug": "foundation-typography"
+    },
+    "2414:10740": {
+      "layoutMode": "HORIZONTAL",
+      "layoutWrap": "NO_WRAP",
+      "pageSlug": "foundation-typography"
+    },
+    "2414:10743": {
+      "layoutMode": "VERTICAL",
+      "layoutWrap": "NO_WRAP",
+      "pageSlug": "foundation-typography"
+    },
+    "2414:10744": {
+      "layoutMode": "HORIZONTAL",
+      "layoutWrap": "NO_WRAP",
+      "pageSlug": "foundation-typography"
+    },
+    "2414:10745": {
+      "layoutMode": "VERTICAL",
+      "layoutWrap": "NO_WRAP",
+      "pageSlug": "foundation-typography"
+    },
+    "2414:10748": {
+      "layoutMode": "HORIZONTAL",
+      "layoutWrap": "NO_WRAP",
+      "pageSlug": "foundation-typography"
+    },
+    "2414:10749": {
+      "layoutMode": "HORIZONTAL",
+      "layoutWrap": "NO_WRAP",
+      "pageSlug": "foundation-typography"
+    },
+    "2414:10751": {
+      "layoutMode": "VERTICAL",
+      "layoutWrap": "NO_WRAP",
+      "pageSlug": "foundation-typography"
+    },
+    "2414:10752": {
+      "layoutMode": "VERTICAL",
+      "layoutWrap": "NO_WRAP",
+      "pageSlug": "foundation-typography"
+    },
+    "2414:10754": {
+      "layoutMode": "HORIZONTAL",
+      "layoutWrap": "NO_WRAP",
+      "pageSlug": "foundation-typography"
+    },
+    "2414:10756": {
+      "layoutMode": "VERTICAL",
+      "layoutWrap": "NO_WRAP",
+      "pageSlug": "foundation-typography"
+    },
+    "2414:10759": {
+      "layoutMode": "HORIZONTAL",
+      "layoutWrap": "NO_WRAP",
+      "pageSlug": "foundation-typography"
+    },
+    "2414:10760": {
+      "layoutMode": "HORIZONTAL",
+      "layoutWrap": "NO_WRAP",
+      "pageSlug": "foundation-typography"
+    },
+    "2414:10762": {
+      "layoutMode": "VERTICAL",
+      "layoutWrap": "NO_WRAP",
+      "pageSlug": "foundation-typography"
+    },
+    "2414:10763": {
+      "layoutMode": "VERTICAL",
+      "layoutWrap": "NO_WRAP",
+      "pageSlug": "foundation-typography"
+    },
+    "2414:10765": {
+      "layoutMode": "HORIZONTAL",
+      "layoutWrap": "NO_WRAP",
+      "pageSlug": "foundation-typography"
+    },
+    "2414:10767": {
+      "layoutMode": "VERTICAL",
+      "layoutWrap": "NO_WRAP",
+      "pageSlug": "foundation-typography"
+    },
+    "2414:10770": {
+      "layoutMode": "HORIZONTAL",
+      "layoutWrap": "NO_WRAP",
+      "pageSlug": "foundation-typography"
+    },
+    "2414:10771": {
+      "layoutMode": "HORIZONTAL",
+      "layoutWrap": "NO_WRAP",
+      "pageSlug": "foundation-typography"
+    },
+    "2414:10773": {
+      "layoutMode": "VERTICAL",
+      "layoutWrap": "NO_WRAP",
+      "pageSlug": "foundation-typography"
+    },
+    "2414:10774": {
+      "layoutMode": "VERTICAL",
+      "layoutWrap": "NO_WRAP",
+      "pageSlug": "foundation-typography"
+    },
+    "2414:10776": {
+      "layoutMode": "HORIZONTAL",
+      "layoutWrap": "NO_WRAP",
+      "pageSlug": "foundation-typography"
+    },
+    "2414:10778": {
+      "layoutMode": "VERTICAL",
+      "layoutWrap": "NO_WRAP",
+      "pageSlug": "foundation-typography"
+    },
+    "2414:10781": {
+      "layoutMode": "HORIZONTAL",
+      "layoutWrap": "NO_WRAP",
+      "pageSlug": "foundation-typography"
+    },
+    "2414:10782": {
+      "layoutMode": "HORIZONTAL",
+      "layoutWrap": "NO_WRAP",
+      "pageSlug": "foundation-typography"
+    },
+    "2414:10784": {
+      "layoutMode": "VERTICAL",
+      "layoutWrap": "NO_WRAP",
+      "pageSlug": "foundation-typography"
+    },
+    "2414:10785": {
+      "layoutMode": "VERTICAL",
+      "layoutWrap": "NO_WRAP",
+      "pageSlug": "foundation-typography"
+    },
+    "2414:10787": {
+      "layoutMode": "HORIZONTAL",
+      "layoutWrap": "NO_WRAP",
+      "pageSlug": "foundation-typography"
+    },
+    "2414:10789": {
+      "layoutMode": "VERTICAL",
+      "layoutWrap": "NO_WRAP",
+      "pageSlug": "foundation-typography"
+    },
+    "2414:10791": {
+      "layoutMode": "VERTICAL",
+      "layoutWrap": "NO_WRAP",
+      "pageSlug": "foundation-typography"
+    },
+    "2414:10792": {
+      "layoutMode": "VERTICAL",
+      "layoutWrap": "NO_WRAP",
+      "pageSlug": "foundation-typography"
+    },
+    "2414:10794": {
+      "layoutMode": "HORIZONTAL",
+      "layoutWrap": "NO_WRAP",
+      "pageSlug": "foundation-typography"
+    },
+    "2414:10796": {
+      "layoutMode": "HORIZONTAL",
+      "layoutWrap": "NO_WRAP",
+      "pageSlug": "foundation-typography"
+    },
+    "2414:10800": {
+      "layoutMode": "VERTICAL",
+      "layoutWrap": "NO_WRAP",
+      "pageSlug": "foundation-typography"
+    },
+    "2414:10801": {
+      "layoutMode": "VERTICAL",
+      "layoutWrap": "NO_WRAP",
+      "pageSlug": "foundation-typography"
+    },
+    "2414:10802": {
+      "layoutMode": "VERTICAL",
+      "layoutWrap": "NO_WRAP",
+      "pageSlug": "foundation-typography"
+    },
+    "2414:10803": {
+      "layoutMode": "HORIZONTAL",
+      "layoutWrap": "NO_WRAP",
+      "pageSlug": "foundation-typography"
+    },
+    "2414:10806": {
+      "layoutMode": "VERTICAL",
+      "layoutWrap": "NO_WRAP",
+      "pageSlug": "foundation-typography"
+    },
+    "2414:10807": {
+      "layoutMode": "HORIZONTAL",
+      "layoutWrap": "NO_WRAP",
+      "pageSlug": "foundation-typography"
+    },
+    "2414:10808": {
+      "layoutMode": "VERTICAL",
+      "layoutWrap": "NO_WRAP",
+      "pageSlug": "foundation-typography"
+    },
+    "2414:10811": {
+      "layoutMode": "VERTICAL",
+      "layoutWrap": "NO_WRAP",
+      "pageSlug": "foundation-typography"
+    },
+    "2414:10812": {
+      "layoutMode": "VERTICAL",
+      "layoutWrap": "NO_WRAP",
+      "pageSlug": "foundation-typography"
+    },
+    "2414:10814": {
+      "layoutMode": "HORIZONTAL",
+      "layoutWrap": "NO_WRAP",
+      "pageSlug": "foundation-typography"
+    },
+    "2414:10817": {
+      "layoutMode": "HORIZONTAL",
+      "layoutWrap": "NO_WRAP",
+      "pageSlug": "foundation-typography"
+    },
+    "2414:10818": {
+      "layoutMode": "HORIZONTAL",
+      "layoutWrap": "NO_WRAP",
+      "pageSlug": "foundation-typography"
+    },
+    "2414:10823": {
+      "layoutMode": "VERTICAL",
+      "layoutWrap": "NO_WRAP",
+      "pageSlug": "foundation-typography"
+    },
+    "2414:10826": {
+      "layoutMode": "VERTICAL",
+      "layoutWrap": "NO_WRAP",
+      "pageSlug": "foundation-typography"
+    },
+    "2414:10827": {
+      "layoutMode": "VERTICAL",
+      "layoutWrap": "NO_WRAP",
+      "pageSlug": "foundation-typography"
+    },
+    "2414:10829": {
+      "layoutMode": "HORIZONTAL",
+      "layoutWrap": "NO_WRAP",
+      "pageSlug": "foundation-typography"
+    },
+    "2414:10832": {
+      "layoutMode": "HORIZONTAL",
+      "layoutWrap": "NO_WRAP",
+      "pageSlug": "foundation-typography"
+    },
+    "2414:10833": {
+      "layoutMode": "HORIZONTAL",
+      "layoutWrap": "NO_WRAP",
+      "pageSlug": "foundation-typography"
+    },
+    "2414:10838": {
+      "layoutMode": "VERTICAL",
+      "layoutWrap": "NO_WRAP",
+      "pageSlug": "foundation-typography"
+    },
+    "2414:10841": {
+      "layoutMode": "VERTICAL",
+      "layoutWrap": "NO_WRAP",
+      "pageSlug": "foundation-typography"
+    },
+    "2414:10842": {
+      "layoutMode": "VERTICAL",
+      "layoutWrap": "NO_WRAP",
+      "pageSlug": "foundation-typography"
+    },
+    "2414:10844": {
+      "layoutMode": "HORIZONTAL",
+      "layoutWrap": "NO_WRAP",
+      "pageSlug": "foundation-typography"
+    },
+    "2414:10846": {
+      "layoutMode": "VERTICAL",
+      "layoutWrap": "NO_WRAP",
+      "pageSlug": "foundation-typography"
+    },
+    "2414:10849": {
+      "layoutMode": "VERTICAL",
+      "layoutWrap": "NO_WRAP",
+      "pageSlug": "foundation-typography"
+    },
+    "2414:10850": {
+      "layoutMode": "VERTICAL",
+      "layoutWrap": "NO_WRAP",
+      "pageSlug": "foundation-typography"
+    },
+    "2414:10852": {
+      "layoutMode": "HORIZONTAL",
+      "layoutWrap": "NO_WRAP",
+      "pageSlug": "foundation-typography"
+    },
+    "2414:10854": {
+      "layoutMode": "VERTICAL",
+      "layoutWrap": "NO_WRAP",
+      "pageSlug": "foundation-typography"
+    },
+    "2414:11099": {
+      "layoutMode": "VERTICAL",
+      "layoutWrap": "NO_WRAP",
+      "pageSlug": "foundation-typography"
+    },
+    "2414:11100": {
+      "layoutMode": "VERTICAL",
+      "layoutWrap": "NO_WRAP",
+      "pageSlug": "foundation-typography"
+    },
+    "2414:11103": {
+      "layoutMode": "VERTICAL",
+      "layoutWrap": "NO_WRAP",
+      "pageSlug": "foundation-typography"
+    },
+    "2466:74712": {
+      "layoutMode": "VERTICAL",
+      "layoutWrap": "NO_WRAP",
+      "pageSlug": "foundation-typography"
+    },
+    "2466:74713": {
+      "layoutMode": "VERTICAL",
+      "layoutWrap": "NO_WRAP",
+      "pageSlug": "foundation-typography"
+    },
+    "2466:74714": {
+      "layoutMode": "HORIZONTAL",
+      "layoutWrap": "NO_WRAP",
+      "pageSlug": "foundation-typography"
+    },
+    "2466:74717": {
+      "layoutMode": "VERTICAL",
+      "layoutWrap": "NO_WRAP",
+      "pageSlug": "foundation-typography"
+    },
+    "2466:74720": {
+      "layoutMode": "VERTICAL",
+      "layoutWrap": "NO_WRAP",
+      "pageSlug": "foundation-typography"
+    },
+    "2466:74721": {
+      "layoutMode": "VERTICAL",
+      "layoutWrap": "NO_WRAP",
+      "pageSlug": "foundation-typography"
+    },
+    "2466:74723": {
+      "layoutMode": "HORIZONTAL",
+      "layoutWrap": "NO_WRAP",
+      "pageSlug": "foundation-typography"
+    },
+    "2466:74726": {
+      "layoutMode": "VERTICAL",
+      "layoutWrap": "NO_WRAP",
+      "pageSlug": "foundation-typography"
+    },
+    "2466:74728": {
+      "layoutMode": "VERTICAL",
+      "layoutWrap": "NO_WRAP",
+      "pageSlug": "foundation-typography"
+    },
+    "2466:74729": {
+      "layoutMode": "VERTICAL",
+      "layoutWrap": "NO_WRAP",
+      "pageSlug": "foundation-typography"
+    },
+    "2466:74731": {
+      "layoutMode": "VERTICAL",
+      "layoutWrap": "NO_WRAP",
+      "pageSlug": "foundation-typography"
+    },
+    "2466:74732": {
+      "layoutMode": "VERTICAL",
+      "layoutWrap": "NO_WRAP",
+      "pageSlug": "foundation-typography"
+    },
+    "2466:74734": {
+      "layoutMode": "HORIZONTAL",
+      "layoutWrap": "NO_WRAP",
+      "pageSlug": "foundation-typography"
+    },
+    "2466:74737": {
+      "layoutMode": "VERTICAL",
+      "layoutWrap": "NO_WRAP",
+      "pageSlug": "foundation-typography"
+    },
+    "2466:74739": {
+      "layoutMode": "VERTICAL",
+      "layoutWrap": "NO_WRAP",
+      "pageSlug": "foundation-typography"
+    },
+    "2466:74743": {
+      "layoutMode": "VERTICAL",
+      "layoutWrap": "NO_WRAP",
+      "pageSlug": "foundation-typography"
+    },
+    "2466:74744": {
+      "layoutMode": "VERTICAL",
+      "layoutWrap": "NO_WRAP",
+      "pageSlug": "foundation-typography"
+    },
+    "2466:74745": {
+      "layoutMode": "HORIZONTAL",
+      "layoutWrap": "NO_WRAP",
+      "pageSlug": "foundation-typography"
+    },
+    "2466:74746": {
+      "layoutMode": "VERTICAL",
+      "layoutWrap": "NO_WRAP",
+      "pageSlug": "foundation-typography"
+    },
+    "2466:74747": {
+      "layoutMode": "HORIZONTAL",
+      "layoutWrap": "NO_WRAP",
+      "pageSlug": "foundation-typography"
+    },
+    "2466:74752": {
+      "layoutMode": "VERTICAL",
+      "layoutWrap": "NO_WRAP",
+      "pageSlug": "foundation-typography"
+    },
+    "2466:74753": {
+      "layoutMode": "HORIZONTAL",
+      "layoutWrap": "NO_WRAP",
+      "pageSlug": "foundation-typography"
+    },
+    "2466:74756": {
+      "layoutMode": "VERTICAL",
+      "layoutWrap": "NO_WRAP",
+      "pageSlug": "foundation-typography"
+    },
+    "2466:74757": {
+      "layoutMode": "HORIZONTAL",
+      "layoutWrap": "NO_WRAP",
+      "pageSlug": "foundation-typography"
+    },
+    "2466:74758": {
+      "layoutMode": "VERTICAL",
+      "layoutWrap": "NO_WRAP",
+      "pageSlug": "foundation-typography"
+    },
+    "2466:74759": {
+      "layoutMode": "HORIZONTAL",
+      "layoutWrap": "NO_WRAP",
+      "pageSlug": "foundation-typography"
+    },
+    "2466:74764": {
+      "layoutMode": "HORIZONTAL",
+      "layoutWrap": "NO_WRAP",
+      "pageSlug": "foundation-typography"
+    },
+    "2466:74768": {
+      "layoutMode": "HORIZONTAL",
+      "layoutWrap": "NO_WRAP",
+      "pageSlug": "foundation-typography"
+    },
+    "2466:74769": {
+      "layoutMode": "VERTICAL",
+      "layoutWrap": "NO_WRAP",
+      "pageSlug": "foundation-typography"
+    },
+    "2466:74770": {
+      "layoutMode": "HORIZONTAL",
+      "layoutWrap": "NO_WRAP",
+      "pageSlug": "foundation-typography"
+    },
+    "2466:74775": {
+      "layoutMode": "HORIZONTAL",
+      "layoutWrap": "NO_WRAP",
+      "pageSlug": "foundation-typography"
+    },
+    "2466:74779": {
+      "layoutMode": "HORIZONTAL",
+      "layoutWrap": "NO_WRAP",
+      "pageSlug": "foundation-typography"
+    },
+    "2466:74780": {
+      "layoutMode": "VERTICAL",
+      "layoutWrap": "NO_WRAP",
+      "pageSlug": "foundation-typography"
+    },
+    "2466:74781": {
+      "layoutMode": "HORIZONTAL",
+      "layoutWrap": "NO_WRAP",
+      "pageSlug": "foundation-typography"
+    },
+    "2466:74786": {
+      "layoutMode": "HORIZONTAL",
+      "layoutWrap": "NO_WRAP",
+      "pageSlug": "foundation-typography"
+    },
+    "2466:74790": {
+      "layoutMode": "HORIZONTAL",
+      "layoutWrap": "NO_WRAP",
+      "pageSlug": "foundation-typography"
+    },
+    "2466:74791": {
+      "layoutMode": "VERTICAL",
+      "layoutWrap": "NO_WRAP",
+      "pageSlug": "foundation-typography"
+    },
+    "2466:74792": {
+      "layoutMode": "HORIZONTAL",
+      "layoutWrap": "NO_WRAP",
+      "pageSlug": "foundation-typography"
+    },
+    "2466:74797": {
+      "layoutMode": "HORIZONTAL",
+      "layoutWrap": "NO_WRAP",
+      "pageSlug": "foundation-typography"
+    },
+    "2466:74801": {
+      "layoutMode": "HORIZONTAL",
+      "layoutWrap": "NO_WRAP",
+      "pageSlug": "foundation-typography"
+    },
+    "2466:74802": {
+      "layoutMode": "VERTICAL",
+      "layoutWrap": "NO_WRAP",
+      "pageSlug": "foundation-typography"
+    },
+    "2466:74803": {
+      "layoutMode": "HORIZONTAL",
+      "layoutWrap": "NO_WRAP",
+      "pageSlug": "foundation-typography"
+    },
+    "2466:74808": {
+      "layoutMode": "HORIZONTAL",
+      "layoutWrap": "NO_WRAP",
+      "pageSlug": "foundation-typography"
+    },
+    "2466:74812": {
+      "layoutMode": "HORIZONTAL",
+      "layoutWrap": "NO_WRAP",
+      "pageSlug": "foundation-typography"
+    },
+    "2466:74813": {
+      "layoutMode": "VERTICAL",
+      "layoutWrap": "NO_WRAP",
+      "pageSlug": "foundation-typography"
+    },
+    "2466:74814": {
+      "layoutMode": "HORIZONTAL",
+      "layoutWrap": "NO_WRAP",
+      "pageSlug": "foundation-typography"
+    },
+    "2466:74819": {
+      "layoutMode": "HORIZONTAL",
+      "layoutWrap": "NO_WRAP",
+      "pageSlug": "foundation-typography"
+    },
+    "2466:74823": {
+      "layoutMode": "HORIZONTAL",
+      "layoutWrap": "NO_WRAP",
+      "pageSlug": "foundation-typography"
+    },
+    "2466:74824": {
+      "layoutMode": "VERTICAL",
+      "layoutWrap": "NO_WRAP",
+      "pageSlug": "foundation-typography"
+    },
+    "2466:74825": {
+      "layoutMode": "HORIZONTAL",
+      "layoutWrap": "NO_WRAP",
+      "pageSlug": "foundation-typography"
+    },
+    "2466:74830": {
+      "layoutMode": "HORIZONTAL",
+      "layoutWrap": "NO_WRAP",
+      "pageSlug": "foundation-typography"
+    },
+    "2466:74834": {
+      "layoutMode": "HORIZONTAL",
+      "layoutWrap": "NO_WRAP",
+      "pageSlug": "foundation-typography"
+    },
+    "2466:74835": {
+      "layoutMode": "VERTICAL",
+      "layoutWrap": "NO_WRAP",
+      "pageSlug": "foundation-typography"
+    },
+    "2466:74836": {
+      "layoutMode": "HORIZONTAL",
+      "layoutWrap": "NO_WRAP",
+      "pageSlug": "foundation-typography"
+    },
+    "2466:74841": {
+      "layoutMode": "HORIZONTAL",
+      "layoutWrap": "NO_WRAP",
+      "pageSlug": "foundation-typography"
+    },
+    "2466:74845": {
+      "layoutMode": "HORIZONTAL",
+      "layoutWrap": "NO_WRAP",
+      "pageSlug": "foundation-typography"
+    },
+    "2466:74846": {
+      "layoutMode": "VERTICAL",
+      "layoutWrap": "NO_WRAP",
+      "pageSlug": "foundation-typography"
+    },
+    "2466:74847": {
+      "layoutMode": "HORIZONTAL",
+      "layoutWrap": "NO_WRAP",
+      "pageSlug": "foundation-typography"
+    },
+    "2466:74852": {
+      "layoutMode": "HORIZONTAL",
+      "layoutWrap": "NO_WRAP",
+      "pageSlug": "foundation-typography"
+    },
+    "2466:74856": {
+      "layoutMode": "HORIZONTAL",
+      "layoutWrap": "NO_WRAP",
+      "pageSlug": "foundation-typography"
+    },
+    "2466:74857": {
+      "layoutMode": "VERTICAL",
+      "layoutWrap": "NO_WRAP",
+      "pageSlug": "foundation-typography"
+    },
+    "2466:74858": {
+      "layoutMode": "HORIZONTAL",
+      "layoutWrap": "NO_WRAP",
+      "pageSlug": "foundation-typography"
+    },
+    "2466:74863": {
+      "layoutMode": "HORIZONTAL",
+      "layoutWrap": "NO_WRAP",
+      "pageSlug": "foundation-typography"
+    },
+    "2466:74867": {
+      "layoutMode": "HORIZONTAL",
+      "layoutWrap": "NO_WRAP",
+      "pageSlug": "foundation-typography"
+    },
+    "2466:74868": {
+      "layoutMode": "VERTICAL",
+      "layoutWrap": "NO_WRAP",
+      "pageSlug": "foundation-typography"
+    },
+    "2466:74869": {
+      "layoutMode": "HORIZONTAL",
+      "layoutWrap": "NO_WRAP",
+      "pageSlug": "foundation-typography"
+    },
+    "2466:74874": {
+      "layoutMode": "HORIZONTAL",
+      "layoutWrap": "NO_WRAP",
+      "pageSlug": "foundation-typography"
+    },
+    "2466:74878": {
+      "layoutMode": "HORIZONTAL",
+      "layoutWrap": "NO_WRAP",
+      "pageSlug": "foundation-typography"
+    },
+    "2466:74879": {
+      "layoutMode": "VERTICAL",
+      "layoutWrap": "NO_WRAP",
+      "pageSlug": "foundation-typography"
+    },
+    "2466:74880": {
+      "layoutMode": "HORIZONTAL",
+      "layoutWrap": "NO_WRAP",
+      "pageSlug": "foundation-typography"
+    },
+    "2466:74885": {
+      "layoutMode": "HORIZONTAL",
+      "layoutWrap": "NO_WRAP",
+      "pageSlug": "foundation-typography"
+    },
+    "2466:74889": {
+      "layoutMode": "HORIZONTAL",
+      "layoutWrap": "NO_WRAP",
+      "pageSlug": "foundation-typography"
+    },
+    "2466:74890": {
+      "layoutMode": "VERTICAL",
+      "layoutWrap": "NO_WRAP",
+      "pageSlug": "foundation-typography"
+    },
+    "2466:74891": {
+      "layoutMode": "HORIZONTAL",
+      "layoutWrap": "NO_WRAP",
+      "pageSlug": "foundation-typography"
+    },
+    "2466:74896": {
+      "layoutMode": "HORIZONTAL",
+      "layoutWrap": "NO_WRAP",
+      "pageSlug": "foundation-typography"
+    },
+    "2466:74900": {
+      "layoutMode": "HORIZONTAL",
+      "layoutWrap": "NO_WRAP",
+      "pageSlug": "foundation-typography"
+    },
+    "2466:74901": {
+      "layoutMode": "VERTICAL",
+      "layoutWrap": "NO_WRAP",
+      "pageSlug": "foundation-typography"
+    },
+    "2466:74902": {
+      "layoutMode": "HORIZONTAL",
+      "layoutWrap": "NO_WRAP",
+      "pageSlug": "foundation-typography"
+    },
+    "2466:74907": {
+      "layoutMode": "HORIZONTAL",
+      "layoutWrap": "NO_WRAP",
+      "pageSlug": "foundation-typography"
+    },
+    "2466:74911": {
+      "layoutMode": "HORIZONTAL",
+      "layoutWrap": "NO_WRAP",
+      "pageSlug": "foundation-typography"
+    },
+    "2466:74912": {
+      "layoutMode": "VERTICAL",
+      "layoutWrap": "NO_WRAP",
+      "pageSlug": "foundation-typography"
+    },
+    "2466:74913": {
+      "layoutMode": "HORIZONTAL",
+      "layoutWrap": "NO_WRAP",
+      "pageSlug": "foundation-typography"
+    },
+    "2466:74918": {
+      "layoutMode": "HORIZONTAL",
+      "layoutWrap": "NO_WRAP",
+      "pageSlug": "foundation-typography"
+    },
+    "2466:74922": {
+      "layoutMode": "HORIZONTAL",
+      "layoutWrap": "NO_WRAP",
+      "pageSlug": "foundation-typography"
+    },
+    "2466:74923": {
+      "layoutMode": "VERTICAL",
+      "layoutWrap": "NO_WRAP",
+      "pageSlug": "foundation-typography"
+    },
+    "2466:74924": {
+      "layoutMode": "HORIZONTAL",
+      "layoutWrap": "NO_WRAP",
+      "pageSlug": "foundation-typography"
+    },
+    "2466:74929": {
+      "layoutMode": "HORIZONTAL",
+      "layoutWrap": "NO_WRAP",
+      "pageSlug": "foundation-typography"
+    },
+    "2466:74933": {
+      "layoutMode": "HORIZONTAL",
+      "layoutWrap": "NO_WRAP",
+      "pageSlug": "foundation-typography"
+    },
+    "2466:74934": {
+      "layoutMode": "VERTICAL",
+      "layoutWrap": "NO_WRAP",
+      "pageSlug": "foundation-typography"
+    },
+    "2466:74935": {
+      "layoutMode": "HORIZONTAL",
+      "layoutWrap": "NO_WRAP",
+      "pageSlug": "foundation-typography"
+    },
+    "2466:74940": {
+      "layoutMode": "HORIZONTAL",
+      "layoutWrap": "NO_WRAP",
+      "pageSlug": "foundation-typography"
+    },
+    "2466:74944": {
+      "layoutMode": "HORIZONTAL",
+      "layoutWrap": "NO_WRAP",
+      "pageSlug": "foundation-typography"
+    },
+    "2466:74945": {
+      "layoutMode": "VERTICAL",
+      "layoutWrap": "NO_WRAP",
+      "pageSlug": "foundation-typography"
+    },
+    "2466:74946": {
+      "layoutMode": "HORIZONTAL",
+      "layoutWrap": "NO_WRAP",
+      "pageSlug": "foundation-typography"
+    },
+    "2466:74951": {
+      "layoutMode": "HORIZONTAL",
+      "layoutWrap": "NO_WRAP",
+      "pageSlug": "foundation-typography"
+    },
+    "2488:10486": {
+      "layoutMode": "VERTICAL",
+      "layoutWrap": "NO_WRAP",
+      "pageSlug": "foundation-typography"
+    },
+    "2488:10487": {
+      "layoutMode": "VERTICAL",
+      "layoutWrap": "NO_WRAP",
+      "pageSlug": "foundation-typography"
+    },
+    "2488:10488": {
+      "layoutMode": "VERTICAL",
+      "layoutWrap": "NO_WRAP",
+      "pageSlug": "foundation-typography"
+    },
+    "2488:10493": {
+      "layoutMode": "HORIZONTAL",
+      "layoutWrap": "NO_WRAP",
+      "pageSlug": "foundation-typography"
+    },
+    "2488:10494": {
+      "layoutMode": "VERTICAL",
+      "layoutWrap": "NO_WRAP",
+      "pageSlug": "foundation-typography"
+    },
+    "2488:10508": {
+      "layoutMode": "VERTICAL",
+      "layoutWrap": "NO_WRAP",
+      "pageSlug": "foundation-typography"
+    }
+  }
+}
