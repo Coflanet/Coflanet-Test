@@ -1,0 +1,296 @@
+{
+  "_summary": {
+    "pageId": "2941:684",
+    "pageName": "  ☕️ Product",
+    "pageSlug": "foundation-product",
+    "totalNodesScanned": 11,
+    "spacingOccurrences": 12,
+    "distinctValues": [
+      24,
+      32,
+      100,
+      200
+    ],
+    "rawValues": [
+      24,
+      32,
+      100,
+      200
+    ],
+    "boundToVariable": {
+      "yes": 0,
+      "no": 12
+    },
+    "distinctVariables": 0,
+    "variableMap": {},
+    "suspiciousItemCount": 10
+  },
+  "_suspiciousSample": [
+    {
+      "tokenName": null,
+      "variableId": null,
+      "value": 200,
+      "unit": "px",
+      "property": "itemSpacing",
+      "aliasGroup": null,
+      "usageNote": "Illustration",
+      "sourceNodeId": "2941:685",
+      "sourceNodeName": "Illustration",
+      "pageId": "2941:684"
+    },
+    {
+      "tokenName": null,
+      "variableId": null,
+      "value": 200,
+      "unit": "px",
+      "property": "paddingTop",
+      "aliasGroup": null,
+      "usageNote": "Illustration",
+      "sourceNodeId": "2941:685",
+      "sourceNodeName": "Illustration",
+      "pageId": "2941:684"
+    },
+    {
+      "tokenName": null,
+      "variableId": null,
+      "value": 200,
+      "unit": "px",
+      "property": "paddingRight",
+      "aliasGroup": null,
+      "usageNote": "Illustration",
+      "sourceNodeId": "2941:685",
+      "sourceNodeName": "Illustration",
+      "pageId": "2941:684"
+    },
+    {
+      "tokenName": null,
+      "variableId": null,
+      "value": 200,
+      "unit": "px",
+      "property": "paddingBottom",
+      "aliasGroup": null,
+      "usageNote": "Illustration",
+      "sourceNodeId": "2941:685",
+      "sourceNodeName": "Illustration",
+      "pageId": "2941:684"
+    },
+    {
+      "tokenName": null,
+      "variableId": null,
+      "value": 200,
+      "unit": "px",
+      "property": "paddingLeft",
+      "aliasGroup": null,
+      "usageNote": "Illustration",
+      "sourceNodeId": "2941:685",
+      "sourceNodeName": "Illustration",
+      "pageId": "2941:684"
+    },
+    {
+      "tokenName": null,
+      "variableId": null,
+      "value": 100,
+      "unit": "px",
+      "property": "itemSpacing",
+      "aliasGroup": null,
+      "usageNote": "Image/Product",
+      "sourceNodeId": "2941:692",
+      "sourceNodeName": "Image/Product",
+      "pageId": "2941:684"
+    },
+    {
+      "tokenName": null,
+      "variableId": null,
+      "value": 200,
+      "unit": "px",
+      "property": "paddingTop",
+      "aliasGroup": null,
+      "usageNote": "Image/Product",
+      "sourceNodeId": "2941:692",
+      "sourceNodeName": "Image/Product",
+      "pageId": "2941:684"
+    },
+    {
+      "tokenName": null,
+      "variableId": null,
+      "value": 200,
+      "unit": "px",
+      "property": "paddingRight",
+      "aliasGroup": null,
+      "usageNote": "Image/Product",
+      "sourceNodeId": "2941:692",
+      "sourceNodeName": "Image/Product",
+      "pageId": "2941:684"
+    },
+    {
+      "tokenName": null,
+      "variableId": null,
+      "value": 200,
+      "unit": "px",
+      "property": "paddingBottom",
+      "aliasGroup": null,
+      "usageNote": "Image/Product",
+      "sourceNodeId": "2941:692",
+      "sourceNodeName": "Image/Product",
+      "pageId": "2941:684"
+    },
+    {
+      "tokenName": null,
+      "variableId": null,
+      "value": 200,
+      "unit": "px",
+      "property": "paddingLeft",
+      "aliasGroup": null,
+      "usageNote": "Image/Product",
+      "sourceNodeId": "2941:692",
+      "sourceNodeName": "Image/Product",
+      "pageId": "2941:684"
+    }
+  ],
+  "items": [
+    {
+      "tokenName": null,
+      "variableId": null,
+      "value": 200,
+      "unit": "px",
+      "property": "itemSpacing",
+      "aliasGroup": null,
+      "usageNote": "Illustration",
+      "sourceNodeId": "2941:685",
+      "sourceNodeName": "Illustration",
+      "pageId": "2941:684"
+    },
+    {
+      "tokenName": null,
+      "variableId": null,
+      "value": 200,
+      "unit": "px",
+      "property": "paddingTop",
+      "aliasGroup": null,
+      "usageNote": "Illustration",
+      "sourceNodeId": "2941:685",
+      "sourceNodeName": "Illustration",
+      "pageId": "2941:684"
+    },
+    {
+      "tokenName": null,
+      "variableId": null,
+      "value": 200,
+      "unit": "px",
+      "property": "paddingRight",
+      "aliasGroup": null,
+      "usageNote": "Illustration",
+      "sourceNodeId": "2941:685",
+      "sourceNodeName": "Illustration",
+      "pageId": "2941:684"
+    },
+    {
+      "tokenName": null,
+      "variableId": null,
+      "value": 200,
+      "unit": "px",
+      "property": "paddingBottom",
+      "aliasGroup": null,
+      "usageNote": "Illustration",
+      "sourceNodeId": "2941:685",
+      "sourceNodeName": "Illustration",
+      "pageId": "2941:684"
+    },
+    {
+      "tokenName": null,
+      "variableId": null,
+      "value": 200,
+      "unit": "px",
+      "property": "paddingLeft",
+      "aliasGroup": null,
+      "usageNote": "Illustration",
+      "sourceNodeId": "2941:685",
+      "sourceNodeName": "Illustration",
+      "pageId": "2941:684"
+    },
+    {
+      "tokenName": null,
+      "variableId": null,
+      "value": 32,
+      "unit": "px",
+      "property": "itemSpacing",
+      "aliasGroup": null,
+      "usageNote": "Heading",
+      "sourceNodeId": "2941:686",
+      "sourceNodeName": "Heading",
+      "pageId": "2941:684"
+    },
+    {
+      "tokenName": null,
+      "variableId": null,
+      "value": 24,
+      "unit": "px",
+      "property": "itemSpacing",
+      "aliasGroup": null,
+      "usageNote": "Content",
+      "sourceNodeId": "2941:687",
+      "sourceNodeName": "Content",
+      "pageId": "2941:684"
+    },
+    {
+      "tokenName": null,
+      "variableId": null,
+      "value": 100,
+      "unit": "px",
+      "property": "itemSpacing",
+      "aliasGroup": null,
+      "usageNote": "Image/Product",
+      "sourceNodeId": "2941:692",
+      "sourceNodeName": "Image/Product",
+      "pageId": "2941:684"
+    },
+    {
+      "tokenName": null,
+      "variableId": null,
+      "value": 200,
+      "unit": "px",
+      "property": "paddingTop",
+      "aliasGroup": null,
+      "usageNote": "Image/Product",
+      "sourceNodeId": "2941:692",
+      "sourceNodeName": "Image/Product",
+      "pageId": "2941:684"
+    },
+    {
+      "tokenName": null,
+      "variableId": null,
+      "value": 200,
+      "unit": "px",
+      "property": "paddingRight",
+      "aliasGroup": null,
+      "usageNote": "Image/Product",
+      "sourceNodeId": "2941:692",
+      "sourceNodeName": "Image/Product",
+      "pageId": "2941:684"
+    },
+    {
+      "tokenName": null,
+      "variableId": null,
+      "value": 200,
+      "unit": "px",
+      "property": "paddingBottom",
+      "aliasGroup": null,
+      "usageNote": "Image/Product",
+      "sourceNodeId": "2941:692",
+      "sourceNodeName": "Image/Product",
+      "pageId": "2941:684"
+    },
+    {
+      "tokenName": null,
+      "variableId": null,
+      "value": 200,
+      "unit": "px",
+      "property": "paddingLeft",
+      "aliasGroup": null,
+      "usageNote": "Image/Product",
+      "sourceNodeId": "2941:692",
+      "sourceNodeName": "Image/Product",
+      "pageId": "2941:684"
+    }
+  ]
+}

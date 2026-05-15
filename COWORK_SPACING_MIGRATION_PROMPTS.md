@@ -41,7 +41,7 @@ Claude Code 는 동일 세션 내에서 **서브에이전트를 병렬로 스폰
 
 - 저장소: `coflanet/coflanet-test`
 - 코드 경로: `Library/component_lab`
-- 작업 브랜치: `claude/spacing-tokens-organization-NwPFO`
+- 작업 브랜치: `claude/audit-figma-spacing-uJuIo`
 - Figma 파일: https://www.figma.com/file/q7yBPcHrid1CGQqFWEPwnR?node-id=2636:31292
 - Figma fileKey: `q7yBPcHrid1CGQqFWEPwnR`
 - 산출물 루트: `Library/component_lab/docs/spacing-migration/`
@@ -101,7 +101,7 @@ Claude Code 는 동일 세션 내에서 **서브에이전트를 병렬로 스폰
 없음
 
 ## 처리
-1. 브랜치 `claude/spacing-tokens-organization-NwPFO` 가 없으면 생성, 있으면 체크아웃
+1. 브랜치 `claude/audit-figma-spacing-uJuIo` 가 없으면 생성, 있으면 체크아웃
 2. 다음 디렉터리에 `.gitkeep` 을 만들어 빈 상태로 커밋:
    - `Library/component_lab/docs/spacing-migration/01-audit/`
    - `Library/component_lab/docs/spacing-migration/02-tokens/`
@@ -397,100 +397,329 @@ Claude Code 는 동일 세션 내에서 **서브에이전트를 병렬로 스폰
 
 ---
 
-# 🆕 Task 05 · Phase 2-A + 2-B — 토큰 설계
+# 🆕 Task 05 · Phase 2 — 토큰 설계 (Palette + Semantic 의도 토큰)
+
+## 결정 사항 (검수 #2 확정 — 2026-05-14)
+
+### Palette (20개 확정)
+```
+0, 1, 2, 3, 4, 6, 7, 8, 9, 10, 12, 14, 16, 20, 24, 28, 32, 40, 44, 48
+```
+제외: 5, 11, 36, 60, 64, 80, 160 (단발성 또는 페이지 카탈로그 grid)
+
+### Semantic 패턴 — 패턴 2 (Palette + 의도 시맨틱)
+- **5 카테고리**: `stack`, `inline`, `inset`, `inset-squish`, `layout`
+- **컴포넌트별 시맨틱 토큰 만들지 않음** (component-button 등 X)
+- 모든 시맨틱은 palette 토큰 1개를 alias
+
+### 명명 규칙
+**JSON (Figma Variables / W3C DTCG 호환, slash 구조)**:
+- Palette: `spacing/{value}` (예: `spacing/12`)
+- Semantic: `spacing/{category}/{role}` (예: `spacing/stack/md`, `spacing/inset-squish/md`)
+
+**Dart (camelCase 자동 변환, App prefix 유지)**:
+- Palette: `AppSpacing.s{value}` (예: `AppSpacing.s12`)
+- Semantic: `AppSpacingSemantic.{category}{Role}` (예: `AppSpacingSemantic.stackMd`)
+- inset-squish 페어는 vertical / horizontal 분리: `AppSpacingSemantic.insetSquishMdVertical` 등
+
+### 데이터 정제 정책 (Phase 1-A/B raw 활용 시 모두 적용)
+1. **Platform UI 제외**: 부모 체인 어느 위치에라도 `Platform=iOS` / `Platform=Android` / `iOS/...` / `Status Bar` / `Dynamic Island` / `Home Indicator` / `Tab Bar` 등 노드 포함 시 자식 모두 제외
+2. **Demo 페이지 제외**: Figma `foundation-colors`, `foundation-typography`, `foundation-icon`, `foundation-decorate`, `foundation-gradient`, `foundation-logo`, `foundation-3d-illustration`, `foundation-product` (라이브러리 컴포넌트가 아님 — 토큰 시연용)
+3. **`foundation-space` 만 예외**: 토큰 정의 spec 페이지 — 포함
+4. **Demo 코드 제외**: 모든 `*_use_cases.dart` 파일
+5. **페이지 직접 frame 주의**: `sourceNodeId` 가 `I` 로 시작 안 하는 노드 중 큰 spacing(>40)은 카탈로그 grid 일 가능성 — 채택 보류
+
+### 음수/소수점/큰값
+- **음수**: 토큰화 안 함 (도입 시 정의)
+- **소수점**: 토큰화 안 함 (Platform UI 필터로 자동 제거됨)
+- **가로/세로 큰 값 (width/height 112/240/280/300/320)**: spacing 범위 외. 별도 size 토큰 후속 트랙
+
+### Border-width
+이번 범위 외. 1px **padding** 은 spacing palette 에 포함, 1px **border** 두께는 별도 `AppBorderWidth` 후속 트랙.
 
 ## 입력
 - `01-audit/gap-analysis.md`
-- 사용자 결정사항 `[USER_DECISION]` (검수 #2 결과)
+- `01-audit/figma-spacing.INDEX.json` + 페이지별 raw 110 파일
+- `01-audit/code-audit.INDEX.json` + 디렉터리별 raw 22 파일
+- `01-audit/figma-pages.json` 의 `codeDirToFigmaPage` 매핑
 
-## 처리 - Part A: Palette
-1. 검수 결정 반영하여 Palette 스케일 확정
-2. 이름 규칙: `spacing-{value}` (예: spacing-0, spacing-2, spacing-4, spacing-8)
-3. 0은 항상 포함
-4. 산출:
-   - `02-tokens/palette.json`
-     ```json
-     {
-       "version": "1.0.0",
-       "tokens": [
-         { "name": "spacing-0", "value": 0, "unit": "px" },
-         { "name": "spacing-2", "value": 2, "unit": "px" }
-       ]
-     }
-     ```
-   - `02-tokens/palette.md` — 결정 근거, 제외값 사유, 사용 빈도 표
+## Part A: Palette
 
-## 처리 - Part B: Semantic
-1. 카테고리:
-   - `layout` (페이지/섹션 간격)
-   - `container` (컨테이너 내부 padding)
-   - `inline` (수평 요소 간격)
-   - `stack` (수직 요소 간격)
-   - `inset` (전방향 padding)
-   - `component-{name}` — 실제 컴포넌트 디렉터리명과 일치 (avatars, buttons, cards, chips, ...)
-2. 이름 규칙: `spacing-{category}-{role}`
-   - 예: `spacing-inset-md`, `spacing-stack-lg`, `spacing-button-padding-x`
-3. 규칙:
-   - 모든 semantic 토큰은 palette 토큰 정확히 1개를 alias
-   - 동일 역할에는 동일 semantic 토큰 재사용
-4. 산출:
-   - `02-tokens/semantic.json`
-     ```json
-     {
-       "version": "1.0.0",
-       "tokens": [
-         { "name": "spacing-inset-md", "aliasOf": "spacing-12", "category": "inset", "role": "md" }
-       ]
+### 산출물
+1. `02-tokens/palette.json` (W3C DTCG 형식)
+   ```json
+   {
+     "$schema": "https://design-tokens.github.io/community-group/format/",
+     "version": "1.0.0",
+     "spacing": {
+       "0":  { "$value": 0,  "$type": "dimension", "$description": "Zero spacing" },
+       "1":  { "$value": 1,  "$type": "dimension" },
+       "2":  { "$value": 2,  "$type": "dimension" },
+       "3":  { "$value": 3,  "$type": "dimension" },
+       "4":  { "$value": 4,  "$type": "dimension" },
+       "6":  { "$value": 6,  "$type": "dimension" },
+       "7":  { "$value": 7,  "$type": "dimension" },
+       "8":  { "$value": 8,  "$type": "dimension" },
+       "9":  { "$value": 9,  "$type": "dimension" },
+       "10": { "$value": 10, "$type": "dimension" },
+       "12": { "$value": 12, "$type": "dimension" },
+       "14": { "$value": 14, "$type": "dimension" },
+       "16": { "$value": 16, "$type": "dimension" },
+       "20": { "$value": 20, "$type": "dimension" },
+       "24": { "$value": 24, "$type": "dimension" },
+       "28": { "$value": 28, "$type": "dimension" },
+       "32": { "$value": 32, "$type": "dimension" },
+       "40": { "$value": 40, "$type": "dimension" },
+       "44": { "$value": 44, "$type": "dimension" },
+       "48": { "$value": 48, "$type": "dimension" }
      }
-     ```
-   - `02-tokens/semantic.md` — 카테고리 정의·예시·alias 관계도(palette→semantic 표)
+   }
+   ```
+2. `02-tokens/palette.md` — 결정 근거, 제외값 사유 (5/11/36/60/64/80/160), 정제 정책, 사용 빈도 표
+
+## Part B: Semantic (의도 시맨틱)
+
+### Part B-0: 사전 역할 인벤토리 자동 생성
+1. raw 파일을 **1개씩 스트리밍** 처리 (메모리 절약)
+2. 위 데이터 정제 정책 모두 적용 후 (Platform/Demo/페이지 grid 제외)
+3. Figma items 의 `usageNote` / `sourceNodeName` + 코드 `contextHint`/`kind` 클러스터링
+4. 카테고리별 역할 후보 자동 도출
+5. 산출: `02-tokens/semantic-roles-inventory.md` — 카테고리/역할별 후보 (Figma 빈도 / 코드 빈도 / 대표 컴포넌트)
+
+### Part B-1: 역할 확정 및 토큰 정의
+
+#### Semantic 토큰 초안 (Part B-0 데이터로 조정)
+```
+# stack — 세로 간격 (수직 itemSpacing, autoLayoutMode VERTICAL)
+spacing/stack/xs    = spacing/2       # Label-Value 미세
+spacing/stack/sm    = spacing/4       # Heading-Description
+spacing/stack/md    = spacing/8       # List item 사이
+spacing/stack/lg    = spacing/16      # Card 사이, Heading-Body
+spacing/stack/xl    = spacing/24      # Section 사이
+
+# inline — 가로 간격 (수평 itemSpacing, autoLayoutMode HORIZONTAL)
+spacing/inline/xs   = spacing/2
+spacing/inline/sm   = spacing/4       # Icon-text 표준
+spacing/inline/md   = spacing/8       # Button/Chip group
+spacing/inline/lg   = spacing/12
+
+# inset — 4방향 동일 padding
+spacing/inset/xs    = spacing/4       # Tag, Badge
+spacing/inset/sm    = spacing/8       # 작은 컨테이너
+spacing/inset/md    = spacing/12      # Icon Button 표준
+spacing/inset/lg    = spacing/16      # FAB, Card padding
+spacing/inset/xl    = spacing/24      # Modal padding
+
+# inset-squish — 수평 > 수직 padding 페어 (Button 패턴)
+spacing/inset-squish/xs/vertical   = spacing/2,   /horizontal = spacing/6    # Badge
+spacing/inset-squish/sm/vertical   = spacing/7,   /horizontal = spacing/14   # Button Small
+spacing/inset-squish/md/vertical   = spacing/9,   /horizontal = spacing/20   # Button Medium
+spacing/inset-squish/lg/vertical   = spacing/12,  /horizontal = spacing/28   # Button Large
+
+# layout — 페이지 레벨 큰 간격
+spacing/layout/sm   = spacing/24      # Section gap
+spacing/layout/md   = spacing/32
+spacing/layout/lg   = spacing/40
+spacing/layout/xl   = spacing/48
+```
+
+### Part B-2: 산출물
+1. `02-tokens/semantic.json` (W3C DTCG, palette alias)
+   ```json
+   {
+     "$schema": "...",
+     "version": "1.0.0",
+     "spacing": {
+       "stack": {
+         "md": { "$value": "{spacing.8}", "$type": "dimension",
+                  "$description": "List item 사이 세로 간격" }
+       },
+       "inset-squish": {
+         "md": {
+           "vertical":   { "$value": "{spacing.9}",  "$type": "dimension" },
+           "horizontal": { "$value": "{spacing.20}", "$type": "dimension" }
+         }
+       }
+     }
+   }
+   ```
+2. `02-tokens/semantic.md` — 카테고리 정의·예시·alias 관계도
+3. `02-tokens/name-mapping.csv` — JSON 이름 ↔ Dart 이름 1:1 매핑
+   ```
+   jsonName,dartClass,dartProperty,value,aliasOf
+   spacing/0,AppSpacing,s0,0,
+   spacing/12,AppSpacing,s12,12,
+   spacing/stack/md,AppSpacingSemantic,stackMd,8,spacing/8
+   spacing/inset-squish/md/vertical,AppSpacingSemantic,insetSquishMdVertical,9,spacing/9
+   spacing/inset-squish/md/horizontal,AppSpacingSemantic,insetSquishMdHorizontal,20,spacing/20
+   ```
+
+## Part C: 디자이너 사용 가이드 (신규)
+
+### 산출물: `02-tokens/usage-guide.md` (디자이너 핵심 문서)
+
+**필수 섹션**:
+
+1. **의사결정 트리** (어떤 토큰 선택할지)
+   ```
+   spacing 이 필요해?
+   ├─ 컨테이너 안 4방향 패딩이야?
+   │  ├─ 4방향 동일 → inset/{xs..xl}
+   │  └─ 수평>수직 → inset-squish/{xs,sm,md,lg}
+   ├─ 컴포넌트 사이 세로 간격? → stack/{xs..xl}
+   ├─ 가로로 나란히 (icon-text)? → inline/{xs..lg}
+   └─ 페이지 레벨? → layout/{sm..xl}
+   ```
+
+2. **각 토큰별 1줄 사용 가이드 + Figma 노드 링크**
+   ```
+   spacing/stack/lg = 16
+     사용: 카드 사이, 헤딩-본문 사이
+     시각: ▢ Card  ←16→  Card  ▢
+     Figma: [Card 페이지의 grid 보기 링크]
+   ```
+
+3. **토큰 사용 우선순위** (코드/디자인 양쪽)
+   - 1순위: 시맨틱 토큰 (의도 명확하면 무조건)
+   - 2순위: 시맨틱 안 맞으면 palette 직접 (Outlined 1px 보정, Icon Button 별도 크기 등)
+   - 3순위: 컴포넌트 고유 패턴은 .dart 안 const (Section Bottom Solid, Banner 등)
+   - ⛔ 임의 숫자 직접 입력 금지
+
+4. **FAQ**
+   - Q: Card padding 늘리고 싶어요 → A: `inset/xl` 정의 변경 (다른 컨테이너도 영향)
+   - Q: Button 만 통통하게 → A: `inset-squish/lg` 변경하면 Solid Button 다 변경. Outlined 1px 보정은 별도
+   - Q: 새 컴포넌트 만들 때 → A: 비슷한 의도의 기존 컴포넌트가 쓰는 시맨틱 토큰 그대로 사용
+
+5. **Figma Variables 동기화 가이드**: slash 구조 그대로 Figma 컬렉션에 등록 (`Spacing/Palette/{value}`, `Spacing/Semantic/{Category}/{Role}`), 각 변수에 description 추가
+
+6. **바이브 코딩 컨텍스트**: 시맨틱 토큰 이름 = AI 가 디자인 의도를 추론하는 메타데이터. 임의 숫자 대신 시맨틱 토큰 사용 시 AI 가 신규 컴포넌트에 일관된 spacing 자동 적용 가능
+
+## 검증 규칙
+- 모든 semantic 토큰의 `aliasOf` 가 palette 에 존재 (orphan 0)
+- palette 의 모든 값이 결정 리스트(20개) 에 있음
+- Dart 변수명 중복 0
+- name-mapping.csv 가 palette + semantic 전체 커버
+- `02-tokens/usage-guide.md` 의 모든 시맨틱 토큰에 사용 예시 + Figma 링크 포함
+
+## 산출물 요약
+- `02-tokens/palette.json`
+- `02-tokens/palette.md`
+- `02-tokens/semantic-roles-inventory.md` ← 신규 (Part B-0)
+- `02-tokens/semantic.json`
+- `02-tokens/semantic.md`
+- `02-tokens/usage-guide.md` ← 신규 (Part C, 디자이너용 핵심)
+- `02-tokens/name-mapping.csv` ← 신규
 
 ## 커밋 & 푸시
 `docs(spacing-migration): define palette and semantic tokens`
 
 ## 📌 사람 검수 #3
-- Palette/Semantic 승인
-- 누락된 컴포넌트 카테고리 없는지 확인
+- Palette 20개 + Semantic 5 카테고리 최종 승인
+- `usage-guide.md` 디자이너 사용성 검토
+- `inset-squish` 페어 정의 정확성 확인 (Button 적용 시뮬레이션)
+
+## 제약
+- ⛔ palette/semantic 외 디렉터리/파일 수정 금지
+- ⛔ **컴포넌트 단위 시맨틱 토큰 (`component-button` 등) 만들지 말 것** — 의도 토큰만
+- ⛔ 데이터 정제 정책(Platform / Demo / *_use_cases) 반드시 적용
+- ⛔ 한 raw 파일은 한 번에 1개씩만 열어 스트리밍 처리
 
 ---
 
 # 🆕 Task 06 · Phase 3 — 매핑 테이블
 
 ## 입력
-- `02-tokens/palette.json`, `02-tokens/semantic.json`
-- `01-audit/figma-spacing-raw.*.json`
-- `01-audit/code-hardcoded-usages.*.json`
+- `02-tokens/palette.json`, `02-tokens/semantic.json`, `02-tokens/name-mapping.csv`
+- `02-tokens/semantic-roles-inventory.md` (자동 매핑 규칙 참고)
+- `01-audit/figma-spacing-raw.*.json` (페이지별)
+- `01-audit/code-hardcoded-usages.*.json` (디렉터리별)
+- `01-audit/figma-pages.json` 의 `codeDirToFigmaPage` 매핑
+
+## 매핑 우선순위 (모든 항목 공통)
+1. **1순위**: 시맨틱 토큰 매칭 → `suggestedToken = AppSpacingSemantic.*`, `status = READY`
+2. **2순위**: 시맨틱 안 맞으면 palette 직접 → `suggestedToken = AppSpacing.s{value}`, `status = READY` (단, 시맨틱화 가능한 후보면 `NEEDS_REVIEW`)
+3. **3순위**: 데이터 정제 정책에 걸리거나 라이브러리 컴포넌트가 아닌 경우 → `status = BLOCKED` + reason
 
 ## 처리
-1. **Figma 매핑** — 모든 figma raw item 순회:
-   - `value` + `property` + `usageNote` + `sourceNodeName` 으로 가장 적절한 semantic 토큰 선택
-   - 자신 있으면 `status=READY`, 모호하면 `NEEDS_REVIEW` + reason, 매칭 불가하면 `BLOCKED` + reason
-   - 출력: `03-mapping/figma-node-to-token.csv`
-     ```
-     pageId,pageSlug,nodeId,nodeName,property,currentValue,suggestedToken,group,status,reason
-     ```
-   - `group` 컬럼은 Phase 4 슬라이싱 키. Foundation 페이지는 `foundation`, Component 페이지의 노드는 해당 컴포넌트 이름(avatars/buttons/...), 그 외는 페이지 카테고리 그대로
 
-2. **코드 매핑** — 모든 code usage 순회:
-   - `kind` + `values` + 파일 경로의 디렉터리로 semantic 토큰 선택
-   - 동일 status 규칙 적용
-   - 출력: `03-mapping/code-usage-to-token.csv`
-     ```
-     file,line,dir,kind,currentValue,suggestedToken,status,reason
-     ```
+### 1. Figma 매핑 — 모든 raw item 순회
 
-3. **검수 큐**:
-   - `03-mapping/REVIEW_QUEUE.md`
-   - `NEEDS_REVIEW` + `BLOCKED` 항목만 표로 정리
-   - 컬럼: `source | id | currentValue | suggestion | reason | action(체크박스)`
+**자동 BLOCKED 규칙** (라이브러리 컴포넌트 아님):
+- 부모 체인에 `Platform=iOS` / `Platform=Android` / iOS Status Bar / Dynamic Island / Home Indicator / Tab Bar 등 포함 → `reason="Platform UI"`
+- 페이지가 `foundation-colors/typography/icon/decorate/gradient/logo/3d-illustration/product` 중 하나 → `reason="Demo 페이지"`
+- 페이지 직접 frame (`sourceNodeId` 가 `I` 로 시작 안 함) + value > 40 → `reason="페이지 카탈로그 grid 의심"` (NEEDS_REVIEW 로)
+
+**자동 시맨틱 매핑 규칙**:
+- `property === 'itemSpacing'` + parent `autoLayoutMode === 'VERTICAL'` → `stack` 후보, 가장 가까운 단계(xs/sm/md/lg/xl) 선택
+- `property === 'itemSpacing'` + parent `autoLayoutMode === 'HORIZONTAL'` → `inline` 후보
+- 4방향 padding 모두 같음 (T=R=B=L) → `inset` 후보
+- T = B, L = R, T ≠ L → `inset-squish` 후보 (페어로 매핑)
+- 그 외 비대칭 → palette 직접 (2순위)
+
+**Outlined / Icon Button 특수 패턴**:
+- Outlined 1px 보정 (8/9, 11/12 페어) → 시맨틱 매칭 안 됨. palette 직접 + `NEEDS_REVIEW` (디자인 정리 검토)
+- Icon Button 의 6/7/10 padding → palette 직접
+
+**출력**: `03-mapping/figma-node-to-token.csv`
+```
+pageId,pageSlug,nodeId,nodeName,property,currentValue,suggestedToken,group,status,reason
+```
+- `group` 컬럼은 Phase 4 슬라이싱 키. Foundation 페이지는 `foundation`, Component/Module 페이지는 해당 컴포넌트 이름 (avatars/buttons/...) — `codeDirToFigmaPage` 역매핑
+
+### 2. 코드 매핑 — 모든 usage 순회
+
+**자동 BLOCKED 규칙**:
+- `file` 이 `*_use_cases.dart` → `reason="Demo 화면"`
+
+**자동 시맨틱 매핑 규칙**:
+- `kind === 'EdgeInsets.symmetric'` + horizontal === vertical → `inset` 단계 매칭
+- `kind === 'EdgeInsets.symmetric'` + horizontal ≠ vertical → `inset-squish` 페어
+- `kind === 'EdgeInsets.all'` → `inset`
+- `kind === 'EdgeInsets.only'` (한 방향) → palette 직접 또는 NEEDS_REVIEW
+- `kind === 'SizedBox'` + height + parent Column → `stack`
+- `kind === 'SizedBox'` + width + parent Row → `inline`
+- `kind === 'Gap'` → autoLayoutMode 추정 (Row/Column 부모) → `stack`/`inline`
+- 기존 `tokenRef` (`AppSpacing.space12` 등) → 신규 palette/semantic 으로 매핑
+
+**non-numeric / expression-with-literal**:
+- non-numeric → `BLOCKED` (변수/함수 호출, 토큰 적용 어려움)
+- expression-with-literal → embeddedLiterals 단위로 매핑 시도 + `NEEDS_REVIEW`
+
+**출력**: `03-mapping/code-usage-to-token.csv`
+```
+file,line,dir,kind,currentValue,suggestedToken,status,reason
+```
+
+### 3. 검수 큐
+- `03-mapping/REVIEW_QUEUE.md`
+- `NEEDS_REVIEW` + `BLOCKED` 항목만 표로 정리
+- 컬럼: `source | id | currentValue | suggestion | reason | action(체크박스)`
+- 정렬: `NEEDS_REVIEW` 먼저 (실제 결정 필요), 그 다음 `BLOCKED` (참고용)
+
+### 4. 매핑 통계 산출
+- `03-mapping/SUMMARY.md`
+- 항목별: 총수, READY 비율, NEEDS_REVIEW 수, BLOCKED 수
+- 시맨틱 vs palette 매핑 비율
+- 카테고리별(stack/inline/inset/inset-squish/layout) 매핑 분포
+
+## 산출물 요약
+- `03-mapping/figma-node-to-token.csv`
+- `03-mapping/code-usage-to-token.csv`
+- `03-mapping/REVIEW_QUEUE.md`
+- `03-mapping/SUMMARY.md`
 
 ## 커밋 & 푸시
 `docs(spacing-migration): generate token mapping tables`
 
 ## 📌 사람 검수 #4
 - `REVIEW_QUEUE.md` 항목을 직접 결정
-- CSV 파일의 status/suggestedToken 을 수동 수정 후 commit
-- 모든 항목이 READY 또는 BLOCKED 가 되면 Phase 4 진입
+- CSV 파일의 `status`/`suggestedToken` 을 수동 수정 후 commit
+- 모든 항목이 `READY` 또는 `BLOCKED` 가 되면 Phase 4 진입
+
+## 제약
+- ⛔ 데이터 정제 정책(Platform / Demo / *_use_cases) 모든 raw 파일에 적용
+- ⛔ 한 raw 파일은 한 번에 1개씩만 열어 스트리밍 처리
+- ⛔ 매핑 규칙은 결정론적으로 — 같은 입력은 같은 출력
 
 ---
 
@@ -696,17 +925,17 @@ analyze 실패 / 테스트 실패:
 # 부록 A · Task 등록 체크리스트 (Cowork 운영자용)
 
 ```
-[ ] Task 00  — Phase 0  Bootstrap
-[✅] Task 01 — Phase 1-A-0 (사전완료, figma-pages.json 존재)
-    📌 검수 #1: figma-pages.json 의 auditOrder/codeDirToFigmaPage 확인
-[ ] Task 02  — Phase 1-B (코드 감사, 22개 서브 작업 1세션)
-[ ] Task 03..30 — Phase 1-A (Figma 페이지별, 총 28개)
-[ ] Task LAST-1A — Phase 1-A INDEX
-[ ] Task 31  — Phase 1-C 갭 분석
-    📌 검수 #2: gap-analysis.md → palette 후보안 결정
-[ ] Task 32  — Phase 2 토큰 설계
-    📌 검수 #3: palette/semantic 승인
-[ ] Task 33  — Phase 3 매핑
+[✅] Task 00  — Phase 0  Bootstrap
+[✅] Task 01  — Phase 1-A-0 (사전완료, figma-pages.json 존재)
+    📌 검수 #1: figma-pages.json 의 auditOrder/codeDirToFigmaPage 확인 (완료)
+[✅] Task 02  — Phase 1-B (코드 감사, 22개 디렉터리)
+[✅] Task 03..30 — Phase 1-A (Figma 페이지별, 27개 audit + 1 skip)
+[✅] Task LAST-1A — Phase 1-A INDEX
+[✅] Task 31  — Phase 1-C 갭 분석
+[✅] 📌 검수 #2: gap-analysis.md → palette 후보안 결정 (2026-05-14, 본 파일 Task 05 의 '결정 사항' 섹션 참조)
+[ ] Task 32 / 본 파일 Task 05 — Phase 2 토큰 설계 ← **결정 사항만 확정. 산출물 생성은 다음 세션**
+    📌 검수 #3: palette/semantic 승인 + usage-guide.md 검토
+[ ] Task 33 / 본 파일 Task 06 — Phase 3 매핑 (⚠️ Task 32 산출물 02-tokens/* 없으면 시작 불가)
     📌 검수 #4: REVIEW_QUEUE.md 해소
 [ ] Task 34..61 — Phase 4 Figma 적용 (28개 그룹)
     📌 검수 #5 (그룹마다)
@@ -719,9 +948,71 @@ analyze 실패 / 테스트 실패:
     📌 검수 #8: SUMMARY.md 최종 승인
 ```
 
-총 84개 Task. 사람 검수 게이트 8개.
+총 84개 Task. 사람 검수 게이트 8개. (현재 진행 위치: **검수 #2 통과, Task 05/32 시작 대기**)
 
-# 부록 B · 의존성 그래프
+---
+
+# 🔴 부록 C · 세션 시작 전 필수 확인 (모든 Task 공통)
+
+새 Claude Code 세션에서 Task 시작 전 **반드시 입력 파일 존재 여부를 먼저 확인**. 부재 시 바로 중단하고 이전 Task 부터 진행.
+
+## Task 별 필수 입력
+
+| Task | 필수 입력 |
+|---|---|
+| Task 04 / 31 (Phase 1-C) | `01-audit/figma-spacing.INDEX.json`, `01-audit/figma-spacing-raw.*.json` (110개 part), `01-audit/code-audit.INDEX.json`, `01-audit/code-hardcoded-usages.*.json` (22개), `01-audit/code-token-defs.foundation.json` |
+| **Task 05 / 32 (Phase 2)** | 위 모두 + `01-audit/gap-analysis.md`, `01-audit/figma-pages.json` |
+| **Task 06 / 33 (Phase 3)** | 위 모두 + `02-tokens/palette.json`, `02-tokens/semantic.json`, `02-tokens/name-mapping.csv`, `02-tokens/semantic-roles-inventory.md` |
+| Task 07..34 (Phase 4) | 위 모두 + `03-mapping/figma-node-to-token.csv` (status=READY 필터 가능) |
+| Task 08 / 62 (Phase 5-Pre) | `02-tokens/palette.json`, `02-tokens/semantic.json` |
+| Task 09..29 (Phase 5) | `03-mapping/code-usage-to-token.csv`, Task 08 머지 후 `lib/foundation/app_spacing.dart` 신버전 |
+
+## Figma raw 파일 이름 패턴 (검색 시 주의)
+
+저장소의 figma raw 는 두 패턴이 섞임:
+- `figma-spacing-raw.{slug}.json` (단일 파일, 작은 페이지)
+- `figma-spacing-raw.{slug}-part{N}.json` (분할 파일, 큰 페이지)
+
+예시:
+```
+figma-spacing-raw.foundation-space.json
+figma-spacing-raw.module-tab-part1.json
+figma-spacing-raw.module-tab-part2.json
+... 모듈 페이지는 보통 part1~part23 까지 분할
+```
+
+INDEX 는 단 1개: `figma-spacing.INDEX.json` (마침표 두 개).
+
+`.errors.json` 파일은 이전 부분 완료 시점 흔적이며 **현재 모두 제거됨** (0개). 보이면 outdated.
+
+## Code raw 파일 이름 패턴
+
+```
+code-hardcoded-usages.{dir}.json (22개)
+code-hardcoded-usages.{dir}-part{N}.json (일부 디렉터리 분할)
+code-audit.INDEX.json
+code-token-defs.foundation.json
+```
+
+## 입력 부재 시 처리 (자동 분기 의무)
+
+```
+if (입력 파일 X 부재) {
+  console.log('❌ 입력 부재:', X)
+  console.log('→ 먼저 <이전 Task> 를 완료하세요.')
+  return  // 현 세션 종료. 추정/빈 출력으로 진행 금지.
+}
+```
+
+## 절대 하지 말 것
+
+- 입력 부재를 이유로 "추정값" 또는 "빈 CSV" 같이 진행
+- 이전 Task 의 일부만 명시적 확인하고 다음 Task 시작
+- `gap-analysis.md` 의 옛 문구 ("figma-spacing.INDEX.json 부재" 같은 자가 진단) 를 현재 상태로 오해 — 현재 gap-analysis.md 는 91,882 items 캡처 완료된 신버전
+
+---
+
+# 부록 D · 의존성 그래프
 
 ```
 Task 00 ──┬─► Task 01 ──📌──► Task 03..N ──► LAST-1A ──┐
