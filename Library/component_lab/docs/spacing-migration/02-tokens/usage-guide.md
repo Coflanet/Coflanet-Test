@@ -1,5 +1,6 @@
 # Spacing 토큰 사용 가이드 — 디자이너 핵심 문서
 
+**버전**: `1.0.0-pending-1a2` — Phase 1-A-2 (`layoutMode` 사이드카) 완료 후 §2-1/§2-2 의 stack/inline 예시 빈도가 실제 분포로 재검증되면 v1.0 으로 승격.
 **대상**: 디자이너 + 프론트엔드 + 바이브 코딩 컨텍스트.
 **입력**: `palette.json` (20 토큰), `semantic.json` (5 카테고리).
 **Figma 파일**: [📚 Library — fileKey q7yBPcHrid1CGQqFWEPwnR](https://www.figma.com/design/q7yBPcHrid1CGQqFWEPwnR)

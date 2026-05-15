@@ -1,10 +1,13 @@
 # Semantic Roles Inventory — Part B-0 (Task 05)
 
+**버전**: `v0.1` — itemSpacing 의 stack/inline 자동 분리는 **Phase 1-A-2 (Task 31a..z) 완료 후 v1.0** 으로 승격.
 **생성**: Phase 1-A/B raw 스트리밍 + 정제 정책 적용 후 자동 클러스터링.
 **입력**: 110 figma-spacing-raw.*.json + 22 code-hardcoded-usages.*.json
 **용도**: Part B-1 (역할 확정) 입력. Figma 빈도 / 코드 빈도 / 대표 컴포넌트로 의도 토큰 ID 의 정당성 확인.
 
 > 정제 정책: Platform UI, Demo 페이지, `*_use_cases.dart`, 페이지-직접 frame value>40, 소수점/음수 모두 제외.
+
+> ⚠️ **v0.1 한계**: Phase 1-A v1 raw 스키마에 `layoutMode` 가 없어 §3 의 `itemSpacing` 23,246 노드를 stack(VERTICAL) / inline(HORIZONTAL) 으로 자동 분리 불가. v1.0 (Phase 1-A-2 사이드카 적용 후) 에서 두 표로 분리 예정. semantic.json 의 alias 값 자체는 본 한계와 무관 (검수 #2 사전 확정).
 
 ---
 

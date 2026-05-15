@@ -1,6 +1,6 @@
 # Palette Tokens — Phase 2 SoT (Task 05)
 
-**버전**: `1.0.0`
+**버전**: `1.0.0-pending-1a2` — palette 20값 자체는 v1.0 확정. Phase 1-A-2 (`layoutMode` 사이드카) 완료 후 semantic.md/usage-guide.md 와 함께 v1.0 으로 일괄 승격.
 **입력**: `01-audit/gap-analysis.md`, `01-audit/figma-spacing.INDEX.json` (91,882 items / 110 raw part), `01-audit/code-audit.INDEX.json` (22 raw / 927 usage), 검수 #2 확정 (2026-05-14)
 **대응 코드**: `lib/foundation/app_spacing.dart` (Phase 5-Pre 에서 재구성 예정)
 

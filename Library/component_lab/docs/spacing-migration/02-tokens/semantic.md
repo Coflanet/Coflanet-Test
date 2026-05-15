@@ -1,6 +1,6 @@
 # Semantic Tokens — Phase 2 SoT (Task 05)
 
-**버전**: `1.0.0`
+**버전**: `1.0.0-pending-1a2` — alias 26 토큰 정의는 확정 (검수 #2). stack/inline 분리는 Phase 1-A-2 (`layoutMode` 사이드카) 완료 후 데이터 재검증.
 **입력**: `palette.json` (20 토큰), `semantic-roles-inventory.md` (Part B-0)
 **패턴**: 패턴 2 (Palette + 의도 시맨틱) — 컴포넌트별 토큰 없음.
 

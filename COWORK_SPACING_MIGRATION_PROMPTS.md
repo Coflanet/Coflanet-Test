@@ -284,6 +284,7 @@ Claude Code 는 동일 세션 내에서 **서브에이전트를 병렬로 스폰
      - `itemSpacing`, `paddingTop|Left|Right|Bottom`, `counterAxisSpacing`
      - Auto Layout gap 값
      - 변수 바인딩이 있는지 (있으면 `variableId` 기록)
+   - **(v2 추가)** 해당 노드 자체의 `layoutMode` (`VERTICAL|HORIZONTAL|NONE`) 및 `layoutWrap` (`NO_WRAP|WRAP`) 를 기록 — Auto Layout 프레임 자신의 속성. `itemSpacing` 의 stack(VERTICAL) / inline(HORIZONTAL) 자동 분리에 필수.
 3. 각 spacing 발생 지점을 다음 스키마로 기록:
    ```json
    {
@@ -295,7 +296,9 @@ Claude Code 는 동일 세션 내에서 **서브에이전트를 병렬로 스폰
      "usageNote": "(괄호 안 메모나 노드 이름에서 추정한 용도)",
      "sourceNodeId": "X:Y",
      "sourceNodeName": "...",
-     "pageId": "{pageId}"
+     "pageId": "{pageId}",
+     "layoutMode": "VERTICAL | HORIZONTAL | NONE (v2 — itemSpacing 의 stack/inline 분리용)",
+     "layoutWrap": "NO_WRAP | WRAP (v2 — Wrap 안 itemSpacing 의 counter axis 판정용, optional)"
    }
    ```
 
@@ -355,6 +358,73 @@ Claude Code 는 동일 세션 내에서 **서브에이전트를 병렬로 스폰
 
 ## 커밋 & 푸시
 `chore(spacing-migration): build figma audit index`
+
+---
+
+# 🆕 Task 31a..31z · Phase 1-A-2 — itemSpacing layoutMode 사이드카 (재크롤)
+
+> **목적**: Phase 1-A v1 raw 에는 `layoutMode` 가 없어 `itemSpacing` 의 stack(VERTICAL) vs inline(HORIZONTAL) 자동 분리 불가. v1 raw 를 덮어쓰지 않고 사이드카 1 파일에 `nodeId → layoutMode` 매핑만 추가.
+>
+> 본 Task 는 `auditOrder` 27 페이지 중 **`itemSpacing` 발생 페이지** 만 대상. 페이지 1~3개씩 끊어 새 세션.
+
+## 입력
+- Figma fileKey: `q7yBPcHrid1CGQqFWEPwnR`
+- 처리 대상 페이지: `pageId={pageId}`, `pageSlug={pageSlug}`
+- v1 raw 의 itemSpacing sourceNodeId 목록 (해당 페이지의 `figma-spacing-raw.{pageSlug}*.json` 에서 `property=itemSpacing` 행의 `sourceNodeId` 만 추출)
+
+## 처리
+1. 대상 페이지에서 itemSpacing sourceNodeId 목록 로드 (메모리에 들고 있을 것 — 외부 파일 만들지 말 것)
+2. `mcp__figma__use_figma` 로 노드 100개씩 배치 조회, 각 노드의 `layoutMode` 와 `layoutWrap` 만 추출 (다른 필드 무시 — 응답 크기 절약)
+3. 각 결과를 사이드카에 append 합산:
+   ```json
+   {
+     "nodeId": { "layoutMode": "VERTICAL", "layoutWrap": "NO_WRAP", "pageSlug": "{pageSlug}" }
+   }
+   ```
+
+## 산출물
+`Library/component_lab/docs/spacing-migration/01-audit/figma-itemspacing-layoutmode.json`
+
+페이지 단위로 추가됨. 최종 1 파일 (모든 페이지 누적). 파일 사이즈 예상: ~23k 엔트리 × ~80 byte = ~2MB.
+
+## 커밋 & 푸시
+`chore(spacing-migration): audit itemSpacing layoutMode - {pageSlug}`
+
+## 성공 기준
+- 사이드카 엔트리 수 ≥ 해당 페이지 itemSpacing 노드 수
+- `layoutMode` 가 `VERTICAL` 또는 `HORIZONTAL` 인 비율 ≥ 95% (`NONE` 은 layoutMode 가 꺼진 프레임 — 거의 없어야 함)
+
+## ⛔ 금지
+- v1 raw (`figma-spacing-raw.*.json` 110개) 변경 금지
+- 다른 spacing 필드 재수집 금지 — 본 Task 는 layoutMode 만 대상
+
+## 실패 처리
+- 응답 잘림 / 세션 만료 시 페이지 분할 (50개씩 또는 25개씩) 재시도
+
+---
+
+# 🆕 Task LAST-1A-2 · Phase 1-A-2 종료 — Phase 2 산출물 재생성
+
+> Task 31a..31z 모두 완료 후 1회 실행
+
+## 입력
+- `01-audit/figma-itemspacing-layoutmode.json` (사이드카)
+- 기존 110개 raw 파일
+- 기존 `02-tokens/*` (v0.1)
+
+## 처리
+1. v1 raw + 사이드카 결합. 각 itemSpacing 행에 `layoutMode` annotate (in-memory, 파일 안 건드림)
+2. `semantic-roles-inventory.md` §3 의 itemSpacing 단일 표를 **stack (VERTICAL)** / **inline (HORIZONTAL)** 두 표로 분리
+3. `palette.md` / `semantic.md` 의 v0.1 표기 제거
+4. `usage-guide.md` 의 stack/inline 예시 값을 실제 분포 Top 으로 검증·갱신
+5. `semantic-roles-inventory.md` 헤더에 "Phase 1-A-2 완료 — 자동 분리 100%" 명시
+
+## 커밋 & 푸시
+`docs(spacing-migration): regenerate Phase 2 with layoutMode-aware stack/inline split`
+
+## 📌 사람 검수 #3 재확인
+- stack/inline 분포가 검수 #2 결정 (semantic.json 의 alias 값) 와 정합 → OK 면 v1.0 승격
+- 만약 stack 빈도가 너무 낮으면 일부 alias 값 재조정 가능
 
 ---
 
@@ -929,13 +999,17 @@ analyze 실패 / 테스트 실패:
 [✅] Task 01  — Phase 1-A-0 (사전완료, figma-pages.json 존재)
     📌 검수 #1: figma-pages.json 의 auditOrder/codeDirToFigmaPage 확인 (완료)
 [✅] Task 02  — Phase 1-B (코드 감사, 22개 디렉터리)
-[✅] Task 03..30 — Phase 1-A (Figma 페이지별, 27개 audit + 1 skip)
+[✅] Task 03..30 — Phase 1-A v1 (Figma 페이지별, 27개 audit + 1 skip, schema v1 — `layoutMode` 없음)
 [✅] Task LAST-1A — Phase 1-A INDEX
 [✅] Task 31  — Phase 1-C 갭 분석
 [✅] 📌 검수 #2: gap-analysis.md → palette 후보안 결정 (2026-05-14, 본 파일 Task 05 의 '결정 사항' 섹션 참조)
-[ ] Task 32 / 본 파일 Task 05 — Phase 2 토큰 설계 ← **결정 사항만 확정. 산출물 생성은 다음 세션**
-    📌 검수 #3: palette/semantic 승인 + usage-guide.md 검토
-[ ] Task 33 / 본 파일 Task 06 — Phase 3 매핑 (⚠️ Task 32 산출물 02-tokens/* 없으면 시작 불가)
+[✅] Task 32 / 본 파일 Task 05 — Phase 2 토큰 설계 v0.1 (PR #34, 2026-05-15)
+    ⚠️ stack/inline 자동 분리는 Task 31a..z 사이드카 도착 후 v1.0 승격
+[ ] Task 31a..31z — Phase 1-A-2 itemSpacing layoutMode 사이드카 (페이지별, ~10 세션)
+    *itemSpacing 발생 페이지만 대상. v1 raw 변경 금지, 사이드카 1 파일만 누적.*
+[ ] Task LAST-1A-2 — Phase 2 산출물 v1.0 재생성 (사이드카 적용 후 1회)
+    📌 검수 #3: palette/semantic v1.0 승인 + usage-guide.md stack/inline 검증
+[ ] Task 33 / 본 파일 Task 06 — Phase 3 매핑 (⚠️ Task 32 v1.0 승격 후 시작 권장)
     📌 검수 #4: REVIEW_QUEUE.md 해소
 [ ] Task 34..61 — Phase 4 Figma 적용 (28개 그룹)
     📌 검수 #5 (그룹마다)
@@ -948,7 +1022,7 @@ analyze 실패 / 테스트 실패:
     📌 검수 #8: SUMMARY.md 최종 승인
 ```
 
-총 84개 Task. 사람 검수 게이트 8개. (현재 진행 위치: **검수 #2 통과, Task 05/32 시작 대기**)
+총 84개 Task + Task 31a..z (Phase 1-A-2 사이드카) + Task LAST-1A-2 (v1.0 재생성). 사람 검수 게이트 8개. (현재 진행 위치: **Task 32 v0.1 산출 완료 (PR #34). Task 31a..z 디스패치 대기**)
 
 ---
 
@@ -962,7 +1036,9 @@ analyze 실패 / 테스트 실패:
 |---|---|
 | Task 04 / 31 (Phase 1-C) | `01-audit/figma-spacing.INDEX.json`, `01-audit/figma-spacing-raw.*.json` (110개 part), `01-audit/code-audit.INDEX.json`, `01-audit/code-hardcoded-usages.*.json` (22개), `01-audit/code-token-defs.foundation.json` |
 | **Task 05 / 32 (Phase 2)** | 위 모두 + `01-audit/gap-analysis.md`, `01-audit/figma-pages.json` |
-| **Task 06 / 33 (Phase 3)** | 위 모두 + `02-tokens/palette.json`, `02-tokens/semantic.json`, `02-tokens/name-mapping.csv`, `02-tokens/semantic-roles-inventory.md` |
+| **Task 31a..z (Phase 1-A-2)** | Figma fileKey + 대상 페이지 itemSpacing sourceNodeId 목록 (해당 `figma-spacing-raw.{pageSlug}*.json` 에서 추출). 사이드카 누적 파일 `01-audit/figma-itemspacing-layoutmode.json` (없으면 생성) |
+| **Task LAST-1A-2 (Phase 2 v1.0 재생성)** | `01-audit/figma-itemspacing-layoutmode.json` (완성본) + 기존 110 raw + 02-tokens/* (v0.1) |
+| **Task 06 / 33 (Phase 3)** | 위 모두 + `02-tokens/palette.json`, `02-tokens/semantic.json`, `02-tokens/name-mapping.csv`, `02-tokens/semantic-roles-inventory.md` (v1.0 권장) |
 | Task 07..34 (Phase 4) | 위 모두 + `03-mapping/figma-node-to-token.csv` (status=READY 필터 가능) |
 | Task 08 / 62 (Phase 5-Pre) | `02-tokens/palette.json`, `02-tokens/semantic.json` |
 | Task 09..29 (Phase 5) | `03-mapping/code-usage-to-token.csv`, Task 08 머지 후 `lib/foundation/app_spacing.dart` 신버전 |
