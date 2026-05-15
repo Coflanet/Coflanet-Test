@@ -127,6 +127,7 @@ class AppPaginationDot extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final c = context.appColors;
     final activeColor =
         c.primaryNormal;
     final inactiveColor = c.componentFillStrong;
@@ -213,6 +214,7 @@ class AppHomeIndicator extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final c = context.appColors;
     final barColor =
         c.labelStrong;
 
@@ -248,6 +250,7 @@ class AppGrabber extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final c = context.appColors;
     final barColor = c.componentFillStrong;
 
     return SizedBox(

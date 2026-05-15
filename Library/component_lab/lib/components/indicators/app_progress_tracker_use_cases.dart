@@ -13,7 +13,7 @@ final List<WidgetbookComponent> progressTrackerUseCases = [
         name: 'Horizontal — 4 steps, current=1',
         builder: (context) => _bg(
           context,
-          const AppProgressTracker(
+          AppProgressTracker(
             steps: [
               AppProgressStep(label: '주문'),
               AppProgressStep(label: '결제'),
@@ -28,7 +28,7 @@ final List<WidgetbookComponent> progressTrackerUseCases = [
         name: 'Horizontal — all complete',
         builder: (context) => _bg(
           context,
-          const AppProgressTracker(
+          AppProgressTracker(
             steps: [
               AppProgressStep(label: '시작'),
               AppProgressStep(label: '중간'),
@@ -42,7 +42,7 @@ final List<WidgetbookComponent> progressTrackerUseCases = [
         name: 'Vertical — 4 steps with subLabel',
         builder: (context) => _bg(
           context,
-          const AppProgressTracker(
+          AppProgressTracker(
             axis: AppProgressTrackerAxis.vertical,
             steps: [
               AppProgressStep(
@@ -64,7 +64,7 @@ final List<WidgetbookComponent> progressTrackerUseCases = [
         name: 'Vertical — all pending',
         builder: (context) => _bg(
           context,
-          const AppProgressTracker(
+          AppProgressTracker(
             axis: AppProgressTrackerAxis.vertical,
             steps: [
               AppProgressStep(label: 'Step 1'),
