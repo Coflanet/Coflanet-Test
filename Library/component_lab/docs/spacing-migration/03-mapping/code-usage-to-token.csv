@@ -1,0 +1,909 @@
+file,line,dir,kind,currentValue,suggestedToken,status,reason
+lib/components/avatars/app_avatar.dart,292,avatars,EdgeInsets.only,,,BLOCKED,EdgeInsets.only missing literal
+lib/components/avatars/app_avatar.dart,297,avatars,EdgeInsets.only,overlap,,BLOCKED,non-numeric EdgeInsets.only
+lib/components/avatars/app_avatar.dart,155,avatars,SizedBox,diameter,,BLOCKED,non-numeric SizedBox dimension
+lib/components/avatars/app_avatar.dart,155,avatars,SizedBox,diameter,,BLOCKED,non-numeric SizedBox dimension
+lib/components/avatars/avatar_use_cases.dart,117,avatars,EdgeInsets.all,24,,BLOCKED,Demo 화면 (_use_cases.dart)
+lib/components/avatars/avatar_use_cases.dart,119,avatars,PropLiteral:spacing,16,,BLOCKED,Demo 화면 (_use_cases.dart)
+lib/components/avatars/avatar_use_cases.dart,120,avatars,PropLiteral:runSpacing,16,,BLOCKED,Demo 화면 (_use_cases.dart)
+lib/components/buttons/app_floating_action_button.dart,37,buttons,EdgeInsets.all,space16,AppSpacingSemantic.insetLg,READY,EdgeInsets.all(tokenRef) → inset
+lib/components/buttons/app_floating_action_button.dart,37,buttons,AppSpacingRef,space16,AppSpacing.s16,READY,기존 tokenRef → palette s16
+lib/components/buttons/app_icon_button.dart,225,buttons,EdgeInsets.all,_padding,,BLOCKED,non-numeric EdgeInsets.all
+lib/components/buttons/app_icon_button.dart,221,buttons,SizedBox,box,,BLOCKED,non-numeric SizedBox dimension
+lib/components/buttons/app_icon_button.dart,221,buttons,SizedBox,box,,BLOCKED,non-numeric SizedBox dimension
+lib/components/buttons/app_icon_button.dart,270,buttons,SizedBox,box,,BLOCKED,non-numeric SizedBox dimension
+lib/components/buttons/app_icon_button.dart,270,buttons,SizedBox,box,,BLOCKED,non-numeric SizedBox dimension
+lib/components/buttons/app_outlined_button.dart,80,buttons,EdgeInsets.symmetric,base.left,,BLOCKED,non-numeric EdgeInsets.symmetric(horizontal)
+lib/components/buttons/app_outlined_button.dart,91,buttons,SizedBox,width,,BLOCKED,non-numeric SizedBox dimension
+lib/components/buttons/app_outlined_button.dart,91,buttons,SizedBox,_height,,BLOCKED,non-numeric SizedBox dimension
+lib/components/buttons/app_outlined_button.dart,113,buttons,SizedBox,_gap,,BLOCKED,non-numeric SizedBox dimension
+lib/components/buttons/app_outlined_button.dart,117,buttons,SizedBox,_gap,,BLOCKED,non-numeric SizedBox dimension
+lib/components/buttons/app_section_bottom_button.dart,66,buttons,EdgeInsets.symmetric,"H=28,V=11",,NEEDS_REVIEW,symmetric V11/H28 off-scale
+lib/components/buttons/app_section_bottom_button.dart,100,buttons,EdgeInsets.symmetric,space24,AppSpacing.s24,READY,EdgeInsets.symmetric(horizontal=tokenRef) → palette s24
+lib/components/buttons/app_section_bottom_button.dart,100,buttons,EdgeInsets.symmetric,space4,AppSpacing.s4,READY,EdgeInsets.symmetric(vertical=tokenRef) → palette s4
+lib/components/buttons/app_section_bottom_button.dart,100,buttons,EdgeInsets.symmetric,"H=24,V=4",AppSpacing.s4 + AppSpacing.s24,NEEDS_REVIEW,비표준 squish 페어 V4/H24 (Outlined 1px 보정 의심 가능)
+lib/components/buttons/app_section_bottom_button.dart,72,buttons,SizedBox,6,AppSpacing.s6,READY,SizedBox(width=)→inline palette direct (no semantic match for 6px)
+lib/components/buttons/app_section_bottom_button.dart,80,buttons,SizedBox,6,AppSpacing.s6,READY,SizedBox(width=)→inline palette direct (no semantic match for 6px)
+lib/components/buttons/app_section_bottom_button.dart,112,buttons,SizedBox,10,AppSpacing.s10,READY,SizedBox(width=)→inline palette direct (no semantic match for 10px)
+lib/components/buttons/app_section_bottom_button.dart,121,buttons,SizedBox,10,AppSpacing.s10,READY,SizedBox(width=)→inline palette direct (no semantic match for 10px)
+lib/components/buttons/app_section_bottom_button.dart,100,buttons,AppSpacingRef,space24,AppSpacing.s24,READY,기존 tokenRef → palette s24
+lib/components/buttons/app_section_bottom_button.dart,100,buttons,AppSpacingRef,space4,AppSpacing.s4,READY,기존 tokenRef → palette s4
+lib/components/buttons/app_section_bottom_button.dart,157,buttons,AppSpacingRef,space4,AppSpacing.s4,READY,기존 tokenRef → palette s4
+lib/components/buttons/app_social_button.dart,78,buttons,SizedBox,width ?? double.infinity,,BLOCKED,non-numeric SizedBox dimension
+lib/components/buttons/app_social_button.dart,78,buttons,SizedBox,height,,BLOCKED,non-numeric SizedBox dimension
+lib/components/buttons/app_social_button.dart,102,buttons,AppSpacingRef,space8,AppSpacing.s8,READY,기존 tokenRef → palette s8
+lib/components/buttons/app_solid_button.dart,151,buttons,SizedBox,_gap,,BLOCKED,non-numeric SizedBox dimension
+lib/components/buttons/app_solid_button.dart,155,buttons,SizedBox,_gap,,BLOCKED,non-numeric SizedBox dimension
+lib/components/buttons/app_solid_button.dart,182,buttons,SizedBox,width,,BLOCKED,non-numeric SizedBox dimension
+lib/components/buttons/app_solid_button.dart,182,buttons,SizedBox,_height,,BLOCKED,non-numeric SizedBox dimension
+lib/components/buttons/app_text_button.dart,43,buttons,EdgeInsets.symmetric,space4,AppSpacing.s4,READY,EdgeInsets.symmetric(vertical=tokenRef) → palette s4
+lib/components/buttons/app_text_button.dart,43,buttons,EdgeInsets.symmetric,V=4,AppSpacing.s4,READY,symmetric vertical only
+lib/components/buttons/app_text_button.dart,82,buttons,SizedBox,_gap,,BLOCKED,non-numeric SizedBox dimension
+lib/components/buttons/app_text_button.dart,86,buttons,SizedBox,_gap,,BLOCKED,non-numeric SizedBox dimension
+lib/components/buttons/app_text_button.dart,43,buttons,AppSpacingRef,space4,AppSpacing.s4,READY,기존 tokenRef → palette s4
+lib/components/buttons/button_use_cases.dart,468,buttons,EdgeInsets.all,24,,BLOCKED,Demo 화면 (_use_cases.dart)
+lib/components/buttons/button_use_cases.dart,490,buttons,EdgeInsets.all,24,,BLOCKED,Demo 화면 (_use_cases.dart)
+lib/components/buttons/button_use_cases.dart,97,buttons,SizedBox,AppSpacing.space12,,BLOCKED,Demo 화면 (_use_cases.dart)
+lib/components/buttons/button_use_cases.dart,201,buttons,SizedBox,AppSpacing.space8,,BLOCKED,Demo 화면 (_use_cases.dart)
+lib/components/buttons/button_use_cases.dart,209,buttons,SizedBox,AppSpacing.space24,,BLOCKED,Demo 화면 (_use_cases.dart)
+lib/components/buttons/button_use_cases.dart,211,buttons,SizedBox,AppSpacing.space8,,BLOCKED,Demo 화면 (_use_cases.dart)
+lib/components/buttons/button_use_cases.dart,289,buttons,SizedBox,4,,BLOCKED,Demo 화면 (_use_cases.dart)
+lib/components/buttons/button_use_cases.dart,25,buttons,PropLiteral:spacing,12,,BLOCKED,Demo 화면 (_use_cases.dart)
+lib/components/buttons/button_use_cases.dart,26,buttons,PropLiteral:runSpacing,12,,BLOCKED,Demo 화면 (_use_cases.dart)
+lib/components/buttons/button_use_cases.dart,39,buttons,PropLiteral:spacing,12,,BLOCKED,Demo 화면 (_use_cases.dart)
+lib/components/buttons/button_use_cases.dart,40,buttons,PropLiteral:runSpacing,12,,BLOCKED,Demo 화면 (_use_cases.dart)
+lib/components/buttons/button_use_cases.dart,56,buttons,PropLiteral:spacing,12,,BLOCKED,Demo 화면 (_use_cases.dart)
+lib/components/buttons/button_use_cases.dart,57,buttons,PropLiteral:runSpacing,12,,BLOCKED,Demo 화면 (_use_cases.dart)
+lib/components/buttons/button_use_cases.dart,75,buttons,PropLiteral:spacing,12,,BLOCKED,Demo 화면 (_use_cases.dart)
+lib/components/buttons/button_use_cases.dart,76,buttons,PropLiteral:runSpacing,12,,BLOCKED,Demo 화면 (_use_cases.dart)
+lib/components/buttons/button_use_cases.dart,124,buttons,PropLiteral:spacing,12,,BLOCKED,Demo 화면 (_use_cases.dart)
+lib/components/buttons/button_use_cases.dart,125,buttons,PropLiteral:runSpacing,12,,BLOCKED,Demo 화면 (_use_cases.dart)
+lib/components/buttons/button_use_cases.dart,138,buttons,PropLiteral:spacing,12,,BLOCKED,Demo 화면 (_use_cases.dart)
+lib/components/buttons/button_use_cases.dart,139,buttons,PropLiteral:runSpacing,12,,BLOCKED,Demo 화면 (_use_cases.dart)
+lib/components/buttons/button_use_cases.dart,153,buttons,PropLiteral:spacing,12,,BLOCKED,Demo 화면 (_use_cases.dart)
+lib/components/buttons/button_use_cases.dart,154,buttons,PropLiteral:runSpacing,12,,BLOCKED,Demo 화면 (_use_cases.dart)
+lib/components/buttons/button_use_cases.dart,171,buttons,PropLiteral:spacing,12,,BLOCKED,Demo 화면 (_use_cases.dart)
+lib/components/buttons/button_use_cases.dart,203,buttons,PropLiteral:spacing,16,,BLOCKED,Demo 화면 (_use_cases.dart)
+lib/components/buttons/button_use_cases.dart,213,buttons,PropLiteral:spacing,16,,BLOCKED,Demo 화면 (_use_cases.dart)
+lib/components/buttons/button_use_cases.dart,232,buttons,PropLiteral:spacing,16,,BLOCKED,Demo 화면 (_use_cases.dart)
+lib/components/buttons/button_use_cases.dart,233,buttons,PropLiteral:runSpacing,8,,BLOCKED,Demo 화면 (_use_cases.dart)
+lib/components/buttons/button_use_cases.dart,272,buttons,PropLiteral:spacing,12,,BLOCKED,Demo 화면 (_use_cases.dart)
+lib/components/buttons/button_use_cases.dart,273,buttons,PropLiteral:runSpacing,12,,BLOCKED,Demo 화면 (_use_cases.dart)
+lib/components/buttons/button_use_cases.dart,306,buttons,PropLiteral:spacing,12,,BLOCKED,Demo 화면 (_use_cases.dart)
+lib/components/buttons/button_use_cases.dart,336,buttons,PropLiteral:spacing,24,,BLOCKED,Demo 화면 (_use_cases.dart)
+lib/components/buttons/button_use_cases.dart,372,buttons,PropLiteral:spacing,24,,BLOCKED,Demo 화면 (_use_cases.dart)
+lib/components/buttons/button_use_cases.dart,97,buttons,AppSpacingRef,AppSpacing.space12,,BLOCKED,Demo 화면 (_use_cases.dart)
+lib/components/buttons/button_use_cases.dart,201,buttons,AppSpacingRef,AppSpacing.space8,,BLOCKED,Demo 화면 (_use_cases.dart)
+lib/components/buttons/button_use_cases.dart,209,buttons,AppSpacingRef,AppSpacing.space24,,BLOCKED,Demo 화면 (_use_cases.dart)
+lib/components/buttons/button_use_cases.dart,211,buttons,AppSpacingRef,AppSpacing.space8,,BLOCKED,Demo 화면 (_use_cases.dart)
+lib/components/cards/app_card.dart,37,cards,EdgeInsets.all,space16,AppSpacingSemantic.insetLg,READY,EdgeInsets.all(tokenRef) → inset
+lib/components/cards/app_card.dart,58,cards,EdgeInsets.symmetric,space16,AppSpacing.s16,READY,EdgeInsets.symmetric(horizontal=tokenRef) → palette s16
+lib/components/cards/app_card.dart,58,cards,EdgeInsets.symmetric,H=16,AppSpacing.s16,READY,symmetric horizontal only
+lib/components/cards/app_card.dart,122,cards,SizedBox,width,,BLOCKED,non-numeric SizedBox dimension
+lib/components/cards/app_card.dart,163,cards,SizedBox,2,AppSpacingSemantic.inlineXs,READY,SizedBox(height=)→stack value-based stack/inline (canonical)
+lib/components/cards/app_card.dart,37,cards,AppSpacingRef,space16,AppSpacing.s16,READY,기존 tokenRef → palette s16
+lib/components/cards/app_card.dart,59,cards,AppSpacingRef,space16,AppSpacing.s16,READY,기존 tokenRef → palette s16
+lib/components/cards/app_card.dart,60,cards,AppSpacingRef,space12,AppSpacing.s12,READY,기존 tokenRef → palette s12
+lib/components/cards/app_card.dart,147,cards,AppSpacingRef,space12,AppSpacing.s12,READY,기존 tokenRef → palette s12
+lib/components/cards/app_card.dart,177,cards,AppSpacingRef,space12,AppSpacing.s12,READY,기존 tokenRef → palette s12
+lib/components/cards/card_use_cases.dart,45,cards,EdgeInsets.all,24,,BLOCKED,Demo 화면 (_use_cases.dart)
+lib/components/cards/card_use_cases.dart,82,cards,EdgeInsets.all,24,,BLOCKED,Demo 화면 (_use_cases.dart)
+lib/components/cards/card_use_cases.dart,34,cards,SizedBox,AppSpacing.space8,,BLOCKED,Demo 화면 (_use_cases.dart)
+lib/components/cards/card_use_cases.dart,53,cards,SizedBox,AppSpacing.space16,,BLOCKED,Demo 화면 (_use_cases.dart)
+lib/components/cards/card_use_cases.dart,59,cards,SizedBox,AppSpacing.space16,,BLOCKED,Demo 화면 (_use_cases.dart)
+lib/components/cards/card_use_cases.dart,90,cards,SizedBox,AppSpacing.space12,,BLOCKED,Demo 화면 (_use_cases.dart)
+lib/components/cards/card_use_cases.dart,98,cards,SizedBox,AppSpacing.space4,,BLOCKED,Demo 화면 (_use_cases.dart)
+lib/components/cards/card_use_cases.dart,34,cards,AppSpacingRef,AppSpacing.space8,,BLOCKED,Demo 화면 (_use_cases.dart)
+lib/components/cards/card_use_cases.dart,53,cards,AppSpacingRef,AppSpacing.space16,,BLOCKED,Demo 화면 (_use_cases.dart)
+lib/components/cards/card_use_cases.dart,59,cards,AppSpacingRef,AppSpacing.space16,,BLOCKED,Demo 화면 (_use_cases.dart)
+lib/components/cards/card_use_cases.dart,90,cards,AppSpacingRef,AppSpacing.space12,,BLOCKED,Demo 화면 (_use_cases.dart)
+lib/components/cards/card_use_cases.dart,98,cards,AppSpacingRef,AppSpacing.space4,,BLOCKED,Demo 화면 (_use_cases.dart)
+lib/components/chips/app_chip.dart,129,chips,EdgeInsets.symmetric,space8,AppSpacing.s8,READY,EdgeInsets.symmetric(horizontal=tokenRef) → palette s8
+lib/components/chips/app_chip.dart,129,chips,EdgeInsets.symmetric,space4,AppSpacing.s4,READY,EdgeInsets.symmetric(vertical=tokenRef) → palette s4
+lib/components/chips/app_chip.dart,129,chips,EdgeInsets.symmetric,"H=8,V=4",AppSpacing.s4 + AppSpacing.s8,NEEDS_REVIEW,비표준 squish 페어 V4/H8 (Outlined 1px 보정 의심 가능)
+lib/components/chips/app_chip.dart,131,chips,EdgeInsets.symmetric,space12,AppSpacing.s12,READY,EdgeInsets.symmetric(horizontal=tokenRef) → palette s12
+lib/components/chips/app_chip.dart,131,chips,EdgeInsets.symmetric,"H=12,V=6",AppSpacing.s6 + AppSpacing.s12,NEEDS_REVIEW,비표준 squish 페어 V6/H12 (Outlined 1px 보정 의심 가능)
+lib/components/chips/app_chip.dart,157,chips,EdgeInsets.all,space4,AppSpacingSemantic.insetXs,READY,EdgeInsets.all(tokenRef) → inset
+lib/components/chips/app_chip.dart,130,chips,AppSpacingRef,space8,AppSpacing.s8,READY,기존 tokenRef → palette s8
+lib/components/chips/app_chip.dart,130,chips,AppSpacingRef,space4,AppSpacing.s4,READY,기존 tokenRef → palette s4
+lib/components/chips/app_chip.dart,132,chips,AppSpacingRef,space12,AppSpacing.s12,READY,기존 tokenRef → palette s12
+lib/components/chips/app_chip.dart,142,chips,AppSpacingRef,space4,AppSpacing.s4,READY,기존 tokenRef → palette s4
+lib/components/chips/app_chip.dart,146,chips,AppSpacingRef,space4,AppSpacing.s4,READY,기존 tokenRef → palette s4
+lib/components/chips/app_chip.dart,157,chips,AppSpacingRef,space4,AppSpacing.s4,READY,기존 tokenRef → palette s4
+lib/components/chips/app_chip_action.dart,179,chips,EdgeInsets.symmetric,m.wrapperPadH,,BLOCKED,non-numeric EdgeInsets.symmetric(horizontal)
+lib/components/chips/app_chip_action.dart,193,chips,EdgeInsets.symmetric,m.padH,,BLOCKED,non-numeric EdgeInsets.symmetric(horizontal)
+lib/components/chips/app_chip_action.dart,214,chips,EdgeInsets.all,tapBoost,,BLOCKED,non-numeric EdgeInsets.all
+lib/components/chips/app_chip_action.dart,201,chips,SizedBox,m.gap,,BLOCKED,non-numeric SizedBox dimension
+lib/components/chips/app_chip_action.dart,65,chips,PropLiteral:gap,2,AppSpacingSemantic.inlineXs,READY,PropLiteral:gap → value-based stack/inline (canonical)
+lib/components/chips/app_chip_action.dart,75,chips,PropLiteral:gap,2,AppSpacingSemantic.inlineXs,READY,PropLiteral:gap → value-based stack/inline (canonical)
+lib/components/chips/app_chip_action.dart,85,chips,PropLiteral:gap,3,AppSpacing.s3,READY,PropLiteral:gap → palette direct (no semantic match for 3px)
+lib/components/chips/app_chip_action.dart,95,chips,PropLiteral:gap,3,AppSpacing.s3,READY,PropLiteral:gap → palette direct (no semantic match for 3px)
+lib/components/chips/app_chip_filter.dart,199,chips,EdgeInsets.symmetric,m.wrapperPadH,,BLOCKED,non-numeric EdgeInsets.symmetric(horizontal)
+lib/components/chips/app_chip_filter.dart,223,chips,EdgeInsets.only,m.padL,,BLOCKED,non-numeric EdgeInsets.only
+lib/components/chips/app_chip_filter.dart,223,chips,EdgeInsets.only,m.padR,,BLOCKED,non-numeric EdgeInsets.only
+lib/components/chips/app_chip_filter.dart,223,chips,EdgeInsets.only,m.padV,,BLOCKED,non-numeric EdgeInsets.only
+lib/components/chips/app_chip_filter.dart,244,chips,EdgeInsets.all,tapBoost,,BLOCKED,non-numeric EdgeInsets.all
+lib/components/chips/app_chip_filter.dart,203,chips,SizedBox,m.wrapperGap,,BLOCKED,non-numeric SizedBox dimension
+lib/components/chips/app_chip_filter.dart,233,chips,SizedBox,m.contentGap,,BLOCKED,non-numeric SizedBox dimension
+lib/components/chips/app_mini_chip.dart,34,chips,EdgeInsets.symmetric,"H=10,V=6",AppSpacing.s6 + AppSpacing.s10,NEEDS_REVIEW,비표준 squish 페어 V6/H10 (Outlined 1px 보정 의심 가능)
+lib/components/chips/app_mini_chip.dart,41,chips,EdgeInsets.symmetric,"H=6,V=2",AppSpacingSemantic.insetSquishXsVertical + insetSquishXsHorizontal,READY,inset-squish Xs
+lib/components/chips/chip_use_cases.dart,399,chips,EdgeInsets.all,AppSpacing.space24,,BLOCKED,Demo 화면 (_use_cases.dart)
+lib/components/chips/chip_use_cases.dart,30,chips,SizedBox,AppSpacing.space8,,BLOCKED,Demo 화면 (_use_cases.dart)
+lib/components/chips/chip_use_cases.dart,43,chips,SizedBox,AppSpacing.space20,,BLOCKED,Demo 화면 (_use_cases.dart)
+lib/components/chips/chip_use_cases.dart,128,chips,SizedBox,AppSpacing.space8,,BLOCKED,Demo 화면 (_use_cases.dart)
+lib/components/chips/chip_use_cases.dart,142,chips,SizedBox,AppSpacing.space20,,BLOCKED,Demo 화면 (_use_cases.dart)
+lib/components/chips/chip_use_cases.dart,159,chips,SizedBox,AppSpacing.space8,,BLOCKED,Demo 화면 (_use_cases.dart)
+lib/components/chips/chip_use_cases.dart,174,chips,SizedBox,AppSpacing.space20,,BLOCKED,Demo 화면 (_use_cases.dart)
+lib/components/chips/chip_use_cases.dart,191,chips,SizedBox,AppSpacing.space8,,BLOCKED,Demo 화면 (_use_cases.dart)
+lib/components/chips/chip_use_cases.dart,205,chips,SizedBox,AppSpacing.space20,,BLOCKED,Demo 화면 (_use_cases.dart)
+lib/components/chips/chip_use_cases.dart,273,chips,SizedBox,AppSpacing.space8,,BLOCKED,Demo 화면 (_use_cases.dart)
+lib/components/chips/chip_use_cases.dart,287,chips,SizedBox,AppSpacing.space20,,BLOCKED,Demo 화면 (_use_cases.dart)
+lib/components/chips/chip_use_cases.dart,304,chips,SizedBox,AppSpacing.space8,,BLOCKED,Demo 화면 (_use_cases.dart)
+lib/components/chips/chip_use_cases.dart,320,chips,SizedBox,AppSpacing.space20,,BLOCKED,Demo 화면 (_use_cases.dart)
+lib/components/chips/chip_use_cases.dart,356,chips,SizedBox,AppSpacing.space8,,BLOCKED,Demo 화면 (_use_cases.dart)
+lib/components/chips/chip_use_cases.dart,370,chips,SizedBox,AppSpacing.space20,,BLOCKED,Demo 화면 (_use_cases.dart)
+lib/components/chips/chip_use_cases.dart,30,chips,AppSpacingRef,AppSpacing.space8,,BLOCKED,Demo 화면 (_use_cases.dart)
+lib/components/chips/chip_use_cases.dart,32,chips,AppSpacingRef,AppSpacing.space8,,BLOCKED,Demo 화면 (_use_cases.dart)
+lib/components/chips/chip_use_cases.dart,33,chips,AppSpacingRef,AppSpacing.space8,,BLOCKED,Demo 화면 (_use_cases.dart)
+lib/components/chips/chip_use_cases.dart,43,chips,AppSpacingRef,AppSpacing.space20,,BLOCKED,Demo 화면 (_use_cases.dart)
+lib/components/chips/chip_use_cases.dart,54,chips,AppSpacingRef,AppSpacing.space8,,BLOCKED,Demo 화면 (_use_cases.dart)
+lib/components/chips/chip_use_cases.dart,55,chips,AppSpacingRef,AppSpacing.space8,,BLOCKED,Demo 화면 (_use_cases.dart)
+lib/components/chips/chip_use_cases.dart,82,chips,AppSpacingRef,AppSpacing.space8,,BLOCKED,Demo 화면 (_use_cases.dart)
+lib/components/chips/chip_use_cases.dart,83,chips,AppSpacingRef,AppSpacing.space8,,BLOCKED,Demo 화면 (_use_cases.dart)
+lib/components/chips/chip_use_cases.dart,128,chips,AppSpacingRef,AppSpacing.space8,,BLOCKED,Demo 화면 (_use_cases.dart)
+lib/components/chips/chip_use_cases.dart,130,chips,AppSpacingRef,AppSpacing.space12,,BLOCKED,Demo 화면 (_use_cases.dart)
+lib/components/chips/chip_use_cases.dart,131,chips,AppSpacingRef,AppSpacing.space12,,BLOCKED,Demo 화면 (_use_cases.dart)
+lib/components/chips/chip_use_cases.dart,142,chips,AppSpacingRef,AppSpacing.space20,,BLOCKED,Demo 화면 (_use_cases.dart)
+lib/components/chips/chip_use_cases.dart,159,chips,AppSpacingRef,AppSpacing.space8,,BLOCKED,Demo 화면 (_use_cases.dart)
+lib/components/chips/chip_use_cases.dart,161,chips,AppSpacingRef,AppSpacing.space12,,BLOCKED,Demo 화면 (_use_cases.dart)
+lib/components/chips/chip_use_cases.dart,162,chips,AppSpacingRef,AppSpacing.space12,,BLOCKED,Demo 화면 (_use_cases.dart)
+lib/components/chips/chip_use_cases.dart,174,chips,AppSpacingRef,AppSpacing.space20,,BLOCKED,Demo 화면 (_use_cases.dart)
+lib/components/chips/chip_use_cases.dart,191,chips,AppSpacingRef,AppSpacing.space8,,BLOCKED,Demo 화면 (_use_cases.dart)
+lib/components/chips/chip_use_cases.dart,193,chips,AppSpacingRef,AppSpacing.space12,,BLOCKED,Demo 화면 (_use_cases.dart)
+lib/components/chips/chip_use_cases.dart,194,chips,AppSpacingRef,AppSpacing.space12,,BLOCKED,Demo 화면 (_use_cases.dart)
+lib/components/chips/chip_use_cases.dart,205,chips,AppSpacingRef,AppSpacing.space20,,BLOCKED,Demo 화면 (_use_cases.dart)
+lib/components/chips/chip_use_cases.dart,216,chips,AppSpacingRef,AppSpacing.space12,,BLOCKED,Demo 화면 (_use_cases.dart)
+lib/components/chips/chip_use_cases.dart,217,chips,AppSpacingRef,AppSpacing.space12,,BLOCKED,Demo 화면 (_use_cases.dart)
+lib/components/chips/chip_use_cases.dart,273,chips,AppSpacingRef,AppSpacing.space8,,BLOCKED,Demo 화면 (_use_cases.dart)
+lib/components/chips/chip_use_cases.dart,275,chips,AppSpacingRef,AppSpacing.space12,,BLOCKED,Demo 화면 (_use_cases.dart)
+lib/components/chips/chip_use_cases.dart,276,chips,AppSpacingRef,AppSpacing.space12,,BLOCKED,Demo 화면 (_use_cases.dart)
+lib/components/chips/chip_use_cases.dart,287,chips,AppSpacingRef,AppSpacing.space20,,BLOCKED,Demo 화면 (_use_cases.dart)
+lib/components/chips/chip_use_cases.dart,304,chips,AppSpacingRef,AppSpacing.space8,,BLOCKED,Demo 화면 (_use_cases.dart)
+lib/components/chips/chip_use_cases.dart,306,chips,AppSpacingRef,AppSpacing.space12,,BLOCKED,Demo 화면 (_use_cases.dart)
+lib/components/chips/chip_use_cases.dart,307,chips,AppSpacingRef,AppSpacing.space12,,BLOCKED,Demo 화면 (_use_cases.dart)
+lib/components/chips/chip_use_cases.dart,320,chips,AppSpacingRef,AppSpacing.space20,,BLOCKED,Demo 화면 (_use_cases.dart)
+lib/components/chips/chip_use_cases.dart,331,chips,AppSpacingRef,AppSpacing.space12,,BLOCKED,Demo 화면 (_use_cases.dart)
+lib/components/chips/chip_use_cases.dart,332,chips,AppSpacingRef,AppSpacing.space12,,BLOCKED,Demo 화면 (_use_cases.dart)
+lib/components/chips/chip_use_cases.dart,356,chips,AppSpacingRef,AppSpacing.space8,,BLOCKED,Demo 화면 (_use_cases.dart)
+lib/components/chips/chip_use_cases.dart,358,chips,AppSpacingRef,AppSpacing.space12,,BLOCKED,Demo 화면 (_use_cases.dart)
+lib/components/chips/chip_use_cases.dart,359,chips,AppSpacingRef,AppSpacing.space12,,BLOCKED,Demo 화면 (_use_cases.dart)
+lib/components/chips/chip_use_cases.dart,370,chips,AppSpacingRef,AppSpacing.space20,,BLOCKED,Demo 화면 (_use_cases.dart)
+lib/components/chips/chip_use_cases.dart,399,chips,AppSpacingRef,AppSpacing.space24,,BLOCKED,Demo 화면 (_use_cases.dart)
+lib/components/contents/app_accordion.dart,100,contents,EdgeInsets.symmetric,widget.padding.value,,BLOCKED,non-numeric EdgeInsets.symmetric(vertical)
+lib/components/contents/app_accordion.dart,133,contents,EdgeInsets.only,space8,AppSpacing.s8,READY,EdgeInsets.only(right=tokenRef) → palette
+lib/components/contents/app_accordion.dart,102,contents,AppSpacingRef,space16,AppSpacing.s16,READY,기존 tokenRef → palette s16
+lib/components/contents/app_accordion.dart,108,contents,AppSpacingRef,space12,AppSpacing.s12,READY,기존 tokenRef → palette s12
+lib/components/contents/app_accordion.dart,133,contents,AppSpacingRef,space8,AppSpacing.s8,READY,기존 tokenRef → palette s8
+lib/components/contents/app_accordion_use_cases.dart,21,contents,EdgeInsets.all,AppSpacing.space16,,BLOCKED,Demo 화면 (_use_cases.dart)
+lib/components/contents/app_accordion_use_cases.dart,42,contents,EdgeInsets.all,AppSpacing.space16,,BLOCKED,Demo 화면 (_use_cases.dart)
+lib/components/contents/app_accordion_use_cases.dart,61,contents,EdgeInsets.all,AppSpacing.space16,,BLOCKED,Demo 화면 (_use_cases.dart)
+lib/components/contents/app_accordion_use_cases.dart,85,contents,EdgeInsets.all,AppSpacing.space16,,BLOCKED,Demo 화면 (_use_cases.dart)
+lib/components/contents/app_accordion_use_cases.dart,102,contents,EdgeInsets.all,AppSpacing.space16,,BLOCKED,Demo 화면 (_use_cases.dart)
+lib/components/contents/app_accordion_use_cases.dart,119,contents,EdgeInsets.all,AppSpacing.space16,,BLOCKED,Demo 화면 (_use_cases.dart)
+lib/components/contents/app_accordion_use_cases.dart,136,contents,EdgeInsets.all,AppSpacing.space16,,BLOCKED,Demo 화면 (_use_cases.dart)
+lib/components/contents/app_accordion_use_cases.dart,160,contents,EdgeInsets.all,AppSpacing.space16,,BLOCKED,Demo 화면 (_use_cases.dart)
+lib/components/contents/app_accordion_use_cases.dart,171,contents,EdgeInsets.all,AppSpacing.space16,,BLOCKED,Demo 화면 (_use_cases.dart)
+lib/components/contents/app_accordion_use_cases.dart,183,contents,EdgeInsets.all,AppSpacing.space16,,BLOCKED,Demo 화면 (_use_cases.dart)
+lib/components/contents/app_accordion_use_cases.dart,200,contents,EdgeInsets.all,AppSpacing.space16,,BLOCKED,Demo 화면 (_use_cases.dart)
+lib/components/contents/app_accordion_use_cases.dart,21,contents,AppSpacingRef,AppSpacing.space16,,BLOCKED,Demo 화면 (_use_cases.dart)
+lib/components/contents/app_accordion_use_cases.dart,42,contents,AppSpacingRef,AppSpacing.space16,,BLOCKED,Demo 화면 (_use_cases.dart)
+lib/components/contents/app_accordion_use_cases.dart,61,contents,AppSpacingRef,AppSpacing.space16,,BLOCKED,Demo 화면 (_use_cases.dart)
+lib/components/contents/app_accordion_use_cases.dart,85,contents,AppSpacingRef,AppSpacing.space16,,BLOCKED,Demo 화면 (_use_cases.dart)
+lib/components/contents/app_accordion_use_cases.dart,102,contents,AppSpacingRef,AppSpacing.space16,,BLOCKED,Demo 화면 (_use_cases.dart)
+lib/components/contents/app_accordion_use_cases.dart,119,contents,AppSpacingRef,AppSpacing.space16,,BLOCKED,Demo 화면 (_use_cases.dart)
+lib/components/contents/app_accordion_use_cases.dart,136,contents,AppSpacingRef,AppSpacing.space16,,BLOCKED,Demo 화면 (_use_cases.dart)
+lib/components/contents/app_accordion_use_cases.dart,160,contents,AppSpacingRef,AppSpacing.space16,,BLOCKED,Demo 화면 (_use_cases.dart)
+lib/components/contents/app_accordion_use_cases.dart,171,contents,AppSpacingRef,AppSpacing.space16,,BLOCKED,Demo 화면 (_use_cases.dart)
+lib/components/contents/app_accordion_use_cases.dart,183,contents,AppSpacingRef,AppSpacing.space16,,BLOCKED,Demo 화면 (_use_cases.dart)
+lib/components/contents/app_accordion_use_cases.dart,200,contents,AppSpacingRef,AppSpacing.space16,,BLOCKED,Demo 화면 (_use_cases.dart)
+lib/components/contents/app_banner.dart,125,contents,EdgeInsets.all,space12,AppSpacingSemantic.insetMd,READY,EdgeInsets.all(tokenRef) → inset
+lib/components/contents/app_banner.dart,159,contents,SizedBox,56,,NEEDS_REVIEW,SizedBox(width=)→inline off-scale literal 56px (closest palette: 48)
+lib/components/contents/app_banner.dart,159,contents,SizedBox,56,,NEEDS_REVIEW,SizedBox(height=)→stack off-scale literal 56px (closest palette: 48)
+lib/components/contents/app_banner.dart,101,contents,AppSpacingRef,space16,AppSpacing.s16,READY,기존 tokenRef → palette s16
+lib/components/contents/app_banner.dart,102,contents,AppSpacingRef,space16,AppSpacing.s16,READY,기존 tokenRef → palette s16
+lib/components/contents/app_banner.dart,103,contents,AppSpacingRef,space16,AppSpacing.s16,READY,기존 tokenRef → palette s16
+lib/components/contents/app_banner.dart,125,contents,AppSpacingRef,space12,AppSpacing.s12,READY,기존 tokenRef → palette s12
+lib/components/contents/app_banner.dart,143,contents,AppSpacingRef,space4,AppSpacing.s4,READY,기존 tokenRef → palette s4
+lib/components/contents/app_banner.dart,156,contents,AppSpacingRef,space12,AppSpacing.s12,READY,기존 tokenRef → palette s12
+lib/components/contents/app_banner_use_cases.dart,148,contents,EdgeInsets.all,AppSpacing.space16,,BLOCKED,Demo 화면 (_use_cases.dart)
+lib/components/contents/app_banner_use_cases.dart,33,contents,SizedBox,240,,BLOCKED,Demo 화면 (_use_cases.dart)
+lib/components/contents/app_banner_use_cases.dart,48,contents,SizedBox,320,,BLOCKED,Demo 화면 (_use_cases.dart)
+lib/components/contents/app_banner_use_cases.dart,63,contents,SizedBox,200,,BLOCKED,Demo 화면 (_use_cases.dart)
+lib/components/contents/app_banner_use_cases.dart,114,contents,SizedBox,double.infinity,,BLOCKED,Demo 화면 (_use_cases.dart)
+lib/components/contents/app_banner_use_cases.dart,123,contents,SizedBox,AppSpacing.space12,,BLOCKED,Demo 화면 (_use_cases.dart)
+lib/components/contents/app_banner_use_cases.dart,130,contents,SizedBox,AppSpacing.space8,,BLOCKED,Demo 화면 (_use_cases.dart)
+lib/components/contents/app_banner_use_cases.dart,123,contents,AppSpacingRef,AppSpacing.space12,,BLOCKED,Demo 화면 (_use_cases.dart)
+lib/components/contents/app_banner_use_cases.dart,130,contents,AppSpacingRef,AppSpacing.space8,,BLOCKED,Demo 화면 (_use_cases.dart)
+lib/components/contents/app_banner_use_cases.dart,148,contents,AppSpacingRef,AppSpacing.space16,,BLOCKED,Demo 화면 (_use_cases.dart)
+lib/components/contents/app_cell.dart,77,contents,EdgeInsets.symmetric,verticalPadding.value,,BLOCKED,non-numeric EdgeInsets.symmetric(vertical)
+lib/components/contents/app_cell.dart,117,contents,SizedBox,2,AppSpacingSemantic.inlineXs,READY,SizedBox(height=)→stack value-based stack/inline (canonical)
+lib/components/contents/app_cell.dart,79,contents,AppSpacingRef,space16,AppSpacing.s16,READY,기존 tokenRef → palette s16
+lib/components/contents/app_cell.dart,88,contents,AppSpacingRef,space12,AppSpacing.s12,READY,기존 tokenRef → palette s12
+lib/components/contents/app_cell.dart,133,contents,AppSpacingRef,space12,AppSpacing.s12,READY,기존 tokenRef → palette s12
+lib/components/contents/app_cell_use_cases.dart,146,contents,EdgeInsets.all,AppSpacing.space16,,BLOCKED,Demo 화면 (_use_cases.dart)
+lib/components/contents/app_cell_use_cases.dart,146,contents,AppSpacingRef,AppSpacing.space16,,BLOCKED,Demo 화면 (_use_cases.dart)
+lib/components/contents/app_coffee_list.dart,82,contents,EdgeInsets.all,space12,AppSpacingSemantic.insetMd,READY,EdgeInsets.all(tokenRef) → inset
+lib/components/contents/app_coffee_list.dart,235,contents,SizedBox,2,AppSpacingSemantic.inlineXs,READY,SizedBox(height=)→stack value-based stack/inline (canonical)
+lib/components/contents/app_coffee_list.dart,82,contents,AppSpacingRef,space12,AppSpacing.s12,READY,기존 tokenRef → palette s12
+lib/components/contents/app_coffee_list.dart,98,contents,AppSpacingRef,space12,AppSpacing.s12,READY,기존 tokenRef → palette s12
+lib/components/contents/app_coffee_list.dart,105,contents,AppSpacingRef,space12,AppSpacing.s12,READY,기존 tokenRef → palette s12
+lib/components/contents/app_coffee_list.dart,110,contents,AppSpacingRef,space16,AppSpacing.s16,READY,기존 tokenRef → palette s16
+lib/components/contents/app_coffee_list.dart,121,contents,AppSpacingRef,space8,AppSpacing.s8,READY,기존 tokenRef → palette s8
+lib/components/contents/app_coffee_list.dart,205,contents,AppSpacingRef,space12,AppSpacing.s12,READY,기존 tokenRef → palette s12
+lib/components/contents/app_coffee_list.dart,215,contents,AppSpacingRef,space8,AppSpacing.s8,READY,기존 tokenRef → palette s8
+lib/components/contents/app_coffee_list.dart,225,contents,AppSpacingRef,space4,AppSpacing.s4,READY,기존 tokenRef → palette s4
+lib/components/contents/app_coffee_list.dart,245,contents,AppSpacingRef,space4,AppSpacing.s4,READY,기존 tokenRef → palette s4
+lib/components/contents/app_coffee_list_use_cases.dart,183,contents,EdgeInsets.all,AppSpacing.space16,,BLOCKED,Demo 화면 (_use_cases.dart)
+lib/components/contents/app_coffee_list_use_cases.dart,150,contents,SizedBox,AppSpacing.space8,,BLOCKED,Demo 화면 (_use_cases.dart)
+lib/components/contents/app_coffee_list_use_cases.dart,157,contents,SizedBox,AppSpacing.space8,,BLOCKED,Demo 화면 (_use_cases.dart)
+lib/components/contents/app_coffee_list_use_cases.dart,150,contents,AppSpacingRef,AppSpacing.space8,,BLOCKED,Demo 화면 (_use_cases.dart)
+lib/components/contents/app_coffee_list_use_cases.dart,157,contents,AppSpacingRef,AppSpacing.space8,,BLOCKED,Demo 화면 (_use_cases.dart)
+lib/components/contents/app_coffee_list_use_cases.dart,183,contents,AppSpacingRef,AppSpacing.space16,,BLOCKED,Demo 화면 (_use_cases.dart)
+lib/components/contents/app_coffee_profile.dart,37,contents,EdgeInsets.symmetric,space4,AppSpacing.s4,READY,EdgeInsets.symmetric(vertical=tokenRef) → palette s4
+lib/components/contents/app_coffee_profile.dart,37,contents,EdgeInsets.symmetric,V=4,AppSpacing.s4,READY,symmetric vertical only
+lib/components/contents/app_coffee_profile.dart,244,contents,EdgeInsets.all,space16,AppSpacingSemantic.insetLg,READY,EdgeInsets.all(tokenRef) → inset
+lib/components/contents/app_coffee_profile.dart,41,contents,SizedBox,40,AppSpacing.s40,NEEDS_REVIEW,SizedBox(width=)→inline palette 40 — Section gap 후보 (AppSpacingSemantic.layoutLg 가능)
+lib/components/contents/app_coffee_profile.dart,70,contents,SizedBox,32,AppSpacing.s32,NEEDS_REVIEW,SizedBox(width=)→inline palette 32 — Section gap 후보 (AppSpacingSemantic.layoutMd 가능)
+lib/components/contents/app_coffee_profile.dart,37,contents,AppSpacingRef,space4,AppSpacing.s4,READY,기존 tokenRef → palette s4
+lib/components/contents/app_coffee_profile.dart,50,contents,AppSpacingRef,space12,AppSpacing.s12,READY,기존 tokenRef → palette s12
+lib/components/contents/app_coffee_profile.dart,60,contents,AppSpacingRef,space4,AppSpacing.s4,READY,기존 tokenRef → palette s4
+lib/components/contents/app_coffee_profile.dart,69,contents,AppSpacingRef,space8,AppSpacing.s8,READY,기존 tokenRef → palette s8
+lib/components/contents/app_coffee_profile.dart,149,contents,AppSpacingRef,space12,AppSpacing.s12,READY,기존 tokenRef → palette s12
+lib/components/contents/app_coffee_profile.dart,157,contents,AppSpacingRef,space8,AppSpacing.s8,READY,기존 tokenRef → palette s8
+lib/components/contents/app_coffee_profile.dart,188,contents,AppSpacingRef,space4,AppSpacing.s4,READY,기존 tokenRef → palette s4
+lib/components/contents/app_coffee_profile.dart,206,contents,AppSpacingRef,space8,AppSpacing.s8,READY,기존 tokenRef → palette s8
+lib/components/contents/app_coffee_profile.dart,207,contents,AppSpacingRef,space8,AppSpacing.s8,READY,기존 tokenRef → palette s8
+lib/components/contents/app_coffee_profile.dart,244,contents,AppSpacingRef,space16,AppSpacing.s16,READY,기존 tokenRef → palette s16
+lib/components/contents/app_coffee_profile.dart,258,contents,AppSpacingRef,space12,AppSpacing.s12,READY,기존 tokenRef → palette s12
+lib/components/contents/app_coffee_profile_use_cases.dart,114,contents,EdgeInsets.all,AppSpacing.space16,,BLOCKED,Demo 화면 (_use_cases.dart)
+lib/components/contents/app_coffee_profile_use_cases.dart,114,contents,AppSpacingRef,AppSpacing.space16,,BLOCKED,Demo 화면 (_use_cases.dart)
+lib/components/contents/app_community_list.dart,43,contents,EdgeInsets.symmetric,space16,AppSpacing.s16,READY,EdgeInsets.symmetric(horizontal=tokenRef) → palette s16
+lib/components/contents/app_community_list.dart,43,contents,EdgeInsets.symmetric,H=16,AppSpacing.s16,READY,symmetric horizontal only
+lib/components/contents/app_community_list.dart,63,contents,SizedBox,6,AppSpacing.s6,READY,SizedBox(height=)→stack palette direct (no semantic match for 6px)
+lib/components/contents/app_community_list.dart,78,contents,SizedBox,2,AppSpacingSemantic.inlineXs,READY,SizedBox(width=)→inline value-based stack/inline (canonical)
+lib/components/contents/app_community_list.dart,92,contents,SizedBox,2,AppSpacingSemantic.inlineXs,READY,SizedBox(width=)→inline value-based stack/inline (canonical)
+lib/components/contents/app_community_list.dart,111,contents,SizedBox,48,AppSpacing.s48,NEEDS_REVIEW,SizedBox(width=)→inline palette 48 — Section gap 후보 (AppSpacingSemantic.layoutXl 가능)
+lib/components/contents/app_community_list.dart,111,contents,SizedBox,48,AppSpacing.s48,NEEDS_REVIEW,SizedBox(height=)→stack palette 48 — Section gap 후보 (AppSpacingSemantic.layoutXl 가능)
+lib/components/contents/app_community_list.dart,44,contents,AppSpacingRef,space16,AppSpacing.s16,READY,기존 tokenRef → palette s16
+lib/components/contents/app_community_list.dart,45,contents,AppSpacingRef,space12,AppSpacing.s12,READY,기존 tokenRef → palette s12
+lib/components/contents/app_community_list.dart,86,contents,AppSpacingRef,space8,AppSpacing.s8,READY,기존 tokenRef → palette s8
+lib/components/contents/app_community_list.dart,105,contents,AppSpacingRef,space12,AppSpacing.s12,READY,기존 tokenRef → palette s12
+lib/components/contents/app_community_list_use_cases.dart,80,contents,EdgeInsets.symmetric,AppSpacing.space8,,BLOCKED,Demo 화면 (_use_cases.dart)
+lib/components/contents/app_community_list_use_cases.dart,80,contents,AppSpacingRef,AppSpacing.space8,,BLOCKED,Demo 화면 (_use_cases.dart)
+lib/components/contents/app_content_badge.dart,135,contents,EdgeInsets.symmetric,spec.padH,,BLOCKED,non-numeric EdgeInsets.symmetric(horizontal)
+lib/components/contents/app_content_badge.dart,135,contents,EdgeInsets.symmetric,spec.padV,,BLOCKED,non-numeric EdgeInsets.symmetric(vertical)
+lib/components/contents/app_content_badge.dart,148,contents,SizedBox,2,AppSpacingSemantic.inlineXs,READY,SizedBox(width=)→inline value-based stack/inline (canonical)
+lib/components/contents/app_content_badge.dart,152,contents,SizedBox,2,AppSpacingSemantic.inlineXs,READY,SizedBox(width=)→inline value-based stack/inline (canonical)
+lib/components/contents/app_content_badge_use_cases.dart,107,contents,EdgeInsets.all,AppSpacing.space24,,BLOCKED,Demo 화면 (_use_cases.dart)
+lib/components/contents/app_content_badge_use_cases.dart,19,contents,AppSpacingRef,AppSpacing.space8,,BLOCKED,Demo 화면 (_use_cases.dart)
+lib/components/contents/app_content_badge_use_cases.dart,35,contents,AppSpacingRef,AppSpacing.space8,,BLOCKED,Demo 화면 (_use_cases.dart)
+lib/components/contents/app_content_badge_use_cases.dart,62,contents,AppSpacingRef,AppSpacing.space8,,BLOCKED,Demo 화면 (_use_cases.dart)
+lib/components/contents/app_content_badge_use_cases.dart,82,contents,AppSpacingRef,AppSpacing.space8,,BLOCKED,Demo 화면 (_use_cases.dart)
+lib/components/contents/app_content_badge_use_cases.dart,83,contents,AppSpacingRef,AppSpacing.space8,,BLOCKED,Demo 화면 (_use_cases.dart)
+lib/components/contents/app_content_badge_use_cases.dart,107,contents,AppSpacingRef,AppSpacing.space24,,BLOCKED,Demo 화면 (_use_cases.dart)
+lib/components/contents/app_item_list.dart,236,contents,EdgeInsets.symmetric,"H=6,V=2",AppSpacingSemantic.insetSquishXsVertical + insetSquishXsHorizontal,READY,inset-squish Xs
+lib/components/contents/app_item_list.dart,102,contents,SizedBox,112,,NEEDS_REVIEW,SizedBox(width=)→inline off-scale literal 112px (closest palette: 48)
+lib/components/contents/app_item_list.dart,128,contents,SizedBox,2,AppSpacingSemantic.inlineXs,READY,SizedBox(height=)→stack value-based stack/inline (canonical)
+lib/components/contents/app_item_list.dart,168,contents,SizedBox,2,AppSpacingSemantic.inlineXs,READY,SizedBox(height=)→stack value-based stack/inline (canonical)
+lib/components/contents/app_item_list.dart,196,contents,SizedBox,size,,BLOCKED,non-numeric SizedBox dimension
+lib/components/contents/app_item_list.dart,196,contents,SizedBox,size,,BLOCKED,non-numeric SizedBox dimension
+lib/components/contents/app_item_list.dart,298,contents,SizedBox,2,AppSpacingSemantic.inlineXs,READY,SizedBox(width=)→inline value-based stack/inline (canonical)
+lib/components/contents/app_item_list.dart,231,contents,PropLiteral:spacing,4,AppSpacingSemantic.inlineSm,READY,PropLiteral:spacing → value-based stack/inline (canonical)
+lib/components/contents/app_item_list.dart,232,contents,PropLiteral:runSpacing,4,AppSpacingSemantic.inlineSm,READY,PropLiteral:runSpacing → value-based stack/inline (canonical)
+lib/components/contents/app_item_list.dart,114,contents,AppSpacingRef,space8,AppSpacing.s8,READY,기존 tokenRef → palette s8
+lib/components/contents/app_item_list.dart,116,contents,AppSpacingRef,space4,AppSpacing.s4,READY,기존 tokenRef → palette s4
+lib/components/contents/app_item_list.dart,125,contents,AppSpacingRef,space4,AppSpacing.s4,READY,기존 tokenRef → palette s4
+lib/components/contents/app_item_list.dart,141,contents,AppSpacingRef,space12,AppSpacing.s12,READY,기존 tokenRef → palette s12
+lib/components/contents/app_item_list.dart,163,contents,AppSpacingRef,space4,AppSpacing.s4,READY,기존 tokenRef → palette s4
+lib/components/contents/app_item_list.dart,165,contents,AppSpacingRef,space4,AppSpacing.s4,READY,기존 tokenRef → palette s4
+lib/components/contents/app_item_list.dart,208,contents,AppSpacingRef,space4,AppSpacing.s4,READY,기존 tokenRef → palette s4
+lib/components/contents/app_item_list.dart,209,contents,AppSpacingRef,space4,AppSpacing.s4,READY,기존 tokenRef → palette s4
+lib/components/contents/app_item_list.dart,272,contents,AppSpacingRef,space4,AppSpacing.s4,READY,기존 tokenRef → palette s4
+lib/components/contents/app_item_list.dart,307,contents,AppSpacingRef,space4,AppSpacing.s4,READY,기존 tokenRef → palette s4
+lib/components/contents/app_item_list_use_cases.dart,138,contents,EdgeInsets.only,AppSpacing.space12,,BLOCKED,Demo 화면 (_use_cases.dart)
+lib/components/contents/app_item_list_use_cases.dart,160,contents,EdgeInsets.all,AppSpacing.space16,,BLOCKED,Demo 화면 (_use_cases.dart)
+lib/components/contents/app_item_list_use_cases.dart,78,contents,AppSpacingRef,AppSpacing.space12,,BLOCKED,Demo 화면 (_use_cases.dart)
+lib/components/contents/app_item_list_use_cases.dart,79,contents,AppSpacingRef,AppSpacing.space16,,BLOCKED,Demo 화면 (_use_cases.dart)
+lib/components/contents/app_item_list_use_cases.dart,138,contents,AppSpacingRef,AppSpacing.space12,,BLOCKED,Demo 화면 (_use_cases.dart)
+lib/components/contents/app_item_list_use_cases.dart,160,contents,AppSpacingRef,AppSpacing.space16,,BLOCKED,Demo 화면 (_use_cases.dart)
+lib/components/contents/app_play_icon_badge.dart,65,contents,EdgeInsets.only,left=2,AppSpacing.s2,READY,EdgeInsets.only directional palette
+lib/components/contents/app_play_icon_badge_use_cases.dart,96,contents,EdgeInsets.all,AppSpacing.space24,,BLOCKED,Demo 화면 (_use_cases.dart)
+lib/components/contents/app_play_icon_badge_use_cases.dart,23,contents,SizedBox,AppSpacing.space16,,BLOCKED,Demo 화면 (_use_cases.dart)
+lib/components/contents/app_play_icon_badge_use_cases.dart,25,contents,SizedBox,AppSpacing.space16,,BLOCKED,Demo 화면 (_use_cases.dart)
+lib/components/contents/app_play_icon_badge_use_cases.dart,39,contents,SizedBox,AppSpacing.space16,,BLOCKED,Demo 화면 (_use_cases.dart)
+lib/components/contents/app_play_icon_badge_use_cases.dart,59,contents,SizedBox,AppSpacing.space12,,BLOCKED,Demo 화면 (_use_cases.dart)
+lib/components/contents/app_play_icon_badge_use_cases.dart,61,contents,SizedBox,AppSpacing.space12,,BLOCKED,Demo 화면 (_use_cases.dart)
+lib/components/contents/app_play_icon_badge_use_cases.dart,65,contents,SizedBox,AppSpacing.space16,,BLOCKED,Demo 화면 (_use_cases.dart)
+lib/components/contents/app_play_icon_badge_use_cases.dart,74,contents,SizedBox,AppSpacing.space12,,BLOCKED,Demo 화면 (_use_cases.dart)
+lib/components/contents/app_play_icon_badge_use_cases.dart,79,contents,SizedBox,AppSpacing.space12,,BLOCKED,Demo 화면 (_use_cases.dart)
+lib/components/contents/app_play_icon_badge_use_cases.dart,23,contents,AppSpacingRef,AppSpacing.space16,,BLOCKED,Demo 화면 (_use_cases.dart)
+lib/components/contents/app_play_icon_badge_use_cases.dart,25,contents,AppSpacingRef,AppSpacing.space16,,BLOCKED,Demo 화면 (_use_cases.dart)
+lib/components/contents/app_play_icon_badge_use_cases.dart,39,contents,AppSpacingRef,AppSpacing.space16,,BLOCKED,Demo 화면 (_use_cases.dart)
+lib/components/contents/app_play_icon_badge_use_cases.dart,59,contents,AppSpacingRef,AppSpacing.space12,,BLOCKED,Demo 화면 (_use_cases.dart)
+lib/components/contents/app_play_icon_badge_use_cases.dart,61,contents,AppSpacingRef,AppSpacing.space12,,BLOCKED,Demo 화면 (_use_cases.dart)
+lib/components/contents/app_play_icon_badge_use_cases.dart,65,contents,AppSpacingRef,AppSpacing.space16,,BLOCKED,Demo 화면 (_use_cases.dart)
+lib/components/contents/app_play_icon_badge_use_cases.dart,74,contents,AppSpacingRef,AppSpacing.space12,,BLOCKED,Demo 화면 (_use_cases.dart)
+lib/components/contents/app_play_icon_badge_use_cases.dart,79,contents,AppSpacingRef,AppSpacing.space12,,BLOCKED,Demo 화면 (_use_cases.dart)
+lib/components/contents/app_play_icon_badge_use_cases.dart,96,contents,AppSpacingRef,AppSpacing.space24,,BLOCKED,Demo 화면 (_use_cases.dart)
+lib/components/contents/app_preference_list.dart,83,contents,EdgeInsets.symmetric,space8,AppSpacing.s8,READY,EdgeInsets.symmetric(horizontal=tokenRef) → palette s8
+lib/components/contents/app_preference_list.dart,83,contents,EdgeInsets.symmetric,"H=8,V=6",AppSpacing.s6 + AppSpacing.s8,NEEDS_REVIEW,비표준 squish 페어 V6/H8 (Outlined 1px 보정 의심 가능)
+lib/components/contents/app_preference_list.dart,189,contents,EdgeInsets.all,space16,AppSpacingSemantic.insetLg,READY,EdgeInsets.all(tokenRef) → inset
+lib/components/contents/app_preference_list.dart,95,contents,SizedBox,2,AppSpacingSemantic.inlineXs,READY,SizedBox(height=)→stack value-based stack/inline (canonical)
+lib/components/contents/app_preference_list.dart,278,contents,SizedBox,double.infinity,,BLOCKED,non-numeric SizedBox dimension
+lib/components/contents/app_preference_list.dart,278,contents,SizedBox,0,AppSpacing.s0,READY,zero size
+lib/components/contents/app_preference_list.dart,225,contents,PropLiteral:spacing,6,AppSpacing.s6,READY,PropLiteral:spacing → palette direct (no semantic match for 6px)
+lib/components/contents/app_preference_list.dart,226,contents,PropLiteral:runSpacing,6,AppSpacing.s6,READY,PropLiteral:runSpacing → palette direct (no semantic match for 6px)
+lib/components/contents/app_preference_list.dart,83,contents,AppSpacingRef,space8,AppSpacing.s8,READY,기존 tokenRef → palette s8
+lib/components/contents/app_preference_list.dart,189,contents,AppSpacingRef,space16,AppSpacing.s16,READY,기존 tokenRef → palette s16
+lib/components/contents/app_preference_list.dart,223,contents,AppSpacingRef,space8,AppSpacing.s8,READY,기존 tokenRef → palette s8
+lib/components/contents/app_preference_list.dart,246,contents,AppSpacingRef,space16,AppSpacing.s16,READY,기존 tokenRef → palette s16
+lib/components/contents/app_preference_list.dart,253,contents,AppSpacingRef,space8,AppSpacing.s8,READY,기존 tokenRef → palette s8
+lib/components/contents/app_preference_list.dart,255,contents,AppSpacingRef,space8,AppSpacing.s8,READY,기존 tokenRef → palette s8
+lib/components/contents/app_preference_list.dart,256,contents,AppSpacingRef,space8,AppSpacing.s8,READY,기존 tokenRef → palette s8
+lib/components/contents/app_preference_list.dart,262,contents,AppSpacingRef,space16,AppSpacing.s16,READY,기존 tokenRef → palette s16
+lib/components/contents/app_preference_list.dart,269,contents,AppSpacingRef,space8,AppSpacing.s8,READY,기존 tokenRef → palette s8
+lib/components/contents/app_preference_list.dart,271,contents,AppSpacingRef,space8,AppSpacing.s8,READY,기존 tokenRef → palette s8
+lib/components/contents/app_preference_list.dart,272,contents,AppSpacingRef,space8,AppSpacing.s8,READY,기존 tokenRef → palette s8
+lib/components/contents/app_preference_list_use_cases.dart,173,contents,EdgeInsets.all,AppSpacing.space16,,BLOCKED,Demo 화면 (_use_cases.dart)
+lib/components/contents/app_preference_list_use_cases.dart,109,contents,SizedBox,AppSpacing.space8,,BLOCKED,Demo 화면 (_use_cases.dart)
+lib/components/contents/app_preference_list_use_cases.dart,111,contents,SizedBox,AppSpacing.space8,,BLOCKED,Demo 화면 (_use_cases.dart)
+lib/components/contents/app_preference_list_use_cases.dart,143,contents,SizedBox,AppSpacing.space12,,BLOCKED,Demo 화면 (_use_cases.dart)
+lib/components/contents/app_preference_list_use_cases.dart,149,contents,SizedBox,AppSpacing.space12,,BLOCKED,Demo 화면 (_use_cases.dart)
+lib/components/contents/app_preference_list_use_cases.dart,157,contents,SizedBox,AppSpacing.space12,,BLOCKED,Demo 화면 (_use_cases.dart)
+lib/components/contents/app_preference_list_use_cases.dart,109,contents,AppSpacingRef,AppSpacing.space8,,BLOCKED,Demo 화면 (_use_cases.dart)
+lib/components/contents/app_preference_list_use_cases.dart,111,contents,AppSpacingRef,AppSpacing.space8,,BLOCKED,Demo 화면 (_use_cases.dart)
+lib/components/contents/app_preference_list_use_cases.dart,122,contents,AppSpacingRef,AppSpacing.space8,,BLOCKED,Demo 화면 (_use_cases.dart)
+lib/components/contents/app_preference_list_use_cases.dart,123,contents,AppSpacingRef,AppSpacing.space8,,BLOCKED,Demo 화면 (_use_cases.dart)
+lib/components/contents/app_preference_list_use_cases.dart,143,contents,AppSpacingRef,AppSpacing.space12,,BLOCKED,Demo 화면 (_use_cases.dart)
+lib/components/contents/app_preference_list_use_cases.dart,149,contents,AppSpacingRef,AppSpacing.space12,,BLOCKED,Demo 화면 (_use_cases.dart)
+lib/components/contents/app_preference_list_use_cases.dart,157,contents,AppSpacingRef,AppSpacing.space12,,BLOCKED,Demo 화면 (_use_cases.dart)
+lib/components/contents/app_preference_list_use_cases.dart,173,contents,AppSpacingRef,AppSpacing.space16,,BLOCKED,Demo 화면 (_use_cases.dart)
+lib/components/contents/app_recipe_timer.dart,52,contents,EdgeInsets.symmetric,V=6,AppSpacing.s6,READY,symmetric vertical only
+lib/components/contents/app_recipe_timer.dart,68,contents,EdgeInsets.symmetric,space4,AppSpacing.s4,READY,EdgeInsets.symmetric(vertical=tokenRef) → palette s4
+lib/components/contents/app_recipe_timer.dart,68,contents,EdgeInsets.symmetric,"H=6,V=4",AppSpacing.s4 + AppSpacing.s6,NEEDS_REVIEW,비표준 squish 페어 V4/H6 (Outlined 1px 보정 의심 가능)
+lib/components/contents/app_recipe_timer.dart,77,contents,EdgeInsets.symmetric,space4,AppSpacing.s4,READY,EdgeInsets.symmetric(horizontal=tokenRef) → palette s4
+lib/components/contents/app_recipe_timer.dart,77,contents,EdgeInsets.symmetric,H=4,AppSpacing.s4,READY,symmetric horizontal only
+lib/components/contents/app_recipe_timer.dart,78,contents,EdgeInsets.symmetric,H=10,AppSpacing.s10,READY,symmetric horizontal only
+lib/components/contents/app_recipe_timer.dart,156,contents,EdgeInsets.all,space16,AppSpacingSemantic.insetLg,READY,EdgeInsets.all(tokenRef) → inset
+lib/components/contents/app_recipe_timer.dart,116,contents,SizedBox,20,AppSpacing.s20,READY,SizedBox(width=)→inline palette direct (no semantic match for 20px)
+lib/components/contents/app_recipe_timer.dart,116,contents,SizedBox,20,AppSpacing.s20,READY,SizedBox(height=)→stack palette direct (no semantic match for 20px)
+lib/components/contents/app_recipe_timer.dart,68,contents,AppSpacingRef,space4,AppSpacing.s4,READY,기존 tokenRef → palette s4
+lib/components/contents/app_recipe_timer.dart,77,contents,AppSpacingRef,space4,AppSpacing.s4,READY,기존 tokenRef → palette s4
+lib/components/contents/app_recipe_timer.dart,80,contents,AppSpacingRef,space4,AppSpacing.s4,READY,기존 tokenRef → palette s4
+lib/components/contents/app_recipe_timer.dart,156,contents,AppSpacingRef,space16,AppSpacing.s16,READY,기존 tokenRef → palette s16
+lib/components/contents/app_recipe_timer.dart,183,contents,AppSpacingRef,space8,AppSpacing.s8,READY,기존 tokenRef → palette s8
+lib/components/contents/app_recipe_timer_use_cases.dart,133,contents,EdgeInsets.all,AppSpacing.space16,,BLOCKED,Demo 화면 (_use_cases.dart)
+lib/components/contents/app_recipe_timer_use_cases.dart,133,contents,AppSpacingRef,AppSpacing.space16,,BLOCKED,Demo 화면 (_use_cases.dart)
+lib/components/contents/app_review.dart,81,contents,EdgeInsets.symmetric,space16,AppSpacing.s16,READY,EdgeInsets.symmetric(horizontal=tokenRef) → palette s16
+lib/components/contents/app_review.dart,81,contents,EdgeInsets.symmetric,H=16,AppSpacing.s16,READY,symmetric horizontal only
+lib/components/contents/app_review.dart,108,contents,EdgeInsets.symmetric,space16,AppSpacing.s16,READY,EdgeInsets.symmetric(horizontal=tokenRef) → palette s16
+lib/components/contents/app_review.dart,108,contents,EdgeInsets.symmetric,H=16,AppSpacing.s16,READY,symmetric horizontal only
+lib/components/contents/app_review.dart,151,contents,EdgeInsets.symmetric,space16,AppSpacing.s16,READY,EdgeInsets.symmetric(horizontal=tokenRef) → palette s16
+lib/components/contents/app_review.dart,151,contents,EdgeInsets.symmetric,H=16,AppSpacing.s16,READY,symmetric horizontal only
+lib/components/contents/app_review.dart,166,contents,EdgeInsets.only,,,BLOCKED,EdgeInsets.only missing literal
+lib/components/contents/app_review.dart,199,contents,EdgeInsets.symmetric,space16,AppSpacing.s16,READY,EdgeInsets.symmetric(horizontal=tokenRef) → palette s16
+lib/components/contents/app_review.dart,199,contents,EdgeInsets.symmetric,H=16,AppSpacing.s16,READY,symmetric horizontal only
+lib/components/contents/app_review.dart,341,contents,EdgeInsets.only,right=1,AppSpacing.s1,READY,EdgeInsets.only directional palette
+lib/components/contents/app_review.dart,410,contents,EdgeInsets.only,,,BLOCKED,EdgeInsets.only missing literal
+lib/components/contents/app_review.dart,445,contents,EdgeInsets.symmetric,space8,AppSpacing.s8,READY,EdgeInsets.symmetric(horizontal=tokenRef) → palette s8
+lib/components/contents/app_review.dart,445,contents,EdgeInsets.symmetric,space4,AppSpacing.s4,READY,EdgeInsets.symmetric(vertical=tokenRef) → palette s4
+lib/components/contents/app_review.dart,445,contents,EdgeInsets.symmetric,"H=8,V=4",AppSpacing.s4 + AppSpacing.s8,NEEDS_REVIEW,비표준 squish 페어 V4/H8 (Outlined 1px 보정 의심 가능)
+lib/components/contents/app_review.dart,137,contents,SizedBox,48,AppSpacing.s48,NEEDS_REVIEW,SizedBox(width=)→inline palette 48 — Section gap 후보 (AppSpacingSemantic.layoutXl 가능)
+lib/components/contents/app_review.dart,137,contents,SizedBox,48,AppSpacing.s48,NEEDS_REVIEW,SizedBox(height=)→stack palette 48 — Section gap 후보 (AppSpacingSemantic.layoutXl 가능)
+lib/components/contents/app_review.dart,267,contents,SizedBox,2,AppSpacingSemantic.inlineXs,READY,SizedBox(width=)→inline value-based stack/inline (canonical)
+lib/components/contents/app_review.dart,313,contents,SizedBox,32,AppSpacing.s32,NEEDS_REVIEW,SizedBox(width=)→inline palette 32 — Section gap 후보 (AppSpacingSemantic.layoutMd 가능)
+lib/components/contents/app_review.dart,313,contents,SizedBox,32,AppSpacing.s32,NEEDS_REVIEW,SizedBox(height=)→stack palette 32 — Section gap 후보 (AppSpacingSemantic.layoutMd 가능)
+lib/components/contents/app_review.dart,82,contents,AppSpacingRef,space16,AppSpacing.s16,READY,기존 tokenRef → palette s16
+lib/components/contents/app_review.dart,83,contents,AppSpacingRef,space12,AppSpacing.s12,READY,기존 tokenRef → palette s12
+lib/components/contents/app_review.dart,90,contents,AppSpacingRef,space8,AppSpacing.s8,READY,기존 tokenRef → palette s8
+lib/components/contents/app_review.dart,98,contents,AppSpacingRef,space8,AppSpacing.s8,READY,기존 tokenRef → palette s8
+lib/components/contents/app_review.dart,109,contents,AppSpacingRef,space16,AppSpacing.s16,READY,기존 tokenRef → palette s16
+lib/components/contents/app_review.dart,110,contents,AppSpacingRef,space12,AppSpacing.s12,READY,기존 tokenRef → palette s12
+lib/components/contents/app_review.dart,121,contents,AppSpacingRef,space4,AppSpacing.s4,READY,기존 tokenRef → palette s4
+lib/components/contents/app_review.dart,134,contents,AppSpacingRef,space12,AppSpacing.s12,READY,기존 tokenRef → palette s12
+lib/components/contents/app_review.dart,152,contents,AppSpacingRef,space16,AppSpacing.s16,READY,기존 tokenRef → palette s16
+lib/components/contents/app_review.dart,153,contents,AppSpacingRef,space12,AppSpacing.s12,READY,기존 tokenRef → palette s12
+lib/components/contents/app_review.dart,160,contents,AppSpacingRef,space8,AppSpacing.s8,READY,기존 tokenRef → palette s8
+lib/components/contents/app_review.dart,178,contents,AppSpacingRef,space8,AppSpacing.s8,READY,기존 tokenRef → palette s8
+lib/components/contents/app_review.dart,187,contents,AppSpacingRef,space8,AppSpacing.s8,READY,기존 tokenRef → palette s8
+lib/components/contents/app_review.dart,200,contents,AppSpacingRef,space16,AppSpacing.s16,READY,기존 tokenRef → palette s16
+lib/components/contents/app_review.dart,201,contents,AppSpacingRef,space12,AppSpacing.s12,READY,기존 tokenRef → palette s12
+lib/components/contents/app_review.dart,215,contents,AppSpacingRef,space8,AppSpacing.s8,READY,기존 tokenRef → palette s8
+lib/components/contents/app_review.dart,218,contents,AppSpacingRef,space8,AppSpacing.s8,READY,기존 tokenRef → palette s8
+lib/components/contents/app_review.dart,228,contents,AppSpacingRef,space4,AppSpacing.s4,READY,기존 tokenRef → palette s4
+lib/components/contents/app_review.dart,240,contents,AppSpacingRef,space8,AppSpacing.s8,READY,기존 tokenRef → palette s8
+lib/components/contents/app_review.dart,275,contents,AppSpacingRef,space8,AppSpacing.s8,READY,기존 tokenRef → palette s8
+lib/components/contents/app_review.dart,282,contents,AppSpacingRef,space8,AppSpacing.s8,READY,기존 tokenRef → palette s8
+lib/components/contents/app_review.dart,330,contents,AppSpacingRef,space8,AppSpacing.s8,READY,기존 tokenRef → palette s8
+lib/components/contents/app_review.dart,351,contents,AppSpacingRef,space4,AppSpacing.s4,READY,기존 tokenRef → palette s4
+lib/components/contents/app_review.dart,369,contents,AppSpacingRef,space8,AppSpacing.s8,READY,기존 tokenRef → palette s8
+lib/components/contents/app_review.dart,377,contents,AppSpacingRef,space8,AppSpacing.s8,READY,기존 tokenRef → palette s8
+lib/components/contents/app_review.dart,445,contents,AppSpacingRef,space8,AppSpacing.s8,READY,기존 tokenRef → palette s8
+lib/components/contents/app_review.dart,445,contents,AppSpacingRef,space4,AppSpacing.s4,READY,기존 tokenRef → palette s4
+lib/components/contents/app_review.dart,458,contents,AppSpacingRef,space4,AppSpacing.s4,READY,기존 tokenRef → palette s4
+lib/components/contents/app_review_use_cases.dart,151,contents,EdgeInsets.symmetric,AppSpacing.space8,,BLOCKED,Demo 화면 (_use_cases.dart)
+lib/components/contents/app_review_use_cases.dart,151,contents,AppSpacingRef,AppSpacing.space8,,BLOCKED,Demo 화면 (_use_cases.dart)
+lib/components/contents/app_section_header.dart,81,contents,EdgeInsets.only,top=2,AppSpacing.s2,READY,EdgeInsets.only directional palette
+lib/components/contents/app_section_header.dart,126,contents,EdgeInsets.symmetric,space16,AppSpacing.s16,READY,EdgeInsets.symmetric(horizontal=tokenRef) → palette s16
+lib/components/contents/app_section_header.dart,126,contents,EdgeInsets.symmetric,H=16,AppSpacing.s16,READY,symmetric horizontal only
+lib/components/contents/app_section_header.dart,104,contents,AppSpacingRef,space12,AppSpacing.s12,READY,기존 tokenRef → palette s12
+lib/components/contents/app_section_header.dart,116,contents,AppSpacingRef,space8,AppSpacing.s8,READY,기존 tokenRef → palette s8
+lib/components/contents/app_section_header.dart,127,contents,AppSpacingRef,space16,AppSpacing.s16,READY,기존 tokenRef → palette s16
+lib/components/contents/app_section_header.dart,128,contents,AppSpacingRef,space12,AppSpacing.s12,READY,기존 tokenRef → palette s12
+lib/components/contents/app_table.dart,67,contents,EdgeInsets.symmetric,space12,AppSpacing.s12,READY,EdgeInsets.symmetric(horizontal=tokenRef) → palette s12
+lib/components/contents/app_table.dart,67,contents,EdgeInsets.symmetric,H=12,AppSpacing.s12,READY,symmetric horizontal only
+lib/components/contents/app_table.dart,107,contents,EdgeInsets.symmetric,space12,AppSpacing.s12,READY,EdgeInsets.symmetric(horizontal=tokenRef) → palette s12
+lib/components/contents/app_table.dart,107,contents,EdgeInsets.symmetric,H=12,AppSpacing.s12,READY,symmetric horizontal only
+lib/components/contents/app_table.dart,68,contents,AppSpacingRef,space12,AppSpacing.s12,READY,기존 tokenRef → palette s12
+lib/components/contents/app_table.dart,69,contents,AppSpacingRef,space8,AppSpacing.s8,READY,기존 tokenRef → palette s8
+lib/components/contents/app_table.dart,108,contents,AppSpacingRef,space12,AppSpacing.s12,READY,기존 tokenRef → palette s12
+lib/components/contents/app_table.dart,109,contents,AppSpacingRef,space8,AppSpacing.s8,READY,기존 tokenRef → palette s8
+lib/components/contents/app_table_use_cases.dart,146,contents,EdgeInsets.symmetric,8,,BLOCKED,Demo 화면 (_use_cases.dart)
+lib/components/contents/app_table_use_cases.dart,173,contents,EdgeInsets.symmetric,8,,BLOCKED,Demo 화면 (_use_cases.dart)
+lib/components/contents/app_table_use_cases.dart,200,contents,EdgeInsets.symmetric,8,,BLOCKED,Demo 화면 (_use_cases.dart)
+lib/components/contents/app_table_use_cases.dart,224,contents,EdgeInsets.all,AppSpacing.space16,,BLOCKED,Demo 화면 (_use_cases.dart)
+lib/components/contents/app_table_use_cases.dart,140,contents,SizedBox,8,,BLOCKED,Demo 화면 (_use_cases.dart)
+lib/components/contents/app_table_use_cases.dart,167,contents,SizedBox,8,,BLOCKED,Demo 화면 (_use_cases.dart)
+lib/components/contents/app_table_use_cases.dart,194,contents,SizedBox,8,,BLOCKED,Demo 화면 (_use_cases.dart)
+lib/components/contents/app_table_use_cases.dart,224,contents,AppSpacingRef,AppSpacing.space16,,BLOCKED,Demo 화면 (_use_cases.dart)
+lib/components/contents/app_tasting_note.dart,44,contents,EdgeInsets.symmetric,space12,AppSpacing.s12,READY,EdgeInsets.symmetric(horizontal=tokenRef) → palette s12
+lib/components/contents/app_tasting_note.dart,44,contents,EdgeInsets.symmetric,H=12,AppSpacing.s12,READY,symmetric horizontal only
+lib/components/contents/app_tasting_note.dart,78,contents,SizedBox,2,AppSpacingSemantic.inlineXs,READY,SizedBox(height=)→stack value-based stack/inline (canonical)
+lib/components/contents/app_tasting_note.dart,45,contents,AppSpacingRef,space12,AppSpacing.s12,READY,기존 tokenRef → palette s12
+lib/components/contents/app_tasting_note.dart,46,contents,AppSpacingRef,space12,AppSpacing.s12,READY,기존 tokenRef → palette s12
+lib/components/contents/app_tasting_note.dart,64,contents,AppSpacingRef,space12,AppSpacing.s12,READY,기존 tokenRef → palette s12
+lib/components/contents/app_tasting_note.dart,91,contents,AppSpacingRef,space8,AppSpacing.s8,READY,기존 tokenRef → palette s8
+lib/components/contents/app_tasting_note_use_cases.dart,83,contents,EdgeInsets.all,AppSpacing.space16,,BLOCKED,Demo 화면 (_use_cases.dart)
+lib/components/contents/app_tasting_note_use_cases.dart,54,contents,SizedBox,AppSpacing.space8,,BLOCKED,Demo 화면 (_use_cases.dart)
+lib/components/contents/app_tasting_note_use_cases.dart,60,contents,SizedBox,AppSpacing.space8,,BLOCKED,Demo 화면 (_use_cases.dart)
+lib/components/contents/app_tasting_note_use_cases.dart,66,contents,SizedBox,AppSpacing.space8,,BLOCKED,Demo 화면 (_use_cases.dart)
+lib/components/contents/app_tasting_note_use_cases.dart,54,contents,AppSpacingRef,AppSpacing.space8,,BLOCKED,Demo 화면 (_use_cases.dart)
+lib/components/contents/app_tasting_note_use_cases.dart,60,contents,AppSpacingRef,AppSpacing.space8,,BLOCKED,Demo 화면 (_use_cases.dart)
+lib/components/contents/app_tasting_note_use_cases.dart,66,contents,AppSpacingRef,AppSpacing.space8,,BLOCKED,Demo 화면 (_use_cases.dart)
+lib/components/contents/app_tasting_note_use_cases.dart,83,contents,AppSpacingRef,AppSpacing.space16,,BLOCKED,Demo 화면 (_use_cases.dart)
+lib/components/control_box/app_control_box.dart,44,control_box,EdgeInsets.symmetric,space12,AppSpacing.s12,READY,EdgeInsets.symmetric(vertical=tokenRef) → palette s12
+lib/components/control_box/app_control_box.dart,44,control_box,EdgeInsets.symmetric,V=12,AppSpacing.s12,READY,symmetric vertical only
+lib/components/control_box/app_control_box.dart,78,control_box,SizedBox,2,AppSpacingSemantic.inlineXs,READY,SizedBox(height=)→stack value-based stack/inline (canonical)
+lib/components/control_box/app_control_box.dart,45,control_box,AppSpacingRef,space12,AppSpacing.s12,READY,기존 tokenRef → palette s12
+lib/components/control_box/app_control_box.dart,46,control_box,AppSpacingRef,space16,AppSpacing.s16,READY,기존 tokenRef → palette s16
+lib/components/control_box/app_control_box.dart,64,control_box,AppSpacingRef,space12,AppSpacing.s12,READY,기존 tokenRef → palette s12
+lib/components/control_box/app_control_box_use_cases.dart,166,control_box,EdgeInsets.all,AppSpacing.space16,,BLOCKED,Demo 화면 (_use_cases.dart)
+lib/components/control_box/app_control_box_use_cases.dart,26,control_box,SizedBox,AppSpacing.space16,,BLOCKED,Demo 화면 (_use_cases.dart)
+lib/components/control_box/app_control_box_use_cases.dart,63,control_box,SizedBox,AppSpacing.space16,,BLOCKED,Demo 화면 (_use_cases.dart)
+lib/components/control_box/app_control_box_use_cases.dart,92,control_box,SizedBox,AppSpacing.space12,,BLOCKED,Demo 화면 (_use_cases.dart)
+lib/components/control_box/app_control_box_use_cases.dart,99,control_box,SizedBox,AppSpacing.space12,,BLOCKED,Demo 화면 (_use_cases.dart)
+lib/components/control_box/app_control_box_use_cases.dart,123,control_box,SizedBox,AppSpacing.space16,,BLOCKED,Demo 화면 (_use_cases.dart)
+lib/components/control_box/app_control_box_use_cases.dart,148,control_box,SizedBox,AppSpacing.space12,,BLOCKED,Demo 화면 (_use_cases.dart)
+lib/components/control_box/app_control_box_use_cases.dart,26,control_box,AppSpacingRef,AppSpacing.space16,,BLOCKED,Demo 화면 (_use_cases.dart)
+lib/components/control_box/app_control_box_use_cases.dart,63,control_box,AppSpacingRef,AppSpacing.space16,,BLOCKED,Demo 화면 (_use_cases.dart)
+lib/components/control_box/app_control_box_use_cases.dart,92,control_box,AppSpacingRef,AppSpacing.space12,,BLOCKED,Demo 화면 (_use_cases.dart)
+lib/components/control_box/app_control_box_use_cases.dart,99,control_box,AppSpacingRef,AppSpacing.space12,,BLOCKED,Demo 화면 (_use_cases.dart)
+lib/components/control_box/app_control_box_use_cases.dart,123,control_box,AppSpacingRef,AppSpacing.space16,,BLOCKED,Demo 화면 (_use_cases.dart)
+lib/components/control_box/app_control_box_use_cases.dart,148,control_box,AppSpacingRef,AppSpacing.space12,,BLOCKED,Demo 화면 (_use_cases.dart)
+lib/components/control_box/app_control_box_use_cases.dart,166,control_box,AppSpacingRef,AppSpacing.space16,,BLOCKED,Demo 화면 (_use_cases.dart)
+lib/components/controls/app_checkbox.dart,72,controls,AppSpacingRef,space8,AppSpacing.s8,READY,기존 tokenRef → palette s8
+lib/components/controls/app_radio.dart,71,controls,AppSpacingRef,space8,AppSpacing.s8,READY,기존 tokenRef → palette s8
+lib/components/controls/app_switch.dart,53,controls,EdgeInsets.all,2,AppSpacing.s2,READY,EdgeInsets.all(2) → palette direct
+lib/components/controls/control_use_cases.dart,61,controls,EdgeInsets.all,24,,BLOCKED,Demo 화면 (_use_cases.dart)
+lib/components/controls/control_use_cases.dart,158,controls,EdgeInsets.all,24,,BLOCKED,Demo 화면 (_use_cases.dart)
+lib/components/controls/control_use_cases.dart,122,controls,SizedBox,AppSpacing.space12,,BLOCKED,Demo 화면 (_use_cases.dart)
+lib/components/controls/control_use_cases.dart,144,controls,SizedBox,AppSpacing.space4,,BLOCKED,Demo 화면 (_use_cases.dart)
+lib/components/controls/control_use_cases.dart,160,controls,PropLiteral:spacing,24,,BLOCKED,Demo 화면 (_use_cases.dart)
+lib/components/controls/control_use_cases.dart,161,controls,PropLiteral:runSpacing,24,,BLOCKED,Demo 화면 (_use_cases.dart)
+lib/components/controls/control_use_cases.dart,122,controls,AppSpacingRef,AppSpacing.space12,,BLOCKED,Demo 화면 (_use_cases.dart)
+lib/components/controls/control_use_cases.dart,144,controls,AppSpacingRef,AppSpacing.space4,,BLOCKED,Demo 화면 (_use_cases.dart)
+lib/components/dividers/app_divider.dart,49,dividers,EdgeInsets.only,indent,,BLOCKED,non-numeric EdgeInsets.only
+lib/components/dividers/app_divider.dart,49,dividers,EdgeInsets.only,endIndent,,BLOCKED,non-numeric EdgeInsets.only
+lib/components/dividers/app_divider.dart,57,dividers,EdgeInsets.only,indent,,BLOCKED,non-numeric EdgeInsets.only
+lib/components/dividers/app_divider.dart,57,dividers,EdgeInsets.only,endIndent,,BLOCKED,non-numeric EdgeInsets.only
+lib/components/dividers/divider_use_cases.dart,47,dividers,EdgeInsets.all,24,,BLOCKED,Demo 화면 (_use_cases.dart)
+lib/components/dividers/divider_use_cases.dart,68,dividers,EdgeInsets.all,24,,BLOCKED,Demo 화면 (_use_cases.dart)
+lib/components/dividers/divider_use_cases.dart,32,dividers,SizedBox,AppSpacing.space8,,BLOCKED,Demo 화면 (_use_cases.dart)
+lib/components/dividers/divider_use_cases.dart,34,dividers,SizedBox,48,,BLOCKED,Demo 화면 (_use_cases.dart)
+lib/components/dividers/divider_use_cases.dart,40,dividers,SizedBox,AppSpacing.space24,,BLOCKED,Demo 화면 (_use_cases.dart)
+lib/components/dividers/divider_use_cases.dart,73,dividers,SizedBox,16,,BLOCKED,Demo 화면 (_use_cases.dart)
+lib/components/dividers/divider_use_cases.dart,75,dividers,SizedBox,16,,BLOCKED,Demo 화면 (_use_cases.dart)
+lib/components/dividers/divider_use_cases.dart,32,dividers,AppSpacingRef,AppSpacing.space8,,BLOCKED,Demo 화면 (_use_cases.dart)
+lib/components/dividers/divider_use_cases.dart,40,dividers,AppSpacingRef,AppSpacing.space24,,BLOCKED,Demo 화면 (_use_cases.dart)
+lib/components/feedback/app_empty_state.dart,51,feedback,EdgeInsets.symmetric,,,BLOCKED,missing literal
+lib/components/feedback/app_empty_state.dart,61,feedback,EdgeInsets.symmetric,,,BLOCKED,missing literal
+lib/components/feedback/app_empty_state.dart,135,feedback,EdgeInsets.symmetric,space20,AppSpacing.s20,READY,EdgeInsets.symmetric(horizontal=tokenRef) → palette s20
+lib/components/feedback/app_empty_state.dart,135,feedback,EdgeInsets.symmetric,"H=20,V=9",AppSpacingSemantic.insetSquishMdVertical + insetSquishMdHorizontal,READY,inset-squish Md
+lib/components/feedback/app_empty_state.dart,57,feedback,SizedBox,128,,NEEDS_REVIEW,SizedBox(width=)→inline off-scale literal 128px (closest palette: 48)
+lib/components/feedback/app_empty_state.dart,57,feedback,SizedBox,128,,NEEDS_REVIEW,SizedBox(height=)→stack off-scale literal 128px (closest palette: 48)
+lib/components/feedback/app_empty_state.dart,58,feedback,AppSpacingRef,space8,AppSpacing.s8,READY,기존 tokenRef → palette s8
+lib/components/feedback/app_empty_state.dart,62,feedback,AppSpacingRef,space16,AppSpacing.s16,READY,기존 tokenRef → palette s16
+lib/components/feedback/app_empty_state.dart,76,feedback,AppSpacingRef,space12,AppSpacing.s12,READY,기존 tokenRef → palette s12
+lib/components/feedback/app_empty_state.dart,89,feedback,AppSpacingRef,space24,AppSpacing.s24,READY,기존 tokenRef → palette s24
+lib/components/feedback/app_empty_state.dart,135,feedback,AppSpacingRef,space20,AppSpacing.s20,READY,기존 tokenRef → palette s20
+lib/components/feedback/app_section_message.dart,117,feedback,EdgeInsets.all,space12,AppSpacingSemantic.insetMd,READY,EdgeInsets.all(tokenRef) → inset
+lib/components/feedback/app_section_message.dart,219,feedback,EdgeInsets.symmetric,H=6,AppSpacing.s6,READY,symmetric horizontal only
+lib/components/feedback/app_section_message.dart,252,feedback,EdgeInsets.symmetric,space4,AppSpacing.s4,READY,EdgeInsets.symmetric(vertical=tokenRef) → palette s4
+lib/components/feedback/app_section_message.dart,252,feedback,EdgeInsets.symmetric,"H=6,V=4",AppSpacing.s4 + AppSpacing.s6,NEEDS_REVIEW,비표준 squish 페어 V4/H6 (Outlined 1px 보정 의심 가능)
+lib/components/feedback/app_section_message.dart,122,feedback,SizedBox,20,AppSpacing.s20,READY,SizedBox(width=)→inline palette direct (no semantic match for 20px)
+lib/components/feedback/app_section_message.dart,122,feedback,SizedBox,22,,NEEDS_REVIEW,SizedBox(height=)→stack off-scale literal 22px (closest palette: 20)
+lib/components/feedback/app_section_message.dart,276,feedback,SizedBox,22,,NEEDS_REVIEW,SizedBox(width=)→inline off-scale literal 22px (closest palette: 20)
+lib/components/feedback/app_section_message.dart,276,feedback,SizedBox,22,,NEEDS_REVIEW,SizedBox(height=)→stack off-scale literal 22px (closest palette: 20)
+lib/components/feedback/app_section_message.dart,117,feedback,AppSpacingRef,space12,AppSpacing.s12,READY,기존 tokenRef → palette s12
+lib/components/feedback/app_section_message.dart,129,feedback,AppSpacingRef,space8,AppSpacing.s8,READY,기존 tokenRef → palette s8
+lib/components/feedback/app_section_message.dart,133,feedback,AppSpacingRef,space8,AppSpacing.s8,READY,기존 tokenRef → palette s8
+lib/components/feedback/app_section_message.dart,141,feedback,AppSpacingRef,space8,AppSpacing.s8,READY,기존 tokenRef → palette s8
+lib/components/feedback/app_section_message.dart,164,feedback,AppSpacingRef,space4,AppSpacing.s4,READY,기존 tokenRef → palette s4
+lib/components/feedback/app_section_message.dart,173,feedback,AppSpacingRef,space12,AppSpacing.s12,READY,기존 tokenRef → palette s12
+lib/components/feedback/app_section_message.dart,177,feedback,AppSpacingRef,space16,AppSpacing.s16,READY,기존 tokenRef → palette s16
+lib/components/feedback/app_section_message.dart,221,feedback,AppSpacingRef,space4,AppSpacing.s4,READY,기존 tokenRef → palette s4
+lib/components/feedback/app_section_message.dart,252,feedback,AppSpacingRef,space4,AppSpacing.s4,READY,기존 tokenRef → palette s4
+lib/components/feedback/app_section_message_use_cases.dart,88,feedback,EdgeInsets.all,AppSpacing.space16,,BLOCKED,Demo 화면 (_use_cases.dart)
+lib/components/feedback/app_section_message_use_cases.dart,88,feedback,AppSpacingRef,AppSpacing.space16,,BLOCKED,Demo 화면 (_use_cases.dart)
+lib/components/feedback/app_snackbar.dart,34,feedback,EdgeInsets.symmetric,space16,AppSpacing.s16,READY,EdgeInsets.symmetric(horizontal=tokenRef) → palette s16
+lib/components/feedback/app_snackbar.dart,34,feedback,EdgeInsets.symmetric,H=16,AppSpacing.s16,READY,symmetric horizontal only
+lib/components/feedback/app_snackbar.dart,35,feedback,EdgeInsets.all,space16,AppSpacingSemantic.insetLg,READY,EdgeInsets.all(tokenRef) → inset
+lib/components/feedback/app_snackbar.dart,34,feedback,AppSpacingRef,space16,AppSpacing.s16,READY,기존 tokenRef → palette s16
+lib/components/feedback/app_snackbar.dart,35,feedback,AppSpacingRef,space16,AppSpacing.s16,READY,기존 tokenRef → palette s16
+lib/components/feedback/app_snackbar.dart,46,feedback,AppSpacingRef,space12,AppSpacing.s12,READY,기존 tokenRef → palette s12
+lib/components/feedback/app_snackbar.dart,60,feedback,AppSpacingRef,space4,AppSpacing.s4,READY,기존 tokenRef → palette s4
+lib/components/feedback/app_snackbar.dart,69,feedback,AppSpacingRef,space8,AppSpacing.s8,READY,기존 tokenRef → palette s8
+lib/components/feedback/app_snackbar.dart,85,feedback,AppSpacingRef,space8,AppSpacing.s8,READY,기존 tokenRef → palette s8
+lib/components/feedback/app_snackbar_use_cases.dart,91,feedback,EdgeInsets.all,AppSpacing.space16,,BLOCKED,Demo 화면 (_use_cases.dart)
+lib/components/feedback/app_snackbar_use_cases.dart,91,feedback,AppSpacingRef,AppSpacing.space16,,BLOCKED,Demo 화면 (_use_cases.dart)
+lib/components/feedback/app_toast.dart,72,feedback,EdgeInsets.symmetric,space16,AppSpacing.s16,READY,EdgeInsets.symmetric(horizontal=tokenRef) → palette s16
+lib/components/feedback/app_toast.dart,72,feedback,EdgeInsets.symmetric,H=16,AppSpacing.s16,READY,symmetric horizontal only
+lib/components/feedback/app_toast.dart,73,feedback,EdgeInsets.symmetric,space16,AppSpacing.s16,READY,EdgeInsets.symmetric(horizontal=tokenRef) → palette s16
+lib/components/feedback/app_toast.dart,73,feedback,EdgeInsets.symmetric,H=16,AppSpacing.s16,READY,symmetric horizontal only
+lib/components/feedback/app_toast.dart,72,feedback,AppSpacingRef,space16,AppSpacing.s16,READY,기존 tokenRef → palette s16
+lib/components/feedback/app_toast.dart,74,feedback,AppSpacingRef,space16,AppSpacing.s16,READY,기존 tokenRef → palette s16
+lib/components/feedback/app_toast.dart,75,feedback,AppSpacingRef,space12,AppSpacing.s12,READY,기존 tokenRef → palette s12
+lib/components/feedback/app_toast.dart,86,feedback,AppSpacingRef,space8,AppSpacing.s8,READY,기존 tokenRef → palette s8
+lib/components/feedback/app_toast.dart,97,feedback,AppSpacingRef,space8,AppSpacing.s8,READY,기존 tokenRef → palette s8
+lib/components/feedback/app_toast_use_cases.dart,131,feedback,EdgeInsets.all,AppSpacing.space16,,BLOCKED,Demo 화면 (_use_cases.dart)
+lib/components/feedback/app_toast_use_cases.dart,131,feedback,AppSpacingRef,AppSpacing.space16,,BLOCKED,Demo 화면 (_use_cases.dart)
+lib/components/feedback/app_tooltip.dart,36,feedback,EdgeInsets.symmetric,space12,AppSpacing.s12,READY,EdgeInsets.symmetric(horizontal=tokenRef) → palette s12
+lib/components/feedback/app_tooltip.dart,36,feedback,EdgeInsets.symmetric,H=12,AppSpacing.s12,READY,symmetric horizontal only
+lib/components/feedback/app_tooltip.dart,79,feedback,EdgeInsets.all,space16,AppSpacingSemantic.insetLg,READY,EdgeInsets.all(tokenRef) → inset
+lib/components/feedback/app_tooltip.dart,37,feedback,AppSpacingRef,space12,AppSpacing.s12,READY,기존 tokenRef → palette s12
+lib/components/feedback/app_tooltip.dart,38,feedback,AppSpacingRef,space8,AppSpacing.s8,READY,기존 tokenRef → palette s8
+lib/components/feedback/app_tooltip.dart,79,feedback,AppSpacingRef,space16,AppSpacing.s16,READY,기존 tokenRef → palette s16
+lib/components/feedback/app_tooltip.dart,109,feedback,AppSpacingRef,space4,AppSpacing.s4,READY,기존 tokenRef → palette s4
+lib/components/feedback/app_tooltip_use_cases.dart,123,feedback,EdgeInsets.all,AppSpacing.space16,,BLOCKED,Demo 화면 (_use_cases.dart)
+lib/components/feedback/app_tooltip_use_cases.dart,101,feedback,SizedBox,AppSpacing.space16,,BLOCKED,Demo 화면 (_use_cases.dart)
+lib/components/feedback/app_tooltip_use_cases.dart,106,feedback,SizedBox,AppSpacing.space16,,BLOCKED,Demo 화면 (_use_cases.dart)
+lib/components/feedback/app_tooltip_use_cases.dart,101,feedback,AppSpacingRef,AppSpacing.space16,,BLOCKED,Demo 화면 (_use_cases.dart)
+lib/components/feedback/app_tooltip_use_cases.dart,106,feedback,AppSpacingRef,AppSpacing.space16,,BLOCKED,Demo 화면 (_use_cases.dart)
+lib/components/feedback/app_tooltip_use_cases.dart,123,feedback,AppSpacingRef,AppSpacing.space16,,BLOCKED,Demo 화면 (_use_cases.dart)
+lib/components/forms/app_search_input_use_cases.dart,47,forms,EdgeInsets.all,AppSpacing.space16,,BLOCKED,Demo 화면 (_use_cases.dart)
+lib/components/forms/app_search_input_use_cases.dart,53,forms,SizedBox,AppSpacing.space16,,BLOCKED,Demo 화면 (_use_cases.dart)
+lib/components/forms/app_search_input_use_cases.dart,47,forms,AppSpacingRef,AppSpacing.space16,,BLOCKED,Demo 화면 (_use_cases.dart)
+lib/components/forms/app_search_input_use_cases.dart,53,forms,AppSpacingRef,AppSpacing.space16,,BLOCKED,Demo 화면 (_use_cases.dart)
+lib/components/forms/app_text_field.dart,181,forms,EdgeInsets.symmetric,space16,AppSpacing.s16,READY,EdgeInsets.symmetric(horizontal=tokenRef) → palette s16
+lib/components/forms/app_text_field.dart,181,forms,EdgeInsets.symmetric,H=16,AppSpacing.s16,READY,symmetric horizontal only
+lib/components/forms/app_text_field.dart,182,forms,AppSpacingRef,space16,AppSpacing.s16,READY,기존 tokenRef → palette s16
+lib/components/forms/app_text_field.dart,183,forms,AppSpacingRef,space12,AppSpacing.s12,READY,기존 tokenRef → palette s12
+lib/components/forms/app_text_field.dart,212,forms,AppSpacingRef,space8,AppSpacing.s8,READY,기존 tokenRef → palette s8
+lib/components/forms/app_text_field.dart,274,forms,AppSpacingRef,space4,AppSpacing.s4,READY,기존 tokenRef → palette s4
+lib/components/forms/text_field_use_cases.dart,158,forms,EdgeInsets.all,24,,BLOCKED,Demo 화면 (_use_cases.dart)
+lib/components/forms/text_field_use_cases.dart,164,forms,SizedBox,AppSpacing.space20,,BLOCKED,Demo 화면 (_use_cases.dart)
+lib/components/forms/text_field_use_cases.dart,164,forms,AppSpacingRef,AppSpacing.space20,,BLOCKED,Demo 화면 (_use_cases.dart)
+lib/components/gauge/app_gauge.dart,64,gauge,EdgeInsets.only,,,BLOCKED,EdgeInsets.only missing literal
+lib/components/gauge/app_gauge.dart,83,gauge,AppSpacingRef,space8,AppSpacing.s8,READY,기존 tokenRef → palette s8
+lib/components/gauge/app_gauge_use_cases.dart,96,gauge,EdgeInsets.all,AppSpacing.space16,,BLOCKED,Demo 화면 (_use_cases.dart)
+lib/components/gauge/app_gauge_use_cases.dart,73,gauge,SizedBox,AppSpacing.space24,,BLOCKED,Demo 화면 (_use_cases.dart)
+lib/components/gauge/app_gauge_use_cases.dart,80,gauge,SizedBox,AppSpacing.space24,,BLOCKED,Demo 화면 (_use_cases.dart)
+lib/components/gauge/app_gauge_use_cases.dart,73,gauge,AppSpacingRef,AppSpacing.space24,,BLOCKED,Demo 화면 (_use_cases.dart)
+lib/components/gauge/app_gauge_use_cases.dart,80,gauge,AppSpacingRef,AppSpacing.space24,,BLOCKED,Demo 화면 (_use_cases.dart)
+lib/components/gauge/app_gauge_use_cases.dart,96,gauge,AppSpacingRef,AppSpacing.space16,,BLOCKED,Demo 화면 (_use_cases.dart)
+lib/components/indicators/app_indicators.dart,53,indicators,EdgeInsets.symmetric,,,BLOCKED,missing literal
+lib/components/indicators/app_indicators.dart,168,indicators,EdgeInsets.only,,,BLOCKED,EdgeInsets.only missing literal
+lib/components/indicators/app_indicators.dart,219,indicators,SizedBox,double.infinity,,BLOCKED,non-numeric SizedBox dimension
+lib/components/indicators/app_indicators.dart,219,indicators,SizedBox,_height,,BLOCKED,non-numeric SizedBox dimension
+lib/components/indicators/app_indicators.dart,253,indicators,SizedBox,double.infinity,,BLOCKED,non-numeric SizedBox dimension
+lib/components/indicators/app_indicators.dart,253,indicators,SizedBox,12,AppSpacing.s12,NEEDS_REVIEW,"SizedBox(height=12) — inline 토큰만 일치, 세로 의미 검토"
+lib/components/indicators/app_progress.dart,29,indicators,SizedBox,height,,BLOCKED,non-numeric SizedBox dimension
+lib/components/indicators/app_progress.dart,63,indicators,SizedBox,size,,BLOCKED,non-numeric SizedBox dimension
+lib/components/indicators/app_progress.dart,63,indicators,SizedBox,size,,BLOCKED,non-numeric SizedBox dimension
+lib/components/indicators/app_progress.dart,120,indicators,SizedBox,6,AppSpacing.s6,READY,SizedBox(height=)→stack palette direct (no semantic match for 6px)
+lib/components/indicators/app_progress_tracker.dart,130,indicators,EdgeInsets.only,,,BLOCKED,EdgeInsets.only missing literal
+lib/components/indicators/app_progress_tracker.dart,206,indicators,EdgeInsets.symmetric,space4,AppSpacing.s4,READY,EdgeInsets.symmetric(horizontal=tokenRef) → palette s4
+lib/components/indicators/app_progress_tracker.dart,206,indicators,EdgeInsets.symmetric,H=4,AppSpacing.s4,READY,symmetric horizontal only
+lib/components/indicators/app_progress_tracker.dart,211,indicators,EdgeInsets.symmetric,space4,AppSpacing.s4,READY,EdgeInsets.symmetric(vertical=tokenRef) → palette s4
+lib/components/indicators/app_progress_tracker.dart,211,indicators,EdgeInsets.symmetric,V=4,AppSpacing.s4,READY,symmetric vertical only
+lib/components/indicators/app_progress_tracker.dart,247,indicators,SizedBox,2,AppSpacingSemantic.inlineXs,READY,SizedBox(height=)→stack value-based stack/inline (canonical)
+lib/components/indicators/app_progress_tracker.dart,95,indicators,AppSpacingRef,space8,AppSpacing.s8,READY,기존 tokenRef → palette s8
+lib/components/indicators/app_progress_tracker.dart,128,indicators,AppSpacingRef,space12,AppSpacing.s12,READY,기존 tokenRef → palette s12
+lib/components/indicators/app_progress_tracker.dart,131,indicators,AppSpacingRef,space16,AppSpacing.s16,READY,기존 tokenRef → palette s16
+lib/components/indicators/app_progress_tracker.dart,206,indicators,AppSpacingRef,space4,AppSpacing.s4,READY,기존 tokenRef → palette s4
+lib/components/indicators/app_progress_tracker.dart,211,indicators,AppSpacingRef,space4,AppSpacing.s4,READY,기존 tokenRef → palette s4
+lib/components/indicators/app_progress_tracker_use_cases.dart,85,indicators,EdgeInsets.all,AppSpacing.space24,,BLOCKED,Demo 화면 (_use_cases.dart)
+lib/components/indicators/app_progress_tracker_use_cases.dart,85,indicators,AppSpacingRef,AppSpacing.space24,,BLOCKED,Demo 화면 (_use_cases.dart)
+lib/components/indicators/indicator_use_cases.dart,141,indicators,EdgeInsets.all,24,,BLOCKED,Demo 화면 (_use_cases.dart)
+lib/components/indicators/indicator_use_cases.dart,151,indicators,EdgeInsets.symmetric,8,,BLOCKED,Demo 화면 (_use_cases.dart)
+lib/components/indicators/indicator_use_cases.dart,235,indicators,EdgeInsets.all,24,,BLOCKED,Demo 화면 (_use_cases.dart)
+lib/components/indicators/indicator_use_cases.dart,96,indicators,SizedBox,AppSpacing.space16,,BLOCKED,Demo 화면 (_use_cases.dart)
+lib/components/indicators/indicator_use_cases.dart,98,indicators,SizedBox,AppSpacing.space16,,BLOCKED,Demo 화면 (_use_cases.dart)
+lib/components/indicators/indicator_use_cases.dart,100,indicators,SizedBox,AppSpacing.space24,,BLOCKED,Demo 화면 (_use_cases.dart)
+lib/components/indicators/indicator_use_cases.dart,102,indicators,SizedBox,AppSpacing.space16,,BLOCKED,Demo 화면 (_use_cases.dart)
+lib/components/indicators/indicator_use_cases.dart,144,indicators,SizedBox,200,,BLOCKED,Demo 화면 (_use_cases.dart)
+lib/components/indicators/indicator_use_cases.dart,168,indicators,SizedBox,AppSpacing.space16,,BLOCKED,Demo 화면 (_use_cases.dart)
+lib/components/indicators/indicator_use_cases.dart,198,indicators,SizedBox,AppSpacing.space16,,BLOCKED,Demo 화면 (_use_cases.dart)
+lib/components/indicators/indicator_use_cases.dart,203,indicators,SizedBox,AppSpacing.space16,,BLOCKED,Demo 화면 (_use_cases.dart)
+lib/components/indicators/indicator_use_cases.dart,17,indicators,PropLiteral:spacing,24,,BLOCKED,Demo 화면 (_use_cases.dart)
+lib/components/indicators/indicator_use_cases.dart,18,indicators,PropLiteral:runSpacing,24,,BLOCKED,Demo 화면 (_use_cases.dart)
+lib/components/indicators/indicator_use_cases.dart,37,indicators,PropLiteral:spacing,24,,BLOCKED,Demo 화면 (_use_cases.dart)
+lib/components/indicators/indicator_use_cases.dart,58,indicators,PropLiteral:spacing,32,,BLOCKED,Demo 화면 (_use_cases.dart)
+lib/components/indicators/indicator_use_cases.dart,59,indicators,PropLiteral:runSpacing,32,,BLOCKED,Demo 화면 (_use_cases.dart)
+lib/components/indicators/indicator_use_cases.dart,96,indicators,AppSpacingRef,AppSpacing.space16,,BLOCKED,Demo 화면 (_use_cases.dart)
+lib/components/indicators/indicator_use_cases.dart,98,indicators,AppSpacingRef,AppSpacing.space16,,BLOCKED,Demo 화면 (_use_cases.dart)
+lib/components/indicators/indicator_use_cases.dart,100,indicators,AppSpacingRef,AppSpacing.space24,,BLOCKED,Demo 화면 (_use_cases.dart)
+lib/components/indicators/indicator_use_cases.dart,102,indicators,AppSpacingRef,AppSpacing.space16,,BLOCKED,Demo 화면 (_use_cases.dart)
+lib/components/indicators/indicator_use_cases.dart,168,indicators,AppSpacingRef,AppSpacing.space16,,BLOCKED,Demo 화면 (_use_cases.dart)
+lib/components/indicators/indicator_use_cases.dart,198,indicators,AppSpacingRef,AppSpacing.space16,,BLOCKED,Demo 화면 (_use_cases.dart)
+lib/components/indicators/indicator_use_cases.dart,203,indicators,AppSpacingRef,AppSpacing.space16,,BLOCKED,Demo 화면 (_use_cases.dart)
+lib/components/indicators/progress_use_cases.dart,135,indicators,EdgeInsets.all,24,,BLOCKED,Demo 화면 (_use_cases.dart)
+lib/components/indicators/progress_use_cases.dart,20,indicators,SizedBox,AppSpacing.space12,,BLOCKED,Demo 화면 (_use_cases.dart)
+lib/components/indicators/progress_use_cases.dart,22,indicators,SizedBox,AppSpacing.space12,,BLOCKED,Demo 화면 (_use_cases.dart)
+lib/components/indicators/progress_use_cases.dart,24,indicators,SizedBox,AppSpacing.space12,,BLOCKED,Demo 화면 (_use_cases.dart)
+lib/components/indicators/progress_use_cases.dart,26,indicators,SizedBox,AppSpacing.space12,,BLOCKED,Demo 화면 (_use_cases.dart)
+lib/components/indicators/progress_use_cases.dart,48,indicators,SizedBox,AppSpacing.space12,,BLOCKED,Demo 화면 (_use_cases.dart)
+lib/components/indicators/progress_use_cases.dart,51,indicators,SizedBox,AppSpacing.space12,,BLOCKED,Demo 화면 (_use_cases.dart)
+lib/components/indicators/progress_use_cases.dart,110,indicators,SizedBox,AppSpacing.space16,,BLOCKED,Demo 화면 (_use_cases.dart)
+lib/components/indicators/progress_use_cases.dart,115,indicators,SizedBox,AppSpacing.space16,,BLOCKED,Demo 화면 (_use_cases.dart)
+lib/components/indicators/progress_use_cases.dart,68,indicators,PropLiteral:spacing,24,,BLOCKED,Demo 화면 (_use_cases.dart)
+lib/components/indicators/progress_use_cases.dart,69,indicators,PropLiteral:runSpacing,24,,BLOCKED,Demo 화면 (_use_cases.dart)
+lib/components/indicators/progress_use_cases.dart,86,indicators,PropLiteral:spacing,24,,BLOCKED,Demo 화면 (_use_cases.dart)
+lib/components/indicators/progress_use_cases.dart,87,indicators,PropLiteral:runSpacing,24,,BLOCKED,Demo 화면 (_use_cases.dart)
+lib/components/indicators/progress_use_cases.dart,20,indicators,AppSpacingRef,AppSpacing.space12,,BLOCKED,Demo 화면 (_use_cases.dart)
+lib/components/indicators/progress_use_cases.dart,22,indicators,AppSpacingRef,AppSpacing.space12,,BLOCKED,Demo 화면 (_use_cases.dart)
+lib/components/indicators/progress_use_cases.dart,24,indicators,AppSpacingRef,AppSpacing.space12,,BLOCKED,Demo 화면 (_use_cases.dart)
+lib/components/indicators/progress_use_cases.dart,26,indicators,AppSpacingRef,AppSpacing.space12,,BLOCKED,Demo 화면 (_use_cases.dart)
+lib/components/indicators/progress_use_cases.dart,48,indicators,AppSpacingRef,AppSpacing.space12,,BLOCKED,Demo 화면 (_use_cases.dart)
+lib/components/indicators/progress_use_cases.dart,51,indicators,AppSpacingRef,AppSpacing.space12,,BLOCKED,Demo 화면 (_use_cases.dart)
+lib/components/indicators/progress_use_cases.dart,110,indicators,AppSpacingRef,AppSpacing.space16,,BLOCKED,Demo 화면 (_use_cases.dart)
+lib/components/indicators/progress_use_cases.dart,115,indicators,AppSpacingRef,AppSpacing.space16,,BLOCKED,Demo 화면 (_use_cases.dart)
+lib/components/modals/app_confirm_dialog.dart,59,modals,EdgeInsets.all,space24,AppSpacingSemantic.insetXl,READY,EdgeInsets.all(tokenRef) → inset
+lib/components/modals/app_confirm_dialog.dart,65,modals,EdgeInsets.all,space24,AppSpacingSemantic.insetXl,READY,EdgeInsets.all(tokenRef) → inset
+lib/components/modals/app_confirm_dialog.dart,59,modals,AppSpacingRef,space24,AppSpacing.s24,READY,기존 tokenRef → palette s24
+lib/components/modals/app_confirm_dialog.dart,65,modals,AppSpacingRef,space24,AppSpacing.s24,READY,기존 tokenRef → palette s24
+lib/components/modals/app_confirm_dialog.dart,75,modals,AppSpacingRef,space8,AppSpacing.s8,READY,기존 tokenRef → palette s8
+lib/components/modals/app_confirm_dialog.dart,83,modals,AppSpacingRef,space24,AppSpacing.s24,READY,기존 tokenRef → palette s24
+lib/components/modals/app_confirm_dialog.dart,95,modals,AppSpacingRef,space8,AppSpacing.s8,READY,기존 tokenRef → palette s8
+lib/components/modals/modal_use_cases.dart,60,modals,EdgeInsets.all,24,,BLOCKED,Demo 화면 (_use_cases.dart)
+lib/components/modals/modal_use_cases.dart,97,modals,EdgeInsets.symmetric,AppSpacing.space24,,BLOCKED,Demo 화면 (_use_cases.dart)
+lib/components/modals/modal_use_cases.dart,97,modals,AppSpacingRef,AppSpacing.space24,,BLOCKED,Demo 화면 (_use_cases.dart)
+lib/components/navigation/app_bottom_navigation.dart,94,navigation,EdgeInsets.only,_horizontalPadding,,BLOCKED,non-numeric EdgeInsets.only
+lib/components/navigation/app_bottom_navigation.dart,94,navigation,EdgeInsets.only,_horizontalPadding,,BLOCKED,non-numeric EdgeInsets.only
+lib/components/navigation/app_bottom_navigation.dart,105,navigation,EdgeInsets.all,_containerPadding,,BLOCKED,non-numeric EdgeInsets.all
+lib/components/navigation/app_bottom_navigation.dart,142,navigation,EdgeInsets.symmetric,space8,AppSpacing.s8,READY,EdgeInsets.symmetric(horizontal=tokenRef) → palette s8
+lib/components/navigation/app_bottom_navigation.dart,142,navigation,EdgeInsets.symmetric,H=8,AppSpacing.s8,READY,symmetric horizontal only
+lib/components/navigation/app_bottom_navigation.dart,123,navigation,SizedBox,_itemWidth,,BLOCKED,non-numeric SizedBox dimension
+lib/components/navigation/app_bottom_navigation.dart,123,navigation,SizedBox,_itemHeight,,BLOCKED,non-numeric SizedBox dimension
+lib/components/navigation/app_bottom_navigation.dart,143,navigation,AppSpacingRef,space8,AppSpacing.s8,READY,기존 tokenRef → palette s8
+lib/components/navigation/app_bottom_navigation.dart,144,navigation,AppSpacingRef,space4,AppSpacing.s4,READY,기존 tokenRef → palette s4
+lib/components/navigation/app_footer.dart,95,navigation,EdgeInsets.symmetric,_horizontalPadding,,BLOCKED,non-numeric EdgeInsets.symmetric(horizontal)
+lib/components/navigation/app_footer.dart,184,navigation,EdgeInsets.only,space8,AppSpacing.s8,READY,EdgeInsets.only(top=tokenRef) → palette
+lib/components/navigation/app_footer.dart,193,navigation,SizedBox,double.infinity,,BLOCKED,non-numeric SizedBox dimension
+lib/components/navigation/app_footer.dart,193,navigation,SizedBox,0,AppSpacing.s0,READY,zero size
+lib/components/navigation/app_footer.dart,124,navigation,AppSpacingRef,space8,AppSpacing.s8,READY,기존 tokenRef → palette s8
+lib/components/navigation/app_footer.dart,158,navigation,AppSpacingRef,space4,AppSpacing.s4,READY,기존 tokenRef → palette s4
+lib/components/navigation/app_footer.dart,185,navigation,AppSpacingRef,space8,AppSpacing.s8,READY,기존 tokenRef → palette s8
+lib/components/navigation/app_gnb.dart,75,navigation,EdgeInsets.symmetric,_horizontalPadding,,BLOCKED,non-numeric EdgeInsets.symmetric(horizontal)
+lib/components/navigation/app_gnb.dart,92,navigation,SizedBox,_iconButtonSize,,BLOCKED,non-numeric SizedBox dimension
+lib/components/navigation/app_gnb.dart,92,navigation,SizedBox,_iconButtonSize,,BLOCKED,non-numeric SizedBox dimension
+lib/components/navigation/app_gnb_use_cases.dart,18,navigation,SizedBox,28,,BLOCKED,Demo 화면 (_use_cases.dart)
+lib/components/navigation/app_gnb_use_cases.dart,37,navigation,SizedBox,28,,BLOCKED,Demo 화면 (_use_cases.dart)
+lib/components/navigation/app_gnb_use_cases.dart,63,navigation,SizedBox,28,,BLOCKED,Demo 화면 (_use_cases.dart)
+lib/components/navigation/app_top_navigation.dart,140,navigation,EdgeInsets.symmetric,_horizontalPadding,,BLOCKED,non-numeric EdgeInsets.symmetric(horizontal)
+lib/components/navigation/app_top_navigation.dart,153,navigation,EdgeInsets.symmetric,,,BLOCKED,missing literal
+lib/components/navigation/app_top_navigation.dart,210,navigation,EdgeInsets.symmetric,_horizontalPadding,,BLOCKED,non-numeric EdgeInsets.symmetric(horizontal)
+lib/components/navigation/app_top_navigation.dart,222,navigation,EdgeInsets.only,_contentSpacing,,BLOCKED,non-numeric EdgeInsets.only
+lib/components/navigation/app_top_navigation.dart,232,navigation,EdgeInsets.symmetric,space4,AppSpacing.s4,READY,EdgeInsets.symmetric(horizontal=tokenRef) → palette s4
+lib/components/navigation/app_top_navigation.dart,232,navigation,EdgeInsets.symmetric,H=4,AppSpacing.s4,READY,symmetric horizontal only
+lib/components/navigation/app_top_navigation.dart,292,navigation,EdgeInsets.symmetric,_horizontalPadding,,BLOCKED,non-numeric EdgeInsets.symmetric(horizontal)
+lib/components/navigation/app_top_navigation.dart,302,navigation,EdgeInsets.symmetric,,,BLOCKED,missing literal
+lib/components/navigation/app_top_navigation.dart,233,navigation,SizedBox,_iconButtonSize,,BLOCKED,non-numeric SizedBox dimension
+lib/components/navigation/app_top_navigation.dart,286,navigation,SizedBox,0,AppSpacing.s0,READY,zero size
+lib/components/navigation/app_top_navigation.dart,351,navigation,SizedBox,_iconButtonSize,,BLOCKED,non-numeric SizedBox dimension
+lib/components/navigation/app_top_navigation.dart,351,navigation,SizedBox,_iconButtonSize,,BLOCKED,non-numeric SizedBox dimension
+lib/components/navigation/app_top_navigation.dart,370,navigation,PropLiteral:spacing,10,AppSpacing.s10,READY,PropLiteral:spacing → palette direct (no semantic match for 10px)
+lib/components/navigation/app_top_navigation.dart,232,navigation,AppSpacingRef,space4,AppSpacing.s4,READY,기존 tokenRef → palette s4
+lib/components/pagination/app_pagination.dart,68,pagination,EdgeInsets.symmetric,H=3,AppSpacing.s3,READY,symmetric horizontal only
+lib/components/pagination/app_pagination_use_cases.dart,158,pagination,EdgeInsets.all,AppSpacing.space16,,BLOCKED,Demo 화면 (_use_cases.dart)
+lib/components/pagination/app_pagination_use_cases.dart,158,pagination,AppSpacingRef,AppSpacing.space16,,BLOCKED,Demo 화면 (_use_cases.dart)
+lib/components/presentation/app_action_sheet.dart,101,presentation,EdgeInsets.all,space8,AppSpacingSemantic.insetSm,READY,EdgeInsets.all(tokenRef) → inset
+lib/components/presentation/app_action_sheet.dart,161,presentation,EdgeInsets.only,space8,AppSpacing.s8,READY,EdgeInsets.only(top=tokenRef) → palette
+lib/components/presentation/app_action_sheet.dart,161,presentation,EdgeInsets.only,space4,AppSpacing.s4,READY,EdgeInsets.only(bottom=tokenRef) → palette
+lib/components/presentation/app_action_sheet.dart,197,presentation,EdgeInsets.symmetric,space16,AppSpacing.s16,READY,EdgeInsets.symmetric(horizontal=tokenRef) → palette s16
+lib/components/presentation/app_action_sheet.dart,197,presentation,EdgeInsets.symmetric,H=16,AppSpacing.s16,READY,symmetric horizontal only
+lib/components/presentation/app_action_sheet.dart,267,presentation,EdgeInsets.symmetric,space16,AppSpacing.s16,READY,EdgeInsets.symmetric(horizontal=tokenRef) → palette s16
+lib/components/presentation/app_action_sheet.dart,267,presentation,EdgeInsets.symmetric,H=16,AppSpacing.s16,READY,symmetric horizontal only
+lib/components/presentation/app_action_sheet.dart,101,presentation,AppSpacingRef,space8,AppSpacing.s8,READY,기존 tokenRef → palette s8
+lib/components/presentation/app_action_sheet.dart,135,presentation,AppSpacingRef,space8,AppSpacing.s8,READY,기존 tokenRef → palette s8
+lib/components/presentation/app_action_sheet.dart,161,presentation,AppSpacingRef,space8,AppSpacing.s8,READY,기존 tokenRef → palette s8
+lib/components/presentation/app_action_sheet.dart,161,presentation,AppSpacingRef,space4,AppSpacing.s4,READY,기존 tokenRef → palette s4
+lib/components/presentation/app_action_sheet.dart,178,presentation,AppSpacingRef,space8,AppSpacing.s8,READY,기존 tokenRef → palette s8
+lib/components/presentation/app_action_sheet.dart,198,presentation,AppSpacingRef,space16,AppSpacing.s16,READY,기존 tokenRef → palette s16
+lib/components/presentation/app_action_sheet.dart,199,presentation,AppSpacingRef,space12,AppSpacing.s12,READY,기존 tokenRef → palette s12
+lib/components/presentation/app_action_sheet.dart,199,presentation,AppSpacingRef,space16,AppSpacing.s16,READY,기존 tokenRef → palette s16
+lib/components/presentation/app_action_sheet.dart,213,presentation,AppSpacingRef,space4,AppSpacing.s4,READY,기존 tokenRef → palette s4
+lib/components/presentation/app_action_sheet.dart,267,presentation,AppSpacingRef,space16,AppSpacing.s16,READY,기존 tokenRef → palette s16
+lib/components/presentation/app_action_sheet.dart,275,presentation,AppSpacingRef,space8,AppSpacing.s8,READY,기존 tokenRef → palette s8
+lib/components/presentation/app_action_sheet_use_cases.dart,78,presentation,EdgeInsets.all,AppSpacing.space24,,BLOCKED,Demo 화면 (_use_cases.dart)
+lib/components/presentation/app_action_sheet_use_cases.dart,78,presentation,AppSpacingRef,AppSpacing.space24,,BLOCKED,Demo 화면 (_use_cases.dart)
+lib/components/presentation/app_auto_complete.dart,221,presentation,EdgeInsets.all,space16,AppSpacingSemantic.insetLg,READY,EdgeInsets.all(tokenRef) → inset
+lib/components/presentation/app_auto_complete.dart,233,presentation,EdgeInsets.all,space16,AppSpacingSemantic.insetLg,READY,EdgeInsets.all(tokenRef) → inset
+lib/components/presentation/app_auto_complete.dart,251,presentation,EdgeInsets.symmetric,space16,AppSpacing.s16,READY,EdgeInsets.symmetric(horizontal=tokenRef) → palette s16
+lib/components/presentation/app_auto_complete.dart,251,presentation,EdgeInsets.symmetric,H=16,AppSpacing.s16,READY,symmetric horizontal only
+lib/components/presentation/app_auto_complete.dart,223,presentation,SizedBox,18,,NEEDS_REVIEW,SizedBox(width=)→inline off-scale literal 18px (closest palette: 16)
+lib/components/presentation/app_auto_complete.dart,223,presentation,SizedBox,18,,NEEDS_REVIEW,SizedBox(height=)→stack off-scale literal 18px (closest palette: 16)
+lib/components/presentation/app_auto_complete.dart,221,presentation,AppSpacingRef,space16,AppSpacing.s16,READY,기존 tokenRef → palette s16
+lib/components/presentation/app_auto_complete.dart,233,presentation,AppSpacingRef,space16,AppSpacing.s16,READY,기존 tokenRef → palette s16
+lib/components/presentation/app_auto_complete.dart,252,presentation,AppSpacingRef,space16,AppSpacing.s16,READY,기존 tokenRef → palette s16
+lib/components/presentation/app_auto_complete.dart,253,presentation,AppSpacingRef,space12,AppSpacing.s12,READY,기존 tokenRef → palette s12
+lib/components/presentation/app_auto_complete_use_cases.dart,95,presentation,EdgeInsets.all,AppSpacing.space16,,BLOCKED,Demo 화면 (_use_cases.dart)
+lib/components/presentation/app_auto_complete_use_cases.dart,95,presentation,AppSpacingRef,AppSpacing.space16,,BLOCKED,Demo 화면 (_use_cases.dart)
+lib/components/presentation/app_bottom_sheet.dart,45,presentation,EdgeInsets.only,space8,AppSpacing.s8,READY,EdgeInsets.only(top=tokenRef) → palette
+lib/components/presentation/app_bottom_sheet.dart,45,presentation,EdgeInsets.only,space4,AppSpacing.s4,READY,EdgeInsets.only(bottom=tokenRef) → palette
+lib/components/presentation/app_bottom_sheet.dart,59,presentation,EdgeInsets.symmetric,space16,AppSpacing.s16,READY,EdgeInsets.symmetric(horizontal=tokenRef) → palette s16
+lib/components/presentation/app_bottom_sheet.dart,59,presentation,EdgeInsets.symmetric,H=16,AppSpacing.s16,READY,symmetric horizontal only
+lib/components/presentation/app_bottom_sheet.dart,143,presentation,EdgeInsets.all,space24,AppSpacingSemantic.insetXl,READY,EdgeInsets.all(tokenRef) → inset
+lib/components/presentation/app_bottom_sheet.dart,154,presentation,EdgeInsets.fromLTRB,space24,AppSpacing.s24,READY,EdgeInsets.fromLTRB(#0=tokenRef) → palette
+lib/components/presentation/app_bottom_sheet.dart,154,presentation,EdgeInsets.fromLTRB,space24,AppSpacing.s24,READY,EdgeInsets.fromLTRB(#1=tokenRef) → palette
+lib/components/presentation/app_bottom_sheet.dart,154,presentation,EdgeInsets.fromLTRB,space24,AppSpacing.s24,READY,EdgeInsets.fromLTRB(#2=tokenRef) → palette
+lib/components/presentation/app_bottom_sheet.dart,154,presentation,EdgeInsets.fromLTRB,space16,AppSpacing.s16,READY,EdgeInsets.fromLTRB(#3=tokenRef) → palette
+lib/components/presentation/app_bottom_sheet.dart,45,presentation,AppSpacingRef,space8,AppSpacing.s8,READY,기존 tokenRef → palette s8
+lib/components/presentation/app_bottom_sheet.dart,45,presentation,AppSpacingRef,space4,AppSpacing.s4,READY,기존 tokenRef → palette s4
+lib/components/presentation/app_bottom_sheet.dart,60,presentation,AppSpacingRef,space16,AppSpacing.s16,READY,기존 tokenRef → palette s16
+lib/components/presentation/app_bottom_sheet.dart,61,presentation,AppSpacingRef,space12,AppSpacing.s12,READY,기존 tokenRef → palette s12
+lib/components/presentation/app_bottom_sheet.dart,143,presentation,AppSpacingRef,space24,AppSpacing.s24,READY,기존 tokenRef → palette s24
+lib/components/presentation/app_bottom_sheet.dart,155,presentation,AppSpacingRef,space24,AppSpacing.s24,READY,기존 tokenRef → palette s24
+lib/components/presentation/app_bottom_sheet.dart,156,presentation,AppSpacingRef,space24,AppSpacing.s24,READY,기존 tokenRef → palette s24
+lib/components/presentation/app_bottom_sheet.dart,157,presentation,AppSpacingRef,space24,AppSpacing.s24,READY,기존 tokenRef → palette s24
+lib/components/presentation/app_bottom_sheet.dart,158,presentation,AppSpacingRef,space16,AppSpacing.s16,READY,기존 tokenRef → palette s16
+lib/components/presentation/app_bottom_sheet_use_cases.dart,21,presentation,EdgeInsets.all,AppSpacing.space16,,BLOCKED,Demo 화면 (_use_cases.dart)
+lib/components/presentation/app_bottom_sheet_use_cases.dart,46,presentation,EdgeInsets.all,AppSpacing.space16,,BLOCKED,Demo 화면 (_use_cases.dart)
+lib/components/presentation/app_bottom_sheet_use_cases.dart,76,presentation,EdgeInsets.all,AppSpacing.space16,,BLOCKED,Demo 화면 (_use_cases.dart)
+lib/components/presentation/app_bottom_sheet_use_cases.dart,96,presentation,EdgeInsets.all,AppSpacing.space16,,BLOCKED,Demo 화면 (_use_cases.dart)
+lib/components/presentation/app_bottom_sheet_use_cases.dart,122,presentation,EdgeInsets.all,AppSpacing.space16,,BLOCKED,Demo 화면 (_use_cases.dart)
+lib/components/presentation/app_bottom_sheet_use_cases.dart,26,presentation,SizedBox,AppSpacing.space24,,BLOCKED,Demo 화면 (_use_cases.dart)
+lib/components/presentation/app_bottom_sheet_use_cases.dart,21,presentation,AppSpacingRef,AppSpacing.space16,,BLOCKED,Demo 화면 (_use_cases.dart)
+lib/components/presentation/app_bottom_sheet_use_cases.dart,26,presentation,AppSpacingRef,AppSpacing.space24,,BLOCKED,Demo 화면 (_use_cases.dart)
+lib/components/presentation/app_bottom_sheet_use_cases.dart,46,presentation,AppSpacingRef,AppSpacing.space16,,BLOCKED,Demo 화면 (_use_cases.dart)
+lib/components/presentation/app_bottom_sheet_use_cases.dart,76,presentation,AppSpacingRef,AppSpacing.space16,,BLOCKED,Demo 화면 (_use_cases.dart)
+lib/components/presentation/app_bottom_sheet_use_cases.dart,96,presentation,AppSpacingRef,AppSpacing.space16,,BLOCKED,Demo 화면 (_use_cases.dart)
+lib/components/presentation/app_bottom_sheet_use_cases.dart,122,presentation,AppSpacingRef,AppSpacing.space16,,BLOCKED,Demo 화면 (_use_cases.dart)
+lib/components/presentation/app_full_modal_use_cases.dart,75,presentation,EdgeInsets.all,AppSpacing.space24,,BLOCKED,Demo 화면 (_use_cases.dart)
+lib/components/presentation/app_full_modal_use_cases.dart,89,presentation,EdgeInsets.all,AppSpacing.space24,,BLOCKED,Demo 화면 (_use_cases.dart)
+lib/components/presentation/app_full_modal_use_cases.dart,51,presentation,SizedBox,AppSpacing.space16,,BLOCKED,Demo 화면 (_use_cases.dart)
+lib/components/presentation/app_full_modal_use_cases.dart,51,presentation,AppSpacingRef,AppSpacing.space16,,BLOCKED,Demo 화면 (_use_cases.dart)
+lib/components/presentation/app_full_modal_use_cases.dart,75,presentation,AppSpacingRef,AppSpacing.space24,,BLOCKED,Demo 화면 (_use_cases.dart)
+lib/components/presentation/app_full_modal_use_cases.dart,89,presentation,AppSpacingRef,AppSpacing.space24,,BLOCKED,Demo 화면 (_use_cases.dart)
+lib/components/presentation/app_menu.dart,126,presentation,EdgeInsets.symmetric,space16,AppSpacing.s16,READY,EdgeInsets.symmetric(horizontal=tokenRef) → palette s16
+lib/components/presentation/app_menu.dart,126,presentation,EdgeInsets.symmetric,H=16,AppSpacing.s16,READY,symmetric horizontal only
+lib/components/presentation/app_menu.dart,224,presentation,EdgeInsets.symmetric,space16,AppSpacing.s16,READY,EdgeInsets.symmetric(horizontal=tokenRef) → palette s16
+lib/components/presentation/app_menu.dart,224,presentation,EdgeInsets.symmetric,H=16,AppSpacing.s16,READY,symmetric horizontal only
+lib/components/presentation/app_menu.dart,127,presentation,AppSpacingRef,space16,AppSpacing.s16,READY,기존 tokenRef → palette s16
+lib/components/presentation/app_menu.dart,147,presentation,AppSpacingRef,space12,AppSpacing.s12,READY,기존 tokenRef → palette s12
+lib/components/presentation/app_menu.dart,169,presentation,AppSpacingRef,space12,AppSpacing.s12,READY,기존 tokenRef → palette s12
+lib/components/presentation/app_menu.dart,181,presentation,AppSpacingRef,space8,AppSpacing.s8,READY,기존 tokenRef → palette s8
+lib/components/presentation/app_menu.dart,224,presentation,AppSpacingRef,space16,AppSpacing.s16,READY,기존 tokenRef → palette s16
+lib/components/presentation/app_menu_use_cases.dart,147,presentation,EdgeInsets.all,AppSpacing.space16,,BLOCKED,Demo 화면 (_use_cases.dart)
+lib/components/presentation/app_menu_use_cases.dart,147,presentation,AppSpacingRef,AppSpacing.space16,,BLOCKED,Demo 화면 (_use_cases.dart)
+lib/components/ratio/app_ratio.dart,192,ratio,SizedBox,width,,BLOCKED,non-numeric SizedBox dimension
+lib/components/ratio/app_ratio.dart,192,ratio,SizedBox,height,,BLOCKED,non-numeric SizedBox dimension
+lib/components/ratio/ratio_use_cases.dart,189,ratio,EdgeInsets.all,24,,BLOCKED,Demo 화면 (_use_cases.dart)
+lib/components/ratio/ratio_use_cases.dart,58,ratio,SizedBox,280,,BLOCKED,Demo 화면 (_use_cases.dart)
+lib/components/ratio/ratio_use_cases.dart,95,ratio,SizedBox,200,,BLOCKED,Demo 화면 (_use_cases.dart)
+lib/components/ratio/ratio_use_cases.dart,101,ratio,SizedBox,16,,BLOCKED,Demo 화면 (_use_cases.dart)
+lib/components/ratio/ratio_use_cases.dart,130,ratio,SizedBox,width,,BLOCKED,Demo 화면 (_use_cases.dart)
+lib/components/ratio/ratio_use_cases.dart,142,ratio,SizedBox,8,,BLOCKED,Demo 화면 (_use_cases.dart)
+lib/components/ratio/ratio_use_cases.dart,173,ratio,SizedBox,8,,BLOCKED,Demo 화면 (_use_cases.dart)
+lib/components/ratio/ratio_use_cases.dart,18,ratio,PropLiteral:spacing,16,,BLOCKED,Demo 화면 (_use_cases.dart)
+lib/components/ratio/ratio_use_cases.dart,19,ratio,PropLiteral:runSpacing,24,,BLOCKED,Demo 화면 (_use_cases.dart)
+lib/components/ratio/ratio_use_cases.dart,39,ratio,PropLiteral:spacing,16,,BLOCKED,Demo 화면 (_use_cases.dart)
+lib/components/ratio/ratio_use_cases.dart,40,ratio,PropLiteral:runSpacing,24,,BLOCKED,Demo 화면 (_use_cases.dart)
+lib/components/scrolls/app_scroll_bar.dart,77,scrolls,SizedBox,_outerWidth,,BLOCKED,non-numeric SizedBox dimension
+lib/components/scrolls/app_scroll_bar.dart,77,scrolls,SizedBox,height,,BLOCKED,non-numeric SizedBox dimension
+lib/components/scrolls/app_scroll_bar.dart,81,scrolls,SizedBox,_barWidth,,BLOCKED,non-numeric SizedBox dimension
+lib/components/scrolls/app_scroll_bar.dart,81,scrolls,SizedBox,track,,BLOCKED,non-numeric SizedBox dimension
+lib/components/scrolls/scroll_use_cases.dart,152,scrolls,EdgeInsets.all,24,,BLOCKED,Demo 화면 (_use_cases.dart)
+lib/components/scrolls/scroll_use_cases.dart,165,scrolls,EdgeInsets.fromLTRB,16,,BLOCKED,Demo 화면 (_use_cases.dart)
+lib/components/scrolls/scroll_use_cases.dart,165,scrolls,EdgeInsets.fromLTRB,16,,BLOCKED,Demo 화면 (_use_cases.dart)
+lib/components/scrolls/scroll_use_cases.dart,165,scrolls,EdgeInsets.fromLTRB,24,,BLOCKED,Demo 화면 (_use_cases.dart)
+lib/components/scrolls/scroll_use_cases.dart,165,scrolls,EdgeInsets.fromLTRB,16,,BLOCKED,Demo 화면 (_use_cases.dart)
+lib/components/scrolls/scroll_use_cases.dart,168,scrolls,EdgeInsets.symmetric,8,,BLOCKED,Demo 화면 (_use_cases.dart)
+lib/components/scrolls/scroll_use_cases.dart,190,scrolls,EdgeInsets.all,24,,BLOCKED,Demo 화면 (_use_cases.dart)
+lib/components/scrolls/scroll_use_cases.dart,113,scrolls,SizedBox,AppSpacing.space8,,BLOCKED,Demo 화면 (_use_cases.dart)
+lib/components/scrolls/scroll_use_cases.dart,153,scrolls,SizedBox,320,,BLOCKED,Demo 화면 (_use_cases.dart)
+lib/components/scrolls/scroll_use_cases.dart,19,scrolls,PropLiteral:spacing,24,,BLOCKED,Demo 화면 (_use_cases.dart)
+lib/components/scrolls/scroll_use_cases.dart,45,scrolls,PropLiteral:spacing,24,,BLOCKED,Demo 화면 (_use_cases.dart)
+lib/components/scrolls/scroll_use_cases.dart,72,scrolls,PropLiteral:spacing,24,,BLOCKED,Demo 화면 (_use_cases.dart)
+lib/components/scrolls/scroll_use_cases.dart,113,scrolls,AppSpacingRef,AppSpacing.space8,,BLOCKED,Demo 화면 (_use_cases.dart)
+lib/components/selection/app_date_picker.dart,121,selection,EdgeInsets.symmetric,space16,AppSpacing.s16,READY,EdgeInsets.symmetric(horizontal=tokenRef) → palette s16
+lib/components/selection/app_date_picker.dart,121,selection,EdgeInsets.symmetric,H=16,AppSpacing.s16,READY,symmetric horizontal only
+lib/components/selection/app_date_picker.dart,211,selection,EdgeInsets.symmetric,,,BLOCKED,missing literal
+lib/components/selection/app_date_picker.dart,116,selection,SizedBox,280,,NEEDS_REVIEW,SizedBox(height=)→stack off-scale literal 280px (closest palette: 48)
+lib/components/selection/app_date_picker.dart,122,selection,AppSpacingRef,space16,AppSpacing.s16,READY,기존 tokenRef → palette s16
+lib/components/selection/app_date_picker.dart,123,selection,AppSpacingRef,space8,AppSpacing.s8,READY,기존 tokenRef → palette s8
+lib/components/selection/app_date_picker.dart,202,selection,AppSpacingRef,space8,AppSpacing.s8,READY,기존 tokenRef → palette s8
+lib/components/selection/app_date_picker.dart,212,selection,AppSpacingRef,space16,AppSpacing.s16,READY,기존 tokenRef → palette s16
+lib/components/selection/app_date_picker.dart,225,selection,AppSpacingRef,space12,AppSpacing.s12,READY,기존 tokenRef → palette s12
+lib/components/selection/app_picker_use_cases.dart,81,selection,EdgeInsets.all,AppSpacing.space16,,BLOCKED,Demo 화면 (_use_cases.dart)
+lib/components/selection/app_picker_use_cases.dart,87,selection,SizedBox,AppSpacing.space16,,BLOCKED,Demo 화면 (_use_cases.dart)
+lib/components/selection/app_picker_use_cases.dart,81,selection,AppSpacingRef,AppSpacing.space16,,BLOCKED,Demo 화면 (_use_cases.dart)
+lib/components/selection/app_picker_use_cases.dart,87,selection,AppSpacingRef,AppSpacing.space16,,BLOCKED,Demo 화면 (_use_cases.dart)
+lib/components/selection/app_select.dart,106,selection,EdgeInsets.symmetric,space16,AppSpacing.s16,READY,EdgeInsets.symmetric(horizontal=tokenRef) → palette s16
+lib/components/selection/app_select.dart,106,selection,EdgeInsets.symmetric,H=16,AppSpacing.s16,READY,symmetric horizontal only
+lib/components/selection/app_select.dart,201,selection,EdgeInsets.symmetric,space16,AppSpacing.s16,READY,EdgeInsets.symmetric(horizontal=tokenRef) → palette s16
+lib/components/selection/app_select.dart,201,selection,EdgeInsets.symmetric,H=16,AppSpacing.s16,READY,symmetric horizontal only
+lib/components/selection/app_select.dart,107,selection,AppSpacingRef,space16,AppSpacing.s16,READY,기존 tokenRef → palette s16
+lib/components/selection/app_select.dart,108,selection,AppSpacingRef,space12,AppSpacing.s12,READY,기존 tokenRef → palette s12
+lib/components/selection/app_select.dart,189,selection,AppSpacingRef,space8,AppSpacing.s8,READY,기존 tokenRef → palette s8
+lib/components/selection/app_select.dart,201,selection,AppSpacingRef,space16,AppSpacing.s16,READY,기존 tokenRef → palette s16
+lib/components/selection/app_select.dart,237,selection,AppSpacingRef,space4,AppSpacing.s4,READY,기존 tokenRef → palette s4
+lib/components/selection/app_select.dart,245,selection,AppSpacingRef,space4,AppSpacing.s4,READY,기존 tokenRef → palette s4
+lib/components/selection/app_select_use_cases.dart,122,selection,EdgeInsets.all,AppSpacing.space16,,BLOCKED,Demo 화면 (_use_cases.dart)
+lib/components/selection/app_select_use_cases.dart,124,selection,SizedBox,300,,BLOCKED,Demo 화면 (_use_cases.dart)
+lib/components/selection/app_select_use_cases.dart,122,selection,AppSpacingRef,AppSpacing.space16,,BLOCKED,Demo 화면 (_use_cases.dart)
+lib/components/selection/app_slider.dart,44,selection,EdgeInsets.only,space8,AppSpacing.s8,READY,EdgeInsets.only(bottom=tokenRef) → palette
+lib/components/selection/app_slider.dart,44,selection,AppSpacingRef,space8,AppSpacing.s8,READY,기존 tokenRef → palette s8
+lib/components/selection/app_slider_use_cases.dart,129,selection,EdgeInsets.all,AppSpacing.space16,,BLOCKED,Demo 화면 (_use_cases.dart)
+lib/components/selection/app_slider_use_cases.dart,99,selection,SizedBox,AppSpacing.space24,,BLOCKED,Demo 화면 (_use_cases.dart)
+lib/components/selection/app_slider_use_cases.dart,109,selection,SizedBox,AppSpacing.space24,,BLOCKED,Demo 화면 (_use_cases.dart)
+lib/components/selection/app_slider_use_cases.dart,99,selection,AppSpacingRef,AppSpacing.space24,,BLOCKED,Demo 화면 (_use_cases.dart)
+lib/components/selection/app_slider_use_cases.dart,109,selection,AppSpacingRef,AppSpacing.space24,,BLOCKED,Demo 화면 (_use_cases.dart)
+lib/components/selection/app_slider_use_cases.dart,129,selection,AppSpacingRef,AppSpacing.space16,,BLOCKED,Demo 화면 (_use_cases.dart)
+lib/components/selection/app_time_picker.dart,89,selection,EdgeInsets.symmetric,space16,AppSpacing.s16,READY,EdgeInsets.symmetric(horizontal=tokenRef) → palette s16
+lib/components/selection/app_time_picker.dart,89,selection,EdgeInsets.symmetric,H=16,AppSpacing.s16,READY,symmetric horizontal only
+lib/components/selection/app_time_picker.dart,168,selection,EdgeInsets.symmetric,,,BLOCKED,missing literal
+lib/components/selection/app_time_picker.dart,84,selection,SizedBox,280,,NEEDS_REVIEW,SizedBox(height=)→stack off-scale literal 280px (closest palette: 48)
+lib/components/selection/app_time_picker.dart,90,selection,AppSpacingRef,space16,AppSpacing.s16,READY,기존 tokenRef → palette s16
+lib/components/selection/app_time_picker.dart,91,selection,AppSpacingRef,space8,AppSpacing.s8,READY,기존 tokenRef → palette s8
+lib/components/selection/app_time_picker.dart,159,selection,AppSpacingRef,space8,AppSpacing.s8,READY,기존 tokenRef → palette s8
+lib/components/selection/app_time_picker.dart,169,selection,AppSpacingRef,space16,AppSpacing.s16,READY,기존 tokenRef → palette s16
+lib/components/selection/app_time_picker.dart,182,selection,AppSpacingRef,space12,AppSpacing.s12,READY,기존 tokenRef → palette s12
+lib/components/tabs/app_category.dart,66,tabs,EdgeInsets.symmetric,space16,AppSpacing.s16,READY,EdgeInsets.symmetric(horizontal=tokenRef) → palette s16
+lib/components/tabs/app_category.dart,66,tabs,EdgeInsets.symmetric,H=16,AppSpacing.s16,READY,symmetric horizontal only
+lib/components/tabs/app_category.dart,72,tabs,EdgeInsets.only,,,BLOCKED,EdgeInsets.only missing literal
+lib/components/tabs/app_category.dart,130,tabs,EdgeInsets.symmetric,space16,AppSpacing.s16,READY,EdgeInsets.symmetric(horizontal=tokenRef) → palette s16
+lib/components/tabs/app_category.dart,130,tabs,EdgeInsets.symmetric,H=16,AppSpacing.s16,READY,symmetric horizontal only
+lib/components/tabs/app_category.dart,66,tabs,AppSpacingRef,space16,AppSpacing.s16,READY,기존 tokenRef → palette s16
+lib/components/tabs/app_category.dart,130,tabs,AppSpacingRef,space16,AppSpacing.s16,READY,기존 tokenRef → palette s16
+lib/components/tabs/app_category_use_cases.dart,95,tabs,EdgeInsets.all,AppSpacing.space16,,BLOCKED,Demo 화면 (_use_cases.dart)
+lib/components/tabs/app_category_use_cases.dart,95,tabs,AppSpacingRef,AppSpacing.space16,,BLOCKED,Demo 화면 (_use_cases.dart)
+lib/components/tabs/app_segmented_control.dart,58,tabs,EdgeInsets.all,2,AppSpacing.s2,READY,EdgeInsets.all(2) → palette direct
+lib/components/tabs/app_segmented_control.dart,100,tabs,AppSpacingRef,space4,AppSpacing.s4,READY,기존 tokenRef → palette s4
+lib/components/tabs/app_segmented_control_use_cases.dart,110,tabs,EdgeInsets.all,AppSpacing.space16,,BLOCKED,Demo 화면 (_use_cases.dart)
+lib/components/tabs/app_segmented_control_use_cases.dart,76,tabs,SizedBox,AppSpacing.space24,,BLOCKED,Demo 화면 (_use_cases.dart)
+lib/components/tabs/app_segmented_control_use_cases.dart,76,tabs,AppSpacingRef,AppSpacing.space24,,BLOCKED,Demo 화면 (_use_cases.dart)
+lib/components/tabs/app_segmented_control_use_cases.dart,110,tabs,AppSpacingRef,AppSpacing.space16,,BLOCKED,Demo 화면 (_use_cases.dart)
+lib/components/tabs/app_tab_bar.dart,100,tabs,EdgeInsets.symmetric,space12,AppSpacing.s12,READY,EdgeInsets.symmetric(horizontal=tokenRef) → palette s12
+lib/components/tabs/app_tab_bar.dart,100,tabs,EdgeInsets.symmetric,H=12,AppSpacing.s12,READY,symmetric horizontal only
+lib/components/tabs/app_tab_bar.dart,124,tabs,EdgeInsets.symmetric,space16,AppSpacing.s16,READY,EdgeInsets.symmetric(horizontal=tokenRef) → palette s16
+lib/components/tabs/app_tab_bar.dart,124,tabs,EdgeInsets.symmetric,H=16,AppSpacing.s16,READY,symmetric horizontal only
+lib/components/tabs/app_tab_bar.dart,130,tabs,EdgeInsets.only,,,BLOCKED,EdgeInsets.only missing literal
+lib/components/tabs/app_tab_bar.dart,86,tabs,SizedBox,size.height,,BLOCKED,non-numeric SizedBox dimension
+lib/components/tabs/app_tab_bar.dart,191,tabs,SizedBox,height,,BLOCKED,non-numeric SizedBox dimension
+lib/components/tabs/app_tab_bar.dart,100,tabs,AppSpacingRef,space12,AppSpacing.s12,READY,기존 tokenRef → palette s12
+lib/components/tabs/app_tab_bar.dart,124,tabs,AppSpacingRef,space16,AppSpacing.s16,READY,기존 tokenRef → palette s16
+lib/components/tabs/app_tab_bar_use_cases.dart,92,tabs,EdgeInsets.all,AppSpacing.space16,,BLOCKED,Demo 화면 (_use_cases.dart)
+lib/components/tabs/app_tab_bar_use_cases.dart,92,tabs,AppSpacingRef,AppSpacing.space16,,BLOCKED,Demo 화면 (_use_cases.dart)
+lib/components/thumbnails/app_thumbnail.dart,111,thumbnails,SizedBox,width,,BLOCKED,non-numeric SizedBox dimension
+lib/components/thumbnails/thumbnail_use_cases.dart,123,thumbnails,EdgeInsets.all,24,,BLOCKED,Demo 화면 (_use_cases.dart)
+lib/components/thumbnails/thumbnail_use_cases.dart,21,thumbnails,SizedBox,120,,BLOCKED,Demo 화면 (_use_cases.dart)
+lib/components/thumbnails/thumbnail_use_cases.dart,28,thumbnails,SizedBox,120,,BLOCKED,Demo 화면 (_use_cases.dart)
+lib/components/thumbnails/thumbnail_use_cases.dart,35,thumbnails,SizedBox,120,,BLOCKED,Demo 화면 (_use_cases.dart)
+lib/components/thumbnails/thumbnail_use_cases.dart,42,thumbnails,SizedBox,120,,BLOCKED,Demo 화면 (_use_cases.dart)
+lib/components/thumbnails/thumbnail_use_cases.dart,17,thumbnails,PropLiteral:spacing,16,,BLOCKED,Demo 화면 (_use_cases.dart)
+lib/components/thumbnails/thumbnail_use_cases.dart,18,thumbnails,PropLiteral:runSpacing,16,,BLOCKED,Demo 화면 (_use_cases.dart)
+lib/components/thumbnails/thumbnail_use_cases.dart,58,thumbnails,PropLiteral:spacing,16,,BLOCKED,Demo 화면 (_use_cases.dart)
+lib/components/thumbnails/thumbnail_use_cases.dart,59,thumbnails,PropLiteral:runSpacing,16,,BLOCKED,Demo 화면 (_use_cases.dart)
+lib/components/thumbnails/thumbnail_use_cases.dart,87,thumbnails,PropLiteral:spacing,16,,BLOCKED,Demo 화면 (_use_cases.dart)
+lib/components/thumbnails/thumbnail_use_cases.dart,88,thumbnails,PropLiteral:runSpacing,16,,BLOCKED,Demo 화면 (_use_cases.dart)
