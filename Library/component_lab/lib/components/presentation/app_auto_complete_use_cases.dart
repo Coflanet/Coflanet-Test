@@ -92,7 +92,7 @@ final List<WidgetbookComponent> autoCompleteUseCases = [
 Widget _bg(BuildContext context, Widget child) {
   return Container(
     color: AppColor.backgroundNormalNormal,
-    padding: const EdgeInsets.all(AppSpacing.space16),
+    padding: const EdgeInsets.all(AppSpacing.s16),
     child: child,
   );
 }

@@ -48,7 +48,7 @@ final List<WidgetbookComponent> fullModalUseCases = [
                           color: AppColor.labelNormal,
                         ),
                       ),
-                      const SizedBox(height: AppSpacing.space16),
+                      const SizedBox(height: AppSpacing.s16),
                       AppSolidButton(
                         label: '닫기',
                         onPressed: () => Navigator.pop(ctx),
@@ -72,7 +72,7 @@ class _DemoBody extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.all(AppSpacing.space24),
+      padding: const EdgeInsets.all(AppSpacing.s24),
       child: Text(
         text,
         style: AppTextStyles.body1NormalRegular.copyWith(
@@ -86,7 +86,7 @@ class _DemoBody extends StatelessWidget {
 Widget _bg(BuildContext context, Widget child) {
   return Container(
     color: AppColor.backgroundNormalNormal,
-    padding: const EdgeInsets.all(AppSpacing.space24),
+    padding: const EdgeInsets.all(AppSpacing.s24),
     alignment: Alignment.center,
     child: child,
   );

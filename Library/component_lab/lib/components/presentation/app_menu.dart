@@ -124,7 +124,7 @@ class _MenuCell extends StatelessWidget {
             opacity: item.isDisabled ? 0.4 : 1.0,
             child: Container(
               padding: EdgeInsets.symmetric(
-                horizontal: AppSpacing.space16,
+                horizontal: AppSpacing.s16,
                 vertical: padding,
               ),
               child: Row(
@@ -144,7 +144,7 @@ class _MenuCell extends StatelessWidget {
                         ),
                       ),
                     ),
-                    SizedBox(width: AppSpacing.space12),
+                    SizedBox(width: AppSpacing.s12),
                   ] else if (variant == AppMenuVariant.checkbox) ...[
                     Container(
                       width: 20,
@@ -166,7 +166,7 @@ class _MenuCell extends StatelessWidget {
                               size: 14, color: Colors.white)
                           : null,
                     ),
-                    SizedBox(width: AppSpacing.space12),
+                    SizedBox(width: AppSpacing.s12),
                   ],
 
                   // Icon
@@ -178,7 +178,7 @@ class _MenuCell extends StatelessWidget {
                           ? Colors.red
                           : AppColor.colorGlobalCoolNeutral30,
                     ),
-                    SizedBox(width: AppSpacing.space8),
+                    SizedBox(width: AppSpacing.s8),
                   ],
 
                   // Label
@@ -221,7 +221,7 @@ class _MenuCell extends StatelessWidget {
         if (showDivider)
           Container(
             height: 1,
-            margin: EdgeInsets.symmetric(horizontal: AppSpacing.space16),
+            margin: EdgeInsets.symmetric(horizontal: AppSpacing.s16),
             color: AppColor.colorGlobalCoolNeutral97,
           ),
       ],

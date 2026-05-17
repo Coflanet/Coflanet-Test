@@ -18,12 +18,12 @@ final List<WidgetbookComponent> bottomSheetUseCases = [
           AppBottomSheet(
             showHandle: true,
             child: Padding(
-              padding: const EdgeInsets.all(AppSpacing.space16),
+              padding: const EdgeInsets.all(AppSpacing.s16),
               child: Column(
                 mainAxisSize: MainAxisSize.min,
                 children: [
                   const Text('Bottom Sheet Content'),
-                  const SizedBox(height: AppSpacing.space24),
+                  const SizedBox(height: AppSpacing.s24),
                   ElevatedButton(
                     onPressed: () {},
                     child: const Text('Action'),
@@ -43,7 +43,7 @@ final List<WidgetbookComponent> bottomSheetUseCases = [
             showHandle: true,
             showCloseButton: true,
             child: Padding(
-              padding: const EdgeInsets.all(AppSpacing.space16),
+              padding: const EdgeInsets.all(AppSpacing.s16),
               child: Column(
                 mainAxisSize: MainAxisSize.min,
                 children: [
@@ -73,7 +73,7 @@ final List<WidgetbookComponent> bottomSheetUseCases = [
             showHandle: true,
             showCloseButton: false,
             child: Padding(
-              padding: const EdgeInsets.all(AppSpacing.space16),
+              padding: const EdgeInsets.all(AppSpacing.s16),
               child: Column(
                 mainAxisSize: MainAxisSize.min,
                 children: const [
@@ -93,7 +93,7 @@ final List<WidgetbookComponent> bottomSheetUseCases = [
             showHandle: true,
             showCloseButton: true,
             child: Padding(
-              padding: const EdgeInsets.all(AppSpacing.space16),
+              padding: const EdgeInsets.all(AppSpacing.s16),
               child: Column(
                 mainAxisSize: MainAxisSize.min,
                 children: [
@@ -119,7 +119,7 @@ final List<WidgetbookComponent> bottomSheetUseCases = [
 
 Widget _bg(BuildContext context, Widget child) {
   return Container(
-    padding: const EdgeInsets.all(AppSpacing.space16),
+    padding: const EdgeInsets.all(AppSpacing.s16),
     color: Theme.of(context).canvasColor,
     height: 400,
     child: child,

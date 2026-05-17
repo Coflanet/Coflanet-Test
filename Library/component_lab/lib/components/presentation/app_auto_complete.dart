@@ -218,7 +218,7 @@ class _Overlay<T> extends StatelessWidget {
   Widget _buildContent() {
     if (loading && results.isEmpty) {
       return const Padding(
-        padding: EdgeInsets.all(AppSpacing.space16),
+        padding: EdgeInsets.all(AppSpacingSemantic.insetLg),
         child: Center(
           child: SizedBox(
             width: 18,
@@ -230,7 +230,7 @@ class _Overlay<T> extends StatelessWidget {
     }
     if (results.isEmpty) {
       return Padding(
-        padding: const EdgeInsets.all(AppSpacing.space16),
+        padding: const EdgeInsets.all(AppSpacingSemantic.insetLg),
         child: Text(
           emptyText,
           style: AppTextStyles.body2NormalRegular.copyWith(
@@ -249,8 +249,8 @@ class _Overlay<T> extends StatelessWidget {
           onTap: () => onTap(item),
           child: Padding(
             padding: const EdgeInsets.symmetric(
-              horizontal: AppSpacing.space16,
-              vertical: AppSpacing.space12,
+              horizontal: AppSpacing.s16,
+              vertical: AppSpacing.s12,
             ),
             child: Text(
               itemLabel(item),
