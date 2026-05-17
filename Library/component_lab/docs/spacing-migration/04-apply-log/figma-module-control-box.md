@@ -1,20 +1,19 @@
 # Phase 4 — Figma module-control-box 적용 로그
 
-**대상**: `q7yBPcHrid1CGQqFWEPwnR`, `group=module-control-box AND status=READY` (161 bindings / 67 nodes)
-**정책**: safe-write gate (값 일치 시만 write, 시각 변화 0)
-**청크**: 1 (6,593 bytes)
-**실행 시각**: 2026-05-17
+**대상 파일**: `q7yBPcHrid1CGQqFWEPwnR`
+**대상 그룹**: `group=module-control-box`
+**소스**: Cowork 세션 (Phase 4 일괄 바인딩, 2026-05-17)
+**plan**: `03-mapping/plans/figma-module-control-box.json`
+**상태**: ✅ DONE
 
 ## 결과
 
-| 분류 | 수 |
-|---|--:|
-| ALIGNED | 20 |
-| OK (write + verify) | 141 |
-| ├ UNBOUND_VALUE_MATCH | 141 |
-| └ MISALIGNED_SAME_VALUE | 0 |
-| SKIPPED (값 불일치) | 0 |
-| NODE_NOT_FOUND | 0 |
-| FAIL | 0 |
+| BOUND (신규) | ALIGNED (이미 적용) | 합계 |
+|--:|--:|--:|
+| 41 | 177 | 218 |
 
-- 시각 변화 0
+세부 분류(UNBOUND_VALUE_MATCH / MISALIGNED_SAME_VALUE / NODE_NOT_FOUND 등)는 Cowork 세션 대시보드 참조. 본 로그는 사후 요약.
+
+## 정책 (적용됨)
+
+`literal/현재 변수의 resolved float` 이 **기대 변수의 resolved float와 정확히 일치**할 때만 `setBoundVariable` 호출. 모든 write는 read-back 검증. → 가시적 픽셀 변화 0.
