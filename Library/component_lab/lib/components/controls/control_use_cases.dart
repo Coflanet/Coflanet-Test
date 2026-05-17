@@ -119,7 +119,7 @@ class _StatefulRadioGroupState extends State<_StatefulRadioGroup> {
             label: '옵션 ${v.toUpperCase()}',
             onChanged: (val) => setState(() => _selected = val ?? 'a'),
           ),
-          const SizedBox(height: AppSpacing.space12),
+          const SizedBox(height: AppSpacing.s12),
         ],
       ],
     );
@@ -141,7 +141,7 @@ class _Cell extends StatelessWidget {
       mainAxisSize: MainAxisSize.min,
       children: [
         child,
-        const SizedBox(height: AppSpacing.space4),
+        const SizedBox(height: AppSpacing.s4),
         Text(label, style: TextStyle(color: altColor, fontSize: 11)),
       ],
     );

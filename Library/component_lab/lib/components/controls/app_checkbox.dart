@@ -69,7 +69,7 @@ class AppCheckbox extends StatelessWidget {
             mainAxisSize: MainAxisSize.min,
             children: [
               boxWidget,
-              const SizedBox(width: AppSpacing.space8),
+              const SizedBox(width: AppSpacing.s8),
               Text(
                 label!,
                 style: (isSm
