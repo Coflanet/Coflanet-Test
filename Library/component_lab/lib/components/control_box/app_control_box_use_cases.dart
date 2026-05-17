@@ -23,7 +23,7 @@ final List<WidgetbookComponent> controlBoxUseCases = [
                 onChanged: (value) {},
                 type: AppControlBoxType.checkbox,
               ),
-              const SizedBox(height: AppSpacing.space16),
+              const SizedBox(height: AppSpacing.s16),
               AppControlBox(
                 label: 'I agree to terms',
                 isSelected: false,
@@ -60,7 +60,7 @@ final List<WidgetbookComponent> controlBoxUseCases = [
                 type: AppControlBoxType.checkbox,
                 isDisabled: true,
               ),
-              const SizedBox(height: AppSpacing.space16),
+              const SizedBox(height: AppSpacing.s16),
               AppControlBox(
                 label: 'Disabled (Unselected)',
                 isSelected: false,
@@ -89,14 +89,14 @@ final List<WidgetbookComponent> controlBoxUseCases = [
                 onChanged: (value) {},
                 type: AppControlBoxType.radio,
               ),
-              const SizedBox(height: AppSpacing.space12),
+              const SizedBox(height: AppSpacing.s12),
               AppControlBox(
                 label: 'Option 2',
                 isSelected: false,
                 onChanged: (value) {},
                 type: AppControlBoxType.radio,
               ),
-              const SizedBox(height: AppSpacing.space12),
+              const SizedBox(height: AppSpacing.s12),
               AppControlBox(
                 label: 'Option 3',
                 isSelected: false,
@@ -120,7 +120,7 @@ final List<WidgetbookComponent> controlBoxUseCases = [
                 onChanged: (value) {},
                 type: AppControlBoxType.radio,
               ),
-              const SizedBox(height: AppSpacing.space16),
+              const SizedBox(height: AppSpacing.s16),
               AppControlBox(
                 label: 'Standard delivery',
                 subtitle: 'Regular delivery (5-7 business days)',
@@ -145,7 +145,7 @@ final List<WidgetbookComponent> controlBoxUseCases = [
                 type: AppControlBoxType.radio,
                 isDisabled: true,
               ),
-              const SizedBox(height: AppSpacing.space12),
+              const SizedBox(height: AppSpacing.s12),
               AppControlBox(
                 label: 'Disabled (Unselected)',
                 isSelected: false,
@@ -163,7 +163,7 @@ final List<WidgetbookComponent> controlBoxUseCases = [
 
 Widget _bg(BuildContext context, Widget child) {
   return Container(
-    padding: const EdgeInsets.all(AppSpacing.space16),
+    padding: const EdgeInsets.all(AppSpacing.s16),
     color: Theme.of(context).canvasColor,
     child: child,
   );
