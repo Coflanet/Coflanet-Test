@@ -51,19 +51,19 @@ final List<WidgetbookComponent> tastingNoteUseCases = [
                 description: '레몬, 라임 계열의 상큼한 향미',
                 onTap: () {},
               ),
-              const SizedBox(height: AppSpacing.space8),
+              const SizedBox(height: AppSpacing.s8),
               AppTastingNote(
                 title: '베리',
                 description: '딸기, 라즈베리 계열의 달콤한 향',
                 onTap: () {},
               ),
-              const SizedBox(height: AppSpacing.space8),
+              const SizedBox(height: AppSpacing.s8),
               AppTastingNote(
                 title: '초콜릿',
                 description: '카카오, 다크초콜릿 계열의 진한 향',
                 onTap: () {},
               ),
-              const SizedBox(height: AppSpacing.space8),
+              const SizedBox(height: AppSpacing.s8),
               AppTastingNote(
                 title: '플로럴',
                 description: '꽃 향, 자스민 계열의 은은한 향',
@@ -80,7 +80,7 @@ final List<WidgetbookComponent> tastingNoteUseCases = [
 Widget _bg(BuildContext context, Widget child) {
   return Container(
     color: Theme.of(context).canvasColor,
-    padding: const EdgeInsets.all(AppSpacing.space16),
+    padding: const EdgeInsets.all(AppSpacing.s16),
     child: ConstrainedBox(
       constraints: const BoxConstraints(maxWidth: 480),
       child: child,

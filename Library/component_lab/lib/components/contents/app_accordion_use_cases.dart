@@ -18,7 +18,7 @@ final List<WidgetbookComponent> accordionUseCases = [
           AppAccordion(
             title: 'Accordion Title',
             content: Padding(
-              padding: const EdgeInsets.all(AppSpacing.space16),
+              padding: const EdgeInsets.all(AppSpacing.s16),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: const [
@@ -39,7 +39,7 @@ final List<WidgetbookComponent> accordionUseCases = [
             title: 'Section Title',
             subtitle: 'Additional information',
             content: Padding(
-              padding: const EdgeInsets.all(AppSpacing.space16),
+              padding: const EdgeInsets.all(AppSpacing.s16),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: const [
@@ -58,7 +58,7 @@ final List<WidgetbookComponent> accordionUseCases = [
             title: 'Expanded by Default',
             initiallyExpanded: true,
             content: Padding(
-              padding: const EdgeInsets.all(AppSpacing.space16),
+              padding: const EdgeInsets.all(AppSpacing.s16),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: const [
@@ -82,7 +82,7 @@ final List<WidgetbookComponent> accordionUseCases = [
             title: 'Large Padding',
             padding: AppAccordionPadding.large,
             content: Padding(
-              padding: const EdgeInsets.all(AppSpacing.space16),
+              padding: const EdgeInsets.all(AppSpacing.s16),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: const [Text('Content with large padding')],
@@ -99,7 +99,7 @@ final List<WidgetbookComponent> accordionUseCases = [
             title: 'Medium Padding',
             padding: AppAccordionPadding.medium,
             content: Padding(
-              padding: const EdgeInsets.all(AppSpacing.space16),
+              padding: const EdgeInsets.all(AppSpacing.s16),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: const [Text('Content with medium padding')],
@@ -116,7 +116,7 @@ final List<WidgetbookComponent> accordionUseCases = [
             title: 'Completed Section',
             isComplete: true,
             content: Padding(
-              padding: const EdgeInsets.all(AppSpacing.space16),
+              padding: const EdgeInsets.all(AppSpacing.s16),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: const [Text('This section is marked complete.')],
@@ -133,7 +133,7 @@ final List<WidgetbookComponent> accordionUseCases = [
             title: 'Settings',
             leading: const Icon(Icons.settings_rounded),
             content: Padding(
-              padding: const EdgeInsets.all(AppSpacing.space16),
+              padding: const EdgeInsets.all(AppSpacing.s16),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: const [Text('Settings content here.')],
@@ -157,7 +157,7 @@ final List<WidgetbookComponent> accordionUseCases = [
                 title: 'Section 1',
                 subtitle: 'Click to expand',
                 content: Padding(
-                  padding: const EdgeInsets.all(AppSpacing.space16),
+                  padding: const EdgeInsets.all(AppSpacing.s16),
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: const [Text('Content for section 1')],
@@ -168,7 +168,7 @@ final List<WidgetbookComponent> accordionUseCases = [
                 title: 'Section 2',
                 subtitle: 'Click to expand',
                 content: Padding(
-                  padding: const EdgeInsets.all(AppSpacing.space16),
+                  padding: const EdgeInsets.all(AppSpacing.s16),
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: const [Text('Content for section 2')],
@@ -180,7 +180,7 @@ final List<WidgetbookComponent> accordionUseCases = [
                 subtitle: 'Click to expand',
                 isComplete: true,
                 content: Padding(
-                  padding: const EdgeInsets.all(AppSpacing.space16),
+                  padding: const EdgeInsets.all(AppSpacing.s16),
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: const [Text('Content for section 3')],
@@ -197,7 +197,7 @@ final List<WidgetbookComponent> accordionUseCases = [
 
 Widget _bg(BuildContext context, Widget child) {
   return Container(
-    padding: const EdgeInsets.all(AppSpacing.space16),
+    padding: const EdgeInsets.all(AppSpacing.s16),
     color: Theme.of(context).canvasColor,
     child: child,
   );

@@ -65,8 +65,8 @@ class AppTable extends StatelessWidget {
             flex: columns[i].flex,
             child: Container(
               padding: EdgeInsets.symmetric(
-                horizontal: AppSpacing.space12,
-                vertical: AppSpacing.space8,
+                horizontal: AppSpacing.s12,
+                vertical: AppSpacing.s8,
               ),
               alignment: columns[i].alignment,
               child: Text(
@@ -105,8 +105,8 @@ class AppTable extends StatelessWidget {
               behavior: HitTestBehavior.opaque,
               child: Container(
                 padding: EdgeInsets.symmetric(
-                  horizontal: AppSpacing.space12,
-                  vertical: AppSpacing.space8,
+                  horizontal: AppSpacing.s12,
+                  vertical: AppSpacing.s8,
                 ),
                 alignment: columns[colIndex].alignment,
                 child: rows[rowIndex][colIndex],

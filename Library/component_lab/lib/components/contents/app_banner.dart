@@ -98,9 +98,9 @@ class AppBanner extends StatelessWidget {
                   ),
                 ),
             Positioned(
-              left: AppSpacing.space16,
-              right: AppSpacing.space16,
-              top: AppSpacing.space16,
+              left: AppSpacing.s16,
+              right: AppSpacing.s16,
+              top: AppSpacing.s16,
               child: Text(
                 title,
                 style: AppTextStyles.body1NormalBold.copyWith(
@@ -122,7 +122,7 @@ class AppBanner extends StatelessWidget {
         color: AppColor.backgroundElevatedAlternative,
         borderRadius: BorderRadius.circular(AppRadius.radius12),
       ),
-      padding: const EdgeInsets.all(AppSpacing.space12),
+      padding: const EdgeInsets.all(AppSpacingSemantic.insetMd),
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -140,7 +140,7 @@ class AppBanner extends StatelessWidget {
                   overflow: TextOverflow.ellipsis,
                 ),
                 if (body != null) ...[
-                  const SizedBox(height: AppSpacing.space4),
+                  const SizedBox(height: AppSpacing.s4),
                   Text(
                     body!,
                     style: AppTextStyles.caption1Regular.copyWith(
@@ -153,7 +153,7 @@ class AppBanner extends StatelessWidget {
               ],
             ),
           ),
-          const SizedBox(width: AppSpacing.space12),
+          const SizedBox(width: AppSpacing.s12),
           ClipRRect(
             borderRadius: BorderRadius.circular(AppRadius.radius8),
             child: SizedBox(

@@ -42,8 +42,8 @@ class AppTastingNote extends StatelessWidget {
           borderRadius: BorderRadius.circular(AppRadius.radius12),
         ),
         padding: const EdgeInsets.symmetric(
-          horizontal: AppSpacing.space12,
-          vertical: AppSpacing.space12,
+          horizontal: AppSpacing.s12,
+          vertical: AppSpacing.s12,
         ),
         child: Row(
           children: [
@@ -61,7 +61,7 @@ class AppTastingNote extends StatelessWidget {
                     ),
               ),
             ),
-            const SizedBox(width: AppSpacing.space12),
+            const SizedBox(width: AppSpacing.s12),
             Expanded(
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
@@ -75,7 +75,7 @@ class AppTastingNote extends StatelessWidget {
                     maxLines: 1,
                     overflow: TextOverflow.ellipsis,
                   ),
-                  const SizedBox(height: 2),
+                  const SizedBox(height: AppSpacingSemantic.inlineXs),
                   Text(
                     description,
                     style: AppTextStyles.caption1Regular.copyWith(
@@ -88,7 +88,7 @@ class AppTastingNote extends StatelessWidget {
               ),
             ),
             if (trailingIcon != null) ...[
-              const SizedBox(width: AppSpacing.space8),
+              const SizedBox(width: AppSpacing.s8),
               Icon(
                 trailingIcon,
                 size: 18,

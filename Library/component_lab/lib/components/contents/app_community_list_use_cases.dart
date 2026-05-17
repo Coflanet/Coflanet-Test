@@ -77,7 +77,7 @@ final List<WidgetbookComponent> communityListUseCases = [
 Widget _bg(BuildContext context, Widget child) {
   return Container(
     color: Theme.of(context).canvasColor,
-    padding: const EdgeInsets.symmetric(vertical: AppSpacing.space8),
+    padding: const EdgeInsets.symmetric(vertical: AppSpacing.s8),
     child: child,
   );
 }

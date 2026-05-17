@@ -75,8 +75,8 @@ final List<WidgetbookComponent> itemListUseCases = [
         builder: (context) => _bg(
           context,
           Wrap(
-            spacing: AppSpacing.space12,
-            runSpacing: AppSpacing.space16,
+            spacing: AppSpacing.s12,
+            runSpacing: AppSpacing.s16,
             children: List.generate(
               3,
               (i) => AppItemCard(
@@ -135,7 +135,7 @@ final List<WidgetbookComponent> itemListUseCases = [
             children: List.generate(
               3,
               (i) => Padding(
-                padding: const EdgeInsets.only(bottom: AppSpacing.space12),
+                padding: const EdgeInsets.only(bottom: AppSpacing.s12),
                 child: AppItemCard(
                   layout: AppItemCardLayout.horizontal,
                   name: '원두 이름 ${i + 1}',
@@ -157,7 +157,7 @@ final List<WidgetbookComponent> itemListUseCases = [
 
 Widget _bg(BuildContext context, Widget child) {
   return SingleChildScrollView(
-    padding: const EdgeInsets.all(AppSpacing.space16),
+    padding: const EdgeInsets.all(AppSpacing.s16),
     child: ConstrainedBox(
       constraints: const BoxConstraints(maxWidth: 480),
       child: Container(

@@ -101,7 +101,7 @@ class AppSectionHeader extends StatelessWidget {
                 ),
               ),
               if (trailing != null) ...[
-                const SizedBox(width: AppSpacing.space12),
+                const SizedBox(width: AppSpacing.s12),
                 trailing!,
               ],
             ],
@@ -113,7 +113,7 @@ class AppSectionHeader extends StatelessWidget {
               titleWidget,
               if (subtitleWidget != null) subtitleWidget,
               if (trailing != null) ...[
-                const SizedBox(height: AppSpacing.space8),
+                const SizedBox(height: AppSpacing.s8),
                 trailing!,
               ],
             ],
@@ -124,8 +124,8 @@ class AppSectionHeader extends StatelessWidget {
       onTap: onTap,
       child: Padding(
         padding: const EdgeInsets.symmetric(
-          horizontal: AppSpacing.space16,
-          vertical: AppSpacing.space12,
+          horizontal: AppSpacing.s16,
+          vertical: AppSpacing.s12,
         ),
         child: body,
       ),

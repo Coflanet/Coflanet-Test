@@ -16,7 +16,7 @@ final List<WidgetbookComponent> contentBadgeUseCases = [
         builder: (context) => _bg(
           context,
           Wrap(
-            spacing: AppSpacing.space8,
+            spacing: AppSpacing.s8,
             children: const [
               AppContentBadge(label: '텍스트', variant: AppContentBadgeVariant.solid),
               AppContentBadge(
@@ -32,7 +32,7 @@ final List<WidgetbookComponent> contentBadgeUseCases = [
         builder: (context) => _bg(
           context,
           Wrap(
-            spacing: AppSpacing.space8,
+            spacing: AppSpacing.s8,
             children: const [
               AppContentBadge(label: '텍스트'),
               AppContentBadge(label: '텍스트', leadingIcon: Icons.info_outline),
@@ -59,7 +59,7 @@ final List<WidgetbookComponent> contentBadgeUseCases = [
         builder: (context) => _bg(
           context,
           Wrap(
-            spacing: AppSpacing.space8,
+            spacing: AppSpacing.s8,
             crossAxisAlignment: WrapCrossAlignment.center,
             children: const [
               AppContentBadge(label: '텍스트', size: AppContentBadgeSize.xsmall),
@@ -79,8 +79,8 @@ final List<WidgetbookComponent> contentBadgeUseCases = [
         builder: (context) => _bg(
           context,
           Wrap(
-            spacing: AppSpacing.space8,
-            runSpacing: AppSpacing.space8,
+            spacing: AppSpacing.s8,
+            runSpacing: AppSpacing.s8,
             children: const [
               AppContentBadge(label: '텍스트', color: AppContentBadgeColor.neutral),
               AppContentBadge(label: '텍스트', color: AppContentBadgeColor.accent),
@@ -104,7 +104,7 @@ final List<WidgetbookComponent> contentBadgeUseCases = [
 
 Widget _bg(BuildContext context, Widget child) {
   return Container(
-    padding: const EdgeInsets.all(AppSpacing.space24),
+    padding: const EdgeInsets.all(AppSpacing.s24),
     color: Theme.of(context).canvasColor,
     alignment: Alignment.centerLeft,
     child: child,
