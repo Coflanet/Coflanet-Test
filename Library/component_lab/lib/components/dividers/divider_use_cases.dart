@@ -29,7 +29,7 @@ final List<WidgetbookComponent> dividerUseCases = [
                   style: AppTextStyles.label2Medium
                       .copyWith(color: labelColor),
                 ),
-                const SizedBox(height: AppSpacing.space8),
+                const SizedBox(height: AppSpacing.s8),
                 if (vertical)
                   SizedBox(
                     height: 48,
@@ -37,7 +37,7 @@ final List<WidgetbookComponent> dividerUseCases = [
                   )
                 else
                   AppDivider(tick: tick, vertical: vertical),
-                const SizedBox(height: AppSpacing.space24),
+                const SizedBox(height: AppSpacing.s24),
               ],
             );
           }
