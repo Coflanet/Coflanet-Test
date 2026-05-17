@@ -40,7 +40,7 @@ class AppTextButton extends StatelessWidget {
 
   bool get _enabled => onPressed != null;
 
-  EdgeInsets get _padding => const EdgeInsets.symmetric(vertical: AppSpacing.space4);
+  EdgeInsets get _padding => const EdgeInsets.symmetric(vertical: AppSpacing.s4);
   double get _gap => 10;
 
   double get _iconSize =>

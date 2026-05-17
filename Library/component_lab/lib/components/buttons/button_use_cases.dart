@@ -94,7 +94,7 @@ final List<WidgetbookComponent> solidButtonUseCases = [
                   label: '확인',
                   width: double.infinity,
                   onPressed: () {}),
-              const SizedBox(height: AppSpacing.space12),
+              const SizedBox(height: AppSpacing.s12),
               AppSolidButton(
                 label: '계속',
                 width: double.infinity,
@@ -198,7 +198,7 @@ final List<WidgetbookComponent> textButtonUseCases = [
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               const Text('Medium'),
-              const SizedBox(height: AppSpacing.space8),
+              const SizedBox(height: AppSpacing.s8),
               Wrap(
                 spacing: 16,
                 children: AppTextButtonTone.values
@@ -206,9 +206,9 @@ final List<WidgetbookComponent> textButtonUseCases = [
                         label: _toneLabel(t.name), tone: t, onPressed: () {}))
                     .toList(),
               ),
-              const SizedBox(height: AppSpacing.space24),
+              const SizedBox(height: AppSpacing.s24),
               const Text('Small'),
-              const SizedBox(height: AppSpacing.space8),
+              const SizedBox(height: AppSpacing.s8),
               Wrap(
                 spacing: 16,
                 children: AppTextButtonTone.values
