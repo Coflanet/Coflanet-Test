@@ -93,13 +93,13 @@ final List<WidgetbookComponent> indicatorUseCases = [
             crossAxisAlignment: CrossAxisAlignment.start,
             children: const [
               AppPaginationDots(count: 3, activeIndex: 0),
-              SizedBox(height: AppSpacing.space16),
+              SizedBox(height: AppSpacing.s16),
               AppPaginationDots(count: 3, activeIndex: 1),
-              SizedBox(height: AppSpacing.space16),
+              SizedBox(height: AppSpacing.s16),
               AppPaginationDots(count: 3, activeIndex: 2),
-              SizedBox(height: AppSpacing.space24),
+              SizedBox(height: AppSpacing.s24),
               AppPaginationDots(count: 5, activeIndex: 2),
-              SizedBox(height: AppSpacing.space16),
+              SizedBox(height: AppSpacing.s16),
               AppPaginationDots(count: 7, activeIndex: 3, dotSize: 6),
             ],
           ),
@@ -165,7 +165,7 @@ class _PaginationDemoState extends State<_PaginationDemo> {
               ),
             ),
           ),
-          const SizedBox(height: AppSpacing.space16),
+          const SizedBox(height: AppSpacing.s16),
           AppPaginationDots(
             count: _pages.length,
             activeIndex: _index,
@@ -195,12 +195,12 @@ final List<WidgetbookComponent> homeIndicatorUseCases = [
             children: const [
               Text('iPhone Portrait (h=34)'),
               AppHomeIndicator(),
-              SizedBox(height: AppSpacing.space16),
+              SizedBox(height: AppSpacing.s16),
               Text('iPhone Landscape (h=21)'),
               AppHomeIndicator(
                 orientation: AppHomeIndicatorOrientation.landscape,
               ),
-              SizedBox(height: AppSpacing.space16),
+              SizedBox(height: AppSpacing.s16),
               Text('iPad Portrait (h=20)'),
               AppHomeIndicator(
                 device: AppHomeIndicatorDevice.iPad,
