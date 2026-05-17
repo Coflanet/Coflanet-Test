@@ -69,10 +69,10 @@ class AppToast extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      margin: EdgeInsets.symmetric(horizontal: AppSpacing.space16),
+      margin: EdgeInsets.symmetric(horizontal: AppSpacing.s16),
       padding: EdgeInsets.symmetric(
-        horizontal: AppSpacing.space16,
-        vertical: AppSpacing.space12,
+        horizontal: AppSpacing.s16,
+        vertical: AppSpacing.s12,
       ),
       decoration: BoxDecoration(
         color: variant.bgColor,
@@ -83,7 +83,7 @@ class AppToast extends StatelessWidget {
         children: [
           if (showIcon) ...[
             Icon(variant.icon, size: 20, color: variant.iconColor),
-            SizedBox(width: AppSpacing.space8),
+            SizedBox(width: AppSpacing.s8),
           ],
           Expanded(
             child: Text(
@@ -94,7 +94,7 @@ class AppToast extends StatelessWidget {
             ),
           ),
           if (action != null) ...[
-            SizedBox(width: AppSpacing.space8),
+            SizedBox(width: AppSpacing.s8),
             GestureDetector(
               onTap: onAction,
               child: Text(

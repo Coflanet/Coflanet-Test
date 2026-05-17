@@ -98,12 +98,12 @@ final List<WidgetbookComponent> tooltipUseCases = [
                     message: 'Home',
                     variant: AppTooltipVariant.normal,
                   ),
-                  SizedBox(width: AppSpacing.space16),
+                  SizedBox(width: AppSpacing.s16),
                   AppTooltipCompact(
                     message: 'Search',
                     variant: AppTooltipVariant.normal,
                   ),
-                  SizedBox(width: AppSpacing.space16),
+                  SizedBox(width: AppSpacing.s16),
                   AppTooltipCompact(
                     message: 'Settings',
                     variant: AppTooltipVariant.normal,
@@ -120,7 +120,7 @@ final List<WidgetbookComponent> tooltipUseCases = [
 
 Widget _bg(BuildContext context, Widget child) {
   return Container(
-    padding: const EdgeInsets.all(AppSpacing.space16),
+    padding: const EdgeInsets.all(AppSpacing.s16),
     color: Theme.of(context).canvasColor,
     child: child,
   );

@@ -31,8 +31,8 @@ class AppSnackbar extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      margin: EdgeInsets.symmetric(horizontal: AppSpacing.space16),
-      padding: EdgeInsets.all(AppSpacing.space16),
+      margin: EdgeInsets.symmetric(horizontal: AppSpacing.s16),
+      padding: EdgeInsets.all(AppSpacingSemantic.insetLg),
       decoration: BoxDecoration(
         color: AppColor.colorGlobalCommon100,
         borderRadius: BorderRadius.circular(AppRadius.radius16),
@@ -43,7 +43,7 @@ class AppSnackbar extends StatelessWidget {
         children: [
           if (icon != null) ...[
             Icon(icon, size: 20, color: AppColor.colorGlobalCoolNeutral30),
-            SizedBox(width: AppSpacing.space12),
+            SizedBox(width: AppSpacing.s12),
           ],
           Expanded(
             child: Column(
@@ -57,7 +57,7 @@ class AppSnackbar extends StatelessWidget {
                   ),
                 ),
                 if (description != null) ...[
-                  const SizedBox(height: AppSpacing.space4),
+                  const SizedBox(height: AppSpacing.s4),
                   Text(
                     description!,
                     style: AppTextStyles.caption1Regular.copyWith(
@@ -66,7 +66,7 @@ class AppSnackbar extends StatelessWidget {
                   ),
                 ],
                 if (actionLabel != null) ...[
-                  SizedBox(height: AppSpacing.space8),
+                  SizedBox(height: AppSpacing.s8),
                   GestureDetector(
                     onTap: onAction,
                     child: Text(
@@ -82,7 +82,7 @@ class AppSnackbar extends StatelessWidget {
             ),
           ),
           if (onDismiss != null) ...[
-            SizedBox(width: AppSpacing.space8),
+            SizedBox(width: AppSpacing.s8),
             GestureDetector(
               onTap: onDismiss,
               child: Icon(

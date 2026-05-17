@@ -34,8 +34,8 @@ class AppTooltipCompact extends StatelessWidget {
 
     return Container(
       padding: EdgeInsets.symmetric(
-        horizontal: AppSpacing.space12,
-        vertical: AppSpacing.space8,
+        horizontal: AppSpacing.s12,
+        vertical: AppSpacing.s8,
       ),
       decoration: BoxDecoration(
         color: isDark
@@ -76,7 +76,7 @@ class AppTooltipExtended extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      padding: EdgeInsets.all(AppSpacing.space16),
+      padding: EdgeInsets.all(AppSpacingSemantic.insetLg),
       decoration: BoxDecoration(
         color: AppColor.colorGlobalCoolNeutral10,
         borderRadius: BorderRadius.circular(AppRadius.radius12),
@@ -106,7 +106,7 @@ class AppTooltipExtended extends StatelessWidget {
                 ),
             ],
           ),
-          const SizedBox(height: AppSpacing.space4),
+          const SizedBox(height: AppSpacing.s4),
           Text(
             description,
             style: AppTextStyles.caption1Regular.copyWith(

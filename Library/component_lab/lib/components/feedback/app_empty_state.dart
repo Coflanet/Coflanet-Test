@@ -55,11 +55,11 @@ class AppEmptyState extends StatelessWidget {
             children: [
               if (visual != null) ...[
                 SizedBox(width: 128, height: 128, child: Center(child: visual)),
-                const SizedBox(height: AppSpacing.space8),
+                const SizedBox(height: AppSpacing.s8),
               ],
               Padding(
                 padding: const EdgeInsets.symmetric(
-                  horizontal: AppSpacing.space16,
+                  horizontal: AppSpacing.s16,
                 ),
                 child: Column(
                   mainAxisSize: MainAxisSize.min,
@@ -73,7 +73,7 @@ class AppEmptyState extends StatelessWidget {
                       ),
                     ),
                     if (description != null) ...[
-                      const SizedBox(height: AppSpacing.space12),
+                      const SizedBox(height: AppSpacing.s12),
                       Text(
                         description!,
                         textAlign: TextAlign.center,
@@ -86,7 +86,7 @@ class AppEmptyState extends StatelessWidget {
                 ),
               ),
               if (actionLabel != null) ...[
-                const SizedBox(height: AppSpacing.space24),
+                const SizedBox(height: AppSpacing.s24),
                 _OutlinedAction(
                   label: actionLabel!,
                   onPressed: onAction,
@@ -132,7 +132,7 @@ class _OutlinedAction extends StatelessWidget {
         onTap: onPressed,
         borderRadius: BorderRadius.circular(AppRadius.radius10),
         child: Padding(
-          padding: const EdgeInsets.symmetric(horizontal: AppSpacing.space20, vertical: 9),
+          padding: const EdgeInsets.symmetric(horizontal: AppSpacing.s20, vertical: AppSpacingSemantic.insetSquishMdVertical),
           child: Text(
             label,
             style: AppTextStyles.body2NormalMedium.copyWith(
