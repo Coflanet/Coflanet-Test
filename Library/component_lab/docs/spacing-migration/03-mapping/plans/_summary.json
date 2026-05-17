@@ -1,0 +1,70 @@
+{
+  "fileKey": "q7yBPcHrid1CGQqFWEPwnR",
+  "chunkSize": 500,
+  "totalBinds": 72864,
+  "totalDistinctNodes": 36624,
+  "groups": {
+    "module-gauge": {
+      "binds": 25,
+      "nodes": 11,
+      "chunks": 1
+    },
+    "module-control-box": {
+      "binds": 161,
+      "nodes": 67,
+      "chunks": 1
+    },
+    "module-progress-indicators": {
+      "binds": 1004,
+      "nodes": 793,
+      "chunks": 3
+    },
+    "module-pagination": {
+      "binds": 2467,
+      "nodes": 1445,
+      "chunks": 5
+    },
+    "module-feedback": {
+      "binds": 3111,
+      "nodes": 1393,
+      "chunks": 7
+    },
+    "module-tab": {
+      "binds": 5123,
+      "nodes": 2589,
+      "chunks": 11
+    },
+    "module-navigation": {
+      "binds": 5198,
+      "nodes": 2409,
+      "chunks": 11
+    },
+    "module-contents": {
+      "binds": 11107,
+      "nodes": 5933,
+      "chunks": 23
+    },
+    "module-presentation": {
+      "binds": 20803,
+      "nodes": 11042,
+      "chunks": 42
+    },
+    "module-selection-input": {
+      "binds": 23865,
+      "nodes": 10942,
+      "chunks": 48
+    }
+  },
+  "executionOrder": [
+    "module-gauge",
+    "module-control-box",
+    "module-progress-indicators",
+    "module-pagination",
+    "module-feedback",
+    "module-tab",
+    "module-navigation",
+    "module-contents",
+    "module-presentation",
+    "module-selection-input"
+  ]
+}
