@@ -87,8 +87,8 @@ class _AppTimePickerState extends State<AppTimePicker> {
               children: [
                 Padding(
                   padding: const EdgeInsets.symmetric(
-                    horizontal: AppSpacing.space16,
-                    vertical: AppSpacing.space8,
+                    horizontal: AppSpacing.s16,
+                    vertical: AppSpacing.s8,
                   ),
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -156,7 +156,7 @@ class _AppTimePickerState extends State<AppTimePicker> {
             widget.label!,
             style: AppTextStyles.label2Medium.copyWith(color: labelColor),
           ),
-          const SizedBox(height: AppSpacing.space8),
+          const SizedBox(height: AppSpacing.s8),
         ],
         Material(
           color: Colors.transparent,
@@ -166,7 +166,7 @@ class _AppTimePickerState extends State<AppTimePicker> {
             child: Container(
               height: 48,
               padding: const EdgeInsets.symmetric(
-                horizontal: AppSpacing.space16,
+                horizontal: AppSpacing.s16,
               ),
               decoration: BoxDecoration(
                 color: fillColor,
@@ -179,7 +179,7 @@ class _AppTimePickerState extends State<AppTimePicker> {
                     size: 20,
                     color: altColor,
                   ),
-                  const SizedBox(width: AppSpacing.space12),
+                  const SizedBox(width: AppSpacing.s12),
                   Expanded(
                     child: Text(
                       _displayValue,

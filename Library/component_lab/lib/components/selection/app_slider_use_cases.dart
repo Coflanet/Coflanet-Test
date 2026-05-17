@@ -96,7 +96,7 @@ final List<WidgetbookComponent> sliderUseCases = [
                 activeColor: Colors.red,
                 showValue: true,
               ),
-              const SizedBox(height: AppSpacing.space24),
+              const SizedBox(height: AppSpacing.s24),
               AppSlider(
                 value: 60,
                 onChanged: (value) {},
@@ -106,7 +106,7 @@ final List<WidgetbookComponent> sliderUseCases = [
                 activeColor: Colors.green,
                 showValue: true,
               ),
-              const SizedBox(height: AppSpacing.space24),
+              const SizedBox(height: AppSpacing.s24),
               AppSlider(
                 value: 90,
                 onChanged: (value) {},
@@ -126,7 +126,7 @@ final List<WidgetbookComponent> sliderUseCases = [
 
 Widget _bg(BuildContext context, Widget child) {
   return Container(
-    padding: const EdgeInsets.all(AppSpacing.space16),
+    padding: const EdgeInsets.all(AppSpacing.s16),
     color: Theme.of(context).canvasColor,
     child: child,
   );

@@ -41,7 +41,7 @@ class AppSlider extends StatelessWidget {
       children: [
         if (label != null || showValue)
           Padding(
-            padding: const EdgeInsets.only(bottom: AppSpacing.space8),
+            padding: const EdgeInsets.only(bottom: AppSpacing.s8),
             child: Row(
               children: [
                 if (label != null)

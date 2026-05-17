@@ -78,13 +78,13 @@ final List<WidgetbookComponent> timePickerUseCases = [
 Widget _wrap(BuildContext context, List<Widget> children) {
   return Container(
     color: AppColor.backgroundNormalNormal,
-    padding: const EdgeInsets.all(AppSpacing.space16),
+    padding: const EdgeInsets.all(AppSpacing.s16),
     child: Column(
       mainAxisSize: MainAxisSize.min,
       crossAxisAlignment: CrossAxisAlignment.stretch,
       children: [
         for (var i = 0; i < children.length; i++) ...[
-          if (i > 0) const SizedBox(height: AppSpacing.space16),
+          if (i > 0) const SizedBox(height: AppSpacing.s16),
           children[i],
         ],
       ],

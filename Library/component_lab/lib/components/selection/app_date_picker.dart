@@ -119,8 +119,8 @@ class _AppDatePickerState extends State<AppDatePicker> {
               children: [
                 Padding(
                   padding: const EdgeInsets.symmetric(
-                    horizontal: AppSpacing.space16,
-                    vertical: AppSpacing.space8,
+                    horizontal: AppSpacing.s16,
+                    vertical: AppSpacing.s8,
                   ),
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -199,7 +199,7 @@ class _AppDatePickerState extends State<AppDatePicker> {
             widget.label!,
             style: AppTextStyles.label2Medium.copyWith(color: labelColor),
           ),
-          const SizedBox(height: AppSpacing.space8),
+          const SizedBox(height: AppSpacing.s8),
         ],
         Material(
           color: Colors.transparent,
@@ -209,7 +209,7 @@ class _AppDatePickerState extends State<AppDatePicker> {
             child: Container(
               height: 48,
               padding: const EdgeInsets.symmetric(
-                horizontal: AppSpacing.space16,
+                horizontal: AppSpacing.s16,
               ),
               decoration: BoxDecoration(
                 color: fillColor,
@@ -222,7 +222,7 @@ class _AppDatePickerState extends State<AppDatePicker> {
                     size: 20,
                     color: altColor,
                   ),
-                  const SizedBox(width: AppSpacing.space12),
+                  const SizedBox(width: AppSpacing.s12),
                   Expanded(
                     child: Text(
                       _displayValue,

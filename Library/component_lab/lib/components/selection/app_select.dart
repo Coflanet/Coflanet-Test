@@ -104,8 +104,8 @@ class _AppSelectState<T> extends State<AppSelect<T>> {
                         behavior: HitTestBehavior.opaque,
                         child: Container(
                           padding: EdgeInsets.symmetric(
-                            horizontal: AppSpacing.space16,
-                            vertical: AppSpacing.space12,
+                            horizontal: AppSpacing.s16,
+                            vertical: AppSpacing.s12,
                           ),
                           color: isSelected
                               ? AppColor.colorGlobalCoolNeutral99
@@ -186,7 +186,7 @@ class _AppSelectState<T> extends State<AppSelect<T>> {
               color: AppColor.colorGlobalCoolNeutral10,
             ),
           ),
-          SizedBox(height: AppSpacing.space8),
+          SizedBox(height: AppSpacing.s8),
         ],
 
         // Select field
@@ -198,7 +198,7 @@ class _AppSelectState<T> extends State<AppSelect<T>> {
               opacity: widget.isDisabled ? 0.4 : 1.0,
               child: Container(
                 height: 48,
-                padding: EdgeInsets.symmetric(horizontal: AppSpacing.space16),
+                padding: EdgeInsets.symmetric(horizontal: AppSpacing.s16),
                 decoration: BoxDecoration(
                   color: AppColor.colorGlobalCommon100,
                   border: Border.all(color: borderColor, width: 1),
@@ -234,7 +234,7 @@ class _AppSelectState<T> extends State<AppSelect<T>> {
 
         // Helper / Error text
         if (widget.errorText != null && widget.isError) ...[
-          SizedBox(height: AppSpacing.space4),
+          SizedBox(height: AppSpacing.s4),
           Text(
             widget.errorText!,
             style: AppTextStyles.caption1Regular.copyWith(
@@ -242,7 +242,7 @@ class _AppSelectState<T> extends State<AppSelect<T>> {
             ),
           ),
         ] else if (widget.helperText != null) ...[
-          SizedBox(height: AppSpacing.space4),
+          SizedBox(height: AppSpacing.s4),
           Text(
             widget.helperText!,
             style: AppTextStyles.caption1Regular.copyWith(
