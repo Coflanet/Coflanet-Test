@@ -110,7 +110,7 @@ class _LabeledBar extends StatelessWidget {
       mainAxisSize: MainAxisSize.min,
       children: [
         bar,
-        const SizedBox(height: AppSpacing.space8),
+        const SizedBox(height: AppSpacing.s8),
         Text(
           label,
           style: AppTextStyles.caption2Medium.copyWith(color: altColor),
