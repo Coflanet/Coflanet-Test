@@ -70,14 +70,14 @@ final List<WidgetbookComponent> gaugeUseCases = [
                 labels: const ['Low', 'Medium', 'High'],
                 showLabel: true,
               ),
-              const SizedBox(height: AppSpacing.space24),
+              const SizedBox(height: AppSpacing.s24),
               AppGauge(
                 value: 4,
                 maxValue: 6,
                 labels: const ['1', '2', '3', '4', '5', '6'],
                 showLabel: true,
               ),
-              const SizedBox(height: AppSpacing.space24),
+              const SizedBox(height: AppSpacing.s24),
               AppGauge(
                 value: 7,
                 maxValue: 10,
@@ -93,7 +93,7 @@ final List<WidgetbookComponent> gaugeUseCases = [
 
 Widget _bg(BuildContext context, Widget child) {
   return Container(
-    padding: const EdgeInsets.all(AppSpacing.space16),
+    padding: const EdgeInsets.all(AppSpacing.s16),
     color: Theme.of(context).canvasColor,
     child: child,
   );
