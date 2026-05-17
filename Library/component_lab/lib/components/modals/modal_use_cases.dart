@@ -94,7 +94,7 @@ Widget _bg(BuildContext context, Widget child) {
             : AppColor.componentMaterialDimmer,
       ),
       Padding(
-        padding: const EdgeInsets.symmetric(vertical: AppSpacing.space24),
+        padding: const EdgeInsets.symmetric(vertical: AppSpacing.s24),
         child: child,
       ),
     ],

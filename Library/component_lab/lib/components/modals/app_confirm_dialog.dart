@@ -56,13 +56,13 @@ class AppConfirmDialog extends StatelessWidget {
       child: ConstrainedBox(
         constraints: const BoxConstraints(maxWidth: 360),
         child: Container(
-          margin: const EdgeInsets.all(AppSpacing.space24),
+          margin: const EdgeInsets.all(AppSpacingSemantic.insetXl),
           decoration: BoxDecoration(
             color: bg,
             borderRadius: AppRadius.radiusModalBorder,
             boxShadow: AppShadows.shadowBlackHeavy,
           ),
-          padding: const EdgeInsets.all(AppSpacing.space24),
+          padding: const EdgeInsets.all(AppSpacingSemantic.insetXl),
           child: Column(
             mainAxisSize: MainAxisSize.min,
             children: [
@@ -72,7 +72,7 @@ class AppConfirmDialog extends StatelessWidget {
                 textAlign: TextAlign.center,
               ),
               if (message != null) ...[
-                const SizedBox(height: AppSpacing.space8),
+                const SizedBox(height: AppSpacing.s8),
                 Text(
                   message!,
                   style: AppTextStyles.body2NormalRegular
@@ -80,7 +80,7 @@ class AppConfirmDialog extends StatelessWidget {
                   textAlign: TextAlign.center,
                 ),
               ],
-              const SizedBox(height: AppSpacing.space24),
+              const SizedBox(height: AppSpacing.s24),
               Row(
                 children: [
                   Expanded(
@@ -92,7 +92,7 @@ class AppConfirmDialog extends StatelessWidget {
                       onPressed: onCancel,
                     ),
                   ),
-                  const SizedBox(width: AppSpacing.space8),
+                  const SizedBox(width: AppSpacing.s8),
                   Expanded(child: confirmButton),
                 ],
               ),
