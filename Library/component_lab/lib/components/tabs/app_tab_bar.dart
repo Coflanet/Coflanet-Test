@@ -97,7 +97,7 @@ class AppTabBar extends StatelessWidget {
                 ),
                 if (trailingIcon != null)
                   Padding(
-                    padding: const EdgeInsets.symmetric(horizontal: AppSpacing.space12),
+                    padding: const EdgeInsets.symmetric(horizontal: AppSpacing.s12),
                     child: IconButton(
                       icon: Icon(trailingIcon, size: 24),
                       onPressed: onTrailingPressed,
@@ -121,7 +121,7 @@ class AppTabBar extends StatelessWidget {
     final tabsWidget = SingleChildScrollView(
       scrollDirection: Axis.horizontal,
       padding: horizontalPadding
-          ? EdgeInsets.symmetric(horizontal: AppSpacing.space16)
+          ? EdgeInsets.symmetric(horizontal: AppSpacing.s16)
           : EdgeInsets.zero,
       child: Row(
         children: List.generate(tabs.length, (i) {

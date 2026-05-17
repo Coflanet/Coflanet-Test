@@ -55,7 +55,7 @@ class AppSegmentedControl extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       height: size.height,
-      padding: const EdgeInsets.all(2),
+      padding: const EdgeInsets.all(AppSpacing.s2),
       decoration: BoxDecoration(
         color: AppColor.colorGlobalCoolNeutral97,
         borderRadius: BorderRadius.circular(AppRadius.radius10),
@@ -97,7 +97,7 @@ class AppSegmentedControl extends StatelessWidget {
                             ? AppColor.colorGlobalCoolNeutral10
                             : AppColor.colorGlobalCoolNeutral50,
                       ),
-                      const SizedBox(width: AppSpacing.space4),
+                      const SizedBox(width: AppSpacing.s4),
                     ],
                     Text(
                       items[i].label,
