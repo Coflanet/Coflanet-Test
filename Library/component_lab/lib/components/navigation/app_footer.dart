@@ -121,7 +121,7 @@ class _AppFooterState extends State<AppFooter> {
           if (widget.customerServiceTitle.isNotEmpty)
             Column(
               crossAxisAlignment: CrossAxisAlignment.start,
-              spacing: AppSpacing.space8,
+              spacing: AppSpacing.s8,
               children: [
                 Text(
                   widget.customerServiceTitle,
@@ -155,7 +155,7 @@ class _AppFooterState extends State<AppFooter> {
                   behavior: HitTestBehavior.opaque,
                   child: Row(
                     mainAxisSize: MainAxisSize.min,
-                    spacing: AppSpacing.space4,
+                    spacing: AppSpacing.s4,
                     children: [
                       Text(
                         widget.businessInfoTitle,
@@ -182,7 +182,7 @@ class _AppFooterState extends State<AppFooter> {
                     child: _businessInfoExpanded
                         ? Padding(
                             padding: const EdgeInsets.only(
-                                top: AppSpacing.space8),
+                                top: AppSpacing.s8),
                             child: Text(
                               widget.businessInfoBody!,
                               style: AppTextStyles.caption2Regular.copyWith(
@@ -190,7 +190,7 @@ class _AppFooterState extends State<AppFooter> {
                               ),
                             ),
                           )
-                        : const SizedBox(width: double.infinity, height: 0),
+                        : const SizedBox(width: double.infinity, height: AppSpacing.s0),
                   ),
               ],
             ),

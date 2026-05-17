@@ -140,8 +140,8 @@ class AppBottomNavigation extends StatelessWidget {
             Center(
               child: Padding(
                 padding: const EdgeInsets.symmetric(
-                  horizontal: AppSpacing.space8,
-                  vertical: AppSpacing.space4,
+                  horizontal: AppSpacing.s8,
+                  vertical: AppSpacing.s4,
                 ),
                 child: Column(
                   mainAxisSize: MainAxisSize.min,
