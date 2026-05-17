@@ -34,7 +34,7 @@ class AppCard extends StatelessWidget {
   const AppCard({
     super.key,
     required this.child,
-    this.padding = const EdgeInsets.all(AppSpacing.space16),
+    this.padding = const EdgeInsets.all(AppSpacingSemantic.insetLg),
     this.onTap,
     this.variant = AppCardVariant.elevated,
     this.borderRadius,
@@ -56,8 +56,8 @@ class AppCard extends StatelessWidget {
     BorderRadius? borderRadius,
     double? width,
     EdgeInsetsGeometry padding = const EdgeInsets.symmetric(
-      horizontal: AppSpacing.space16,
-      vertical: AppSpacing.space12,
+      horizontal: AppSpacing.s16,
+      vertical: AppSpacing.s12,
     ),
   }) {
     return AppCard(
@@ -144,7 +144,7 @@ class _ListCardRow extends StatelessWidget {
       children: [
         if (leading != null) ...[
           leading!,
-          const SizedBox(width: AppSpacing.space12),
+          const SizedBox(width: AppSpacing.s12),
         ],
         Expanded(
           child: Column(
@@ -160,7 +160,7 @@ class _ListCardRow extends StatelessWidget {
                 overflow: TextOverflow.ellipsis,
               ),
               if (subtitle != null) ...[
-                const SizedBox(height: 2),
+                const SizedBox(height: AppSpacingSemantic.inlineXs),
                 Text(
                   subtitle!,
                   style: AppTextStyles.caption1Regular.copyWith(
@@ -174,7 +174,7 @@ class _ListCardRow extends StatelessWidget {
           ),
         ),
         if (trailing != null) ...[
-          const SizedBox(width: AppSpacing.space12),
+          const SizedBox(width: AppSpacing.s12),
           trailing!,
         ],
       ],
