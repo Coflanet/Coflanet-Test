@@ -127,9 +127,9 @@ class AppChip extends StatelessWidget {
     final isSm = size == AppChipTagSize.sm;
     final padding = isSm
         ? const EdgeInsets.symmetric(
-            horizontal: AppSpacing.space8, vertical: AppSpacing.space4)
+            horizontal: AppSpacing.s8, vertical: AppSpacing.s4)
         : const EdgeInsets.symmetric(
-            horizontal: AppSpacing.space12, vertical: 6);
+            horizontal: AppSpacing.s12, vertical: 6);
     final textStyle =
         isSm ? AppTextStyles.caption2Medium : AppTextStyles.label2Medium;
     final iconSize = isSm ? 12.0 : 14.0;
@@ -139,11 +139,11 @@ class AppChip extends StatelessWidget {
       children: [
         if (leadingIcon != null) ...[
           Icon(leadingIcon, size: iconSize, color: colors.fg),
-          SizedBox(width: isSm ? 4 : AppSpacing.space4),
+          SizedBox(width: isSm ? 4 : AppSpacing.s4),
         ],
         Text(label, style: textStyle.copyWith(color: colors.fg)),
         if (onDelete != null) ...[
-          SizedBox(width: isSm ? 4 : AppSpacing.space4),
+          SizedBox(width: isSm ? 4 : AppSpacing.s4),
           // Tap target 보강 — 시각 아이콘은 작지만 hit-test 영역은 24×24 이상.
           Semantics(
             label: '$label 삭제',
@@ -154,7 +154,7 @@ class AppChip extends StatelessWidget {
               behavior: HitTestBehavior.opaque,
               onTap: onDelete,
               child: Padding(
-                padding: const EdgeInsets.all(AppSpacing.space4),
+                padding: const EdgeInsets.all(AppSpacingSemantic.insetXs),
                 child: Icon(Icons.close_rounded,
                     size: iconSize, color: colors.fg),
               ),

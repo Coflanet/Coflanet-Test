@@ -27,10 +27,10 @@ final List<WidgetbookComponent> chipBasicUseCases = [
                   style: const TextStyle(
                       fontSize: 12, fontWeight: FontWeight.w600),
                 ),
-                const SizedBox(height: AppSpacing.space8),
+                const SizedBox(height: AppSpacing.s8),
                 Wrap(
-                  spacing: AppSpacing.space8,
-                  runSpacing: AppSpacing.space8,
+                  spacing: AppSpacing.s8,
+                  runSpacing: AppSpacing.s8,
                   alignment: WrapAlignment.center,
                   children: AppChipColor.values
                       .map((color) => AppChip(
@@ -40,7 +40,7 @@ final List<WidgetbookComponent> chipBasicUseCases = [
                           ))
                       .toList(),
                 ),
-                const SizedBox(height: AppSpacing.space20),
+                const SizedBox(height: AppSpacing.s20),
               ],
             ],
           ),
@@ -51,8 +51,8 @@ final List<WidgetbookComponent> chipBasicUseCases = [
         builder: (context) => _bg(
           context,
           Wrap(
-            spacing: AppSpacing.space8,
-            runSpacing: AppSpacing.space8,
+            spacing: AppSpacing.s8,
+            runSpacing: AppSpacing.s8,
             alignment: WrapAlignment.center,
             children: const [
               AppChip(
@@ -79,8 +79,8 @@ final List<WidgetbookComponent> chipBasicUseCases = [
         builder: (context) => _bg(
           context,
           Wrap(
-            spacing: AppSpacing.space8,
-            runSpacing: AppSpacing.space8,
+            spacing: AppSpacing.s8,
+            runSpacing: AppSpacing.s8,
             alignment: WrapAlignment.center,
             children: [
               AppChip(
@@ -125,10 +125,10 @@ final List<WidgetbookComponent> chipActionUseCases = [
                 Text(variant.name,
                     style: const TextStyle(
                         fontSize: 12, fontWeight: FontWeight.w600)),
-                const SizedBox(height: AppSpacing.space8),
+                const SizedBox(height: AppSpacing.s8),
                 Wrap(
-                  spacing: AppSpacing.space12,
-                  runSpacing: AppSpacing.space12,
+                  spacing: AppSpacing.s12,
+                  runSpacing: AppSpacing.s12,
                   alignment: WrapAlignment.center,
                   children: AppChipSize.values
                       .map((s) => AppChipAction(
@@ -139,7 +139,7 @@ final List<WidgetbookComponent> chipActionUseCases = [
                           ))
                       .toList(),
                 ),
-                const SizedBox(height: AppSpacing.space20),
+                const SizedBox(height: AppSpacing.s20),
               ],
             ],
           ),
@@ -156,10 +156,10 @@ final List<WidgetbookComponent> chipActionUseCases = [
                 Text(variant.name,
                     style: const TextStyle(
                         fontSize: 12, fontWeight: FontWeight.w600)),
-                const SizedBox(height: AppSpacing.space8),
+                const SizedBox(height: AppSpacing.s8),
                 Wrap(
-                  spacing: AppSpacing.space12,
-                  runSpacing: AppSpacing.space12,
+                  spacing: AppSpacing.s12,
+                  runSpacing: AppSpacing.s12,
                   alignment: WrapAlignment.center,
                   children: AppChipSize.values
                       .map((s) => AppChipAction(
@@ -171,7 +171,7 @@ final List<WidgetbookComponent> chipActionUseCases = [
                           ))
                       .toList(),
                 ),
-                const SizedBox(height: AppSpacing.space20),
+                const SizedBox(height: AppSpacing.s20),
               ],
             ],
           ),
@@ -188,10 +188,10 @@ final List<WidgetbookComponent> chipActionUseCases = [
                 Text(variant.name,
                     style: const TextStyle(
                         fontSize: 12, fontWeight: FontWeight.w600)),
-                const SizedBox(height: AppSpacing.space8),
+                const SizedBox(height: AppSpacing.s8),
                 Wrap(
-                  spacing: AppSpacing.space12,
-                  runSpacing: AppSpacing.space12,
+                  spacing: AppSpacing.s12,
+                  runSpacing: AppSpacing.s12,
                   alignment: WrapAlignment.center,
                   children: AppChipSize.values
                       .map((s) => AppChipAction(
@@ -202,7 +202,7 @@ final List<WidgetbookComponent> chipActionUseCases = [
                           ))
                       .toList(),
                 ),
-                const SizedBox(height: AppSpacing.space20),
+                const SizedBox(height: AppSpacing.s20),
               ],
             ],
           ),
@@ -213,8 +213,8 @@ final List<WidgetbookComponent> chipActionUseCases = [
         builder: (context) => _bg(
           context,
           Wrap(
-            spacing: AppSpacing.space12,
-            runSpacing: AppSpacing.space12,
+            spacing: AppSpacing.s12,
+            runSpacing: AppSpacing.s12,
             alignment: WrapAlignment.center,
             children: [
               AppChipAction(
@@ -270,10 +270,10 @@ final List<WidgetbookComponent> chipFilterUseCases = [
                 Text(variant.name,
                     style: const TextStyle(
                         fontSize: 12, fontWeight: FontWeight.w600)),
-                const SizedBox(height: AppSpacing.space8),
+                const SizedBox(height: AppSpacing.s8),
                 Wrap(
-                  spacing: AppSpacing.space12,
-                  runSpacing: AppSpacing.space12,
+                  spacing: AppSpacing.s12,
+                  runSpacing: AppSpacing.s12,
                   alignment: WrapAlignment.center,
                   children: AppChipSize.values
                       .map((s) => AppChipFilter(
@@ -284,7 +284,7 @@ final List<WidgetbookComponent> chipFilterUseCases = [
                           ))
                       .toList(),
                 ),
-                const SizedBox(height: AppSpacing.space20),
+                const SizedBox(height: AppSpacing.s20),
               ],
             ],
           ),
@@ -301,10 +301,10 @@ final List<WidgetbookComponent> chipFilterUseCases = [
                 Text(variant.name,
                     style: const TextStyle(
                         fontSize: 12, fontWeight: FontWeight.w600)),
-                const SizedBox(height: AppSpacing.space8),
+                const SizedBox(height: AppSpacing.s8),
                 Wrap(
-                  spacing: AppSpacing.space12,
-                  runSpacing: AppSpacing.space12,
+                  spacing: AppSpacing.s12,
+                  runSpacing: AppSpacing.s12,
                   alignment: WrapAlignment.center,
                   children: AppChipSize.values
                       .map((s) => AppChipFilter(
@@ -317,7 +317,7 @@ final List<WidgetbookComponent> chipFilterUseCases = [
                           ))
                       .toList(),
                 ),
-                const SizedBox(height: AppSpacing.space20),
+                const SizedBox(height: AppSpacing.s20),
               ],
             ],
           ),
@@ -328,8 +328,8 @@ final List<WidgetbookComponent> chipFilterUseCases = [
         builder: (context) => _bg(
           context,
           Wrap(
-            spacing: AppSpacing.space12,
-            runSpacing: AppSpacing.space12,
+            spacing: AppSpacing.s12,
+            runSpacing: AppSpacing.s12,
             alignment: WrapAlignment.center,
             children: AppChipSize.values
                 .map((s) => AppChipFilter(
@@ -353,10 +353,10 @@ final List<WidgetbookComponent> chipFilterUseCases = [
                 Text(variant.name,
                     style: const TextStyle(
                         fontSize: 12, fontWeight: FontWeight.w600)),
-                const SizedBox(height: AppSpacing.space8),
+                const SizedBox(height: AppSpacing.s8),
                 Wrap(
-                  spacing: AppSpacing.space12,
-                  runSpacing: AppSpacing.space12,
+                  spacing: AppSpacing.s12,
+                  runSpacing: AppSpacing.s12,
                   alignment: WrapAlignment.center,
                   children: AppChipSize.values
                       .map((s) => AppChipFilter(
@@ -367,7 +367,7 @@ final List<WidgetbookComponent> chipFilterUseCases = [
                           ))
                       .toList(),
                 ),
-                const SizedBox(height: AppSpacing.space20),
+                const SizedBox(height: AppSpacing.s20),
               ],
             ],
           ),
@@ -396,7 +396,7 @@ Widget _bg(BuildContext context, Widget child) {
     color: isDark
         ? AppColor.darkBackgroundNormalNormal
         : AppColor.backgroundNormalNormal,
-    padding: const EdgeInsets.all(AppSpacing.space24),
+    padding: const EdgeInsets.all(AppSpacing.s24),
     alignment: Alignment.center,
     child: child,
   );
