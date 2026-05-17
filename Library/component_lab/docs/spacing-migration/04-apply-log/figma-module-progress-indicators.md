@@ -5,8 +5,8 @@
 **입력**: `03-mapping/figma-node-to-token.csv` 중 `group=module-progress-indicators AND status=READY` (1,004행 / 793 distinct node)
 **plan**: `03-mapping/plans/figma-module-progress-indicators.json`
 **도구**: Figma MCP `use_figma`. 모든 write에 즉시 read-back 검증.
-**실행 시각**: TBD
-**상태**: PENDING (Figma MCP 부착 대기)
+**실행 시각**: 2026-05-17
+**상태**: 완료
 
 ## 정책 (safe-write gate)
 
@@ -64,36 +64,37 @@
 | palette direct (no semantic match for 6px) | 6 |
 | palette direct (no semantic match for 20px) | 5 |
 
-## 결과 집계 (실행 후 채움)
+## 결과 집계
 
-| 분류 | 수 | 의미 |
-|---|--:|---|
-| **ALIGNED** | — | 이미 기대 변수에 바인딩됨 (수정 불필요) |
-| **OK (written + verified)** | — | 안전 게이트 통과 후 write 성공, post-verify 통과 |
-| ├ UNBOUND_VALUE_MATCH | — | 미바인딩 + literal == expected → palette/semantic 토큰 바인딩 |
-| └ MISALIGNED_SAME_VALUE | — | 다른 변수에 바인딩됨, resolved 값 == expected → CSV 권장 변수로 교체 |
-| MISALIGNED_DIFF_VALUE_SKIPPED | — | — |
-| UNBOUND_VALUE_MISMATCH_SKIPPED | — | — |
-| NODE_NOT_FOUND | — | instance child path 미발견 (detach·교체 의심) |
-| NOT_AUTOLAYOUT | — | — |
-| PROP_MISSING | — | — |
-| **FAIL** | — | — |
+| 분류 | 수 |
+|---|--:|
+| **ALIGNED** | 523 |
+| **OK (written + verified)** | **439** |
+| ├ UNBOUND_VALUE_MATCH | 2 |
+| └ MISALIGNED_SAME_VALUE | 437 |
+| MISALIGNED_DIFF_VALUE_SKIPPED | 0 |
+| UNBOUND_VALUE_MISMATCH_SKIPPED | 0 |
+| NODE_NOT_FOUND | 0 |
+| NOT_AUTOLAYOUT | 0 |
+| PROP_MISSING | 0 |
+| **FAIL** | **0** |
 
-- **literal 값 변화**: TBD
-- **가시적 픽셀 변화**: TBD
+- **literal 값 변화**: 0
+- **가시적 픽셀 변화**: 0
 
-### 청크별 상세 (실행 후 채움)
+### 청크별 상세
 
-| chunk | aligned | ok | nodeMiss | fail |
-|---|--:|--:|--:|--:|
-| 00 | — | — | — | — |
-| 01 | — | — | — | — |
-| 02 | — | — | — | — |
-| **합계** | **—** | **—** | **—** | **—** |
+실행 시 38KB byte-budget 기반 2-청크 재분할 사용 (plan JSON은 500-tuple 3-청크):
 
-## NODE_NOT_FOUND 상세 (실행 후 채움)
+| chunk | aligned | ok | misAligned-SV | unboundMatch | fail |
+|---|--:|--:|--:|--:|--:|
+| 000 | 518 | 312 | 311 | 1 | 0 |
+| 001 | 5 | 127 | 126 | 1 | 0 |
+| **합계** | **523** | **439** | **437** | **2** | **0** |
 
-(해당 없음 또는 instance-path 패턴 목록)
+## NODE_NOT_FOUND 상세
+
+해당 없음.
 
 ## NEEDS_REVIEW
 
