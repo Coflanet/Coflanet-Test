@@ -1,0 +1,40 @@
+{
+  "_summary": {
+    "pageId": "0:1",
+    "pageName": "🏷️ Logo",
+    "pageSlug": "foundation-logo",
+    "fileKey": "q7yBPcHrid1CGQqFWEPwnR",
+    "schemaVersion": "1A-2-sidecar.v1",
+    "purpose": "itemSpacing nodeId → layoutMode/layoutWrap 사이드카 (Phase 1-A-2)",
+    "sourceRaw": "figma-spacing-raw.foundation-logo.json",
+    "itemSpacingNodesTotal": 16,
+    "found": 16,
+    "notFound": 0,
+    "distribution": {
+      "VERTICAL": 12,
+      "HORIZONTAL": 4,
+      "NONE": 0
+    },
+    "autoLayoutCoverage": "100.0%",
+    "wrapNodes": 1,
+    "method": "mcp__figma__use_figma (Plugin API: figma.getNodeByIdAsync) — 1 batch of 16 nodes"
+  },
+  "nodes": {
+    "2497:4389": { "layoutMode": "VERTICAL", "layoutWrap": "NO_WRAP", "pageSlug": "foundation-logo" },
+    "2497:4390": { "layoutMode": "VERTICAL", "layoutWrap": "NO_WRAP", "pageSlug": "foundation-logo" },
+    "2497:4391": { "layoutMode": "VERTICAL", "layoutWrap": "NO_WRAP", "pageSlug": "foundation-logo" },
+    "2596:72238": { "layoutMode": "HORIZONTAL", "layoutWrap": "NO_WRAP", "pageSlug": "foundation-logo" },
+    "2497:4396": { "layoutMode": "HORIZONTAL", "layoutWrap": "NO_WRAP", "pageSlug": "foundation-logo" },
+    "2556:146651": { "layoutMode": "VERTICAL", "layoutWrap": "NO_WRAP", "pageSlug": "foundation-logo" },
+    "2773:35027": { "layoutMode": "VERTICAL", "layoutWrap": "NO_WRAP", "pageSlug": "foundation-logo" },
+    "2773:35029": { "layoutMode": "VERTICAL", "layoutWrap": "NO_WRAP", "pageSlug": "foundation-logo" },
+    "2556:146657": { "layoutMode": "VERTICAL", "layoutWrap": "NO_WRAP", "pageSlug": "foundation-logo" },
+    "2411:28944": { "layoutMode": "HORIZONTAL", "layoutWrap": "WRAP", "pageSlug": "foundation-logo" },
+    "2549:124955": { "layoutMode": "HORIZONTAL", "layoutWrap": "NO_WRAP", "pageSlug": "foundation-logo" },
+    "2773:34774": { "layoutMode": "VERTICAL", "layoutWrap": "NO_WRAP", "pageSlug": "foundation-logo" },
+    "2773:35023": { "layoutMode": "VERTICAL", "layoutWrap": "NO_WRAP", "pageSlug": "foundation-logo" },
+    "2773:35041": { "layoutMode": "VERTICAL", "layoutWrap": "NO_WRAP", "pageSlug": "foundation-logo" },
+    "3374:17105": { "layoutMode": "VERTICAL", "layoutWrap": "NO_WRAP", "pageSlug": "foundation-logo" },
+    "3374:17106": { "layoutMode": "VERTICAL", "layoutWrap": "NO_WRAP", "pageSlug": "foundation-logo" }
+  }
+}

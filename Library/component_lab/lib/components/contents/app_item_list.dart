@@ -111,9 +111,9 @@ class AppItemCard extends StatelessWidget {
             onLikeTap: onLikeTap,
             size: 112,
           ),
-          const SizedBox(height: AppSpacing.space8),
+          const SizedBox(height: AppSpacing.s8),
           _BrandTags(tags: brandTags),
-          if (brandTags.isNotEmpty) const SizedBox(height: AppSpacing.space4),
+          if (brandTags.isNotEmpty) const SizedBox(height: AppSpacing.s4),
           Text(
             name,
             style: AppTextStyles.label1NormalRegular.copyWith(
@@ -122,10 +122,10 @@ class AppItemCard extends StatelessWidget {
             maxLines: 2,
             overflow: TextOverflow.ellipsis,
           ),
-          const SizedBox(height: AppSpacing.space4),
+          const SizedBox(height: AppSpacing.s4),
           _PriceRow(price: price, discountPercent: discountPercent),
           if (rating != null) ...[
-            const SizedBox(height: 2),
+            const SizedBox(height: AppSpacingSemantic.inlineXs),
             _RatingRow(rating: rating!, reviewCount: reviewCount),
           ],
         ],
@@ -138,7 +138,7 @@ class AppItemCard extends StatelessWidget {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         _Thumbnail(image: image, size: 88),
-        const SizedBox(width: AppSpacing.space12),
+        const SizedBox(width: AppSpacing.s12),
         Expanded(
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
@@ -160,12 +160,12 @@ class AppItemCard extends StatelessWidget {
                   AppItemHeart(isLiked: isLiked, onTap: onLikeTap, size: 20),
                 ],
               ),
-              const SizedBox(height: AppSpacing.space4),
+              const SizedBox(height: AppSpacing.s4),
               _BrandTags(tags: brandTags),
-              if (brandTags.isNotEmpty) const SizedBox(height: AppSpacing.space4),
+              if (brandTags.isNotEmpty) const SizedBox(height: AppSpacing.s4),
               _PriceRow(price: price, discountPercent: discountPercent),
               if (rating != null) ...[
-                const SizedBox(height: 2),
+                const SizedBox(height: AppSpacingSemantic.inlineXs),
                 _RatingRow(rating: rating!, reviewCount: reviewCount),
               ],
             ],
@@ -205,8 +205,8 @@ class _Thumbnail extends StatelessWidget {
               ColoredBox(color: AppColor.lineSolidNormal),
             if (onLikeTap != null)
               Positioned(
-                top: AppSpacing.space4,
-                right: AppSpacing.space4,
+                top: AppSpacing.s4,
+                right: AppSpacing.s4,
                 child: AppItemHeart(
                   isLiked: isLiked,
                   onTap: onLikeTap,
@@ -228,12 +228,12 @@ class _BrandTags extends StatelessWidget {
   Widget build(BuildContext context) {
     if (tags.isEmpty) return const SizedBox.shrink();
     return Wrap(
-      spacing: 4,
-      runSpacing: 4,
+      spacing: AppSpacingSemantic.inlineSm,
+      runSpacing: AppSpacingSemantic.inlineSm,
       children: tags
           .map(
             (t) => Container(
-              padding: const EdgeInsets.symmetric(horizontal: 6, vertical: 2),
+              padding: const EdgeInsets.symmetric(horizontal: AppSpacingSemantic.insetSquishXsHorizontal, vertical: AppSpacingSemantic.insetSquishXsVertical),
               decoration: BoxDecoration(
                 color: AppColor.primaryLight,
                 borderRadius: BorderRadius.circular(AppRadius.radius4),
@@ -269,7 +269,7 @@ class _PriceRow extends StatelessWidget {
               color: AppColor.statusNegative,
             ),
           ),
-          const SizedBox(width: AppSpacing.space4),
+          const SizedBox(width: AppSpacing.s4),
         ],
         Text(
           formatPrice(price),
@@ -295,7 +295,7 @@ class _RatingRow extends StatelessWidget {
       mainAxisSize: MainAxisSize.min,
       children: [
         Icon(Icons.star_rounded, size: 12, color: AppColor.colorGlobalYellow50),
-        const SizedBox(width: 2),
+        const SizedBox(width: AppSpacingSemantic.inlineXs),
         Text(
           rating.toStringAsFixed(1),
           style: AppTextStyles.caption1Regular.copyWith(
@@ -304,7 +304,7 @@ class _RatingRow extends StatelessWidget {
           ),
         ),
         if (reviewCount != null) ...[
-          const SizedBox(width: AppSpacing.space4),
+          const SizedBox(width: AppSpacing.s4),
           Text(
             '· 구매 $reviewCount건',
             style: AppTextStyles.caption1Regular.copyWith(

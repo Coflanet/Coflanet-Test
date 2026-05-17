@@ -80,7 +80,7 @@ class AppGauge extends StatelessWidget {
 
         // 라벨
         if (showLabel && labels != null && labels!.length == maxValue) ...[
-          const SizedBox(height: AppSpacing.space8),
+          const SizedBox(height: AppSpacing.s8),
           Row(
             children: List.generate(maxValue, (i) {
               final isActive = i == value - 1;

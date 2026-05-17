@@ -106,9 +106,9 @@ final List<WidgetbookComponent> preferenceListUseCases = [
             mainAxisSize: MainAxisSize.min,
             children: const [
               AppTasteChip(label: '산미', level: AppTasteLevel.good),
-              SizedBox(width: AppSpacing.space8),
+              SizedBox(width: AppSpacing.s8),
               AppTasteChip(label: '바디감', level: AppTasteLevel.normal),
-              SizedBox(width: AppSpacing.space8),
+              SizedBox(width: AppSpacing.s8),
               AppTasteChip(label: '쓴맛', level: AppTasteLevel.bad),
             ],
           ),
@@ -119,8 +119,8 @@ final List<WidgetbookComponent> preferenceListUseCases = [
         builder: (context) => _bg(
           context,
           Wrap(
-            spacing: AppSpacing.space8,
-            runSpacing: AppSpacing.space8,
+            spacing: AppSpacing.s8,
+            runSpacing: AppSpacing.s8,
             children: _flavorChips(),
           ),
         ),
@@ -140,13 +140,13 @@ final List<WidgetbookComponent> preferenceListUseCases = [
                 title: '제목을 입력해주세요',
                 summaryTags: _summaryTags,
               ),
-              const SizedBox(height: AppSpacing.space12),
+              const SizedBox(height: AppSpacing.s12),
               AppPreferenceItem(
                 title: '제목을 입력해주세요',
                 summaryTags: _summaryTags,
                 state: AppPreferenceItemState.selected,
               ),
-              const SizedBox(height: AppSpacing.space12),
+              const SizedBox(height: AppSpacing.s12),
               AppPreferenceItem(
                 title: '제목을 입력해주세요',
                 summaryTags: _summaryTags,
@@ -154,7 +154,7 @@ final List<WidgetbookComponent> preferenceListUseCases = [
                 flavorChips: _flavorChips(),
                 expanded: true,
               ),
-              const SizedBox(height: AppSpacing.space12),
+              const SizedBox(height: AppSpacing.s12),
               AppPreferenceItem(
                 title: '제목을 입력해주세요',
                 summaryTags: _summaryTags,
@@ -170,7 +170,7 @@ final List<WidgetbookComponent> preferenceListUseCases = [
 
 Widget _bg(BuildContext context, Widget child) {
   return SingleChildScrollView(
-    padding: const EdgeInsets.all(AppSpacing.space16),
+    padding: const EdgeInsets.all(AppSpacing.s16),
     child: ConstrainedBox(
       constraints: const BoxConstraints(maxWidth: 480),
       child: Container(

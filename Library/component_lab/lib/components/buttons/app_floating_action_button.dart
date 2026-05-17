@@ -34,7 +34,7 @@ class AppFloatingActionButton extends StatelessWidget {
     final body = Container(
       width: 56,
       height: 56,
-      padding: const EdgeInsets.all(AppSpacing.space16),
+      padding: const EdgeInsets.all(AppSpacingSemantic.insetLg),
       decoration: BoxDecoration(
         color: fill,
         shape: BoxShape.circle,

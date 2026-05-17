@@ -42,7 +42,7 @@ class AppBottomSheet extends StatelessWidget {
           // Handle
           if (showHandle)
             Padding(
-              padding: const EdgeInsets.only(top: AppSpacing.space8, bottom: AppSpacing.space4),
+              padding: const EdgeInsets.only(top: AppSpacing.s8, bottom: AppSpacing.s4),
               child: Container(
                 width: 36,
                 height: 4,
@@ -57,8 +57,8 @@ class AppBottomSheet extends StatelessWidget {
           if (title != null || showCloseButton)
             Padding(
               padding: EdgeInsets.symmetric(
-                horizontal: AppSpacing.space16,
-                vertical: AppSpacing.space12,
+                horizontal: AppSpacing.s16,
+                vertical: AppSpacing.s12,
               ),
               child: Row(
                 children: [
@@ -140,7 +140,7 @@ class AppModalPopup extends StatelessWidget {
     return Center(
       child: Container(
         width: width,
-        margin: EdgeInsets.all(AppSpacing.space24),
+        margin: EdgeInsets.all(AppSpacingSemantic.insetXl),
         decoration: BoxDecoration(
           color: AppColor.colorGlobalCommon100,
           borderRadius: BorderRadius.circular(AppRadius.radius20),
@@ -152,10 +152,10 @@ class AppModalPopup extends StatelessWidget {
             if (title != null)
               Padding(
                 padding: EdgeInsets.fromLTRB(
-                  AppSpacing.space24,
-                  AppSpacing.space24,
-                  AppSpacing.space24,
-                  AppSpacing.space16,
+                  AppSpacing.s24,
+                  AppSpacing.s24,
+                  AppSpacing.s24,
+                  AppSpacing.s16,
                 ),
                 child: Row(
                   children: [

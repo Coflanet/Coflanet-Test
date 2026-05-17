@@ -41,8 +41,8 @@ class AppCommunityListItem extends StatelessWidget {
       onTap: onTap,
       child: Padding(
         padding: const EdgeInsets.symmetric(
-          horizontal: AppSpacing.space16,
-          vertical: AppSpacing.space12,
+          horizontal: AppSpacing.s16,
+          vertical: AppSpacing.s12,
         ),
         child: Row(
           crossAxisAlignment: CrossAxisAlignment.start,
@@ -60,7 +60,7 @@ class AppCommunityListItem extends StatelessWidget {
                     maxLines: 1,
                     overflow: TextOverflow.ellipsis,
                   ),
-                  const SizedBox(height: 6),
+                  const SizedBox(height: AppSpacing.s6),
                   Row(
                     children: [
                       Text(
@@ -75,7 +75,7 @@ class AppCommunityListItem extends StatelessWidget {
                         size: 14,
                         color: AppColor.labelAlternative,
                       ),
-                      const SizedBox(width: 2),
+                      const SizedBox(width: AppSpacingSemantic.inlineXs),
                       Text(
                         '$likeCount',
                         style: AppTextStyles.caption1Regular.copyWith(
@@ -83,13 +83,13 @@ class AppCommunityListItem extends StatelessWidget {
                           fontFeatures: const [FontFeature.tabularFigures()],
                         ),
                       ),
-                      const SizedBox(width: AppSpacing.space8),
+                      const SizedBox(width: AppSpacing.s8),
                       Icon(
                         Icons.chat_bubble_outline_rounded,
                         size: 14,
                         color: AppColor.labelAlternative,
                       ),
-                      const SizedBox(width: 2),
+                      const SizedBox(width: AppSpacingSemantic.inlineXs),
                       Text(
                         '$commentCount',
                         style: AppTextStyles.caption1Regular.copyWith(
@@ -102,7 +102,7 @@ class AppCommunityListItem extends StatelessWidget {
                 ],
               ),
             ),
-            const SizedBox(width: AppSpacing.space12),
+            const SizedBox(width: AppSpacing.s12),
             Stack(
               clipBehavior: Clip.none,
               children: [

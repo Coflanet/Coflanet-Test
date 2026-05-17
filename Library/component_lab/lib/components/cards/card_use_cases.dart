@@ -31,7 +31,7 @@ final List<WidgetbookComponent> cardUseCases = [
                     style: AppTextStyles.headline2Bold
                         .copyWith(color: labelColor),
                   ),
-                  const SizedBox(height: AppSpacing.space8),
+                  const SizedBox(height: AppSpacing.s8),
                   Text(
                     '카드 안 컨텐츠. 본문 스타일은 body2NormalRegular.',
                     style: AppTextStyles.body2NormalRegular
@@ -50,13 +50,13 @@ final List<WidgetbookComponent> cardUseCases = [
                   width: double.infinity,
                   child: body('Flat'),
                 ),
-                const SizedBox(height: AppSpacing.space16),
+                const SizedBox(height: AppSpacing.s16),
                 AppCard(
                   variant: AppCardVariant.elevated,
                   width: double.infinity,
                   child: body('Elevated (그림자)'),
                 ),
-                const SizedBox(height: AppSpacing.space16),
+                const SizedBox(height: AppSpacing.s16),
                 AppCard(
                   variant: AppCardVariant.outlined,
                   width: double.infinity,
@@ -87,7 +87,7 @@ final List<WidgetbookComponent> cardUseCases = [
                 children: [
                   Icon(Icons.coffee_rounded,
                       color: AppColor.colorGlobalOrange50, size: 32),
-                  const SizedBox(width: AppSpacing.space12),
+                  const SizedBox(width: AppSpacing.s12),
                   Expanded(
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
@@ -95,7 +95,7 @@ final List<WidgetbookComponent> cardUseCases = [
                         Text('탭 가능한 카드',
                             style: AppTextStyles.headline2Bold
                                 .copyWith(color: labelColor)),
-                        const SizedBox(height: AppSpacing.space4),
+                        const SizedBox(height: AppSpacing.s4),
                         Text(
                           'onTap 콜백 있으면 InkWell 자동 적용',
                           style: AppTextStyles.label1NormalRegular.copyWith(

@@ -69,7 +69,7 @@ class AppSectionBottomButton extends StatelessWidget {
               children: [
                 if (leftIcon != null) ...[
                   Icon(leftIcon, size: 18, color: altColor),
-                  const SizedBox(width: 6),
+                  const SizedBox(width: AppSpacing.s6),
                 ],
                 Text(
                   label,
@@ -77,7 +77,7 @@ class AppSectionBottomButton extends StatelessWidget {
                       .copyWith(color: altColor),
                 ),
                 if (rightIcon != null) ...[
-                  const SizedBox(width: 6),
+                  const SizedBox(width: AppSpacing.s6),
                   Icon(rightIcon, size: 18, color: altColor),
                 ],
               ],
@@ -97,7 +97,7 @@ class AppSectionBottomButton extends StatelessWidget {
             ),
           ),
           alignment: Alignment.center,
-          padding: const EdgeInsets.symmetric(horizontal: AppSpacing.space24, vertical: AppSpacing.space4),
+          padding: const EdgeInsets.symmetric(horizontal: AppSpacing.s24, vertical: AppSpacing.s4),
           child: Material(
             color: Colors.transparent,
             child: InkWell(
@@ -109,7 +109,7 @@ class AppSectionBottomButton extends StatelessWidget {
                   if (leftIcon != null) ...[
                     Icon(leftIcon, size: 18,
                         color: c.labelNormal),
-                    const SizedBox(width: 10),
+                    const SizedBox(width: AppSpacing.s10),
                   ],
                   Text(
                     label,
@@ -118,7 +118,7 @@ class AppSectionBottomButton extends StatelessWidget {
                     ),
                   ),
                   if (rightIcon != null) ...[
-                    const SizedBox(width: 10),
+                    const SizedBox(width: AppSpacing.s10),
                     Icon(rightIcon, size: 18,
                         color: c.labelNormal),
                   ],
@@ -154,7 +154,7 @@ class AppSectionBottomButton extends StatelessWidget {
                     color: altColor,
                   ),
                 ),
-                const SizedBox(width: AppSpacing.space4),
+                const SizedBox(width: AppSpacing.s4),
                 Icon(
                   isExpanded
                       ? Icons.keyboard_arrow_up_rounded

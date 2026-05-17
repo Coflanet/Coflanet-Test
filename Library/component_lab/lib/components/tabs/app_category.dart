@@ -63,7 +63,7 @@ class AppCategory extends StatelessWidget {
     return SingleChildScrollView(
       scrollDirection: Axis.horizontal,
       padding: horizontalPadding
-          ? EdgeInsets.symmetric(horizontal: AppSpacing.space16)
+          ? EdgeInsets.symmetric(horizontal: AppSpacing.s16)
           : EdgeInsets.zero,
       child: Row(
         children: List.generate(items.length, (i) {
@@ -127,7 +127,7 @@ class _CategoryChip extends StatelessWidget {
       onTap: onTap,
       child: Container(
         height: height,
-        padding: const EdgeInsets.symmetric(horizontal: AppSpacing.space16),
+        padding: const EdgeInsets.symmetric(horizontal: AppSpacing.s16),
         decoration: BoxDecoration(
           color: bgColor,
           border: border,

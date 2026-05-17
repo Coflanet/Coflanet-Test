@@ -229,7 +229,7 @@ class AppTopNavigation extends StatelessWidget {
                   // 큰 제목
                   if (showTitle && title != null)
                     Padding(
-                      padding: const EdgeInsets.symmetric(horizontal: AppSpacing.space4),
+                      padding: const EdgeInsets.symmetric(horizontal: AppSpacing.s4),
                       child: SizedBox(
                         height: _iconButtonSize,
                         child: Align(
@@ -367,7 +367,7 @@ class AppTopNavigation extends StatelessWidget {
   Widget _buildTrailingRow() {
     return Row(
       mainAxisSize: MainAxisSize.min,
-      spacing: 10,
+      spacing: AppSpacing.s10,
       children: trailingActions.map((action) {
         return Stack(
           clipBehavior: Clip.none,

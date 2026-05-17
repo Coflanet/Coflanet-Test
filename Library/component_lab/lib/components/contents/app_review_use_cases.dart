@@ -148,7 +148,7 @@ Widget _bg(BuildContext context, Widget child) {
       color: Theme.of(context).canvasColor,
       borderRadius: BorderRadius.circular(AppRadius.radius8),
     ),
-    padding: const EdgeInsets.symmetric(vertical: AppSpacing.space8),
+    padding: const EdgeInsets.symmetric(vertical: AppSpacing.s8),
     child: child,
   );
 }

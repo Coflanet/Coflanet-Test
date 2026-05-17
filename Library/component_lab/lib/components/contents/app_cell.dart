@@ -76,7 +76,7 @@ class AppCell extends StatelessWidget {
               : Colors.transparent,
           padding: EdgeInsets.symmetric(
             vertical: verticalPadding.value,
-            horizontal: AppSpacing.space16,
+            horizontal: AppSpacing.s16,
           ),
           child: Row(
             crossAxisAlignment: verticalAlign == AppCellVerticalAlign.top
@@ -85,7 +85,7 @@ class AppCell extends StatelessWidget {
             children: [
               if (leading != null) ...[
                 leading!,
-                SizedBox(width: AppSpacing.space12),
+                SizedBox(width: AppSpacing.s12),
               ],
               Expanded(
                 child: Column(
@@ -114,7 +114,7 @@ class AppCell extends StatelessWidget {
                           : TextOverflow.visible,
                     ),
                     if (description != null) ...[
-                      const SizedBox(height: 2),
+                      const SizedBox(height: AppSpacingSemantic.inlineXs),
                       Text(
                         description!,
                         style: AppTextStyles.caption1Regular.copyWith(
@@ -130,7 +130,7 @@ class AppCell extends StatelessWidget {
                 ),
               ),
               if (trailing != null) ...[
-                SizedBox(width: AppSpacing.space12),
+                SizedBox(width: AppSpacing.s12),
                 trailing!,
               ],
             ],

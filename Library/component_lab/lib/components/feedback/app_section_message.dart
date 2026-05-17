@@ -114,7 +114,7 @@ class AppSectionMessage extends StatelessWidget {
           ),
           // 3) 콘텐츠
           Padding(
-            padding: const EdgeInsets.all(AppSpacing.space12),
+            padding: const EdgeInsets.all(AppSpacingSemantic.insetMd),
             child: Row(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
@@ -126,11 +126,11 @@ class AppSectionMessage extends StatelessWidget {
                       child: Icon(icon, size: 20, color: tint),
                     ),
                   ),
-                  const SizedBox(width: AppSpacing.space8),
+                  const SizedBox(width: AppSpacing.s8),
                 ],
                 Expanded(child: _buildMessage(context)),
                 if (actionLabel != null) ...[
-                  const SizedBox(width: AppSpacing.space8),
+                  const SizedBox(width: AppSpacing.s8),
                   _TrailingButton(
                     label: actionLabel!,
                     onTap: onAction,
@@ -138,7 +138,7 @@ class AppSectionMessage extends StatelessWidget {
                   ),
                 ],
                 if (onClose != null) ...[
-                  const SizedBox(width: AppSpacing.space8),
+                  const SizedBox(width: AppSpacing.s8),
                   _CloseButton(onTap: onClose!),
                 ],
               ],
@@ -161,7 +161,7 @@ class AppSectionMessage extends StatelessWidget {
           ),
         ),
         if (description != null) ...[
-          const SizedBox(height: AppSpacing.space4),
+          const SizedBox(height: AppSpacing.s4),
           Text(
             description!,
             style: AppTextStyles.label1NormalRegular.copyWith(
@@ -170,11 +170,11 @@ class AppSectionMessage extends StatelessWidget {
           ),
         ],
         if (bottomActions.isNotEmpty) ...[
-          const SizedBox(height: AppSpacing.space12),
+          const SizedBox(height: AppSpacing.s12),
           Row(
             children: [
               for (var i = 0; i < bottomActions.length; i++) ...[
-                if (i > 0) const SizedBox(width: AppSpacing.space16),
+                if (i > 0) const SizedBox(width: AppSpacing.s16),
                 _BottomActionButton(action: bottomActions[i]),
               ],
             ],
@@ -218,7 +218,7 @@ class _BottomActionButton extends StatelessWidget {
         child: Padding(
           padding: const EdgeInsets.symmetric(
             horizontal: 6,
-            vertical: AppSpacing.space4,
+            vertical: AppSpacing.s4,
           ),
           child: Text(
             action.label,
@@ -249,7 +249,7 @@ class _TrailingButton extends StatelessWidget {
         onTap: onTap,
         borderRadius: BorderRadius.circular(AppRadius.radiusPill),
         child: Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 6, vertical: AppSpacing.space4),
+          padding: const EdgeInsets.symmetric(horizontal: 6, vertical: AppSpacing.s4),
           child: Text(
             label,
             style: AppTextStyles.label1NormalBold.copyWith(color: color),

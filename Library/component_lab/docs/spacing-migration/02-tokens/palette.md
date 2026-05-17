@@ -1,103 +1,106 @@
-# Palette Tokens — Phase 2 SoT
+# Palette Tokens — Phase 2 SoT (Task 05)
 
-**버전**: `0.1.0-phase2`
-**입력**: `01-audit/gap-analysis.md`, USER_DECISION 검수 #2 (2026-05-12)
-**대응 코드**: `lib/foundation/app_spacing.dart` (커밋 `eb79fbb`, PR #28 머지)
-
----
-
-## 1. 확정 스케일 (16 토큰)
-
-| # | 토큰명 (문서) | 코드 식별자 | 값 (px) | Figma 팔레트 | 코드 빈도 | 분류 | 결정 근거 |
-|---:|---|---|---:|:--:|---:|---|---|
-| 1  | `spacing-0`  | `space0`  | 0  | ○ | 12 | core      | USER_DECISION #2 신규 승인. zero padding 12회 사용 → `EdgeInsets.zero` 와 분리해 의도 명시. |
-| 2  | `spacing-4`  | `space4`  | 4  | ● | 96 | core      | 양쪽 매치, 빈도 4위. |
-| 3  | `spacing-8`  | `space8`  | 8  | ● | 199 | core     | 양쪽 매치, 빈도 2위. icon-text gap 기본값. |
-| 4  | `spacing-12` | `space12` | 12 | ● | 164 | core     | 양쪽 매치, 빈도 3위. list item 간격. |
-| 5  | `spacing-14` | `space14` | 14 | ○ | 0   | safe-area | Safe Area Bottom (Android). **Phase 2 Dimension 분리 후보 — 미결.** |
-| 6  | `spacing-16` | `space16` | 16 | ● | 233 | core     | 양쪽 매치, **빈도 1위**. 카드/콘텐츠 기본 패딩. |
-| 7  | `spacing-20` | `space20` | 20 | ● | 21  | core     | 양쪽 매치. |
-| 8  | `spacing-24` | `space24` | 24 | ● | 88  | core     | 양쪽 매치, 빈도 5위. 섹션/모달 패딩. |
-| 9  | `spacing-28` | `space28` | 28 | ○ | 4   | mid-step | USER_DECISION #2 신규 승인. button bottom / GNB logo off-scale 4건 통합용. |
-| 10 | `spacing-32` | `space32` | 32 | ● | 5   | core     | 양쪽 매치. 리터럴 전량 → Phase 2 마이그레이션 대상. |
-| 11 | `spacing-34` | `space34` | 34 | ○ | 0   | safe-area | Safe Area Bottom (iOS). **Dimension 분리 후보 — 미결.** |
-| 12 | `spacing-36` | `space36` | 36 | ○ | 0   | safe-area | Safe Area Status (Android). **Dimension 분리 후보 — 미결.** |
-| 13 | `spacing-40` | `space40` | 40 | ● | 2   | core     | 양쪽 매치 (빈도 낮음). |
-| 14 | `spacing-44` | `space44` | 44 | ○ | 0   | safe-area | Safe Area Status (iOS). **Dimension 분리 후보 — 미결.** |
-| 15 | `spacing-48` | `space48` | 48 | ● | 5   | core     | 양쪽 매치. |
-| 16 | `spacing-56` | `space56` | 56 | ○ | 2   | mid-step | USER_DECISION #2 신규 승인. banner off-scale 2건 통합용. |
-
-분류:
-- **core** (9개): 4의 배수 + 빈도 ≥2 + 양쪽 매치 또는 신규 승인 (0 포함)
-- **mid-step** (2개): 4의 배수, off-scale 통합용 신규 — `28`, `56`
-- **safe-area** (4개): 디바이스 상수 — `14`, `34`, `36`, `44` (Dimension 이관 검토 중)
+**버전**: `1.0.0-pending-1a2` — palette 20값 자체는 v1.0 확정. Phase 1-A-2 (`layoutMode` 사이드카) 완료 후 semantic.md/usage-guide.md 와 함께 v1.0 으로 일괄 승격.
+**입력**: `01-audit/gap-analysis.md`, `01-audit/figma-spacing.INDEX.json` (91,882 items / 110 raw part), `01-audit/code-audit.INDEX.json` (22 raw / 927 usage), 검수 #2 확정 (2026-05-14)
+**대응 코드**: `lib/foundation/app_spacing.dart` (Phase 5-Pre 에서 재구성 예정)
 
 ---
 
-## 2. 이름 규칙 매핑
+## 1. 확정 스케일 (20 토큰)
+
+정제 정책 적용 후의 Figma / 코드 빈도. 정제 = Platform UI 제외 + Demo 페이지 제외 + `*_use_cases.dart` 제외 + 페이지-직접 frame value>40 제외 + 소수점/음수 제외.
+
+| # | 토큰 (JSON) | Dart | 값 (px) | Figma 빈도 | 코드 빈도 (총) | 코드 (tokenRef / literal) | 분류 |
+|---:|---|---|---:|---:|---:|---|---|
+|  1 | `spacing/0` | `AppSpacing.s0` | 0 | 0 | 12 | 0 / 12 | core |
+|  2 | `spacing/1` | `AppSpacing.s1` | 1 | 1,938 | 3 | 0 / 3 | sub-step |
+|  3 | `spacing/2` | `AppSpacing.s2` | 2 | 14,741 | 24 | 0 / 24 | sub-step |
+|  4 | `spacing/3` | `AppSpacing.s3` | 3 | 4,383 | 4 | 0 / 4 | sub-step |
+|  5 | `spacing/4` | `AppSpacing.s4` | 4 | 13,047 | 91 | 84 / 7 | core |
+|  6 | `spacing/6` | `AppSpacing.s6` | 6 | 7,797 | 18 | 0 / 18 | sub-step |
+|  7 | `spacing/7` | `AppSpacing.s7` | 7 | 906 | 0 | 0 / 0 | button-pair |
+|  8 | `spacing/8` | `AppSpacing.s8` | 8 | 13,921 | 131 | 128 / 3 | core |
+|  9 | `spacing/9` | `AppSpacing.s9` | 9 | 3,821 | 1 | 0 / 1 | button-pair |
+| 10 | `spacing/10` | `AppSpacing.s10` | 10 | 6,379 | 5 | 0 / 5 | sub-step |
+| 11 | `spacing/12` | `AppSpacing.s12` | 12 | 6,687 | 87 | 86 / 1 | core |
+| 12 | `spacing/14` | `AppSpacing.s14` | 14 | 343 | 0 | 0 / 0 | button-pair |
+| 13 | `spacing/16` | `AppSpacing.s16` | 16 | 3,609 | 87 | 87 / 0 | core |
+| 14 | `spacing/20` | `AppSpacing.s20` | 20 | 2,791 | 5 | 2 / 3 | button-pair |
+| 15 | `spacing/24` | `AppSpacing.s24` | 24 | 3,296 | 19 | 18 / 1 | core |
+| 16 | `spacing/28` | `AppSpacing.s28` | 28 | 605 | 1 | 0 / 1 | button-pair |
+| 17 | `spacing/32` | `AppSpacing.s32` | 32 | 130 | 3 | 0 / 3 | layout |
+| 18 | `spacing/40` | `AppSpacing.s40` | 40 | 50 | 2 | 0 / 2 | layout |
+| 19 | `spacing/44` | `AppSpacing.s44` | 44 | 81 | 0 | 0 / 0 | layout |
+| 20 | `spacing/48` | `AppSpacing.s48` | 48 | 0 | 4 | 0 / 4 | layout |
+
+---
+
+## 2. 명명 규칙
 
 | 컨텍스트 | 표기 | 예 |
 |---|---|---|
-| 문서 / JSON 토큰 ID | `spacing-{value}` (kebab) | `spacing-16` |
-| Figma 변수명 | `Spacing/{value}` | `Spacing/16` |
-| Dart 식별자 | `space{N}` (camelCase 호환) | `AppSpacing.space16` |
-
-> USER_DECISION #2 권장: Dart 는 kebab 불가 → **`space{N}` 유지**, 문서/JSON 만 kebab. 매핑 표 (위) 를 SoT 로 사용.
+| JSON (W3C DTCG / Figma Variables, slash) | `spacing/{value}` | `spacing/12` |
+| Dart 식별자 (camelCase) | `AppSpacing.s{value}` | `AppSpacing.s12` |
 
 ---
 
-## 3. 제외값 사유
+## 3. 데이터 정제 정책
 
-### 3-1. 제거 후보 — 팔레트 비포함 확정
+Phase 1-A/B raw 활용 시 모두 적용. 정제 후 통과한 row 만 본 팔레트 결정의 근거가 됨.
 
-| 값 | 빈도 | 사유 |
-|---:|---:|---|
-| 9   | 1 | empty_state 단발성. `spacing-8` 로 통합. |
-| 11  | 1 | bottom button 단발성. `spacing-12` 로 통합. |
-| 80  | 1 | feedback 단발성. Dimension 영역 (썸네일/배너) 또는 제거. |
-| 112 | 1 | item_list 단발성. Dimension 후보. |
-| 240 | 1 | banner_use_cases 데모. 제거 또는 Dimension. |
-| 300 | 1 | select_use_cases 데모. 제거 또는 Dimension. |
+1. **Platform UI 제외**: 부모 체인이나 노드명/usageNote 에 `Platform=iOS|Android`, `Status Bar`, `Dynamic Island`, `Home Indicator`, `Tab Bar`, `Safe Area`, `iPhone|iPad`, `iOS/...`, `Android/...` 포함 시 자식 모두 제외
+2. **Demo 페이지 제외**: `foundation-colors`, `foundation-typography`, `foundation-icon`, `foundation-decorate`, `foundation-gradient`, `foundation-logo`, `foundation-3d-illustration`, `foundation-product`
+3. **`foundation-space` 예외 포함**: 토큰 정의 spec 페이지 — 포함
+4. **Demo 코드 제외**: 모든 `*_use_cases.dart` 파일
+5. **페이지 직접 frame 주의**: `sourceNodeId` 가 `I` 로 시작 안 하는 노드 중 큰 spacing(>40) 은 카탈로그 grid → 제외
+6. **음수/소수점 제외**: itemSpacing 음수(겹침) / 1.33 같은 소수는 Platform UI 잔존 후처리에서 자동 제거
 
-→ USER_DECISION #2 의 **§6-3 미결 항목**. 본 팔레트는 위 6값을 모두 **포함하지 않음** (Phase 2 마이그레이션 시 통합 매핑은 `03-mapping/` 에서 정의).
+### 정제 통계
 
-### 3-2. Dimension 시스템 이관 후보 — 미결
+| 단계 | Figma | 코드 |
+|---|---:|---:|
+| raw row | 91,882 | 927 |
+| Demo 제외 | 5,559 | 398 |
+| Platform UI 제외 | 537 | — |
+| 페이지-grid 제외 | 403 | — |
+| 음수/소수점 제외 | 181 | — |
+| 비숫자 제외 | — | 82 |
+| **accepted** | **85,202** | **511** |
 
-| 값 | 사용처 | 처리 방향 |
-|---:|---|---|
-| 14, 34, 36, 44 | Safe Area 디바이스 상수 | `AppDeviceMetrics` 등 별도 시스템으로 분리 검토. |
-| 80, 112, 120, 128, 200, 240, 280, 300, 320 | 썸네일/배너/피커 고정 크기 | `AppDimensions` 등 별도 시스템 후보. |
+---
 
-→ USER_DECISION #2 의 **§6-2, §6-4 ⊘ 미결**. 본 버전에서는 **14/34/36/44 만 팔레트에 잔류** (이미 코드에 정의되어 있고 결정 전 제거 시 호환성 깨짐). Component-size 9종은 처음부터 spacing 팔레트에 들어온 적 없음 — 별도 시스템에서 추후 다룸.
+## 4. 제외값 사유
 
-### 3-3. Off-scale 통합 대상 (마이그레이션 시 치환)
+### 4-1. 제외 확정 (단발성 또는 grid)
 
-| 원본 값 | 빈도 | 치환 목표 | 카테고리 |
+| 값 | Figma 빈도 | 코드 빈도 | 사유 |
 |---:|---:|---:|---|
-| 1   | 3  | BorderSide 로 표현 | hairline |
-| 2   | 24 | 4 (또는 BorderSide) | micro-gap |
-| 3   | 4  | 4 | micro-gap |
-| 6   | 18 | 4 또는 8 | sub-step |
-| 10  | 5  | 8 또는 12 | sub-step |
-| 18  | 2  | 16 또는 20 | sub-step |
-| 22  | 3  | 24 | sub-step |
+| 5 | 132 | 0 | single-occurrence Filler |
+| 11 | 387 | 1 | single-occurrence button bottom |
+| 36 | 13 | 0 | Safe Area Android (Dimension 후속 트랙) |
+| 60 | 0 | 0 | foundation-space 페이지 카탈로그 grid |
+| 64 | 0 | 0 | Avatar overlap grid |
+| 80 | 4 | 1 | feedback 단발 |
+| 160 | 0 | 0 | page catalog frame |
 
-→ Phase 2 `03-mapping/` 에서 1:1 치환 룰 확정 예정.
+### 4-2. Spacing 범위 외 (별도 size 토큰 후속 트랙)
+
+- width/height 의 큰 값 (112, 120, 128, 200, 240, 280, 300, 320 등): Dimension/Size 토큰 후속 트랙
+- 1px **border** 두께: `AppBorderWidth` 후속 트랙 (단, 1px **padding** 은 본 팔레트 `spacing/1` 에 포함)
+
+### 4-3. Off-scale 잔존 후보 (정제 후 빈도 ≥ 100, 팔레트 미포함)
+
+정제 후에도 Figma 빈도가 일정 이상이나, 검수 #2 에서 별도 토큰화 보류:
+
+(없음)
 
 ---
 
-## 4. 제약 준수 확인
+## 5. 제약 준수 확인
 
 | 제약 | 충족 |
 |---|:--:|
-| Palette `0` 포함 필수 | ✅ `spacing-0` 1번째 항목 |
-| 이름 규칙 `spacing-{value}` | ✅ 16개 전부 일치 |
-| 코드 팔레트 (16단계) 와 동기 | ✅ `app_spacing.dart` 와 1:1 |
+| Palette `0` 포함 | ✅ `spacing/0` |
+| 명명 규칙 `spacing/{value}` | ✅ 20 토큰 |
+| 검수 #2 의 20 값 ↔ 본 팔레트 1:1 | ✅ |
 
----
-
-## 5. 미결 항목 인계 (Phase 1-D / Phase 2 본 작업)
-
-1. **Safe Area 4종 (14/34/36/44) Dimension 분리 여부** — 결정 시 본 팔레트에서 제거 후 `AppDeviceMetrics.*` 로 이관.
-2. **제거 후보 6값** (9/11/80/112/240/300) — 본 팔레트에 포함하지 않음. Phase 2 마이그레이션에서 통합 매핑 적용.
-3. **Sem-mismatch 2건** (Button hor/ver) — 본 팔레트 결정과 무관. `semantic.md` §5 에서 별도 추적.

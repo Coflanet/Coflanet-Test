@@ -99,13 +99,13 @@ class _AppAccordionState extends State<AppAccordion>
           child: Padding(
             padding: EdgeInsets.symmetric(
               vertical: widget.padding.value,
-              horizontal: AppSpacing.space16,
+              horizontal: AppSpacing.s16,
             ),
             child: Row(
               children: [
                 if (widget.leading != null) ...[
                   widget.leading!,
-                  SizedBox(width: AppSpacing.space12),
+                  SizedBox(width: AppSpacing.s12),
                 ],
                 Expanded(
                   child: Column(
@@ -130,7 +130,7 @@ class _AppAccordionState extends State<AppAccordion>
                 ),
                 if (widget.isComplete)
                   Padding(
-                    padding: EdgeInsets.only(right: AppSpacing.space8),
+                    padding: EdgeInsets.only(right: AppSpacing.s8),
                     child: Icon(
                       Icons.check_circle,
                       size: 20,

@@ -73,7 +73,7 @@ final List<WidgetbookComponent> segmentedControlUseCases = [
                 selectedIndex: 0,
                 onChanged: (index) {},
               ),
-              const SizedBox(height: AppSpacing.space24),
+              const SizedBox(height: AppSpacing.s24),
               AppSegmentedControl(
                 items: const [
                   AppSegmentItem(label: 'Heart', icon: Icons.favorite_rounded),
@@ -107,7 +107,7 @@ final List<WidgetbookComponent> segmentedControlUseCases = [
 
 Widget _bg(BuildContext context, Widget child) {
   return Container(
-    padding: const EdgeInsets.all(AppSpacing.space16),
+    padding: const EdgeInsets.all(AppSpacing.s16),
     color: Theme.of(context).canvasColor,
     child: child,
   );

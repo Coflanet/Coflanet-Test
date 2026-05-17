@@ -120,14 +120,14 @@ final List<WidgetbookComponent> bannerUseCases = [
                   onTap: () {},
                 ),
               ),
-              const SizedBox(height: AppSpacing.space12),
+              const SizedBox(height: AppSpacing.s12),
               AppBanner(
                 layout: AppBannerLayout.compact,
                 title: '바리스타 추천 시그니처',
                 body: '주니어 바리스타가 직접 큐레이션한 시그니처 메뉴',
                 onTap: () {},
               ),
-              const SizedBox(height: AppSpacing.space8),
+              const SizedBox(height: AppSpacing.s8),
               AppBanner(
                 layout: AppBannerLayout.compact,
                 title: '핸드드립 입문 가이드',
@@ -145,7 +145,7 @@ final List<WidgetbookComponent> bannerUseCases = [
 Widget _bg(BuildContext context, Widget child) {
   return Container(
     color: Theme.of(context).canvasColor,
-    padding: const EdgeInsets.all(AppSpacing.space16),
+    padding: const EdgeInsets.all(AppSpacing.s16),
     child: child,
   );
 }

@@ -20,9 +20,9 @@ final List<WidgetbookComponent> playIconBadgeUseCases = [
             crossAxisAlignment: CrossAxisAlignment.center,
             children: const [
               AppPlayIconBadge(size: AppPlayIconBadgeSize.small),
-              SizedBox(width: AppSpacing.space16),
+              SizedBox(width: AppSpacing.s16),
               AppPlayIconBadge(size: AppPlayIconBadgeSize.medium),
-              SizedBox(width: AppSpacing.space16),
+              SizedBox(width: AppSpacing.s16),
               AppPlayIconBadge(size: AppPlayIconBadgeSize.large),
             ],
           ),
@@ -36,7 +36,7 @@ final List<WidgetbookComponent> playIconBadgeUseCases = [
             mainAxisSize: MainAxisSize.min,
             children: const [
               AppPlayIconBadge(variant: AppPlayIconBadgeVariant.normal),
-              SizedBox(width: AppSpacing.space16),
+              SizedBox(width: AppSpacing.s16),
               AppPlayIconBadge(
                 variant: AppPlayIconBadgeVariant.alternative,
               ),
@@ -56,13 +56,13 @@ final List<WidgetbookComponent> playIconBadgeUseCases = [
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: const [
                   AppPlayIconBadge(size: AppPlayIconBadgeSize.small),
-                  SizedBox(width: AppSpacing.space12),
+                  SizedBox(width: AppSpacing.s12),
                   AppPlayIconBadge(size: AppPlayIconBadgeSize.medium),
-                  SizedBox(width: AppSpacing.space12),
+                  SizedBox(width: AppSpacing.s12),
                   AppPlayIconBadge(size: AppPlayIconBadgeSize.large),
                 ],
               ),
-              const SizedBox(height: AppSpacing.space16),
+              const SizedBox(height: AppSpacing.s16),
               Row(
                 mainAxisSize: MainAxisSize.min,
                 crossAxisAlignment: CrossAxisAlignment.center,
@@ -71,12 +71,12 @@ final List<WidgetbookComponent> playIconBadgeUseCases = [
                     size: AppPlayIconBadgeSize.small,
                     variant: AppPlayIconBadgeVariant.alternative,
                   ),
-                  SizedBox(width: AppSpacing.space12),
+                  SizedBox(width: AppSpacing.s12),
                   AppPlayIconBadge(
                     size: AppPlayIconBadgeSize.medium,
                     variant: AppPlayIconBadgeVariant.alternative,
                   ),
-                  SizedBox(width: AppSpacing.space12),
+                  SizedBox(width: AppSpacing.s12),
                   AppPlayIconBadge(
                     size: AppPlayIconBadgeSize.large,
                     variant: AppPlayIconBadgeVariant.alternative,
@@ -93,7 +93,7 @@ final List<WidgetbookComponent> playIconBadgeUseCases = [
 
 Widget _bg(BuildContext context, Widget child) {
   return Container(
-    padding: const EdgeInsets.all(AppSpacing.space24),
+    padding: const EdgeInsets.all(AppSpacing.s24),
     color: Theme.of(context).canvasColor,
     alignment: Alignment.center,
     child: child,

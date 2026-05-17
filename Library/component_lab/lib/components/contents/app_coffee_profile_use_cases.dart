@@ -111,7 +111,7 @@ final List<WidgetbookComponent> coffeeProfileUseCases = [
 
 Widget _bg(BuildContext context, Widget child) {
   return SingleChildScrollView(
-    padding: const EdgeInsets.all(AppSpacing.space16),
+    padding: const EdgeInsets.all(AppSpacing.s16),
     child: ConstrainedBox(
       constraints: const BoxConstraints(maxWidth: 480),
       child: Container(

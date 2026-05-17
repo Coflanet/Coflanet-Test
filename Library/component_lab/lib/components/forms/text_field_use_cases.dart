@@ -161,7 +161,7 @@ Widget _wrap(BuildContext context, List<Widget> children) {
       children: [
         for (final child in children) ...[
           child,
-          const SizedBox(height: AppSpacing.space20),
+          const SizedBox(height: AppSpacing.s20),
         ],
       ],
     ),

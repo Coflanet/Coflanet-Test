@@ -99,7 +99,7 @@ class AppSocialButton extends StatelessWidget {
                   height: 22,
                   colorFilter: ColorFilter.mode(c.fg, BlendMode.srcIn),
                 ),
-                const SizedBox(width: AppSpacing.space8),
+                const SizedBox(width: AppSpacing.s8),
                 Text(
                   customText ?? c.label,
                   style: AppTextStyles.headline2Bold.copyWith(color: c.fg),

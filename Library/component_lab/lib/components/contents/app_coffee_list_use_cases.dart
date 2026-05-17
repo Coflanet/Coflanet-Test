@@ -147,14 +147,14 @@ final List<WidgetbookComponent> coffeeListUseCases = [
                 name: '에티오피아 예가체프',
                 onTap: () {},
               ),
-              const SizedBox(height: AppSpacing.space8),
+              const SizedBox(height: AppSpacing.s8),
               AppCoffeeListItem(
                 brand: '브랜드명 · 구독중',
                 name: '콜롬비아 수프리모',
                 state: AppCoffeeListItemState.selected,
                 onTap: () {},
               ),
-              const SizedBox(height: AppSpacing.space8),
+              const SizedBox(height: AppSpacing.s8),
               AppCoffeeListItem(
                 brand: '브랜드명 · 구독중',
                 name: '브라질 산토스',
@@ -180,7 +180,7 @@ final List<WidgetbookComponent> coffeeListUseCases = [
 
 Widget _bg(BuildContext context, Widget child) {
   return SingleChildScrollView(
-    padding: const EdgeInsets.all(AppSpacing.space16),
+    padding: const EdgeInsets.all(AppSpacing.s16),
     child: ConstrainedBox(
       constraints: const BoxConstraints(maxWidth: 480),
       child: Container(

@@ -34,7 +34,7 @@ class AppCoffeeAttributeBar extends StatelessWidget {
   Widget build(BuildContext context) {
     final hasCompare = comparedValue != null;
     return Padding(
-      padding: const EdgeInsets.symmetric(vertical: AppSpacing.space4),
+      padding: const EdgeInsets.symmetric(vertical: AppSpacing.s4),
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.center,
         children: [
@@ -47,7 +47,7 @@ class AppCoffeeAttributeBar extends StatelessWidget {
               ),
             ),
           ),
-          const SizedBox(width: AppSpacing.space12),
+          const SizedBox(width: AppSpacing.s12),
           Expanded(
             child: Column(
               mainAxisSize: MainAxisSize.min,
@@ -57,7 +57,7 @@ class AppCoffeeAttributeBar extends StatelessWidget {
                   color: AppColor.primaryNormal,
                 ),
                 if (hasCompare) ...[
-                  const SizedBox(height: AppSpacing.space4),
+                  const SizedBox(height: AppSpacing.s4),
                   _Track(
                     ratio: (comparedValue! / maxValue).clamp(0.0, 1.0),
                     color: AppColor.colorGlobalYellow50,
@@ -66,7 +66,7 @@ class AppCoffeeAttributeBar extends StatelessWidget {
               ],
             ),
           ),
-          const SizedBox(width: AppSpacing.space8),
+          const SizedBox(width: AppSpacing.s8),
           SizedBox(
             width: 32,
             child: Text(
@@ -146,7 +146,7 @@ class AppCoffeeAttributesChart extends StatelessWidget {
               mainAxisSize: MainAxisSize.min,
               children: [
                 _LegendDot(color: AppColor.primaryNormal, label: '커피'),
-                const SizedBox(width: AppSpacing.space12),
+                const SizedBox(width: AppSpacing.s12),
                 _LegendDot(
                   color: AppColor.colorGlobalYellow50,
                   label: '내취향',
@@ -154,7 +154,7 @@ class AppCoffeeAttributesChart extends StatelessWidget {
               ],
             ),
           ),
-          const SizedBox(height: AppSpacing.space8),
+          const SizedBox(height: AppSpacing.s8),
         ],
         ...values.entries.map(
           (e) => AppCoffeeAttributeBar(
@@ -185,7 +185,7 @@ class _LegendDot extends StatelessWidget {
             color: AppColor.labelAlternative,
           ),
         ),
-        const SizedBox(width: AppSpacing.space4),
+        const SizedBox(width: AppSpacing.s4),
         Container(
           width: 6,
           height: 6,
@@ -203,8 +203,8 @@ class AppFlavorNotesChips extends StatelessWidget {
   const AppFlavorNotesChips({
     super.key,
     required this.notes,
-    this.spacing = AppSpacing.space8,
-    this.runSpacing = AppSpacing.space8,
+    this.spacing = AppSpacing.s8,
+    this.runSpacing = AppSpacing.s8,
   });
 
   final List<String> notes;
@@ -241,7 +241,7 @@ class AppCoffeeProfileCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      padding: const EdgeInsets.all(AppSpacing.space16),
+      padding: const EdgeInsets.all(AppSpacingSemantic.insetLg),
       decoration: BoxDecoration(
         color: AppColor.backgroundElevatedAlternative,
         borderRadius: BorderRadius.circular(AppRadius.radius12),
@@ -255,7 +255,7 @@ class AppCoffeeProfileCard extends StatelessWidget {
             compared: compared,
             maxValue: maxValue,
           ),
-          const SizedBox(height: AppSpacing.space12),
+          const SizedBox(height: AppSpacing.s12),
           AppFlavorNotesChips(notes: flavorNotes),
         ],
       ),

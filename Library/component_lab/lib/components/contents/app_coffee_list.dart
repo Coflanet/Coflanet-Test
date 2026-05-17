@@ -79,7 +79,7 @@ class AppCoffeeListItem extends StatelessWidget {
             borderRadius: BorderRadius.circular(AppRadius.radius12),
             border: Border.all(color: borderColor, width: borderWidth),
           ),
-          padding: const EdgeInsets.all(AppSpacing.space12),
+          padding: const EdgeInsets.all(AppSpacingSemantic.insetMd),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.stretch,
             mainAxisSize: MainAxisSize.min,
@@ -95,19 +95,19 @@ class AppCoffeeListItem extends StatelessWidget {
                 onLikeTap: onLikeTap,
               ),
               if (expanded && attributes != null) ...[
-                const SizedBox(height: AppSpacing.space12),
+                const SizedBox(height: AppSpacing.s12),
                 AppCoffeeAttributesChart(
                   values: attributes!,
                   compared: compared,
                 ),
               ],
               if (expanded && flavorNotes.isNotEmpty) ...[
-                const SizedBox(height: AppSpacing.space12),
+                const SizedBox(height: AppSpacing.s12),
                 AppFlavorNotesChips(notes: flavorNotes),
               ],
               if (expanded &&
                   (onDetailTap != null || onRecipeTap != null)) ...[
-                const SizedBox(height: AppSpacing.space16),
+                const SizedBox(height: AppSpacing.s16),
                 Row(
                   children: [
                     if (onDetailTap != null)
@@ -118,7 +118,7 @@ class AppCoffeeListItem extends StatelessWidget {
                         ),
                       ),
                     if (onDetailTap != null && onRecipeTap != null)
-                      const SizedBox(width: AppSpacing.space8),
+                      const SizedBox(width: AppSpacing.s8),
                     if (onRecipeTap != null)
                       Expanded(
                         child: _PrimaryActionButton(
@@ -202,7 +202,7 @@ class _Header extends StatelessWidget {
               ),
           ],
         ),
-        const SizedBox(width: AppSpacing.space12),
+        const SizedBox(width: AppSpacing.s12),
         Expanded(
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
@@ -212,7 +212,7 @@ class _Header extends StatelessWidget {
                 children: [
                   AppMiniChip(label: brand, tone: AppMiniChipTone.primary),
                   if (expanded && price != null) ...[
-                    const SizedBox(width: AppSpacing.space8),
+                    const SizedBox(width: AppSpacing.s8),
                     Text(
                       '실시간시세',
                       style: AppTextStyles.caption1Regular.copyWith(
@@ -222,7 +222,7 @@ class _Header extends StatelessWidget {
                   ],
                 ],
               ),
-              const SizedBox(height: AppSpacing.space4),
+              const SizedBox(height: AppSpacing.s4),
               Text(
                 name,
                 style: AppTextStyles.body2NormalMedium.copyWith(
@@ -232,7 +232,7 @@ class _Header extends StatelessWidget {
                 overflow: TextOverflow.ellipsis,
               ),
               if (expanded && price != null) ...[
-                const SizedBox(height: 2),
+                const SizedBox(height: AppSpacingSemantic.inlineXs),
                 Row(
                   children: [
                     if (discountPercent != null) ...[
@@ -242,7 +242,7 @@ class _Header extends StatelessWidget {
                           color: AppColor.statusNegative,
                         ),
                       ),
-                      const SizedBox(width: AppSpacing.space4),
+                      const SizedBox(width: AppSpacing.s4),
                     ],
                     Text(
                       formatPrice(price!),

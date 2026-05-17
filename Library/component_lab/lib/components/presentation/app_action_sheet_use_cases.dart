@@ -75,7 +75,7 @@ final List<WidgetbookComponent> actionSheetUseCases = [
 Widget _bg(BuildContext context, Widget child) {
   return Container(
     color: AppColor.backgroundNormalNormal,
-    padding: const EdgeInsets.all(AppSpacing.space24),
+    padding: const EdgeInsets.all(AppSpacing.s24),
     alignment: Alignment.center,
     child: child,
   );

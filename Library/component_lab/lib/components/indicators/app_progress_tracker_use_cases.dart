@@ -82,7 +82,7 @@ final List<WidgetbookComponent> progressTrackerUseCases = [
 Widget _bg(BuildContext context, Widget child) {
   return Container(
     color: AppColor.backgroundNormalNormal,
-    padding: const EdgeInsets.all(AppSpacing.space24),
+    padding: const EdgeInsets.all(AppSpacing.s24),
     child: child,
   );
 }

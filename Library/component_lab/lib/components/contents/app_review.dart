@@ -79,15 +79,15 @@ class AppReview extends StatelessWidget {
   Widget _buildTextOnly(BuildContext context) {
     return Padding(
       padding: const EdgeInsets.symmetric(
-        horizontal: AppSpacing.space16,
-        vertical: AppSpacing.space12,
+        horizontal: AppSpacing.s16,
+        vertical: AppSpacing.s12,
       ),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         mainAxisSize: MainAxisSize.min,
         children: [
           _StarRow(rating: rating, author: author, date: date),
-          const SizedBox(height: AppSpacing.space8),
+          const SizedBox(height: AppSpacing.s8),
           Text(
             content,
             style: AppTextStyles.body2NormalRegular.copyWith(
@@ -95,7 +95,7 @@ class AppReview extends StatelessWidget {
             ),
           ),
           if (helpfulCount != null) ...[
-            const SizedBox(height: AppSpacing.space8),
+            const SizedBox(height: AppSpacing.s8),
             _HelpfulRow(count: helpfulCount, onTap: onHelpfulTap),
           ],
         ],
@@ -106,8 +106,8 @@ class AppReview extends StatelessWidget {
   Widget _buildCompact(BuildContext context) {
     return Padding(
       padding: const EdgeInsets.symmetric(
-        horizontal: AppSpacing.space16,
-        vertical: AppSpacing.space12,
+        horizontal: AppSpacing.s16,
+        vertical: AppSpacing.s12,
       ),
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -118,7 +118,7 @@ class AppReview extends StatelessWidget {
               mainAxisSize: MainAxisSize.min,
               children: [
                 _StarRow(rating: rating, author: author, date: date),
-                const SizedBox(height: AppSpacing.space4),
+                const SizedBox(height: AppSpacing.s4),
                 Text(
                   content,
                   style: AppTextStyles.body2NormalRegular.copyWith(
@@ -131,7 +131,7 @@ class AppReview extends StatelessWidget {
             ),
           ),
           if (thumbnails.isNotEmpty) ...[
-            const SizedBox(width: AppSpacing.space12),
+            const SizedBox(width: AppSpacing.s12),
             ClipRRect(
               borderRadius: BorderRadius.circular(AppRadius.radius8),
               child: SizedBox(
@@ -149,15 +149,15 @@ class AppReview extends StatelessWidget {
   Widget _buildMultiImage(BuildContext context) {
     return Padding(
       padding: const EdgeInsets.symmetric(
-        horizontal: AppSpacing.space16,
-        vertical: AppSpacing.space12,
+        horizontal: AppSpacing.s16,
+        vertical: AppSpacing.s12,
       ),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         mainAxisSize: MainAxisSize.min,
         children: [
           _StarRow(rating: rating, author: author, date: date),
-          const SizedBox(height: AppSpacing.space8),
+          const SizedBox(height: AppSpacing.s8),
           Row(
             children: thumbnails.take(4).map((t) {
               final i = thumbnails.indexOf(t);
@@ -175,7 +175,7 @@ class AppReview extends StatelessWidget {
               );
             }).toList(),
           ),
-          const SizedBox(height: AppSpacing.space8),
+          const SizedBox(height: AppSpacing.s8),
           Text(
             content,
             style: AppTextStyles.body2NormalRegular.copyWith(
@@ -184,7 +184,7 @@ class AppReview extends StatelessWidget {
             maxLines: 4,
             overflow: TextOverflow.ellipsis,
           ),
-          const SizedBox(height: AppSpacing.space8),
+          const SizedBox(height: AppSpacing.s8),
           _HelpfulRow(
             count: helpfulCount,
             onTap: onHelpfulTap,
@@ -197,8 +197,8 @@ class AppReview extends StatelessWidget {
   Widget _buildFull(BuildContext context) {
     return Padding(
       padding: const EdgeInsets.symmetric(
-        horizontal: AppSpacing.space16,
-        vertical: AppSpacing.space12,
+        horizontal: AppSpacing.s16,
+        vertical: AppSpacing.s12,
       ),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -212,10 +212,10 @@ class AppReview extends StatelessWidget {
             avatar: avatar,
           ),
           if (thumbnails.isNotEmpty) ...[
-            const SizedBox(height: AppSpacing.space8),
+            const SizedBox(height: AppSpacing.s8),
             _ImageGrid(thumbnails: thumbnails),
           ],
-          const SizedBox(height: AppSpacing.space8),
+          const SizedBox(height: AppSpacing.s8),
           Text(
             content,
             style: AppTextStyles.body2NormalRegular.copyWith(
@@ -225,7 +225,7 @@ class AppReview extends StatelessWidget {
             overflow: TextOverflow.ellipsis,
           ),
           if (onMoreTap != null) ...[
-            const SizedBox(height: AppSpacing.space4),
+            const SizedBox(height: AppSpacing.s4),
             GestureDetector(
               behavior: HitTestBehavior.opaque,
               onTap: onMoreTap,
@@ -237,7 +237,7 @@ class AppReview extends StatelessWidget {
               ),
             ),
           ],
-          const SizedBox(height: AppSpacing.space8),
+          const SizedBox(height: AppSpacing.s8),
           _HelpfulRow(
             count: helpfulCount,
             onTap: onHelpfulTap,
@@ -264,7 +264,7 @@ class _StarRow extends StatelessWidget {
     return Row(
       children: [
         Icon(Icons.star_rounded, size: 14, color: AppColor.colorGlobalYellow50),
-        const SizedBox(width: 2),
+        const SizedBox(width: AppSpacingSemantic.inlineXs),
         Text(
           rating.toStringAsFixed(1),
           style: AppTextStyles.label2Bold.copyWith(
@@ -272,14 +272,14 @@ class _StarRow extends StatelessWidget {
             fontFeatures: const [FontFeature.tabularFigures()],
           ),
         ),
-        const SizedBox(width: AppSpacing.space8),
+        const SizedBox(width: AppSpacing.s8),
         Text(
           author,
           style: AppTextStyles.label2Regular.copyWith(
             color: AppColor.labelNeutral,
           ),
         ),
-        const SizedBox(width: AppSpacing.space8),
+        const SizedBox(width: AppSpacing.s8),
         Text(
           date,
           style: AppTextStyles.caption1Regular.copyWith(
@@ -327,7 +327,7 @@ class _AvatarStarRow extends StatelessWidget {
                 ),
               ),
         ),
-        const SizedBox(width: AppSpacing.space8),
+        const SizedBox(width: AppSpacing.s8),
         Expanded(
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
@@ -348,7 +348,7 @@ class _AvatarStarRow extends StatelessWidget {
                       ),
                     ),
                   ),
-                  const SizedBox(width: AppSpacing.space4),
+                  const SizedBox(width: AppSpacing.s4),
                   Text(
                     rating.toStringAsFixed(1),
                     style: AppTextStyles.label2Bold.copyWith(
@@ -366,7 +366,7 @@ class _AvatarStarRow extends StatelessWidget {
                       color: AppColor.labelNeutral,
                     ),
                   ),
-                  const SizedBox(width: AppSpacing.space8),
+                  const SizedBox(width: AppSpacing.s8),
                   Text(
                     date,
                     style: AppTextStyles.caption1Regular.copyWith(
@@ -374,7 +374,7 @@ class _AvatarStarRow extends StatelessWidget {
                     ),
                   ),
                   if (onReportTap != null) ...[
-                    const SizedBox(width: AppSpacing.space8),
+                    const SizedBox(width: AppSpacing.s8),
                     GestureDetector(
                       behavior: HitTestBehavior.opaque,
                       onTap: onReportTap,
@@ -442,7 +442,7 @@ class _HelpfulRow extends StatelessWidget {
           behavior: HitTestBehavior.opaque,
           onTap: onTap,
           child: Container(
-            padding: const EdgeInsets.symmetric(horizontal: AppSpacing.space8, vertical: AppSpacing.space4),
+            padding: const EdgeInsets.symmetric(horizontal: AppSpacing.s8, vertical: AppSpacing.s4),
             decoration: BoxDecoration(
               color: AppColor.lineSolidNeutral,
               borderRadius: BorderRadius.circular(AppRadius.radius6),
@@ -455,7 +455,7 @@ class _HelpfulRow extends StatelessWidget {
                   size: 12,
                   color: AppColor.labelAlternative,
                 ),
-                const SizedBox(width: AppSpacing.space4),
+                const SizedBox(width: AppSpacing.s4),
                 Text(
                   '${count ?? 0}',
                   style: AppTextStyles.caption1Regular.copyWith(

@@ -17,13 +17,13 @@ final List<WidgetbookComponent> progressUseCases = [
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: const [
               AppLinearProgress(value: 0),
-              SizedBox(height: AppSpacing.space12),
+              SizedBox(height: AppSpacing.s12),
               AppLinearProgress(value: 0.25),
-              SizedBox(height: AppSpacing.space12),
+              SizedBox(height: AppSpacing.s12),
               AppLinearProgress(value: 0.5),
-              SizedBox(height: AppSpacing.space12),
+              SizedBox(height: AppSpacing.s12),
               AppLinearProgress(value: 0.75),
-              SizedBox(height: AppSpacing.space12),
+              SizedBox(height: AppSpacing.s12),
               AppLinearProgress(value: 1),
             ],
           ),
@@ -45,10 +45,10 @@ final List<WidgetbookComponent> progressUseCases = [
             children: [
               const AppLinearProgress(
                   value: 0.6, color: AppColor.colorGlobalGreen50),
-              const SizedBox(height: AppSpacing.space12),
+              const SizedBox(height: AppSpacing.s12),
               const AppLinearProgress(
                   value: 0.4, color: AppColor.colorGlobalOrange50, height: 8),
-              const SizedBox(height: AppSpacing.space12),
+              const SizedBox(height: AppSpacing.s12),
               const AppLinearProgress(
                   value: 0.8, color: AppColor.colorGlobalRed50, height: 12),
             ],
@@ -107,12 +107,12 @@ final List<WidgetbookComponent> progressUseCases = [
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
               AppLabeledProgress(label: '진행 중', value: 0.35),
-              SizedBox(height: AppSpacing.space16),
+              SizedBox(height: AppSpacing.s16),
               AppLabeledProgress(
                   label: '저장됨',
                   value: 0.85,
                   color: AppColor.colorGlobalGreen50),
-              SizedBox(height: AppSpacing.space16),
+              SizedBox(height: AppSpacing.s16),
               AppLabeledProgress(
                   label: '거의 완료',
                   value: 0.95,

@@ -130,7 +130,7 @@ final List<WidgetbookComponent> recipeTimerUseCases = [
 Widget _bg(BuildContext context, Widget child) {
   return Container(
     color: Theme.of(context).canvasColor,
-    padding: const EdgeInsets.all(AppSpacing.space16),
+    padding: const EdgeInsets.all(AppSpacing.s16),
     child: ConstrainedBox(
       constraints: const BoxConstraints(maxWidth: 480),
       child: child,

@@ -179,8 +179,8 @@ class _AppTextFieldState extends State<AppTextField> {
   }
 
   EdgeInsets get _contentPadding => const EdgeInsets.symmetric(
-        horizontal: AppSpacing.space16,
-        vertical: AppSpacing.space12,
+        horizontal: AppSpacing.s16,
+        vertical: AppSpacing.s12,
       );
 
   @override
@@ -209,7 +209,7 @@ class _AppTextFieldState extends State<AppTextField> {
             widget.label!,
             style: AppTextStyles.label2Medium.copyWith(color: labelColor),
           ),
-          const SizedBox(height: AppSpacing.space8),
+          const SizedBox(height: AppSpacing.s8),
         ],
         SizedBox(
           height: widget.maxLines > 1 ? null : _height,
@@ -271,7 +271,7 @@ class _AppTextFieldState extends State<AppTextField> {
           ),
         ),
         if (_hasError || widget.helperText != null) ...[
-          const SizedBox(height: AppSpacing.space4),
+          const SizedBox(height: AppSpacing.s4),
           Text(
             _hasError ? widget.errorText! : widget.helperText!,
             style: AppTextStyles.caption1Regular.copyWith(

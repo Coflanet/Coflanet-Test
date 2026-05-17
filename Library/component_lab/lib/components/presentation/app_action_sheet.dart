@@ -98,7 +98,7 @@ class AppActionSheet extends StatelessWidget {
     return SafeArea(
       top: false,
       child: Padding(
-        padding: const EdgeInsets.all(AppSpacing.space8),
+        padding: const EdgeInsets.all(AppSpacingSemantic.insetSm),
         child: switch (style) {
           AppActionSheetStyle.ios => _buildIos(context, cardColor),
           AppActionSheetStyle.android => _buildAndroid(context, cardColor),
@@ -132,7 +132,7 @@ class AppActionSheet extends StatelessWidget {
             ),
           ),
         ),
-        const SizedBox(height: AppSpacing.space8),
+        const SizedBox(height: AppSpacing.s8),
         ClipRRect(
           borderRadius: BorderRadius.circular(AppRadius.radius14),
           child: Container(
@@ -158,7 +158,7 @@ class AppActionSheet extends StatelessWidget {
           children: [
             // Drag handle
             Padding(
-              padding: const EdgeInsets.only(top: AppSpacing.space8, bottom: AppSpacing.space4),
+              padding: const EdgeInsets.only(top: AppSpacing.s8, bottom: AppSpacing.s4),
               child: Container(
                 width: 36,
                 height: 4,
@@ -175,7 +175,7 @@ class AppActionSheet extends StatelessWidget {
                 action: actions[i],
                 onTap: () => Navigator.pop(context, i),
               ),
-            const SizedBox(height: AppSpacing.space8),
+            const SizedBox(height: AppSpacing.s8),
           ],
         ),
       ),
@@ -195,8 +195,8 @@ class _Header extends StatelessWidget {
     return Container(
       width: double.infinity,
       padding: EdgeInsets.symmetric(
-        horizontal: AppSpacing.space16,
-        vertical: compact ? AppSpacing.space12 : AppSpacing.space16,
+        horizontal: AppSpacing.s16,
+        vertical: compact ? AppSpacing.s12 : AppSpacing.s16,
       ),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.center,
@@ -210,7 +210,7 @@ class _Header extends StatelessWidget {
                 color: AppColor.labelNeutral,
               ),
             ),
-          if (title != null && message != null) const SizedBox(height: AppSpacing.space4),
+          if (title != null && message != null) const SizedBox(height: AppSpacing.s4),
           if (message != null)
             Text(
               message!,
@@ -264,7 +264,7 @@ class _ActionRow extends StatelessWidget {
         child: Container(
           width: double.infinity,
           height: 56,
-          padding: const EdgeInsets.symmetric(horizontal: AppSpacing.space16),
+          padding: const EdgeInsets.symmetric(horizontal: AppSpacing.s16),
           alignment: Alignment.center,
           child: Row(
             mainAxisAlignment: MainAxisAlignment.center,
@@ -272,7 +272,7 @@ class _ActionRow extends StatelessWidget {
             children: [
               if (action.icon != null) ...[
                 Icon(action.icon, size: 20, color: color),
-                const SizedBox(width: AppSpacing.space8),
+                const SizedBox(width: AppSpacing.s8),
               ],
               Flexible(
                 child: Text(

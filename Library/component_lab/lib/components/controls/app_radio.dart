@@ -68,7 +68,7 @@ class AppRadio<T> extends StatelessWidget {
             mainAxisSize: MainAxisSize.min,
             children: [
               radio,
-              const SizedBox(width: AppSpacing.space8),
+              const SizedBox(width: AppSpacing.s8),
               Text(
                 label!,
                 style: AppTextStyles.label1NormalRegular

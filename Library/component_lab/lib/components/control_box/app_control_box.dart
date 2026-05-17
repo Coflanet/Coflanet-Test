@@ -42,8 +42,8 @@ class AppControlBox extends StatelessWidget {
         opacity: isDisabled ? 0.4 : 1.0,
         child: Container(
           padding: EdgeInsets.symmetric(
-            vertical: AppSpacing.space12,
-            horizontal: AppSpacing.space16,
+            vertical: AppSpacing.s12,
+            horizontal: AppSpacing.s16,
           ),
           decoration: BoxDecoration(
             color: isSelected
@@ -61,7 +61,7 @@ class AppControlBox extends StatelessWidget {
             children: [
               // 선택 인디케이터
               _buildIndicator(),
-              SizedBox(width: AppSpacing.space12),
+              SizedBox(width: AppSpacing.s12),
               // 라벨
               Expanded(
                 child: Column(
@@ -75,7 +75,7 @@ class AppControlBox extends StatelessWidget {
                       ),
                     ),
                     if (subtitle != null) ...[
-                      const SizedBox(height: 2),
+                      const SizedBox(height: AppSpacingSemantic.inlineXs),
                       Text(
                         subtitle!,
                         style: AppTextStyles.caption1Regular.copyWith(

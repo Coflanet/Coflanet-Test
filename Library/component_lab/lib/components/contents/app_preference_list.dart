@@ -80,7 +80,7 @@ class AppTasteChip extends StatelessWidget {
       onTap: onTap,
       child: Container(
         width: 60,
-        padding: const EdgeInsets.symmetric(vertical: 6, horizontal: AppSpacing.space8),
+        padding: const EdgeInsets.symmetric(vertical: 6, horizontal: AppSpacing.s8),
         decoration: BoxDecoration(
           color: bg,
           borderRadius: BorderRadius.circular(AppRadius.radius8),
@@ -92,7 +92,7 @@ class AppTasteChip extends StatelessWidget {
               label,
               style: AppTextStyles.caption1Regular.copyWith(color: fg),
             ),
-            const SizedBox(height: 2),
+            const SizedBox(height: AppSpacingSemantic.inlineXs),
             Text(
               _levelText(),
               style: AppTextStyles.label2Bold.copyWith(color: fg),
@@ -186,7 +186,7 @@ class _AppPreferenceItemState extends State<AppPreferenceItem> {
           borderRadius: BorderRadius.circular(AppRadius.radius12),
           border: Border.all(color: borderColor, width: borderWidth),
         ),
-        padding: const EdgeInsets.all(AppSpacing.space16),
+        padding: const EdgeInsets.all(AppSpacingSemantic.insetLg),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           mainAxisSize: MainAxisSize.min,
@@ -220,10 +220,10 @@ class _AppPreferenceItemState extends State<AppPreferenceItem> {
               ),
             ),
             if (widget.summaryTags.isNotEmpty) ...[
-              const SizedBox(height: AppSpacing.space8),
+              const SizedBox(height: AppSpacing.s8),
               Wrap(
-                spacing: 6,
-                runSpacing: 6,
+                spacing: AppSpacing.s6,
+                runSpacing: AppSpacing.s6,
                 children: widget.summaryTags
                     .map(
                       (t) => AppPreferenceFlavorChip(label: t),
@@ -243,39 +243,39 @@ class _AppPreferenceItemState extends State<AppPreferenceItem> {
                       children: [
                         if (widget.tasteChips != null &&
                             widget.tasteChips!.isNotEmpty) ...[
-                          const SizedBox(height: AppSpacing.space16),
+                          const SizedBox(height: AppSpacing.s16),
                           Text(
                             '맛 선호도',
                             style: AppTextStyles.label2Regular.copyWith(
                               color: AppColor.labelAlternative,
                             ),
                           ),
-                          const SizedBox(height: AppSpacing.space8),
+                          const SizedBox(height: AppSpacing.s8),
                           Wrap(
-                            spacing: AppSpacing.space8,
-                            runSpacing: AppSpacing.space8,
+                            spacing: AppSpacing.s8,
+                            runSpacing: AppSpacing.s8,
                             children: widget.tasteChips!,
                           ),
                         ],
                         if (widget.flavorChips != null &&
                             widget.flavorChips!.isNotEmpty) ...[
-                          const SizedBox(height: AppSpacing.space16),
+                          const SizedBox(height: AppSpacing.s16),
                           Text(
                             '좋아하는 향',
                             style: AppTextStyles.label2Regular.copyWith(
                               color: AppColor.labelAlternative,
                             ),
                           ),
-                          const SizedBox(height: AppSpacing.space8),
+                          const SizedBox(height: AppSpacing.s8),
                           Wrap(
-                            spacing: AppSpacing.space8,
-                            runSpacing: AppSpacing.space8,
+                            spacing: AppSpacing.s8,
+                            runSpacing: AppSpacing.s8,
                             children: widget.flavorChips!,
                           ),
                         ],
                       ],
                     )
-                  : const SizedBox(width: double.infinity, height: 0),
+                  : const SizedBox(width: double.infinity, height: AppSpacing.s0),
             ),
           ],
         ),

@@ -92,7 +92,7 @@ class AppProgressTracker extends StatelessWidget {
                       const Spacer(),
                   ],
                 ),
-                const SizedBox(height: AppSpacing.space8),
+                const SizedBox(height: AppSpacing.s8),
                 _StepLabel(step: steps[i], state: _stateOf(i), centered: true),
               ],
             ),
@@ -125,10 +125,10 @@ class AppProgressTracker extends StatelessWidget {
                       ),
                   ],
                 ),
-                const SizedBox(width: AppSpacing.space12),
+                const SizedBox(width: AppSpacing.s12),
                 Padding(
                   padding: EdgeInsets.only(
-                    bottom: i < steps.length - 1 ? AppSpacing.space16 : 0,
+                    bottom: i < steps.length - 1 ? AppSpacing.s16 : 0,
                   ),
                   child: _StepLabel(
                     step: steps[i],
@@ -203,12 +203,12 @@ class _Connector extends StatelessWidget {
     return horizontal
         ? Container(
             height: 2,
-            margin: const EdgeInsets.symmetric(horizontal: AppSpacing.space4),
+            margin: const EdgeInsets.symmetric(horizontal: AppSpacing.s4),
             color: color,
           )
         : Container(
             width: 2,
-            margin: const EdgeInsets.symmetric(vertical: AppSpacing.space4),
+            margin: const EdgeInsets.symmetric(vertical: AppSpacing.s4),
             color: color,
           );
   }
@@ -244,7 +244,7 @@ class _StepLabel extends StatelessWidget {
           style: weight.copyWith(color: color),
         ),
         if (step.subLabel != null) ...[
-          const SizedBox(height: 2),
+          const SizedBox(height: AppSpacingSemantic.inlineXs),
           Text(
             step.subLabel!,
             textAlign: centered ? TextAlign.center : TextAlign.start,
