@@ -432,11 +432,22 @@ class SurveyResultView extends GetView<SurveyController> {
                       color: AppColor.backgroundNormalAlternative,
                       borderRadius: BorderRadius.circular(12),
                     ),
-                    child: Icon(
-                      Icons.coffee_rounded,
-                      color: AppColor.labelAssistive,
-                      size: 40,
-                    ),
+                    clipBehavior: Clip.antiAlias,
+                    child: rec.imageUrl != null && rec.imageUrl!.isNotEmpty
+                        ? Image.network(
+                            rec.imageUrl!,
+                            fit: BoxFit.cover,
+                            errorBuilder: (_, __, ___) => Icon(
+                              Icons.coffee_rounded,
+                              color: AppColor.labelAssistive,
+                              size: 40,
+                            ),
+                          )
+                        : Icon(
+                            Icons.coffee_rounded,
+                            color: AppColor.labelAssistive,
+                            size: 40,
+                          ),
                   ),
                   const SizedBox(width: 12),
                   // Text column

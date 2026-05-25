@@ -195,7 +195,13 @@ class SupabaseSurveyRepository implements SurveyRepository {
     final flavorTags = <String>[];
     final tags = bean['flavor_tags'] ?? bean['flavorTags'];
     if (tags is List) {
-      flavorTags.addAll(tags.map((t) => t.toString()));
+      for (final t in tags) {
+        if (t is Map) {
+          flavorTags.add(t['descriptor'] as String? ?? t['category'] as String? ?? '');
+        } else {
+          flavorTags.add(t.toString());
+        }
+      }
     }
 
     // match_score (0.0~1.0) → matchPercent (0~100)
@@ -213,12 +219,15 @@ class SupabaseSurveyRepository implements SurveyRepository {
       id: (r['id'] ?? r['bean_id'] ?? bean['id'] ?? '').toString(),
       name: bean['name'] as String? ?? '',
       manufacturer: bean['manufacturer'] as String?,
-      origin: bean['origin'] as String? ?? '',
+      origin: bean['origin'] is List
+          ? (bean['origin'] as List).join(', ')
+          : bean['origin'] as String? ?? '',
       roastLevel:
           bean['roast_level'] as String? ?? bean['roastLevel'] as String? ?? '',
       description: bean['description'] as String? ?? '',
-      imageUrl: bean['image_url'] as String? ?? bean['imageUrl'] as String?,
-      originalPrice:
+      imageUrl: bean['naver_image_url'] as String? ??
+          bean['image_url'] as String? ?? bean['imageUrl'] as String?,
+      originalPrice: _toIntOrNull(bean['naver_lprice']) ??
           bean['original_price'] as int? ?? bean['originalPrice'] as int?,
       discountPrice:
           bean['discount_price'] as int? ?? bean['discountPrice'] as int?,
@@ -228,7 +237,7 @@ class SupabaseSurveyRepository implements SurveyRepository {
       tasteProfile: tasteProfile,
       matchPercent: matchPercent,
       flavorTags: flavorTags,
-      purchaseUrl:
+      purchaseUrl: bean['naver_link'] as String? ??
           bean['purchase_url'] as String? ?? bean['purchaseUrl'] as String?,
       reason:
           (r['recommendation_reason'] ?? r['reason'])?.toString(),
@@ -240,6 +249,13 @@ class SupabaseSurveyRepository implements SurveyRepository {
     if (value is double) return value.round();
     if (value is String) return int.tryParse(value) ?? defaultValue;
     return defaultValue;
+  }
+
+  int? _toIntOrNull(dynamic value) {
+    if (value is int) return value;
+    if (value is double) return value.round();
+    if (value is String) return int.tryParse(value);
+    return null;
   }
 
   @override
@@ -314,12 +330,21 @@ class SupabaseSurveyRepository implements SurveyRepository {
     }
 
     // Parse the response
+    // Edge Function은 { success, data: { taste_profile, recommendations, flavors, ... } } 구조
     final responseMap = data is Map<String, dynamic>
         ? data
         : <String, dynamic>{};
-    final profileData =
-        responseMap['taste_profile'] ?? responseMap['profile'] ?? responseMap;
-    final recsData = responseMap['recommendations'] ?? [];
+    final payload = responseMap['data'] is Map<String, dynamic>
+        ? responseMap['data'] as Map<String, dynamic>
+        : responseMap;
+    final profileData = <String, dynamic>{
+      ...?payload['taste_profile'] is Map ? payload['taste_profile'] as Map<String, dynamic> : null,
+      'coffee_type': payload['coffee_type'],
+      'coffee_type_label': payload['coffee_type_label'],
+      'coffee_type_description': payload['coffee_type_description'],
+      'flavors': payload['flavors'],
+    };
+    final recsData = payload['recommendations'] ?? [];
 
     // Clear session after successful completion
     _currentSessionId = null;
