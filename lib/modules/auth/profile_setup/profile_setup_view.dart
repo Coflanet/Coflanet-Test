@@ -30,6 +30,7 @@ class ProfileSetupView extends GetView<ProfileSetupController> {
               BlendMode.srcIn,
             ),
           ),
+          tooltip: '뒤로 가기',
           onPressed: () => Get.back(),
         ),
       ),

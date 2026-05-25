@@ -382,36 +382,41 @@ class MainShellView extends GetView<MainShellController> {
     // Use filled icon for selected, outline for unselected
     final icon = isActive ? tab.iconFilled : tab.iconOutline;
 
-    return GestureDetector(
-      onTap: () => controller.onTabTapped(index),
-      behavior: HitTestBehavior.opaque,
-      child: AnimatedContainer(
-        duration: const Duration(milliseconds: 200),
-        height: 56, // Fill most of the 64px container height
-        margin: const EdgeInsets.symmetric(horizontal: 2),
-        decoration: BoxDecoration(
-          // Figma: Active = black @ 35% opacity, pill shape
-          color: isActive
-              ? AppColor.colorGlobalCommon0.withOpacity(0.35)
-              : AppColor.transparent,
-          borderRadius: BorderRadius.circular(99), // Pill shape
-        ),
-        child: Column(
-          mainAxisSize: MainAxisSize.min,
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            // Icon
-            Icon(icon, size: 22, color: iconColor),
-            const SizedBox(height: 2),
-            // Label - Figma: Caption 2/Medium, 11px, 500 weight, letter-spacing 0.0311em
-            Text(
-              tab.label,
-              style: AppTextStyles.caption2Medium.copyWith(
-                color: labelColor,
-                letterSpacing: 0.0311 * 11, // 0.0311em at 11px
+    return Semantics(
+      label: '${tab.label} 탭',
+      selected: isActive,
+      button: true,
+      child: GestureDetector(
+        onTap: () => controller.onTabTapped(index),
+        behavior: HitTestBehavior.opaque,
+        child: AnimatedContainer(
+          duration: const Duration(milliseconds: 200),
+          height: 56, // Fill most of the 64px container height
+          margin: const EdgeInsets.symmetric(horizontal: 2),
+          decoration: BoxDecoration(
+            // Figma: Active = black @ 35% opacity, pill shape
+            color: isActive
+                ? AppColor.colorGlobalCommon0.withOpacity(0.35)
+                : AppColor.transparent,
+            borderRadius: BorderRadius.circular(99), // Pill shape
+          ),
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              // Icon
+              Icon(icon, size: 22, color: iconColor),
+              const SizedBox(height: 2),
+              // Label - Figma: Caption 2/Medium, 11px, 500 weight, letter-spacing 0.0311em
+              Text(
+                tab.label,
+                style: AppTextStyles.caption2Medium.copyWith(
+                  color: labelColor,
+                  letterSpacing: 0.0311 * 11, // 0.0311em at 11px
+                ),
               ),
-            ),
-          ],
+            ],
+          ),
         ),
       ),
     );

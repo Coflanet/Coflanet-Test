@@ -21,14 +21,16 @@ class SurveyReasonController extends GetxController {
   final SurveyRepository _surveyRepository =
       RepositoryProvider.surveyRepository;
 
-  /// Hardcoded fallback options from Figma (937:45569)
+  /// 서버 option_key와 동기화된 폴백 옵션 (서버 조회 실패 시 사용)
   static const _fallbackOptions = [
-    SurveyReasonOption(id: 'taste', label: '커피 취향을 찾고 싶어요.'),
-    SurveyReasonOption(id: 'beginner', label: '커피는 좋아하지만 추출은 처음이에요'),
-    SurveyReasonOption(id: 'subscribe', label: '원두를 편하게 구독하고 싶어요.'),
-    SurveyReasonOption(id: 'variety', label: '다양한 원두를 시도해보고 싶어요.'),
-    SurveyReasonOption(id: 'community', label: '사람들과 커피에 대해 소통하고 싶어요.'),
-    SurveyReasonOption(id: 'info', label: '커피에 대한 정보를 알고싶어요.'),
+    SurveyReasonOption(id: 'find_taste', label: '커피 취향을 찾고 싶어요.'),
+    SurveyReasonOption(id: 'subscribe_bean', label: '원두를 편하게 구독하고 싶어요.'),
+    SurveyReasonOption(id: 'try_variety', label: '다양한 원두를 시도해보고 싶어요.'),
+    SurveyReasonOption(
+      id: 'community',
+      label: '사람들과 커피에 대해 소통하고 싶어요.',
+    ),
+    SurveyReasonOption(id: 'learn_coffee', label: '커피에 대한 정보를 알고싶어요.'),
   ];
 
   /// Available options (loaded from server or fallback)
@@ -61,7 +63,8 @@ class SurveyReasonController extends GetxController {
         final parsed = <SurveyReasonOption>[];
         for (var i = 0; i < result.length; i++) {
           final map = result[i] as Map<String, dynamic>;
-          final id = (map['id'] ?? map['slug'] ?? '').toString();
+          final id =
+              (map['option_key'] ?? map['slug'] ?? map['id'] ?? '').toString();
           final label = map['label'] as String? ?? map['name'] as String? ?? '';
           if (label.isEmpty) continue;
           parsed.add(

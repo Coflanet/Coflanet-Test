@@ -83,8 +83,11 @@ class SupabaseSurveyRepository implements SurveyRepository {
       }
 
       // Get recommendations
-      final recsData = await _db.rpc('get_my_recommendations');
-      debugPrint('[SurveyRepo] get_my_recommendations: $recsData');
+      // RPC가 { result_id, recommendations: [...] } Map을 반환할 수 있음
+      final recsRaw = await _db.rpc('get_my_recommendations');
+      debugPrint('[SurveyRepo] get_my_recommendations: $recsRaw');
+      final recsData =
+          recsRaw is Map ? recsRaw['recommendations'] ?? recsRaw : recsRaw;
 
       return _parseServerResult(profileData, recsData);
     } catch (e) {
@@ -170,44 +173,65 @@ class SupabaseSurveyRepository implements SurveyRepository {
   }
 
   CoffeeRecommendationModel _parseRecommendation(Map<String, dynamic> r) {
+    // RPC 응답은 { id, match_score, display_order, recommendation_reason, bean: {...} } 구조
+    // bean 키가 있으면 nested 객체에서 원두 정보를 읽음
+    final bean = r['bean'] is Map<String, dynamic>
+        ? r['bean'] as Map<String, dynamic>
+        : r;
+
     // Defensive: handle both camelCase and snake_case keys
-    final tp = r['taste_profile'] ?? r['tasteProfile'];
+    final tp = bean['taste_profile'] ?? bean['tasteProfile'];
     final tasteProfile = tp is Map<String, dynamic>
         ? TasteProfileModel.fromJson(tp)
         : TasteProfileModel(
-            acidity: _toInt(r['acidity']),
-            sweetness: _toInt(r['sweetness']),
-            bitterness: _toInt(r['bitterness']),
-            body: _toInt(r['body']),
-            aroma: _toInt(r['aroma']),
-            balance: _toInt(r['balance'], defaultValue: 50),
+            acidity: _toInt(bean['acidity']),
+            sweetness: _toInt(bean['sweetness']),
+            bitterness: _toInt(bean['bitterness']),
+            body: _toInt(bean['body']),
+            aroma: _toInt(bean['aroma']),
+            balance: _toInt(bean['balance'], defaultValue: 50),
           );
 
     final flavorTags = <String>[];
-    final tags = r['flavor_tags'] ?? r['flavorTags'];
+    final tags = bean['flavor_tags'] ?? bean['flavorTags'];
     if (tags is List) {
       flavorTags.addAll(tags.map((t) => t.toString()));
     }
 
+    // match_score (0.0~1.0) → matchPercent (0~100)
+    final matchScore = r['match_score'] ??
+        r['matchScore'] ??
+        r['match_percent'] ??
+        r['matchPercent'];
+    final matchPercent = matchScore is num
+        ? (matchScore <= 1.0
+            ? (matchScore * 100).round()
+            : matchScore.round())
+        : 50;
+
     return CoffeeRecommendationModel(
-      id: (r['id'] ?? r['bean_id'] ?? '').toString(),
-      name: r['name'] as String? ?? '',
-      manufacturer: r['manufacturer'] as String?,
-      origin: r['origin'] as String? ?? '',
+      id: (r['id'] ?? r['bean_id'] ?? bean['id'] ?? '').toString(),
+      name: bean['name'] as String? ?? '',
+      manufacturer: bean['manufacturer'] as String?,
+      origin: bean['origin'] as String? ?? '',
       roastLevel:
-          r['roast_level'] as String? ?? r['roastLevel'] as String? ?? '',
-      description: r['description'] as String? ?? '',
-      imageUrl: r['image_url'] as String? ?? r['imageUrl'] as String?,
-      originalPrice: r['original_price'] as int? ?? r['originalPrice'] as int?,
-      discountPrice: r['discount_price'] as int? ?? r['discountPrice'] as int?,
+          bean['roast_level'] as String? ?? bean['roastLevel'] as String? ?? '',
+      description: bean['description'] as String? ?? '',
+      imageUrl: bean['image_url'] as String? ?? bean['imageUrl'] as String?,
+      originalPrice:
+          bean['original_price'] as int? ?? bean['originalPrice'] as int?,
+      discountPrice:
+          bean['discount_price'] as int? ?? bean['discountPrice'] as int?,
       discountPercent:
-          r['discount_percent'] as int? ?? r['discountPercent'] as int?,
-      weight: r['weight'] as String?,
+          bean['discount_percent'] as int? ?? bean['discountPercent'] as int?,
+      weight: bean['weight'] as String?,
       tasteProfile: tasteProfile,
-      matchPercent:
-          r['match_percent'] as int? ?? r['matchPercent'] as int? ?? 50,
+      matchPercent: matchPercent,
       flavorTags: flavorTags,
-      purchaseUrl: r['purchase_url'] as String? ?? r['purchaseUrl'] as String?,
+      purchaseUrl:
+          bean['purchase_url'] as String? ?? bean['purchaseUrl'] as String?,
+      reason:
+          (r['recommendation_reason'] ?? r['reason'])?.toString(),
     );
   }
 

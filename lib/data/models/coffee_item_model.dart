@@ -21,7 +21,7 @@ class CoffeeItem {
   /// Characteristic flavor tags (특성 향미) - e.g., ["자스민", "베리", "로스팅 향"]
   final List<String>? characteristicFlavors;
 
-  /// Aroma intensity (향의 진함) - 0.0 to 5.0
+  /// Aroma intensity (향의 진함) - 0 to 100
   final double? aromaIntensity;
 
   /// Origin country/region
@@ -32,6 +32,24 @@ class CoffeeItem {
 
   /// Processing method (e.g., "Washed", "Natural", "Honey")
   final String? processMethod;
+
+  /// 네이버 쇼핑 상품 ID
+  final String? naverProductId;
+
+  /// 네이버 쇼핑 상품 링크
+  final String? naverLink;
+
+  /// 네이버 쇼핑 이미지 URL (우선 표시)
+  final String? naverImageUrl;
+
+  /// 네이버 쇼핑 최저가 (원)
+  final int? naverLprice;
+
+  /// 네이버 쇼핑 최고가 (원)
+  final int? naverHprice;
+
+  /// 네이버 쇼핑 판매처명
+  final String? naverMallName;
 
   /// Whether the bean is hidden from the main list
   final bool isHidden;
@@ -53,9 +71,18 @@ class CoffeeItem {
     this.origin,
     this.roastLevel,
     this.processMethod,
+    this.naverProductId,
+    this.naverLink,
+    this.naverImageUrl,
+    this.naverLprice,
+    this.naverHprice,
+    this.naverMallName,
     this.isHidden = false,
     this.sortOrder,
   });
+
+  /// 표시용 이미지 URL (네이버 이미지 우선, 없으면 기본 imageUrl)
+  String? get displayImageUrl => naverImageUrl ?? imageUrl;
 
   /// Get all flavor tags combined
   List<String> get allFlavorTags => [
@@ -78,6 +105,12 @@ class CoffeeItem {
     String? origin,
     String? roastLevel,
     String? processMethod,
+    String? naverProductId,
+    String? naverLink,
+    String? naverImageUrl,
+    int? naverLprice,
+    int? naverHprice,
+    String? naverMallName,
     bool? isHidden,
     int? sortOrder,
   }) {
@@ -96,6 +129,12 @@ class CoffeeItem {
       origin: origin ?? this.origin,
       roastLevel: roastLevel ?? this.roastLevel,
       processMethod: processMethod ?? this.processMethod,
+      naverProductId: naverProductId ?? this.naverProductId,
+      naverLink: naverLink ?? this.naverLink,
+      naverImageUrl: naverImageUrl ?? this.naverImageUrl,
+      naverLprice: naverLprice ?? this.naverLprice,
+      naverHprice: naverHprice ?? this.naverHprice,
+      naverMallName: naverMallName ?? this.naverMallName,
       isHidden: isHidden ?? this.isHidden,
       sortOrder: sortOrder ?? this.sortOrder,
     );

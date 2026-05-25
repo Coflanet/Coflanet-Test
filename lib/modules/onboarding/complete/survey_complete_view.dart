@@ -18,8 +18,15 @@ class SurveyCompleteView extends GetView<SurveyController> {
       appBar: AppBar(
         backgroundColor: AppColor.transparent,
         elevation: 0,
+        centerTitle: true,
+        title: Text(
+          '취향 분석',
+          style: AppTextStyles.headline2Bold.copyWith(
+            color: AppColor.labelNormal,
+          ),
+        ),
         leading:
-            const SizedBox.shrink(), // No back button - arrived via offNamed
+            const SizedBox.shrink(), // 뒤로 가기 버튼 없음 — offNamed로 진입
         actions: [
           IconButton(
             icon: SvgPicture.asset(

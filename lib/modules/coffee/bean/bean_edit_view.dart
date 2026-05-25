@@ -95,7 +95,7 @@ class _BeanEditViewState extends State<BeanEditView> {
       _balance = bean.flavorProfile!.balance;
     }
 
-    _aromaIntensity = bean.aromaIntensity ?? 2.5;
+    _aromaIntensity = bean.aromaIntensity ?? 50;
     _selectedCommonFlavors.addAll(bean.commonFlavors ?? []);
     _selectedCharacteristicFlavors.addAll(bean.characteristicFlavors ?? []);
     _selectedRoastLevel = bean.roastLevel;

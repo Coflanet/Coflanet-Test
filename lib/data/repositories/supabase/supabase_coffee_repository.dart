@@ -116,6 +116,18 @@ class SupabaseCoffeeRepository implements CoffeeRepository {
     if (item.origin != null) data['origin'] = [item.origin]; // TEXT[] column
     if (item.roastLevel != null) data['roast_level'] = item.roastLevel;
     if (item.processMethod != null) data['processing'] = item.processMethod;
+
+    // FlavorProfile 필드 (0-100 스케일 정수)
+    if (item.flavorProfile != null) {
+      data['acidity'] = item.flavorProfile!.acidity.round();
+      data['body'] = item.flavorProfile!.body.round();
+      data['sweetness'] = item.flavorProfile!.sweetness.round();
+      data['bitterness'] = item.flavorProfile!.bitterness.round();
+    }
+    if (item.aromaIntensity != null) {
+      data['aroma'] = item.aromaIntensity!.round();
+    }
+
     // flavor_tags → bean_flavor_tags 별도 테이블이므로 여기서 보내지 않음
     return data;
   }
@@ -193,6 +205,12 @@ class SupabaseCoffeeRepository implements CoffeeRepository {
           data['roast_level'] as String? ?? data['roastLevel'] as String?,
       processMethod:
           data['processing'] as String? ?? data['process_method'] as String?,
+      naverProductId: data['naver_product_id'] as String?,
+      naverLink: data['naver_link'] as String?,
+      naverImageUrl: data['naver_image_url'] as String?,
+      naverLprice: data['naver_lprice'] as int?,
+      naverHprice: data['naver_hprice'] as int?,
+      naverMallName: data['naver_mall_name'] as String?,
       isHidden: data['is_hidden'] as bool? ?? false,
       sortOrder: data['sort_order'] as int?,
     );

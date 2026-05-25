@@ -32,15 +32,15 @@ class BeanDetailView extends StatelessWidget {
     color: AppColor.colorGlobalOrange50,
     brand: '스페셜티 로스터스',
     flavorProfile: FlavorProfile(
-      acidity: 4.5,
-      body: 2.5,
-      sweetness: 4.0,
-      bitterness: 1.5,
-      balance: 4.2,
+      acidity: 90,
+      body: 50,
+      sweetness: 80,
+      bitterness: 30,
+      balance: 84,
     ),
     commonFlavors: ['과일 향', '꽃 향'],
     characteristicFlavors: ['자스민', '베리', '시트러스'],
-    aromaIntensity: 4.8,
+    aromaIntensity: 96,
   );
 
   @override
@@ -126,11 +126,41 @@ class BeanDetailView extends StatelessWidget {
   }
 
   Widget _buildHeader() {
+    final displayImage = _bean.displayImageUrl;
+
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 24),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
+          // 원두 이미지 (네이버 이미지 우선)
+          if (displayImage != null) ...[
+            Center(
+              child: ClipRRect(
+                borderRadius: AppRadius.xlBorder,
+                child: Image.network(
+                  displayImage,
+                  width: 200,
+                  height: 200,
+                  fit: BoxFit.cover,
+                  errorBuilder: (context, error, stackTrace) => Container(
+                    width: 200,
+                    height: 200,
+                    decoration: BoxDecoration(
+                      color: AppColor.colorGlobalCoolNeutral15,
+                      borderRadius: AppRadius.xlBorder,
+                    ),
+                    child: Icon(
+                      Icons.coffee,
+                      size: 64,
+                      color: _bean.color,
+                    ),
+                  ),
+                ),
+              ),
+            ),
+            const SizedBox(height: 20),
+          ],
           // Brand
           if (_bean.brand != null)
             Text(
@@ -155,6 +185,11 @@ class BeanDetailView extends StatelessWidget {
               color: AppColor.colorGlobalCoolNeutral60,
             ),
           ),
+          // 네이버 쇼핑 가격 정보
+          if (_bean.naverLprice != null) ...[
+            const SizedBox(height: 12),
+            _buildPriceRow(),
+          ],
           // Origin info row
           if (_bean.origin != null || _bean.roastLevel != null) ...[
             const SizedBox(height: 16),
@@ -180,6 +215,66 @@ class BeanDetailView extends StatelessWidget {
         ],
       ),
     );
+  }
+
+  /// 네이버 쇼핑 가격 정보 행
+  Widget _buildPriceRow() {
+    final formatter = _formatPrice(_bean.naverLprice!);
+    final mallName = _bean.naverMallName;
+
+    return Container(
+      padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 10),
+      decoration: BoxDecoration(
+        color: AppColor.colorGlobalCoolNeutral15,
+        borderRadius: AppRadius.lgBorder,
+      ),
+      child: Row(
+        children: [
+          Icon(
+            Icons.shopping_bag_outlined,
+            size: 18,
+            color: AppColor.primaryNormal,
+          ),
+          const SizedBox(width: 8),
+          Text(
+            formatter,
+            style: AppTextStyles.body1NormalBold.copyWith(
+              color: AppColor.primaryNormal,
+            ),
+          ),
+          if (_bean.naverHprice != null &&
+              _bean.naverHprice != _bean.naverLprice) ...[
+            Text(
+              ' ~ ${_formatPrice(_bean.naverHprice!)}',
+              style: AppTextStyles.body2NormalRegular.copyWith(
+                color: AppColor.colorGlobalCoolNeutral60,
+              ),
+            ),
+          ],
+          const Spacer(),
+          if (mallName != null)
+            Text(
+              mallName,
+              style: AppTextStyles.caption1Medium.copyWith(
+                color: AppColor.colorGlobalCoolNeutral60,
+              ),
+            ),
+        ],
+      ),
+    );
+  }
+
+  /// 가격 포맷팅 (원 단위, 쉼표 구분)
+  String _formatPrice(int price) {
+    final priceStr = price.toString();
+    final buffer = StringBuffer();
+    for (var i = 0; i < priceStr.length; i++) {
+      if (i > 0 && (priceStr.length - i) % 3 == 0) {
+        buffer.write(',');
+      }
+      buffer.write(priceStr[i]);
+    }
+    return '$buffer원';
   }
 
   Widget _buildInfoChip(IconData icon, String label) {
@@ -230,7 +325,7 @@ class BeanDetailView extends StatelessWidget {
                     ),
                   ),
                   Text(
-                    _bean.aromaIntensity!.toStringAsFixed(1),
+                    _bean.aromaIntensity!.round().toString(),
                     style: AppTextStyles.body2NormalBold.copyWith(
                       color: AppColor.primaryNormal,
                     ),

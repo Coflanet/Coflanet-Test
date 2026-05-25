@@ -128,8 +128,8 @@ class SocialLoginConfig {
   // 디버그 설정
   // ============================================================
 
-  /// 소셜 로그인 디버그 로깅 활성화
-  static bool enableDebugLogging = true;
+  /// 소셜 로그인 디버그 로깅 활성화 (릴리스에서 자동 비활성)
+  static bool enableDebugLogging = kDebugMode;
 
   /// 설정 상태 출력 (디버그용)
   static void printConfigStatus() {

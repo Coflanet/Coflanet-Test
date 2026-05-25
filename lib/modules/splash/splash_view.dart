@@ -43,6 +43,7 @@ class SplashView extends GetView<SplashController> {
             width: 200,
             height: 200,
             fit: BoxFit.contain,
+            semanticLabel: 'Coflanet 로고',
             errorBuilder: (context, error, stackTrace) => Container(
               width: 120,
               height: 120,

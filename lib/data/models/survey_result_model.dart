@@ -119,7 +119,7 @@ class TasteProfileModel {
 class CoffeeRecommendationModel {
   final String id;
   final String name;
-  final String? manufacturer; // 제조사 (추가)
+  final String? manufacturer; // 제조사
   final String origin;
   final String roastLevel;
   final String description;
@@ -129,9 +129,10 @@ class CoffeeRecommendationModel {
   final int? discountPercent;
   final String? weight;
   final TasteProfileModel tasteProfile;
-  final int matchPercent; // 일치율 (추가)
-  final List<String> flavorTags; // 맛 태그 (추가)
-  final String? purchaseUrl; // 판매 링크 (추가)
+  final int matchPercent; // 일치율
+  final List<String> flavorTags; // 맛 태그
+  final String? purchaseUrl; // 판매 링크
+  final String? reason; // 추천 사유
 
   const CoffeeRecommendationModel({
     required this.id,
@@ -146,9 +147,10 @@ class CoffeeRecommendationModel {
     this.discountPercent,
     this.weight,
     required this.tasteProfile,
-    this.matchPercent = 50, // 기본값 50%
+    this.matchPercent = 50,
     this.flavorTags = const [],
     this.purchaseUrl,
+    this.reason,
   });
 
   factory CoffeeRecommendationModel.fromJson(Map<String, dynamic> json) {
@@ -174,6 +176,7 @@ class CoffeeRecommendationModel {
               .toList() ??
           [],
       purchaseUrl: json['purchaseUrl'] as String?,
+      reason: json['reason'] as String?,
     );
   }
 
@@ -194,6 +197,7 @@ class CoffeeRecommendationModel {
       'matchPercent': matchPercent,
       'flavorTags': flavorTags,
       if (purchaseUrl != null) 'purchaseUrl': purchaseUrl,
+      if (reason != null) 'reason': reason,
     };
   }
 }

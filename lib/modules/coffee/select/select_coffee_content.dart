@@ -365,6 +365,8 @@ class SelectCoffeeContent extends GetView<SelectCoffeeController> {
   /// Edit mode card - Figma: List/Coffee List/Accordion
   /// Height: 80px, Background: #FFFFFF, Border-radius: 20px, Padding: 16px
   Widget _buildEditModeCard(CoffeeItem item, bool isSelected) {
+    final displayImage = item.displayImageUrl;
+
     return GestureDetector(
       onTap: () => controller.toggleEditSelection(item.id),
       child: Container(
@@ -390,20 +392,21 @@ class SelectCoffeeContent extends GetView<SelectCoffeeController> {
         child: Row(
           children: [
             // Thumbnail - Figma: 48x48, radius 12px
+            // 네이버 이미지 우선 사용
             Container(
               width: 48,
               height: 48,
               decoration: BoxDecoration(
                 color: AppColor.colorGlobalCoolNeutral95,
                 borderRadius: BorderRadius.circular(12), // Figma: 12px
-                image: item.imageUrl != null
+                image: displayImage != null
                     ? DecorationImage(
-                        image: NetworkImage(item.imageUrl!),
+                        image: NetworkImage(displayImage),
                         fit: BoxFit.cover,
                       )
                     : null,
               ),
-              child: item.imageUrl == null
+              child: displayImage == null
                   ? Icon(Icons.coffee, color: item.color, size: 24)
                   : null,
             ),
@@ -724,6 +727,7 @@ class _CoffeeAccordionCardState extends State<_CoffeeAccordionCard>
     final subtitleColor = AppColor.labelAlternative;
     // Figma: coffee name color #171719
     const textColor = AppColor.colorGlobalCoolNeutral10;
+    final displayImage = widget.item.displayImageUrl;
 
     return GestureDetector(
       onTap: _handleTap,
@@ -736,21 +740,35 @@ class _CoffeeAccordionCardState extends State<_CoffeeAccordionCard>
         child: Row(
           children: [
             // Thumbnail - Figma: 64x64, border-radius 12px
+            // 네이버 이미지가 있으면 네트워크 이미지 표시
             Container(
               width: 64,
               height: 64,
               decoration: BoxDecoration(
-                gradient: LinearGradient(
-                  begin: Alignment.topLeft,
-                  end: Alignment.bottomRight,
-                  colors: [
-                    widget.item.color.withValues(alpha: 0.3),
-                    widget.item.color.withValues(alpha: 0.15),
-                  ],
-                ),
+                gradient: displayImage == null
+                    ? LinearGradient(
+                        begin: Alignment.topLeft,
+                        end: Alignment.bottomRight,
+                        colors: [
+                          widget.item.color.withValues(alpha: 0.3),
+                          widget.item.color.withValues(alpha: 0.15),
+                        ],
+                      )
+                    : null,
+                color: displayImage != null
+                    ? AppColor.colorGlobalCoolNeutral95
+                    : null,
                 borderRadius: BorderRadius.circular(12), // Figma: 8-12px
+                image: displayImage != null
+                    ? DecorationImage(
+                        image: NetworkImage(displayImage),
+                        fit: BoxFit.cover,
+                      )
+                    : null,
               ),
-              child: Icon(Icons.coffee, color: widget.item.color, size: 32),
+              child: displayImage == null
+                  ? Icon(Icons.coffee, color: widget.item.color, size: 32)
+                  : null,
             ),
             const SizedBox(width: 16), // Figma: gap 16px
             // Text section
@@ -780,6 +798,17 @@ class _CoffeeAccordionCardState extends State<_CoffeeAccordionCard>
                     maxLines: 1,
                     overflow: TextOverflow.ellipsis,
                   ),
+                  // 네이버 쇼핑 가격 표시
+                  if (widget.item.naverLprice != null) ...[
+                    const SizedBox(height: 4),
+                    Text(
+                      _formatPrice(widget.item.naverLprice!),
+                      style: AppTextStyles.label1NormalMedium.copyWith(
+                        color: AppColor.primaryNormal,
+                        letterSpacing: 0.0145,
+                      ),
+                    ),
+                  ],
                 ],
               ),
             ),
@@ -798,6 +827,19 @@ class _CoffeeAccordionCardState extends State<_CoffeeAccordionCard>
         ),
       ),
     );
+  }
+
+  /// 가격 포맷팅 (원 단위, 쉼표 구분)
+  String _formatPrice(int price) {
+    final priceStr = price.toString();
+    final buffer = StringBuffer();
+    for (var i = 0; i < priceStr.length; i++) {
+      if (i > 0 && (priceStr.length - i) % 3 == 0) {
+        buffer.write(',');
+      }
+      buffer.write(priceStr[i]);
+    }
+    return '$buffer원';
   }
 
   /// Expanded Content - Figma: Contents section

@@ -88,6 +88,7 @@ class SurveyReasonView extends GetView<SurveyReasonController> {
           height: 24,
           colorFilter: ColorFilter.mode(AppColor.labelNormal, BlendMode.srcIn),
         ),
+        tooltip: '뒤로 가기',
         onPressed: () => Get.back(),
       ),
     );
