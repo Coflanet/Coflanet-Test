@@ -108,7 +108,7 @@ class ProfileSetupView extends GetView<ProfileSetupController> {
   Widget _buildContinueButton() {
     return Obx(
       () => PrimaryButton(
-        text: '시작하기',
+        text: '확인',
         onPressed: controller.isValid ? controller.saveAndContinue : null,
         isEnabled: controller.isValid,
       ),

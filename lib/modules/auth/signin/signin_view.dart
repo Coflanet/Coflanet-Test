@@ -16,7 +16,7 @@ class SignInView extends GetView<SignInController> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: AppColor.backgroundNormalNormal,
+      backgroundColor: AppColor.colorGlobalCommon0,
       body: SafeArea(
         child: Padding(
           padding: const EdgeInsets.symmetric(horizontal: 24),
@@ -75,7 +75,7 @@ class SignInView extends GetView<SignInController> {
           '로그인하고\n내 취향을 찾아볼까요?',
           textAlign: TextAlign.center,
           style: AppTextStyles.heading1Bold.copyWith(
-            color: AppColor.labelNormal,
+            color: AppColor.staticLabelWhiteStrong,
             height: 1.4,
           ),
         ),
@@ -130,14 +130,14 @@ class SignInView extends GetView<SignInController> {
           child: Text(
             '이메일 로그인',
             style: AppTextStyles.label1NormalMedium.copyWith(
-              color: AppColor.labelAlternative,
+              color: AppColor.staticLabelWhiteStrong.withValues(alpha: 0.7),
             ),
           ),
         ),
         Container(
           width: 1,
           height: 12,
-          color: AppColor.lineNormalNeutral,
+          color: AppColor.staticLabelWhiteStrong.withValues(alpha: 0.3),
           margin: const EdgeInsets.symmetric(horizontal: 8),
         ),
         TextButton(
@@ -145,7 +145,7 @@ class SignInView extends GetView<SignInController> {
           child: Text(
             '게스트로 로그인',
             style: AppTextStyles.label1NormalMedium.copyWith(
-              color: AppColor.labelAlternative,
+              color: AppColor.staticLabelWhiteStrong.withValues(alpha: 0.7),
             ),
           ),
         ),

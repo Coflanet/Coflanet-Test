@@ -119,7 +119,7 @@ class SurveyReasonView extends GetView<SurveyReasonController> {
       decoration: BoxDecoration(color: AppColor.backgroundNormalNormal),
       child: Obx(
         () => PrimaryButton(
-          text: '완료',
+          text: '원두 취향 찾으러 가기',
           onPressed: controller.complete,
           isEnabled: controller.hasSelection,
         ),
