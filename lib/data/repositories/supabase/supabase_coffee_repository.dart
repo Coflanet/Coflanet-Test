@@ -115,6 +115,7 @@ class SupabaseCoffeeRepository implements CoffeeRepository {
     if (item.description.isNotEmpty) data['description'] = item.description;
     if (item.origin != null) data['origin'] = [item.origin]; // TEXT[] column
     if (item.roastLevel != null) data['roast_level'] = item.roastLevel;
+    if (item.roastPoint != null) data['roast_point'] = item.roastPoint;
     if (item.processMethod != null) data['processing'] = item.processMethod;
 
     // FlavorProfile 필드 (0-100 스케일 정수)
@@ -203,6 +204,9 @@ class SupabaseCoffeeRepository implements CoffeeRepository {
       origin: origin,
       roastLevel:
           data['roast_level'] as String? ?? data['roastLevel'] as String?,
+      roastPoint:
+          (data['roast_point'] as num?)?.toInt() ??
+          (data['roastPoint'] as num?)?.toInt(),
       processMethod:
           data['processing'] as String? ?? data['process_method'] as String?,
       naverProductId: data['naver_product_id'] as String?,

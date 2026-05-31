@@ -5,6 +5,8 @@ import 'package:coflanet/constants/asset_constant.dart';
 import 'package:coflanet/constants/color_constant.dart';
 import 'package:coflanet/constants/radius_constant.dart';
 import 'package:coflanet/constants/style_constant.dart';
+import 'package:coflanet/core/services/app_config_service.dart';
+import 'package:coflanet/data/models/bean_option_model.dart';
 import 'package:coflanet/data/models/coffee_item_model.dart';
 import 'package:coflanet/widgets/charts/flavor_radar_chart.dart';
 import 'package:coflanet/widgets/tags/flavor_tag.dart';
@@ -47,27 +49,16 @@ class _BeanEditViewState extends State<BeanEditView> {
   final Set<String> _selectedCommonFlavors = {};
   final Set<String> _selectedCharacteristicFlavors = {};
 
-  // Selected options
-  String? _selectedRoastLevel;
-  String? _selectedProcessMethod;
+  // Selected options — 서버 lookup 기반 (로스팅은 point 1~10, 가공방식은 code)
+  int? _selectedRoastPoint;
+  String? _selectedProcessCode;
 
   bool _hasChanges = false;
 
-  static const _roastLevels = [
-    'Light',
-    'Light-Medium',
-    'Medium',
-    'Medium-Dark',
-    'Dark',
-  ];
+  final AppConfigService _config = Get.find<AppConfigService>();
 
-  static const _processMethods = [
-    'Washed',
-    'Natural',
-    'Honey',
-    'Wet-Hulled',
-    'Anaerobic',
-  ];
+  List<RoastOption> get _roastLevels => _config.roastLevels;
+  List<ProcessOption> get _processMethods => _config.processMethods;
 
   @override
   void initState() {
@@ -98,8 +89,8 @@ class _BeanEditViewState extends State<BeanEditView> {
     _aromaIntensity = bean.aromaIntensity ?? 50;
     _selectedCommonFlavors.addAll(bean.commonFlavors ?? []);
     _selectedCharacteristicFlavors.addAll(bean.characteristicFlavors ?? []);
-    _selectedRoastLevel = bean.roastLevel;
-    _selectedProcessMethod = bean.processMethod;
+    _selectedRoastPoint = bean.roastPoint;
+    _selectedProcessCode = bean.processMethod;
   }
 
   @override
@@ -160,12 +151,22 @@ class _BeanEditViewState extends State<BeanEditView> {
       origin: _originController.text.trim().isNotEmpty
           ? _originController.text.trim()
           : null,
-      roastLevel: _selectedRoastLevel,
-      processMethod: _selectedProcessMethod,
+      roastLevel: _findRoast(_selectedRoastPoint)?.levelCode,
+      roastPoint: _selectedRoastPoint,
+      processMethod: _selectedProcessCode,
     );
 
     // Return to previous screen with the bean data
     Get.back(result: bean);
+  }
+
+  /// 선택한 roast_point 에 해당하는 옵션 조회
+  RoastOption? _findRoast(int? point) {
+    if (point == null) return null;
+    for (final r in _roastLevels) {
+      if (r.point == point) return r;
+    }
+    return null;
   }
 
   String _generateDescription() {
@@ -417,24 +418,42 @@ class _BeanEditViewState extends State<BeanEditView> {
       children: [
         _buildSectionTitle('상세 정보'),
         const SizedBox(height: 16),
-        // Roast level
-        _buildDropdownField(
+        // 로스팅 — roast_point 선택, "1 · 라이트" 표시
+        _buildDropdownField<int>(
           label: '로스팅',
-          value: _selectedRoastLevel,
-          options: _roastLevels,
+          value: _roastLevels.any((r) => r.point == _selectedRoastPoint)
+              ? _selectedRoastPoint
+              : null,
+          items: _roastLevels
+              .map(
+                (r) => DropdownMenuItem<int>(
+                  value: r.point,
+                  child: Text('${r.point} · ${r.labelKo}'),
+                ),
+              )
+              .toList(),
           onChanged: (v) {
-            setState(() => _selectedRoastLevel = v);
+            setState(() => _selectedRoastPoint = v);
             _markChanged();
           },
         ),
         const SizedBox(height: 16),
-        // Process method
-        _buildDropdownField(
+        // 가공 방식 — code 선택, 한국어 라벨 표시
+        _buildDropdownField<String>(
           label: '가공 방식',
-          value: _selectedProcessMethod,
-          options: _processMethods,
+          value: _processMethods.any((p) => p.code == _selectedProcessCode)
+              ? _selectedProcessCode
+              : null,
+          items: _processMethods
+              .map(
+                (p) => DropdownMenuItem<String>(
+                  value: p.code,
+                  child: Text(p.labelKo),
+                ),
+              )
+              .toList(),
           onChanged: (v) {
-            setState(() => _selectedProcessMethod = v);
+            setState(() => _selectedProcessCode = v);
             _markChanged();
           },
         ),
@@ -556,11 +575,11 @@ class _BeanEditViewState extends State<BeanEditView> {
     );
   }
 
-  Widget _buildDropdownField({
+  Widget _buildDropdownField<T>({
     required String label,
-    required String? value,
-    required List<String> options,
-    required ValueChanged<String?> onChanged,
+    required T? value,
+    required List<DropdownMenuItem<T>> items,
+    required ValueChanged<T?> onChanged,
   }) {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
@@ -579,8 +598,8 @@ class _BeanEditViewState extends State<BeanEditView> {
             borderRadius: AppRadius.lgBorder,
           ),
           child: DropdownButtonHideUnderline(
-            child: DropdownButton<String>(
-              value: options.contains(value) ? value : null,
+            child: DropdownButton<T>(
+              value: value,
               isExpanded: true,
               hint: Text(
                 '선택해주세요',
@@ -596,12 +615,7 @@ class _BeanEditViewState extends State<BeanEditView> {
               style: AppTextStyles.body1NormalMedium.copyWith(
                 color: AppColor.colorGlobalCommon100,
               ),
-              items: options.map((option) {
-                return DropdownMenuItem<String>(
-                  value: option,
-                  child: Text(option),
-                );
-              }).toList(),
+              items: items,
               onChanged: onChanged,
             ),
           ),

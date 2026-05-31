@@ -1,4 +1,5 @@
 import 'package:coflanet/core/api/api_client.dart';
+import 'package:coflanet/data/models/bean_option_model.dart';
 import 'package:coflanet/data/models/onboarding_option_model.dart';
 import 'package:coflanet/data/repositories/repository_interfaces.dart';
 import 'package:get/get.dart';
@@ -11,6 +12,7 @@ class ApiConfigRepository implements ConfigRepository {
   final ApiClient _apiClient = Get.find<ApiClient>();
 
   static const String _onboardingOptionsEndpoint = '/config/onboarding-options';
+  static const String _beanOptionsEndpoint = '/config/bean-options';
 
   @override
   Future<List<OnboardingOption>> getOnboardingOptions() async {
@@ -19,5 +21,11 @@ class ApiConfigRepository implements ConfigRepository {
     return data
         .map((e) => OnboardingOption.fromJson(e as Map<String, dynamic>))
         .toList();
+  }
+
+  @override
+  Future<BeanOptions> getBeanOptions() async {
+    final response = await _apiClient.get(_beanOptionsEndpoint);
+    return BeanOptions.fromJson(response.data as Map<String, dynamic>);
   }
 }

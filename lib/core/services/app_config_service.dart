@@ -1,5 +1,6 @@
 import 'package:flutter/foundation.dart';
 import 'package:get/get.dart';
+import 'package:coflanet/data/models/bean_option_model.dart';
 import 'package:coflanet/data/models/onboarding_option_model.dart';
 import 'package:coflanet/data/repositories/repository_interfaces.dart';
 import 'package:coflanet/data/repositories/repository_provider.dart';
@@ -34,6 +35,15 @@ class AppConfigService extends GetxService {
   final _onboardingOptions = <OnboardingOption>[].obs;
   List<OnboardingOption> get onboardingOptions => _onboardingOptions;
 
+  final _roastLevels = <RoastOption>[].obs;
+  List<RoastOption> get roastLevels => _roastLevels;
+
+  final _processMethods = <ProcessOption>[].obs;
+  List<ProcessOption> get processMethods => _processMethods;
+
+  final _flavorDescriptors = <FlavorDescriptor>[].obs;
+  List<FlavorDescriptor> get flavorDescriptors => _flavorDescriptors;
+
   /// 모든 lookup 데이터를 병렬로 로드한다.
   /// 하나라도 실패하면 error 상태로 전환되어 재시도가 가능하다.
   Future<void> loadAll() async {
@@ -42,12 +52,17 @@ class AppConfigService extends GetxService {
     _errorMessage.value = null;
 
     try {
-      final onboardingOptions = await _repo.getOnboardingOptions();
-      // [확장 지점] 이후 항목은 Future.wait 로 병렬 로드한다.
+      final results = await Future.wait([
+        _repo.getOnboardingOptions(),
+        _repo.getBeanOptions(),
+      ]);
 
-      _onboardingOptions.assignAll(onboardingOptions);
+      _onboardingOptions.assignAll(results[0] as List<OnboardingOption>);
+      final beanOptions = results[1] as BeanOptions;
+      _roastLevels.assignAll(beanOptions.roastLevels);
+      _processMethods.assignAll(beanOptions.processMethods);
+      _flavorDescriptors.assignAll(beanOptions.flavorDescriptors);
       // 빈 리스트도 ready 로 둔다(서버 시딩 전 [] 반환 시 앱 진행 가능).
-      // 시딩 완료 후 "비어있으면 error" 정책으로 바꾸려면 여기서 isEmpty 검사 추가.
       _status.value = ConfigLoadStatus.ready;
     } catch (e) {
       _errorMessage.value = e.toString();

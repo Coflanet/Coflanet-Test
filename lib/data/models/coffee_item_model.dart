@@ -27,8 +27,11 @@ class CoffeeItem {
   /// Origin country/region
   final String? origin;
 
-  /// Roasting level (e.g., "Light", "Medium", "Dark")
+  /// Roasting level code (light/medium/medium_dark/dark)
   final String? roastLevel;
+
+  /// Roasting point (1~10, refs roast_point) — roastLevel과 함께 저장
+  final int? roastPoint;
 
   /// Processing method (e.g., "Washed", "Natural", "Honey")
   final String? processMethod;
@@ -70,6 +73,7 @@ class CoffeeItem {
     this.aromaIntensity,
     this.origin,
     this.roastLevel,
+    this.roastPoint,
     this.processMethod,
     this.naverProductId,
     this.naverLink,
@@ -104,6 +108,7 @@ class CoffeeItem {
     double? aromaIntensity,
     String? origin,
     String? roastLevel,
+    int? roastPoint,
     String? processMethod,
     String? naverProductId,
     String? naverLink,
@@ -128,6 +133,7 @@ class CoffeeItem {
       aromaIntensity: aromaIntensity ?? this.aromaIntensity,
       origin: origin ?? this.origin,
       roastLevel: roastLevel ?? this.roastLevel,
+      roastPoint: roastPoint ?? this.roastPoint,
       processMethod: processMethod ?? this.processMethod,
       naverProductId: naverProductId ?? this.naverProductId,
       naverLink: naverLink ?? this.naverLink,

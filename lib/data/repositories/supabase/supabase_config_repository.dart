@@ -1,3 +1,4 @@
+import 'package:coflanet/data/models/bean_option_model.dart';
 import 'package:coflanet/data/models/onboarding_option_model.dart';
 import 'package:coflanet/data/repositories/repository_interfaces.dart';
 import 'package:supabase_flutter/supabase_flutter.dart' hide LocalStorage;
@@ -20,5 +21,14 @@ class SupabaseConfigRepository implements ConfigRepository {
           .toList();
     }
     return <OnboardingOption>[];
+  }
+
+  @override
+  Future<BeanOptions> getBeanOptions() async {
+    final result = await _db.rpc('get_bean_options');
+    if (result is Map<String, dynamic>) {
+      return BeanOptions.fromJson(result);
+    }
+    return const BeanOptions();
   }
 }

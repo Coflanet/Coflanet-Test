@@ -1,3 +1,4 @@
+import 'package:coflanet/data/models/bean_option_model.dart';
 import 'package:coflanet/data/models/onboarding_option_model.dart';
 import 'package:coflanet/data/repositories/repository_interfaces.dart';
 
@@ -37,5 +38,31 @@ class DummyConfigRepository implements ConfigRepository {
         displayOrder: 5,
       ),
     ];
+  }
+
+  @override
+  Future<BeanOptions> getBeanOptions() async {
+    await Future.delayed(const Duration(milliseconds: 50));
+    return const BeanOptions(
+      roastLevels: [
+        RoastOption(point: 1, levelCode: 'light', labelKo: '라이트'),
+        RoastOption(point: 2, levelCode: 'light', labelKo: '라이트'),
+        RoastOption(point: 3, levelCode: 'light', labelKo: '라이트'),
+        RoastOption(point: 4, levelCode: 'medium', labelKo: '미디엄'),
+        RoastOption(point: 5, levelCode: 'medium', labelKo: '미디엄'),
+        RoastOption(point: 6, levelCode: 'medium_dark', labelKo: '미디엄 다크'),
+        RoastOption(point: 7, levelCode: 'medium_dark', labelKo: '미디엄 다크'),
+        RoastOption(point: 8, levelCode: 'dark', labelKo: '다크'),
+        RoastOption(point: 9, levelCode: 'dark', labelKo: '다크'),
+        RoastOption(point: 10, levelCode: 'dark', labelKo: '다크'),
+      ],
+      processMethods: [
+        ProcessOption(code: 'washed', labelKo: '워시드'),
+        ProcessOption(code: 'natural', labelKo: '내추럴'),
+        ProcessOption(code: 'honey', labelKo: '허니'),
+        ProcessOption(code: 'wet_hulled', labelKo: '웻 헐링'),
+        ProcessOption(code: 'anaerobic', labelKo: '애너로빅'),
+      ],
+    );
   }
 }

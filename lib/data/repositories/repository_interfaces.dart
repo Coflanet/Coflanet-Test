@@ -1,3 +1,4 @@
+import 'package:coflanet/data/models/bean_option_model.dart';
 import 'package:coflanet/data/models/brew_log_model.dart';
 import 'package:coflanet/data/models/coffee_item_model.dart';
 import 'package:coflanet/data/models/onboarding_option_model.dart';
@@ -245,5 +246,6 @@ abstract class ConfigRepository {
   /// 온보딩 가입 이유 옵션 (get_onboarding_options RPC)
   Future<List<OnboardingOption>> getOnboardingOptions();
 
-  // [확장 예정] 로스팅/가공방식 옵션, 향미 설명, 향미 카테고리 등
+  /// 원두 옵션 (로스팅/가공방식/향미) — get_bean_options RPC
+  Future<BeanOptions> getBeanOptions();
 }
