@@ -1,5 +1,6 @@
 import 'package:coflanet/data/models/brew_log_model.dart';
 import 'package:coflanet/data/models/coffee_item_model.dart';
+import 'package:coflanet/data/models/onboarding_option_model.dart';
 import 'package:coflanet/data/models/survey_question_model.dart';
 import 'package:coflanet/data/models/survey_result_model.dart';
 import 'package:coflanet/data/models/timer_step_model.dart';
@@ -230,4 +231,19 @@ abstract class BrewLogRepository {
 
   /// Get user's brewing statistics
   Future<Map<String, dynamic>?> getMyBrewStats();
+}
+
+// ─────────────────────────────────────────────────────────────────────────────
+// Config Repository
+// ─────────────────────────────────────────────────────────────────────────────
+
+/// Repository for app-wide lookup/constant data
+///
+/// 앱 시작 시 프리로드되는 전역 상수(lookup) 조회 전용.
+/// 화면 하드코딩 fallback 을 서버 데이터로 대체하기 위한 레이어.
+abstract class ConfigRepository {
+  /// 온보딩 가입 이유 옵션 (get_onboarding_options RPC)
+  Future<List<OnboardingOption>> getOnboardingOptions();
+
+  // [확장 예정] 로스팅/가공방식 옵션, 향미 설명, 향미 카테고리 등
 }

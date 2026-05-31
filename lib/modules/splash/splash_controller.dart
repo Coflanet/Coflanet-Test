@@ -4,11 +4,16 @@ import 'package:supabase_flutter/supabase_flutter.dart' hide LocalStorage;
 import 'package:coflanet/core/base/base_controller.dart';
 import 'package:coflanet/core/storage/local_storage.dart';
 import 'package:coflanet/core/services/survey_service.dart';
+import 'package:coflanet/core/services/app_config_service.dart';
 import 'package:coflanet/data/repositories/repository_config.dart';
 import 'package:coflanet/routes/app_pages.dart';
 
 class SplashController extends BaseController {
   final LocalStorage _storage = Get.find<LocalStorage>();
+  final AppConfigService _config = Get.find<AppConfigService>();
+
+  /// View 에서 로드 상태/재시도 UI 를 구독하기 위한 노출
+  AppConfigService get config => _config;
 
   @override
   void onInit() {
@@ -18,6 +23,11 @@ class SplashController extends BaseController {
 
   Future<void> _initializeApp() async {
     try {
+      // 전역 상수(lookup) 프리로드. 실패하면 error 상태로 두고 중단한다.
+      // (SplashView 가 '다시 시도' UI 를 표시하고, retry() 로 재진입)
+      await _config.loadAll();
+      if (_config.hasError) return;
+
       // Wait for 2 seconds to show splash screen
       await Future.delayed(const Duration(seconds: 2));
 
@@ -31,6 +41,14 @@ class SplashController extends BaseController {
       }
       // Fallback: go to sign in on error
       _safeNavigate(Routes.signIn);
+    }
+  }
+
+  /// 프리로드 실패 후 사용자가 '다시 시도' 를 눌렀을 때 재로드한다.
+  Future<void> retry() async {
+    await _config.loadAll();
+    if (_config.isReady) {
+      await _navigateToNextScreen();
     }
   }
 

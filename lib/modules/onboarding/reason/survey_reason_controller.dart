@@ -1,41 +1,21 @@
-import 'package:flutter/foundation.dart';
 import 'package:get/get.dart';
+import 'package:coflanet/core/services/app_config_service.dart';
+import 'package:coflanet/data/models/onboarding_option_model.dart';
 import 'package:coflanet/data/repositories/repository_interfaces.dart';
 import 'package:coflanet/data/repositories/repository_provider.dart';
 import 'package:coflanet/routes/app_pages.dart';
-import 'package:supabase_flutter/supabase_flutter.dart' hide LocalStorage;
-
-/// Model for survey reason option
-class SurveyReasonOption {
-  final String id;
-  final String label;
-
-  const SurveyReasonOption({required this.id, required this.label});
-}
 
 /// Controller for Survey Reason Screen
 /// Handles multiple selection of reasons for joining Coflanet
 class SurveyReasonController extends GetxController {
   final SurveyRepository _surveyRepository =
       RepositoryProvider.surveyRepository;
+  final AppConfigService _config = Get.find<AppConfigService>();
 
-  /// 서버 option_key와 동기화된 폴백 옵션 (서버 조회 실패 시 사용)
-  static const _fallbackOptions = [
-    SurveyReasonOption(id: 'find_taste', label: '커피 취향을 찾고 싶어요.'),
-    SurveyReasonOption(id: 'subscribe_bean', label: '원두를 편하게 구독하고 싶어요.'),
-    SurveyReasonOption(id: 'try_variety', label: '다양한 원두를 시도해보고 싶어요.'),
-    SurveyReasonOption(
-      id: 'community',
-      label: '사람들과 커피에 대해 소통하고 싶어요.',
-    ),
-    SurveyReasonOption(id: 'learn_coffee', label: '커피에 대한 정보를 알고싶어요.'),
-  ];
+  /// 가입 이유 옵션 — 앱 시작 시 스플래시에서 프리로드된 서버 데이터
+  List<OnboardingOption> get options => _config.onboardingOptions;
 
-  /// Available options (loaded from server or fallback)
-  final _options = <SurveyReasonOption>[..._fallbackOptions].obs;
-  List<SurveyReasonOption> get options => _options;
-
-  /// Selected option IDs
+  /// Selected option keys
   final _selectedIds = <String>{}.obs;
   Set<String> get selectedIds => _selectedIds;
 
@@ -44,41 +24,6 @@ class SurveyReasonController extends GetxController {
 
   /// Check if a specific option is selected
   bool isSelected(String id) => _selectedIds.contains(id);
-
-  @override
-  void onInit() {
-    super.onInit();
-    _loadOptions();
-  }
-
-  /// Load options from get_onboarding_options RPC
-  Future<void> _loadOptions() async {
-    try {
-      final result = await Supabase.instance.client.rpc(
-        'get_onboarding_options',
-      );
-      if (result is List && result.isNotEmpty) {
-        final parsed = <SurveyReasonOption>[];
-        for (var i = 0; i < result.length; i++) {
-          final map = result[i] as Map<String, dynamic>;
-          final id =
-              (map['option_key'] ?? map['slug'] ?? map['id'] ?? '').toString();
-          final label = map['label'] as String? ?? map['name'] as String? ?? '';
-          if (label.isEmpty) continue;
-          parsed.add(
-            SurveyReasonOption(id: id.isEmpty ? 'option_$i' : id, label: label),
-          );
-        }
-        if (parsed.isNotEmpty) {
-          _options.value = parsed;
-          return;
-        }
-      }
-    } catch (e) {
-      debugPrint('[SurveyReasonController] get_onboarding_options error: $e');
-    }
-    // Fallback: keep hardcoded options (already set as default)
-  }
 
   /// Toggle option selection
   void toggleOption(String id) {

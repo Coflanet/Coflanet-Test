@@ -7,6 +7,7 @@ import 'package:coflanet/data/repositories/dummy/dummy_survey_repository.dart';
 import 'package:coflanet/data/repositories/dummy/dummy_coffee_repository.dart';
 import 'package:coflanet/data/repositories/dummy/dummy_recipe_repository.dart';
 import 'package:coflanet/data/repositories/dummy/dummy_user_preferences_repository.dart';
+import 'package:coflanet/data/repositories/dummy/dummy_config_repository.dart';
 // Supabase implementations
 import 'package:coflanet/data/repositories/supabase/supabase_auth_repository.dart';
 import 'package:coflanet/data/repositories/supabase/supabase_brew_log_repository.dart';
@@ -14,12 +15,14 @@ import 'package:coflanet/data/repositories/supabase/supabase_survey_repository.d
 import 'package:coflanet/data/repositories/supabase/supabase_coffee_repository.dart';
 import 'package:coflanet/data/repositories/supabase/supabase_recipe_repository.dart';
 import 'package:coflanet/data/repositories/supabase/supabase_user_preferences_repository.dart';
+import 'package:coflanet/data/repositories/supabase/supabase_config_repository.dart';
 // API implementations
 import 'package:coflanet/data/repositories/api/api_auth_repository.dart';
 import 'package:coflanet/data/repositories/api/api_survey_repository.dart';
 import 'package:coflanet/data/repositories/api/api_coffee_repository.dart';
 import 'package:coflanet/data/repositories/api/api_recipe_repository.dart';
 import 'package:coflanet/data/repositories/api/api_user_preferences_repository.dart';
+import 'package:coflanet/data/repositories/api/api_config_repository.dart';
 
 /// Provider for repository instances
 /// Returns dummy, supabase, or API implementations based on RepositoryConfig
@@ -32,6 +35,7 @@ class RepositoryProvider {
   static RecipeRepository? _recipeRepository;
   static UserPreferencesRepository? _userPreferencesRepository;
   static BrewLogRepository? _brewLogRepository;
+  static ConfigRepository? _configRepository;
 
   /// Get AuthRepository instance
   static AuthRepository get authRepository {
@@ -93,6 +97,16 @@ class RepositoryProvider {
     return _brewLogRepository!;
   }
 
+  /// Get ConfigRepository instance
+  static ConfigRepository get configRepository {
+    _configRepository ??= switch (RepositoryConfig.dataSource) {
+      DataSource.dummy => DummyConfigRepository(),
+      DataSource.supabase => SupabaseConfigRepository(),
+      DataSource.api => ApiConfigRepository(),
+    };
+    return _configRepository!;
+  }
+
   /// Reset all repositories (useful for testing)
   static void reset() {
     _authRepository = null;
@@ -101,5 +115,6 @@ class RepositoryProvider {
     _recipeRepository = null;
     _userPreferencesRepository = null;
     _brewLogRepository = null;
+    _configRepository = null;
   }
 }

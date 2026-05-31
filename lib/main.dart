@@ -10,6 +10,7 @@ import 'package:coflanet/core/theme/app_theme.dart';
 import 'package:coflanet/core/storage/local_storage.dart';
 import 'package:coflanet/core/services/survey_service.dart';
 import 'package:coflanet/core/services/auth_service.dart';
+import 'package:coflanet/core/services/app_config_service.dart';
 import 'package:coflanet/core/api/api_client.dart';
 import 'package:coflanet/core/theme/theme_controller.dart';
 import 'package:coflanet/core/config/social_login_config.dart';
@@ -89,6 +90,11 @@ void main() async {
     permanent: true,
   );
   await Get.putAsync<ApiClient>(() => ApiClient().init(), permanent: true);
+
+  // AppConfigService 는 동기 등록만 한다. 실제 서버 로드(loadAll)는
+  // SplashController 에서 await 한다 — runApp 이전(putAsync)에 로드하면
+  // 네트워크 실패 시 재시도 UI 를 띄울 화면이 없기 때문.
+  Get.put<AppConfigService>(AppConfigService(), permanent: true);
 
   runApp(const CoflanetApp());
 }
