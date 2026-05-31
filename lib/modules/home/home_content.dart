@@ -618,7 +618,9 @@ class HomeContent extends GetView<HomeController> {
         crossAxisCount: 2,
         crossAxisSpacing: 12,
         mainAxisSpacing: 12,
-        childAspectRatio: 0.65,
+        // 정사각 이미지 + 텍스트(태그/브랜드/이름 2줄/가격) 수용 여유 높이.
+        // 오버플로우 방지는 카드 내부 Expanded+Flexible 구조가 보장.
+        childAspectRatio: 0.6,
       ),
       itemCount: items.length,
       itemBuilder: (context, index) => _buildProductCard(items[index]),
@@ -692,34 +694,41 @@ class HomeContent extends GetView<HomeController> {
               ),
             ],
           ),
-          Padding(
-            padding: const EdgeInsets.all(8),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                // 취향 일치율
-                if (item.matchPercent > 0) _buildSmallTag('취향 ${item.matchPercent}%'),
-                const SizedBox(height: 4),
-                Text(
-                  '${item.manufacturer ?? '브랜드명'} | ${item.origin}',
-                  style: AppTextStyles.caption1Regular.copyWith(
-                    color: AppColor.labelAlternative,
+          // Expanded 로 텍스트 영역을 셀 잔여 높이에 가둬 오버플로우를 구조적으로 차단.
+          Expanded(
+            child: Padding(
+              padding: const EdgeInsets.all(8),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  // 취향 일치율
+                  if (item.matchPercent > 0)
+                    _buildSmallTag('취향 ${item.matchPercent}%'),
+                  const SizedBox(height: 4),
+                  Text(
+                    '${item.manufacturer ?? '브랜드명'} | ${item.origin}',
+                    style: AppTextStyles.caption1Regular.copyWith(
+                      color: AppColor.labelAlternative,
+                    ),
+                    maxLines: 1,
+                    overflow: TextOverflow.ellipsis,
                   ),
-                  maxLines: 1,
-                  overflow: TextOverflow.ellipsis,
-                ),
-                const SizedBox(height: 2),
-                Text(
-                  item.name,
-                  style: AppTextStyles.caption1Medium.copyWith(
-                    color: AppColor.labelNormal,
+                  const SizedBox(height: 2),
+                  // 이름 — 잔여 높이를 흡수하고 초과 시 말줄임 (가변 데이터 안전)
+                  Flexible(
+                    child: Text(
+                      item.name,
+                      style: AppTextStyles.caption1Medium.copyWith(
+                        color: AppColor.labelNormal,
+                      ),
+                      maxLines: 2,
+                      overflow: TextOverflow.ellipsis,
+                    ),
                   ),
-                  maxLines: 2,
-                  overflow: TextOverflow.ellipsis,
-                ),
-                const SizedBox(height: 4),
-                _buildPriceRow(item),
-              ],
+                  const SizedBox(height: 4),
+                  _buildPriceRow(item),
+                ],
+              ),
             ),
           ),
         ],
