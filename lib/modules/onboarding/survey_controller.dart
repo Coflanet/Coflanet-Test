@@ -336,19 +336,9 @@ class SurveyController extends BaseController {
     _multiRatingAnswers.clear();
     _questions = await _surveyRepository.getQuestions(type: 'standard');
 
-    // start_survey RPC — server CHECK: 'preference' or 'lifestyle'
-    try {
-      final result = await _surveyRepository.startSurvey(
-        surveyType: 'preference',
-      );
-      _sessionId =
-          result['session_id'] as String? ??
-          result['new_session_id'] as String?;
-    } catch (e) {
-      debugPrint('[SurveyController] startSurvey RPC failed: $e');
-    }
-
+    // 즉시 첫 질문으로 이동 — 세션 시작은 백그라운드(답변은 분석 시 일괄 저장)
     Get.toNamed('${Routes.survey}/0');
+    _startSession('preference');
   }
 
   /// Start lifestyle survey
@@ -359,18 +349,23 @@ class SurveyController extends BaseController {
     _multiRatingAnswers.clear();
     _questions = await _surveyRepository.getQuestions(type: 'lifestyle');
 
-    try {
-      final result = await _surveyRepository.startSurvey(
-        surveyType: 'lifestyle',
-      );
-      _sessionId =
-          result['session_id'] as String? ??
-          result['new_session_id'] as String?;
-    } catch (e) {
-      debugPrint('[SurveyController] startLifestyleSurvey RPC failed: $e');
-    }
-
     Get.toNamed('${Routes.survey}/0');
+    _startSession('lifestyle');
+  }
+
+  /// 서버 세션 시작 (백그라운드) — server CHECK: 'preference' or 'lifestyle'
+  /// 네트워크 RPC 를 네비게이션 이후에 비동기로 처리해 화면 전환 지연을 없앤다.
+  void _startSession(String surveyType) {
+    _surveyRepository
+        .startSurvey(surveyType: surveyType)
+        .then((result) {
+          _sessionId =
+              result['session_id'] as String? ??
+              result['new_session_id'] as String?;
+        })
+        .catchError((Object e) {
+          debugPrint('[SurveyController] startSurvey RPC failed: $e');
+        });
   }
 
   /// Save current step's answers to server (fire-and-forget, non-blocking)
