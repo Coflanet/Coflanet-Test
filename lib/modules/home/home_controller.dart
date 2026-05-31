@@ -53,8 +53,8 @@ class HomeController extends BaseController {
   final _likedIds = <String>{}.obs;
 
   /// 상단 광고 캐러셀 — [백엔드 API 연동 대기] banners 테이블 연결 시 실제 데이터
-  /// 현재는 placeholder 5개로 페이지 카운트만 운영
-  static const int carouselTotalCount = 5;
+  /// banners 테이블 부재로 현재는 placeholder 1개만 표시
+  static const int carouselTotalCount = 1;
   final PageController carouselController = PageController();
   final RxInt carouselIndex = 0.obs;
 

@@ -195,8 +195,8 @@ class HomeContent extends GetView<HomeController> {
   }
 
   // ===== 광고 캐러셀 =====
-  /// 5개 placeholder 페이지 — [백엔드 API 연동 대기] banners 테이블 연동 시 실데이터.
-  /// 박스 한 개 안에 placeholder 이미지 + 우상단 인디케이터 + 좌하단 타이틀 모두 통합.
+  /// placeholder 페이지 — [백엔드 API 연동 대기] banners 테이블 연동 시 실데이터.
+  /// banners 부재로 현재 1개만 표시. 박스 안에 placeholder 이미지 + 인디케이터 통합.
   Widget _buildCarousel() {
     const totalCount = HomeController.carouselTotalCount;
     return SizedBox(
@@ -222,31 +222,32 @@ class HomeContent extends GetView<HomeController> {
                     color: AppColor.colorGlobalCommon100.withValues(alpha: 0.4),
                   ),
                 ),
-                // 페이지 인디케이터 — 우상단
-                Positioned(
-                  top: 16,
-                  right: 16,
-                  child: Container(
-                    padding: const EdgeInsets.symmetric(
-                      horizontal: 12,
-                      vertical: 6,
-                    ),
-                    decoration: BoxDecoration(
-                      color: AppColor.colorGlobalCommon0.withValues(
-                        alpha: 0.5,
+                // 페이지 인디케이터 — 우상단 (2개 이상일 때만)
+                if (totalCount > 1)
+                  Positioned(
+                    top: 16,
+                    right: 16,
+                    child: Container(
+                      padding: const EdgeInsets.symmetric(
+                        horizontal: 12,
+                        vertical: 6,
                       ),
-                      borderRadius: BorderRadius.circular(99),
-                    ),
-                    child: Obx(
-                      () => Text(
-                        '${controller.carouselIndex.value + 1} / $totalCount',
-                        style: AppTextStyles.caption1Medium.copyWith(
-                          color: AppColor.colorGlobalCommon100,
+                      decoration: BoxDecoration(
+                        color: AppColor.colorGlobalCommon0.withValues(
+                          alpha: 0.5,
+                        ),
+                        borderRadius: BorderRadius.circular(99),
+                      ),
+                      child: Obx(
+                        () => Text(
+                          '${controller.carouselIndex.value + 1} / $totalCount',
+                          style: AppTextStyles.caption1Medium.copyWith(
+                            color: AppColor.colorGlobalCommon100,
+                          ),
                         ),
                       ),
                     ),
                   ),
-                ),
                 // [백엔드 API 연동 대기] banners 테이블 연동 시 배너 타이틀 표시
               ],
             ),
