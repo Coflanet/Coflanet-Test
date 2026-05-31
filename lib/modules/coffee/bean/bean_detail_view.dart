@@ -17,65 +17,111 @@ import 'package:coflanet/data/repositories/repository_provider.dart';
 /// - Flavor radar chart (산미, 바디감, 단맛, 쓴맛, 밸런스)
 /// - Flavor tags (공통 향미, 특성 향미)
 /// - Origin, roast level, process method
+///
+/// 원두 데이터는 목록 화면에서 `Get.arguments['bean']` 으로 전달받는다.
+/// 인자가 없는 비정상 진입 시에는 '정보를 불러올 수 없음' 상태를 표시한다.
 class BeanDetailView extends StatelessWidget {
   const BeanDetailView({super.key});
 
-  CoffeeItem get _bean {
+  CoffeeItem? get _beanArg {
     final args = Get.arguments as Map<String, dynamic>?;
-    return args?['bean'] as CoffeeItem? ?? _defaultBean;
+    return args?['bean'] as CoffeeItem?;
   }
-
-  static const _defaultBean = CoffeeItem(
-    id: 'default',
-    name: '에티오피아 예가체프',
-    description: '과일향, 꽃향이 풍부한 산미 커피',
-    color: AppColor.colorGlobalOrange50,
-    brand: '스페셜티 로스터스',
-    flavorProfile: FlavorProfile(
-      acidity: 90,
-      body: 50,
-      sweetness: 80,
-      bitterness: 30,
-      balance: 84,
-    ),
-    commonFlavors: ['과일 향', '꽃 향'],
-    characteristicFlavors: ['자스민', '베리', '시트러스'],
-    aromaIntensity: 96,
-  );
 
   @override
   Widget build(BuildContext context) {
+    final bean = _beanArg;
+    if (bean == null) {
+      return _buildNotFound();
+    }
+    return _buildDetail(bean);
+  }
+
+  Widget _buildDetail(CoffeeItem bean) {
     return Scaffold(
       backgroundColor: AppColor.colorGlobalCommon0,
       body: SafeArea(
         child: Column(
           children: [
-            _buildAppBar(),
+            _buildAppBar(bean),
             Expanded(
               child: SingleChildScrollView(
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    _buildHeader(),
+                    _buildHeader(bean),
                     const SizedBox(height: 24),
-                    _buildFlavorChart(),
+                    _buildFlavorChart(bean),
                     const SizedBox(height: 32),
-                    _buildFlavorTags(),
+                    _buildFlavorTags(bean),
                     const SizedBox(height: 32),
-                    _buildInfoSection(),
+                    _buildInfoSection(bean),
                     const SizedBox(height: 100),
                   ],
                 ),
               ),
             ),
-            _buildBottomBar(),
+            _buildBottomBar(bean),
           ],
         ),
       ),
     );
   }
 
-  Widget _buildAppBar() {
+  /// 인자 없이 진입한 경우 표시되는 안내 화면
+  Widget _buildNotFound() {
+    return Scaffold(
+      backgroundColor: AppColor.colorGlobalCommon0,
+      body: SafeArea(
+        child: Column(
+          children: [
+            Container(
+              padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 8),
+              child: Row(
+                children: [
+                  IconButton(
+                    icon: SvgPicture.asset(
+                      AssetPath.iconArrowBack,
+                      width: 24,
+                      height: 24,
+                      colorFilter: ColorFilter.mode(
+                        AppColor.colorGlobalCommon100,
+                        BlendMode.srcIn,
+                      ),
+                    ),
+                    onPressed: () => Get.back(),
+                  ),
+                ],
+              ),
+            ),
+            Expanded(
+              child: Center(
+                child: Column(
+                  mainAxisSize: MainAxisSize.min,
+                  children: [
+                    Icon(
+                      Icons.coffee_outlined,
+                      size: 48,
+                      color: AppColor.colorGlobalCoolNeutral50,
+                    ),
+                    const SizedBox(height: 16),
+                    Text(
+                      '원두 정보를 불러올 수 없어요.',
+                      style: AppTextStyles.body1NormalMedium.copyWith(
+                        color: AppColor.colorGlobalCoolNeutral60,
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+
+  Widget _buildAppBar(CoffeeItem bean) {
     return Container(
       padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 8),
       child: Row(
@@ -109,7 +155,7 @@ class BeanDetailView extends StatelessWidget {
             onPressed: () async {
               final result = await Get.toNamed(
                 Routes.beanEdit,
-                arguments: {'bean': _bean},
+                arguments: {'bean': bean},
               );
               if (result is CoffeeItem) {
                 await RepositoryProvider.coffeeRepository.updateCoffeeItem(
@@ -125,8 +171,8 @@ class BeanDetailView extends StatelessWidget {
     );
   }
 
-  Widget _buildHeader() {
-    final displayImage = _bean.displayImageUrl;
+  Widget _buildHeader(CoffeeItem bean) {
+    final displayImage = bean.displayImageUrl;
 
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 24),
@@ -153,7 +199,7 @@ class BeanDetailView extends StatelessWidget {
                     child: Icon(
                       Icons.coffee,
                       size: 64,
-                      color: _bean.color,
+                      color: bean.color,
                     ),
                   ),
                 ),
@@ -162,9 +208,9 @@ class BeanDetailView extends StatelessWidget {
             const SizedBox(height: 20),
           ],
           // Brand
-          if (_bean.brand != null)
+          if (bean.brand != null)
             Text(
-              _bean.brand!,
+              bean.brand!,
               style: AppTextStyles.body2NormalRegular.copyWith(
                 color: AppColor.colorGlobalCoolNeutral60,
               ),
@@ -172,7 +218,7 @@ class BeanDetailView extends StatelessWidget {
           const SizedBox(height: 4),
           // Name
           Text(
-            _bean.name,
+            bean.name,
             style: AppTextStyles.title1Bold.copyWith(
               color: AppColor.colorGlobalCommon100,
             ),
@@ -180,34 +226,34 @@ class BeanDetailView extends StatelessWidget {
           const SizedBox(height: 8),
           // Description
           Text(
-            _bean.description,
+            bean.description,
             style: AppTextStyles.body1NormalRegular.copyWith(
               color: AppColor.colorGlobalCoolNeutral60,
             ),
           ),
           // 네이버 쇼핑 가격 정보
-          if (_bean.naverLprice != null) ...[
+          if (bean.naverLprice != null) ...[
             const SizedBox(height: 12),
-            _buildPriceRow(),
+            _buildPriceRow(bean),
           ],
           // Origin info row
-          if (_bean.origin != null || _bean.roastLevel != null) ...[
+          if (bean.origin != null || bean.roastLevel != null) ...[
             const SizedBox(height: 16),
             Wrap(
               spacing: 12,
               runSpacing: 8,
               children: [
-                if (_bean.origin != null)
-                  _buildInfoChip(Icons.place_outlined, _bean.origin!),
-                if (_bean.roastLevel != null)
+                if (bean.origin != null)
+                  _buildInfoChip(Icons.place_outlined, bean.origin!),
+                if (bean.roastLevel != null)
                   _buildInfoChip(
                     Icons.local_fire_department_outlined,
-                    _bean.roastLevel!,
+                    bean.roastLevel!,
                   ),
-                if (_bean.processMethod != null)
+                if (bean.processMethod != null)
                   _buildInfoChip(
                     Icons.water_drop_outlined,
-                    _bean.processMethod!,
+                    bean.processMethod!,
                   ),
               ],
             ),
@@ -218,9 +264,9 @@ class BeanDetailView extends StatelessWidget {
   }
 
   /// 네이버 쇼핑 가격 정보 행
-  Widget _buildPriceRow() {
-    final formatter = _formatPrice(_bean.naverLprice!);
-    final mallName = _bean.naverMallName;
+  Widget _buildPriceRow(CoffeeItem bean) {
+    final formatter = _formatPrice(bean.naverLprice!);
+    final mallName = bean.naverMallName;
 
     return Container(
       padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 10),
@@ -242,10 +288,10 @@ class BeanDetailView extends StatelessWidget {
               color: AppColor.primaryNormal,
             ),
           ),
-          if (_bean.naverHprice != null &&
-              _bean.naverHprice != _bean.naverLprice) ...[
+          if (bean.naverHprice != null &&
+              bean.naverHprice != bean.naverLprice) ...[
             Text(
-              ' ~ ${_formatPrice(_bean.naverHprice!)}',
+              ' ~ ${_formatPrice(bean.naverHprice!)}',
               style: AppTextStyles.body2NormalRegular.copyWith(
                 color: AppColor.colorGlobalCoolNeutral60,
               ),
@@ -300,8 +346,8 @@ class BeanDetailView extends StatelessWidget {
     );
   }
 
-  Widget _buildFlavorChart() {
-    final profile = _bean.flavorProfile ?? const FlavorProfile();
+  Widget _buildFlavorChart(CoffeeItem bean) {
+    final profile = bean.flavorProfile ?? const FlavorProfile();
 
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 24),
@@ -314,7 +360,7 @@ class BeanDetailView extends StatelessWidget {
         child: Column(
           children: [
             // Aroma intensity
-            if (_bean.aromaIntensity != null) ...[
+            if (bean.aromaIntensity != null) ...[
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
@@ -325,7 +371,7 @@ class BeanDetailView extends StatelessWidget {
                     ),
                   ),
                   Text(
-                    _bean.aromaIntensity!.round().toString(),
+                    bean.aromaIntensity!.round().toString(),
                     style: AppTextStyles.body2NormalBold.copyWith(
                       color: AppColor.primaryNormal,
                     ),
@@ -333,7 +379,7 @@ class BeanDetailView extends StatelessWidget {
                 ],
               ),
               const SizedBox(height: 8),
-              _buildAromaBar(_bean.aromaIntensity!),
+              _buildAromaBar(bean.aromaIntensity!),
               const SizedBox(height: 24),
             ],
             // Radar chart
@@ -344,7 +390,7 @@ class BeanDetailView extends StatelessWidget {
                 showLabels: true,
                 showValues: true,
                 animate: true,
-                fillColor: AppColor.primaryNormal.withValues(alpha:0.15),
+                fillColor: AppColor.primaryNormal.withValues(alpha: 0.15),
                 strokeColor: AppColor.primaryNormal,
                 gridColor: AppColor.colorGlobalCoolNeutral30,
                 labelColor: AppColor.colorGlobalCommon100,
@@ -377,7 +423,7 @@ class BeanDetailView extends StatelessWidget {
                 decoration: BoxDecoration(
                   gradient: LinearGradient(
                     colors: [
-                      AppColor.primaryNormal.withValues(alpha:0.7),
+                      AppColor.primaryNormal.withValues(alpha: 0.7),
                       AppColor.primaryNormal,
                     ],
                   ),
@@ -460,12 +506,12 @@ class BeanDetailView extends StatelessWidget {
     );
   }
 
-  Widget _buildFlavorTags() {
+  Widget _buildFlavorTags(CoffeeItem bean) {
     final hasCommon =
-        _bean.commonFlavors != null && _bean.commonFlavors!.isNotEmpty;
+        bean.commonFlavors != null && bean.commonFlavors!.isNotEmpty;
     final hasCharacteristic =
-        _bean.characteristicFlavors != null &&
-        _bean.characteristicFlavors!.isNotEmpty;
+        bean.characteristicFlavors != null &&
+        bean.characteristicFlavors!.isNotEmpty;
 
     if (!hasCommon && !hasCharacteristic) return const SizedBox.shrink();
 
@@ -475,11 +521,11 @@ class BeanDetailView extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           if (hasCommon) ...[
-            _buildTagSection('공통 향미', _bean.commonFlavors!),
+            _buildTagSection('공통 향미', bean.commonFlavors!),
             const SizedBox(height: 20),
           ],
           if (hasCharacteristic)
-            _buildTagSection('특성 향미', _bean.characteristicFlavors!),
+            _buildTagSection('특성 향미', bean.characteristicFlavors!),
         ],
       ),
     );
@@ -505,7 +551,7 @@ class BeanDetailView extends StatelessWidget {
     );
   }
 
-  Widget _buildInfoSection() {
+  Widget _buildInfoSection(CoffeeItem bean) {
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 24),
       child: Column(
@@ -526,12 +572,12 @@ class BeanDetailView extends StatelessWidget {
             ),
             child: Column(
               children: [
-                if (_bean.origin != null) _buildInfoRow('원산지', _bean.origin!),
-                if (_bean.roastLevel != null)
-                  _buildInfoRow('로스팅', _bean.roastLevel!),
-                if (_bean.processMethod != null)
-                  _buildInfoRow('가공 방식', _bean.processMethod!),
-                if (_bean.brand != null) _buildInfoRow('브랜드', _bean.brand!),
+                if (bean.origin != null) _buildInfoRow('원산지', bean.origin!),
+                if (bean.roastLevel != null)
+                  _buildInfoRow('로스팅', bean.roastLevel!),
+                if (bean.processMethod != null)
+                  _buildInfoRow('가공 방식', bean.processMethod!),
+                if (bean.brand != null) _buildInfoRow('브랜드', bean.brand!),
               ],
             ),
           ),
@@ -563,11 +609,11 @@ class BeanDetailView extends StatelessWidget {
     );
   }
 
-  Widget _buildBottomBar() {
+  Widget _buildBottomBar(CoffeeItem bean) {
     return AppBottomBar.primaryButton(
       text: '원두 레시피 시작',
       onPressed: () {
-        Get.toNamed(Routes.coffeeSettings, arguments: {'bean': _bean});
+        Get.toNamed(Routes.coffeeSettings, arguments: {'bean': bean});
       },
       padding: const EdgeInsets.all(24),
     );
@@ -585,10 +631,10 @@ class _FlavorTagChip extends StatelessWidget {
     return Container(
       padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 8),
       decoration: BoxDecoration(
-        color: AppColor.primaryNormal.withValues(alpha:0.12),
+        color: AppColor.primaryNormal.withValues(alpha: 0.12),
         borderRadius: AppRadius.xxxlBorder,
         border: Border.all(
-          color: AppColor.primaryNormal.withValues(alpha:0.3),
+          color: AppColor.primaryNormal.withValues(alpha: 0.3),
           width: 1,
         ),
       ),
