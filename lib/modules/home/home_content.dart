@@ -3,7 +3,7 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
 import 'package:coflanet/constants/color_constant.dart';
 import 'package:coflanet/constants/style_constant.dart';
-import 'package:coflanet/data/models/coffee_item_model.dart';
+import 'package:coflanet/data/models/survey_result_model.dart';
 import 'package:coflanet/modules/home/home_controller.dart';
 
 /// Home Content — Figma `Home_Item_yes` 화면 구현
@@ -247,21 +247,7 @@ class HomeContent extends GetView<HomeController> {
                     ),
                   ),
                 ),
-                // 하단 타이틀 — 박스 안 좌하단 (흰색 텍스트)
-                Positioned(
-                  left: 20,
-                  right: 20,
-                  bottom: 24,
-                  child: Text(
-                    '타이틀을 입력해주세요.\n최대 2줄까지 입력가능합니다.',
-                    maxLines: 2,
-                    overflow: TextOverflow.ellipsis,
-                    style: AppTextStyles.body1NormalBold.copyWith(
-                      color: AppColor.colorGlobalCommon100,
-                      height: 1.35,
-                    ),
-                  ),
-                ),
+                // [백엔드 API 연동 대기] banners 테이블 연동 시 배너 타이틀 표시
               ],
             ),
           );
@@ -483,10 +469,17 @@ class HomeContent extends GetView<HomeController> {
             children: [
               Row(
                 children: [
-                  const Text('🍋', style: TextStyle(fontSize: 18)),
+                  Text(
+                    controller.tasteFlavors.isNotEmpty
+                        ? controller.tasteFlavors.first.emoji
+                        : '☕',
+                    style: const TextStyle(fontSize: 18),
+                  ),
                   const SizedBox(width: 6),
                   Text(
-                    '시트러스 러버',
+                    controller.tasteTypeLabel.isNotEmpty
+                        ? controller.tasteTypeLabel
+                        : '나의 커피 취향',
                     style: AppTextStyles.body1NormalBold.copyWith(
                       color: AppColor.labelNormal,
                     ),
@@ -504,16 +497,25 @@ class HomeContent extends GetView<HomeController> {
           Wrap(
             spacing: 6,
             runSpacing: 6,
-            children: [
-              _buildPreferenceChip('산미 좋음'),
-              _buildPreferenceChip('과일 향'),
-              _buildPreferenceChip('꽃 향'),
-              _buildPreferenceChip('외 2개'),
-            ],
+            children: _buildPreferenceChips(),
           ),
         ],
       ),
     );
+  }
+
+  /// 취향 향미 칩 목록 — 최대 3개 + "외 N개"
+  List<Widget> _buildPreferenceChips() {
+    final flavors = controller.tasteFlavors;
+    if (flavors.isEmpty) return const [];
+    const maxChips = 3;
+    final chips = <Widget>[
+      for (final f in flavors.take(maxChips)) _buildPreferenceChip(f.name),
+    ];
+    if (flavors.length > maxChips) {
+      chips.add(_buildPreferenceChip('외 ${flavors.length - maxChips}개'));
+    }
+    return chips;
   }
 
   Widget _buildPreferenceChip(String label) {
@@ -607,7 +609,7 @@ class HomeContent extends GetView<HomeController> {
   }
 
   /// 공통 상품 그리드 (2열).
-  Widget _buildProductGrid(List<CoffeeItem> items) {
+  Widget _buildProductGrid(List<CoffeeRecommendationModel> items) {
     return GridView.builder(
       shrinkWrap: true,
       physics: const NeverScrollableScrollPhysics(),
@@ -622,8 +624,8 @@ class HomeContent extends GetView<HomeController> {
     );
   }
 
-  /// 단일 상품 카드 — 이미지 + 좋아요 + 태그 + 이름 + 가격 + 평점.
-  Widget _buildProductCard(CoffeeItem item) {
+  /// 단일 상품 카드 — 추천 데이터(이미지 + 좋아요 + 매치율 + 이름 + 가격).
+  Widget _buildProductCard(CoffeeRecommendationModel item) {
     return Container(
       decoration: BoxDecoration(
         color: AppColor.colorGlobalCommon100,
@@ -645,15 +647,19 @@ class HomeContent extends GetView<HomeController> {
                       topLeft: Radius.circular(12),
                       topRight: Radius.circular(12),
                     ),
-                    image: item.displayImageUrl != null
+                    image: item.imageUrl != null
                         ? DecorationImage(
-                            image: NetworkImage(item.displayImageUrl!),
+                            image: NetworkImage(item.imageUrl!),
                             fit: BoxFit.cover,
                           )
                         : null,
                   ),
-                  child: item.displayImageUrl == null
-                      ? Icon(Icons.coffee, size: 48, color: item.color)
+                  child: item.imageUrl == null
+                      ? Icon(
+                          Icons.coffee,
+                          size: 48,
+                          color: AppColor.primaryNormal,
+                        )
                       : null,
                 ),
               ),
@@ -690,16 +696,11 @@ class HomeContent extends GetView<HomeController> {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Row(
-                  children: [
-                    _buildSmallTag('New'),
-                    const SizedBox(width: 4),
-                    _buildSmallTag('Best'),
-                  ],
-                ),
+                // 취향 일치율
+                if (item.matchPercent > 0) _buildSmallTag('취향 ${item.matchPercent}%'),
                 const SizedBox(height: 4),
                 Text(
-                  '${item.brand ?? '브랜드명'} | 원산지',
+                  '${item.manufacturer ?? '브랜드명'} | ${item.origin}',
                   style: AppTextStyles.caption1Regular.copyWith(
                     color: AppColor.labelAlternative,
                   ),
@@ -716,29 +717,54 @@ class HomeContent extends GetView<HomeController> {
                   overflow: TextOverflow.ellipsis,
                 ),
                 const SizedBox(height: 4),
-                Row(
-                  children: [
-                    Text(
-                      '12%',
-                      style: AppTextStyles.caption1Medium.copyWith(
-                        color: AppColor.primaryNormal,
-                      ),
-                    ),
-                    const SizedBox(width: 4),
-                    Text(
-                      '12,000',
-                      style: AppTextStyles.body2NormalBold.copyWith(
-                        color: AppColor.labelNormal,
-                      ),
-                    ),
-                  ],
-                ),
+                _buildPriceRow(item),
               ],
             ),
           ),
         ],
       ),
     );
+  }
+
+  /// 가격 행 — 할인율 + 가격. 가격 정보 없으면 표시 안 함.
+  Widget _buildPriceRow(CoffeeRecommendationModel item) {
+    final price = item.discountPrice ?? item.originalPrice;
+    if (price == null && item.discountPercent == null) {
+      return const SizedBox.shrink();
+    }
+    return Row(
+      children: [
+        if (item.discountPercent != null) ...[
+          Text(
+            '${item.discountPercent}%',
+            style: AppTextStyles.caption1Medium.copyWith(
+              color: AppColor.primaryNormal,
+            ),
+          ),
+          const SizedBox(width: 4),
+        ],
+        if (price != null)
+          Text(
+            _formatPrice(price),
+            style: AppTextStyles.body2NormalBold.copyWith(
+              color: AppColor.labelNormal,
+            ),
+          ),
+      ],
+    );
+  }
+
+  /// 가격 포맷팅 (원 단위, 쉼표 구분)
+  String _formatPrice(int price) {
+    final priceStr = price.toString();
+    final buffer = StringBuffer();
+    for (var i = 0; i < priceStr.length; i++) {
+      if (i > 0 && (priceStr.length - i) % 3 == 0) {
+        buffer.write(',');
+      }
+      buffer.write(priceStr[i]);
+    }
+    return '$buffer원';
   }
 
   Widget _buildSmallTag(String label) {

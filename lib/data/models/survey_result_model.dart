@@ -1,6 +1,9 @@
 /// Model for survey results
 class SurveyResultModel {
   final String coffeeType;
+
+  /// 커피 타입 라벨 (예: '시트러스 러버') — 서버 coffee_type_label
+  final String coffeeTypeLabel;
   final String coffeeTypeDescription;
   final TasteProfileModel tasteProfile;
   final List<FlavorDescriptionModel> flavorDescriptions;
@@ -8,6 +11,7 @@ class SurveyResultModel {
 
   const SurveyResultModel({
     required this.coffeeType,
+    this.coffeeTypeLabel = '',
     required this.coffeeTypeDescription,
     required this.tasteProfile,
     this.flavorDescriptions = const [],
@@ -17,6 +21,7 @@ class SurveyResultModel {
   factory SurveyResultModel.fromJson(Map<String, dynamic> json) {
     return SurveyResultModel(
       coffeeType: json['coffeeType'] as String,
+      coffeeTypeLabel: json['coffeeTypeLabel'] as String? ?? '',
       coffeeTypeDescription: json['coffeeTypeDescription'] as String,
       tasteProfile: TasteProfileModel.fromJson(
         json['tasteProfile'] as Map<String, dynamic>,
@@ -41,6 +46,7 @@ class SurveyResultModel {
   Map<String, dynamic> toJson() {
     return {
       'coffeeType': coffeeType,
+      'coffeeTypeLabel': coffeeTypeLabel,
       'coffeeTypeDescription': coffeeTypeDescription,
       'tasteProfile': tasteProfile.toJson(),
       'flavorDescriptions': flavorDescriptions.map((e) => e.toJson()).toList(),

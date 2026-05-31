@@ -4,6 +4,7 @@ import 'package:coflanet/core/base/base_controller.dart';
 import 'package:coflanet/core/services/auth_service.dart';
 import 'package:coflanet/core/services/survey_service.dart';
 import 'package:coflanet/data/models/coffee_item_model.dart';
+import 'package:coflanet/data/models/survey_result_model.dart';
 import 'package:coflanet/data/repositories/repository_interfaces.dart';
 import 'package:coflanet/data/repositories/repository_provider.dart';
 
@@ -24,19 +25,28 @@ class HomeController extends BaseController {
   List<CoffeeItem> get myBeans => _myBeans;
   bool get hasMyBeans => _myBeans.isNotEmpty;
 
-  /// 취향 기반 추천 그리드 — [백엔드 API 연동 대기]
-  final _tasteRecommendations = <CoffeeItem>[].obs;
-  List<CoffeeItem> get tasteRecommendations => _tasteRecommendations;
+  /// 취향 기반 추천 그리드 — 설문 결과(get_my_recommendations) 연동
+  final _tasteRecommendations = <CoffeeRecommendationModel>[].obs;
+  List<CoffeeRecommendationModel> get tasteRecommendations =>
+      _tasteRecommendations;
   bool get hasTasteRecommendations => _tasteRecommendations.isNotEmpty;
 
-  /// 카테고리별 베스트 상품 — [백엔드 API 연동 대기]
-  final _categoryBest = <CoffeeItem>[].obs;
-  List<CoffeeItem> get categoryBest => _categoryBest;
+  /// 취향 배너 — 커피 타입 라벨 (예: '시트러스 러버')
+  String get tasteTypeLabel =>
+      _surveyService.surveyResult?.coffeeTypeLabel ?? '';
+
+  /// 취향 배너 — 향미 설명 칩 (이름/이모지)
+  List<FlavorDescriptionModel> get tasteFlavors =>
+      _surveyService.surveyResult?.flavorDescriptions ?? [];
+
+  /// 카테고리별 베스트 상품 — [백엔드 API 연동 대기] (전용 API 부재로 빈 상태 유지)
+  final _categoryBest = <CoffeeRecommendationModel>[].obs;
+  List<CoffeeRecommendationModel> get categoryBest => _categoryBest;
   bool get hasCategoryBest => _categoryBest.isNotEmpty;
 
-  /// 실시간 인기 — [백엔드 API 연동 대기]
-  final _realtimePopular = <CoffeeItem>[].obs;
-  List<CoffeeItem> get realtimePopular => _realtimePopular;
+  /// 실시간 인기 — [백엔드 API 연동 대기] (전용 API 부재로 빈 상태 유지)
+  final _realtimePopular = <CoffeeRecommendationModel>[].obs;
+  List<CoffeeRecommendationModel> get realtimePopular => _realtimePopular;
   bool get hasRealtimePopular => _realtimePopular.isNotEmpty;
 
   /// 좋아요 (찜) ID 집합 — 로컬 상태, [백엔드 API 연동 대기]
@@ -69,12 +79,18 @@ class HomeController extends BaseController {
   Future<void> _loadData() async {
     showLoading();
     try {
+      // 설문 결과(취향 프로필 + 추천) 최신화
+      await _surveyService.refresh();
+
       // 보유 원두 (실제 스토어 데이터)
       _myBeans.value = await _coffeeRepository.getCoffeeItems();
 
-      // [백엔드 API 연동 대기] 추천 / 카테고리 / 인기 API
+      // 취향 기반 추천 — 설문 결과의 recommendations 사용
+      _tasteRecommendations.value =
+          _surveyService.surveyResult?.recommendations ?? [];
+
+      // [백엔드 API 연동 대기] 카테고리 / 실시간 인기 전용 API
       // 현재는 빈 배열 유지 → UI 가 empty 상태 분기 표시
-      _tasteRecommendations.clear();
       _categoryBest.clear();
       _realtimePopular.clear();
     } finally {

@@ -157,6 +157,10 @@ class SupabaseSurveyRepository implements SurveyRepository {
           profile['coffee_type'] as String? ??
           profile['coffeeType'] as String? ??
           '밸런스형',
+      coffeeTypeLabel:
+          profile['coffee_type_label'] as String? ??
+          profile['coffeeTypeLabel'] as String? ??
+          '',
       coffeeTypeDescription:
           profile['coffee_type_description'] as String? ??
           profile['coffeeTypeDescription'] as String? ??
