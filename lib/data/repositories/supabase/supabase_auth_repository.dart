@@ -3,16 +3,15 @@ import 'package:coflanet/core/storage/local_storage.dart';
 import 'package:coflanet/data/models/user_model.dart';
 import 'package:coflanet/data/providers/auth_provider.dart';
 import 'package:coflanet/data/repositories/repository_interfaces.dart';
+import 'package:coflanet/data/repositories/supabase/supabase_repository_base.dart';
 import 'package:get/get.dart';
-import 'package:supabase_flutter/supabase_flutter.dart' hide LocalStorage;
 
 /// Supabase implementation of AuthRepository
 /// Uses Supabase Auth — authentication handled by AuthService.
 /// This repository handles user profile management and account operations.
-class SupabaseAuthRepository implements AuthRepository {
+class SupabaseAuthRepository extends SupabaseRepositoryBase
+    implements AuthRepository {
   final LocalStorage _storage = Get.find<LocalStorage>();
-
-  SupabaseClient get _db => Supabase.instance.client;
 
   @override
   Future<UserModel> exchangeToken({
@@ -22,8 +21,8 @@ class SupabaseAuthRepository implements AuthRepository {
   }) async {
     // No-op: AuthService handles Supabase Auth directly
     // Return current user from session
-    final user = _db.auth.currentUser;
-    final session = _db.auth.currentSession;
+    final user = db.auth.currentUser;
+    final session = db.auth.currentSession;
     return UserModel(
       id: user?.id ?? socialUser?.id ?? '',
       email: user?.email ?? socialUser?.email,
@@ -45,32 +44,35 @@ class SupabaseAuthRepository implements AuthRepository {
 
   @override
   Future<void> logout() async {
-    await _db.auth.signOut();
+    // 인증 메서드는 재인증 루프 위험으로 guard 로 감싸지 않는다.
+    await db.auth.signOut();
   }
 
   @override
   Future<void> deleteAccount() async {
     try {
       // supabase_flutter automatically includes auth headers
-      await _db.functions.invoke('delete-account');
+      await guard(() => db.functions.invoke('delete-account'));
     } catch (e) {
       debugPrint(
         '[SupabaseAuthRepository] delete-account Edge Function failed: $e',
       );
-      // Fallback: RPC 직접 호출
-      final userId = _db.auth.currentUser?.id;
+      // Fallback: RPC 직접 호출 (인증 메서드인 currentUser 는 감싸지 않음)
+      final userId = db.auth.currentUser?.id;
       if (userId != null) {
-        await _db.rpc('delete_user_data', params: {'p_user_id': userId});
+        await guard(
+          () => db.rpc('delete_user_data', params: {'p_user_id': userId}),
+        );
       }
     }
   }
 
   @override
   Future<UserModel?> getCurrentUser() async {
-    final user = _db.auth.currentUser;
+    final user = db.auth.currentUser;
     if (user == null) return null;
 
-    final session = _db.auth.currentSession;
+    final session = db.auth.currentSession;
     return UserModel(
       id: user.id,
       email: user.email,
@@ -90,7 +92,9 @@ class SupabaseAuthRepository implements AuthRepository {
     String? profileImageUrl,
   }) async {
     if (name != null) {
-      await _db.rpc('save_display_name', params: {'display_name': name});
+      await guard(
+        () => db.rpc('save_display_name', params: {'display_name': name}),
+      );
     }
 
     // Refresh user data

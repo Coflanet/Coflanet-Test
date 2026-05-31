@@ -1,13 +1,12 @@
 import 'package:flutter/foundation.dart';
 import 'package:coflanet/data/models/brew_log_model.dart';
 import 'package:coflanet/data/repositories/repository_interfaces.dart';
-import 'package:supabase_flutter/supabase_flutter.dart' hide LocalStorage;
+import 'package:coflanet/data/repositories/supabase/supabase_repository_base.dart';
 
 /// Supabase implementation of BrewLogRepository
 /// Uses RPC functions for all brew log operations.
-class SupabaseBrewLogRepository implements BrewLogRepository {
-  SupabaseClient get _db => Supabase.instance.client;
-
+class SupabaseBrewLogRepository extends SupabaseRepositoryBase
+    implements BrewLogRepository {
   /// Cached slug → UUID map for brew_methods
   Map<String, String>? _slugToIdCache;
 
@@ -24,9 +23,8 @@ class SupabaseBrewLogRepository implements BrewLogRepository {
         }
       }
 
-      final result = await _db.rpc(
-        'save_brew_log',
-        params: {'p_values': values},
+      final result = await guard(
+        () => db.rpc('save_brew_log', params: {'p_values': values}),
       );
       debugPrint('[BrewLogRepo] save_brew_log result: $result');
       return result is Map<String, dynamic> ? result : <String, dynamic>{};
@@ -42,9 +40,11 @@ class SupabaseBrewLogRepository implements BrewLogRepository {
     int offset = 0,
   }) async {
     try {
-      final result = await _db.rpc(
-        'get_my_brew_logs',
-        params: {'p_limit': limit, 'p_offset': offset},
+      final result = await guard(
+        () => db.rpc(
+          'get_my_brew_logs',
+          params: {'p_limit': limit, 'p_offset': offset},
+        ),
       );
       debugPrint('[BrewLogRepo] get_my_brew_logs: $result');
       if (result == null) return [];
@@ -71,9 +71,11 @@ class SupabaseBrewLogRepository implements BrewLogRepository {
   @override
   Future<void> updateBrewLog(String logId, Map<String, dynamic> values) async {
     try {
-      await _db.rpc(
-        'update_brew_log',
-        params: {'p_log_id': logId, 'p_values': values},
+      await guard(
+        () => db.rpc(
+          'update_brew_log',
+          params: {'p_log_id': logId, 'p_values': values},
+        ),
       );
     } catch (e) {
       debugPrint('[BrewLogRepo] updateBrewLog error: $e');
@@ -83,7 +85,9 @@ class SupabaseBrewLogRepository implements BrewLogRepository {
   @override
   Future<void> deleteBrewLog(String logId) async {
     try {
-      await _db.rpc('delete_brew_log', params: {'p_log_id': logId});
+      await guard(
+        () => db.rpc('delete_brew_log', params: {'p_log_id': logId}),
+      );
     } catch (e) {
       debugPrint('[BrewLogRepo] deleteBrewLog error: $e');
     }
@@ -92,7 +96,7 @@ class SupabaseBrewLogRepository implements BrewLogRepository {
   @override
   Future<Map<String, dynamic>?> getMyBrewStats() async {
     try {
-      final result = await _db.rpc('get_my_brew_stats');
+      final result = await guard(() => db.rpc('get_my_brew_stats'));
       debugPrint('[BrewLogRepo] get_my_brew_stats: $result');
       if (result is Map<String, dynamic>) return result;
       return null;
@@ -114,7 +118,9 @@ class SupabaseBrewLogRepository implements BrewLogRepository {
   Future<Map<String, String>> _getSlugMap() async {
     if (_slugToIdCache != null) return _slugToIdCache!;
     try {
-      final rows = await _db.from('brew_methods').select('id, slug');
+      final rows = await guard(
+        () => db.from('brew_methods').select('id, slug'),
+      );
       final map = <String, String>{};
       for (final r in rows) {
         map[r['slug'] as String] = r['id'] as String;

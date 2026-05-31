@@ -16,6 +16,7 @@ import 'package:coflanet/core/theme/theme_controller.dart';
 import 'package:coflanet/core/config/social_login_config.dart';
 import 'package:coflanet/constants/color_constant.dart';
 import 'package:coflanet/data/repositories/repository_config.dart';
+import 'package:coflanet/data/repositories/supabase/supabase_repository_base.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -85,6 +86,14 @@ void main() async {
     ),
     permanent: true,
   );
+
+  // Supabase repository 가 인증 만료(UNAUTHORIZED)를 감지하면 전역 재인증을
+  // 트리거하도록 콜백 주입. 호출 시점에 find 하여 등록 순서와 무관하게 안전.
+  SupabaseRepositoryBase.onAuthExpired = () async {
+    if (Get.isRegistered<AuthService>()) {
+      await Get.find<AuthService>().handleSessionExpired();
+    }
+  };
   await Get.putAsync<SurveyService>(
     () => SurveyService().init(),
     permanent: true,

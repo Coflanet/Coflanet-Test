@@ -2,19 +2,18 @@ import 'dart:ui' show Color;
 import 'package:flutter/foundation.dart';
 import 'package:coflanet/data/models/coffee_item_model.dart';
 import 'package:coflanet/data/repositories/repository_interfaces.dart';
+import 'package:coflanet/data/repositories/supabase/supabase_repository_base.dart';
 import 'package:coflanet/widgets/charts/flavor_radar_chart.dart'
     show FlavorProfile;
-import 'package:supabase_flutter/supabase_flutter.dart' hide LocalStorage;
 
 /// Supabase implementation of CoffeeRepository
 /// Uses RPC functions for list operations, direct queries for individual items.
-class SupabaseCoffeeRepository implements CoffeeRepository {
-  SupabaseClient get _db => Supabase.instance.client;
-
+class SupabaseCoffeeRepository extends SupabaseRepositoryBase
+    implements CoffeeRepository {
   @override
   Future<List<CoffeeItem>> getCoffeeItems() async {
     try {
-      final result = await _db.rpc('get_my_bean_list');
+      final result = await guard(() => db.rpc('get_my_bean_list'));
       debugPrint('[CoffeeRepo] get_my_bean_list: $result');
 
       if (result == null) return [];
@@ -43,9 +42,8 @@ class SupabaseCoffeeRepository implements CoffeeRepository {
   Future<void> addCoffeeItem(CoffeeItem item) async {
     try {
       final values = _buildBeanData(item);
-      final result = await _db.rpc(
-        'add_custom_bean',
-        params: {'p_values': values},
+      final result = await guard(
+        () => db.rpc('add_custom_bean', params: {'p_values': values}),
       );
       debugPrint('[CoffeeRepo] add_custom_bean result: $result');
     } catch (e) {
@@ -57,9 +55,11 @@ class SupabaseCoffeeRepository implements CoffeeRepository {
   Future<void> updateCoffeeItem(CoffeeItem item) async {
     try {
       final values = _buildBeanData(item);
-      final result = await _db.rpc(
-        'update_custom_bean',
-        params: {'p_bean_id': item.id, 'p_values': values},
+      final result = await guard(
+        () => db.rpc(
+          'update_custom_bean',
+          params: {'p_bean_id': item.id, 'p_values': values},
+        ),
       );
       debugPrint('[CoffeeRepo] update_custom_bean result: $result');
     } catch (e) {
@@ -70,7 +70,9 @@ class SupabaseCoffeeRepository implements CoffeeRepository {
   @override
   Future<void> deleteCoffeeItem(String id) async {
     try {
-      await _db.rpc('remove_from_coffee_list', params: {'p_bean_id': id});
+      await guard(
+        () => db.rpc('remove_from_coffee_list', params: {'p_bean_id': id}),
+      );
     } catch (e) {
       debugPrint('[CoffeeRepo] deleteCoffeeItem error: $e');
     }
@@ -88,7 +90,9 @@ class SupabaseCoffeeRepository implements CoffeeRepository {
   @override
   Future<void> reorderCoffeeItems(List<String> orderedIds) async {
     try {
-      await _db.rpc('reorder_coffee_list', params: {'p_bean_ids': orderedIds});
+      await guard(
+        () => db.rpc('reorder_coffee_list', params: {'p_bean_ids': orderedIds}),
+      );
     } catch (e) {
       debugPrint('[CoffeeRepo] reorderCoffeeItems error: $e');
     }
@@ -245,9 +249,11 @@ class SupabaseCoffeeRepository implements CoffeeRepository {
     String addedFrom = 'manual',
   }) async {
     try {
-      final result = await _db.rpc(
-        'add_to_coffee_list',
-        params: {'p_bean_id': beanId, 'p_added_from': addedFrom},
+      final result = await guard(
+        () => db.rpc(
+          'add_to_coffee_list',
+          params: {'p_bean_id': beanId, 'p_added_from': addedFrom},
+        ),
       );
       debugPrint('[CoffeeRepo] add_to_coffee_list result: $result');
       return result is Map<String, dynamic> ? result : <String, dynamic>{};
@@ -262,9 +268,11 @@ class SupabaseCoffeeRepository implements CoffeeRepository {
     Map<String, dynamic>? filters,
   }) async {
     try {
-      final result = await _db.rpc(
-        'get_coffee_catalog',
-        params: filters != null ? {'p_filters': filters} : {},
+      final result = await guard(
+        () => db.rpc(
+          'get_coffee_catalog',
+          params: filters != null ? {'p_filters': filters} : {},
+        ),
       );
       debugPrint('[CoffeeRepo] get_coffee_catalog result: $result');
       return result is Map<String, dynamic> ? result : <String, dynamic>{};

@@ -3,6 +3,7 @@ import 'package:flutter/widgets.dart';
 import 'package:get/get.dart';
 import 'package:supabase_flutter/supabase_flutter.dart'
     hide LocalStorage, AuthException;
+import 'package:coflanet/core/services/auth_error.dart' as auth_error;
 import 'package:coflanet/core/storage/local_storage.dart';
 import 'package:coflanet/data/models/user_model.dart';
 import 'package:coflanet/data/providers/auth_provider.dart';
@@ -212,21 +213,9 @@ class AuthService extends GetxService with WidgetsBindingObserver {
     });
   }
 
-  /// 서버 RPC/함수의 인증 만료성 에러인지 판별한다.
-  ///
-  /// - PostgrestException P0001 + 메시지에 'UNAUTHORIZED' (RPC 내부 RAISE)
-  /// - PostgrestException 42501 (permission denied — 미인증 role 로 함수 호출)
-  static bool isAuthExpiredError(Object error) {
-    if (error is PostgrestException) {
-      final code = error.code;
-      if (code == '42501') return true;
-      if (code == 'P0001' &&
-          error.message.toUpperCase().contains('UNAUTHORIZED')) {
-        return true;
-      }
-    }
-    return false;
-  }
+  /// 서버 RPC/함수의 인증 만료성 에러인지 판별한다. (auth_error.dart 위임)
+  static bool isAuthExpiredError(Object error) =>
+      auth_error.isAuthExpiredError(error);
 
   /// 세션 만료 처리 — 세션/캐시를 정리하고 로그인 화면으로 유도한다.
   ///

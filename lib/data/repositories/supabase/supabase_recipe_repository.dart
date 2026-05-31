@@ -4,7 +4,7 @@ import 'package:coflanet/core/storage/local_storage.dart';
 import 'package:coflanet/data/dummy/dummy_timer_data.dart';
 import 'package:coflanet/data/models/timer_step_model.dart';
 import 'package:coflanet/data/repositories/repository_interfaces.dart';
-import 'package:supabase_flutter/supabase_flutter.dart' hide LocalStorage;
+import 'package:coflanet/data/repositories/supabase/supabase_repository_base.dart';
 
 /// Supabase implementation of RecipeRepository
 ///
@@ -16,8 +16,8 @@ import 'package:supabase_flutter/supabase_flutter.dart' hide LocalStorage;
 ///
 /// Built-in recipes come from DummyTimerData (static, not in DB).
 /// Saved/favorite recipe IDs are stored locally (no server table for this).
-class SupabaseRecipeRepository implements RecipeRepository {
-  SupabaseClient get _db => Supabase.instance.client;
+class SupabaseRecipeRepository extends SupabaseRepositoryBase
+    implements RecipeRepository {
   final LocalStorage _storage = Get.find<LocalStorage>();
 
   /// Cached brew_methods slug → UUID mapping
@@ -36,7 +36,9 @@ class SupabaseRecipeRepository implements RecipeRepository {
       if (methodId != null) {
         final params = <String, dynamic>{'p_brew_method_id': methodId};
         if (beanId != null) params['p_bean_id'] = beanId;
-        final result = await _db.rpc('get_merged_recipe', params: params);
+        final result = await guard(
+          () => db.rpc('get_merged_recipe', params: params),
+        );
         debugPrint('[RecipeRepo] get_merged_recipe($coffeeType): $result');
         if (result is Map<String, dynamic>) {
           return _recipeFromRpc(result, coffeeType);
@@ -69,14 +71,16 @@ class SupabaseRecipeRepository implements RecipeRepository {
 
     // User's custom recipes
     try {
-      final userId = _db.auth.currentUser?.id;
+      final userId = db.auth.currentUser?.id;
       if (userId == null) return builtIn;
 
-      final rows = await _db
-          .from('recipes')
-          .select('*, recipe_steps(*), recipe_aroma_tags(*)')
-          .eq('user_id', userId)
-          .eq('is_default', false);
+      final rows = await guard(
+        () => db
+            .from('recipes')
+            .select('*, recipe_steps(*), recipe_aroma_tags(*)')
+            .eq('user_id', userId)
+            .eq('is_default', false),
+      );
 
       final slugMap = await _getSlugMap();
       final custom = rows.map((r) => _recipeFromRow(r, slugMap)).toList();
@@ -109,11 +113,13 @@ class SupabaseRecipeRepository implements RecipeRepository {
     if (knownTypes.contains(id)) return DummyTimerData.getRecipe(id);
 
     try {
-      final row = await _db
-          .from('recipes')
-          .select('*, recipe_steps(*), recipe_aroma_tags(*)')
-          .eq('id', id)
-          .maybeSingle();
+      final row = await guard(
+        () => db
+            .from('recipes')
+            .select('*, recipe_steps(*), recipe_aroma_tags(*)')
+            .eq('id', id)
+            .maybeSingle(),
+      );
       if (row == null) return null;
 
       final slugMap = await _getSlugMap();
@@ -127,7 +133,7 @@ class SupabaseRecipeRepository implements RecipeRepository {
   @override
   Future<void> saveRecipe(TimerRecipeModel recipe) async {
     try {
-      final userId = _db.auth.currentUser?.id;
+      final userId = db.auth.currentUser?.id;
       if (userId == null) return;
 
       final methodId = await _getBrewMethodId(recipe.coffeeType);
@@ -177,14 +183,16 @@ class SupabaseRecipeRepository implements RecipeRepository {
             .toList(),
       };
 
-      final result = await _db.rpc(
-        'save_custom_recipe',
-        params: {
-          'p_brew_method_id': methodId,
-          'p_bean_id': beanId,
-          'p_name': recipe.name,
-          'p_values': values,
-        },
+      final result = await guard(
+        () => db.rpc(
+          'save_custom_recipe',
+          params: {
+            'p_brew_method_id': methodId,
+            'p_bean_id': beanId,
+            'p_name': recipe.name,
+            'p_values': values,
+          },
+        ),
       );
       debugPrint('[RecipeRepo] save_custom_recipe result: $result');
     } catch (e) {
@@ -195,7 +203,9 @@ class SupabaseRecipeRepository implements RecipeRepository {
   @override
   Future<void> deleteRecipe(String id) async {
     try {
-      await _db.rpc('delete_custom_recipe', params: {'p_recipe_id': id});
+      await guard(
+        () => db.rpc('delete_custom_recipe', params: {'p_recipe_id': id}),
+      );
       await removeFromSavedRecipes(id);
     } catch (e) {
       debugPrint('[RecipeRepo] deleteRecipe error: $e');
@@ -242,7 +252,9 @@ class SupabaseRecipeRepository implements RecipeRepository {
     if (_brewMethodCache != null) return _brewMethodCache!;
 
     try {
-      final rows = await _db.from('brew_methods').select('id, slug');
+      final rows = await guard(
+        () => db.from('brew_methods').select('id, slug'),
+      );
       final map = <String, String>{};
       for (final r in rows) {
         final id = r['id'] as String;

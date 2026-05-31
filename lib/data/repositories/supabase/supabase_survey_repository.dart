@@ -5,15 +5,14 @@ import 'package:coflanet/data/dummy/dummy_survey_data.dart';
 import 'package:coflanet/data/models/survey_question_model.dart';
 import 'package:coflanet/data/models/survey_result_model.dart';
 import 'package:coflanet/data/repositories/repository_interfaces.dart';
+import 'package:coflanet/data/repositories/supabase/supabase_repository_base.dart';
 import 'package:get/get.dart';
-import 'package:supabase_flutter/supabase_flutter.dart' hide LocalStorage;
 
 /// Supabase implementation of SurveyRepository
 /// Uses RPC functions + Edge Functions for survey flow.
-class SupabaseSurveyRepository implements SurveyRepository {
+class SupabaseSurveyRepository extends SupabaseRepositoryBase
+    implements SurveyRepository {
   final LocalStorage _storage = Get.find<LocalStorage>();
-
-  SupabaseClient get _db => Supabase.instance.client;
 
   /// Current survey session ID (tracked across start → save → complete)
   String? _currentSessionId;
@@ -68,13 +67,13 @@ class SupabaseSurveyRepository implements SurveyRepository {
   @override
   Future<SurveyResultModel?> getSurveyResult() async {
     // Skip server call if not authenticated
-    if (_db.auth.currentUser == null) {
+    if (db.auth.currentUser == null) {
       return _getLocalResult();
     }
 
     try {
       // Get taste profile
-      final profileData = await _db.rpc('get_my_taste_profile');
+      final profileData = await guard(() => db.rpc('get_my_taste_profile'));
       debugPrint('[SurveyRepo] get_my_taste_profile: $profileData');
 
       if (profileData == null) {
@@ -84,7 +83,7 @@ class SupabaseSurveyRepository implements SurveyRepository {
 
       // Get recommendations
       // RPC가 { result_id, recommendations: [...] } Map을 반환할 수 있음
-      final recsRaw = await _db.rpc('get_my_recommendations');
+      final recsRaw = await guard(() => db.rpc('get_my_recommendations'));
       debugPrint('[SurveyRepo] get_my_recommendations: $recsRaw');
       final recsData =
           recsRaw is Map ? recsRaw['recommendations'] ?? recsRaw : recsRaw;
@@ -271,7 +270,7 @@ class SupabaseSurveyRepository implements SurveyRepository {
   @override
   Future<void> clearSurveyResult() async {
     try {
-      await _db.rpc('retake_survey');
+      await guard(() => db.rpc('retake_survey'));
     } catch (e) {
       debugPrint('[SurveyRepo] retake_survey error: $e');
     }
@@ -285,7 +284,7 @@ class SupabaseSurveyRepository implements SurveyRepository {
     // Step 1: Ensure session exists
     String? sessionId = _currentSessionId;
     if (sessionId == null || sessionId.isEmpty) {
-      final retakeResult = await _db.rpc('retake_survey');
+      final retakeResult = await guard(() => db.rpc('retake_survey'));
       debugPrint('[SurveyRepo] retake_survey result: $retakeResult');
 
       if (retakeResult is Map<String, dynamic>) {
@@ -322,9 +321,11 @@ class SupabaseSurveyRepository implements SurveyRepository {
     }
 
     // Step 4: submit-survey Edge Function (supabase_flutter handles auth)
-    final response = await _db.functions.invoke(
-      'submit-survey',
-      body: {'session_id': sessionId},
+    final response = await guard(
+      () => db.functions.invoke(
+        'submit-survey',
+        body: {'session_id': sessionId},
+      ),
     );
 
     final data = response.data;
@@ -384,7 +385,9 @@ class SupabaseSurveyRepository implements SurveyRepository {
   @override
   Future<void> saveSurveyReasons(List<String> reasons) async {
     try {
-      await _db.rpc('save_onboarding_reasons', params: {'reasons': reasons});
+      await guard(
+        () => db.rpc('save_onboarding_reasons', params: {'reasons': reasons}),
+      );
     } catch (e) {
       debugPrint('[SurveyRepo] save_onboarding_reasons error: $e');
     }
@@ -396,9 +399,8 @@ class SupabaseSurveyRepository implements SurveyRepository {
   Future<Map<String, dynamic>> startSurvey({
     String surveyType = 'standard',
   }) async {
-    final result = await _db.rpc(
-      'start_survey',
-      params: {'p_survey_type': surveyType},
+    final result = await guard(
+      () => db.rpc('start_survey', params: {'p_survey_type': surveyType}),
     );
     debugPrint('[SurveyRepo] start_survey result: $result');
     final data = result is Map<String, dynamic> ? result : <String, dynamic>{};
@@ -416,12 +418,14 @@ class SupabaseSurveyRepository implements SurveyRepository {
   /// Load question_key → question UUID mapping from survey_questions table.
   Future<void> _loadQuestionIds(String surveyType) async {
     try {
-      final rows = await _db
-          .from('survey_questions')
-          .select('id, question_key, survey_type')
-          .or('survey_type.eq.common,survey_type.eq.$surveyType')
-          .order('step')
-          .order('question_order');
+      final rows = await guard(
+        () => db
+            .from('survey_questions')
+            .select('id, question_key, survey_type')
+            .or('survey_type.eq.common,survey_type.eq.$surveyType')
+            .order('step')
+            .order('question_order'),
+      );
 
       final map = <String, String>{};
       for (final r in rows) {
@@ -491,9 +495,11 @@ class SupabaseSurveyRepository implements SurveyRepository {
       return {};
     }
 
-    final result = await _db.rpc(
-      'save_survey_answers',
-      params: {'p_session_id': sessionId, 'p_answers': resolvedAnswers},
+    final result = await guard(
+      () => db.rpc(
+        'save_survey_answers',
+        params: {'p_session_id': sessionId, 'p_answers': resolvedAnswers},
+      ),
     );
     debugPrint('[SurveyRepo] save_survey_answers result: $result');
     return result is Map<String, dynamic> ? result : <String, dynamic>{};
@@ -550,9 +556,8 @@ class SupabaseSurveyRepository implements SurveyRepository {
 
   @override
   Future<Map<String, dynamic>> completeSurvey(String sessionId) async {
-    final result = await _db.rpc(
-      'complete_survey',
-      params: {'p_session_id': sessionId},
+    final result = await guard(
+      () => db.rpc('complete_survey', params: {'p_session_id': sessionId}),
     );
     debugPrint('[SurveyRepo] complete_survey result: $result');
     return result is Map<String, dynamic> ? result : <String, dynamic>{};

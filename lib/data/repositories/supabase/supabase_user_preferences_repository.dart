@@ -1,21 +1,20 @@
 import 'package:flutter/foundation.dart';
 import 'package:coflanet/core/storage/local_storage.dart';
 import 'package:coflanet/data/repositories/repository_interfaces.dart';
+import 'package:coflanet/data/repositories/supabase/supabase_repository_base.dart';
 import 'package:get/get.dart';
-import 'package:supabase_flutter/supabase_flutter.dart' hide LocalStorage;
 
 /// Supabase implementation of UserPreferencesRepository
 /// Uses RPC functions for server-synced preferences,
 /// local storage for device-local settings.
-class SupabaseUserPreferencesRepository implements UserPreferencesRepository {
+class SupabaseUserPreferencesRepository extends SupabaseRepositoryBase
+    implements UserPreferencesRepository {
   final LocalStorage _storage = Get.find<LocalStorage>();
-
-  SupabaseClient get _db => Supabase.instance.client;
 
   @override
   Future<bool> isOnboardingComplete() async {
     try {
-      final result = await _db.rpc('get_onboarding_status');
+      final result = await guard(() => db.rpc('get_onboarding_status'));
       debugPrint('[UserPrefsRepo] get_onboarding_status: $result');
 
       if (result == null) return _storage.isOnboardingComplete;
@@ -55,12 +54,14 @@ class SupabaseUserPreferencesRepository implements UserPreferencesRepository {
 
     // Sync to server via RPC
     try {
-      if (_db.auth.currentUser != null) {
-        await _db.rpc(
-          'update_profile',
-          params: {
-            'p_values': {'is_dark_mode': isDark},
-          },
+      if (db.auth.currentUser != null) {
+        await guard(
+          () => db.rpc(
+            'update_profile',
+            params: {
+              'p_values': {'is_dark_mode': isDark},
+            },
+          ),
         );
       }
     } catch (e) {
@@ -72,7 +73,7 @@ class SupabaseUserPreferencesRepository implements UserPreferencesRepository {
   Future<String?> getUserName() async {
     // Try Supabase Auth user metadata first
     // Kakao OAuth may use 'name', 'full_name', or 'preferred_username'
-    final user = _db.auth.currentUser;
+    final user = db.auth.currentUser;
     final meta = user?.userMetadata;
     final name =
         meta?['display_name'] as String? ??
@@ -90,7 +91,9 @@ class SupabaseUserPreferencesRepository implements UserPreferencesRepository {
     await _storage.saveUserName(name);
 
     try {
-      await _db.rpc('save_display_name', params: {'display_name': name});
+      await guard(
+        () => db.rpc('save_display_name', params: {'display_name': name}),
+      );
     } catch (e) {
       debugPrint('[UserPrefsRepo] saveUserName error: $e');
     }
@@ -99,7 +102,7 @@ class SupabaseUserPreferencesRepository implements UserPreferencesRepository {
   @override
   Future<String?> getUserId() async {
     // Supabase Auth is the source of truth
-    return _db.auth.currentUser?.id ?? _storage.getUserId();
+    return db.auth.currentUser?.id ?? _storage.getUserId();
   }
 
   @override
