@@ -1,4 +1,5 @@
 import 'package:get/get.dart';
+import 'package:coflanet/core/services/auth_service.dart';
 
 /// Base controller with common functionality for all controllers
 abstract class BaseController extends GetxController {
@@ -47,6 +48,13 @@ abstract class BaseController extends GetxController {
       hideLoading();
       return result;
     } catch (e) {
+      // 인증 만료성 에러는 일반 에러로 표시하지 않고 재인증 플로우로 분기한다.
+      if (AuthService.isAuthExpiredError(e) &&
+          Get.isRegistered<AuthService>()) {
+        hideLoading();
+        await Get.find<AuthService>().handleSessionExpired();
+        return null;
+      }
       setError(e.toString());
       return null;
     }

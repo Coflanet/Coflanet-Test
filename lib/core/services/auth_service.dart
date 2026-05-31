@@ -13,6 +13,7 @@ import 'package:coflanet/data/providers/apple_auth_provider.dart';
 import 'package:coflanet/data/repositories/repository_interfaces.dart';
 import 'package:coflanet/data/repositories/repository_provider.dart';
 import 'package:coflanet/data/repositories/repository_config.dart';
+import 'package:coflanet/routes/app_pages.dart';
 
 /// Authentication service configuration
 class AuthServiceConfig {
@@ -82,6 +83,12 @@ class AuthService extends GetxService with WidgetsBindingObserver {
   StreamSubscription<AuthState>? _oauthSub;
   Timer? _oauthResumeTimer;
 
+  // 앱 전역 인증 상태 구독 (OAuth 임시 구독과 별개로 세션 종료를 감시)
+  StreamSubscription<AuthState>? _authStateSub;
+
+  // 세션 만료 처리 중복 실행 방지 플래그
+  bool _handlingSessionExpiry = false;
+
   AuthService({this.config = const AuthServiceConfig()});
 
   bool get _isSupabase => RepositoryConfig.dataSource == DataSource.supabase;
@@ -94,6 +101,10 @@ class AuthService extends GetxService with WidgetsBindingObserver {
     WidgetsBinding.instance.addObserver(this);
     _initProviders();
     _loadUserFromStorage();
+    // 캐시된 로그인 상태와 실제 Supabase 세션의 정합성을 맞춘다.
+    _reconcileSession();
+    // 세션 종료(로그아웃/만료)를 전역으로 감시한다.
+    _listenToAuthChanges();
   }
 
   @override
@@ -101,6 +112,7 @@ class AuthService extends GetxService with WidgetsBindingObserver {
     WidgetsBinding.instance.removeObserver(this);
     _oauthResumeTimer?.cancel();
     _oauthSub?.cancel();
+    _authStateSub?.cancel();
     super.onClose();
   }
 
@@ -158,6 +170,89 @@ class AuthService extends GetxService with WidgetsBindingObserver {
         // Invalid stored data, clear it
         _storage.clearUserData();
       }
+    }
+  }
+
+  /// 캐시된 로그인 상태와 실제 Supabase 세션의 정합성을 맞춘다.
+  ///
+  /// 로컬에 캐시된 UserModel 은 있는데 Supabase 세션이 없으면(만료/소실),
+  /// 앱이 "로그인됨"으로 오인해 인증 RPC 가 UNAUTHORIZED 로 실패하는 문제가
+  /// 생긴다. 이때 캐시를 비워 isLoggedIn 이 실제 세션과 어긋나지 않게 한다.
+  /// 더미/로컬 모드는 Supabase 세션 개념이 없으므로 캐시를 그대로 둔다.
+  void _reconcileSession() {
+    if (!_isSupabase) return;
+    if (_currentUser.value == null) return;
+    if (_supabase.auth.currentSession != null) return;
+
+    debugPrint('[AuthService] 캐시 사용자 존재하나 Supabase 세션 없음 — 캐시 정리');
+    _currentUser.value = null;
+    _storage.clearUserData();
+  }
+
+  /// 앱 전역 Supabase 인증 상태 구독.
+  ///
+  /// 토큰 갱신 실패나 로그아웃으로 세션이 사라지면(signedOut), 어느 화면이든
+  /// 캐시 UserModel 을 정리하고 로그인 화면으로 이동시킨다. 화면별 처리 없이
+  /// 세션 종료 이벤트에 전역으로 반응하는 단일 지점이다.
+  void _listenToAuthChanges() {
+    if (!_isSupabase) return;
+    _authStateSub?.cancel();
+    _authStateSub = _supabase.auth.onAuthStateChange.listen((data) {
+      if (data.event == AuthChangeEvent.signedOut && data.session == null) {
+        if (_currentUser.value != null) {
+          debugPrint('[AuthService] 세션 종료(signedOut) — 캐시 정리');
+          _currentUser.value = null;
+          _storage.clearUserData();
+        }
+        // 세션이 사라졌으면 어느 화면에 있든 로그인 화면으로 이동
+        if (Get.currentRoute != Routes.signIn) {
+          Get.offAllNamed(Routes.signIn);
+        }
+      }
+    });
+  }
+
+  /// 서버 RPC/함수의 인증 만료성 에러인지 판별한다.
+  ///
+  /// - PostgrestException P0001 + 메시지에 'UNAUTHORIZED' (RPC 내부 RAISE)
+  /// - PostgrestException 42501 (permission denied — 미인증 role 로 함수 호출)
+  static bool isAuthExpiredError(Object error) {
+    if (error is PostgrestException) {
+      final code = error.code;
+      if (code == '42501') return true;
+      if (code == 'P0001' &&
+          error.message.toUpperCase().contains('UNAUTHORIZED')) {
+        return true;
+      }
+    }
+    return false;
+  }
+
+  /// 세션 만료 처리 — 세션/캐시를 정리하고 로그인 화면으로 유도한다.
+  ///
+  /// 인증 RPC 가 UNAUTHORIZED 로 실패했을 때 일반 에러 대신 호출한다.
+  /// 짧은 시간에 여러 RPC 가 동시에 실패해도 한 번만 처리한다.
+  Future<void> handleSessionExpired() async {
+    if (_handlingSessionExpiry) return;
+    if (Get.currentRoute == Routes.signIn) return;
+    _handlingSessionExpiry = true;
+
+    try {
+      debugPrint('[AuthService] 세션 만료 감지 — 로그인 화면으로 이동');
+      if (_isSupabase) {
+        try {
+          await _supabase.auth.signOut();
+        } catch (_) {
+          // 이미 세션이 없을 수 있음 — 무시하고 로컬 정리 진행
+        }
+      }
+      _storage.clearUserData();
+      _currentUser.value = null;
+
+      Get.offAllNamed(Routes.signIn);
+      Get.snackbar('세션 만료', '세션이 만료되었습니다. 다시 로그인해주세요.');
+    } finally {
+      _handlingSessionExpiry = false;
     }
   }
 

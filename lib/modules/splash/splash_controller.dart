@@ -52,28 +52,8 @@ class SplashController extends BaseController {
     }
   }
 
-  // [DEV] Set to true to always go to survey intro for testing
-  static const bool _devForceOnboarding = false;
-  // [DEV] Set to true to reset login state (starts from SignIn)
-  static const bool _devForceSignIn = false;
-  // [DEV] Set to true to go directly to survey result for testing
-  static const bool _devForceSurveyResult = false;
-  // [DEV] Set to true to go directly to MainShell for UI testing
-  static const bool _devForceMainShell = true;
-
   Future<void> _navigateToNextScreen() async {
-    // [DEV] Direct navigation to MainShell for UI testing
-    if (_devForceMainShell) {
-      Get.offAllNamed(Routes.mainShell, arguments: {'initialTab': 0});
-      return;
-    }
-
-    // [DEV] Direct navigation to survey result for UI testing
-    if (_devForceSurveyResult) {
-      _safeNavigate(Routes.surveyResult);
-      return;
-    }
-
+    // 로그인/세션 상태를 검사해 다음 화면을 결정한다.
     if (RepositoryConfig.dataSource == DataSource.supabase) {
       await _navigateSupabase();
     } else {
@@ -85,29 +65,28 @@ class SplashController extends BaseController {
   Future<void> _navigateSupabase() async {
     final session = Supabase.instance.client.auth.currentSession;
 
-    if (_devForceSignIn || session == null) {
+    // 유효한 세션이 없으면 로그인 화면으로
+    if (session == null) {
       _safeNavigate(Routes.signIn);
       return;
     }
 
     // Session exists — check onboarding via server RPC
     bool isOnboardingComplete = false;
-    if (!_devForceOnboarding) {
-      if (RepositoryConfig.isCiTest) {
-        isOnboardingComplete = _storage.isOnboardingComplete;
-      } else {
-        try {
-          final result = await Supabase.instance.client.rpc(
-            'get_onboarding_status',
-          );
-          if (result is Map<String, dynamic>) {
-            isOnboardingComplete =
-                result['has_completed_survey'] as bool? ?? false;
-          }
-        } catch (e) {
-          debugPrint('[SplashController] get_onboarding_status error: $e');
-          isOnboardingComplete = _storage.isOnboardingComplete;
+    if (RepositoryConfig.isCiTest) {
+      isOnboardingComplete = _storage.isOnboardingComplete;
+    } else {
+      try {
+        final result = await Supabase.instance.client.rpc(
+          'get_onboarding_status',
+        );
+        if (result is Map<String, dynamic>) {
+          isOnboardingComplete =
+              result['has_completed_survey'] as bool? ?? false;
         }
+      } catch (e) {
+        debugPrint('[SplashController] get_onboarding_status error: $e');
+        isOnboardingComplete = _storage.isOnboardingComplete;
       }
     }
 
@@ -127,10 +106,8 @@ class SplashController extends BaseController {
 
   /// Local/Dummy mode: check LocalStorage
   void _navigateLocal() {
-    final isLoggedIn = _devForceSignIn ? false : _storage.isLoggedIn;
-    final isOnboardingComplete = _devForceOnboarding
-        ? false
-        : _storage.isOnboardingComplete;
+    final isLoggedIn = _storage.isLoggedIn;
+    final isOnboardingComplete = _storage.isOnboardingComplete;
 
     if (!isLoggedIn) {
       // Not logged in -> go to sign in

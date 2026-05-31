@@ -1,4 +1,6 @@
 import 'package:flutter/foundation.dart';
+import 'package:flutter/widgets.dart';
+import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:get/get.dart';
 import 'package:supabase_flutter/supabase_flutter.dart' hide LocalStorage;
 import 'package:coflanet/core/base/base_controller.dart';
@@ -12,8 +14,40 @@ class EmailLoginController extends BaseController {
   final email = ''.obs;
   final password = ''.obs;
 
+  /// 입력 필드 컨트롤러 — 디버그 빌드에서 테스트 계정 prefill 에 사용
+  final emailTextController = TextEditingController();
+  final passwordTextController = TextEditingController();
+
   final emailError = Rxn<String>();
   final passwordError = Rxn<String>();
+
+  @override
+  void onInit() {
+    super.onInit();
+    _prefillDevCredentials();
+  }
+
+  @override
+  void onClose() {
+    emailTextController.dispose();
+    passwordTextController.dispose();
+    super.onClose();
+  }
+
+  /// 디버그 빌드에서만 .env 의 DEV_LOGIN_EMAIL / DEV_LOGIN_PASSWORD 를
+  /// 입력 필드에 채워 테스트 로그인을 빠르게 한다. 키가 없으면 아무것도 안 함.
+  /// 릴리스 빌드에서는 kDebugMode 가드로 완전히 비활성화된다.
+  void _prefillDevCredentials() {
+    if (!kDebugMode) return;
+    final devEmail = dotenv.env['DEV_LOGIN_EMAIL'] ?? '';
+    final devPassword = dotenv.env['DEV_LOGIN_PASSWORD'] ?? '';
+    if (devEmail.isEmpty && devPassword.isEmpty) return;
+
+    emailTextController.text = devEmail;
+    passwordTextController.text = devPassword;
+    email.value = devEmail;
+    password.value = devPassword;
+  }
 
   bool get isFormValid =>
       email.value.isNotEmpty &&

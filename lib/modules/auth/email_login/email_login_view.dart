@@ -74,6 +74,7 @@ class EmailLoginView extends GetView<EmailLoginController> {
       () => _buildTextField(
         label: '이메일',
         hintText: 'example@email.com',
+        textController: controller.emailTextController,
         errorText: controller.emailError.value,
         keyboardType: TextInputType.emailAddress,
         onChanged: controller.onEmailChanged,
@@ -87,6 +88,7 @@ class EmailLoginView extends GetView<EmailLoginController> {
       () => _buildTextField(
         label: '비밀번호',
         hintText: '비밀번호를 입력해주세요',
+        textController: controller.passwordTextController,
         errorText: controller.passwordError.value,
         obscureText: true,
         onChanged: controller.onPasswordChanged,
@@ -98,6 +100,7 @@ class EmailLoginView extends GetView<EmailLoginController> {
   Widget _buildTextField({
     required String label,
     required String hintText,
+    TextEditingController? textController,
     String? errorText,
     bool obscureText = false,
     TextInputType? keyboardType,
@@ -127,6 +130,7 @@ class EmailLoginView extends GetView<EmailLoginController> {
             ),
           ),
           child: TextField(
+            controller: textController,
             onChanged: onChanged,
             obscureText: obscureText,
             keyboardType: keyboardType,
