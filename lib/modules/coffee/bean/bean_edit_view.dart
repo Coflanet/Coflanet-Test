@@ -49,16 +49,26 @@ class _BeanEditViewState extends State<BeanEditView> {
   final Set<String> _selectedCommonFlavors = {};
   final Set<String> _selectedCharacteristicFlavors = {};
 
-  // Selected options — 서버 lookup 기반 (로스팅은 point 1~10, 가공방식은 code)
-  int? _selectedRoastPoint;
+  // Selected options — 서버 lookup 기반 (로스팅은 level_code, 가공방식은 code)
+  String? _selectedRoastLevel;
   String? _selectedProcessCode;
 
   bool _hasChanges = false;
 
   final AppConfigService _config = Get.find<AppConfigService>();
 
-  List<RoastOption> get _roastLevels => _config.roastLevels;
   List<ProcessOption> get _processMethods => _config.processMethods;
+
+  /// 로스팅 — 라벨(level_code) 기준 distinct 4개(라이트/미디엄/미디엄 다크/다크)만 표시.
+  /// [세분화 예정] roast_point 1~10 세분화 시 _config.roastLevels 를 직접 사용.
+  List<RoastOption> get _roastLevelGroups {
+    final seen = <String>{};
+    final groups = <RoastOption>[];
+    for (final r in _config.roastLevels) {
+      if (seen.add(r.levelCode)) groups.add(r);
+    }
+    return groups;
+  }
 
   @override
   void initState() {
@@ -89,7 +99,7 @@ class _BeanEditViewState extends State<BeanEditView> {
     _aromaIntensity = bean.aromaIntensity ?? 50;
     _selectedCommonFlavors.addAll(bean.commonFlavors ?? []);
     _selectedCharacteristicFlavors.addAll(bean.characteristicFlavors ?? []);
-    _selectedRoastPoint = bean.roastPoint;
+    _selectedRoastLevel = bean.roastLevel;
     _selectedProcessCode = bean.processMethod;
   }
 
@@ -151,8 +161,8 @@ class _BeanEditViewState extends State<BeanEditView> {
       origin: _originController.text.trim().isNotEmpty
           ? _originController.text.trim()
           : null,
-      roastLevel: _findRoast(_selectedRoastPoint)?.levelCode,
-      roastPoint: _selectedRoastPoint,
+      roastLevel: _selectedRoastLevel,
+      roastPoint: _findRoastByLevel(_selectedRoastLevel)?.point,
       processMethod: _selectedProcessCode,
     );
 
@@ -160,11 +170,11 @@ class _BeanEditViewState extends State<BeanEditView> {
     Get.back(result: bean);
   }
 
-  /// 선택한 roast_point 에 해당하는 옵션 조회
-  RoastOption? _findRoast(int? point) {
-    if (point == null) return null;
-    for (final r in _roastLevels) {
-      if (r.point == point) return r;
+  /// 선택한 level_code 에 해당하는 대표 옵션 조회 (roast_point 저장용)
+  RoastOption? _findRoastByLevel(String? code) {
+    if (code == null) return null;
+    for (final r in _roastLevelGroups) {
+      if (r.levelCode == code) return r;
     }
     return null;
   }
@@ -418,22 +428,22 @@ class _BeanEditViewState extends State<BeanEditView> {
       children: [
         _buildSectionTitle('상세 정보'),
         const SizedBox(height: 16),
-        // 로스팅 — roast_point 선택, "1 · 라이트" 표시
-        _buildDropdownField<int>(
+        // 로스팅 — 라벨 4단계(라이트/미디엄/미디엄 다크/다크) 표시
+        _buildDropdownField<String>(
           label: '로스팅',
-          value: _roastLevels.any((r) => r.point == _selectedRoastPoint)
-              ? _selectedRoastPoint
+          value: _roastLevelGroups.any((r) => r.levelCode == _selectedRoastLevel)
+              ? _selectedRoastLevel
               : null,
-          items: _roastLevels
+          items: _roastLevelGroups
               .map(
-                (r) => DropdownMenuItem<int>(
-                  value: r.point,
-                  child: Text('${r.point} · ${r.labelKo}'),
+                (r) => DropdownMenuItem<String>(
+                  value: r.levelCode,
+                  child: Text(r.labelKo),
                 ),
               )
               .toList(),
           onChanged: (v) {
-            setState(() => _selectedRoastPoint = v);
+            setState(() => _selectedRoastLevel = v);
             _markChanged();
           },
         ),
