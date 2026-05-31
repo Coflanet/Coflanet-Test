@@ -100,7 +100,7 @@ class MyTasteView extends GetView<MyTasteController> {
                       borderRadius: AppRadius.fullBorder,
                       boxShadow: [
                         BoxShadow(
-                          color: AppColor.colorGlobalOrange50.withOpacity(0.2),
+                          color: AppColor.colorGlobalOrange50.withValues(alpha:0.2),
                           blurRadius: 30,
                           offset: const Offset(0, 10),
                         ),
@@ -160,7 +160,7 @@ class MyTasteView extends GetView<MyTasteController> {
         ),
         borderRadius: AppRadius.xxxlBorder,
         border: Border.all(
-          color: AppColor.colorGlobalOrange50.withOpacity(0.2),
+          color: AppColor.colorGlobalOrange50.withValues(alpha:0.2),
           width: 1,
         ),
       ),
@@ -187,7 +187,7 @@ class MyTasteView extends GetView<MyTasteController> {
                     borderRadius: AppRadius.xxlBorder,
                     boxShadow: [
                       BoxShadow(
-                        color: AppColor.colorGlobalOrange50.withOpacity(0.3),
+                        color: AppColor.colorGlobalOrange50.withValues(alpha:0.3),
                         blurRadius: 16,
                         offset: const Offset(0, 6),
                       ),
@@ -359,7 +359,7 @@ class MyTasteView extends GetView<MyTasteController> {
               Container(
                 padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
                 decoration: BoxDecoration(
-                  color: data.color.withOpacity(0.12),
+                  color: data.color.withValues(alpha:0.12),
                   borderRadius: AppRadius.mdBorder,
                 ),
                 child: Text(
@@ -382,12 +382,12 @@ class MyTasteView extends GetView<MyTasteController> {
                           gradient: LinearGradient(
                             begin: Alignment.topCenter,
                             end: Alignment.bottomCenter,
-                            colors: [data.color, data.color.withOpacity(0.7)],
+                            colors: [data.color, data.color.withValues(alpha:0.7)],
                           ),
                           borderRadius: AppRadius.mdBorder,
                           boxShadow: [
                             BoxShadow(
-                              color: data.color.withOpacity(0.25),
+                              color: data.color.withValues(alpha:0.25),
                               blurRadius: 8,
                               offset: const Offset(0, 4),
                             ),

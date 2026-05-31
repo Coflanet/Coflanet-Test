@@ -235,7 +235,7 @@ class _FlavorRadarChartState extends State<FlavorRadarChart>
               showLabels: widget.showLabels,
               showValues: widget.showValues,
               fillColor:
-                  widget.fillColor ?? AppColor.primaryNormal.withOpacity(0.2),
+                  widget.fillColor ?? AppColor.primaryNormal.withValues(alpha:0.2),
               strokeColor: widget.strokeColor ?? AppColor.primaryNormal,
               gridColor: widget.gridColor ?? AppColor.lineNormalNormal,
               labelColor: widget.labelColor ?? AppColor.labelNormal,
@@ -306,7 +306,7 @@ class _FlavorRadarChartPainter extends CustomPainter {
     double startAngle,
   ) {
     final gridPaint = Paint()
-      ..color = gridColor.withOpacity(0.3)
+      ..color = gridColor.withValues(alpha:0.3)
       ..style = PaintingStyle.stroke
       ..strokeWidth = 1;
 
@@ -339,7 +339,7 @@ class _FlavorRadarChartPainter extends CustomPainter {
     double startAngle,
   ) {
     final axisPaint = Paint()
-      ..color = gridColor.withOpacity(0.5)
+      ..color = gridColor.withValues(alpha:0.5)
       ..style = PaintingStyle.stroke
       ..strokeWidth = 1;
 

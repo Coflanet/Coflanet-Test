@@ -454,7 +454,7 @@ class _CoffeeCard extends StatelessWidget {
           padding: const EdgeInsets.all(16),
           decoration: BoxDecoration(
             color: isSelected
-                ? AppColor.primaryNormal.withOpacity(0.08)
+                ? AppColor.primaryNormal.withValues(alpha:0.08)
                 : AppColor.backgroundNormalNormal,
             borderRadius: AppRadius.xlBorder,
             border: Border.all(
@@ -598,7 +598,7 @@ class _CoffeeCard extends StatelessWidget {
         gradient: LinearGradient(
           begin: Alignment.topLeft,
           end: Alignment.bottomRight,
-          colors: [item.color.withOpacity(0.2), item.color.withOpacity(0.1)],
+          colors: [item.color.withValues(alpha:0.2), item.color.withValues(alpha:0.1)],
         ),
         borderRadius: AppRadius.lgBorder,
       ),
@@ -672,7 +672,7 @@ class _HiddenCoffeeCard extends StatelessWidget {
       child: Container(
         padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 10),
         decoration: BoxDecoration(
-          color: AppColor.backgroundNormalNormal.withOpacity(0.5),
+          color: AppColor.backgroundNormalNormal.withValues(alpha:0.5),
           borderRadius: AppRadius.lgBorder,
         ),
         child: Row(
@@ -688,7 +688,7 @@ class _HiddenCoffeeCard extends StatelessWidget {
               child: Center(
                 child: Icon(
                   Icons.coffee,
-                  color: item.color.withOpacity(0.5),
+                  color: item.color.withValues(alpha:0.5),
                   size: 20,
                 ),
               ),
@@ -727,7 +727,7 @@ class _HiddenCoffeeCard extends StatelessWidget {
                   vertical: 6,
                 ),
                 decoration: BoxDecoration(
-                  color: AppColor.primaryNormal.withOpacity(0.1),
+                  color: AppColor.primaryNormal.withValues(alpha:0.1),
                   borderRadius: AppRadius.smBorder,
                 ),
                 child: Text(

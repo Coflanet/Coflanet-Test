@@ -172,6 +172,20 @@ class SurveyController extends BaseController {
   Set<String> get selectedBeanIds => _selectedBeanIds;
   int get selectedBeanCount => _selectedBeanIds.length;
 
+  /// 좋아요(찜) 한 원두 ID 집합 (Survey Result 카드 좋아요 토글)
+  /// [백엔드 API 연동 대기] 서버 영속화
+  final _likedBeanIds = <String>{}.obs;
+  Set<String> get likedBeanIds => _likedBeanIds;
+  bool isBeanLiked(String beanId) => _likedBeanIds.contains(beanId);
+  void toggleBeanLike(String beanId) {
+    if (_likedBeanIds.contains(beanId)) {
+      _likedBeanIds.remove(beanId);
+    } else {
+      _likedBeanIds.add(beanId);
+    }
+    _likedBeanIds.refresh();
+  }
+
   // Check if current question has selection
   bool get hasSelection {
     final question = currentQuestion;

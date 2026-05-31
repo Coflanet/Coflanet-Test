@@ -9,6 +9,16 @@ import 'package:coflanet/modules/onboarding/survey_controller.dart';
 class SurveyAnalyzingView extends GetView<SurveyController> {
   const SurveyAnalyzingView({super.key});
 
+  // Figma 사양: Pretendard SemiBold 22 / lineHeight 1.36 / letterSpacing -0.4268
+  // 색상은 Label/strong (#000000) 토큰 매핑
+  // Auth 카테고리에서 통일한 페이지 헤더 스타일과 동일
+  TextStyle get _screenHeaderStyle => AppTextStyles.heading1Bold.copyWith(
+    fontWeight: FontWeight.w600,
+    height: 1.36,
+    letterSpacing: -0.4268,
+    color: AppColor.labelStrong,
+  );
+
   @override
   Widget build(BuildContext context) {
     // Start analysis when view is loaded
@@ -74,10 +84,7 @@ class SurveyAnalyzingView extends GetView<SurveyController> {
               Text(
                 '${controller.userName}님의 취향을\n분석하고 있어요.',
                 textAlign: TextAlign.center,
-                style: AppTextStyles.heading1Bold.copyWith(
-                  color: AppColor.labelNormal,
-                  height: 1.4,
-                ),
+                style: _screenHeaderStyle,
               ),
 
               const SizedBox(height: 60),
@@ -135,7 +142,7 @@ class _LoadingDotsState extends State<_LoadingDots>
               width: 8,
               height: 8,
               decoration: BoxDecoration(
-                color: AppColor.primaryNormal.withOpacity(opacity),
+                color: AppColor.primaryNormal.withValues(alpha: opacity),
                 shape: BoxShape.circle,
               ),
             );

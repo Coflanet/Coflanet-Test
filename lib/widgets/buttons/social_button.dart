@@ -3,7 +3,6 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:coflanet/constants/asset_constant.dart';
 import 'package:coflanet/constants/color_constant.dart';
 import 'package:coflanet/constants/style_constant.dart';
-import 'package:coflanet/constants/radius_constant.dart';
 
 enum SocialButtonType { kakao, naver, apple }
 
@@ -34,7 +33,9 @@ class SocialButton extends StatelessWidget {
             foregroundColor: _foregroundColor,
             elevation: 0,
             shape: RoundedRectangleBorder(
-              borderRadius: AppRadius.lgBorder,
+              // Figma 사양 borderRadius 10. 토큰 AppRadius.lg(=12) 과 차이가 있어
+              // 컴포넌트 단위로 override (전역 토큰 영향 방지).
+              borderRadius: BorderRadius.circular(10),
               side: BorderSide.none,
             ),
           ),
@@ -79,7 +80,8 @@ class SocialButton extends StatelessWidget {
   Color get _foregroundColor {
     switch (type) {
       case SocialButtonType.kakao:
-        return AppColor.colorGlobalCoolNeutral10;
+        // 카카오 공식 가이드 #191919 (Figma 사양 일치)
+        return AppColor.socialKakaoText;
       case SocialButtonType.naver:
         return AppColor.colorGlobalCommon100;
       case SocialButtonType.apple:

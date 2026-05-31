@@ -395,7 +395,7 @@ class RecipeFormView extends GetView<CoffeeController> {
             fontSize: 14,
             fontWeight: FontWeight.w500,
             color: isSelected
-                ? Colors.white
+                ? AppColor.staticLabelWhiteStrong
                 : AppColor.colorGlobalCoolNeutral40,
           ),
         ),
@@ -950,19 +950,19 @@ class RecipeFormView extends GetView<CoffeeController> {
           },
           style: ElevatedButton.styleFrom(
             backgroundColor: AppColor.primaryNormal,
-            foregroundColor: Colors.white,
+            foregroundColor: AppColor.staticLabelWhiteStrong,
             elevation: 0,
             shape: RoundedRectangleBorder(
               borderRadius: BorderRadius.circular(12),
             ),
           ),
-          child: const Text(
+          child: Text(
             '저장하기',
             style: TextStyle(
               fontFamily: 'Pretendard',
               fontSize: 16,
               fontWeight: FontWeight.w600,
-              color: Colors.white,
+              color: AppColor.staticLabelWhiteStrong,
             ),
           ),
         ),
@@ -990,7 +990,7 @@ class RecipeFormView extends GetView<CoffeeController> {
         '알림',
         '원두 이름을 입력해주세요',
         snackPosition: SnackPosition.BOTTOM,
-        backgroundColor: Colors.red.shade100,
+        backgroundColor: AppColor.colorGlobalRed95,
       );
       return;
     }

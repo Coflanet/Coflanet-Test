@@ -12,6 +12,15 @@ class MainShellController extends BaseController {
   /// Used for dynamic theme switching (Filled vs Empty state)
   bool get hasTasteProfile => _surveyService.hasResult;
 
+  /// 탭 인덱스 매핑 (Figma `Home_Item_yes` 5개 탭):
+  /// 0: 홈, 1: 원두, 2: 커뮤니티, 3: 쇼핑, 4: 마이
+  static const int tabHome = 0;
+  static const int tabBean = 1;
+  static const int tabCommunity = 2;
+  static const int tabShopping = 3;
+  static const int tabMy = 4;
+  static const int _maxTabIndex = tabMy;
+
   @override
   void onInit() {
     super.onInit();
@@ -19,7 +28,7 @@ class MainShellController extends BaseController {
     final args = Get.arguments as Map<String, dynamic>?;
     if (args != null && args.containsKey('initialTab')) {
       final initialTab = args['initialTab'] as int;
-      if (initialTab >= 0 && initialTab <= 3) {
+      if (initialTab >= 0 && initialTab <= _maxTabIndex) {
         currentTabIndex.value = initialTab;
       }
     }
@@ -32,20 +41,23 @@ class MainShellController extends BaseController {
 
   /// Navigate to specific tab by index
   void goToTab(int index) {
-    if (index >= 0 && index <= 3) {
+    if (index >= 0 && index <= _maxTabIndex) {
       currentTabIndex.value = index;
     }
   }
 
-  /// Navigate to coffee tab (index 0)
-  void goToCoffee() => goToTab(0);
+  /// 홈 탭으로 이동 (index 0)
+  void goToHome() => goToTab(tabHome);
 
-  /// Navigate to extraction list tab (index 1)
-  void goToExtractionList() => goToTab(1);
+  /// 원두 탭으로 이동 (index 1)
+  void goToCoffee() => goToTab(tabBean);
 
-  /// Navigate to tasting notes tab (index 2)
-  void goToTastingNotes() => goToTab(2);
+  /// 커뮤니티 탭으로 이동 (index 2)
+  void goToCommunity() => goToTab(tabCommunity);
 
-  /// Navigate to my planet tab (index 3)
-  void goToMyPlanet() => goToTab(3);
+  /// 쇼핑 탭으로 이동 (index 3)
+  void goToShopping() => goToTab(tabShopping);
+
+  /// 마이 탭으로 이동 (index 4)
+  void goToMyPlanet() => goToTab(tabMy);
 }

@@ -166,7 +166,7 @@ class DummyCoffeeRepository implements CoffeeRepository {
       'id': item.id,
       'name': item.name,
       'description': item.description,
-      'color': item.color.value,
+      'color': item.color.toARGB32(),
       'imageUrl': item.imageUrl,
       'brand': item.brand,
       'flavorProfile': item.flavorProfile != null

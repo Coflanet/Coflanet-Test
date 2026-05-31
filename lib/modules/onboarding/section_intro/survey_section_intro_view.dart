@@ -14,6 +14,16 @@ import 'package:coflanet/widgets/buttons/primary_button.dart';
 class SurveySectionIntroView extends GetView<SurveyController> {
   const SurveySectionIntroView({super.key});
 
+  // Figma 사양: Pretendard SemiBold 22 / lineHeight 1.36 / letterSpacing -0.4268
+  // 색상은 Label/strong (#000000) 토큰 매핑
+  // Auth 카테고리에서 통일한 페이지 헤더 스타일과 동일
+  TextStyle get _screenHeaderStyle => AppTextStyles.heading1Bold.copyWith(
+    fontWeight: FontWeight.w600,
+    height: 1.36,
+    letterSpacing: -0.4268,
+    color: AppColor.labelStrong,
+  );
+
   /// Check if current survey is lifestyle type
   bool get _isLifestyle => controller.surveyType == SurveyType.lifestyle;
 
@@ -204,15 +214,11 @@ class SurveySectionIntroView extends GetView<SurveyController> {
       children: [
         Text(
           line1,
-          style: AppTextStyles.heading1Bold.copyWith(
-            color: AppColor.labelNormal,
-          ),
+          style: _screenHeaderStyle,
         ),
         Text(
           line2,
-          style: AppTextStyles.heading1Bold.copyWith(
-            color: AppColor.labelNormal,
-          ),
+          style: _screenHeaderStyle,
         ),
       ],
     );
@@ -245,9 +251,9 @@ class SurveySectionIntroView extends GetView<SurveyController> {
             shape: BoxShape.circle,
             color: state == _StepState.active
                 ? AppColor.primaryNormal
-                : AppColor.componentFillNormal,
-            border: state == _StepState.inactive
-                ? Border.all(color: AppColor.primaryNormal, width: 1.5)
+                : AppColor.transparent,
+            border: state != _StepState.active
+                ? Border.all(color: AppColor.lineNormalNormal, width: 1.5)
                 : null,
           ),
           child: Center(
@@ -266,7 +272,7 @@ class SurveySectionIntroView extends GetView<SurveyController> {
                     style: AppTextStyles.label1NormalBold.copyWith(
                       color: state == _StepState.active
                           ? AppColor.staticLabelWhiteNormal
-                          : AppColor.primaryNormal,
+                          : AppColor.labelAlternative,
                     ),
                   ),
           ),
@@ -278,7 +284,7 @@ class SurveySectionIntroView extends GetView<SurveyController> {
           style: AppTextStyles.body1NormalMedium.copyWith(
             color: state == _StepState.active
                 ? AppColor.primaryNormal
-                : AppColor.labelAssistive,
+                : AppColor.labelNormal,
             fontWeight: state == _StepState.active
                 ? FontWeight.w600
                 : FontWeight.w400,
@@ -295,9 +301,7 @@ class SurveySectionIntroView extends GetView<SurveyController> {
       child: Container(
         width: 2,
         height: 32,
-        color: isCompleted
-            ? AppColor.labelAssistive.withValues(alpha: 0.3)
-            : AppColor.primaryNormal.withValues(alpha: 0.3),
+        color: AppColor.lineNormalNormal.withValues(alpha: 0.5),
       ),
     );
   }

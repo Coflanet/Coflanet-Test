@@ -2,12 +2,16 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
-import 'package:kakao_flutter_sdk_common/kakao_flutter_sdk_common.dart';
+import 'package:kakao_flutter_sdk_user/kakao_flutter_sdk_user.dart';
 import 'package:supabase_flutter/supabase_flutter.dart' hide LocalStorage;
 import 'package:coflanet/app_binding.dart';
 import 'package:coflanet/routes/app_pages.dart';
 import 'package:coflanet/core/theme/app_theme.dart';
 import 'package:coflanet/core/storage/local_storage.dart';
+import 'package:coflanet/core/services/survey_service.dart';
+import 'package:coflanet/core/services/auth_service.dart';
+import 'package:coflanet/core/api/api_client.dart';
+import 'package:coflanet/core/theme/theme_controller.dart';
 import 'package:coflanet/core/config/social_login_config.dart';
 import 'package:coflanet/constants/color_constant.dart';
 import 'package:coflanet/data/repositories/repository_config.dart';
@@ -66,6 +70,25 @@ void main() async {
       systemNavigationBarIconBrightness: Brightness.dark,
     ),
   );
+
+  // GetX 의 initialBinding 은 putAsync 를 await 하지 않아 SplashController 가
+  // SurveyService 등록 전에 onInit 을 실행하면 "not found" 에러 발생.
+  // runApp 전에 글로벌 의존성을 동기/await 로 명시 등록하여 타이밍 보장.
+  Get.put<LocalStorage>(LocalStorage(), permanent: true);
+  Get.put<ThemeController>(ThemeController(), permanent: true);
+  Get.put<AuthService>(
+    AuthService(
+      config: AuthServiceConfig(
+        useDummyProviders: SocialLoginConfig.useDummyProviders,
+      ),
+    ),
+    permanent: true,
+  );
+  await Get.putAsync<SurveyService>(
+    () => SurveyService().init(),
+    permanent: true,
+  );
+  await Get.putAsync<ApiClient>(() => ApiClient().init(), permanent: true);
 
   runApp(const CoflanetApp());
 }

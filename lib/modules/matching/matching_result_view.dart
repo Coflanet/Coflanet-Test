@@ -140,7 +140,7 @@ class MatchingResultView extends GetView<MatchingController> {
         borderRadius: AppRadius.xxxlBorder,
         boxShadow: [
           BoxShadow(
-            color: AppColor.colorGlobalOrange50.withOpacity(0.3),
+            color: AppColor.colorGlobalOrange50.withValues(alpha:0.3),
             blurRadius: 24,
             offset: const Offset(0, 12),
           ),
@@ -157,7 +157,7 @@ class MatchingResultView extends GetView<MatchingController> {
               height: 160,
               decoration: BoxDecoration(
                 shape: BoxShape.circle,
-                color: AppColor.staticLabelWhiteStrong.withOpacity(0.1),
+                color: AppColor.staticLabelWhiteStrong.withValues(alpha:0.1),
               ),
             ),
           ),
@@ -169,7 +169,7 @@ class MatchingResultView extends GetView<MatchingController> {
               height: 100,
               decoration: BoxDecoration(
                 shape: BoxShape.circle,
-                color: AppColor.staticLabelWhiteStrong.withOpacity(0.08),
+                color: AppColor.staticLabelWhiteStrong.withValues(alpha:0.08),
               ),
             ),
           ),
@@ -187,7 +187,7 @@ class MatchingResultView extends GetView<MatchingController> {
                     vertical: 6,
                   ),
                   decoration: BoxDecoration(
-                    color: AppColor.staticLabelWhiteStrong.withOpacity(0.2),
+                    color: AppColor.staticLabelWhiteStrong.withValues(alpha:0.2),
                     borderRadius: AppRadius.xxlBorder,
                   ),
                   child: Row(
@@ -226,7 +226,7 @@ class MatchingResultView extends GetView<MatchingController> {
                 Text(
                   result.coffeeTypeDescription,
                   style: AppTextStyles.body2NormalRegular.copyWith(
-                    color: AppColor.staticLabelWhiteStrong.withOpacity(0.9),
+                    color: AppColor.staticLabelWhiteStrong.withValues(alpha:0.9),
                     height: 1.6,
                   ),
                 ),
@@ -398,7 +398,7 @@ class MatchingResultView extends GetView<MatchingController> {
               gradient: LinearGradient(
                 begin: Alignment.topLeft,
                 end: Alignment.bottomRight,
-                colors: [color.withOpacity(0.8), color],
+                colors: [color.withValues(alpha:0.8), color],
               ),
               borderRadius: AppRadius.top(AppRadius.xxl),
             ),
@@ -412,7 +412,7 @@ class MatchingResultView extends GetView<MatchingController> {
                     height: 80,
                     decoration: BoxDecoration(
                       shape: BoxShape.circle,
-                      color: AppColor.staticLabelWhiteStrong.withOpacity(0.1),
+                      color: AppColor.staticLabelWhiteStrong.withValues(alpha:0.1),
                     ),
                   ),
                 ),

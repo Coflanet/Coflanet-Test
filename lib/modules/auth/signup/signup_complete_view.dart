@@ -98,7 +98,8 @@ class SignUpCompleteView extends StatelessWidget {
     return PrimaryButton(
       text: '시작하기',
       onPressed: () {
-        // Navigate to survey intro (취향 선택 화면)
+        // 회원가입 완료 → 취향 설문 인트로로 진행
+        // (profileSetup 으로 보내면 이름입력→이유→완료가 무한 반복됨)
         Get.offAllNamed(Routes.surveyIntro);
       },
     );

@@ -1,5 +1,5 @@
 /// Barrel export for all repository files
-library repositories;
+library;
 
 export 'repository_interfaces.dart';
 export 'repository_config.dart';

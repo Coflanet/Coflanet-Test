@@ -1,6 +1,5 @@
 import 'package:flutter/foundation.dart';
 import 'package:get/get.dart';
-import 'package:coflanet/core/storage/local_storage.dart';
 import 'package:coflanet/data/repositories/repository_interfaces.dart';
 import 'package:coflanet/data/repositories/repository_provider.dart';
 import 'package:coflanet/routes/app_pages.dart';
@@ -17,7 +16,6 @@ class SurveyReasonOption {
 /// Controller for Survey Reason Screen
 /// Handles multiple selection of reasons for joining Coflanet
 class SurveyReasonController extends GetxController {
-  final LocalStorage _storage = Get.find<LocalStorage>();
   final SurveyRepository _surveyRepository =
       RepositoryProvider.surveyRepository;
 

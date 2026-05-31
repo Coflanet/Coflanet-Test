@@ -10,6 +10,16 @@ import 'package:coflanet/modules/coffee/coffee_controller.dart';
 class CoffeeMainView extends GetView<CoffeeController> {
   const CoffeeMainView({super.key});
 
+  // Figma 사양: Pretendard SemiBold 22 / lineHeight 1.36 / letterSpacing -0.4268
+  // 색상은 Label/strong (#000000) 토큰 매핑
+  // Auth 카테고리에서 통일한 페이지 헤더 스타일과 동일
+  TextStyle get _screenHeaderStyle => AppTextStyles.heading1Bold.copyWith(
+    fontWeight: FontWeight.w600,
+    height: 1.36,
+    letterSpacing: -0.4268,
+    color: AppColor.labelStrong,
+  );
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -33,10 +43,7 @@ class CoffeeMainView extends GetView<CoffeeController> {
             children: [
               Text(
                 '어떤 방식으로\n커피를 즐기시겠어요?',
-                style: AppTextStyles.heading1Bold.copyWith(
-                  color: AppColor.labelNormal,
-                  height: 1.4,
-                ),
+                style: _screenHeaderStyle,
               ),
 
               const SizedBox(height: 32),
@@ -85,7 +92,7 @@ class CoffeeMainView extends GetView<CoffeeController> {
           borderRadius: AppRadius.xlBorder,
           boxShadow: [
             BoxShadow(
-              color: AppColor.labelNormal.withOpacity(0.08),
+              color: AppColor.labelNormal.withValues(alpha: 0.08),
               blurRadius: 8,
               offset: const Offset(0, 2),
             ),
@@ -98,7 +105,7 @@ class CoffeeMainView extends GetView<CoffeeController> {
               width: 64,
               height: 64,
               decoration: BoxDecoration(
-                color: color.withOpacity(0.1),
+                color: color.withValues(alpha: 0.1),
                 borderRadius: AppRadius.mdBorder,
               ),
               child: ClipRRect(

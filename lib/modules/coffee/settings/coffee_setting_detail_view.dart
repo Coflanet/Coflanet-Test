@@ -224,8 +224,8 @@ class CoffeeSettingDetailView extends GetView<CoffeeController> {
           begin: Alignment.topLeft,
           end: Alignment.bottomRight,
           colors: [
-            AppColor.primaryNormal.withOpacity(0.3),
-            AppColor.primaryNormal.withOpacity(0.15),
+            AppColor.primaryNormal.withValues(alpha:0.3),
+            AppColor.primaryNormal.withValues(alpha:0.15),
           ],
         ),
         borderRadius: AppRadius.xxxlBorder,
@@ -274,7 +274,7 @@ class CoffeeSettingDetailView extends GetView<CoffeeController> {
               inactiveTrackColor:
                   AppColor.colorGlobalCoolNeutral25, // Dark track
               thumbColor: AppColor.primaryNormal,
-              overlayColor: AppColor.primaryNormal.withOpacity(0.15),
+              overlayColor: AppColor.primaryNormal.withValues(alpha:0.15),
               trackHeight: 6,
               thumbShape: const RoundSliderThumbShape(enabledThumbRadius: 14),
               overlayShape: const RoundSliderOverlayShape(overlayRadius: 24),

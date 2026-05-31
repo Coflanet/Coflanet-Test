@@ -21,16 +21,6 @@ class RecipeStep {
   });
 }
 
-/// Dummy recipe steps data
-const List<RecipeStep> _dummyRecipeSteps = [
-  RecipeStep(number: 1, title: '원두 분쇄', description: '분쇄도: 800~1,000μm'),
-  RecipeStep(number: 2, title: '예열', description: '서버와 드리퍼 예열'),
-  RecipeStep(number: 3, title: '뜸 들이기', description: '물 30g 30초간 뜸'),
-  RecipeStep(number: 4, title: '1차 추출', description: '100g 추출'),
-  RecipeStep(number: 5, title: '2차 추출', description: '70g 마무리 추출'),
-  RecipeStep(number: 6, title: '추출 완료', description: '드리퍼 제거하고 서버를 섞기'),
-];
-
 class CoffeeSettingsView extends GetView<CoffeeController> {
   const CoffeeSettingsView({super.key});
 
@@ -85,9 +75,9 @@ class CoffeeSettingsView extends GetView<CoffeeController> {
                 color: AppColor.componentFillScroll,
                 borderRadius: BorderRadius.circular(99),
               ),
-              child: const Icon(
+              child: Icon(
                 Icons.chevron_left,
-                color: Colors.white,
+                color: AppColor.staticLabelWhiteStrong,
                 size: 24,
               ),
             ),
@@ -227,7 +217,7 @@ class CoffeeSettingsView extends GetView<CoffeeController> {
       height: 104,
       padding: const EdgeInsets.all(24),
       decoration: BoxDecoration(
-        color: AppColor.colorGlobalCoolNeutral50.withOpacity(0.12),
+        color: AppColor.colorGlobalCoolNeutral50.withValues(alpha: 0.12),
         borderRadius: BorderRadius.circular(24),
       ),
       child: Row(
@@ -335,7 +325,7 @@ class CoffeeSettingsView extends GetView<CoffeeController> {
     return Container(
       padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 16),
       decoration: BoxDecoration(
-        color: AppColor.colorGlobalCoolNeutral50.withOpacity(0.12),
+        color: AppColor.colorGlobalCoolNeutral50.withValues(alpha: 0.12),
         borderRadius: BorderRadius.circular(32),
       ),
       child: Obx(
@@ -388,9 +378,9 @@ class CoffeeSettingsView extends GetView<CoffeeController> {
   /// Figma: background #FFFFFF, border-radius 40px, padding 32px 24px, gap 16px, height 324px
   Widget _buildProgressTracker() {
     return Obx(() {
-      // Force Obx to track list changes by accessing length
+      // Obx 반응성 트래킹을 위해 length 접근
       final steps = controller.extractionSteps;
-      final stepCount = steps.length;
+      steps.length;
 
       // Always build from controller state - don't fall back to dummy data
       List<RecipeStep> displaySteps = [];
@@ -412,7 +402,7 @@ class CoffeeSettingsView extends GetView<CoffeeController> {
         final step = steps[i];
         final minutes = step.duration.inMinutes;
         final seconds = step.duration.inSeconds % 60;
-        final timeStr = minutes > 0 ? '${minutes}분 ${seconds}초' : '${seconds}초';
+        final timeStr = minutes > 0 ? '$minutes분 $seconds초' : '$seconds초';
         displaySteps.add(
           RecipeStep(
             number: i + 3,
@@ -465,20 +455,20 @@ class CoffeeSettingsView extends GetView<CoffeeController> {
             onPressed: () => Get.toNamed(Routes.timerActive),
             style: ElevatedButton.styleFrom(
               backgroundColor: AppColor.primaryNormal,
-              foregroundColor: Colors.white,
+              foregroundColor: AppColor.staticLabelWhiteStrong,
               elevation: 0,
               shape: RoundedRectangleBorder(
                 borderRadius: BorderRadius.circular(99),
               ),
               padding: const EdgeInsets.symmetric(horizontal: 28, vertical: 12),
             ),
-            child: const Text(
+            child: Text(
               '원두 레시피 시작',
               style: TextStyle(
                 fontFamily: 'Pretendard',
                 fontSize: 16,
                 fontWeight: FontWeight.w600,
-                color: Colors.white,
+                color: AppColor.staticLabelWhiteStrong,
               ),
             ),
           ),
@@ -773,14 +763,14 @@ class _RecipeStepItem extends StatelessWidget {
                 borderRadius: BorderRadius.circular(1000),
               ),
               child: Center(
-                // Badge number - Figma: Pretendard 12px/600, color #FFFFFF
+                // Badge number - Figma: Pretendard 12px/600
                 child: Text(
                   '${step.number}',
-                  style: const TextStyle(
+                  style: TextStyle(
                     fontFamily: 'Pretendard',
                     fontSize: 12,
                     fontWeight: FontWeight.w600,
-                    color: AppColor.colorGlobalCommon100,
+                    color: AppColor.labelAlternative,
                   ),
                 ),
               ),

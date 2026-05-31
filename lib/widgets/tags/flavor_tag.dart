@@ -82,7 +82,7 @@ class FlavorTag extends StatelessWidget {
                 child: Icon(
                   Icons.close,
                   size: _getIconSize(),
-                  color: _getTextColor().withOpacity(0.7),
+                  color: _getTextColor().withValues(alpha:0.7),
                 ),
               ),
             ],
@@ -114,13 +114,13 @@ class FlavorTag extends StatelessWidget {
 
     switch (style) {
       case FlavorTagStyle.primary:
-        return AppColor.primaryNormal.withOpacity(0.12);
+        return AppColor.primaryNormal.withValues(alpha:0.12);
       case FlavorTagStyle.secondary:
         return AppColor.componentFillNormal;
       case FlavorTagStyle.outlined:
         return Colors.transparent;
       case FlavorTagStyle.compact:
-        return AppColor.primaryNormal.withOpacity(0.08);
+        return AppColor.primaryNormal.withValues(alpha:0.08);
     }
   }
 
@@ -132,7 +132,7 @@ class FlavorTag extends StatelessWidget {
     switch (style) {
       case FlavorTagStyle.primary:
         return Border.all(
-          color: AppColor.primaryNormal.withOpacity(0.3),
+          color: AppColor.primaryNormal.withValues(alpha:0.3),
           width: 1,
         );
       case FlavorTagStyle.secondary:

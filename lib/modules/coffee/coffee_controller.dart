@@ -324,7 +324,7 @@ class CoffeeController extends BaseController {
       await _recipeRepository.saveRecipe(recipe);
 
       return true;
-    } catch (e, stackTrace) {
+    } catch (e) {
       Get.snackbar(
         '저장 실패',
         '레시피 저장 중 오류가 발생했습니다',
@@ -500,7 +500,7 @@ class CoffeeController extends BaseController {
       await _recipeRepository.saveRecipe(recipe);
       clearNewRecipeForm();
       return true;
-    } catch (e, stackTrace) {
+    } catch (e) {
       Get.snackbar(
         '저장 실패',
         '레시피 저장 중 오류가 발생했습니다',

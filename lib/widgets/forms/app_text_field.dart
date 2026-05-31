@@ -438,6 +438,7 @@ class _AppTextFieldState extends State<AppTextField>
       onEditingComplete: widget.onEditingComplete,
       style: _textStyle.copyWith(color: textColor),
       cursorColor: cursorColor,
+      textAlignVertical: TextAlignVertical.center,
       decoration: InputDecoration(
         hintText: widget.hintText,
         hintStyle: AppTextStyles.body1NormalRegular.copyWith(color: hintColor),

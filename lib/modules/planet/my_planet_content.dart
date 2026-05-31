@@ -256,7 +256,7 @@ class MyPlanetContent extends GetView<MyPlanetController> {
           colors: [
             AppColor.colorGlobalCommon100, // White at top (0%)
             AppColor.colorGlobalCommon100, // White at middle (50%)
-            color.withOpacity(0.6), // Color at bottom (100%)
+            color.withValues(alpha:0.6), // Color at bottom (100%)
           ],
         ),
       ),
@@ -309,27 +309,6 @@ class MyPlanetContent extends GetView<MyPlanetController> {
           );
         }),
       ),
-    );
-  }
-
-  Widget _buildFlavorNotesList() {
-    final flavors = controller.flavorDescriptions;
-    return Column(
-      children: List.generate(flavors.length, (index) {
-        final flavor = flavors[index];
-        return Column(
-          children: [
-            _buildFlavorNoteItem(flavor),
-            if (index < flavors.length - 1)
-              Divider(
-                height: 1,
-                indent: 72,
-                endIndent: 20,
-                color: AppColor.lineSolidNeutral,
-              ),
-          ],
-        );
-      }),
     );
   }
 

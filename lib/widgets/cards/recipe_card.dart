@@ -84,7 +84,7 @@ class RecipeCard extends StatelessWidget {
                   child: Text(
                     infoText!,
                     style: AppTextStyles.caption1Regular.copyWith(
-                      color: AppColor.staticLabelWhiteStrong.withOpacity(0.9),
+                      color: AppColor.staticLabelWhiteStrong.withValues(alpha:0.9),
                     ),
                   ),
                 ),
@@ -109,7 +109,7 @@ class RecipeCard extends StatelessWidget {
         Text(
           item.label,
           style: AppTextStyles.caption1Regular.copyWith(
-            color: AppColor.staticLabelWhiteStrong.withOpacity(0.8),
+            color: AppColor.staticLabelWhiteStrong.withValues(alpha:0.8),
           ),
         ),
       ],

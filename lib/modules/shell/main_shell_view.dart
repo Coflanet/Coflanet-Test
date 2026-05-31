@@ -1,23 +1,29 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:coflanet/constants/color_constant.dart';
-import 'package:coflanet/constants/radius_constant.dart';
 import 'package:coflanet/constants/style_constant.dart';
 import 'package:coflanet/modules/shell/main_shell_controller.dart';
 import 'package:coflanet/modules/coffee/select/select_coffee_content.dart';
 import 'package:coflanet/modules/coffee/select/select_coffee_controller.dart';
-import 'package:coflanet/modules/extraction/extraction_list_view.dart';
-import 'package:coflanet/modules/tasting/tasting_notes_view.dart';
+import 'package:coflanet/modules/community/community_content.dart';
+import 'package:coflanet/modules/home/home_content.dart';
 import 'package:coflanet/modules/planet/my_planet_content.dart';
 import 'package:coflanet/modules/planet/my_planet_controller.dart';
+import 'package:coflanet/modules/shopping/shopping_content.dart';
 
 class MainShellView extends GetView<MainShellController> {
   const MainShellView({super.key});
 
   /// Tab data structure for cleaner code
-  /// Figma: 원두 목록, 추출 목록, 시음 기록, My 행성
+  /// Figma `Home_Item_yes` 기준 5개 탭: 홈, 원두, 커뮤니티, 쇼핑, 마이
   /// Icons: filled for selected, outline for unselected
   static const List<_TabData> _tabs = [
+    _TabData(
+      iconFilled: Icons.home_rounded,
+      iconOutline: Icons.home_outlined,
+      label: '홈',
+      navTitle: '홈',
+    ),
     _TabData(
       iconFilled: Icons.coffee_rounded,
       iconOutline: Icons.coffee_outlined,
@@ -25,21 +31,21 @@ class MainShellView extends GetView<MainShellController> {
       navTitle: '원두 목록',
     ),
     _TabData(
-      iconFilled: Icons.laptop_mac_rounded,
-      iconOutline: Icons.laptop_mac_outlined,
-      label: '추출 목록',
-      navTitle: '추출 목록',
+      iconFilled: Icons.forum_rounded,
+      iconOutline: Icons.forum_outlined,
+      label: '커뮤니티',
+      navTitle: '커뮤니티',
     ),
     _TabData(
-      iconFilled: Icons.edit_note_rounded,
-      iconOutline: Icons.edit_note,
-      label: '시음 기록',
-      navTitle: '시음 기록',
+      iconFilled: Icons.shopping_bag_rounded,
+      iconOutline: Icons.shopping_bag_outlined,
+      label: '쇼핑',
+      navTitle: '쇼핑',
     ),
     _TabData(
       iconFilled: Icons.person_rounded,
       iconOutline: Icons.person_outline_rounded,
-      label: 'My 행성',
+      label: '마이',
       navTitle: 'My 행성',
     ),
   ];
@@ -60,40 +66,59 @@ class MainShellView extends GetView<MainShellController> {
         children: [
           // ===== CONTENT AREA (Obx: only content rebuilds on tab switch) =====
           Positioned(
-            top: topPadding + topNavHeight,
+            top: 0,
             left: 0,
             right: 0,
             bottom: 0,
             child: Obx(() {
               final currentIndex = controller.currentTabIndex.value;
               final bool isEditMode =
-                  currentIndex == 0 &&
+                  currentIndex == MainShellController.tabBean &&
                   Get.isRegistered<SelectCoffeeController>() &&
                   Get.find<SelectCoffeeController>().isEditing;
               final bottomInset = isEditMode ? 0.0 : tabBarTotalHeight;
+              // 홈 탭은 자체 헤더를 가지므로 topNavigation 영역을 비워 둔다.
+              // 그 외 탭은 기존처럼 topPadding + topNavHeight 만큼 콘텐츠를 내림.
+              final bool isHomeTab = currentIndex == MainShellController.tabHome;
+              final topInset = isHomeTab ? 0.0 : (topPadding + topNavHeight);
 
-              if (currentIndex == 3) {
+              if (currentIndex == MainShellController.tabMy) {
                 return Padding(
-                  padding: EdgeInsets.only(bottom: bottomInset),
+                  padding: EdgeInsets.only(
+                    top: topInset,
+                    bottom: bottomInset,
+                  ),
                   child: const MyPlanetContent(),
                 );
               }
-              return Container(
-                decoration: BoxDecoration(
-                  color: AppColor.colorGlobalCoolNeutral98,
-                  borderRadius: BorderRadius.only(
-                    topLeft: Radius.circular(contentTopRadius),
-                    topRight: Radius.circular(contentTopRadius),
+              // 홈 탭은 다크 테마 → 배경 검은색
+              // 그 외 탭은 기존 밝은 배경 유지
+              final Color contentBgColor = isHomeTab
+                  ? AppColor.colorGlobalCommon0
+                  : AppColor.backgroundNormalAlternative;
+              return Padding(
+                padding: EdgeInsets.only(top: topInset),
+                child: Container(
+                  decoration: BoxDecoration(
+                    color: contentBgColor,
+                    borderRadius: isHomeTab
+                        ? BorderRadius.zero
+                        : BorderRadius.only(
+                            topLeft: Radius.circular(contentTopRadius),
+                            topRight: Radius.circular(contentTopRadius),
+                          ),
                   ),
-                ),
-                child: ClipRRect(
-                  borderRadius: BorderRadius.only(
-                    topLeft: Radius.circular(contentTopRadius),
-                    topRight: Radius.circular(contentTopRadius),
-                  ),
-                  child: Padding(
-                    padding: EdgeInsets.only(bottom: bottomInset),
-                    child: _buildCurrentTab(currentIndex),
+                  child: ClipRRect(
+                    borderRadius: isHomeTab
+                        ? BorderRadius.zero
+                        : BorderRadius.only(
+                            topLeft: Radius.circular(contentTopRadius),
+                            topRight: Radius.circular(contentTopRadius),
+                          ),
+                    child: Padding(
+                      padding: EdgeInsets.only(bottom: bottomInset),
+                      child: _buildCurrentTab(currentIndex),
+                    ),
                   ),
                 ),
               );
@@ -101,28 +126,36 @@ class MainShellView extends GetView<MainShellController> {
           ),
 
           // ===== TOP NAVIGATION (Obx: only title/buttons rebuild) =====
+          // 홈 탭에서는 자체 헤더가 있으므로 topNavigation 영역을 비워 둔다.
+          // Stack 의 직접 자식이 Positioned 여야 하므로 Obx 는 안쪽에 둔다.
           Positioned(
             top: 0,
             left: 0,
             right: 0,
-            child: Container(
-              padding: EdgeInsets.only(top: topPadding),
-              height: topPadding + topNavHeight,
-              decoration: BoxDecoration(
-                gradient: LinearGradient(
-                  begin: Alignment.topCenter,
-                  end: Alignment.bottomCenter,
-                  stops: const [0.0, 0.4, 0.7, 1.0],
-                  colors: [
-                    AppColor.colorGlobalCommon0.withValues(alpha: 0.0),
-                    AppColor.colorGlobalCommon0.withValues(alpha: 0.1),
-                    AppColor.colorGlobalCommon0.withValues(alpha: 0.3),
-                    AppColor.colorGlobalCommon0.withValues(alpha: 0.5),
-                  ],
+            child: Obx(() {
+              final currentIndex = controller.currentTabIndex.value;
+              if (currentIndex == MainShellController.tabHome) {
+                return const SizedBox.shrink();
+              }
+              return Container(
+                padding: EdgeInsets.only(top: topPadding),
+                height: topPadding + topNavHeight,
+                decoration: BoxDecoration(
+                  gradient: LinearGradient(
+                    begin: Alignment.topCenter,
+                    end: Alignment.bottomCenter,
+                    stops: const [0.0, 0.4, 0.7, 1.0],
+                    colors: [
+                      AppColor.colorGlobalCommon0.withValues(alpha: 0.0),
+                      AppColor.colorGlobalCommon0.withValues(alpha: 0.1),
+                      AppColor.colorGlobalCommon0.withValues(alpha: 0.3),
+                      AppColor.colorGlobalCommon0.withValues(alpha: 0.5),
+                    ],
+                  ),
                 ),
-              ),
-              child: Obx(() => _buildTopNavigation()),
-            ),
+                child: _buildTopNavigation(),
+              );
+            }),
           ),
 
           // ===== TAB BAR (Obx: only tab bar rebuilds) =====
@@ -133,7 +166,7 @@ class MainShellView extends GetView<MainShellController> {
             child: Obx(() {
               final currentIndex = controller.currentTabIndex.value;
               final bool isEditMode =
-                  currentIndex == 0 &&
+                  currentIndex == MainShellController.tabBean &&
                   Get.isRegistered<SelectCoffeeController>() &&
                   Get.find<SelectCoffeeController>().isEditing;
               if (isEditMode) return const SizedBox.shrink();
@@ -145,15 +178,17 @@ class MainShellView extends GetView<MainShellController> {
     );
   }
 
-  /// Only renders the active tab (replaces IndexedStack that kept all 4 tabs alive)
+  /// Only renders the active tab (replaces IndexedStack that kept all 5 tabs alive)
   Widget _buildCurrentTab(int index) {
     switch (index) {
-      case 0:
+      case MainShellController.tabHome:
+        return const HomeContent();
+      case MainShellController.tabBean:
         return const SelectCoffeeContent();
-      case 1:
-        return const ExtractionListView();
-      case 2:
-        return const TastingNotesView();
+      case MainShellController.tabCommunity:
+        return const CommunityContent();
+      case MainShellController.tabShopping:
+        return const ShoppingContent();
       default:
         return const SizedBox.shrink();
     }
@@ -165,27 +200,27 @@ class MainShellView extends GetView<MainShellController> {
   Widget _buildTopNavigation() {
     final currentIndex = controller.currentTabIndex.value;
 
-    // Get edit mode state for 원두 tab title
+    // 원두 탭 (index 1) 의 편집 모드 여부
     final bool isEditMode =
-        currentIndex == 0 &&
+        currentIndex == MainShellController.tabBean &&
         Get.isRegistered<SelectCoffeeController>() &&
         Get.find<SelectCoffeeController>().isEditing;
 
-    // Title changes based on tab and mode per Figma
-    // Tab 0 Normal: "원두 목록", Tab 0 Edit: "원두 목록 편집"
-    // Tab 3 (My 행성): Show username only (not "My 행성")
+    // 탭/모드별 타이틀 결정
+    // - 원두 탭 편집모드: "원두 목록 편집"
+    // - 마이 탭: 사용자명 (My 행성 별칭)
+    // - 그 외: _tabs[index].navTitle
     String title;
-    if (currentIndex == 0 && isEditMode) {
-      title = '원두 목록 편집'; // Edit mode title
-    } else if (currentIndex == 3) {
-      // For My 행성 tab, show username from MyPlanetController
+    if (currentIndex == MainShellController.tabBean && isEditMode) {
+      title = '원두 목록 편집';
+    } else if (currentIndex == MainShellController.tabMy) {
       if (Get.isRegistered<MyPlanetController>()) {
         title = Get.find<MyPlanetController>().userName;
       } else {
-        title = '커플래니터'; // Fallback
+        title = '커플래니터';
       }
     } else {
-      title = _tabs[currentIndex].navTitle; // Use navTitle for other tabs
+      title = _tabs[currentIndex].navTitle;
     }
 
     return Padding(
@@ -194,7 +229,8 @@ class MainShellView extends GetView<MainShellController> {
         children: [
           // Leading: Back button in edit mode only
           // Figma: In normal mode, title is flush left (no spacer)
-          if (currentIndex == 0 && isEditMode) _buildBackButton(),
+          if (currentIndex == MainShellController.tabBean && isEditMode)
+            _buildBackButton(),
 
           // Title - Centered in edit mode, Left aligned (flush) in normal mode
           // Figma Edit Mode: Headline 2/Bold - 17px, weight 600, line-height 141.2%
@@ -218,7 +254,7 @@ class MainShellView extends GetView<MainShellController> {
           ),
 
           // Trailing action button (only for 원두 tab)
-          if (currentIndex == 0) _buildEditButton(),
+          if (currentIndex == MainShellController.tabBean) _buildEditButton(),
         ],
       ),
     );
@@ -327,38 +363,44 @@ class MainShellView extends GetView<MainShellController> {
     });
   }
 
-  /// Custom tab bar - Figma: Dark background with pill-shaped tab container inside
+  /// Custom tab bar - Figma `Home_Item_yes` 기준 5탭
   /// Outer: Dark charcoal background with rounded top corners
-  /// Inner: 328x64px pill-shaped glass effect container
+  /// Inner: 화면 폭에 맞춘 pill-shaped glass effect container (5개 탭)
   Widget _buildTabBar() {
-    return ClipRRect(
-      borderRadius: const BorderRadius.only(
-        topLeft: Radius.circular(12),
-        topRight: Radius.circular(12),
-      ),
-      child: Container(
-        // Dark background area - Figma: #1C1C1E
-        decoration: BoxDecoration(color: AppColor.colorGlobalCoolNeutral15),
-        padding: const EdgeInsets.only(top: 6, bottom: 16),
-        child: Center(
+    return Builder(
+      builder: (context) {
+        // 5개 탭을 수용하기 위해 화면 너비에서 좌우 16px 여백을 뺀 폭 사용.
+        final screenWidth = MediaQuery.of(context).size.width;
+        final innerWidth = (screenWidth - 32).clamp(280.0, 400.0);
+
+        return ClipRRect(
+          borderRadius: const BorderRadius.only(
+            topLeft: Radius.circular(12),
+            topRight: Radius.circular(12),
+          ),
           child: Container(
-            width: 328,
-            height: 64,
-            padding: const EdgeInsets.all(4),
-            decoration: BoxDecoration(
-              // Figma: rgba(112, 115, 124, 0.22) - glass effect
-              color: AppColor.lineNormalNormal,
-              borderRadius: BorderRadius.circular(99), // Pill shape
-            ),
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-              children: List.generate(_tabs.length, (index) {
-                return Expanded(child: _buildTabItem(index));
-              }),
+            decoration: BoxDecoration(color: AppColor.colorGlobalCoolNeutral15),
+            padding: const EdgeInsets.only(top: 6, bottom: 16),
+            child: Center(
+              child: Container(
+                width: innerWidth,
+                height: 64,
+                padding: const EdgeInsets.all(4),
+                decoration: BoxDecoration(
+                  color: AppColor.lineNormalNormal,
+                  borderRadius: BorderRadius.circular(99),
+                ),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                  children: List.generate(_tabs.length, (index) {
+                    return Expanded(child: _buildTabItem(index));
+                  }),
+                ),
+              ),
             ),
           ),
-        ),
-      ),
+        );
+      },
     );
   }
 
@@ -396,7 +438,7 @@ class MainShellView extends GetView<MainShellController> {
           decoration: BoxDecoration(
             // Figma: Active = black @ 35% opacity, pill shape
             color: isActive
-                ? AppColor.colorGlobalCommon0.withOpacity(0.35)
+                ? AppColor.colorGlobalCommon0.withValues(alpha: 0.35)
                 : AppColor.transparent,
             borderRadius: BorderRadius.circular(99), // Pill shape
           ),
@@ -407,13 +449,15 @@ class MainShellView extends GetView<MainShellController> {
               // Icon
               Icon(icon, size: 22, color: iconColor),
               const SizedBox(height: 2),
-              // Label - Figma: Caption 2/Medium, 11px, 500 weight, letter-spacing 0.0311em
+              // Label - 5탭 수용: 라벨이 잘리지 않도록 줄임 + Auto-shrink
               Text(
                 tab.label,
                 style: AppTextStyles.caption2Medium.copyWith(
                   color: labelColor,
-                  letterSpacing: 0.0311 * 11, // 0.0311em at 11px
                 ),
+                maxLines: 1,
+                overflow: TextOverflow.ellipsis,
+                textAlign: TextAlign.center,
               ),
             ],
           ),

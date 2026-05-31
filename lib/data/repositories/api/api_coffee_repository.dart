@@ -112,7 +112,7 @@ class ApiCoffeeRepository implements CoffeeRepository {
       'id': item.id,
       'name': item.name,
       'description': item.description,
-      'color': item.color.value,
+      'color': item.color.toARGB32(),
       'image_url': item.imageUrl,
       'brand': item.brand,
       'flavor_profile': item.flavorProfile != null

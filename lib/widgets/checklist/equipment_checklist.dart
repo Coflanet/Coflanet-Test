@@ -255,7 +255,7 @@ class EquipmentChecklist extends StatelessWidget {
                             vertical: 2,
                           ),
                           decoration: BoxDecoration(
-                            color: AppColor.primaryNormal.withOpacity(0.15),
+                            color: AppColor.primaryNormal.withValues(alpha:0.15),
                             borderRadius: AppRadius.xsBorder,
                           ),
                           child: Text(

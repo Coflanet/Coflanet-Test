@@ -54,6 +54,9 @@ class SurveyResultView extends GetView<SurveyController> {
           // ── Flavor descriptions ──
           SliverToBoxAdapter(child: _buildFlavorDescriptions(result)),
 
+          // ── 핑크 할인 배너 (Figma 추가) ──
+          SliverToBoxAdapter(child: _buildDiscountBanner()),
+
           // ── Divider ──
           SliverToBoxAdapter(
             child: Padding(
@@ -328,6 +331,89 @@ class SurveyResultView extends GetView<SurveyController> {
   }
 
   // ─────────────────────────────────────────────────────────────────────────
+  // 3.5. 핑크 할인 배너 (Figma 추가)
+  // ─────────────────────────────────────────────────────────────────────────
+
+  /// 핑크 그라데이션 할인 배너 — 추천 원두 결과 위에 표시.
+  /// "특별 할인" + 부제 + 우측 화살표 패턴.
+  /// [백엔드 API 연동 대기] 실제 프로모션 정보 연결 시 동적 텍스트 적용.
+  Widget _buildDiscountBanner() {
+    return Padding(
+      padding: const EdgeInsets.fromLTRB(20, 12, 20, 20),
+      child: GestureDetector(
+        onTap: () {
+          // [백엔드 API 연동 대기] 프로모션 상세 화면 이동
+        },
+        child: Container(
+          padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 16),
+          decoration: BoxDecoration(
+            gradient: const LinearGradient(
+              begin: Alignment.centerLeft,
+              end: Alignment.centerRight,
+              colors: [
+                Color(0xFFFFB6D1), // 핑크 라이트
+                Color(0xFFFF7AA8), // 핑크 다크
+              ],
+            ),
+            borderRadius: BorderRadius.circular(16),
+            boxShadow: [
+              BoxShadow(
+                color: const Color(0xFFFF7AA8).withValues(alpha: 0.18),
+                blurRadius: 12,
+                offset: const Offset(0, 4),
+              ),
+            ],
+          ),
+          child: Row(
+            children: [
+              Container(
+                width: 40,
+                height: 40,
+                decoration: BoxDecoration(
+                  color: AppColor.colorGlobalCommon100.withValues(alpha: 0.25),
+                  shape: BoxShape.circle,
+                ),
+                child: const Center(
+                  child: Text('🎁', style: TextStyle(fontSize: 22)),
+                ),
+              ),
+              const SizedBox(width: 12),
+              Expanded(
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  mainAxisSize: MainAxisSize.min,
+                  children: [
+                    Text(
+                      '${controller.userName}님만을 위한 첫 구매 할인',
+                      style: AppTextStyles.body2NormalBold.copyWith(
+                        color: AppColor.colorGlobalCommon100,
+                      ),
+                    ),
+                    const SizedBox(height: 2),
+                    Text(
+                      '추천 원두 최대 20% 할인 진행중',
+                      style: AppTextStyles.caption1Regular.copyWith(
+                        color: AppColor.colorGlobalCommon100.withValues(
+                          alpha: 0.9,
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+              Icon(
+                Icons.chevron_right,
+                color: AppColor.colorGlobalCommon100,
+                size: 20,
+              ),
+            ],
+          ),
+        ),
+      ),
+    );
+  }
+
+  // ─────────────────────────────────────────────────────────────────────────
   // 4. Recommended coffee bean cards - Light theme with shadows
   // ─────────────────────────────────────────────────────────────────────────
 
@@ -424,30 +510,70 @@ class SurveyResultView extends GetView<SurveyController> {
               Row(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  // Thumbnail (Figma: 88x88, radius 12px)
-                  Container(
-                    width: 88,
-                    height: 88,
-                    decoration: BoxDecoration(
-                      color: AppColor.backgroundNormalAlternative,
-                      borderRadius: BorderRadius.circular(12),
-                    ),
-                    clipBehavior: Clip.antiAlias,
-                    child: rec.imageUrl != null && rec.imageUrl!.isNotEmpty
-                        ? Image.network(
-                            rec.imageUrl!,
-                            fit: BoxFit.cover,
-                            errorBuilder: (_, __, ___) => Icon(
-                              Icons.coffee_rounded,
-                              color: AppColor.labelAssistive,
-                              size: 40,
+                  // Thumbnail (Figma: 88x88, radius 12px) + 좋아요 토글 오버레이
+                  Stack(
+                    children: [
+                      Container(
+                        width: 88,
+                        height: 88,
+                        decoration: BoxDecoration(
+                          color: AppColor.backgroundNormalAlternative,
+                          borderRadius: BorderRadius.circular(12),
+                        ),
+                        clipBehavior: Clip.antiAlias,
+                        child: rec.imageUrl != null && rec.imageUrl!.isNotEmpty
+                            ? Image.network(
+                                rec.imageUrl!,
+                                fit: BoxFit.cover,
+                                errorBuilder: (_, __, ___) => Icon(
+                                  Icons.coffee_rounded,
+                                  color: AppColor.labelAssistive,
+                                  size: 40,
+                                ),
+                              )
+                            : Icon(
+                                Icons.coffee_rounded,
+                                color: AppColor.labelAssistive,
+                                size: 40,
+                              ),
+                      ),
+                      Positioned(
+                        right: 4,
+                        bottom: 4,
+                        child: Obx(() {
+                          final isLiked = controller.isBeanLiked(rec.id);
+                          return GestureDetector(
+                            onTap: () => controller.toggleBeanLike(rec.id),
+                            behavior: HitTestBehavior.opaque,
+                            child: Container(
+                              width: 28,
+                              height: 28,
+                              decoration: BoxDecoration(
+                                color: AppColor.colorGlobalCommon100.withValues(
+                                  alpha: 0.92,
+                                ),
+                                shape: BoxShape.circle,
+                                boxShadow: [
+                                  BoxShadow(
+                                    color: AppColor.colorGlobalCommon0
+                                        .withValues(alpha: 0.08),
+                                    blurRadius: 4,
+                                    offset: const Offset(0, 1),
+                                  ),
+                                ],
+                              ),
+                              child: Icon(
+                                isLiked
+                                    ? Icons.favorite
+                                    : Icons.favorite_border,
+                                size: 16,
+                                color: AppColor.primaryNormal,
+                              ),
                             ),
-                          )
-                        : Icon(
-                            Icons.coffee_rounded,
-                            color: AppColor.labelAssistive,
-                            size: 40,
-                          ),
+                          );
+                        }),
+                      ),
+                    ],
                   ),
                   const SizedBox(width: 12),
                   // Text column

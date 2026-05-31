@@ -14,6 +14,16 @@ import 'package:coflanet/widgets/buttons/primary_button.dart';
 class SurveyQuestionView extends GetView<SurveyController> {
   const SurveyQuestionView({super.key});
 
+  // Figma 사양: Pretendard SemiBold 22 / lineHeight 1.36 / letterSpacing -0.4268
+  // 색상은 Label/strong (#000000) 토큰 매핑
+  // Auth 카테고리에서 통일한 페이지 헤더 스타일과 동일
+  TextStyle get _screenHeaderStyle => AppTextStyles.heading1Bold.copyWith(
+    fontWeight: FontWeight.w600,
+    height: 1.36,
+    letterSpacing: -0.4268,
+    color: AppColor.labelStrong,
+  );
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -98,9 +108,7 @@ class SurveyQuestionView extends GetView<SurveyController> {
               alignment: Alignment.centerLeft,
               child: Text(
                 question.question,
-                style: AppTextStyles.heading1Bold.copyWith(
-                  color: AppColor.labelNormal,
-                ),
+                style: _screenHeaderStyle,
               ),
             ),
             if (question.description.isNotEmpty) ...[
@@ -138,9 +146,7 @@ class SurveyQuestionView extends GetView<SurveyController> {
           // Question text
           Text(
             question.question,
-            style: AppTextStyles.heading1Bold.copyWith(
-              color: AppColor.labelNormal,
-            ),
+            style: _screenHeaderStyle,
           ),
 
           if (question.description.isNotEmpty) ...[

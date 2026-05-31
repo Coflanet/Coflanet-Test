@@ -1,15 +1,29 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
+
 import 'package:coflanet/constants/asset_constant.dart';
 import 'package:coflanet/constants/color_constant.dart';
+import 'package:coflanet/constants/spacing_constant.dart';
 import 'package:coflanet/constants/style_constant.dart';
 import 'package:coflanet/constants/radius_constant.dart';
 import 'package:coflanet/modules/auth/signup/signup_controller.dart';
+import 'package:coflanet/modules/onboarding/widgets/survey_progress_bar.dart';
 import 'package:coflanet/widgets/buttons/primary_button.dart';
+import 'package:coflanet/widgets/forms/app_text_field.dart';
 
 class SignUpView extends GetView<SignUpController> {
   const SignUpView({super.key});
+
+  // Figma 사양: Pretendard SemiBold 22 / lineHeight 1.36 / letterSpacing -0.4268
+  // 색상은 Label/strong (#000000) 토큰 매핑
+  // signup 멀티스텝 4개 헤더 (step=0/1/2/3) 모두 동일 사양 사용
+  TextStyle get _stepHeaderStyle => AppTextStyles.heading1Bold.copyWith(
+    fontWeight: FontWeight.w600,
+    height: 1.36,
+    letterSpacing: -0.4268,
+    color: AppColor.labelStrong,
+  );
 
   @override
   Widget build(BuildContext context) {
@@ -17,36 +31,22 @@ class SignUpView extends GetView<SignUpController> {
       backgroundColor: AppColor.backgroundNormalNormal,
       appBar: _buildAppBar(),
       body: SafeArea(
-        child: SingleChildScrollView(
-          child: Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 24),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                const SizedBox(height: 24),
-
-                // Header
-                _buildHeader(),
-
-                const SizedBox(height: 40),
-
-                // Form fields
-                _buildForm(),
-
-                const SizedBox(height: 32),
-
-                // Sign up button
-                _buildSignUpButton(),
-
-                const SizedBox(height: 24),
-
-                // Sign in link
-                _buildSignInLink(),
-
-                const SizedBox(height: 48),
-              ],
+        top: false,
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Obx(
+              () => Padding(
+                padding: const EdgeInsets.symmetric(
+                  horizontal: AppSpacing.space24,
+                ),
+                child: SurveyProgressIndicator(progress: controller.progress),
+              ),
             ),
-          ),
+            Expanded(
+              child: Obx(() => _buildStepContent()),
+            ),
+          ],
         ),
       ),
     );
@@ -57,211 +57,356 @@ class SignUpView extends GetView<SignUpController> {
       backgroundColor: AppColor.backgroundNormalNormal,
       elevation: 0,
       leading: IconButton(
-        onPressed: () => Get.back(),
+        onPressed: () => controller.previousStep(),
         icon: SvgPicture.asset(
           AssetPath.iconArrowBack,
-          width: 24,
-          height: 24,
+          width: AppSpacing.space24,
+          height: AppSpacing.space24,
           colorFilter: ColorFilter.mode(AppColor.labelNormal, BlendMode.srcIn),
         ),
+        tooltip: '뒤로 가기',
       ),
     );
   }
 
-  Widget _buildHeader() {
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        Text(
-          '이메일로 시작하기',
-          style: AppTextStyles.heading1Bold.copyWith(
-            color: AppColor.labelNormal,
+  Widget _buildStepContent() {
+    return switch (controller.currentStep) {
+      0 => _buildTermsStep(),
+      1 => _buildEmailStep(),
+      2 => _buildPasswordStep(),
+      3 => _buildConfirmPasswordStep(),
+      _ => const SizedBox.shrink(),
+    };
+  }
+
+  // --- Step 0: 서비스 약관 ---
+
+  Widget _buildTermsStep() {
+    return Padding(
+      padding: const EdgeInsets.symmetric(horizontal: AppSpacing.space24),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          const SizedBox(height: AppSpacing.space32),
+          Text(
+            '서비스 약관에\n동의해 주세요',
+            style: _stepHeaderStyle,
           ),
-        ),
-        const SizedBox(height: 8),
-        Text(
-          '간단한 정보만 입력하면 바로 시작할 수 있어요',
-          style: AppTextStyles.body2NormalRegular.copyWith(
-            color: AppColor.labelAlternative,
+          const SizedBox(height: AppSpacing.space40),
+          _buildTermCheckbox(
+            label: '전체 동의하기',
+            value: controller.termsAll.value,
+            onChanged: controller.toggleAll,
+            isBold: true,
           ),
-        ),
-      ],
-    );
-  }
-
-  Widget _buildForm() {
-    return Column(
-      children: [
-        // Email field
-        _buildEmailField(),
-
-        const SizedBox(height: 20),
-
-        // Password field
-        _buildPasswordField(),
-
-        const SizedBox(height: 20),
-
-        // Confirm password field
-        _buildConfirmPasswordField(),
-      ],
-    );
-  }
-
-  Widget _buildEmailField() {
-    return Obx(
-      () => _buildTextField(
-        label: '이메일',
-        hintText: 'example@email.com',
-        errorText: controller.emailError.value,
-        keyboardType: TextInputType.emailAddress,
-        onChanged: controller.onEmailChanged,
-        prefixIcon: Icons.email_outlined,
+          Divider(color: AppColor.lineNormalNeutral, height: 1),
+          const SizedBox(height: AppSpacing.space20),
+          _buildTermCheckbox(
+            label: '회원 약관 동의',
+            tag: '필수',
+            value: controller.termsService.value,
+            onChanged: (v) =>
+                controller.toggleTerm(controller.termsService, v),
+          ),
+          _buildTermCheckbox(
+            label: '회원 약관 동의',
+            tag: '선택',
+            value: controller.termsServiceOptional.value,
+            onChanged: (v) =>
+                controller.toggleTerm(controller.termsServiceOptional, v),
+          ),
+          _buildTermCheckbox(
+            label: '개인정보 수집 및 이용 동의',
+            tag: '필수',
+            value: controller.termsPrivacy.value,
+            onChanged: (v) =>
+                controller.toggleTerm(controller.termsPrivacy, v),
+          ),
+          _buildTermCheckbox(
+            label: '만 14세 이상이에요',
+            tag: '필수',
+            value: controller.termsAge.value,
+            onChanged: (v) => controller.toggleTerm(controller.termsAge, v),
+            description:
+                '만 14세 이상부터 회원가입이 가능합니다.\n해당 정보는 저장되지 않으며, 만 14세 이상 확인\n용도로만 사용합니다.',
+          ),
+          const Spacer(),
+          PrimaryButton(
+            text: '다음',
+            onPressed:
+                controller.isCurrentStepValid ? controller.nextStep : null,
+            isEnabled: controller.isCurrentStepValid,
+          ),
+          const SizedBox(height: AppSpacing.space48),
+        ],
       ),
     );
   }
 
-  Widget _buildPasswordField() {
-    return Obx(
-      () => _buildTextField(
-        label: '비밀번호',
-        hintText: '6자 이상 입력해주세요',
-        errorText: controller.passwordError.value,
-        obscureText: true,
-        onChanged: controller.onPasswordChanged,
-        prefixIcon: Icons.lock_outline,
-      ),
-    );
-  }
-
-  Widget _buildConfirmPasswordField() {
-    return Obx(
-      () => _buildTextField(
-        label: '비밀번호 확인',
-        hintText: '비밀번호를 다시 입력해주세요',
-        errorText: controller.confirmPasswordError.value,
-        obscureText: true,
-        onChanged: controller.onConfirmPasswordChanged,
-        prefixIcon: Icons.lock_outline,
-      ),
-    );
-  }
-
-  Widget _buildTextField({
+  Widget _buildTermCheckbox({
     required String label,
-    required String hintText,
-    String? errorText,
-    bool obscureText = false,
-    TextInputType? keyboardType,
-    required Function(String) onChanged,
-    IconData? prefixIcon,
+    String? tag,
+    required bool value,
+    required ValueChanged<bool?> onChanged,
+    bool isBold = false,
+    String? description,
   }) {
-    final hasError = errorText != null;
-
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        Text(
-          label,
-          style: AppTextStyles.label1NormalMedium.copyWith(
-            color: AppColor.labelNormal,
-          ),
-        ),
-        const SizedBox(height: 8),
-        Container(
-          decoration: BoxDecoration(
-            color: AppColor.componentFillAlternative,
-            borderRadius: AppRadius.lgBorder,
-            border: Border.all(
-              color: hasError
-                  ? AppColor.statusNegative
-                  : AppColor.lineNormalNeutral,
-              width: 1,
-            ),
-          ),
-          child: TextField(
-            onChanged: onChanged,
-            obscureText: obscureText,
-            keyboardType: keyboardType,
-            style: AppTextStyles.body1NormalRegular.copyWith(
-              color: AppColor.labelNormal,
-            ),
-            decoration: InputDecoration(
-              hintText: hintText,
-              hintStyle: AppTextStyles.body1NormalRegular.copyWith(
-                color: AppColor.labelAssistive,
-              ),
-              prefixIcon: prefixIcon != null
-                  ? Icon(
-                      prefixIcon,
-                      color: hasError
-                          ? AppColor.statusNegative
-                          : AppColor.labelAlternative,
-                      size: 20,
-                    )
-                  : null,
-              border: InputBorder.none,
-              contentPadding: const EdgeInsets.symmetric(
-                horizontal: 16,
-                vertical: 14,
-              ),
-            ),
-          ),
-        ),
-        if (hasError) ...[
-          const SizedBox(height: 6),
+    return Padding(
+      padding: const EdgeInsets.only(bottom: AppSpacing.space16),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
           Row(
             children: [
-              Icon(
-                Icons.error_outline,
-                size: 14,
-                color: AppColor.statusNegative,
-              ),
-              const SizedBox(width: 4),
-              Text(
-                errorText,
-                style: AppTextStyles.caption1Regular.copyWith(
-                  color: AppColor.statusNegative,
+              SizedBox(
+                width: AppSpacing.space24,
+                height: AppSpacing.space24,
+                child: Checkbox(
+                  value: value,
+                  onChanged: onChanged,
+                  activeColor: AppColor.primaryNormal,
+                  shape: const CircleBorder(),
+                  side: BorderSide(
+                    color: AppColor.lineNormalNeutral,
+                    width: 1.5,
+                  ),
                 ),
+              ),
+              const SizedBox(width: AppSpacing.space12),
+              Expanded(
+                child: Row(
+                  children: [
+                    Text(
+                      label,
+                      style:
+                          (isBold
+                                  ? AppTextStyles.body1NormalBold
+                                  : AppTextStyles.body2NormalRegular)
+                              .copyWith(color: AppColor.labelNormal),
+                    ),
+                    if (tag != null) ...[
+                      const SizedBox(width: AppSpacing.space4),
+                      Text(
+                        '($tag)',
+                        style: AppTextStyles.body2NormalRegular.copyWith(
+                          color: tag == '필수'
+                              ? AppColor.primaryNormal
+                              : AppColor.labelAssistive,
+                        ),
+                      ),
+                    ],
+                  ],
+                ),
+              ),
+              Icon(
+                Icons.chevron_right,
+                size: AppSpacing.space20,
+                color: AppColor.labelAssistive,
               ),
             ],
           ),
+          if (description != null) ...[
+            Padding(
+              // left 36 = 체크박스 24 + 갭 12 정렬용 (토큰 합성)
+              padding: const EdgeInsets.only(
+                left: AppSpacing.space24 + AppSpacing.space12,
+                top: AppSpacing.space4,
+              ),
+              child: Text(
+                description,
+                style: AppTextStyles.caption1Regular.copyWith(
+                  color: AppColor.labelAlternative,
+                  height: 1.5,
+                ),
+              ),
+            ),
+          ],
         ],
-      ],
-    );
-  }
-
-  Widget _buildSignUpButton() {
-    return Obx(
-      () => PrimaryButton(
-        text: '회원가입',
-        onPressed: controller.signUp,
-        isLoading: controller.isLoading,
-        isEnabled: controller.isFormValid,
       ),
     );
   }
 
-  Widget _buildSignInLink() {
-    return Row(
-      mainAxisAlignment: MainAxisAlignment.center,
-      children: [
-        Text(
-          '이미 계정이 있으신가요?',
-          style: AppTextStyles.label1NormalRegular.copyWith(
-            color: AppColor.labelAlternative,
+  // --- Step 1: 이메일 입력 ---
+
+  Widget _buildEmailStep() {
+    return Padding(
+      padding: const EdgeInsets.symmetric(horizontal: AppSpacing.space24),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          const SizedBox(height: AppSpacing.space32),
+          Text(
+            '메일을 입력해 주세요',
+            style: _stepHeaderStyle,
           ),
-        ),
-        TextButton(
-          onPressed: controller.goToSignIn,
-          child: Text(
-            '로그인',
-            style: AppTextStyles.label1NormalMedium.copyWith(
-              color: AppColor.primaryNormal,
+          const SizedBox(height: AppSpacing.space56),
+          AppTextField(
+            controller: controller.emailTextController,
+            label: '메일',
+            hintText: '메일',
+            keyboardType: TextInputType.emailAddress,
+            textInputAction: TextInputAction.done,
+            errorText: controller.emailError.value,
+            autofocus: true,
+            onSubmitted: (_) {
+              if (controller.isCurrentStepValid) controller.nextStep();
+            },
+          ),
+          const Spacer(),
+          PrimaryButton(
+            text: '확인',
+            onPressed:
+                controller.isCurrentStepValid ? controller.nextStep : null,
+            isEnabled: controller.isCurrentStepValid,
+          ),
+          const SizedBox(height: AppSpacing.space48),
+        ],
+      ),
+    );
+  }
+
+  // --- Step 2: 비밀번호 입력 ---
+
+  Widget _buildPasswordStep() {
+    return Padding(
+      padding: const EdgeInsets.symmetric(horizontal: AppSpacing.space24),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          const SizedBox(height: AppSpacing.space32),
+          Text(
+            '비밀번호를 입력해 주세요',
+            style: _stepHeaderStyle,
+          ),
+          const SizedBox(height: AppSpacing.space56),
+          AppTextField(
+            controller: controller.passwordTextController,
+            label: '비밀번호',
+            hintText: '비밀번호',
+            obscureText: !controller.isPasswordVisible.value,
+            showPasswordToggle: true,
+            errorText: controller.passwordError.value,
+            helperText: '8~20자 이내 / 대소문자, 숫자, 특수문자 포함',
+            autofocus: true,
+            onSubmitted: (_) {
+              if (controller.isCurrentStepValid) controller.nextStep();
+            },
+          ),
+          const Spacer(),
+          PrimaryButton(
+            text: '다음',
+            onPressed:
+                controller.isCurrentStepValid ? controller.nextStep : null,
+            isEnabled: controller.isCurrentStepValid,
+          ),
+          const SizedBox(height: AppSpacing.space48),
+        ],
+      ),
+    );
+  }
+
+  // --- Step 3: 비밀번호 확인 ---
+
+  Widget _buildConfirmPasswordStep() {
+    return Padding(
+      padding: const EdgeInsets.symmetric(horizontal: AppSpacing.space24),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          const SizedBox(height: AppSpacing.space32),
+          RichText(
+            text: TextSpan(
+              style: _stepHeaderStyle,
+              children: [
+                const TextSpan(text: '비밀번호를 '),
+                // "한번 더" 강조: 같은 폰트/weight/size/lh/ls, 색상만 primary 로 override
+                // (spec: 05_password_confirm_spec.md — 별도 강조 폰트 스타일 없음)
+                TextSpan(
+                  text: '한번 더',
+                  style: _stepHeaderStyle.copyWith(
+                    color: AppColor.primaryNormal,
+                  ),
+                ),
+                const TextSpan(text: ' 입력해 주세요'),
+              ],
             ),
           ),
-        ),
-      ],
+          const SizedBox(height: AppSpacing.space56),
+          AppTextField(
+            controller: controller.confirmPasswordTextController,
+            label: '비밀번호 확인',
+            hintText: '비밀번호 확인',
+            obscureText: !controller.isConfirmPasswordVisible.value,
+            showPasswordToggle: true,
+            errorText: controller.confirmPasswordError.value,
+            autofocus: true,
+            onSubmitted: (_) {
+              if (controller.isCurrentStepValid) controller.nextStep();
+            },
+          ),
+          const SizedBox(height: AppSpacing.space20),
+          Container(
+            width: double.infinity,
+            padding: const EdgeInsets.symmetric(
+              horizontal: AppSpacing.space16,
+              vertical: AppSpacing.space14,
+            ),
+            decoration: BoxDecoration(
+              color: AppColor.componentFillAlternative,
+              borderRadius: AppRadius.lgBorder,
+              border: Border.all(color: AppColor.lineNormalNeutral, width: 1),
+            ),
+            child: Row(
+              children: [
+                Expanded(
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text(
+                        '비밀번호',
+                        style: AppTextStyles.caption1Regular.copyWith(
+                          color: AppColor.labelAlternative,
+                        ),
+                      ),
+                      const SizedBox(height: AppSpacing.space4),
+                      Text(
+                        '●' * controller.password.value.length.clamp(0, 10),
+                        style: AppTextStyles.body1NormalRegular.copyWith(
+                          color: AppColor.labelNormal,
+                          letterSpacing: 2,
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+                Icon(
+                  Icons.visibility_off_outlined,
+                  color: AppColor.labelAssistive,
+                  size: AppSpacing.space20,
+                ),
+              ],
+            ),
+          ),
+          if (controller.passwordError.value == null)
+            Padding(
+              padding: const EdgeInsets.only(top: AppSpacing.space6),
+              child: Text(
+                '8~20자 이내 / 대소문자, 숫자, 특수문자 포함',
+                style: AppTextStyles.caption1Regular.copyWith(
+                  color: AppColor.labelAssistive,
+                ),
+              ),
+            ),
+          const Spacer(),
+          PrimaryButton(
+            text: '확인',
+            onPressed:
+                controller.isCurrentStepValid ? controller.nextStep : null,
+            isEnabled: controller.isCurrentStepValid,
+          ),
+          const SizedBox(height: AppSpacing.space48),
+        ],
+      ),
     );
   }
 }

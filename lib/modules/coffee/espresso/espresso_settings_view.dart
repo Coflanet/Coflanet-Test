@@ -27,7 +27,7 @@ class EspressoSettingsView extends GetView<EspressoSettingsController> {
                   padding: const EdgeInsets.all(20),
                   itemCount: controller.steps.length + 1, // +1 for add button
                   buildDefaultDragHandles: false,
-                  onReorder: controller.onReorder,
+                  onReorderItem: controller.onReorder,
                   itemBuilder: (context, index) {
                     if (index == controller.steps.length) {
                       return _buildAddStepButton(
@@ -184,7 +184,7 @@ class _StepCard extends StatelessWidget {
           Container(
             padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
             decoration: BoxDecoration(
-              color: _getStepColor().withOpacity(0.1),
+              color: _getStepColor().withValues(alpha:0.1),
               borderRadius: const BorderRadius.vertical(
                 top: Radius.circular(16),
               ),
@@ -328,8 +328,8 @@ class _StepCard extends StatelessWidget {
     final minutes = duration.inMinutes;
     final seconds = duration.inSeconds % 60;
     if (minutes > 0) {
-      return '$minutes분 ${seconds}초';
+      return '$minutes분 $seconds초';
     }
-    return '${seconds}초';
+    return '$seconds초';
   }
 }

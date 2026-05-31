@@ -7,11 +7,21 @@ import 'package:coflanet/constants/style_constant.dart';
 import 'package:coflanet/core/storage/local_storage.dart';
 import 'package:coflanet/modules/onboarding/survey_controller.dart';
 
-/// Survey Index Screen (Figma: 1114:59459 - Survey_index01)
-/// Shows vertical stepper with 4 sections before starting survey
+/// Survey Index Screen (Figma: Survey_01.png)
+/// Shows vertical stepper with 3 sections before starting survey
 /// "[이름]님께 커피 경험 질문을 드릴게요!"
 class SurveyIndexView extends GetView<SurveyController> {
   const SurveyIndexView({super.key});
+
+  // Figma 사양: Pretendard SemiBold 22 / lineHeight 1.36 / letterSpacing -0.4268
+  // 색상은 Label/strong (#000000) 토큰 매핑
+  // Auth 카테고리에서 통일한 페이지 헤더 스타일과 동일
+  TextStyle get _screenHeaderStyle => AppTextStyles.heading1Bold.copyWith(
+    fontWeight: FontWeight.w600,
+    height: 1.36,
+    letterSpacing: -0.4268,
+    color: AppColor.labelStrong,
+  );
 
   @override
   Widget build(BuildContext context) {
@@ -42,15 +52,11 @@ class SurveyIndexView extends GetView<SurveyController> {
               // Main title
               Text(
                 '$userName님께',
-                style: AppTextStyles.heading1Bold.copyWith(
-                  color: AppColor.labelNormal,
-                ),
+                style: _screenHeaderStyle,
               ),
               Text(
                 '커피 경험 질문을 드릴게요!',
-                style: AppTextStyles.heading1Bold.copyWith(
-                  color: AppColor.labelNormal,
-                ),
+                style: _screenHeaderStyle,
               ),
               const SizedBox(height: 16),
 
@@ -69,14 +75,12 @@ class SurveyIndexView extends GetView<SurveyController> {
               ),
               const SizedBox(height: 32),
 
-              // 4-step vertical stepper (per Figma 1114:59459)
+              // 3-step vertical stepper (Figma: Survey_01.png)
               _buildStepIndicator(1, '커피 경험 질문', isActive: true),
               _buildVerticalLine(),
               _buildStepIndicator(2, '기본 맛 취향', isActive: false),
               _buildVerticalLine(),
               _buildStepIndicator(3, '특성 향미 취향', isActive: false),
-              _buildVerticalLine(),
-              _buildStepIndicator(4, '커피 마시는 스타일', isActive: false),
 
               const Spacer(),
 
@@ -115,7 +119,7 @@ class SurveyIndexView extends GetView<SurveyController> {
     );
   }
 
-  /// Build a step indicator row with circle and text
+  /// Build a step indicator row with circle and text (Figma: Survey_01.png)
   Widget _buildStepIndicator(int step, String label, {required bool isActive}) {
     return Row(
       children: [
@@ -142,7 +146,7 @@ class SurveyIndexView extends GetView<SurveyController> {
           ),
         ),
         const SizedBox(width: 12),
-        // Label text
+        // Label
         Text(
           label,
           style: AppTextStyles.body1NormalMedium.copyWith(

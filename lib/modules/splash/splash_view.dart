@@ -48,7 +48,7 @@ class SplashView extends GetView<SplashController> {
               width: 120,
               height: 120,
               decoration: BoxDecoration(
-                color: AppColor.staticLabelWhiteStrong.withOpacity(0.15),
+                color: AppColor.staticLabelWhiteStrong.withValues(alpha:0.15),
                 borderRadius: AppRadius.fullBorder,
               ),
               child: Icon(

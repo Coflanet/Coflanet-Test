@@ -21,7 +21,7 @@ class SelectCoffeeContent extends GetView<SelectCoffeeController> {
     // Background color: Figma #F4F4F5
     return SizedBox.expand(
       child: Container(
-        color: AppColor.colorGlobalCoolNeutral98, // Figma: #F4F4F5
+        color: AppColor.backgroundNormalAlternative,
         child: Obx(() {
           if (controller.isLoading) {
             return Center(
@@ -37,64 +37,72 @@ class SelectCoffeeContent extends GetView<SelectCoffeeController> {
     );
   }
 
+  /// 빈 상태 — Figma 'Home_Item_yes' 시안 기준
+  /// 보라색 박스 카드 + 안내 텍스트 (좌) + 원두 일러스트 placeholder (우)
+  /// 탭하면 원두 추가 화면으로 진입
   Widget _buildEmptyState() {
-    return Center(
-      child: Padding(
-        padding: const EdgeInsets.all(32),
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            Container(
-              width: 80,
-              height: 80,
+    return Padding(
+      padding: const EdgeInsets.fromLTRB(20, 20, 20, 20),
+      child: Column(
+        children: [
+          GestureDetector(
+            onTap: controller.addNewCoffee,
+            behavior: HitTestBehavior.opaque,
+            child: Container(
+              padding: const EdgeInsets.fromLTRB(20, 24, 20, 24),
               decoration: BoxDecoration(
-                color: AppColor
-                    .colorGlobalCoolNeutral95, // Light gray for light bg
-                shape: BoxShape.circle,
+                color: AppColor.primaryNormal, // Figma 보라 #6541F2
+                borderRadius: BorderRadius.circular(24),
               ),
-              child: Icon(
-                Icons.coffee_outlined,
-                size: 40,
-                color: AppColor.colorGlobalCoolNeutral50,
-              ),
-            ),
-            const SizedBox(height: 24),
-            Text(
-              '저장된 원두가 없어요',
-              style: AppTextStyles.title2Bold.copyWith(
-                color: AppColor.colorGlobalCommon0, // Black text for light bg
-              ),
-            ),
-            const SizedBox(height: 8),
-            Text(
-              '자주 마시는 원두를 추가해보세요',
-              style: AppTextStyles.body1NormalRegular.copyWith(
-                color: AppColor.colorGlobalCoolNeutral50,
-              ),
-            ),
-            const SizedBox(height: 24),
-            GestureDetector(
-              onTap: controller.addNewCoffee,
-              child: Container(
-                padding: const EdgeInsets.symmetric(
-                  horizontal: 24,
-                  vertical: 14,
-                ),
-                decoration: BoxDecoration(
-                  color: AppColor.primaryNormal,
-                  borderRadius: AppRadius.lgPlusBorder,
-                ),
-                child: Text(
-                  '원두 추가하기',
-                  style: AppTextStyles.headline2Bold.copyWith(
-                    color:
-                        AppColor.colorGlobalCommon100, // White text on purple
+              child: Row(
+                children: [
+                  // 좌측 안내 텍스트 2줄
+                  Expanded(
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Text(
+                          '원두를 구독하시거나',
+                          style: AppTextStyles.body1NormalBold.copyWith(
+                            color: AppColor.colorGlobalCommon100,
+                            height: 1.4,
+                          ),
+                        ),
+                        const SizedBox(height: 2),
+                        Text(
+                          '레시피를 등록해보세요',
+                          style: AppTextStyles.body1NormalBold.copyWith(
+                            color: AppColor.colorGlobalCommon100,
+                            height: 1.4,
+                          ),
+                        ),
+                      ],
+                    ),
                   ),
-                ),
+                  const SizedBox(width: 12),
+                  // 우측 일러스트 자리 — 반투명 박스 + 이미지 아이콘
+                  Container(
+                    width: 64,
+                    height: 64,
+                    decoration: BoxDecoration(
+                      color: AppColor.colorGlobalCommon100.withValues(
+                        alpha: 0.15,
+                      ),
+                      borderRadius: BorderRadius.circular(12),
+                    ),
+                    child: Icon(
+                      Icons.image_outlined,
+                      size: 28,
+                      color: AppColor.colorGlobalCommon100.withValues(
+                        alpha: 0.7,
+                      ),
+                    ),
+                  ),
+                ],
               ),
             ),
-          ],
-        ),
+          ),
+        ],
       ),
     );
   }
@@ -147,7 +155,7 @@ class SelectCoffeeContent extends GetView<SelectCoffeeController> {
           child: ReorderableListView.builder(
             padding: const EdgeInsets.fromLTRB(20, 0, 20, 80),
             itemCount: items.length,
-            onReorder: (oldIndex, newIndex) {
+            onReorderItem: (oldIndex, newIndex) {
               controller.reorderItems(oldIndex, newIndex);
             },
             proxyDecorator: (child, index, animation) {
@@ -276,7 +284,7 @@ class SelectCoffeeContent extends GetView<SelectCoffeeController> {
             width: 1,
           ),
         ),
-        child: const Icon(Icons.add, color: Color(0xFF4A4A4A), size: 24),
+        child: Icon(Icons.add, color: AppColor.labelAlternative, size: 24),
       ),
     );
   }
@@ -420,13 +428,8 @@ class SelectCoffeeContent extends GetView<SelectCoffeeController> {
                   // Brand - Figma: 12px, gray
                   Text(
                     item.brand ?? '브랜드명',
-                    style: const TextStyle(
-                      fontFamily: 'Pretendard',
-                      fontSize: 12, // Figma: 12px
-                      fontWeight: FontWeight.w400, // Figma: 400
-                      height: 1.4,
-                      letterSpacing: 0.02,
-                      color: AppColor.colorGlobalNeutral60, // Figma: gray
+                    style: AppTextStyles.caption1Regular.copyWith(
+                      color: AppColor.labelAssistive,
                     ),
                     maxLines: 1,
                     overflow: TextOverflow.ellipsis,
@@ -435,13 +438,8 @@ class SelectCoffeeContent extends GetView<SelectCoffeeController> {
                   // Name - Figma: 14-16px, semi-bold
                   Text(
                     item.name,
-                    style: const TextStyle(
-                      fontFamily: 'Pretendard',
-                      fontSize: 15, // Figma: 14-16px
-                      fontWeight: FontWeight.w600, // Figma: 600
-                      height: 1.4,
-                      letterSpacing: 0.01,
-                      color: AppColor.colorGlobalNeutral10, // Figma: near black
+                    style: AppTextStyles.body2NormalBold.copyWith(
+                      color: AppColor.labelNormal,
                     ),
                     maxLines: 1,
                     overflow: TextOverflow.ellipsis,
@@ -522,13 +520,8 @@ class SelectCoffeeContent extends GetView<SelectCoffeeController> {
                 // Selection count - Figma: Body 1/Normal - Regular (16px, 400)
                 Text(
                   '${controller.selectedEditCount}개가 선택됨',
-                  style: const TextStyle(
-                    fontFamily: 'Pretendard',
-                    fontSize: 15, // Increased for better visibility
-                    fontWeight: FontWeight.w400, // Figma: 400
-                    height: 1.5, // Figma: 150%
-                    letterSpacing: 0.01,
-                    color: AppColor.colorGlobalCoolNeutral99, // Figma: #F7F7F8
+                  style: AppTextStyles.body1NormalRegular.copyWith(
+                    color: AppColor.inverseLabelNormal,
                   ),
                 ),
                 // Delete button - Figma: Button/Icon/LiquidGlass 44x44

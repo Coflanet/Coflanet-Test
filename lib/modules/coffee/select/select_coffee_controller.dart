@@ -200,10 +200,8 @@ class SelectCoffeeController extends BaseController {
   }
 
   /// Reorder items
+  /// ReorderableListView.onReorderItem (신규 API) 가 newIndex 를 자동 조정해 전달.
   Future<void> reorderItems(int oldIndex, int newIndex) async {
-    if (newIndex > oldIndex) {
-      newIndex -= 1;
-    }
     final item = _coffeeItems.removeAt(oldIndex);
     _coffeeItems.insert(newIndex, item);
 

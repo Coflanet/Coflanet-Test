@@ -305,7 +305,7 @@ class _EquipmentCard extends StatelessWidget {
         padding: const EdgeInsets.all(16),
         decoration: BoxDecoration(
           color: isSelected
-              ? AppColor.primaryNormal.withOpacity(0.08)
+              ? AppColor.primaryNormal.withValues(alpha:0.08)
               : AppColor.componentFillNormal,
           borderRadius: AppRadius.lgBorder,
           border: Border.all(
@@ -322,7 +322,7 @@ class _EquipmentCard extends StatelessWidget {
               height: 48,
               decoration: BoxDecoration(
                 color: isSelected
-                    ? AppColor.primaryNormal.withOpacity(0.15)
+                    ? AppColor.primaryNormal.withValues(alpha:0.15)
                     : AppColor.backgroundNormalAlternative,
                 borderRadius: AppRadius.mdBorder,
               ),

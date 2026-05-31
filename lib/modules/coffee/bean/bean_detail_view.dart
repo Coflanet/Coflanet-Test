@@ -344,7 +344,7 @@ class BeanDetailView extends StatelessWidget {
                 showLabels: true,
                 showValues: true,
                 animate: true,
-                fillColor: AppColor.primaryNormal.withOpacity(0.15),
+                fillColor: AppColor.primaryNormal.withValues(alpha:0.15),
                 strokeColor: AppColor.primaryNormal,
                 gridColor: AppColor.colorGlobalCoolNeutral30,
                 labelColor: AppColor.colorGlobalCommon100,
@@ -377,7 +377,7 @@ class BeanDetailView extends StatelessWidget {
                 decoration: BoxDecoration(
                   gradient: LinearGradient(
                     colors: [
-                      AppColor.primaryNormal.withOpacity(0.7),
+                      AppColor.primaryNormal.withValues(alpha:0.7),
                       AppColor.primaryNormal,
                     ],
                   ),
@@ -585,10 +585,10 @@ class _FlavorTagChip extends StatelessWidget {
     return Container(
       padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 8),
       decoration: BoxDecoration(
-        color: AppColor.primaryNormal.withOpacity(0.12),
+        color: AppColor.primaryNormal.withValues(alpha:0.12),
         borderRadius: AppRadius.xxxlBorder,
         border: Border.all(
-          color: AppColor.primaryNormal.withOpacity(0.3),
+          color: AppColor.primaryNormal.withValues(alpha:0.3),
           width: 1,
         ),
       ),

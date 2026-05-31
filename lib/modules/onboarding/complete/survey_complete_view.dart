@@ -11,6 +11,16 @@ import 'package:coflanet/widgets/buttons/primary_button.dart';
 class SurveyCompleteView extends GetView<SurveyController> {
   const SurveyCompleteView({super.key});
 
+  // Figma 사양: Pretendard SemiBold 22 / lineHeight 1.36 / letterSpacing -0.4268
+  // 색상은 Label/strong (#000000) 토큰 매핑
+  // Auth 카테고리에서 통일한 페이지 헤더 스타일과 동일
+  TextStyle get _screenHeaderStyle => AppTextStyles.heading1Bold.copyWith(
+    fontWeight: FontWeight.w600,
+    height: 1.36,
+    letterSpacing: -0.4268,
+    color: AppColor.labelStrong,
+  );
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -51,9 +61,18 @@ class SurveyCompleteView extends GetView<SurveyController> {
               padding: const EdgeInsets.symmetric(horizontal: 24),
               child: Column(
                 children: [
+                  const Spacer(flex: 2),
+
+                  // Figma 순서: 안내 텍스트가 일러스트 위에 위치
+                  Text(
+                    '${controller.userName}님의\n커피 취향을 찾았어요!',
+                    textAlign: TextAlign.center,
+                    style: _screenHeaderStyle,
+                  ),
+
                   const Spacer(flex: 1),
 
-                  // Mascot illustration - astronaut bunny with gift
+                  // 토끼 일러스트 — 브랜드 아이덴티티 유지
                   ClipRRect(
                     borderRadius: AppRadius.fullBorder,
                     child: Image.asset(
@@ -86,18 +105,6 @@ class SurveyCompleteView extends GetView<SurveyController> {
                           ],
                         ),
                       ),
-                    ),
-                  ),
-
-                  const Spacer(flex: 1),
-
-                  // Complete message matching Figma
-                  Text(
-                    '${controller.userName}님의\n커피 취향을 찾았어요!',
-                    textAlign: TextAlign.center,
-                    style: AppTextStyles.heading1Bold.copyWith(
-                      color: AppColor.labelNormal,
-                      height: 1.4,
                     ),
                   ),
 

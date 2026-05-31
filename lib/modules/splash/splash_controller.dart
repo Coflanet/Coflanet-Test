@@ -41,7 +41,7 @@ class SplashController extends BaseController {
   // [DEV] Set to true to go directly to survey result for testing
   static const bool _devForceSurveyResult = false;
   // [DEV] Set to true to go directly to MainShell for UI testing
-  static const bool _devForceMainShell = false;
+  static const bool _devForceMainShell = true;
 
   Future<void> _navigateToNextScreen() async {
     // [DEV] Direct navigation to MainShell for UI testing

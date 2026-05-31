@@ -41,9 +41,9 @@ class EspressoSettingsController extends BaseController {
   }
 
   // ─── Reorder ───
+  // ReorderableListView.onReorderItem (신규 API) 가 newIndex 를 자동 조정해 전달.
   void onReorder(int oldIndex, int newIndex) {
-    if (oldIndex >= _steps.length || newIndex > _steps.length) return;
-    if (newIndex > oldIndex) newIndex--;
+    if (oldIndex >= _steps.length || newIndex >= _steps.length) return;
 
     final step = _steps.removeAt(oldIndex);
     _steps.insert(newIndex, step);
