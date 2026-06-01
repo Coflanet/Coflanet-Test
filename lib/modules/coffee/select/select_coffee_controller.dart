@@ -1,9 +1,12 @@
 import 'package:get/get.dart';
 import 'package:share_plus/share_plus.dart';
+import 'package:coflanet/constants/util_constant.dart';
 import 'package:coflanet/core/base/base_controller.dart';
 import 'package:coflanet/data/models/coffee_item_model.dart';
 import 'package:coflanet/data/repositories/repository_interfaces.dart';
 import 'package:coflanet/data/repositories/repository_provider.dart';
+import 'package:coflanet/modules/coffee/coffee_controller.dart';
+import 'package:coflanet/widgets/modals/bean_add_method_modal.dart';
 import 'package:coflanet/routes/app_pages.dart';
 
 /// Controller for Select Coffee Section
@@ -68,7 +71,13 @@ class SelectCoffeeController extends BaseController {
   }
 
   /// Toggle edit mode
+  /// 등록된 원두가 없으면 편집 모드 진입을 막고 안내 토스트를 띄운다.
   void toggleEditMode() {
+    // 진입 시도(현재 비편집) + 원두 0개 → 차단 + 안내 후 종료
+    if (!_isEditing.value && _coffeeItems.isEmpty) {
+      AppUtil.showTopToast('등록된 원두가 없어요');
+      return;
+    }
     _isEditing.value = !_isEditing.value;
     if (!_isEditing.value) {
       // Clear edit selections when exiting edit mode
@@ -210,12 +219,27 @@ class SelectCoffeeController extends BaseController {
     await _coffeeRepository.reorderCoffeeItems(orderedIds);
   }
 
-  /// Add new coffee - navigates to bean edit page
+  /// Add new coffee - 원두 추가 방식 선택 바텀시트를 먼저 띄운다
   Future<void> addNewCoffee() async {
-    final result = await Get.toNamed(Routes.beanEdit);
-    if (result is CoffeeItem) {
-      await _coffeeRepository.addCoffeeItem(result);
-      await _loadCoffeeItems();
+    final method = await BeanAddMethodModal.show();
+    if (method == null) return;
+
+    switch (method) {
+      case BeanAddMethod.search:
+        // [백엔드 API 연동 대기] 원두 검색 화면 연동 예정 — 현재는 임시 안내
+        AppUtil.underConstructionPopup();
+        return;
+      case BeanAddMethod.manual:
+        // 레시피 설정 폼(add 모드)으로 진입. 원두 생성·레시피 저장은 폼에서 완결한다.
+        if (!Get.isRegistered<CoffeeController>()) {
+          Get.put<CoffeeController>(CoffeeController(), permanent: true);
+        }
+        Get.find<CoffeeController>().clearNewRecipeForm();
+        final result = await Get.toNamed(Routes.recipeAdd);
+        if (result is CoffeeItem) {
+          // 폼에서 이미 추가·저장됨 → 목록만 새로고침
+          await _loadCoffeeItems();
+        }
     }
   }
 

@@ -3,8 +3,12 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
 import 'package:coflanet/constants/color_constant.dart';
 import 'package:coflanet/constants/style_constant.dart';
+import 'package:coflanet/core/services/cart_service.dart';
+import 'package:coflanet/core/services/notification_service.dart';
 import 'package:coflanet/data/models/survey_result_model.dart';
 import 'package:coflanet/modules/home/home_controller.dart';
+import 'package:coflanet/modules/shell/main_shell_controller.dart';
+import 'package:coflanet/routes/app_pages.dart';
 
 /// Home Content — Figma `Home_Item_yes` 화면 구현
 ///
@@ -100,26 +104,27 @@ class HomeContent extends GetView<HomeController> {
               _buildHeaderIconButton(
                 svgPath: 'assets/icons/ic_search.svg',
                 label: '검색',
-                onTap: () {
-                  // [백엔드 API 연동 대기] 검색 화면 이동
-                },
+                onTap: () => Get.toNamed(Routes.search),
               ),
               const SizedBox(width: 8),
-              _buildHeaderIconButton(
-                svgPath: 'assets/icons/ic_bell.svg',
-                label: '알림',
-                hasNotification: true,
-                onTap: () {
-                  // [백엔드 API 연동 대기] 알림 화면 이동
-                },
+              // 알림 — 안 읽은 알림이 있을 때만 dot 표시 (NotificationService 구독)
+              Obx(
+                () => _buildHeaderIconButton(
+                  svgPath: 'assets/icons/ic_bell.svg',
+                  label: '알림',
+                  hasNotification: NotificationService.to.hasUnread,
+                  onTap: () => Get.toNamed(Routes.notification),
+                ),
               ),
               const SizedBox(width: 8),
-              _buildHeaderIconButton(
-                svgPath: 'assets/icons/ic_bag.svg',
-                label: '장바구니',
-                onTap: () {
-                  // [백엔드 API 연동 대기] 장바구니 화면 이동
-                },
+              // 장바구니 — 담긴 상품 종류 수를 뱃지로 표시 (CartService 구독)
+              Obx(
+                () => _buildHeaderIconButton(
+                  svgPath: 'assets/icons/ic_bag.svg',
+                  label: '장바구니',
+                  badgeCount: CartService.to.distinctCount,
+                  onTap: () => Get.toNamed(Routes.cart),
+                ),
               ),
             ],
           ),
@@ -133,12 +138,14 @@ class HomeContent extends GetView<HomeController> {
   /// 배경: 헤더 뒤가 단색 검정이라 BackdropFilter 블러는 시각 효과가 없고
   /// 아이콘 가장자리에 뿌연 샘플링 아티팩트만 유발 → 불투명 회색 fill 로 대체.
   /// 아이콘: SVG `fill="currentColor"` + Colors.white 로 확실한 흰색 tint.
-  /// hasNotification true → 우상단에 보라 점 (알림 뱃지).
+  /// hasNotification true → 우상단에 보라 점 (알림 dot).
+  /// badgeCount > 0 → 우상단에 숫자 뱃지 (장바구니 수량).
   Widget _buildHeaderIconButton({
     required String svgPath,
     required String label,
     required VoidCallback onTap,
     bool hasNotification = false,
+    int badgeCount = 0,
   }) {
     return Semantics(
       label: label,
@@ -173,8 +180,8 @@ class HomeContent extends GetView<HomeController> {
                   ),
                 ),
               ),
-              // 알림 뱃지 (우상단 보라 점)
-              if (hasNotification)
+              // 알림 dot (우상단 보라 점) — 안 읽은 알림이 있을 때만
+              if (hasNotification && badgeCount <= 0)
                 Positioned(
                   top: 6,
                   right: 6,
@@ -184,6 +191,29 @@ class HomeContent extends GetView<HomeController> {
                     decoration: BoxDecoration(
                       shape: BoxShape.circle,
                       color: AppColor.primaryNormal,
+                    ),
+                  ),
+                ),
+              // 숫자 뱃지 (장바구니 수량) — 1개 이상일 때만
+              if (badgeCount > 0)
+                Positioned(
+                  top: 2,
+                  right: 2,
+                  child: Container(
+                    constraints: const BoxConstraints(minWidth: 16),
+                    height: 16,
+                    padding: const EdgeInsets.symmetric(horizontal: 4),
+                    alignment: Alignment.center,
+                    decoration: BoxDecoration(
+                      color: AppColor.primaryNormal,
+                      borderRadius: BorderRadius.circular(99),
+                    ),
+                    child: Text(
+                      badgeCount > 9 ? '9+' : '$badgeCount',
+                      style: AppTextStyles.caption2Bold.copyWith(
+                        color: AppColor.colorGlobalCommon100,
+                        height: 1.0,
+                      ),
                     ),
                   ),
                 ),
@@ -280,7 +310,10 @@ class HomeContent extends GetView<HomeController> {
               ),
               GestureDetector(
                 onTap: () {
-                  // [백엔드 API 연동 대기] 편집 화면 이동
+                  // 원두 목록(원두 탭)으로 이동
+                  if (Get.isRegistered<MainShellController>()) {
+                    Get.find<MainShellController>().goToCoffee();
+                  }
                 },
                 child: Text(
                   '편집하기',

@@ -1,5 +1,7 @@
 import 'package:get/get.dart';
+import 'package:coflanet/constants/color_constant.dart';
 import 'package:coflanet/core/base/base_controller.dart';
+import 'package:coflanet/data/models/coffee_item_model.dart';
 import 'package:coflanet/data/models/timer_step_model.dart';
 import 'package:coflanet/data/repositories/repository_interfaces.dart';
 import 'package:coflanet/data/repositories/repository_provider.dart';
@@ -70,6 +72,10 @@ class CoffeeController extends BaseController {
   /// Recipe repository for persistence
   final RecipeRepository _recipeRepository =
       RepositoryProvider.recipeRepository;
+
+  /// Coffee repository for custom bean persistence (add mode)
+  final CoffeeRepository _coffeeRepository =
+      RepositoryProvider.coffeeRepository;
 
   @override
   void onInit() {
@@ -462,57 +468,79 @@ class CoffeeController extends BaseController {
 
   // ===== New Recipe (Add Mode) =====
 
+  /// Recipe name for new recipe (add mode)
+  /// 레시피 이름 — 목록 카드 제목 + 서버 bean name 기준
+  final _recipeName = ''.obs;
+  String get recipeName => _recipeName.value;
+  set recipeName(String value) => _recipeName.value = value;
+
   /// Bean name for new recipe (add mode)
+  /// 원두 이름 — 보조 정보(→ CoffeeItem.description)
   final _newRecipeBeanName = ''.obs;
   String get newRecipeBeanName => _newRecipeBeanName.value;
   set newRecipeBeanName(String value) => _newRecipeBeanName.value = value;
 
-  /// Clear new recipe form
+  /// Clear new recipe form (add 모드 진입 시 기본값 초기화)
   void clearNewRecipeForm() {
+    _recipeName.value = '';
     _newRecipeBeanName.value = '';
+    _selectedType.value = null;
     _cupsCount.value = 1;
     _strength.value = 50;
     _customCoffeeAmount.value = null;
     _customWaterAmount.value = null;
+    _waterTemperature.value = 92;
+    _extractionTime.value = 180;
+    _grindSize.value = 1000;
+    _stepsInitialized = false;
+    initializeDefaultSteps();
   }
 
-  /// Save new recipe
-  Future<bool> saveNewRecipe() async {
-    if (_newRecipeBeanName.value.isEmpty) return false;
+  /// Save new recipe + custom bean (add mode)
+  ///
+  /// 레시피 이름을 기준으로 커스텀 원두를 생성(목록 추가 + 서버 저장)하고,
+  /// 발급된 원두 id 에 레시피 파라미터를 연결 저장한다.
+  /// 생성된 [CoffeeItem] 을 반환하며, 실패 시 null.
+  Future<CoffeeItem?> saveNewRecipe() async {
+    if (_recipeName.value.trim().isEmpty) return null;
 
     try {
-      final timerSteps = <TimerStepModel>[];
-      for (int i = 0; i < _extractionSteps.length; i++) {
-        timerSteps.add(_extractionSteps[i].toTimerStepModel(i + 1));
+      // 1. 커스텀 원두 생성 (name=레시피 이름, description=원두 이름)
+      final bean = CoffeeItem(
+        id: DateTime.now().millisecondsSinceEpoch.toString(),
+        name: _recipeName.value.trim(),
+        description: _newRecipeBeanName.value.trim(),
+        color: AppColor.colorGlobalViolet50,
+      );
+      final newBeanId = await _coffeeRepository.addCoffeeItem(bean);
+
+      // 2. 레시피 파라미터를 원두에 연결 저장 (id 패턴 bean_<uuid>)
+      if (newBeanId != null && newBeanId.isNotEmpty) {
+        final timerSteps = <TimerStepModel>[];
+        for (int i = 0; i < _extractionSteps.length; i++) {
+          timerSteps.add(_extractionSteps[i].toTimerStepModel(i + 1));
+        }
+        final recipe = TimerRecipeModel(
+          id: 'bean_$newBeanId',
+          name: _recipeName.value.trim(),
+          coffeeType: _coffeeTypeString,
+          coffeeAmount: coffeeAmount,
+          waterAmount: totalStepsWaterAmount,
+          totalDurationSeconds: totalStepsDuration.inSeconds,
+          steps: timerSteps,
+        );
+        await _recipeRepository.saveRecipe(recipe);
       }
 
-      final recipeId = 'custom_${DateTime.now().millisecondsSinceEpoch}';
-      final recipe = TimerRecipeModel(
-        id: recipeId,
-        name: _newRecipeBeanName.value,
-        coffeeType: _coffeeTypeString,
-        coffeeAmount: coffeeAmount,
-        waterAmount: totalStepsWaterAmount,
-        totalDurationSeconds: totalStepsDuration.inSeconds,
-        steps: timerSteps,
-      );
-
-      await _recipeRepository.saveRecipe(recipe);
       clearNewRecipeForm();
-      return true;
+      return bean.copyWith(id: newBeanId ?? bean.id);
     } catch (e) {
       Get.snackbar(
         '저장 실패',
         '레시피 저장 중 오류가 발생했습니다',
         snackPosition: SnackPosition.BOTTOM,
       );
-      return false;
+      return null;
     }
-  }
-
-  /// Navigate to add recipe page
-  void goToAddRecipe() {
-    clearNewRecipeForm();
-    Get.toNamed(Routes.recipeAdd);
   }
 }

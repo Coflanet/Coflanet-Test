@@ -70,7 +70,7 @@ void main() {
     }
 
     // Try to save - should fail
-    final saveBtn = find.text('저장하기');
+    final saveBtn = find.text('확인');
     if (saveBtn.evaluate().isNotEmpty) {
       await tester.tap(saveBtn);
       await tester.pumpAndSettle(const Duration(seconds: 2));
@@ -145,7 +145,7 @@ void main() {
     debugPrint('2.5 Bean still selected: ${editController.selectedBeanId}');
 
     // Save with default steps - should succeed and navigate back
-    final saveBtn2 = find.text('저장하기');
+    final saveBtn2 = find.text('확인');
     if (saveBtn2.evaluate().isNotEmpty) {
       await tester.tap(saveBtn2);
       await tester.pump(const Duration(milliseconds: 100));
@@ -192,7 +192,7 @@ void main() {
     );
 
     // Tap save button in UI (tests the full button handler)
-    final saveBtn3 = find.text('저장하기');
+    final saveBtn3 = find.text('확인');
     expect(saveBtn3, findsOneWidget, reason: 'Save button should be visible');
     await tester.tap(saveBtn3);
     await tester.pump(const Duration(milliseconds: 100));

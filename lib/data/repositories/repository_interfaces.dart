@@ -113,7 +113,9 @@ abstract class CoffeeRepository {
   Future<CoffeeItem?> getCoffeeItemById(String id);
 
   /// Add a new coffee item
-  Future<void> addCoffeeItem(CoffeeItem item);
+  ///
+  /// 생성된 원두 id 를 반환한다 (서버 발급 bean_id 또는 로컬 id). 실패 시 null.
+  Future<String?> addCoffeeItem(CoffeeItem item);
 
   /// Update an existing coffee item
   Future<void> updateCoffeeItem(CoffeeItem item);

@@ -63,6 +63,14 @@ import 'package:coflanet/modules/planet/my_planet_view.dart';
 import 'package:coflanet/modules/shell/main_shell_binding.dart';
 import 'package:coflanet/modules/shell/main_shell_view.dart';
 
+// Modules - Search / Notification / Cart (Home Header)
+import 'package:coflanet/modules/search/search_view.dart';
+import 'package:coflanet/modules/search/search_binding.dart';
+import 'package:coflanet/modules/notification/notification_view.dart';
+import 'package:coflanet/modules/notification/notification_binding.dart';
+import 'package:coflanet/modules/cart/cart_view.dart';
+import 'package:coflanet/modules/cart/cart_binding.dart';
+
 part 'app_routes.dart';
 
 /// App routing configuration
@@ -276,6 +284,26 @@ class AppPages {
       page: () => const MainShellView(),
       binding: MainShellBinding(),
       transition: Transition.fadeIn,
+    ),
+
+    // === Feature (Home Header) ===
+    GetPage(
+      name: Routes.search,
+      page: () => const SearchView(),
+      binding: SearchBinding(),
+      transition: Transition.cupertino,
+    ),
+    GetPage(
+      name: Routes.notification,
+      page: () => const NotificationView(),
+      binding: NotificationBinding(),
+      transition: Transition.cupertino,
+    ),
+    GetPage(
+      name: Routes.cart,
+      page: () => const CartView(),
+      binding: CartBinding(),
+      transition: Transition.cupertino,
     ),
   ];
 }

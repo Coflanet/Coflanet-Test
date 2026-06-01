@@ -39,9 +39,10 @@ class ApiCoffeeRepository implements CoffeeRepository {
   }
 
   @override
-  Future<void> addCoffeeItem(CoffeeItem item) async {
+  Future<String?> addCoffeeItem(CoffeeItem item) async {
     try {
       await _apiClient.post(_baseEndpoint, data: _coffeeItemToJson(item));
+      return null;
     } catch (e) {
       rethrow;
     }

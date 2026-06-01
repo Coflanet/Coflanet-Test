@@ -254,24 +254,11 @@ class _AppTextFieldState extends State<AppTextField>
     }
   }
 
+  /// 세로 패딩은 0 — 고정 높이([_height]) 안에서 [TextAlignVertical.center] 로
+  /// 텍스트를 중앙 정렬한다. (prefix/suffix 아이콘이 있을 때 세로 패딩이 크면
+  /// 중앙 정렬이 무시되고 위로 치우치는 Flutter 동작을 회피)
   EdgeInsets get _contentPadding {
-    switch (widget.size) {
-      case TextFieldSize.sm:
-        return EdgeInsets.symmetric(
-          horizontal: AppSpacing.md,
-          vertical: AppSpacing.sm,
-        );
-      case TextFieldSize.md:
-        return EdgeInsets.symmetric(
-          horizontal: AppSpacing.md,
-          vertical: AppSpacing.md,
-        );
-      case TextFieldSize.lg:
-        return EdgeInsets.symmetric(
-          horizontal: AppSpacing.md,
-          vertical: AppSpacing.md,
-        );
-    }
+    return EdgeInsets.symmetric(horizontal: AppSpacing.md, vertical: 0);
   }
 
   @override

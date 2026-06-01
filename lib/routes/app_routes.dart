@@ -34,6 +34,11 @@ abstract class Routes {
   // === Shell Routes ===
   static const mainShell = '/main-shell';
 
+  // === Feature Routes (Home Header) ===
+  static const search = '/search';
+  static const notification = '/notification';
+  static const cart = '/cart';
+
   // === Coffee Routes ===
   static const coffeeMain = '/coffee';
   static const handDrip = '/coffee/hand-drip';

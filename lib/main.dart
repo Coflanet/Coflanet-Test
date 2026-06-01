@@ -11,6 +11,8 @@ import 'package:coflanet/core/storage/local_storage.dart';
 import 'package:coflanet/core/services/survey_service.dart';
 import 'package:coflanet/core/services/auth_service.dart';
 import 'package:coflanet/core/services/app_config_service.dart';
+import 'package:coflanet/core/services/notification_service.dart';
+import 'package:coflanet/core/services/cart_service.dart';
 import 'package:coflanet/core/api/api_client.dart';
 import 'package:coflanet/core/theme/theme_controller.dart';
 import 'package:coflanet/core/config/social_login_config.dart';
@@ -104,6 +106,10 @@ void main() async {
   // SplashController 에서 await 한다 — runApp 이전(putAsync)에 로드하면
   // 네트워크 실패 시 재시도 UI 를 띄울 화면이 없기 때문.
   Get.put<AppConfigService>(AppConfigService(), permanent: true);
+
+  // 알림/장바구니 전역 서비스 — 헤더 dot/뱃지의 단일 소스. 로컬 영속만 사용.
+  Get.put<NotificationService>(NotificationService(), permanent: true);
+  Get.put<CartService>(CartService(), permanent: true);
 
   runApp(const CoflanetApp());
 }
