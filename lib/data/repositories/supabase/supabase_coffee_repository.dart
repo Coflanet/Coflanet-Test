@@ -39,15 +39,21 @@ class SupabaseCoffeeRepository extends SupabaseRepositoryBase
   }
 
   @override
-  Future<void> addCoffeeItem(CoffeeItem item) async {
+  Future<String?> addCoffeeItem(CoffeeItem item) async {
     try {
       final values = _buildBeanData(item);
       final result = await guard(
         () => db.rpc('add_custom_bean', params: {'p_values': values}),
       );
       debugPrint('[CoffeeRepo] add_custom_bean result: $result');
+      // add_custom_bean 은 { bean_id, list_item_id } 를 반환한다.
+      if (result is Map) {
+        return result['bean_id']?.toString();
+      }
+      return null;
     } catch (e) {
       debugPrint('[CoffeeRepo] addCoffeeItem error: $e');
+      return null;
     }
   }
 

@@ -76,6 +76,39 @@ class AppUtil {
     );
   }
 
+  /// 상단에서 부드럽게 내려와 잠시 보였다가 다시 올라가는 안내 토스트.
+  ///
+  /// 에러용(빨강) [showToast] 와 달리 중립 다크 톤 — 가벼운 안내/검증 메시지에 사용.
+  static void showTopToast(String msg) {
+    // 떠 있는 토스트가 있으면 닫고 새로 표시 (중복 누적 방지)
+    if (Get.isSnackbarOpen) {
+      Get.closeCurrentSnackbar();
+    }
+    Get.rawSnackbar(
+      messageText: Text(
+        msg,
+        textAlign: TextAlign.center,
+        style: AppTextStyles.body2NormalMedium.copyWith(
+          color: AppColor.staticLabelWhiteStrong,
+        ),
+      ),
+      snackPosition: SnackPosition.TOP,
+      backgroundColor: AppColor.colorGlobalCoolNeutral10.withValues(
+        alpha: 0.94,
+      ),
+      borderRadius: 14,
+      margin: const EdgeInsets.fromLTRB(16, 12, 16, 0),
+      padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 14),
+      duration: const Duration(milliseconds: 1600),
+      animationDuration: const Duration(milliseconds: 450),
+      forwardAnimationCurve: Curves.easeOutCubic,
+      reverseAnimationCurve: Curves.easeInCubic,
+      snackStyle: SnackStyle.FLOATING,
+      isDismissible: true,
+      boxShadows: AppShadows.shadowBlackStrong,
+    );
+  }
+
   /// Format datetime string to 'yyyy.MM.dd'
   static String changeDateFormat(String datetime) {
     final dateTime = DateTime.parse(datetime);

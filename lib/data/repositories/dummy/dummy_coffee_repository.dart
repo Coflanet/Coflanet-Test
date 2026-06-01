@@ -74,11 +74,12 @@ class DummyCoffeeRepository implements CoffeeRepository {
   }
 
   @override
-  Future<void> addCoffeeItem(CoffeeItem item) async {
+  Future<String?> addCoffeeItem(CoffeeItem item) async {
     final items = await getCoffeeItems();
     items.add(item);
     _cachedItems = items;
     await _persistItems(items);
+    return item.id;
   }
 
   @override
