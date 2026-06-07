@@ -6,9 +6,18 @@ import 'package:coflanet/constants/color_constant.dart';
 import 'package:coflanet/constants/style_constant.dart';
 import 'package:coflanet/constants/radius_constant.dart';
 import 'package:coflanet/modules/coffee/timer/coffee_timer_controller.dart';
+import 'package:coflanet/modules/coffee/timer/widgets/timer_action_text.dart';
+import 'package:coflanet/modules/coffee/timer/widgets/timer_step_illustration.dart';
+import 'package:coflanet/modules/coffee/timer/widgets/timer_water_amount_chip.dart';
 import 'package:coflanet/widgets/timer/circular_timer.dart';
 import 'package:coflanet/widgets/modals/confirm_modal.dart';
 
+/// 타이머 진행 화면 — 스텝 dot / 정보 바 / 준비·타이머 콘텐츠 / 하단 네비게이션.
+///
+/// 순수 표시 위젯(TimerActionText/TimerStepIllustration/TimerWaterAmountChip)은
+/// widgets/ 로 분리. 1초 틱 Obx 경계(CircularTimer/preCountdown 오버레이)와
+/// 타이머 상태 5분기 네비게이션은 controller 강결합이라 View 에 잔류한다 —
+/// 400줄 임계값 초과의 정당한 예외.
 class CoffeeTimerView extends GetView<CoffeeTimerController> {
   const CoffeeTimerView({super.key});
 
@@ -179,11 +188,14 @@ class CoffeeTimerView extends GetView<CoffeeTimerController> {
           textAlign: TextAlign.center,
         ),
         const SizedBox(height: 36),
-        // Step illustration
-        _buildStepIllustration(step),
+        // 스텝 일러스트
+        TimerStepIllustration(
+          title: step.title,
+          illustrationEmoji: step.illustrationEmoji,
+        ),
         const SizedBox(height: 36),
-        // Action text with highlighted keywords
-        if (step.actionText != null) _buildActionText(step.actionText!),
+        // 수치 강조 액션 안내
+        if (step.actionText != null) TimerActionText(text: step.actionText!),
       ],
     );
   }
@@ -252,152 +264,11 @@ class CoffeeTimerView extends GetView<CoffeeTimerController> {
           ),
         ),
         const SizedBox(height: 24),
-        // Action text with water amount highlighted
-        if (step.actionText != null) _buildActionText(step.actionText!),
+        // 수치 강조 액션 안내 / 물의 양 칩
+        if (step.actionText != null) TimerActionText(text: step.actionText!),
         if (step.waterAmount != null && step.actionText == null)
-          _buildWaterAmountChip(step.waterAmount!),
+          TimerWaterAmountChip(waterAmount: step.waterAmount!),
       ],
-    );
-  }
-
-  // ─── Action Text with highlighted numbers/measurements ───
-
-  Widget _buildActionText(String text) {
-    // Highlight patterns: numbers followed by g, ml, 초, 번, etc.
-    final regex = RegExp(r'(\d+\s*(?:g|ml|초|번|회|분|μm))');
-    final spans = <TextSpan>[];
-    int lastEnd = 0;
-
-    for (final match in regex.allMatches(text)) {
-      if (match.start > lastEnd) {
-        spans.add(
-          TextSpan(
-            text: text.substring(lastEnd, match.start),
-            style: AppTextStyles.body1NormalMedium.copyWith(
-              color: AppColor.labelNormal, // Dark text
-            ),
-          ),
-        );
-      }
-      spans.add(
-        TextSpan(
-          text: match.group(0),
-          style: AppTextStyles.body1NormalBold.copyWith(
-            color: AppColor.primaryNormal, // Violet highlight
-          ),
-        ),
-      );
-      lastEnd = match.end;
-    }
-    if (lastEnd < text.length) {
-      spans.add(
-        TextSpan(
-          text: text.substring(lastEnd),
-          style: AppTextStyles.body1NormalMedium.copyWith(
-            color: AppColor.labelNormal, // Dark text
-          ),
-        ),
-      );
-    }
-
-    // Fallback: no matches → plain text
-    if (spans.isEmpty) {
-      spans.add(
-        TextSpan(
-          text: text,
-          style: AppTextStyles.body1NormalMedium.copyWith(
-            color: AppColor.labelNormal, // Dark text
-          ),
-        ),
-      );
-    }
-
-    return Container(
-      width: double.infinity,
-      padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 14),
-      decoration: BoxDecoration(
-        color: AppColor.backgroundNormalAlternative, // Light gray card
-        borderRadius: AppRadius.lgBorder,
-      ),
-      child: RichText(
-        textAlign: TextAlign.center,
-        text: TextSpan(children: spans),
-      ),
-    );
-  }
-
-  // ─── Step Illustration (real images for preparation steps) ───
-
-  Widget _buildStepIllustration(dynamic step) {
-    final assetPath = _getIllustrationAsset(step.title);
-
-    if (assetPath != null) {
-      // Use real illustration image
-      return Image.asset(
-        assetPath,
-        width: 280,
-        height: 280,
-        fit: BoxFit.contain,
-        errorBuilder: (context, error, stackTrace) {
-          // Fallback to emoji if image fails to load
-          return _buildEmojiPlaceholder(step.illustrationEmoji ?? '☕');
-        },
-      );
-    }
-
-    // Fallback to emoji placeholder
-    return _buildEmojiPlaceholder(step.illustrationEmoji ?? '☕');
-  }
-
-  String? _getIllustrationAsset(String stepTitle) {
-    // Map step titles to illustration assets
-    switch (stepTitle) {
-      case '원두 분쇄':
-        return AssetPath.timerStepGrinder;
-      case '예열하기':
-        return AssetPath.timerStepPourover;
-      default:
-        return null;
-    }
-  }
-
-  Widget _buildEmojiPlaceholder(String emoji) {
-    return Container(
-      width: 120,
-      height: 120,
-      decoration: BoxDecoration(
-        color: AppColor.primaryLight,
-        shape: BoxShape.circle,
-      ),
-      alignment: Alignment.center,
-      child: Text(emoji, style: AppTextStyles.emojiLarge),
-    );
-  }
-
-  Widget _buildWaterAmountChip(int waterAmount) {
-    return Container(
-      padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 10),
-      decoration: BoxDecoration(
-        color: AppColor.backgroundNormalAlternative, // Light gray card
-        borderRadius: AppRadius.lgBorder,
-      ),
-      child: Row(
-        mainAxisSize: MainAxisSize.min,
-        children: [
-          Icon(
-            Icons.water_drop_outlined,
-            color: AppColor.primaryNormal,
-            size: 18,
-          ),
-          const SizedBox(width: 6),
-          Text(
-            '${waterAmount}ml',
-            style: AppTextStyles.body1NormalBold.copyWith(
-              color: AppColor.primaryNormal,
-            ),
-          ),
-        ],
-      ),
     );
   }
 
