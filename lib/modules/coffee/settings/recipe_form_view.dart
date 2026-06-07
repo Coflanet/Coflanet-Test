@@ -636,11 +636,13 @@ class RecipeFormView extends GetView<CoffeeController> {
   /// 추가 모드 저장 — 새 원두 생성 + 레시피 저장 후 목록으로 반환
   Future<void> _saveNew() async {
     if (controller.recipeName.trim().isEmpty) {
+      // 에러 토스트 표준 스타일 (statusNegative 솔리드 + 흰 텍스트, 테마 무관)
       Get.snackbar(
         '알림',
         '레시피 이름을 입력해주세요',
         snackPosition: SnackPosition.BOTTOM,
-        backgroundColor: AppColor.colorGlobalRed95,
+        backgroundColor: AppColor.statusNegative,
+        colorText: AppColor.staticLabelWhiteStrong,
       );
       return;
     }

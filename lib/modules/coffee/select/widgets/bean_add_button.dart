@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:coflanet/constants/app_color_scheme.dart';
 import 'package:coflanet/constants/color_constant.dart';
 
 /// 원두 추가 원형 버튼 — 음각(인셋 그림자) 효과.
@@ -38,14 +39,17 @@ class BeanAddButton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final isDark = Theme.of(context).brightness == Brightness.dark;
+    final colors = AppColorScheme.of(context);
     return GestureDetector(
       onTap: onTap,
-      child: isEditing ? _buildEditMode(isDark) : _buildNormalMode(isDark),
+      child: isEditing
+          ? _buildEditMode(isDark, colors)
+          : _buildNormalMode(isDark, colors),
     );
   }
 
   /// 일반 모드 — 회색 채움 + 인셋 그림자 (음각)
-  Widget _buildNormalMode(bool isDark) {
+  Widget _buildNormalMode(bool isDark, AppColorScheme colors) {
     final base = isDark ? _darkNormalBase : _normalBase;
     final edge = isDark ? _darkNormalEdge : _normalEdge;
     final border = isDark ? _darkNormalBorder : _normalBorder;
@@ -90,13 +94,14 @@ class BeanAddButton extends StatelessWidget {
             width: 1,
           ),
         ),
-        child: Icon(Icons.add, color: AppColor.labelAlternative, size: 24),
+        // 아이콘 — 테마 라벨색 (이전 static 라이트 토큰은 다크에서 안 보임)
+        child: Icon(Icons.add, color: colors.labelAlternative, size: 24),
       ),
     );
   }
 
   /// 편집 모드 — 아웃라인형 음각
-  Widget _buildEditMode(bool isDark) {
+  Widget _buildEditMode(bool isDark, AppColorScheme colors) {
     final base = isDark ? _darkEditBase : _editBase;
     final center = isDark ? _darkEditCenter : _editCenter;
     final edge = isDark ? _darkEditEdge : _editEdge;
@@ -139,15 +144,12 @@ class BeanAddButton extends StatelessWidget {
             stops: const [0.5, 1.0],
           ),
           border: Border.all(
-            color: AppColor.colorGlobalCoolNeutral50.withValues(alpha: 0.3),
+            color: colors.interactionInactive.withValues(alpha: 0.5),
             width: 1,
           ),
         ),
-        child: Icon(
-          Icons.add,
-          color: AppColor.colorGlobalCoolNeutral50,
-          size: 24,
-        ),
+        // 아이콘 — 테마 라벨색 (다크에서도 또렷하게)
+        child: Icon(Icons.add, color: colors.labelAlternative, size: 24),
       ),
     );
   }

@@ -20,10 +20,6 @@ import 'package:coflanet/widgets/navigation/app_bottom_bar.dart';
 ///   - `'extractionTime'`   → 추출 시간 (time picker)
 ///   - `'waterAmount'`      → 물 양 (100-400ml)
 ///
-/// 파일이 400줄 경계값을 초과하지만, 본문 대부분이 `_ParamConfig`(controller
-/// getter/updater 클로저 묶음) 5분기 + 모달 핸들러 3종 + 자체 Obx 경계를 가진
-/// 단신 빌더들이라 controller 미참조 위젯으로 추출할 수 없어 View 잔류가
-/// 정당한 예외다 (coffee_settings_view 와 동일 사유).
 class CoffeeSettingDetailView extends GetView<CoffeeController> {
   const CoffeeSettingDetailView({super.key});
 
@@ -160,10 +156,7 @@ class CoffeeSettingDetailView extends GetView<CoffeeController> {
             AssetPath.iconArrowBack,
             width: 24,
             height: 24,
-            colorFilter: ColorFilter.mode(
-              colors.labelStrong,
-              BlendMode.srcIn,
-            ),
+            colorFilter: ColorFilter.mode(colors.labelStrong, BlendMode.srcIn),
           ),
           onPressed: () => Get.back(),
         ),
@@ -328,10 +321,7 @@ class CoffeeSettingDetailView extends GetView<CoffeeController> {
         decoration: BoxDecoration(
           color: colors.surfaceCard,
           borderRadius: AppRadius.lgBorder,
-          border: Border.all(
-            color: colors.lineSolidNormal,
-            width: 1,
-          ),
+          border: Border.all(color: colors.lineSolidNormal, width: 1),
         ),
         child: Row(
           mainAxisAlignment: MainAxisAlignment.center,
@@ -367,11 +357,7 @@ class CoffeeSettingDetailView extends GetView<CoffeeController> {
       ),
       child: Row(
         children: [
-          Icon(
-            Icons.info_outline,
-            color: colors.labelAssistive,
-            size: 18,
-          ),
+          Icon(Icons.info_outline, color: colors.labelAssistive, size: 18),
           const SizedBox(width: 10),
           Expanded(
             child: Text(

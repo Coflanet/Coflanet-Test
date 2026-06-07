@@ -340,7 +340,8 @@ class CoffeeTimerView extends GetView<CoffeeTimerController> {
     return Obx(() {
       return Row(
         children: [
-          // Previous button
+          // Previous button — 비활성 시에도 형태/라벨이 보이도록
+          // 옅은 fill + labelAssistive 사용 (labelDisable 은 다크에서 거의 투명)
           Expanded(
             child: SizedBox(
               height: 52,
@@ -349,22 +350,23 @@ class CoffeeTimerView extends GetView<CoffeeTimerController> {
                     ? null
                     : () => controller.previousStep(),
                 style: OutlinedButton.styleFrom(
+                  backgroundColor: colors.componentFillAlternative,
                   side: BorderSide(
                     color: controller.isFirstStep
-                        ? colors.lineNormalNormal
-                        : colors.lineNormalAlternative,
+                        ? colors.lineNormalNeutral
+                        : colors.lineNormalNormal,
                   ),
                   shape: RoundedRectangleBorder(
                     borderRadius: AppRadius.lgBorder,
                   ),
                   foregroundColor: colors.labelNormal,
-                  disabledForegroundColor: colors.labelDisable,
+                  disabledForegroundColor: colors.labelAssistive,
                 ),
                 child: Text(
                   '이전',
                   style: AppTextStyles.body1NormalMedium.copyWith(
                     color: controller.isFirstStep
-                        ? colors.labelDisable
+                        ? colors.labelAssistive
                         : colors.labelNormal,
                   ),
                 ),
@@ -410,7 +412,8 @@ class CoffeeTimerView extends GetView<CoffeeTimerController> {
 
       return Row(
         children: [
-          // Previous button
+          // Previous button — 비활성 시에도 형태/라벨이 보이도록
+          // 옅은 fill + labelAssistive 사용 (labelDisable 은 다크에서 거의 투명)
           Expanded(
             child: SizedBox(
               height: 52,
@@ -419,22 +422,23 @@ class CoffeeTimerView extends GetView<CoffeeTimerController> {
                     ? null
                     : () => controller.previousStep(),
                 style: OutlinedButton.styleFrom(
+                  backgroundColor: colors.componentFillAlternative,
                   side: BorderSide(
                     color: controller.isFirstStep
-                        ? colors.lineNormalNormal
-                        : colors.lineNormalAlternative,
+                        ? colors.lineNormalNeutral
+                        : colors.lineNormalNormal,
                   ),
                   shape: RoundedRectangleBorder(
                     borderRadius: AppRadius.lgBorder,
                   ),
                   foregroundColor: colors.labelNormal,
-                  disabledForegroundColor: colors.labelDisable,
+                  disabledForegroundColor: colors.labelAssistive,
                 ),
                 child: Text(
                   '이전',
                   style: AppTextStyles.body1NormalMedium.copyWith(
                     color: controller.isFirstStep
-                        ? colors.labelDisable
+                        ? colors.labelAssistive
                         : colors.labelNormal,
                   ),
                 ),

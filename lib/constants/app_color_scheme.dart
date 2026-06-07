@@ -186,7 +186,9 @@ class AppColorScheme {
     primarySecondary: AppColor.colorGlobalViolet70,
     primaryStrong: AppColor.colorGlobalViolet55,
     primaryHeavy: AppColor.colorGlobalViolet50,
-    primaryLight: AppColor.colorGlobalViolet20,
+    // 연보라 틴트 배경 — violet20 솔리드는 위의 보라/회색 텍스트가 묻혀서
+    // 반투명 틴트로 사용 (어두운 배경 위에서 은은한 보라 + 텍스트 대비 확보)
+    primaryLight: AppColor.colorGlobalViolet60.withValues(alpha: 0.2),
     labelNormal: AppColor.colorGlobalCoolNeutral99,
     labelStrong: AppColor.colorGlobalCommon100,
     labelNeutral: const Color(0xFFC2C4C8).withValues(alpha: 0.88),
@@ -196,8 +198,10 @@ class AppColorScheme {
     backgroundNormalNormal: AppColor.colorGlobalCommon0,
     // Figma 다크 시안(홈/셸)의 페이지 배경이 순검정이므로 alternative 도 검정
     backgroundNormalAlternative: AppColor.colorGlobalCommon0,
-    backgroundElevatedNormal: AppColor.colorGlobalCoolNeutral15,
-    backgroundElevatedAlternative: AppColor.colorGlobalCoolNeutral17,
+    // 모달/다이얼로그 표면 — 순검정 페이지 + 딤 위에서 카드 윤곽이 보이도록
+    // cn15/17 보다 한 단계 밝은 값 사용 (다크 다이얼로그 대비 확보)
+    backgroundElevatedNormal: AppColor.colorGlobalCoolNeutral22,
+    backgroundElevatedAlternative: AppColor.colorGlobalCoolNeutral20,
     backgroundOpacity75: const Color(0xFF000000).withValues(alpha: 0.75),
     surfaceCard: AppColor.colorGlobalCoolNeutral15,
     surfaceCardStrong: AppColor.colorGlobalCoolNeutral20,

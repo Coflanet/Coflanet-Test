@@ -17,11 +17,12 @@ enum RatingSentiment { dislike, neutral, like }
 
 /// 설문 평가 칩 (이모지 + 라벨) — ternary/binary 레이팅 전용.
 ///
-/// 선택/미선택 색은 원본 의미색 체계를 1:1 보존한다:
-/// - dislike: Red50/95 배경, Red40/90 보더, 라벨 Red50
-/// - neutral: labelAssistive/componentFillNormal 배경, labelNormal/lineNormalNeutral 보더
-/// - like: Blue50/95 배경, Blue40/90 보더, 라벨 Blue50
-/// - 선택 시 라벨은 공통 흰색(colorGlobalCommon100)
+/// 의미색(빨강/파랑)은 테마별로 톤을 달리한다:
+/// - 라이트: Figma 원본 파스텔 (Red95/Blue95 배경 + Red90/Blue90 보더)
+/// - 다크: 반투명 틴트 (Red50/Blue50 @16% 배경 + @40% 보더) — 파스텔이
+///   검정 배경 위에서 혼자 밝게 떠 보이는 문제 방지
+/// - 선택 시: Red50/Blue50 솔리드 + 흰 라벨 (양 테마 공통)
+/// - neutral 은 시맨틱 스킴(componentFill/label 계열)을 그대로 따른다
 class SurveyRatingChip extends StatelessWidget {
   const SurveyRatingChip({
     super.key,
@@ -54,6 +55,7 @@ class SurveyRatingChip extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final colors = AppColorScheme.of(context);
+    final isDark = Theme.of(context).brightness == Brightness.dark;
 
     final double verticalPadding = switch (size) {
       RatingChipSize.large => 20,
@@ -78,30 +80,42 @@ class SurveyRatingChip extends StatelessWidget {
         duration: const Duration(milliseconds: 200),
         padding: EdgeInsets.symmetric(vertical: verticalPadding),
         decoration: BoxDecoration(
-          color: _backgroundColor(colors),
+          color: _backgroundColor(colors, isDark),
           borderRadius: AppRadius.lgBorder,
-          border: Border.all(color: _borderColor(colors), width: 2),
+          border: Border.all(color: _borderColor(colors, isDark), width: 2),
         ),
         child: Column(
           mainAxisSize: MainAxisSize.min,
           children: [
             Text(emoji, style: TextStyle(fontSize: emojiSize)),
             SizedBox(height: gap),
-            Text(label, style: labelBase.copyWith(color: _labelColor(colors))),
+            Text(
+              label,
+              style: labelBase.copyWith(color: _labelColor(colors, isDark)),
+            ),
           ],
         ),
       ),
     );
   }
 
-  // dislike(빨강)/like(파랑) 은 의미색이라 raw 팔레트 유지,
-  // neutral 의 회색/라벨 계열만 시맨틱 스킴으로 교체한다.
-  Color _backgroundColor(AppColorScheme colors) {
+  // 의미색(빨강/파랑)은 테마별 톤 분기 — 라이트: 파스텔 / 다크: 반투명 틴트.
+  // neutral 은 시맨틱 스킴 토큰을 그대로 사용한다.
+  Color _backgroundColor(AppColorScheme colors, bool isDark) {
     if (isSelected) {
       return switch (sentiment) {
         RatingSentiment.dislike => AppColor.colorGlobalRed50,
         RatingSentiment.neutral => colors.labelAssistive,
         RatingSentiment.like => AppColor.colorGlobalBlue50,
+      };
+    }
+    if (isDark) {
+      return switch (sentiment) {
+        RatingSentiment.dislike =>
+          AppColor.colorGlobalRed50.withValues(alpha: 0.16),
+        RatingSentiment.neutral => colors.componentFillNormal,
+        RatingSentiment.like =>
+          AppColor.colorGlobalBlue50.withValues(alpha: 0.16),
       };
     }
     return switch (sentiment) {
@@ -111,12 +125,21 @@ class SurveyRatingChip extends StatelessWidget {
     };
   }
 
-  Color _borderColor(AppColorScheme colors) {
+  Color _borderColor(AppColorScheme colors, bool isDark) {
     if (isSelected) {
       return switch (sentiment) {
         RatingSentiment.dislike => AppColor.colorGlobalRed40,
         RatingSentiment.neutral => colors.labelNormal,
         RatingSentiment.like => AppColor.colorGlobalBlue40,
+      };
+    }
+    if (isDark) {
+      return switch (sentiment) {
+        RatingSentiment.dislike =>
+          AppColor.colorGlobalRed50.withValues(alpha: 0.4),
+        RatingSentiment.neutral => colors.lineNormalNeutral,
+        RatingSentiment.like =>
+          AppColor.colorGlobalBlue50.withValues(alpha: 0.4),
       };
     }
     return switch (sentiment) {
@@ -126,8 +149,16 @@ class SurveyRatingChip extends StatelessWidget {
     };
   }
 
-  Color _labelColor(AppColorScheme colors) {
+  Color _labelColor(AppColorScheme colors, bool isDark) {
     if (isSelected) return AppColor.colorGlobalCommon100;
+    if (isDark) {
+      // 다크 틴트 배경 위 가독성을 위해 한 단계 밝은 의미색
+      return switch (sentiment) {
+        RatingSentiment.dislike => AppColor.colorGlobalRed60,
+        RatingSentiment.neutral => colors.labelNormal,
+        RatingSentiment.like => AppColor.colorGlobalBlue60,
+      };
+    }
     return switch (sentiment) {
       RatingSentiment.dislike => AppColor.colorGlobalRed50,
       RatingSentiment.neutral => colors.labelNormal,

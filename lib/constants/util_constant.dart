@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
+import 'package:coflanet/constants/app_color_scheme.dart';
 import 'package:coflanet/constants/color_constant.dart';
 import 'package:coflanet/constants/style_constant.dart';
 import 'package:coflanet/routes/app_pages.dart';
@@ -13,26 +14,45 @@ class AppUtil {
   static const String baseUrlHost = 'api.coflanet-dev.com';
 
   static void showPopup({title = 'New Page', content}) {
+    // Get.defaultDialog 는 context 밖에서 호출되므로 Get.context 로 스킴 취득
+    final colors = AppColorScheme.of(Get.context!);
     Get.defaultDialog(
       title: title,
-      content: Text(content),
+      titleStyle: AppTextStyles.headline2Bold.copyWith(
+        color: colors.labelNormal,
+      ),
+      content: Text(
+        content,
+        style: AppTextStyles.body2NormalRegular.copyWith(
+          color: colors.labelNormal,
+        ),
+      ),
+      backgroundColor: colors.backgroundElevatedNormal,
       confirmTextColor: AppColor.staticLabelWhiteStrong,
       onConfirm: () => Get.offAllNamed(Routes.mainShell),
-      buttonColor: AppColor.primaryNormal,
+      buttonColor: colors.primaryNormal,
     );
   }
 
   static void underConstructionPopup() {
+    // Get.defaultDialog 는 context 밖에서 호출되므로 Get.context 로 스킴 취득
+    final colors = AppColorScheme.of(Get.context!);
     Get.defaultDialog(
       title: '안내',
       titleStyle: AppTextStyles.headline2Bold.copyWith(
-        color: AppColor.labelNormal,
+        color: colors.labelNormal,
       ),
-      content: const Text('준비중 입니다.'),
+      content: Text(
+        '준비중 입니다.',
+        style: AppTextStyles.body2NormalRegular.copyWith(
+          color: colors.labelNormal,
+        ),
+      ),
+      backgroundColor: colors.backgroundElevatedNormal,
       textConfirm: '확인',
       confirmTextColor: AppColor.staticLabelWhiteStrong,
       onConfirm: Get.back,
-      buttonColor: AppColor.primaryNormal,
+      buttonColor: colors.primaryNormal,
     );
   }
 
@@ -70,7 +90,7 @@ class AppUtil {
       '',
       msg,
       snackPosition: SnackPosition.BOTTOM,
-      backgroundColor: Colors.red,
+      backgroundColor: AppColor.statusNegative,
       colorText: AppColor.staticLabelWhiteStrong,
       duration: const Duration(seconds: 2),
     );
