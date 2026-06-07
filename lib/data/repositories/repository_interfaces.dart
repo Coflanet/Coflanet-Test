@@ -1,3 +1,4 @@
+import 'package:coflanet/data/models/banner_model.dart';
 import 'package:coflanet/data/models/bean_option_model.dart';
 import 'package:coflanet/data/models/brew_log_model.dart';
 import 'package:coflanet/data/models/coffee_item_model.dart';
@@ -234,6 +235,23 @@ abstract class BrewLogRepository {
 
   /// Get user's brewing statistics
   Future<Map<String, dynamic>?> getMyBrewStats();
+}
+
+// ─────────────────────────────────────────────────────────────────────────────
+// Banner Repository
+// ─────────────────────────────────────────────────────────────────────────────
+
+/// Repository for home banner / coupon operations
+///
+/// 홈 배너(캐러셀/프로모 슬롯) 조회와 쿠폰 발급을 담당한다.
+abstract class BannerRepository {
+  /// 활성 배너 조회 (get_active_banners RPC) — slot/priority 정렬
+  Future<List<BannerModel>> getActiveBanners();
+
+  /// 쿠폰 발급 (claim_coupon RPC, 1인 1매)
+  ///
+  /// 반환: {'is_new': bool, 'message'?: 'ALREADY_CLAIMED', ...}
+  Future<Map<String, dynamic>> claimCoupon(String couponId);
 }
 
 // ─────────────────────────────────────────────────────────────────────────────

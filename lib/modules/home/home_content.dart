@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:coflanet/constants/color_constant.dart';
+import 'package:coflanet/constants/app_color_scheme.dart';
 import 'package:coflanet/core/services/cart_service.dart';
 import 'package:coflanet/core/services/notification_service.dart';
 import 'package:coflanet/modules/home/home_controller.dart';
@@ -10,6 +10,7 @@ import 'package:coflanet/modules/home/widgets/home_footer.dart';
 import 'package:coflanet/modules/home/widgets/home_maker_section.dart';
 import 'package:coflanet/modules/home/widgets/home_my_bean_section.dart';
 import 'package:coflanet/modules/home/widgets/home_product_section.dart';
+import 'package:coflanet/modules/home/widgets/home_promo_banner.dart';
 import 'package:coflanet/modules/home/widgets/home_taste_banner.dart';
 import 'package:coflanet/modules/home/widgets/home_top_bar.dart';
 import 'package:coflanet/modules/shell/main_shell_controller.dart';
@@ -19,10 +20,11 @@ import 'package:coflanet/routes/app_pages.dart';
 ///
 /// 섹션 구성 (위젯은 modules/home/widgets/ 에 분리, 각 섹션은 독립 카드):
 /// - 상단 헤더 (HomeTopBar) — 검정 배경 위 보라 로고 + 아이콘 (카드 아님)
-/// - 광고 캐러셀 (HomeCarousel) — 독립 둥근 카드
+/// - 광고 캐러셀 (HomeCarousel) — 서버 배너(home_carousel 슬롯) 둥근 카드
 /// - 보유 원두 (HomeMyBeanSection) — 보라 둥근 카드
 /// - 취향 배너 (HomeTasteBanner) — 설문 완료 시
 /// - 상품 섹션 (HomeProductSection) — 취향 추천 (취향 배너 위)
+/// - 프로모 배너 (HomePromoBanner) — 서버 배너(home_promo 슬롯) 있을 때만
 /// - 상품 섹션 (HomeProductSection) — '새로운 맛을 찾아볼까요?'
 /// - 커피 메이커 섹션 (HomeMakerSection)
 /// - 커피 기록 커뮤니티 (HomeCommunitySection)
@@ -37,18 +39,20 @@ class HomeContent extends GetView<HomeController> {
 
   @override
   Widget build(BuildContext context) {
+    final colors = AppColorScheme.of(context);
+
     return Obx(() {
       if (controller.isLoading) {
         return Container(
-          color: AppColor.colorGlobalCommon0,
+          color: colors.backgroundNormalAlternative,
           child: Center(
-            child: CircularProgressIndicator(color: AppColor.primaryNormal),
+            child: CircularProgressIndicator(color: colors.primaryNormal),
           ),
         );
       }
-      // 다크 배경 — 홈 전체 검은색
+      // 페이지 배경 — 다크: 순검정(Figma), 라이트: 밝은 회색 위 흰 카드
       return Container(
-        color: AppColor.colorGlobalCommon0,
+        color: colors.backgroundNormalAlternative,
         child: SafeArea(
           bottom: false,
           child: SingleChildScrollView(
@@ -68,12 +72,13 @@ class HomeContent extends GetView<HomeController> {
                   ),
                 ),
                 const SizedBox(height: _sectionGap),
-                // 광고 캐러셀 — 독립 둥근 카드 (위젯 내부 좌우 16 마진)
+                // 광고 캐러셀 — 서버 배너(home_carousel 슬롯), 없으면 placeholder 1장
                 HomeCarousel(
+                  banners: controller.carouselBanners,
                   pageController: controller.carouselController,
                   currentIndex: controller.carouselIndex,
-                  totalCount: HomeController.carouselTotalCount,
                   onPageChanged: controller.onCarouselPageChanged,
+                  onBannerTap: controller.onBannerTap,
                 ),
                 const SizedBox(height: _sectionGap),
                 // 보유 원두 — 보라 둥근 카드
@@ -99,8 +104,15 @@ class HomeContent extends GetView<HomeController> {
                   onMoreTap: _goToShoppingTab,
                 ),
                 const SizedBox(height: _sectionGap),
-                // [백엔드 API 연동 대기] 핑크 할인 배너 — banners/coupons 테이블
-                // 연동 시 서버 데이터 기반으로 재도입 (정적 목데이터 노출 금지).
+                // 프로모 배너 — 서버 배너(home_promo 슬롯) 있을 때만 노출
+                if (controller.promoBanner != null) ...[
+                  HomePromoBanner(
+                    banner: controller.promoBanner!,
+                    onTap: () =>
+                        controller.onBannerTap(controller.promoBanner!),
+                  ),
+                  const SizedBox(height: _sectionGap),
+                ],
                 // [백엔드 API 연동 대기] 실시간 인기 전용 API 연동 시 추가 섹션 검토.
                 HomeProductSection(
                   title: '새로운 맛을 찾아볼까요?',
