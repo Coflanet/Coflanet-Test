@@ -26,12 +26,14 @@ class MainShellView extends GetView<MainShellController> {
   @override
   Widget build(BuildContext context) {
     final topPadding = MediaQuery.of(context).padding.top;
+    final bottomPadding = MediaQuery.of(context).padding.bottom;
     final colors = AppColorScheme.of(context);
 
     // Layout constants
     const topNavHeight = ShellTopNavigation.navHeight;
     // Tab bar: 6px top + 64px pill + 16px bottom = 86px
-    const tabBarTotalHeight = 86.0;
+    // + 시스템 네비 인셋 (ShellTabBar 가 같은 인셋을 하단 여백에 더함)
+    final tabBarTotalHeight = 86.0 + bottomPadding;
     const contentTopRadius = 40.0;
 
     return Scaffold(

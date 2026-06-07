@@ -12,8 +12,8 @@ import 'package:coflanet/constants/style_constant.dart';
 /// (라이트/다크) 위에서도 동일한 룩을 유지한다. 따라서 이 위젯은
 /// AppColorScheme 을 일절 사용하지 않는다 (테마 회귀 구조적 차단):
 /// - raw 팔레트 const: coolNeutral15(틴트) / violet60(활성) / common0(활성 pill)
-/// - `AppColor.inverseLabelNeutral` 은 **static 시맨틱 getter**(라이트 고정값,
-///   테마 무관) — `colors.inverseLabelNeutral`(AppColorScheme) 로 치환하면
+/// - 비활성 탭은 `AppColor.staticLabelWhiteNeutral` (테마 무관 고정 밝은 회색)
+///   — `colors.inverseLabelNeutral`(AppColorScheme) 로 치환하면
 ///   다크에서 값이 뒤집혀 비활성 탭이 배경에 묻힌다. 치환 금지.
 /// - 활성색 violet60 은 편집버튼의 `colors.primaryNormal` 과 다크에서만
 ///   우연히 일치 — 공통화 금지 (라이트에서 violet50 으로 달라짐).
@@ -73,9 +73,12 @@ class ShellTabBar extends StatelessWidget {
     // 5개 탭을 수용하기 위해 화면 너비에서 좌우 16px 여백을 뺀 폭 사용.
     final screenWidth = MediaQuery.of(context).size.width;
     final innerWidth = (screenWidth - 32).clamp(280.0, 400.0);
+    // 시스템 네비게이션 인셋 — 3버튼 네비(~48dp)가 탭바를 가리지 않도록
+    // 하단 여백에 더한다 (제스처 네비에서는 인셋이 작아 기존과 거의 동일).
+    final bottomInset = MediaQuery.of(context).padding.bottom;
 
     return Padding(
-      padding: const EdgeInsets.only(top: 6, bottom: 16),
+      padding: EdgeInsets.only(top: 6, bottom: 16 + bottomInset),
       child: Center(
         child: SizedBox(
           width: innerWidth,
@@ -134,7 +137,7 @@ class _ShellTabItem extends StatelessWidget {
     // Colors per Figma CSS — 항상 다크 글래스 고정 (AppColorScheme 미사용)
     const activeColor = AppColor.colorGlobalViolet60; // Figma: #7D5EF7
     final inactiveColor =
-        AppColor.inverseLabelNeutral; // rgba(194, 196, 200, 0.88) static getter
+        AppColor.staticLabelWhiteNeutral; // rgba(194, 196, 200, 0.88) 고정
 
     final iconColor = isActive ? activeColor : inactiveColor;
     final labelColor = isActive ? activeColor : inactiveColor;
