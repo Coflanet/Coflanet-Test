@@ -233,10 +233,13 @@ class CoffeeTimerView extends GetView<CoffeeTimerController> {
           ),
         ),
         const SizedBox(height: 8),
-        // Circular timer
+        // Circular timer — 1초 틱 사이를 선형 보간해 연속 스윕으로 표시.
+        // key 를 스텝 단위로 바꿔 스텝 전환 시 되감기 애니메이션 방지.
         Obx(
           () => CircularTimer(
+            key: ValueKey(controller.currentStepIndex),
             progress: controller.stepProgress,
+            animationDuration: const Duration(seconds: 1),
             progressColor: AppColor.primaryNormal,
             backgroundColor:
                 AppColor.colorGlobalCoolNeutral90, // Light gray track

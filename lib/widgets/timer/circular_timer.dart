@@ -13,6 +13,13 @@ class CircularTimer extends StatelessWidget {
   final Widget? child;
   final List<double>? phaseMarkers; // Phase positions (0.0 to 1.0)
 
+  /// 진행 아크 보간 시간 — Duration.zero(기본)면 즉시 점프(기존 동작),
+  /// 1초 틱 타이머에서 Duration(seconds: 1) + Curves.linear 로 주면
+  /// 틱 사이가 이어져 연속적으로 차오르는 스윕이 된다.
+  /// 스텝 전환(진행률 리셋) 시 되감기 애니메이션을 피하려면
+  /// 호출부에서 key 를 스텝 단위로 바꿔 상태를 초기화한다.
+  final Duration animationDuration;
+
   const CircularTimer({
     super.key,
     required this.progress,
@@ -22,6 +29,7 @@ class CircularTimer extends StatelessWidget {
     this.backgroundColor,
     this.child,
     this.phaseMarkers,
+    this.animationDuration = Duration.zero,
   });
 
   @override
@@ -41,26 +49,46 @@ class CircularTimer extends StatelessWidget {
               boxShadow: [
                 BoxShadow(
                   color: (progressColor ?? AppColor.colorGlobalOrange50)
-                      .withValues(alpha:0.15),
+                      .withValues(alpha: 0.15),
                   blurRadius: 40,
                   spreadRadius: 10,
                 ),
               ],
             ),
           ),
-          // Main circular progress
-          CustomPaint(
-            size: Size(size, size),
-            painter: _CircularTimerPainter(
-              progress: progress,
-              strokeWidth: strokeWidth,
-              progressColor: progressColor ?? AppColor.colorGlobalOrange50,
-              backgroundColor:
-                  backgroundColor ??
-                  AppColor.colorGlobalNeutral22.withValues(alpha:0.3),
-              phaseMarkers: phaseMarkers,
+          // Main circular progress — animationDuration 이 있으면 이전 값에서
+          // 새 값까지 선형 보간 (1초 틱과 맞물려 연속 스윕)
+          if (animationDuration == Duration.zero)
+            CustomPaint(
+              size: Size(size, size),
+              painter: _CircularTimerPainter(
+                progress: progress,
+                strokeWidth: strokeWidth,
+                progressColor: progressColor ?? AppColor.colorGlobalOrange50,
+                backgroundColor:
+                    backgroundColor ??
+                    AppColor.colorGlobalNeutral22.withValues(alpha: 0.3),
+                phaseMarkers: phaseMarkers,
+              ),
+            )
+          else
+            TweenAnimationBuilder<double>(
+              tween: Tween(begin: 0, end: progress.clamp(0.0, 1.0)),
+              duration: animationDuration,
+              curve: Curves.linear,
+              builder: (context, animatedProgress, _) => CustomPaint(
+                size: Size(size, size),
+                painter: _CircularTimerPainter(
+                  progress: animatedProgress,
+                  strokeWidth: strokeWidth,
+                  progressColor: progressColor ?? AppColor.colorGlobalOrange50,
+                  backgroundColor:
+                      backgroundColor ??
+                      AppColor.colorGlobalNeutral22.withValues(alpha: 0.3),
+                  phaseMarkers: phaseMarkers,
+                ),
+              ),
             ),
-          ),
           // Inner decorative ring
           Container(
             width: size - strokeWidth * 4,
@@ -68,7 +96,7 @@ class CircularTimer extends StatelessWidget {
             decoration: BoxDecoration(
               shape: BoxShape.circle,
               border: Border.all(
-                color: AppColor.colorGlobalNeutral22.withValues(alpha:0.1),
+                color: AppColor.colorGlobalNeutral22.withValues(alpha: 0.1),
                 width: 1,
               ),
             ),
@@ -124,7 +152,11 @@ class _CircularTimerPainter extends CustomPainter {
       ..shader = SweepGradient(
         startAngle: -math.pi / 2,
         endAngle: 3 * math.pi / 2,
-        colors: [progressColor.withValues(alpha:0.6), progressColor, progressColor],
+        colors: [
+          progressColor.withValues(alpha: 0.6),
+          progressColor,
+          progressColor,
+        ],
         stops: const [0.0, 0.5, 1.0],
         transform: const GradientRotation(-math.pi / 2),
       ).createShader(rect);
@@ -135,7 +167,7 @@ class _CircularTimerPainter extends CustomPainter {
     // Draw phase markers
     if (phaseMarkers != null) {
       final markerPaint = Paint()
-        ..color = AppColor.colorGlobalCommon100.withValues(alpha:0.4)
+        ..color = AppColor.colorGlobalCommon100.withValues(alpha: 0.4)
         ..strokeWidth = 2
         ..style = PaintingStyle.stroke;
 
@@ -167,7 +199,7 @@ class _CircularTimerPainter extends CustomPainter {
 
       // Outer glow
       final glowPaint = Paint()
-        ..color = progressColor.withValues(alpha:0.3)
+        ..color = progressColor.withValues(alpha: 0.3)
         ..maskFilter = const MaskFilter.blur(BlurStyle.normal, 8);
       canvas.drawCircle(dotCenter, strokeWidth / 2 + 4, glowPaint);
 
@@ -221,7 +253,7 @@ class PhaseIndicator extends StatelessWidget {
               color: isActive
                   ? color
                   : isPast
-                  ? color.withValues(alpha:0.5)
+                  ? color.withValues(alpha: 0.5)
                   : AppColor.colorGlobalNeutral30,
             ),
           ),
