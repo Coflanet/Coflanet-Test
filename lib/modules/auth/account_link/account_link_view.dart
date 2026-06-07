@@ -2,11 +2,13 @@ import 'dart:io' show Platform;
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:coflanet/constants/app_color_scheme.dart';
+import 'package:coflanet/constants/color_constant.dart';
 import 'package:coflanet/constants/style_constant.dart';
 import 'package:coflanet/constants/radius_constant.dart';
 import 'package:coflanet/data/providers/auth_provider.dart';
 import 'package:coflanet/modules/auth/account_link/account_link_controller.dart';
 import 'package:coflanet/widgets/buttons/social_button.dart';
+import 'package:coflanet/widgets/forms/app_text_field.dart';
 
 class AccountLinkView extends GetView<AccountLinkController> {
   const AccountLinkView({super.key});
@@ -116,23 +118,21 @@ class AccountLinkView extends GetView<AccountLinkController> {
 
                 const SizedBox(height: 32),
 
-                // 이메일 연동 폼
-                _buildTextField(
-                  colors: colors,
+                // 이메일 연동 폼 — 공통 AppTextField 로 통일
+                AppTextField(
                   controller: controller.emailController,
                   label: '이메일',
-                  hint: 'example@email.com',
+                  hintText: 'example@email.com',
                   keyboardType: TextInputType.emailAddress,
-                  error: controller.emailError,
+                  errorText: controller.emailError,
                 ),
                 const SizedBox(height: 12),
-                _buildTextField(
-                  colors: colors,
+                AppTextField(
                   controller: controller.passwordController,
                   label: '비밀번호',
-                  hint: '6자 이상 입력',
+                  hintText: '6자 이상 입력',
                   obscureText: true,
-                  error: controller.passwordError,
+                  errorText: controller.passwordError,
                 ),
                 const SizedBox(height: 24),
 
@@ -149,19 +149,20 @@ class AccountLinkView extends GetView<AccountLinkController> {
                       borderRadius: AppRadius.lgBorder,
                     ),
                     child: Center(
+                      // 보라 solid 버튼 위 — 테마 무관 고정 흰색 토큰
                       child: controller.isLoading
-                          ? const SizedBox(
+                          ? SizedBox(
                               width: 24,
                               height: 24,
                               child: CircularProgressIndicator(
-                                color: Colors.white,
+                                color: AppColor.staticLabelWhiteStrong,
                                 strokeWidth: 2,
                               ),
                             )
                           : Text(
                               '이메일로 연결',
                               style: AppTextStyles.headline2Bold.copyWith(
-                                color: Colors.white,
+                                color: AppColor.staticLabelWhiteStrong,
                               ),
                             ),
                     ),
@@ -174,54 +175,6 @@ class AccountLinkView extends GetView<AccountLinkController> {
           );
         }),
       ),
-    );
-  }
-
-  Widget _buildTextField({
-    required AppColorScheme colors,
-    required TextEditingController controller,
-    required String label,
-    required String hint,
-    bool obscureText = false,
-    TextInputType? keyboardType,
-    String? error,
-  }) {
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        Text(
-          label,
-          style: AppTextStyles.label1NormalMedium.copyWith(
-            color: colors.labelNormal,
-          ),
-        ),
-        const SizedBox(height: 8),
-        TextField(
-          controller: controller,
-          obscureText: obscureText,
-          keyboardType: keyboardType,
-          style: AppTextStyles.body1NormalRegular.copyWith(
-            color: colors.labelNormal,
-          ),
-          decoration: InputDecoration(
-            hintText: hint,
-            hintStyle: AppTextStyles.body1NormalRegular.copyWith(
-              color: colors.labelDisable,
-            ),
-            filled: true,
-            fillColor: colors.componentFillNormal,
-            border: OutlineInputBorder(
-              borderRadius: AppRadius.lgBorder,
-              borderSide: BorderSide.none,
-            ),
-            contentPadding: const EdgeInsets.symmetric(
-              horizontal: 16,
-              vertical: 14,
-            ),
-            errorText: error,
-          ),
-        ),
-      ],
     );
   }
 }
