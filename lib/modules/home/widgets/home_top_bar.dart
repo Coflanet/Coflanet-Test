@@ -1,10 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:coflanet/constants/color_constant.dart';
 import 'package:coflanet/modules/home/widgets/home_header_icon_button.dart';
 
-/// 홈 상단 헤더 — 좌측 로고 SVG + 우측 검색/알림/장바구니 아이콘.
+/// 홈 상단 헤더 — 좌측 보라 로고 SVG + 우측 검색/알림/장바구니 아이콘.
 ///
-/// 다크 배경 위에 흰색 로고/아이콘, 우측 액션은 반투명 회색 원 안에 흰색 아이콘.
+/// 검정 배경 위에 보라 로고, 우측 액션은 반투명 회색 원 안에 흰색 아이콘.
 /// 반응형 값([hasUnread], [cartBadgeCount])은 호출부에서 Obx 로 풀어 주입한다.
 /// [백엔드 API 연동 대기] 각 액션의 실제 동작 (검색, 알림 카운트, 장바구니 카운트)
 class HomeTopBar extends StatelessWidget {
@@ -58,6 +59,11 @@ class HomeTopBar extends StatelessWidget {
                   child: SvgPicture.asset(
                     'assets/images/logo_main.svg',
                     width: 48,
+                    // 검정 배경 위 보라 로고 (Figma) — SVG 원본 색 무시하고 틴트
+                    colorFilter: ColorFilter.mode(
+                      AppColor.primaryNormal,
+                      BlendMode.srcIn,
+                    ),
                   ),
                 ),
               ),

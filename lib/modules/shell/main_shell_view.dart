@@ -1,3 +1,5 @@
+import 'dart:ui';
+
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:coflanet/constants/color_constant.dart';
@@ -364,8 +366,10 @@ class MainShellView extends GetView<MainShellController> {
   }
 
   /// Custom tab bar - Figma `Home_Item_yes` 기준 5탭
-  /// Outer: Dark charcoal background with rounded top corners
-  /// Inner: 화면 폭에 맞춘 pill-shaped glass effect container (5개 탭)
+  /// 배경 패널 없이 투명 — pill-shaped glass 컨테이너만 화면 위에 떠 있다.
+  /// Liquid Glass: BackdropFilter 블러 + 어두운 틴트.
+  /// 밝은 콘텐츠(원두/커뮤니티/쇼핑)가 탭바 뒤로 깔려도 항상 다크 글래스로 보이도록
+  /// 배경 의존적인 반투명 회색 대신 어두운 틴트를 고정 사용한다.
   Widget _buildTabBar() {
     return Builder(
       builder: (context) {
@@ -373,28 +377,31 @@ class MainShellView extends GetView<MainShellController> {
         final screenWidth = MediaQuery.of(context).size.width;
         final innerWidth = (screenWidth - 32).clamp(280.0, 400.0);
 
-        return ClipRRect(
-          borderRadius: const BorderRadius.only(
-            topLeft: Radius.circular(12),
-            topRight: Radius.circular(12),
-          ),
-          child: Container(
-            decoration: BoxDecoration(color: AppColor.colorGlobalCoolNeutral15),
-            padding: const EdgeInsets.only(top: 6, bottom: 16),
-            child: Center(
-              child: Container(
-                width: innerWidth,
-                height: 64,
-                padding: const EdgeInsets.all(4),
-                decoration: BoxDecoration(
-                  color: AppColor.lineNormalNormal,
-                  borderRadius: BorderRadius.circular(99),
-                ),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                  children: List.generate(_tabs.length, (index) {
-                    return Expanded(child: _buildTabItem(index));
-                  }),
+        return Padding(
+          padding: const EdgeInsets.only(top: 6, bottom: 16),
+          child: Center(
+            child: SizedBox(
+              width: innerWidth,
+              height: 64,
+              child: ClipRRect(
+                borderRadius: BorderRadius.circular(99),
+                child: BackdropFilter(
+                  filter: ImageFilter.blur(sigmaX: 24, sigmaY: 24),
+                  child: Container(
+                    padding: const EdgeInsets.all(4),
+                    decoration: BoxDecoration(
+                      color: AppColor.colorGlobalCoolNeutral15.withValues(
+                        alpha: 0.72,
+                      ),
+                      borderRadius: BorderRadius.circular(99),
+                    ),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                      children: List.generate(_tabs.length, (index) {
+                        return Expanded(child: _buildTabItem(index));
+                      }),
+                    ),
+                  ),
                 ),
               ),
             ),

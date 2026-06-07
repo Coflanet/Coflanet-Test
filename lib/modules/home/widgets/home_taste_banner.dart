@@ -1,9 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:coflanet/constants/color_constant.dart';
+import 'package:coflanet/constants/radius_constant.dart';
 import 'package:coflanet/constants/style_constant.dart';
 import 'package:coflanet/data/models/survey_result_model.dart';
 
-/// 홈 취향 배너 (노랑) — 설문 완료 시 표시. 좌우 여백 0.
+/// 홈 취향 배너 (노랑) — 설문 완료 시 표시. 풀폭 + 둥근 코너 카드.
 ///
 /// 취향 타입 라벨 + 향미 칩 (최대 3개 + "외 N개").
 class HomeTasteBanner extends StatelessWidget {
@@ -29,7 +30,10 @@ class HomeTasteBanner extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 14),
-      decoration: const BoxDecoration(color: _bannerYellow),
+      decoration: BoxDecoration(
+        color: _bannerYellow,
+        borderRadius: AppRadius.xxlBorder,
+      ),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -49,21 +53,30 @@ class HomeTasteBanner extends StatelessWidget {
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              Row(
-                children: [
-                  Text(
-                    flavors.isNotEmpty ? flavors.first.emoji : '☕',
-                    style: const TextStyle(fontSize: 18),
-                  ),
-                  const SizedBox(width: 6),
-                  Text(
-                    typeLabel.isNotEmpty ? typeLabel : '나의 커피 취향',
-                    style: AppTextStyles.body1NormalBold.copyWith(
-                      color: AppColor.labelNormal,
+              // 가변 취향 라벨 — 긴 한국어 라벨에서 우측 아이콘과 충돌하지 않도록
+              // Expanded + ellipsis 로 폭을 제한한다.
+              Expanded(
+                child: Row(
+                  children: [
+                    Text(
+                      flavors.isNotEmpty ? flavors.first.emoji : '☕',
+                      style: const TextStyle(fontSize: 18),
                     ),
-                  ),
-                ],
+                    const SizedBox(width: 6),
+                    Flexible(
+                      child: Text(
+                        typeLabel.isNotEmpty ? typeLabel : '나의 커피 취향',
+                        style: AppTextStyles.body1NormalBold.copyWith(
+                          color: AppColor.labelNormal,
+                        ),
+                        maxLines: 1,
+                        overflow: TextOverflow.ellipsis,
+                      ),
+                    ),
+                  ],
+                ),
               ),
+              const SizedBox(width: 8),
               Icon(Icons.swap_horiz, size: 22, color: AppColor.labelNeutral),
             ],
           ),
@@ -91,7 +104,7 @@ class HomeTasteBanner extends StatelessWidget {
       padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 6),
       decoration: BoxDecoration(
         color: AppColor.colorGlobalCommon100.withValues(alpha: 0.55),
-        borderRadius: BorderRadius.circular(99),
+        borderRadius: AppRadius.fullBorder,
       ),
       child: Text(
         label,

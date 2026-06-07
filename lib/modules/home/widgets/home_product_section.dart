@@ -1,15 +1,19 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:coflanet/constants/color_constant.dart';
+import 'package:coflanet/constants/radius_constant.dart';
 import 'package:coflanet/constants/style_constant.dart';
 import 'package:coflanet/data/models/survey_result_model.dart';
 import 'package:coflanet/modules/home/widgets/home_empty_card.dart';
+import 'package:coflanet/modules/home/widgets/home_section_more_button.dart';
 import 'package:coflanet/widgets/cards/product_card.dart';
+import 'package:coflanet/widgets/typography/section_title.dart';
 
-/// 홈 상품 섹션 — 섹션 타이틀 + 2열 상품 그리드 (또는 빈 상태 카드).
+/// 홈 상품 섹션 — 섹션 타이틀 + 2열 상품 그리드 (또는 빈 상태 카드) + 하단 '더 보기' 버튼.
 ///
-/// 취향 추천 / 인기 랭킹 / 실시간 인기 3개 섹션이 공유한다.
-/// [backgroundColor] 가 있으면 풀폭 카드 배경(취향 추천), 없으면 좌우 16 패딩(나머지).
+/// 취향 추천 / 인기 랭킹 / 실시간 인기 등 모든 상품 섹션이 공유한다.
+/// 모든 섹션을 풀폭 다크 둥근 카드(CoolNeutral15, radius 20)로 통일하며,
+/// 그리드 하단에 항상 [HomeSectionMoreButton] 더 보기 버튼을 노출한다.
 ///
 /// 좋아요 반응성: 카드 단위 Obx 로 [isLiked] 를 구독 — 한 카드 토글이
 /// 다른 카드를 리빌드하지 않는다 (전체 그리드 단일 Obx 금지).
@@ -21,7 +25,8 @@ class HomeProductSection extends StatelessWidget {
     required this.emptyMessage,
     required this.isLiked,
     required this.onLikeTap,
-    this.backgroundColor,
+    this.onMoreTap,
+    this.moreLabel = '추천 원두 더 보기',
   });
 
   /// 섹션 타이틀
@@ -39,38 +44,39 @@ class HomeProductSection extends StatelessWidget {
   /// 좋아요 토글 콜백
   final void Function(String id) onLikeTap;
 
-  /// 섹션 배경색 — null 이면 투명 + 좌우 16 패딩
-  final Color? backgroundColor;
+  /// 더 보기 버튼 탭 콜백 — null 이면 동작 없음 ([백엔드 API 연동 대기])
+  final VoidCallback? onMoreTap;
+
+  /// 더 보기 버튼 라벨
+  final String moreLabel;
 
   @override
   Widget build(BuildContext context) {
-    final content = Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        Text(
-          title,
-          style: AppTextStyles.body1NormalBold.copyWith(
-            color: AppColor.colorGlobalCommon100,
+    return Container(
+      width: double.infinity,
+      padding: const EdgeInsets.all(16),
+      decoration: BoxDecoration(
+        color: AppColor.colorGlobalCoolNeutral15,
+        borderRadius: AppRadius.xxlBorder,
+      ),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          SectionTitle(
+            title: title,
+            titleStyle: AppTextStyles.body1NormalBold.copyWith(
+              color: AppColor.colorGlobalCommon100,
+            ),
           ),
-        ),
-        SizedBox(height: backgroundColor != null ? 12 : 10),
-        if (items.isNotEmpty)
-          _buildGrid()
-        else
-          HomeEmptyCard(message: emptyMessage),
-      ],
-    );
-
-    if (backgroundColor != null) {
-      return Container(
-        padding: const EdgeInsets.all(16),
-        decoration: BoxDecoration(color: backgroundColor),
-        child: content,
-      );
-    }
-    return Padding(
-      padding: const EdgeInsets.symmetric(horizontal: 16),
-      child: content,
+          const SizedBox(height: 12),
+          if (items.isNotEmpty)
+            _buildGrid()
+          else
+            HomeEmptyCard(message: emptyMessage),
+          const SizedBox(height: 16),
+          HomeSectionMoreButton(label: moreLabel, onTap: onMoreTap),
+        ],
+      ),
     );
   }
 
