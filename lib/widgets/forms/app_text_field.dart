@@ -371,6 +371,9 @@ class _AppTextFieldState extends State<AppTextField>
           return AnimatedContainer(
             duration: const Duration(milliseconds: 200),
             curve: Curves.easeOutCubic,
+            // 고정 높이 박스 안에서 TextField 를 항상 세로 중앙에 배치
+            // (기기/폰트 배율에 따라 위로 치우치는 케이스 방지)
+            alignment: Alignment.center,
             decoration: BoxDecoration(
               color: fillColor,
               borderRadius: AppRadius.inputBorder,

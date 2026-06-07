@@ -131,26 +131,31 @@ class _ConfirmModalState extends State<ConfirmModal>
   @override
   Widget build(BuildContext context) {
     final colors = AppColorScheme.of(context);
-    return FadeTransition(
-      opacity: _fadeAnimation,
-      child: ScaleTransition(
-        scale: _scaleAnimation,
-        child: Center(
-          child: Container(
-            width: MediaQuery.of(context).size.width - 48,
-            decoration: BoxDecoration(
-              color: colors.backgroundElevatedNormal,
-              borderRadius: AppRadius.modalBorder,
-              boxShadow: AppShadows.shadowBlackHeavy,
-              // 다크 모드는 검정 그림자가 어두운 배경에 흡수되어 카드 경계가
-              // 약해지므로 1px 보더로 경계를 보강한다. 라이트 외형은 불변.
-              border: Theme.of(context).brightness == Brightness.dark
-                  ? Border.all(color: colors.lineSolidNormal, width: 1)
-                  : null,
-            ),
-            child: Column(
-              mainAxisSize: MainAxisSize.min,
-              children: [_buildContent(colors), _buildActions()],
+    // Get.dialog 는 Material 조상을 제공하지 않으므로 직접 감싼다 —
+    // 없으면 모든 Text 에 노란 이중 밑줄이 그려진다.
+    return Material(
+      type: MaterialType.transparency,
+      child: FadeTransition(
+        opacity: _fadeAnimation,
+        child: ScaleTransition(
+          scale: _scaleAnimation,
+          child: Center(
+            child: Container(
+              width: MediaQuery.of(context).size.width - 48,
+              decoration: BoxDecoration(
+                color: colors.backgroundElevatedNormal,
+                borderRadius: AppRadius.modalBorder,
+                boxShadow: AppShadows.shadowBlackHeavy,
+                // 다크 모드는 검정 그림자가 어두운 배경에 흡수되어 카드 경계가
+                // 약해지므로 1px 보더로 경계를 보강한다. 라이트 외형은 불변.
+                border: Theme.of(context).brightness == Brightness.dark
+                    ? Border.all(color: colors.lineSolidNormal, width: 1)
+                    : null,
+              ),
+              child: Column(
+                mainAxisSize: MainAxisSize.min,
+                children: [_buildContent(colors), _buildActions()],
+              ),
             ),
           ),
         ),
