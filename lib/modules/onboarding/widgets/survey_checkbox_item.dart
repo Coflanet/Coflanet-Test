@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:coflanet/constants/app_color_scheme.dart';
-import 'package:coflanet/constants/color_constant.dart';
 import 'package:coflanet/constants/radius_constant.dart';
 import 'package:coflanet/constants/style_constant.dart';
 
@@ -43,8 +42,9 @@ class SurveyCheckboxItem extends StatelessWidget {
               : colors.componentFillNormal,
           borderRadius: AppRadius.lgBorder,
           border: Border.all(
-            // Figma: 선택됨 = Violet 테두리 2px, 미선택 = 테두리 없음
-            color: isSelected ? colors.primaryNormal : AppColor.transparent,
+            // Figma: 선택됨 = Violet 테두리 2px.
+            // 미선택 = 연한 회색 1px 상시 표시 (다크 검정 배경에서 외곽 확보).
+            color: isSelected ? colors.primaryNormal : colors.lineNormalNeutral,
             width: isSelected ? 2 : 1,
           ),
         ),

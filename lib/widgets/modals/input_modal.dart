@@ -213,6 +213,16 @@ class _InputModalState extends State<InputModal> {
       decoration: BoxDecoration(
         color: colors.backgroundElevatedNormal,
         borderRadius: AppRadius.top(AppRadius.xxxl),
+        // 다크 모드는 어두운 배경 위에서 시트 상단 경계가 약해지므로
+        // 둥근 상단 모서리를 따라 좌/상/우 1px 보더만 추가한다.
+        // 화면 하단에 붙는 아래쪽은 선을 긋지 않는다. 라이트 외형은 불변.
+        border: Theme.of(context).brightness == Brightness.dark
+            ? Border(
+                top: BorderSide(color: colors.lineSolidNormal, width: 1),
+                left: BorderSide(color: colors.lineSolidNormal, width: 1),
+                right: BorderSide(color: colors.lineSolidNormal, width: 1),
+              )
+            : null,
       ),
       child: SafeArea(
         top: false,

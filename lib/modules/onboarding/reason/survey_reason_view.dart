@@ -118,6 +118,7 @@ class SurveyReasonView extends GetView<SurveyReasonController> {
   }
 
   Widget _buildBottomCTA(AppColorScheme colors) {
+    // body 가 SafeArea(top: false) 라 시스템 네비 인셋은 이미 보호됨
     return Container(
       padding: const EdgeInsets.fromLTRB(24, 16, 24, 34),
       decoration: BoxDecoration(color: colors.backgroundNormalNormal),

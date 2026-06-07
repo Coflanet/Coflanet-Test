@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:coflanet/constants/app_color_scheme.dart';
 import 'package:coflanet/constants/asset_constant.dart';
-import 'package:coflanet/constants/color_constant.dart';
 import 'package:coflanet/constants/style_constant.dart';
 
 /// 준비 스텝 일러스트 — 스텝 제목에 매칭되는 에셋 이미지, 없으면 이모지 placeholder.
@@ -22,6 +22,7 @@ class TimerStepIllustration extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final colors = AppColorScheme.of(context);
     final assetPath = _getIllustrationAsset(title);
 
     if (assetPath != null) {
@@ -33,13 +34,13 @@ class TimerStepIllustration extends StatelessWidget {
         fit: BoxFit.contain,
         errorBuilder: (context, error, stackTrace) {
           // 이미지 로드 실패 시 이모지 fallback
-          return _buildEmojiPlaceholder(illustrationEmoji ?? '☕');
+          return _buildEmojiPlaceholder(colors, illustrationEmoji ?? '☕');
         },
       );
     }
 
     // 이모지 placeholder fallback
-    return _buildEmojiPlaceholder(illustrationEmoji ?? '☕');
+    return _buildEmojiPlaceholder(colors, illustrationEmoji ?? '☕');
   }
 
   /// 스텝 제목 → 일러스트 에셋 매핑
@@ -54,12 +55,12 @@ class TimerStepIllustration extends StatelessWidget {
     }
   }
 
-  Widget _buildEmojiPlaceholder(String emoji) {
+  Widget _buildEmojiPlaceholder(AppColorScheme colors, String emoji) {
     return Container(
       width: 120,
       height: 120,
       decoration: BoxDecoration(
-        color: AppColor.primaryLight,
+        color: colors.primaryLight,
         shape: BoxShape.circle,
       ),
       alignment: Alignment.center,

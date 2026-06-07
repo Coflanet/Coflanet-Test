@@ -42,10 +42,7 @@ class SurveyResultView extends GetView<SurveyController> {
             AssetPath.iconArrowBack,
             width: 24,
             height: 24,
-            colorFilter: ColorFilter.mode(
-              colors.labelNormal,
-              BlendMode.srcIn,
-            ),
+            colorFilter: ColorFilter.mode(colors.labelNormal, BlendMode.srcIn),
           ),
           onPressed: () => Get.back(),
         ),
@@ -95,6 +92,9 @@ class SurveyResultView extends GetView<SurveyController> {
               // [백엔드 API 연동 대기] 추천 원두 전체 목록
               onMoreTap: () {},
               onRetakeTap: () => controller.startSurvey(),
+              // 원두 선택 없이 홈으로 — 결과는 저장되고 원두 담기만 생략
+              // (completeOnboarding 은 선택 0개면 원두 저장을 건너뛴다)
+              onSkipTap: () => controller.completeOnboarding(),
             ),
           ),
 

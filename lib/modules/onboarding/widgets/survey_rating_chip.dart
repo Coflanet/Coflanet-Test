@@ -111,11 +111,13 @@ class SurveyRatingChip extends StatelessWidget {
     }
     if (isDark) {
       return switch (sentiment) {
-        RatingSentiment.dislike =>
-          AppColor.colorGlobalRed50.withValues(alpha: 0.16),
+        RatingSentiment.dislike => AppColor.colorGlobalRed50.withValues(
+          alpha: 0.16,
+        ),
         RatingSentiment.neutral => colors.componentFillNormal,
-        RatingSentiment.like =>
-          AppColor.colorGlobalBlue50.withValues(alpha: 0.16),
+        RatingSentiment.like => AppColor.colorGlobalBlue50.withValues(
+          alpha: 0.16,
+        ),
       };
     }
     return switch (sentiment) {
@@ -135,11 +137,13 @@ class SurveyRatingChip extends StatelessWidget {
     }
     if (isDark) {
       return switch (sentiment) {
-        RatingSentiment.dislike =>
-          AppColor.colorGlobalRed50.withValues(alpha: 0.4),
+        RatingSentiment.dislike => AppColor.colorGlobalRed50.withValues(
+          alpha: 0.4,
+        ),
         RatingSentiment.neutral => colors.lineNormalNeutral,
-        RatingSentiment.like =>
-          AppColor.colorGlobalBlue50.withValues(alpha: 0.4),
+        RatingSentiment.like => AppColor.colorGlobalBlue50.withValues(
+          alpha: 0.4,
+        ),
       };
     }
     return switch (sentiment) {

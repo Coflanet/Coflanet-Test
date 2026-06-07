@@ -33,7 +33,8 @@ class HomeMyBeanSection extends StatelessWidget {
     return Container(
       padding: const EdgeInsets.fromLTRB(16, 16, 16, 16),
       decoration: BoxDecoration(
-        color: AppColor.primaryNormal,
+        // 브랜드 보라 고정 카드 (테마 무관) — raw 팔레트 직접 사용
+        color: AppColor.colorGlobalViolet50,
         borderRadius: AppRadius.xxlBorder,
       ),
       child: Column(
@@ -150,13 +151,15 @@ class HomeMyBeanSection extends StatelessWidget {
                         vertical: 2,
                       ),
                       decoration: BoxDecoration(
-                        color: AppColor.primaryNormal.withValues(alpha: 0.12),
+                        color: AppColor.colorGlobalViolet50.withValues(
+                          alpha: 0.12,
+                        ),
                         borderRadius: AppRadius.xsBorder,
                       ),
                       child: Text(
                         '구독중',
                         style: AppTextStyles.caption2Medium.copyWith(
-                          color: AppColor.primaryNormal,
+                          color: AppColor.colorGlobalViolet50,
                         ),
                       ),
                     ),

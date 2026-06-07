@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:coflanet/constants/color_constant.dart';
+import 'package:coflanet/constants/app_color_scheme.dart';
 import 'package:coflanet/constants/radius_constant.dart';
 import 'package:coflanet/constants/style_constant.dart';
 
@@ -14,6 +14,7 @@ class TimerActionText extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final colors = AppColorScheme.of(context);
     // 강조 패턴: 숫자 + 단위 (g, ml, 초, 번, 회, 분, μm)
     final regex = RegExp(r'(\d+\s*(?:g|ml|초|번|회|분|μm))');
     final spans = <TextSpan>[];
@@ -25,7 +26,7 @@ class TimerActionText extends StatelessWidget {
           TextSpan(
             text: text.substring(lastEnd, match.start),
             style: AppTextStyles.body1NormalMedium.copyWith(
-              color: AppColor.labelNormal,
+              color: colors.labelNormal,
             ),
           ),
         );
@@ -34,7 +35,7 @@ class TimerActionText extends StatelessWidget {
         TextSpan(
           text: match.group(0),
           style: AppTextStyles.body1NormalBold.copyWith(
-            color: AppColor.primaryNormal,
+            color: colors.primaryNormal,
           ),
         ),
       );
@@ -45,7 +46,7 @@ class TimerActionText extends StatelessWidget {
         TextSpan(
           text: text.substring(lastEnd),
           style: AppTextStyles.body1NormalMedium.copyWith(
-            color: AppColor.labelNormal,
+            color: colors.labelNormal,
           ),
         ),
       );
@@ -57,7 +58,7 @@ class TimerActionText extends StatelessWidget {
         TextSpan(
           text: text,
           style: AppTextStyles.body1NormalMedium.copyWith(
-            color: AppColor.labelNormal,
+            color: colors.labelNormal,
           ),
         ),
       );
@@ -67,7 +68,7 @@ class TimerActionText extends StatelessWidget {
       width: double.infinity,
       padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 14),
       decoration: BoxDecoration(
-        color: AppColor.backgroundNormalAlternative,
+        color: colors.surfaceCardStrong,
         borderRadius: AppRadius.lgBorder,
       ),
       child: RichText(

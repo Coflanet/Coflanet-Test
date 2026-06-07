@@ -69,23 +69,7 @@ class RecommendationCard extends StatelessWidget {
               children: [
                 _buildCheckbox(colors),
                 const Spacer(),
-                Container(
-                  padding: const EdgeInsets.symmetric(
-                    horizontal: 8,
-                    vertical: 4,
-                  ),
-                  decoration: BoxDecoration(
-                    color: AppColor.colorGlobalBlue50.withValues(alpha: 0.08),
-                    borderRadius: BorderRadius.circular(99),
-                  ),
-                  child: Text(
-                    '일치율 $matchPercent%',
-                    style: AppTextStyles.caption2Regular.copyWith(
-                      color: AppColor.colorGlobalBlue50,
-                      fontSize: 11,
-                    ),
-                  ),
-                ),
+                _buildMatchBadge(context, matchPercent),
               ],
             ),
             const SizedBox(height: 16), // Figma: gap 16px
@@ -198,6 +182,34 @@ class RecommendationCard extends StatelessWidget {
     );
   }
 
+  /// 일치율 뱃지 — 다크/라이트 분기.
+  /// 다크: 검정 배경 위 윤곽 확보를 위해 배경 Blue50@0.2 + 텍스트 Blue60.
+  /// 라이트: Figma 확정본 그대로 Blue50@0.08 + 텍스트 Blue50.
+  Widget _buildMatchBadge(BuildContext context, int matchPercent) {
+    final isDark = Theme.of(context).brightness == Brightness.dark;
+    final badgeBackground = isDark
+        ? AppColor.colorGlobalBlue50.withValues(alpha: 0.2)
+        : AppColor.colorGlobalBlue50.withValues(alpha: 0.08);
+    final badgeText = isDark
+        ? AppColor.colorGlobalBlue60
+        : AppColor.colorGlobalBlue50;
+
+    return Container(
+      padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
+      decoration: BoxDecoration(
+        color: badgeBackground,
+        borderRadius: BorderRadius.circular(99),
+      ),
+      child: Text(
+        '일치율 $matchPercent%',
+        style: AppTextStyles.caption2Regular.copyWith(
+          color: badgeText,
+          fontSize: 11,
+        ),
+      ),
+    );
+  }
+
   /// Figma 가격: "12,000" (16px Bold) + "원" (15px Regular)
   Widget _buildPriceRow(AppColorScheme colors, CoffeeRecommendationModel rec) {
     final price = rec.discountPrice ?? rec.originalPrice;
@@ -268,7 +280,7 @@ class RecommendationCard extends StatelessWidget {
                     widthFactor: item.$2 / 100,
                     child: Container(
                       decoration: BoxDecoration(
-                        color: AppColor.colorGlobalViolet70,
+                        color: colors.primarySecondary,
                         borderRadius: BorderRadius.circular(99),
                       ),
                     ),

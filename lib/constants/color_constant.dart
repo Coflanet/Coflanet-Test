@@ -206,28 +206,49 @@ class AppColor {
   static const double colorGlobalOpacity100 = 1.0;
 
   // ===== SEMANTIC TOKENS (Light Mode) =====
+  //
+  // [리팩토링 대상] 아래 정적 시맨틱 getter 들은 라이트 고정값이라
+  // 다크모드를 반영하지 못한다. 위젯에서는 반드시
+  // `AppColorScheme.of(context)` (app_color_scheme.dart) 를 사용할 것.
+  // @Deprecated 는 재발 방지 가드 — 새 사용처가 생기면 analyze 에서 경고된다.
 
   // Primary Colors
+  @Deprecated('AppColorScheme.of(context).primaryNormal 사용 — 정적 getter 는 다크모드 미반영')
   static Color get primaryNormal => colorGlobalViolet50;
+  @Deprecated('AppColorScheme.of(context).primarySecondary 사용 — 정적 getter 는 다크모드 미반영')
   static Color get primarySecondary => colorGlobalViolet70;
+  @Deprecated('AppColorScheme.of(context).primaryStrong 사용 — 정적 getter 는 다크모드 미반영')
   static Color get primaryStrong => colorGlobalViolet45;
+  @Deprecated('AppColorScheme.of(context).primaryHeavy 사용 — 정적 getter 는 다크모드 미반영')
   static Color get primaryHeavy => colorGlobalViolet40;
+  @Deprecated('AppColorScheme.of(context).primaryLight 사용 — 정적 getter 는 다크모드 미반영')
   static Color get primaryLight => colorGlobalViolet95;
 
   // Label Colors
+  @Deprecated('AppColorScheme.of(context).labelNormal 사용 — 정적 getter 는 다크모드 미반영')
   static Color get labelNormal => colorGlobalCoolNeutral10;
+  @Deprecated('AppColorScheme.of(context).labelStrong 사용 — 정적 getter 는 다크모드 미반영')
   static Color get labelStrong => colorGlobalCommon0;
+  @Deprecated('AppColorScheme.of(context).labelNeutral 사용 — 정적 getter 는 다크모드 미반영')
   static Color get labelNeutral => const Color(0xFF2E2F33).withValues(alpha:0.88);
+  @Deprecated('AppColorScheme.of(context).labelAlternative 사용 — 정적 getter 는 다크모드 미반영')
   static Color get labelAlternative =>
       const Color(0xFF37383C).withValues(alpha:0.61);
+  @Deprecated('AppColorScheme.of(context).labelAssistive 사용 — 정적 getter 는 다크모드 미반영')
   static Color get labelAssistive => const Color(0xFF37383C).withValues(alpha:0.35);
+  @Deprecated('AppColorScheme.of(context).labelDisable 사용 — 정적 getter 는 다크모드 미반영')
   static Color get labelDisable => const Color(0xFF37383C).withValues(alpha:0.16);
 
   // Background Colors
+  @Deprecated('AppColorScheme.of(context).backgroundNormalNormal 사용 — 정적 getter 는 다크모드 미반영')
   static Color get backgroundNormalNormal => colorGlobalCommon100;
+  @Deprecated('AppColorScheme.of(context).backgroundNormalAlternative 사용 — 정적 getter 는 다크모드 미반영')
   static Color get backgroundNormalAlternative => colorGlobalCoolNeutral99;
+  @Deprecated('AppColorScheme.of(context).backgroundElevatedNormal 사용 — 정적 getter 는 다크모드 미반영')
   static Color get backgroundElevatedNormal => colorGlobalCommon100;
+  @Deprecated('AppColorScheme.of(context).backgroundElevatedAlternative 사용 — 정적 getter 는 다크모드 미반영')
   static Color get backgroundElevatedAlternative => colorGlobalCoolNeutral99;
+  @Deprecated('AppColorScheme.of(context).backgroundOpacity75 사용 — 정적 getter 는 다크모드 미반영')
   static Color get backgroundOpacity75 =>
       const Color(0xFFFFFFFF).withValues(alpha:0.75);
 
@@ -235,61 +256,100 @@ class AppColor {
   static const Color backgroundTimer = Color(0xFF333333);
 
   // Interaction Colors
+  @Deprecated('AppColorScheme.of(context).interactionInactive 사용 — 정적 getter 는 다크모드 미반영')
   static Color get interactionInactive => colorGlobalCoolNeutral70;
+  @Deprecated('AppColorScheme.of(context).interactionDisable 사용 — 정적 getter 는 다크모드 미반영')
   static Color get interactionDisable =>
       const Color(0xFFF4F4F5).withValues(alpha:0.5);
 
   // Line Colors
+  @Deprecated('AppColorScheme.of(context).lineNormalNormal 사용 — 정적 getter 는 다크모드 미반영')
   static Color get lineNormalNormal =>
       const Color(0xFF70737C).withValues(alpha:0.22);
+  @Deprecated('AppColorScheme.of(context).lineNormalNeutral 사용 — 정적 getter 는 다크모드 미반영')
   static Color get lineNormalNeutral =>
       const Color(0xFF70737C).withValues(alpha:0.16);
+  @Deprecated('AppColorScheme.of(context).lineNormalAlternative 사용 — 정적 getter 는 다크모드 미반영')
   static Color get lineNormalAlternative =>
       const Color(0xFF70737C).withValues(alpha:0.08);
+  @Deprecated('AppColorScheme.of(context).lineSolidNormal 사용 — 정적 getter 는 다크모드 미반영')
   static Color get lineSolidNormal => colorGlobalCoolNeutral96;
+  @Deprecated('AppColorScheme.of(context).lineSolidNeutral 사용 — 정적 getter 는 다크모드 미반영')
   static Color get lineSolidNeutral => colorGlobalCoolNeutral97;
+  @Deprecated('AppColorScheme.of(context).lineSolidAlternative 사용 — 정적 getter 는 다크모드 미반영')
   static Color get lineSolidAlternative => colorGlobalCoolNeutral98;
 
   // Status Colors
+  @Deprecated('AppColorScheme.of(context).statusPositive 사용 — 정적 getter 는 다크모드 미반영')
   static Color get statusPositive => colorGlobalGreen50;
+  @Deprecated('AppColorScheme.of(context).statusPositiveBlue 사용 — 정적 getter 는 다크모드 미반영')
   static Color get statusPositiveBlue => colorGlobalBlue50;
+  @Deprecated('AppColorScheme.of(context).statusCautionary 사용 — 정적 getter 는 다크모드 미반영')
   static Color get statusCautionary => colorGlobalOrange50;
+  @Deprecated('AppColorScheme.of(context).statusNegative 사용 — 정적 getter 는 다크모드 미반영')
   static Color get statusNegative => colorGlobalRed50;
 
-  // Accent Background Colors
+  // Accent Background Colors (미사용 — 필요 시 raw 팔레트 직접 사용)
+  @Deprecated('미사용 토큰 — raw 팔레트(colorGlobal*) 직접 사용')
   static Color get accentBackgroundRed => colorGlobalRed50;
+  @Deprecated('미사용 토큰 — raw 팔레트(colorGlobal*) 직접 사용')
   static Color get accentBackgroundOrange => colorGlobalOrange50;
+  @Deprecated('미사용 토큰 — raw 팔레트(colorGlobal*) 직접 사용')
   static Color get accentBackgroundYellow => colorGlobalYellow50;
+  @Deprecated('미사용 토큰 — raw 팔레트(colorGlobal*) 직접 사용')
   static Color get accentBackgroundLime => colorGlobalLime50;
+  @Deprecated('미사용 토큰 — raw 팔레트(colorGlobal*) 직접 사용')
   static Color get accentBackgroundCyan => colorGlobalCyan50;
+  @Deprecated('미사용 토큰 — raw 팔레트(colorGlobal*) 직접 사용')
   static Color get accentBackgroundBlue => colorGlobalBlue50;
+  @Deprecated('미사용 토큰 — raw 팔레트(colorGlobal*) 직접 사용')
   static Color get accentBackgroundPink => colorGlobalPink50;
+  @Deprecated('미사용 토큰 — raw 팔레트(colorGlobal*) 직접 사용')
   static Color get accentBackgroundBrown => const Color(0xFFAD683D);
+  @Deprecated('미사용 토큰 — raw 팔레트(colorGlobal*) 직접 사용')
   static Color get accentBackgroundViolet => colorGlobalViolet50;
 
-  // Accent Foreground Colors
+  // Accent Foreground Colors (미사용 — 필요 시 raw 팔레트 직접 사용)
+  @Deprecated('미사용 토큰 — raw 팔레트(colorGlobal*) 직접 사용')
   static Color get accentForegroundRed => colorGlobalRed40;
+  @Deprecated('미사용 토큰 — raw 팔레트(colorGlobal*) 직접 사용')
   static Color get accentForegroundOrange => colorGlobalOrange39;
+  @Deprecated('미사용 토큰 — raw 팔레트(colorGlobal*) 직접 사용')
   static Color get accentForegroundYellow => colorGlobalYellow40;
+  @Deprecated('미사용 토큰 — raw 팔레트(colorGlobal*) 직접 사용')
   static Color get accentForegroundLime => colorGlobalLime37;
+  @Deprecated('미사용 토큰 — raw 팔레트(colorGlobal*) 직접 사용')
   static Color get accentForegroundGreen => colorGlobalGreen40;
+  @Deprecated('미사용 토큰 — raw 팔레트(colorGlobal*) 직접 사용')
   static Color get accentForegroundCyan => colorGlobalCyan40;
+  @Deprecated('미사용 토큰 — raw 팔레트(colorGlobal*) 직접 사용')
   static Color get accentForegroundLightBlue => colorGlobalLightBlue40;
+  @Deprecated('미사용 토큰 — raw 팔레트(colorGlobal*) 직접 사용')
   static Color get accentForegroundBlue => colorGlobalBlue45;
+  @Deprecated('미사용 토큰 — raw 팔레트(colorGlobal*) 직접 사용')
   static Color get accentForegroundViolet => colorGlobalViolet45;
+  @Deprecated('미사용 토큰 — raw 팔레트(colorGlobal*) 직접 사용')
   static Color get accentForegroundPink => colorGlobalPink46;
 
   // Inverse Colors
+  @Deprecated('AppColorScheme.of(context).inversePrimary 사용 — 정적 getter 는 다크모드 미반영')
   static Color get inversePrimary => colorGlobalViolet50;
+  @Deprecated('AppColorScheme.of(context).inverseBackground 사용 — 정적 getter 는 다크모드 미반영')
   static Color get inverseBackground => colorGlobalCoolNeutral15;
+  @Deprecated('AppColorScheme.of(context).inverseLabelNormal 사용 — 정적 getter 는 다크모드 미반영')
   static Color get inverseLabelNormal => colorGlobalCoolNeutral99;
+  @Deprecated('AppColorScheme.of(context).inverseLabelStrong 사용 — 정적 getter 는 다크모드 미반영')
   static Color get inverseLabelStrong => colorGlobalCommon100;
+  @Deprecated('테마 무관 고정값이 필요하면 staticLabelWhiteNeutral, 테마 반전은 AppColorScheme.of(context).inverseLabelNeutral')
   static Color get inverseLabelNeutral =>
       const Color(0xFFC2C4C8).withValues(alpha:0.88);
+  @Deprecated('테마 무관 고정값이 필요하면 staticLabelWhiteAlternative, 테마 반전은 AppColorScheme.of(context).inverseLabelAlternative')
   static Color get inverseLabelAlternative =>
       const Color(0xFFAEB0B6).withValues(alpha:0.61);
+  @Deprecated('테마 무관 고정값이 필요하면 staticLabelWhiteAssistive, 테마 반전은 AppColorScheme.of(context).inverseLabelAssistive')
   static Color get inverseLabelAssistive =>
       const Color(0xFFAEB0B6).withValues(alpha:0.35);
+  @Deprecated('테마 무관 고정값이 필요하면 staticLabelWhiteDisable, 테마 반전은 AppColorScheme.of(context).inverseLabelDisable')
   static Color get inverseLabelDisable =>
       const Color(0xFF989BA2).withValues(alpha:0.16);
 
@@ -318,14 +378,19 @@ class AppColor {
       const Color(0xFF989BA2).withValues(alpha:0.16);
 
   // Component Colors
+  @Deprecated('AppColorScheme.of(context).componentFillNormal 사용 — 정적 getter 는 다크모드 미반영')
   static Color get componentFillNormal =>
       const Color(0xFF70737C).withValues(alpha:0.08);
+  @Deprecated('AppColorScheme.of(context).componentFillStrong 사용 — 정적 getter 는 다크모드 미반영')
   static Color get componentFillStrong =>
       const Color(0xFF70737C).withValues(alpha:0.16);
+  @Deprecated('AppColorScheme.of(context).componentFillAlternative 사용 — 정적 getter 는 다크모드 미반영')
   static Color get componentFillAlternative =>
       const Color(0xFF70737C).withValues(alpha:0.05);
+  @Deprecated('AppColorScheme.of(context).componentFillScroll 사용 — 정적 getter 는 다크모드 미반영')
   static Color get componentFillScroll =>
       const Color(0xFF4D4D4D).withValues(alpha:0.6);
+  @Deprecated('AppColorScheme.of(context).componentMaterialDimmer 사용 — 정적 getter 는 다크모드 미반영')
   static Color get componentMaterialDimmer =>
       const Color(0xFF171719).withValues(alpha:0.52);
 
@@ -363,75 +428,113 @@ class AppColor {
   /// Apple white - for dark mode
   static const Color socialAppleWhite = Color(0xFFFFFFFF);
 
-  // ===== DARK MODE SUPPORT =====
+  // ===== DARK MODE SUPPORT (레거시) =====
+  //
+  // [리팩토링 대상] 다크 값의 단일 소스는 AppColorScheme.dark 다.
+  // 아래 dark* getter 는 마이그레이션 이전 레거시 — 사용 금지.
 
   // Dark Mode Primary Colors
+  @Deprecated('AppColorScheme.dark 가 단일 소스 — 레거시 getter 사용 금지')
   static Color get darkPrimaryNormal => colorGlobalViolet60;
+  @Deprecated('AppColorScheme.dark 가 단일 소스 — 레거시 getter 사용 금지')
   static Color get darkPrimarySecondary => colorGlobalViolet70;
+  @Deprecated('AppColorScheme.dark 가 단일 소스 — 레거시 getter 사용 금지')
   static Color get darkPrimaryStrong => colorGlobalViolet55;
+  @Deprecated('AppColorScheme.dark 가 단일 소스 — 레거시 getter 사용 금지')
   static Color get darkPrimaryHeavy => colorGlobalViolet50;
+  @Deprecated('AppColorScheme.dark 가 단일 소스 — 레거시 getter 사용 금지')
   static Color get darkPrimaryLight => colorGlobalViolet20;
 
   // Dark Mode Background Colors
+  @Deprecated('AppColorScheme.dark 가 단일 소스 — 레거시 getter 사용 금지')
   static Color get darkBackgroundNormalNormal => colorGlobalCoolNeutral15;
+  @Deprecated('AppColorScheme.dark 가 단일 소스 — 레거시 getter 사용 금지')
   static Color get darkBackgroundNormalAlternative => colorGlobalCoolNeutral5;
+  @Deprecated('AppColorScheme.dark 가 단일 소스 — 레거시 getter 사용 금지')
   static Color get darkBackgroundElevatedNormal => colorGlobalCoolNeutral17;
+  @Deprecated('AppColorScheme.dark 가 단일 소스 — 레거시 getter 사용 금지')
   static Color get darkBackgroundElevatedAlternative => colorGlobalCoolNeutral7;
+  @Deprecated('AppColorScheme.dark 가 단일 소스 — 레거시 getter 사용 금지')
   static Color get darkBackgroundOpacity75 =>
       const Color(0xFF000000).withValues(alpha:0.75);
 
   // Dark Mode Label Colors
+  @Deprecated('AppColorScheme.dark 가 단일 소스 — 레거시 getter 사용 금지')
   static Color get darkLabelNormal => colorGlobalCoolNeutral99;
+  @Deprecated('AppColorScheme.dark 가 단일 소스 — 레거시 getter 사용 금지')
   static Color get darkLabelStrong => colorGlobalCommon100;
+  @Deprecated('AppColorScheme.dark 가 단일 소스 — 레거시 getter 사용 금지')
   static Color get darkLabelNeutral =>
       const Color(0xFFC2C4C8).withValues(alpha:0.88);
+  @Deprecated('AppColorScheme.dark 가 단일 소스 — 레거시 getter 사용 금지')
   static Color get darkLabelAlternative =>
       const Color(0xFFAEB0B6).withValues(alpha:0.61);
+  @Deprecated('AppColorScheme.dark 가 단일 소스 — 레거시 getter 사용 금지')
   static Color get darkLabelAssistive =>
       const Color(0xFFAEB0B6).withValues(alpha:0.28);
+  @Deprecated('AppColorScheme.dark 가 단일 소스 — 레거시 getter 사용 금지')
   static Color get darkLabelDisable =>
       const Color(0xFF989BA2).withValues(alpha:0.16);
 
   // Dark Mode Interaction Colors
+  @Deprecated('AppColorScheme.dark 가 단일 소스 — 레거시 getter 사용 금지')
   static Color get darkInteractionInactive => colorGlobalCoolNeutral40;
+  @Deprecated('AppColorScheme.dark 가 단일 소스 — 레거시 getter 사용 금지')
   static Color get darkInteractionDisable =>
       const Color(0xFF2E2F33).withValues(alpha:0.5);
 
   // Dark Mode Line Colors
+  @Deprecated('AppColorScheme.dark 가 단일 소스 — 레거시 getter 사용 금지')
   static Color get darkLineNormalNormal =>
       const Color(0xFF70737C).withValues(alpha:0.32);
+  @Deprecated('AppColorScheme.dark 가 단일 소스 — 레거시 getter 사용 금지')
   static Color get darkLineNormalNeutral =>
       const Color(0xFF70737C).withValues(alpha:0.28);
+  @Deprecated('AppColorScheme.dark 가 단일 소스 — 레거시 getter 사용 금지')
   static Color get darkLineNormalAlternative =>
       const Color(0xFF70737C).withValues(alpha:0.22);
+  @Deprecated('AppColorScheme.dark 가 단일 소스 — 레거시 getter 사용 금지')
   static Color get darkLineSolidNormal => colorGlobalCoolNeutral25;
+  @Deprecated('AppColorScheme.dark 가 단일 소스 — 레거시 getter 사용 금지')
   static Color get darkLineSolidNeutral => colorGlobalCoolNeutral23;
+  @Deprecated('AppColorScheme.dark 가 단일 소스 — 레거시 getter 사용 금지')
   static Color get darkLineSolidAlternative => colorGlobalCoolNeutral22;
 
   // Dark Mode Status Colors
+  @Deprecated('AppColorScheme.dark 가 단일 소스 — 레거시 getter 사용 금지')
   static Color get darkStatusPositive => colorGlobalGreen60;
+  @Deprecated('AppColorScheme.dark 가 단일 소스 — 레거시 getter 사용 금지')
   static Color get darkStatusPositiveBlue => colorGlobalBlue60;
+  @Deprecated('AppColorScheme.dark 가 단일 소스 — 레거시 getter 사용 금지')
   static Color get darkStatusCautionary => colorGlobalOrange60;
+  @Deprecated('AppColorScheme.dark 가 단일 소스 — 레거시 getter 사용 금지')
   static Color get darkStatusNegative => colorGlobalRed60;
 
   // Dark Mode Component Colors
+  @Deprecated('AppColorScheme.dark 가 단일 소스 — 레거시 getter 사용 금지')
   static Color get darkComponentFillNormal =>
       const Color(0xFF70737C).withValues(alpha:0.22);
+  @Deprecated('AppColorScheme.dark 가 단일 소스 — 레거시 getter 사용 금지')
   static Color get darkComponentFillStrong =>
       const Color(0xFF70737C).withValues(alpha:0.28);
+  @Deprecated('AppColorScheme.dark 가 단일 소스 — 레거시 getter 사용 금지')
   static Color get darkComponentFillAlternative =>
       const Color(0xFF70737C).withValues(alpha:0.12);
+  @Deprecated('AppColorScheme.dark 가 단일 소스 — 레거시 getter 사용 금지')
   static Color get darkComponentFillScroll =>
       const Color(0xFF3E3E3E).withValues(alpha:0.6);
+  @Deprecated('AppColorScheme.dark 가 단일 소스 — 레거시 getter 사용 금지')
   static Color get darkComponentMaterialDimmer =>
       const Color(0xFF171719).withValues(alpha:0.74);
 
   // Helper method to apply opacity to any color
+  @Deprecated('Color.withValues(alpha:) 직접 사용')
   static Color withOpacity(Color color, double opacity) {
     return color.withValues(alpha:opacity);
   }
 
   // Convenience method to get theme-appropriate colors
+  @Deprecated('AppColorScheme.of(context) 사용 — 수동 분기 금지')
   static Color getThemeColor({
     required Color lightColor,
     required Color darkColor,

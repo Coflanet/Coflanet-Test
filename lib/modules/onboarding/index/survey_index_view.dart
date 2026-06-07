@@ -109,9 +109,7 @@ class SurveyIndexView extends GetView<SurveyController> {
       centerTitle: true,
       title: Text(
         '취향 분석',
-        style: AppTextStyles.headline2Bold.copyWith(
-          color: colors.labelNormal,
-        ),
+        style: AppTextStyles.headline2Bold.copyWith(color: colors.labelNormal),
       ),
     );
   }
@@ -142,7 +140,7 @@ class SurveyIndexView extends GetView<SurveyController> {
               style: AppTextStyles.label1NormalBold.copyWith(
                 color: isActive
                     ? AppColor.staticLabelWhiteNormal
-                    : colors.labelAlternative,
+                    : colors.labelNormal,
               ),
             ),
           ),

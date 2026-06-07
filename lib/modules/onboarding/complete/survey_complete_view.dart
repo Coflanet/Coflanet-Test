@@ -118,12 +118,17 @@ class SurveyCompleteView extends GetView<SurveyController> {
           ),
 
           // Bottom CTA area (BottomSheet_CTA style)
+          // SafeArea minimum: 제스처 네비=기존 34px 유지, 3버튼 네비=시스템 바 위로
           Container(
-            padding: const EdgeInsets.fromLTRB(24, 16, 24, 34),
+            padding: const EdgeInsets.fromLTRB(24, 16, 24, 0),
             decoration: BoxDecoration(color: colors.backgroundNormalNormal),
-            child: PrimaryButton(
-              text: '내 취향 커피 만나러 가기',
-              onPressed: () => controller.viewResult(),
+            child: SafeArea(
+              top: false,
+              minimum: const EdgeInsets.only(bottom: 34),
+              child: PrimaryButton(
+                text: '내 취향 커피 만나러 가기',
+                onPressed: () => controller.viewResult(),
+              ),
             ),
           ),
         ],

@@ -88,7 +88,7 @@ class SurveySectionIntroView extends GetView<SurveyController> {
               ),
             ),
 
-            // Bottom CTA
+            // Bottom CTA — body 가 SafeArea(top: false) 라 인셋은 이미 보호됨
             Container(
               padding: const EdgeInsets.fromLTRB(24, 16, 24, 34),
               decoration: BoxDecoration(color: colors.backgroundNormalNormal),
@@ -144,9 +144,7 @@ class SurveySectionIntroView extends GetView<SurveyController> {
       centerTitle: true,
       title: Text(
         '취향 분석',
-        style: AppTextStyles.headline2Bold.copyWith(
-          color: colors.labelNormal,
-        ),
+        style: AppTextStyles.headline2Bold.copyWith(color: colors.labelNormal),
       ),
       actions: [
         // X 닫기 버튼 (건너뛰기)
@@ -155,10 +153,7 @@ class SurveySectionIntroView extends GetView<SurveyController> {
             AssetPath.iconClose,
             width: 24,
             height: 24,
-            colorFilter: ColorFilter.mode(
-              colors.labelNormal,
-              BlendMode.srcIn,
-            ),
+            colorFilter: ColorFilter.mode(colors.labelNormal, BlendMode.srcIn),
           ),
           onPressed: () => controller.skipSurvey(),
         ),
@@ -274,7 +269,7 @@ class SurveySectionIntroView extends GetView<SurveyController> {
                     style: AppTextStyles.label1NormalBold.copyWith(
                       color: state == _StepState.active
                           ? AppColor.staticLabelWhiteNormal
-                          : colors.labelAlternative,
+                          : colors.labelNormal,
                     ),
                   ),
           ),

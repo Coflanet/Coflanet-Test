@@ -34,6 +34,20 @@ class CircularTimer extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final isDark = Theme.of(context).brightness == Brightness.dark;
+    // 트랙(배경 링) 기본값 — backgroundColor 가 주입되면 그대로 존중하고,
+    // 미주입 시에만 테마 분기. 라이트는 기존값, 다크는 어두운 배경 대비를
+    // 확보하기 위해 더 밝은 중립색을 사용한다.
+    final resolvedTrackColor =
+        backgroundColor ??
+        (isDark
+            ? AppColor.colorGlobalCoolNeutral50.withValues(alpha: 0.45)
+            : AppColor.colorGlobalNeutral22.withValues(alpha: 0.3));
+    // 내부 장식 링 보더 — 다크에서 살짝 더 밝게 보강.
+    final innerRingColor = isDark
+        ? AppColor.colorGlobalCoolNeutral40.withValues(alpha: 0.25)
+        : AppColor.colorGlobalNeutral22.withValues(alpha: 0.1);
+
     return SizedBox(
       width: size,
       height: size,
@@ -65,9 +79,7 @@ class CircularTimer extends StatelessWidget {
                 progress: progress,
                 strokeWidth: strokeWidth,
                 progressColor: progressColor ?? AppColor.colorGlobalOrange50,
-                backgroundColor:
-                    backgroundColor ??
-                    AppColor.colorGlobalNeutral22.withValues(alpha: 0.3),
+                backgroundColor: resolvedTrackColor,
                 phaseMarkers: phaseMarkers,
               ),
             )
@@ -82,9 +94,7 @@ class CircularTimer extends StatelessWidget {
                   progress: animatedProgress,
                   strokeWidth: strokeWidth,
                   progressColor: progressColor ?? AppColor.colorGlobalOrange50,
-                  backgroundColor:
-                      backgroundColor ??
-                      AppColor.colorGlobalNeutral22.withValues(alpha: 0.3),
+                  backgroundColor: resolvedTrackColor,
                   phaseMarkers: phaseMarkers,
                 ),
               ),
@@ -96,7 +106,7 @@ class CircularTimer extends StatelessWidget {
             decoration: BoxDecoration(
               shape: BoxShape.circle,
               border: Border.all(
-                color: AppColor.colorGlobalNeutral22.withValues(alpha: 0.1),
+                color: innerRingColor,
                 width: 1,
               ),
             ),

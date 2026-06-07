@@ -131,9 +131,7 @@ class _RatingButton extends StatelessWidget {
         duration: const Duration(milliseconds: 150),
         padding: const EdgeInsets.symmetric(vertical: 12, horizontal: 8),
         decoration: BoxDecoration(
-          color: isSelected
-              ? colors.primaryLight
-              : colors.componentFillNormal,
+          color: isSelected ? colors.primaryLight : colors.componentFillNormal,
           borderRadius: AppRadius.mdBorder,
           border: Border.all(
             color: isSelected ? colors.primaryNormal : AppColor.transparent,
@@ -148,9 +146,7 @@ class _RatingButton extends StatelessWidget {
             Text(
               label,
               style: AppTextStyles.caption1Medium.copyWith(
-                color: isSelected
-                    ? colors.primaryNormal
-                    : colors.labelNormal,
+                color: isSelected ? colors.primaryNormal : colors.labelNormal,
               ),
             ),
           ],

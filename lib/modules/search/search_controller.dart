@@ -1,6 +1,6 @@
 import 'package:flutter/widgets.dart';
 import 'package:get/get.dart';
-import 'package:coflanet/constants/color_constant.dart';
+import 'package:coflanet/constants/util_constant.dart';
 import 'package:coflanet/core/base/base_controller.dart';
 import 'package:coflanet/core/services/cart_service.dart';
 import 'package:coflanet/data/models/cart_item_model.dart';
@@ -80,13 +80,6 @@ class SearchController extends BaseController {
         price: bean.displayPrice ?? 0,
       ),
     );
-    Get.snackbar(
-      '장바구니',
-      '${bean.name}을(를) 담았어요',
-      snackPosition: SnackPosition.BOTTOM,
-      backgroundColor: AppColor.primaryNormal,
-      colorText: AppColor.staticLabelWhiteStrong,
-      duration: const Duration(seconds: 2),
-    );
+    AppUtil.showSuccessSnackbar('장바구니', '${bean.name}을(를) 담았어요');
   }
 }

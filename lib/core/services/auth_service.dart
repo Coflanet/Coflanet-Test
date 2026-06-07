@@ -3,6 +3,7 @@ import 'package:flutter/widgets.dart';
 import 'package:get/get.dart';
 import 'package:supabase_flutter/supabase_flutter.dart'
     hide LocalStorage, AuthException;
+import 'package:coflanet/constants/util_constant.dart';
 import 'package:coflanet/core/services/auth_error.dart' as auth_error;
 import 'package:coflanet/core/storage/local_storage.dart';
 import 'package:coflanet/data/models/user_model.dart';
@@ -239,7 +240,8 @@ class AuthService extends GetxService with WidgetsBindingObserver {
       _currentUser.value = null;
 
       Get.offAllNamed(Routes.signIn);
-      Get.snackbar('세션 만료', '세션이 만료되었습니다. 다시 로그인해주세요.');
+      // 테마 반응 공용 에러 스낵바 (기본 Get.snackbar 는 테마 미반영)
+      AppUtil.showErrorSnackbar('세션 만료', '세션이 만료되었습니다. 다시 로그인해주세요.');
     } finally {
       _handlingSessionExpiry = false;
     }

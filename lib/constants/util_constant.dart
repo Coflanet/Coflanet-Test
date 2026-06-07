@@ -86,20 +86,60 @@ class AppUtil {
   }
 
   static void showToast(String msg) {
+    final colors = AppColorScheme.of(Get.context!);
     Get.snackbar(
       '',
       msg,
       snackPosition: SnackPosition.BOTTOM,
-      backgroundColor: AppColor.statusNegative,
+      backgroundColor: colors.statusNegative,
       colorText: AppColor.staticLabelWhiteStrong,
       duration: const Duration(seconds: 2),
     );
   }
 
+  /// 성공/안내 스낵바 — 보라(primary) 배경 + 흰 텍스트, 테마 반응.
+  ///
+  /// 컨트롤러에서 색을 직접 만지지 말고 항상 이 유틸을 사용한다
+  /// (정적 토큰 직접 사용으로 인한 다크모드 불일치 재발 방지).
+  static void showSuccessSnackbar(String title, String message) {
+    final colors = AppColorScheme.of(Get.context!);
+    Get.snackbar(
+      title,
+      message,
+      snackPosition: SnackPosition.BOTTOM,
+      backgroundColor: colors.primaryNormal.withValues(alpha: 0.95),
+      colorText: AppColor.staticLabelWhiteStrong,
+      margin: const EdgeInsets.all(16),
+      borderRadius: 12,
+      duration: const Duration(seconds: 2),
+    );
+  }
+
+  /// 에러 스낵바 — 빨강(statusNegative) 배경 + 흰 텍스트, 테마 반응.
+  static void showErrorSnackbar(String title, String message) {
+    final colors = AppColorScheme.of(Get.context!);
+    Get.snackbar(
+      title,
+      message,
+      snackPosition: SnackPosition.BOTTOM,
+      backgroundColor: colors.statusNegative.withValues(alpha: 0.95),
+      colorText: AppColor.staticLabelWhiteStrong,
+      margin: const EdgeInsets.all(16),
+      borderRadius: 12,
+      duration: const Duration(seconds: 3),
+      icon: Icon(
+        Icons.error_outline,
+        color: AppColor.staticLabelWhiteStrong,
+      ),
+    );
+  }
+
   /// 상단에서 부드럽게 내려와 잠시 보였다가 다시 올라가는 안내 토스트.
   ///
-  /// 에러용(빨강) [showToast] 와 달리 중립 다크 톤 — 가벼운 안내/검증 메시지에 사용.
+  /// 에러용(빨강) [showToast] 와 달리 중립 반전 톤 — 가벼운 안내/검증 메시지에 사용.
+  /// 테마 반전(inverse) 토큰 사용: 라이트=어두운 토스트, 다크=밝은 토스트.
   static void showTopToast(String msg) {
+    final colors = AppColorScheme.of(Get.context!);
     // 떠 있는 토스트가 있으면 닫고 새로 표시 (중복 누적 방지)
     if (Get.isSnackbarOpen) {
       Get.closeCurrentSnackbar();
@@ -109,13 +149,11 @@ class AppUtil {
         msg,
         textAlign: TextAlign.center,
         style: AppTextStyles.body2NormalMedium.copyWith(
-          color: AppColor.staticLabelWhiteStrong,
+          color: colors.inverseLabelStrong,
         ),
       ),
       snackPosition: SnackPosition.TOP,
-      backgroundColor: AppColor.colorGlobalCoolNeutral10.withValues(
-        alpha: 0.94,
-      ),
+      backgroundColor: colors.inverseBackground.withValues(alpha: 0.96),
       borderRadius: 14,
       margin: const EdgeInsets.fromLTRB(16, 12, 16, 0),
       padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 14),

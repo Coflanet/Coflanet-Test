@@ -34,9 +34,7 @@ class SurveyEquipmentGridItem extends StatelessWidget {
       child: AnimatedContainer(
         duration: const Duration(milliseconds: 200),
         decoration: BoxDecoration(
-          color: isSelected
-              ? colors.primaryLight
-              : colors.componentFillNormal,
+          color: isSelected ? colors.primaryLight : colors.componentFillNormal,
           borderRadius: AppRadius.lgBorder,
           border: Border.all(
             color: isSelected ? colors.primaryNormal : AppColor.transparent,
@@ -58,7 +56,7 @@ class SurveyEquipmentGridItem extends StatelessWidget {
                 Icons.coffee_rounded,
                 color: isSelected
                     ? colors.primaryNormal
-                    : colors.labelAssistive,
+                    : colors.labelAlternative,
                 size: 24,
               ),
             ),
@@ -66,9 +64,7 @@ class SurveyEquipmentGridItem extends StatelessWidget {
             Text(
               label,
               style: AppTextStyles.label1NormalMedium.copyWith(
-                color: isSelected
-                    ? colors.primaryNormal
-                    : colors.labelNormal,
+                color: isSelected ? colors.primaryNormal : colors.labelNormal,
               ),
               textAlign: TextAlign.center,
             ),

@@ -94,10 +94,7 @@ class SurveyQuestionView extends GetView<SurveyController> {
             AssetPath.iconClose,
             width: 24,
             height: 24,
-            colorFilter: ColorFilter.mode(
-              colors.labelNormal,
-              BlendMode.srcIn,
-            ),
+            colorFilter: ColorFilter.mode(colors.labelNormal, BlendMode.srcIn),
           ),
           onPressed: () => controller.skipSurvey(),
         ),
@@ -121,10 +118,7 @@ class SurveyQuestionView extends GetView<SurveyController> {
             // 질문 텍스트 (상단)
             Align(
               alignment: Alignment.centerLeft,
-              child: Text(
-                question.question,
-                style: _screenHeaderStyle(colors),
-              ),
+              child: Text(question.question, style: _screenHeaderStyle(colors)),
             ),
             if (question.description.isNotEmpty) ...[
               const SizedBox(height: 8),

@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:coflanet/constants/color_constant.dart';
+import 'package:coflanet/constants/app_color_scheme.dart';
 import 'package:coflanet/constants/radius_constant.dart';
 import 'package:coflanet/constants/style_constant.dart';
 
@@ -14,10 +14,11 @@ class TimerWaterAmountChip extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final colors = AppColorScheme.of(context);
     return Container(
       padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 10),
       decoration: BoxDecoration(
-        color: AppColor.backgroundNormalAlternative,
+        color: colors.surfaceCardStrong,
         borderRadius: AppRadius.lgBorder,
       ),
       child: Row(
@@ -25,14 +26,14 @@ class TimerWaterAmountChip extends StatelessWidget {
         children: [
           Icon(
             Icons.water_drop_outlined,
-            color: AppColor.primaryNormal,
+            color: colors.primaryNormal,
             size: 18,
           ),
           const SizedBox(width: 6),
           Text(
             '${waterAmount}ml',
             style: AppTextStyles.body1NormalBold.copyWith(
-              color: AppColor.primaryNormal,
+              color: colors.primaryNormal,
             ),
           ),
         ],

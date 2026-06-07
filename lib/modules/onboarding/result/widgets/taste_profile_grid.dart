@@ -96,7 +96,7 @@ class TasteProfileGrid extends StatelessWidget {
                 Text(
                   levelText,
                   style: AppTextStyles.caption2Medium.copyWith(
-                    color: colors.labelAlternative,
+                    color: colors.labelNeutral,
                   ),
                 ),
               ],

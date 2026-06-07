@@ -90,9 +90,10 @@ class HomePromoBanner extends StatelessWidget {
                       : null,
                 ),
                 child: banner.imageUrl == null
-                    ? Icon(
+                    // 고정 흰 박스 위 — 테마 무관 고정 보라 (raw 팔레트)
+                    ? const Icon(
                         Icons.coffee,
-                        color: AppColor.primaryNormal,
+                        color: AppColor.colorGlobalViolet50,
                         size: 32,
                       )
                     : null,

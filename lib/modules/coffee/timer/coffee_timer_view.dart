@@ -514,7 +514,7 @@ class CoffeeTimerView extends GetView<CoffeeTimerController> {
                         controller.isLastStep ? '완료' : '다음',
                         style: AppTextStyles.body1NormalMedium.copyWith(
                           color: isTimerActive
-                              ? AppColor.labelDisable
+                              ? colors.labelAssistive
                               : AppColor.staticLabelWhiteStrong,
                         ),
                       ),

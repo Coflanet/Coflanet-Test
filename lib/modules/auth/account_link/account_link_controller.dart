@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:coflanet/constants/color_constant.dart';
+import 'package:coflanet/constants/util_constant.dart';
 import 'package:coflanet/core/base/base_controller.dart';
 import 'package:coflanet/core/services/auth_service.dart';
 import 'package:coflanet/data/models/user_model.dart';
@@ -36,15 +36,7 @@ class AccountLinkController extends BaseController {
       clearError();
       await _authService.linkWithSocial(type);
       Get.back();
-      Get.snackbar(
-        '완료',
-        '계정이 연결되었습니다',
-        snackPosition: SnackPosition.BOTTOM,
-        backgroundColor: AppColor.primaryNormal.withValues(alpha: 0.9),
-        colorText: Colors.white,
-        margin: const EdgeInsets.all(16),
-        borderRadius: 12,
-      );
+      AppUtil.showSuccessSnackbar('완료', '계정이 연결되었습니다');
     } on AuthException catch (e) {
       _showError(e.message);
     } catch (e) {
@@ -76,15 +68,7 @@ class AccountLinkController extends BaseController {
       clearError();
       await _authService.linkWithEmail(email, password);
       Get.back();
-      Get.snackbar(
-        '완료',
-        '이메일 계정이 연결되었습니다',
-        snackPosition: SnackPosition.BOTTOM,
-        backgroundColor: AppColor.primaryNormal.withValues(alpha: 0.9),
-        colorText: Colors.white,
-        margin: const EdgeInsets.all(16),
-        borderRadius: 12,
-      );
+      AppUtil.showSuccessSnackbar('완료', '이메일 계정이 연결되었습니다');
     } on AuthException catch (e) {
       _showError(e.message);
     } catch (e) {
@@ -96,16 +80,6 @@ class AccountLinkController extends BaseController {
 
   void _showError(String message) {
     setError(message);
-    Get.snackbar(
-      '연결 실패',
-      message,
-      snackPosition: SnackPosition.BOTTOM,
-      backgroundColor: AppColor.statusNegative.withValues(alpha: 0.9),
-      colorText: Colors.white,
-      margin: const EdgeInsets.all(16),
-      borderRadius: 12,
-      duration: const Duration(seconds: 4),
-      icon: const Icon(Icons.error_outline, color: Colors.white),
-    );
+    AppUtil.showErrorSnackbar('연결 실패', message);
   }
 }
