@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
+import 'package:coflanet/constants/app_color_scheme.dart';
 import 'package:coflanet/constants/asset_constant.dart';
 import 'package:coflanet/constants/color_constant.dart';
 import 'package:coflanet/constants/radius_constant.dart';
@@ -140,7 +141,8 @@ class _BeanEditViewState extends State<BeanEditView> {
         '입력 오류',
         '원두 이름을 입력해주세요',
         snackPosition: SnackPosition.BOTTOM,
-        backgroundColor: AppColor.statusNegative,
+        backgroundColor: AppColorScheme.of(context).statusNegative,
+        // 보라/에러 배경 위 흰 텍스트는 테마 무관 static 유지
         colorText: AppColor.staticLabelWhiteStrong,
       );
       return;
@@ -210,6 +212,8 @@ class _BeanEditViewState extends State<BeanEditView> {
 
   @override
   Widget build(BuildContext context) {
+    final colors = AppColorScheme.of(context);
+
     return PopScope(
       canPop: false,
       onPopInvokedWithResult: (didPop, result) async {
@@ -220,24 +224,24 @@ class _BeanEditViewState extends State<BeanEditView> {
         }
       },
       child: Scaffold(
-        backgroundColor: AppColor.colorGlobalCommon0,
+        backgroundColor: colors.backgroundNormalAlternative,
         body: SafeArea(
           child: Column(
             children: [
-              _buildAppBar(),
+              _buildAppBar(colors),
               Expanded(
                 child: SingleChildScrollView(
                   padding: const EdgeInsets.all(24),
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      _buildBasicInfoSection(),
+                      _buildBasicInfoSection(colors),
                       const SizedBox(height: 32),
-                      _buildFlavorProfileSection(),
+                      _buildFlavorProfileSection(colors),
                       const SizedBox(height: 32),
-                      _buildFlavorTagsSection(),
+                      _buildFlavorTagsSection(colors),
                       const SizedBox(height: 32),
-                      _buildDetailsSection(),
+                      _buildDetailsSection(colors),
                       const SizedBox(height: 100),
                     ],
                   ),
@@ -251,7 +255,7 @@ class _BeanEditViewState extends State<BeanEditView> {
     );
   }
 
-  Widget _buildAppBar() {
+  Widget _buildAppBar(AppColorScheme colors) {
     return Container(
       padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 8),
       child: Row(
@@ -262,7 +266,7 @@ class _BeanEditViewState extends State<BeanEditView> {
               width: 24,
               height: 24,
               colorFilter: ColorFilter.mode(
-                AppColor.colorGlobalCommon100,
+                colors.labelStrong,
                 BlendMode.srcIn,
               ),
             ),
@@ -275,7 +279,7 @@ class _BeanEditViewState extends State<BeanEditView> {
           Text(
             _isEditing ? '원두 편집' : '원두 추가',
             style: AppTextStyles.headline1Bold.copyWith(
-              color: AppColor.colorGlobalCommon100,
+              color: colors.labelStrong,
             ),
           ),
           const Spacer(),
@@ -285,13 +289,14 @@ class _BeanEditViewState extends State<BeanEditView> {
     );
   }
 
-  Widget _buildBasicInfoSection() {
+  Widget _buildBasicInfoSection(AppColorScheme colors) {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        _buildSectionTitle('기본 정보'),
+        _buildSectionTitle(colors, '기본 정보'),
         const SizedBox(height: 16),
         _buildTextField(
+          colors: colors,
           controller: _brandController,
           label: '브랜드명',
           hint: '브랜드명을 입력해주세요',
@@ -299,6 +304,7 @@ class _BeanEditViewState extends State<BeanEditView> {
         ),
         const SizedBox(height: 16),
         _buildTextField(
+          colors: colors,
           controller: _nameController,
           label: '원두 이름',
           hint: '원두 이름을 입력해주세요',
@@ -306,6 +312,7 @@ class _BeanEditViewState extends State<BeanEditView> {
         ),
         const SizedBox(height: 16),
         _buildTextField(
+          colors: colors,
           controller: _originController,
           label: '원산지',
           hint: '예: 에티오피아 예가체프',
@@ -315,11 +322,11 @@ class _BeanEditViewState extends State<BeanEditView> {
     );
   }
 
-  Widget _buildFlavorProfileSection() {
+  Widget _buildFlavorProfileSection(AppColorScheme colors) {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        _buildSectionTitle('향미 프로필'),
+        _buildSectionTitle(colors, '향미 프로필'),
         const SizedBox(height: 16),
         // Radar chart preview
         Center(
@@ -335,10 +342,10 @@ class _BeanEditViewState extends State<BeanEditView> {
             showLabels: true,
             showValues: false,
             animate: false,
-            fillColor: AppColor.primaryNormal.withValues(alpha: 0.15),
-            strokeColor: AppColor.primaryNormal,
-            gridColor: AppColor.colorGlobalCoolNeutral30,
-            labelColor: AppColor.colorGlobalCommon100,
+            fillColor: colors.primaryNormal.withValues(alpha: 0.15),
+            strokeColor: colors.primaryNormal,
+            gridColor: colors.lineSolidNormal,
+            labelColor: colors.labelStrong,
           ),
         ),
         const SizedBox(height: 24),
@@ -396,17 +403,17 @@ class _BeanEditViewState extends State<BeanEditView> {
     );
   }
 
-  Widget _buildFlavorTagsSection() {
+  Widget _buildFlavorTagsSection(AppColorScheme colors) {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        _buildSectionTitle('향미 태그'),
+        _buildSectionTitle(colors, '향미 태그'),
         const SizedBox(height: 16),
         // Common flavors
         Text(
           '공통 향미',
           style: AppTextStyles.body2NormalMedium.copyWith(
-            color: AppColor.colorGlobalCoolNeutral60,
+            color: colors.labelAlternative,
           ),
         ),
         const SizedBox(height: 12),
@@ -430,7 +437,7 @@ class _BeanEditViewState extends State<BeanEditView> {
         Text(
           '특성 향미',
           style: AppTextStyles.body2NormalMedium.copyWith(
-            color: AppColor.colorGlobalCoolNeutral60,
+            color: colors.labelAlternative,
           ),
         ),
         const SizedBox(height: 12),
@@ -453,14 +460,15 @@ class _BeanEditViewState extends State<BeanEditView> {
     );
   }
 
-  Widget _buildDetailsSection() {
+  Widget _buildDetailsSection(AppColorScheme colors) {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        _buildSectionTitle('상세 정보'),
+        _buildSectionTitle(colors, '상세 정보'),
         const SizedBox(height: 16),
         // 로스팅 — 라벨 4단계(라이트/미디엄/미디엄 다크/다크) 표시
         _buildDropdownField<String>(
+          colors: colors,
           label: '로스팅',
           value:
               _roastLevelGroups.any((r) => r.levelCode == _selectedRoastLevel)
@@ -482,6 +490,7 @@ class _BeanEditViewState extends State<BeanEditView> {
         const SizedBox(height: 16),
         // 가공 방식 — code 선택, 한국어 라벨 표시
         _buildDropdownField<String>(
+          colors: colors,
           label: '가공 방식',
           value: _processMethods.any((p) => p.code == _selectedProcessCode)
               ? _selectedProcessCode
@@ -504,16 +513,17 @@ class _BeanEditViewState extends State<BeanEditView> {
   }
 
   /// 섹션 타이틀 — 공통 SectionTitle 재사용 (titleStyle 명시 주입)
-  Widget _buildSectionTitle(String title) {
+  Widget _buildSectionTitle(AppColorScheme colors, String title) {
     return SectionTitle(
       title: title,
       titleStyle: AppTextStyles.headline2Bold.copyWith(
-        color: AppColor.colorGlobalCommon100,
+        color: colors.labelStrong,
       ),
     );
   }
 
   Widget _buildTextField({
+    required AppColorScheme colors,
     required TextEditingController controller,
     required String label,
     required String hint,
@@ -527,7 +537,7 @@ class _BeanEditViewState extends State<BeanEditView> {
             Text(
               label,
               style: AppTextStyles.body2NormalMedium.copyWith(
-                color: AppColor.colorGlobalCoolNeutral60,
+                color: colors.labelAlternative,
               ),
             ),
             if (isRequired) ...[
@@ -535,7 +545,7 @@ class _BeanEditViewState extends State<BeanEditView> {
               Text(
                 '*',
                 style: AppTextStyles.body2NormalMedium.copyWith(
-                  color: AppColor.statusNegative,
+                  color: colors.statusNegative,
                 ),
               ),
             ],
@@ -546,15 +556,15 @@ class _BeanEditViewState extends State<BeanEditView> {
           controller: controller,
           onChanged: (_) => _markChanged(),
           style: AppTextStyles.body1NormalMedium.copyWith(
-            color: AppColor.colorGlobalCommon100,
+            color: colors.labelStrong,
           ),
           decoration: InputDecoration(
             hintText: hint,
             hintStyle: AppTextStyles.body1NormalRegular.copyWith(
-              color: AppColor.colorGlobalCoolNeutral50,
+              color: colors.labelAssistive,
             ),
             filled: true,
-            fillColor: AppColor.colorGlobalCoolNeutral15,
+            fillColor: colors.surfaceCard,
             border: OutlineInputBorder(
               borderRadius: AppRadius.lgBorder,
               borderSide: BorderSide.none,
@@ -570,6 +580,7 @@ class _BeanEditViewState extends State<BeanEditView> {
   }
 
   Widget _buildDropdownField<T>({
+    required AppColorScheme colors,
     required String label,
     required T? value,
     required List<DropdownMenuItem<T>> items,
@@ -581,14 +592,14 @@ class _BeanEditViewState extends State<BeanEditView> {
         Text(
           label,
           style: AppTextStyles.body2NormalMedium.copyWith(
-            color: AppColor.colorGlobalCoolNeutral60,
+            color: colors.labelAlternative,
           ),
         ),
         const SizedBox(height: 8),
         Container(
           padding: const EdgeInsets.symmetric(horizontal: 16),
           decoration: BoxDecoration(
-            color: AppColor.colorGlobalCoolNeutral15,
+            color: colors.surfaceCard,
             borderRadius: AppRadius.lgBorder,
           ),
           child: DropdownButtonHideUnderline(
@@ -598,16 +609,16 @@ class _BeanEditViewState extends State<BeanEditView> {
               hint: Text(
                 '선택해주세요',
                 style: AppTextStyles.body1NormalRegular.copyWith(
-                  color: AppColor.colorGlobalCoolNeutral50,
+                  color: colors.labelAssistive,
                 ),
               ),
               icon: Icon(
                 Icons.keyboard_arrow_down,
-                color: AppColor.colorGlobalCoolNeutral60,
+                color: colors.labelAlternative,
               ),
-              dropdownColor: AppColor.colorGlobalCoolNeutral15,
+              dropdownColor: colors.surfaceCard,
               style: AppTextStyles.body1NormalMedium.copyWith(
-                color: AppColor.colorGlobalCommon100,
+                color: colors.labelStrong,
               ),
               items: items,
               onChanged: onChanged,

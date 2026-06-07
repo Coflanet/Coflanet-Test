@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
+import 'package:coflanet/constants/app_color_scheme.dart';
 import 'package:coflanet/constants/asset_constant.dart';
 import 'package:coflanet/constants/color_constant.dart';
 import 'package:coflanet/constants/style_constant.dart';
@@ -28,18 +29,21 @@ class SurveyQuestionView extends GetView<SurveyController> {
   // Figma 사양: Pretendard SemiBold 22 / lineHeight 1.36 / letterSpacing -0.4268
   // 색상은 Label/strong (#000000) 토큰 매핑
   // Auth 카테고리에서 통일한 페이지 헤더 스타일과 동일
-  TextStyle get _screenHeaderStyle => AppTextStyles.heading1Bold.copyWith(
-    fontWeight: FontWeight.w600,
-    height: 1.36,
-    letterSpacing: -0.4268,
-    color: AppColor.labelStrong,
-  );
+  TextStyle _screenHeaderStyle(AppColorScheme colors) =>
+      AppTextStyles.heading1Bold.copyWith(
+        fontWeight: FontWeight.w600,
+        height: 1.36,
+        letterSpacing: -0.4268,
+        color: colors.labelStrong,
+      );
 
   @override
   Widget build(BuildContext context) {
+    final colors = AppColorScheme.of(context);
+
     return Scaffold(
-      backgroundColor: AppColor.backgroundNormalNormal,
-      appBar: _buildAppBar(),
+      backgroundColor: colors.backgroundNormalNormal,
+      appBar: _buildAppBar(colors),
       body: SafeArea(
         child: Column(
           children: [
@@ -53,15 +57,15 @@ class SurveyQuestionView extends GetView<SurveyController> {
               ),
             ),
             const SizedBox(height: 8),
-            Expanded(child: Obx(() => _buildContent())),
-            _buildBottomButton(),
+            Expanded(child: Obx(() => _buildContent(colors))),
+            _buildBottomButton(colors),
           ],
         ),
       ),
     );
   }
 
-  PreferredSizeWidget _buildAppBar() {
+  PreferredSizeWidget _buildAppBar(AppColorScheme colors) {
     return AppBar(
       backgroundColor: AppColor.transparent,
       elevation: 0,
@@ -70,7 +74,7 @@ class SurveyQuestionView extends GetView<SurveyController> {
           AssetPath.iconArrowBack,
           width: 24,
           height: 24,
-          colorFilter: ColorFilter.mode(AppColor.labelNormal, BlendMode.srcIn),
+          colorFilter: ColorFilter.mode(colors.labelNormal, BlendMode.srcIn),
         ),
         onPressed: () => controller.previousQuestion(),
       ),
@@ -79,7 +83,7 @@ class SurveyQuestionView extends GetView<SurveyController> {
         () => Text(
           controller.currentStepTitle,
           style: AppTextStyles.headline2Bold.copyWith(
-            color: AppColor.labelNormal,
+            color: colors.labelNormal,
           ),
         ),
       ),
@@ -91,7 +95,7 @@ class SurveyQuestionView extends GetView<SurveyController> {
             width: 24,
             height: 24,
             colorFilter: ColorFilter.mode(
-              AppColor.labelNormal,
+              colors.labelNormal,
               BlendMode.srcIn,
             ),
           ),
@@ -101,7 +105,7 @@ class SurveyQuestionView extends GetView<SurveyController> {
     );
   }
 
-  Widget _buildContent() {
+  Widget _buildContent(AppColorScheme colors) {
     final question = controller.currentQuestion;
     if (question == null) return const SizedBox();
 
@@ -117,7 +121,10 @@ class SurveyQuestionView extends GetView<SurveyController> {
             // 질문 텍스트 (상단)
             Align(
               alignment: Alignment.centerLeft,
-              child: Text(question.question, style: _screenHeaderStyle),
+              child: Text(
+                question.question,
+                style: _screenHeaderStyle(colors),
+              ),
             ),
             if (question.description.isNotEmpty) ...[
               const SizedBox(height: 8),
@@ -126,7 +133,7 @@ class SurveyQuestionView extends GetView<SurveyController> {
                 child: Text(
                   question.description,
                   style: AppTextStyles.body2NormalRegular.copyWith(
-                    color: AppColor.labelAlternative,
+                    color: colors.labelAlternative,
                   ),
                 ),
               ),
@@ -135,7 +142,7 @@ class SurveyQuestionView extends GetView<SurveyController> {
             Expanded(
               child: Align(
                 alignment: const Alignment(0, -0.4),
-                child: _buildOptionsForType(question),
+                child: _buildOptionsForType(colors, question),
               ),
             ),
           ],
@@ -152,14 +159,14 @@ class SurveyQuestionView extends GetView<SurveyController> {
           const SizedBox(height: 24),
 
           // 질문 텍스트
-          Text(question.question, style: _screenHeaderStyle),
+          Text(question.question, style: _screenHeaderStyle(colors)),
 
           if (question.description.isNotEmpty) ...[
             const SizedBox(height: 8),
             Text(
               question.description,
               style: AppTextStyles.body2NormalRegular.copyWith(
-                color: AppColor.labelAlternative,
+                color: colors.labelAlternative,
               ),
             ),
           ],
@@ -167,7 +174,7 @@ class SurveyQuestionView extends GetView<SurveyController> {
           const SizedBox(height: 32),
 
           // 질문 유형별 옵션 렌더링
-          _buildOptionsForType(question),
+          _buildOptionsForType(colors, question),
 
           const SizedBox(height: 24),
         ],
@@ -175,7 +182,7 @@ class SurveyQuestionView extends GetView<SurveyController> {
     );
   }
 
-  Widget _buildBottomButton() {
+  Widget _buildBottomButton(AppColorScheme colors) {
     return Obx(() {
       // 섹션 2-3 (step 2-9): rating 질문 — 버튼 없음, 자동 진행
       if (controller.currentStep >= 2) {
@@ -188,7 +195,7 @@ class SurveyQuestionView extends GetView<SurveyController> {
       return Container(
         padding: const EdgeInsets.all(24),
         decoration: BoxDecoration(
-          color: AppColor.backgroundNormalNormal,
+          color: colors.backgroundNormalNormal,
           boxShadow: AppShadows.shadowBlackNormal,
         ),
         child: PrimaryButton(
@@ -239,7 +246,10 @@ class SurveyQuestionView extends GetView<SurveyController> {
   }
 
   /// 질문 유형별 옵션 렌더링
-  Widget _buildOptionsForType(SurveyQuestionModel question) {
+  Widget _buildOptionsForType(
+    AppColorScheme colors,
+    SurveyQuestionModel question,
+  ) {
     switch (question.questionType) {
       case SurveyQuestionType.checkbox:
         // 텍스트 전용 체크박스 (step 0)
@@ -291,7 +301,7 @@ class SurveyQuestionView extends GetView<SurveyController> {
 
       case SurveyQuestionType.imageGrid:
         // 추출 기구 선택 그리드
-        return _buildImageGrid(question);
+        return _buildImageGrid(colors, question);
 
       case SurveyQuestionType.multiRating:
         // 한 화면에 여러 레이팅 항목
@@ -320,7 +330,7 @@ class SurveyQuestionView extends GetView<SurveyController> {
   }
 
   /// 추출 기구 선택 그리드 (2열) + "잘 모르겠어요" 링크
-  Widget _buildImageGrid(SurveyQuestionModel question) {
+  Widget _buildImageGrid(AppColorScheme colors, SurveyQuestionModel question) {
     final isUnknownSelected = controller.isOptionSelected('unknown');
 
     return Column(
@@ -350,12 +360,12 @@ class SurveyQuestionView extends GetView<SurveyController> {
             '잘 모르겠어요',
             style: AppTextStyles.body2NormalMedium.copyWith(
               color: isUnknownSelected
-                  ? AppColor.primaryNormal
-                  : AppColor.labelAssistive,
+                  ? colors.primaryNormal
+                  : colors.labelAssistive,
               decoration: TextDecoration.underline,
               decorationColor: isUnknownSelected
-                  ? AppColor.primaryNormal
-                  : AppColor.labelAssistive,
+                  ? colors.primaryNormal
+                  : colors.labelAssistive,
             ),
           ),
         ),

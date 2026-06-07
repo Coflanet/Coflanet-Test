@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
+import 'package:coflanet/constants/app_color_scheme.dart';
 import 'package:coflanet/constants/color_constant.dart';
 import 'package:coflanet/constants/style_constant.dart';
 import 'package:coflanet/constants/radius_constant.dart';
@@ -73,7 +74,7 @@ class GrindSizeModal extends StatefulWidget {
         barrierDismissible: barrierDismissible,
       ),
       barrierDismissible: barrierDismissible,
-      barrierColor: AppColor.componentMaterialDimmer,
+      barrierColor: AppColorScheme.of(Get.context!).componentMaterialDimmer,
     );
   }
 
@@ -168,6 +169,7 @@ class _GrindSizeModalState extends State<GrindSizeModal>
 
   @override
   Widget build(BuildContext context) {
+    final colors = AppColorScheme.of(context);
     return FadeTransition(
       opacity: _fadeAnimation,
       child: ScaleTransition(
@@ -180,18 +182,18 @@ class _GrindSizeModalState extends State<GrindSizeModal>
                 bottom: MediaQuery.of(context).viewInsets.bottom,
               ),
               decoration: BoxDecoration(
-                color: AppColor.backgroundElevatedNormal,
+                color: colors.backgroundElevatedNormal,
                 borderRadius: AppRadius.modalBorder,
                 boxShadow: AppShadows.shadowBlackHeavy,
               ),
               child: Column(
                 mainAxisSize: MainAxisSize.min,
                 children: [
-                  _buildHeader(),
-                  _buildInputField(),
-                  _buildPresetButtons(),
-                  _buildHint(),
-                  _buildActions(),
+                  _buildHeader(colors),
+                  _buildInputField(colors),
+                  _buildPresetButtons(colors),
+                  _buildHint(colors),
+                  _buildActions(colors),
                 ],
               ),
             ),
@@ -201,7 +203,7 @@ class _GrindSizeModalState extends State<GrindSizeModal>
     );
   }
 
-  Widget _buildHeader() {
+  Widget _buildHeader(AppColorScheme colors) {
     return Container(
       padding: const EdgeInsets.fromLTRB(24, 24, 24, 8),
       child: Column(
@@ -209,7 +211,7 @@ class _GrindSizeModalState extends State<GrindSizeModal>
           Text(
             widget.title ?? '분쇄도를 입력해주세요',
             style: AppTextStyles.heading1Bold.copyWith(
-              color: AppColor.labelNormal,
+              color: colors.labelNormal,
             ),
             textAlign: TextAlign.center,
           ),
@@ -218,7 +220,7 @@ class _GrindSizeModalState extends State<GrindSizeModal>
             Text(
               widget.message!,
               style: AppTextStyles.body2NormalRegular.copyWith(
-                color: AppColor.labelAlternative,
+                color: colors.labelAlternative,
               ),
               textAlign: TextAlign.center,
             ),
@@ -227,7 +229,7 @@ class _GrindSizeModalState extends State<GrindSizeModal>
             Text(
               '추출 방식과 장비에 따라 굵기를 조절해보세요',
               style: AppTextStyles.body2NormalRegular.copyWith(
-                color: AppColor.labelAlternative,
+                color: colors.labelAlternative,
               ),
               textAlign: TextAlign.center,
             ),
@@ -237,7 +239,7 @@ class _GrindSizeModalState extends State<GrindSizeModal>
     );
   }
 
-  Widget _buildInputField() {
+  Widget _buildInputField(AppColorScheme colors) {
     return Padding(
       padding: const EdgeInsets.fromLTRB(20, 16, 20, 12),
       child: Column(
@@ -245,13 +247,13 @@ class _GrindSizeModalState extends State<GrindSizeModal>
         children: [
           Container(
             decoration: BoxDecoration(
-              color: AppColor.componentFillNormal,
+              color: colors.componentFillNormal,
               borderRadius: AppRadius.buttonBorder,
               border: Border.all(
                 color: _errorText != null
-                    ? AppColor.statusNegative
+                    ? colors.statusNegative
                     : _focusNode.hasFocus
-                    ? AppColor.primaryNormal
+                    ? colors.primaryNormal
                     : Colors.transparent,
                 width: 1.5,
               ),
@@ -268,7 +270,7 @@ class _GrindSizeModalState extends State<GrindSizeModal>
                     onSubmitted: (_) => _onConfirm(),
                     textAlign: TextAlign.center,
                     style: AppTextStyles.title2Bold.copyWith(
-                      color: AppColor.labelNormal,
+                      color: colors.labelNormal,
                     ),
                     decoration: InputDecoration(
                       border: InputBorder.none,
@@ -284,7 +286,7 @@ class _GrindSizeModalState extends State<GrindSizeModal>
                   child: Text(
                     'μm',
                     style: AppTextStyles.body1NormalMedium.copyWith(
-                      color: AppColor.labelAlternative,
+                      color: colors.labelAlternative,
                     ),
                   ),
                 ),
@@ -299,13 +301,13 @@ class _GrindSizeModalState extends State<GrindSizeModal>
                   Icon(
                     Icons.error_outline,
                     size: 14,
-                    color: AppColor.statusNegative,
+                    color: colors.statusNegative,
                   ),
                   const SizedBox(width: 4),
                   Text(
                     _errorText!,
                     style: AppTextStyles.caption1Regular.copyWith(
-                      color: AppColor.statusNegative,
+                      color: colors.statusNegative,
                     ),
                   ),
                 ],
@@ -316,7 +318,7 @@ class _GrindSizeModalState extends State<GrindSizeModal>
     );
   }
 
-  Widget _buildPresetButtons() {
+  Widget _buildPresetButtons(AppColorScheme colors) {
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 16),
       child: Wrap(
@@ -332,13 +334,13 @@ class _GrindSizeModalState extends State<GrindSizeModal>
               padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 10),
               decoration: BoxDecoration(
                 color: isSelected
-                    ? AppColor.primaryNormal
-                    : AppColor.componentFillNormal,
+                    ? colors.primaryNormal
+                    : colors.componentFillNormal,
                 borderRadius: AppRadius.xxxlBorder,
                 border: Border.all(
                   color: isSelected
-                      ? AppColor.primaryNormal
-                      : AppColor.lineNormalNormal,
+                      ? colors.primaryNormal
+                      : colors.lineNormalNormal,
                   width: 1,
                 ),
               ),
@@ -347,7 +349,7 @@ class _GrindSizeModalState extends State<GrindSizeModal>
                 style: AppTextStyles.label1NormalMedium.copyWith(
                   color: isSelected
                       ? AppColor.staticLabelWhiteStrong
-                      : AppColor.labelNormal,
+                      : colors.labelNormal,
                 ),
               ),
             ),
@@ -357,24 +359,24 @@ class _GrindSizeModalState extends State<GrindSizeModal>
     );
   }
 
-  Widget _buildHint() {
+  Widget _buildHint(AppColorScheme colors) {
     return Padding(
       padding: const EdgeInsets.fromLTRB(20, 16, 20, 8),
       child: Container(
         padding: const EdgeInsets.all(12),
         decoration: BoxDecoration(
-          color: AppColor.backgroundNormalAlternative,
+          color: colors.backgroundNormalAlternative,
           borderRadius: AppRadius.mdBorder,
         ),
         child: Row(
           children: [
-            Icon(Icons.info_outline, color: AppColor.labelAssistive, size: 16),
+            Icon(Icons.info_outline, color: colors.labelAssistive, size: 16),
             const SizedBox(width: 8),
             Expanded(
               child: Text(
                 _getGrindSizeHint(),
                 style: AppTextStyles.caption1Regular.copyWith(
-                  color: AppColor.labelAlternative,
+                  color: colors.labelAlternative,
                 ),
               ),
             ),
@@ -394,7 +396,7 @@ class _GrindSizeModalState extends State<GrindSizeModal>
     return '콜드브루용 굵게 분쇄 (1400-1600μm)';
   }
 
-  Widget _buildActions() {
+  Widget _buildActions(AppColorScheme colors) {
     return Container(
       padding: const EdgeInsets.fromLTRB(16, 8, 16, 20),
       child: Row(
@@ -405,8 +407,8 @@ class _GrindSizeModalState extends State<GrindSizeModal>
               child: OutlinedButton(
                 onPressed: _onCancel,
                 style: OutlinedButton.styleFrom(
-                  foregroundColor: AppColor.labelNormal,
-                  side: BorderSide(color: AppColor.lineNormalNormal),
+                  foregroundColor: colors.labelNormal,
+                  side: BorderSide(color: colors.lineNormalNormal),
                   shape: RoundedRectangleBorder(
                     borderRadius: AppRadius.buttonBorder,
                   ),
@@ -422,7 +424,7 @@ class _GrindSizeModalState extends State<GrindSizeModal>
               child: ElevatedButton(
                 onPressed: _onConfirm,
                 style: ElevatedButton.styleFrom(
-                  backgroundColor: AppColor.primaryNormal,
+                  backgroundColor: colors.primaryNormal,
                   foregroundColor: AppColor.staticLabelWhiteStrong,
                   elevation: 0,
                   shape: RoundedRectangleBorder(

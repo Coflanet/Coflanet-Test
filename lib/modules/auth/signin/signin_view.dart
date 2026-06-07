@@ -1,7 +1,7 @@
 import 'dart:io' show Platform;
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:coflanet/constants/color_constant.dart';
+import 'package:coflanet/constants/app_color_scheme.dart';
 import 'package:coflanet/constants/style_constant.dart';
 import 'package:coflanet/data/providers/auth_provider.dart';
 import 'package:coflanet/modules/auth/signin/signin_controller.dart';
@@ -13,8 +13,9 @@ class SignInView extends GetView<SignInController> {
 
   @override
   Widget build(BuildContext context) {
+    final colors = AppColorScheme.of(context);
     return Scaffold(
-      backgroundColor: AppColor.backgroundNormalNormal,
+      backgroundColor: colors.backgroundNormalNormal,
       body: SafeArea(
         child: Padding(
           padding: const EdgeInsets.symmetric(horizontal: 24),
@@ -25,7 +26,7 @@ class SignInView extends GetView<SignInController> {
               const Spacer(flex: 1),
 
               // Logo and welcome text
-              _buildHeader(),
+              _buildHeader(colors),
 
               // 헤더 ~ 버튼 사이 큰 여백 (Figma 와 동일한 비율)
               const Spacer(flex: 4),
@@ -35,7 +36,7 @@ class SignInView extends GetView<SignInController> {
 
               const SizedBox(height: 24),
 
-              _buildBottomLinks(),
+              _buildBottomLinks(colors),
 
               // Figma 사양 bottom: 34px (`1:3955` "txt_btn_list")
               const SizedBox(height: 34),
@@ -46,7 +47,7 @@ class SignInView extends GetView<SignInController> {
     );
   }
 
-  Widget _buildHeader() {
+  Widget _buildHeader(AppColorScheme colors) {
     // Figma MCP 정확값: Title 2/Bold (Pretendard Bold 28 / lh 1.358 / ls -0.6608)
     // 토큰 `AppTextStyles.heading1Bold` 는 22/1.4 이므로 컴포넌트 단위 override 유지.
     // 토큰 전역 수정은 다른 화면 영향 범위가 커서 보류 (typography 토큰 원본 부재).
@@ -54,7 +55,7 @@ class SignInView extends GetView<SignInController> {
       '로그인하고\n내 취향을 찾아볼까요?',
       textAlign: TextAlign.center,
       style: AppTextStyles.heading1Bold.copyWith(
-        color: AppColor.labelNormal,
+        color: colors.labelNormal,
         fontSize: 28,
         height: 1.358,
         letterSpacing: -0.6608,
@@ -101,7 +102,7 @@ class SignInView extends GetView<SignInController> {
     );
   }
 
-  Widget _buildBottomLinks() {
+  Widget _buildBottomLinks(AppColorScheme colors) {
     return Row(
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
@@ -110,17 +111,15 @@ class SignInView extends GetView<SignInController> {
           child: Text(
             '회원가입',
             style: AppTextStyles.label1NormalMedium.copyWith(
-              color: AppColor.labelAlternative,
+              color: colors.labelAlternative,
             ),
           ),
         ),
         Container(
           width: 1,
           height: 12,
-          // Figma 사양: #70737C α22% (`Line/Normal/Normal` = `#70737c38`)
-          // 토큰 `lineNormalNeutral` 은 α16% 로 정의되어 있고 14개 화면에서 공유되므로
-          // 토큰 수정 대신 컴포넌트 단위 override 적용
-          color: const Color(0xFF70737C).withValues(alpha: 0.22),
+          // Figma 사양: #70737C α22% (`Line/Normal/Normal`) → 시맨틱 lineNormalNormal 매핑
+          color: colors.lineNormalNormal,
           margin: const EdgeInsets.symmetric(horizontal: 8),
         ),
         TextButton(
@@ -128,7 +127,7 @@ class SignInView extends GetView<SignInController> {
           child: Text(
             '이메일 로그인',
             style: AppTextStyles.label1NormalMedium.copyWith(
-              color: AppColor.labelAlternative,
+              color: colors.labelAlternative,
             ),
           ),
         ),

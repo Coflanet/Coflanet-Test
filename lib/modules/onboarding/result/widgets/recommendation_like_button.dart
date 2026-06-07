@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:coflanet/constants/app_color_scheme.dart';
 import 'package:coflanet/constants/color_constant.dart';
 
 /// 추천 카드 썸네일 위 좋아요 토글 버튼 (28x28 흰 원 + 하트).
@@ -21,6 +22,8 @@ class RecommendationLikeButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final colors = AppColorScheme.of(context);
+
     return Semantics(
       label: isLiked ? '좋아요 취소' : '좋아요',
       button: true,
@@ -44,7 +47,7 @@ class RecommendationLikeButton extends StatelessWidget {
           child: Icon(
             isLiked ? Icons.favorite : Icons.favorite_border,
             size: 16,
-            color: AppColor.primaryNormal,
+            color: colors.primaryNormal,
           ),
         ),
       ),

@@ -2,8 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
 
+import 'package:coflanet/constants/app_color_scheme.dart';
 import 'package:coflanet/constants/asset_constant.dart';
-import 'package:coflanet/constants/color_constant.dart';
 import 'package:coflanet/constants/spacing_constant.dart';
 import 'package:coflanet/constants/style_constant.dart';
 import 'package:coflanet/constants/radius_constant.dart';
@@ -16,20 +16,22 @@ class SignUpView extends GetView<SignUpController> {
   const SignUpView({super.key});
 
   // Figma 사양: Pretendard SemiBold 22 / lineHeight 1.36 / letterSpacing -0.4268
-  // 색상은 Label/strong (#000000) 토큰 매핑
+  // 색상은 Label/strong 토큰 매핑
   // signup 멀티스텝 4개 헤더 (step=0/1/2/3) 모두 동일 사양 사용
-  TextStyle get _stepHeaderStyle => AppTextStyles.heading1Bold.copyWith(
-    fontWeight: FontWeight.w600,
-    height: 1.36,
-    letterSpacing: -0.4268,
-    color: AppColor.labelStrong,
-  );
+  TextStyle _stepHeaderStyle(AppColorScheme colors) =>
+      AppTextStyles.heading1Bold.copyWith(
+        fontWeight: FontWeight.w600,
+        height: 1.36,
+        letterSpacing: -0.4268,
+        color: colors.labelStrong,
+      );
 
   @override
   Widget build(BuildContext context) {
+    final colors = AppColorScheme.of(context);
     return Scaffold(
-      backgroundColor: AppColor.backgroundNormalNormal,
-      appBar: _buildAppBar(),
+      backgroundColor: colors.backgroundNormalNormal,
+      appBar: _buildAppBar(colors),
       body: SafeArea(
         top: false,
         child: Column(
@@ -44,7 +46,7 @@ class SignUpView extends GetView<SignUpController> {
               ),
             ),
             Expanded(
-              child: Obx(() => _buildStepContent()),
+              child: Obx(() => _buildStepContent(colors)),
             ),
           ],
         ),
@@ -52,9 +54,9 @@ class SignUpView extends GetView<SignUpController> {
     );
   }
 
-  PreferredSizeWidget _buildAppBar() {
+  PreferredSizeWidget _buildAppBar(AppColorScheme colors) {
     return AppBar(
-      backgroundColor: AppColor.backgroundNormalNormal,
+      backgroundColor: colors.backgroundNormalNormal,
       elevation: 0,
       leading: IconButton(
         onPressed: () => controller.previousStep(),
@@ -62,26 +64,26 @@ class SignUpView extends GetView<SignUpController> {
           AssetPath.iconArrowBack,
           width: AppSpacing.space24,
           height: AppSpacing.space24,
-          colorFilter: ColorFilter.mode(AppColor.labelNormal, BlendMode.srcIn),
+          colorFilter: ColorFilter.mode(colors.labelNormal, BlendMode.srcIn),
         ),
         tooltip: '뒤로 가기',
       ),
     );
   }
 
-  Widget _buildStepContent() {
+  Widget _buildStepContent(AppColorScheme colors) {
     return switch (controller.currentStep) {
-      0 => _buildTermsStep(),
-      1 => _buildEmailStep(),
-      2 => _buildPasswordStep(),
-      3 => _buildConfirmPasswordStep(),
+      0 => _buildTermsStep(colors),
+      1 => _buildEmailStep(colors),
+      2 => _buildPasswordStep(colors),
+      3 => _buildConfirmPasswordStep(colors),
       _ => const SizedBox.shrink(),
     };
   }
 
   // --- Step 0: 서비스 약관 ---
 
-  Widget _buildTermsStep() {
+  Widget _buildTermsStep(AppColorScheme colors) {
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: AppSpacing.space24),
       child: Column(
@@ -90,18 +92,20 @@ class SignUpView extends GetView<SignUpController> {
           const SizedBox(height: AppSpacing.space32),
           Text(
             '서비스 약관에\n동의해 주세요',
-            style: _stepHeaderStyle,
+            style: _stepHeaderStyle(colors),
           ),
           const SizedBox(height: AppSpacing.space40),
           _buildTermCheckbox(
+            colors: colors,
             label: '전체 동의하기',
             value: controller.termsAll.value,
             onChanged: controller.toggleAll,
             isBold: true,
           ),
-          Divider(color: AppColor.lineNormalNeutral, height: 1),
+          Divider(color: colors.lineNormalNeutral, height: 1),
           const SizedBox(height: AppSpacing.space20),
           _buildTermCheckbox(
+            colors: colors,
             label: '회원 약관 동의',
             tag: '필수',
             value: controller.termsService.value,
@@ -109,6 +113,7 @@ class SignUpView extends GetView<SignUpController> {
                 controller.toggleTerm(controller.termsService, v),
           ),
           _buildTermCheckbox(
+            colors: colors,
             label: '회원 약관 동의',
             tag: '선택',
             value: controller.termsServiceOptional.value,
@@ -116,6 +121,7 @@ class SignUpView extends GetView<SignUpController> {
                 controller.toggleTerm(controller.termsServiceOptional, v),
           ),
           _buildTermCheckbox(
+            colors: colors,
             label: '개인정보 수집 및 이용 동의',
             tag: '필수',
             value: controller.termsPrivacy.value,
@@ -123,6 +129,7 @@ class SignUpView extends GetView<SignUpController> {
                 controller.toggleTerm(controller.termsPrivacy, v),
           ),
           _buildTermCheckbox(
+            colors: colors,
             label: '만 14세 이상이에요',
             tag: '필수',
             value: controller.termsAge.value,
@@ -144,6 +151,7 @@ class SignUpView extends GetView<SignUpController> {
   }
 
   Widget _buildTermCheckbox({
+    required AppColorScheme colors,
     required String label,
     String? tag,
     required bool value,
@@ -164,10 +172,10 @@ class SignUpView extends GetView<SignUpController> {
                 child: Checkbox(
                   value: value,
                   onChanged: onChanged,
-                  activeColor: AppColor.primaryNormal,
+                  activeColor: colors.primaryNormal,
                   shape: const CircleBorder(),
                   side: BorderSide(
-                    color: AppColor.lineNormalNeutral,
+                    color: colors.lineNormalNeutral,
                     width: 1.5,
                   ),
                 ),
@@ -182,7 +190,7 @@ class SignUpView extends GetView<SignUpController> {
                           (isBold
                                   ? AppTextStyles.body1NormalBold
                                   : AppTextStyles.body2NormalRegular)
-                              .copyWith(color: AppColor.labelNormal),
+                              .copyWith(color: colors.labelNormal),
                     ),
                     if (tag != null) ...[
                       const SizedBox(width: AppSpacing.space4),
@@ -190,8 +198,8 @@ class SignUpView extends GetView<SignUpController> {
                         '($tag)',
                         style: AppTextStyles.body2NormalRegular.copyWith(
                           color: tag == '필수'
-                              ? AppColor.primaryNormal
-                              : AppColor.labelAssistive,
+                              ? colors.primaryNormal
+                              : colors.labelAssistive,
                         ),
                       ),
                     ],
@@ -201,7 +209,7 @@ class SignUpView extends GetView<SignUpController> {
               Icon(
                 Icons.chevron_right,
                 size: AppSpacing.space20,
-                color: AppColor.labelAssistive,
+                color: colors.labelAssistive,
               ),
             ],
           ),
@@ -215,7 +223,7 @@ class SignUpView extends GetView<SignUpController> {
               child: Text(
                 description,
                 style: AppTextStyles.caption1Regular.copyWith(
-                  color: AppColor.labelAlternative,
+                  color: colors.labelAlternative,
                   height: 1.5,
                 ),
               ),
@@ -228,7 +236,7 @@ class SignUpView extends GetView<SignUpController> {
 
   // --- Step 1: 이메일 입력 ---
 
-  Widget _buildEmailStep() {
+  Widget _buildEmailStep(AppColorScheme colors) {
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: AppSpacing.space24),
       child: Column(
@@ -237,7 +245,7 @@ class SignUpView extends GetView<SignUpController> {
           const SizedBox(height: AppSpacing.space32),
           Text(
             '메일을 입력해 주세요',
-            style: _stepHeaderStyle,
+            style: _stepHeaderStyle(colors),
           ),
           const SizedBox(height: AppSpacing.space56),
           AppTextField(
@@ -267,7 +275,7 @@ class SignUpView extends GetView<SignUpController> {
 
   // --- Step 2: 비밀번호 입력 ---
 
-  Widget _buildPasswordStep() {
+  Widget _buildPasswordStep(AppColorScheme colors) {
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: AppSpacing.space24),
       child: Column(
@@ -276,7 +284,7 @@ class SignUpView extends GetView<SignUpController> {
           const SizedBox(height: AppSpacing.space32),
           Text(
             '비밀번호를 입력해 주세요',
-            style: _stepHeaderStyle,
+            style: _stepHeaderStyle(colors),
           ),
           const SizedBox(height: AppSpacing.space56),
           AppTextField(
@@ -307,7 +315,7 @@ class SignUpView extends GetView<SignUpController> {
 
   // --- Step 3: 비밀번호 확인 ---
 
-  Widget _buildConfirmPasswordStep() {
+  Widget _buildConfirmPasswordStep(AppColorScheme colors) {
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: AppSpacing.space24),
       child: Column(
@@ -316,15 +324,15 @@ class SignUpView extends GetView<SignUpController> {
           const SizedBox(height: AppSpacing.space32),
           RichText(
             text: TextSpan(
-              style: _stepHeaderStyle,
+              style: _stepHeaderStyle(colors),
               children: [
                 const TextSpan(text: '비밀번호를 '),
                 // "한번 더" 강조: 같은 폰트/weight/size/lh/ls, 색상만 primary 로 override
                 // (spec: 05_password_confirm_spec.md — 별도 강조 폰트 스타일 없음)
                 TextSpan(
                   text: '한번 더',
-                  style: _stepHeaderStyle.copyWith(
-                    color: AppColor.primaryNormal,
+                  style: _stepHeaderStyle(colors).copyWith(
+                    color: colors.primaryNormal,
                   ),
                 ),
                 const TextSpan(text: ' 입력해 주세요'),
@@ -352,9 +360,9 @@ class SignUpView extends GetView<SignUpController> {
               vertical: AppSpacing.space14,
             ),
             decoration: BoxDecoration(
-              color: AppColor.componentFillAlternative,
+              color: colors.componentFillAlternative,
               borderRadius: AppRadius.lgBorder,
-              border: Border.all(color: AppColor.lineNormalNeutral, width: 1),
+              border: Border.all(color: colors.lineNormalNeutral, width: 1),
             ),
             child: Row(
               children: [
@@ -365,14 +373,14 @@ class SignUpView extends GetView<SignUpController> {
                       Text(
                         '비밀번호',
                         style: AppTextStyles.caption1Regular.copyWith(
-                          color: AppColor.labelAlternative,
+                          color: colors.labelAlternative,
                         ),
                       ),
                       const SizedBox(height: AppSpacing.space4),
                       Text(
                         '●' * controller.password.value.length.clamp(0, 10),
                         style: AppTextStyles.body1NormalRegular.copyWith(
-                          color: AppColor.labelNormal,
+                          color: colors.labelNormal,
                           letterSpacing: 2,
                         ),
                       ),
@@ -381,7 +389,7 @@ class SignUpView extends GetView<SignUpController> {
                 ),
                 Icon(
                   Icons.visibility_off_outlined,
-                  color: AppColor.labelAssistive,
+                  color: colors.labelAssistive,
                   size: AppSpacing.space20,
                 ),
               ],
@@ -393,7 +401,7 @@ class SignUpView extends GetView<SignUpController> {
               child: Text(
                 '8~20자 이내 / 대소문자, 숫자, 특수문자 포함',
                 style: AppTextStyles.caption1Regular.copyWith(
-                  color: AppColor.labelAssistive,
+                  color: colors.labelAssistive,
                 ),
               ),
             ),

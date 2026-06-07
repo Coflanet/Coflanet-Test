@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
+import 'package:coflanet/constants/app_color_scheme.dart';
 import 'package:coflanet/constants/asset_constant.dart';
 import 'package:coflanet/constants/color_constant.dart';
 import 'package:coflanet/constants/style_constant.dart';
@@ -16,8 +17,9 @@ class HandDripView extends GetView<CoffeeController> {
 
   @override
   Widget build(BuildContext context) {
+    final colors = AppColorScheme.of(context);
     return Scaffold(
-      backgroundColor: AppColor.backgroundNormalNormal,
+      backgroundColor: colors.backgroundNormalNormal,
       appBar: AppBar(
         backgroundColor: AppColor.transparent,
         elevation: 0,
@@ -27,7 +29,7 @@ class HandDripView extends GetView<CoffeeController> {
             width: 24,
             height: 24,
             colorFilter: ColorFilter.mode(
-              AppColor.labelNormal,
+              colors.labelNormal,
               BlendMode.srcIn,
             ),
           ),
@@ -36,7 +38,7 @@ class HandDripView extends GetView<CoffeeController> {
         title: Text(
           '핸드드립',
           style: AppTextStyles.headline1Bold.copyWith(
-            color: AppColor.labelNormal,
+            color: colors.labelNormal,
           ),
         ),
         actions: [
@@ -46,7 +48,7 @@ class HandDripView extends GetView<CoffeeController> {
               width: 24,
               height: 24,
               colorFilter: ColorFilter.mode(
-                AppColor.labelAlternative,
+                colors.labelAlternative,
                 BlendMode.srcIn,
               ),
             ),
@@ -74,16 +76,16 @@ class HandDripView extends GetView<CoffeeController> {
               Text(
                 '추출 단계',
                 style: AppTextStyles.headline1Bold.copyWith(
-                  color: AppColor.labelNormal,
+                  color: colors.labelNormal,
                 ),
               ),
               const SizedBox(height: 16),
 
-              _buildStep(1, '물 끓이기', '92-96°C가 적당해요'),
-              _buildStep(2, '필터 세팅', '드리퍼에 필터를 놓고 린싱하세요'),
-              _buildStep(3, '원두 갈기', '중간 굵기로 분쇄하세요'),
-              _buildStep(4, '뜸 들이기', '30초간 뜸을 들이세요'),
-              _buildStep(5, '추출하기', '원을 그리며 천천히 부어주세요'),
+              _buildStep(colors, 1, '물 끓이기', '92-96°C가 적당해요'),
+              _buildStep(colors, 2, '필터 세팅', '드리퍼에 필터를 놓고 린싱하세요'),
+              _buildStep(colors, 3, '원두 갈기', '중간 굵기로 분쇄하세요'),
+              _buildStep(colors, 4, '뜸 들이기', '30초간 뜸을 들이세요'),
+              _buildStep(colors, 5, '추출하기', '원을 그리며 천천히 부어주세요'),
 
               const SizedBox(height: 32),
 
@@ -125,7 +127,12 @@ class HandDripView extends GetView<CoffeeController> {
     );
   }
 
-  Widget _buildStep(int number, String title, String description) {
+  Widget _buildStep(
+    AppColorScheme colors,
+    int number,
+    String title,
+    String description,
+  ) {
     return Padding(
       padding: const EdgeInsets.only(bottom: 16),
       child: Row(
@@ -135,14 +142,14 @@ class HandDripView extends GetView<CoffeeController> {
             width: 32,
             height: 32,
             decoration: BoxDecoration(
-              color: AppColor.primaryLight,
+              color: colors.primaryLight,
               borderRadius: AppRadius.xlBorder,
             ),
             child: Center(
               child: Text(
                 '$number',
                 style: AppTextStyles.label1NormalBold.copyWith(
-                  color: AppColor.primaryNormal,
+                  color: colors.primaryNormal,
                 ),
               ),
             ),
@@ -155,14 +162,14 @@ class HandDripView extends GetView<CoffeeController> {
                 Text(
                   title,
                   style: AppTextStyles.body1NormalMedium.copyWith(
-                    color: AppColor.labelNormal,
+                    color: colors.labelNormal,
                   ),
                 ),
                 const SizedBox(height: 4),
                 Text(
                   description,
                   style: AppTextStyles.caption1Regular.copyWith(
-                    color: AppColor.labelAlternative,
+                    color: colors.labelAlternative,
                   ),
                 ),
               ],

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:coflanet/constants/app_color_scheme.dart';
 import 'package:coflanet/constants/color_constant.dart';
 import 'package:coflanet/constants/style_constant.dart';
 
@@ -40,6 +41,7 @@ class SelectableChip extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final colors = AppColorScheme.of(context);
     return GestureDetector(
       onTap: onTap,
       child: AnimatedContainer(
@@ -48,10 +50,10 @@ class SelectableChip extends StatelessWidget {
         width: fullWidth ? double.infinity : null,
         alignment: Alignment.center,
         decoration: BoxDecoration(
-          color: AppColor.componentFillNormal,
+          color: colors.componentFillNormal,
           borderRadius: BorderRadius.circular(radius),
           border: Border.all(
-            color: isSelected ? AppColor.primaryNormal : AppColor.transparent,
+            color: isSelected ? colors.primaryNormal : AppColor.transparent,
             width: 1.5,
           ),
         ),
@@ -59,8 +61,8 @@ class SelectableChip extends StatelessWidget {
           label,
           style: AppTextStyles.body2NormalMedium.copyWith(
             color: isSelected
-                ? AppColor.primaryNormal
-                : AppColor.labelAlternative,
+                ? colors.primaryNormal
+                : colors.labelAlternative,
           ),
         ),
       ),

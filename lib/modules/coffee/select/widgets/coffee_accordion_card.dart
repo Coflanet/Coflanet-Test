@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:coflanet/constants/app_color_scheme.dart';
 import 'package:coflanet/constants/color_constant.dart';
 import 'package:coflanet/constants/radius_constant.dart';
 import 'package:coflanet/constants/style_constant.dart';
@@ -111,15 +112,16 @@ class _CoffeeAccordionCardState extends State<CoffeeAccordionCard>
 
   @override
   Widget build(BuildContext context) {
+    final colors = AppColorScheme.of(context);
     return Padding(
       padding: const EdgeInsets.only(bottom: 12),
       child: AnimatedContainer(
         duration: const Duration(milliseconds: 200),
         decoration: BoxDecoration(
-          color: AppColor.colorGlobalCommon100, // 항상 흰 카드
+          color: colors.surfaceCard, // 카드 (다크: coolNeutral15)
           borderRadius: BorderRadius.circular(20),
           border: widget.isSelected
-              ? Border.all(color: AppColor.primaryNormal, width: 2)
+              ? Border.all(color: colors.primaryNormal, width: 2)
               : null,
           boxShadow: [
             BoxShadow(
@@ -133,7 +135,7 @@ class _CoffeeAccordionCardState extends State<CoffeeAccordionCard>
           mainAxisSize: MainAxisSize.min,
           children: [
             // 헤더 (항상 표시)
-            _buildHeader(),
+            _buildHeader(colors),
             // 펼침 콘텐츠
             ClipRect(
               child: AnimatedBuilder(
@@ -145,7 +147,7 @@ class _CoffeeAccordionCardState extends State<CoffeeAccordionCard>
                     child: child,
                   );
                 },
-                child: _buildExpandedContent(),
+                child: _buildExpandedContent(colors),
               ),
             ),
           ],
@@ -156,11 +158,11 @@ class _CoffeeAccordionCardState extends State<CoffeeAccordionCard>
 
   /// 헤더 행 — Figma: List/Coffee List/Accordion > List
   /// 편집 모드에서는 체크박스/드래그 핸들이 카드 밖(부모 리스트)에 있음
-  Widget _buildHeader() {
+  Widget _buildHeader(AppColorScheme colors) {
     // Figma: 브랜드 텍스트 rgba(55, 56, 60, 0.61)
-    final subtitleColor = AppColor.labelAlternative;
-    // Figma: 원두 이름 #171719
-    const textColor = AppColor.colorGlobalCoolNeutral10;
+    final subtitleColor = colors.labelAlternative;
+    // Figma: 원두 이름 #171719 → 시맨틱 labelNormal
+    final textColor = colors.labelNormal;
     final displayImage = widget.item.displayImageUrl;
 
     return GestureDetector(
@@ -186,7 +188,7 @@ class _CoffeeAccordionCardState extends State<CoffeeAccordionCard>
                       )
                     : null,
                 color: displayImage != null
-                    ? AppColor.colorGlobalCoolNeutral95
+                    ? colors.componentFillStrong
                     : null,
                 borderRadius: BorderRadius.circular(12),
                 image: displayImage != null
@@ -232,7 +234,7 @@ class _CoffeeAccordionCardState extends State<CoffeeAccordionCard>
                     Text(
                       AppUtil.changeNumberToWon(widget.item.naverLprice!),
                       style: AppTextStyles.label1NormalMedium.copyWith(
-                        color: AppColor.primaryNormal,
+                        color: colors.primaryNormal,
                         letterSpacing: 0.0145,
                       ),
                     ),
@@ -246,7 +248,7 @@ class _CoffeeAccordionCardState extends State<CoffeeAccordionCard>
                 turns: _iconTurns,
                 child: Icon(
                   Icons.keyboard_arrow_down,
-                  color: AppColor.labelNeutral,
+                  color: colors.labelNeutral,
                   size: 24,
                 ),
               ),
@@ -257,17 +259,17 @@ class _CoffeeAccordionCardState extends State<CoffeeAccordionCard>
   }
 
   /// 펼침 콘텐츠 — Figma: Contents
-  Widget _buildExpandedContent() {
+  Widget _buildExpandedContent(AppColorScheme colors) {
     return Container(
       padding: const EdgeInsets.fromLTRB(16, 0, 16, 16),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           // 커피 프로필 (맛바 + divider + 향미 태그를 한 컨테이너에)
-          _buildCoffeeProfileSection(),
+          _buildCoffeeProfileSection(colors),
           const SizedBox(height: 16),
           // 액션 버튼
-          _buildActionButtons(),
+          _buildActionButtons(colors),
         ],
       ),
     );
@@ -275,7 +277,7 @@ class _CoffeeAccordionCardState extends State<CoffeeAccordionCard>
 
   /// 커피 프로필 — Figma: Coffee Profile
   /// 맛 게이지 5축 + divider + 향미 태그 (회색 컨테이너 radius 24)
-  Widget _buildCoffeeProfileSection() {
+  Widget _buildCoffeeProfileSection(AppColorScheme colors) {
     final profile = widget.item.flavorProfile;
     if (profile == null) {
       return const SizedBox.shrink();
@@ -284,7 +286,7 @@ class _CoffeeAccordionCardState extends State<CoffeeAccordionCard>
     return Container(
       padding: const EdgeInsets.fromLTRB(24, 16, 24, 24),
       decoration: BoxDecoration(
-        color: AppColor.componentFillNormal,
+        color: colors.componentFillNormal,
         borderRadius: BorderRadius.circular(24),
       ),
       child: Column(
@@ -300,7 +302,7 @@ class _CoffeeAccordionCardState extends State<CoffeeAccordionCard>
           // ── divider + 향미 태그 ──
           if (widget.item.allFlavorTags.isNotEmpty) ...[
             const SizedBox(height: 20),
-            Container(height: 1, color: AppColor.componentFillNormal),
+            Container(height: 1, color: colors.componentFillNormal),
             const SizedBox(height: 20),
             // 향미 태그 — FlavorTag 와 보더/패딩/radius 가 달라 공통화하지 않음
             Wrap(
@@ -313,13 +315,13 @@ class _CoffeeAccordionCardState extends State<CoffeeAccordionCard>
                     vertical: 6,
                   ),
                   decoration: BoxDecoration(
-                    color: AppColor.componentFillNormal,
+                    color: colors.componentFillNormal,
                     borderRadius: AppRadius.fullBorder,
                   ),
                   child: Text(
                     tag,
                     style: AppTextStyles.label1NormalMedium.copyWith(
-                      color: AppColor.colorGlobalCoolNeutral10,
+                      color: colors.labelNormal,
                       letterSpacing: 0.0145,
                     ),
                   ),
@@ -333,7 +335,7 @@ class _CoffeeAccordionCardState extends State<CoffeeAccordionCard>
   }
 
   /// 액션 버튼 — Figma: Button List (40px pill ×2, gap 4)
-  Widget _buildActionButtons() {
+  Widget _buildActionButtons(AppColorScheme colors) {
     return Row(
       children: [
         // 보조 버튼 — 원두 상세 (회색)
@@ -344,17 +346,15 @@ class _CoffeeAccordionCardState extends State<CoffeeAccordionCard>
               height: 40,
               padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 9),
               decoration: BoxDecoration(
-                // Figma: rgba(112, 115, 124, 0.08)
-                color: AppColor.colorGlobalCoolNeutral50.withValues(
-                  alpha: 0.08,
-                ),
+                // Figma: rgba(112, 115, 124, 0.08) → 시맨틱 fill
+                color: colors.componentFillNormal,
                 borderRadius: AppRadius.fullBorder,
               ),
               child: Center(
                 child: Text(
                   '원두 상세',
                   style: AppTextStyles.body2NormalBold.copyWith(
-                    color: AppColor.colorGlobalCoolNeutral10, // #171719
+                    color: colors.labelNormal,
                     letterSpacing: 0.0096,
                   ),
                 ),
@@ -371,12 +371,13 @@ class _CoffeeAccordionCardState extends State<CoffeeAccordionCard>
               height: 40,
               padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 9),
               decoration: BoxDecoration(
-                color: AppColor.colorGlobalViolet50, // #6541F2
+                color: colors.primaryNormal, // #6541F2
                 borderRadius: AppRadius.fullBorder,
               ),
               child: Center(
                 child: Text(
                   '레시피 실행',
+                  // 보라 solid 버튼 위 흰 텍스트 — static 유지
                   style: AppTextStyles.body2NormalBold.copyWith(
                     color: AppColor.colorGlobalCommon100, // #FFFFFF
                     letterSpacing: 0.0096,

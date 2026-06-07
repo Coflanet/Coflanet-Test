@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:coflanet/constants/color_constant.dart';
+import 'package:coflanet/constants/app_color_scheme.dart';
 import 'package:coflanet/constants/style_constant.dart';
 
 /// 섹션 타이틀 + 선택적 서브텍스트.
@@ -36,6 +36,7 @@ class SectionTitle extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final colors = AppColorScheme.of(context);
     return Column(
       mainAxisSize: MainAxisSize.min,
       crossAxisAlignment: CrossAxisAlignment.start,
@@ -48,7 +49,7 @@ class SectionTitle extends StatelessWidget {
             style:
                 subtitleStyle ??
                 AppTextStyles.body2NormalRegular.copyWith(
-                  color: AppColor.labelAlternative,
+                  color: colors.labelAlternative,
                 ),
           ),
         ],

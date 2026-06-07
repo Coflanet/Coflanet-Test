@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:coflanet/constants/app_color_scheme.dart';
 import 'package:coflanet/constants/color_constant.dart';
 import 'package:coflanet/constants/style_constant.dart';
 import 'package:coflanet/constants/radius_constant.dart';
@@ -36,6 +37,7 @@ class AppAnimatedTasteBar extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final colors = AppColorScheme.of(context);
     return Padding(
       padding: EdgeInsets.only(bottom: isLast ? 0 : 20),
       child: Column(
@@ -47,7 +49,7 @@ class AppAnimatedTasteBar extends StatelessWidget {
               Text(
                 label,
                 style: AppTextStyles.label1NormalMedium.copyWith(
-                  color: AppColor.labelNormal,
+                  color: colors.labelNormal,
                 ),
               ),
               Container(
@@ -73,7 +75,7 @@ class AppAnimatedTasteBar extends StatelessWidget {
               Container(
                 height: barHeight,
                 decoration: BoxDecoration(
-                  color: AppColor.lineNormalAlternative,
+                  color: colors.lineNormalAlternative,
                   borderRadius: AppRadius.smBorder,
                 ),
               ),
@@ -136,6 +138,7 @@ class AppMiniTasteBar extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final colors = AppColorScheme.of(context);
     return Padding(
       padding: const EdgeInsets.only(bottom: 4),
       child: Row(
@@ -145,7 +148,7 @@ class AppMiniTasteBar extends StatelessWidget {
             child: Text(
               label,
               style: AppTextStyles.caption2Medium.copyWith(
-                color: AppColor.labelAssistive,
+                color: colors.labelAssistive,
               ),
             ),
           ),
@@ -157,9 +160,9 @@ class AppMiniTasteBar extends StatelessWidget {
                 borderRadius: AppRadius.xxsBorder,
                 child: LinearProgressIndicator(
                   value: value / 100,
-                  backgroundColor: AppColor.lineNormalAlternative,
+                  backgroundColor: colors.lineNormalAlternative,
                   valueColor: AlwaysStoppedAnimation<Color>(
-                    AppColor.primaryNormal,
+                    colors.primaryNormal,
                   ),
                 ),
               ),

@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:coflanet/constants/app_color_scheme.dart';
 import 'package:coflanet/constants/asset_constant.dart';
-import 'package:coflanet/constants/color_constant.dart';
 import 'package:coflanet/constants/radius_constant.dart';
 import 'package:coflanet/constants/style_constant.dart';
 import 'package:coflanet/data/models/survey_result_model.dart';
@@ -16,15 +16,16 @@ class FlavorDescriptionRow extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final colors = AppColorScheme.of(context);
     final aromaImage = _getAromaImage(description.name);
 
     return Container(
       margin: const EdgeInsets.only(bottom: 12),
       padding: const EdgeInsets.all(16),
       decoration: BoxDecoration(
-        color: AppColor.backgroundNormalNormal,
+        color: colors.backgroundNormalNormal,
         borderRadius: AppRadius.lgBorder,
-        border: Border.all(color: AppColor.lineNormalNeutral),
+        border: Border.all(color: colors.lineNormalNeutral),
         boxShadow: AppShadows.shadowBlackNormal,
       ),
       child: Row(
@@ -39,8 +40,8 @@ class FlavorDescriptionRow extends StatelessWidget {
                 begin: Alignment.topLeft,
                 end: Alignment.bottomRight,
                 colors: [
-                  AppColor.primaryLight,
-                  AppColor.primaryNormal.withValues(alpha: 0.3),
+                  colors.primaryLight,
+                  colors.primaryNormal.withValues(alpha: 0.3),
                 ],
               ),
               shape: BoxShape.circle,
@@ -71,14 +72,14 @@ class FlavorDescriptionRow extends StatelessWidget {
                 Text(
                   description.name,
                   style: AppTextStyles.label1NormalBold.copyWith(
-                    color: AppColor.labelNormal,
+                    color: colors.labelNormal,
                   ),
                 ),
                 const SizedBox(height: 4),
                 Text(
                   description.description,
                   style: AppTextStyles.caption1Regular.copyWith(
-                    color: AppColor.labelAlternative,
+                    color: colors.labelAlternative,
                   ),
                 ),
               ],

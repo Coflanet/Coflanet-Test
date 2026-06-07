@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
+import 'package:coflanet/constants/app_color_scheme.dart';
 import 'package:coflanet/constants/asset_constant.dart';
-import 'package:coflanet/constants/color_constant.dart';
 import 'package:coflanet/constants/style_constant.dart';
 import 'package:coflanet/data/models/survey_result_model.dart';
 import 'package:coflanet/modules/onboarding/result/widgets/flavor_description_row.dart';
@@ -27,13 +27,14 @@ class SurveyResultView extends GetView<SurveyController> {
 
   @override
   Widget build(BuildContext context) {
+    final colors = AppColorScheme.of(context);
     final result = controller.surveyResult;
 
     return Scaffold(
-      backgroundColor: AppColor.backgroundNormalNormal,
+      backgroundColor: colors.backgroundNormalNormal,
       appBar: AppBar(
-        backgroundColor: AppColor.backgroundNormalNormal,
-        surfaceTintColor: AppColor.backgroundNormalNormal,
+        backgroundColor: colors.backgroundNormalNormal,
+        surfaceTintColor: colors.backgroundNormalNormal,
         elevation: 0,
         scrolledUnderElevation: 0,
         leading: IconButton(
@@ -42,7 +43,7 @@ class SurveyResultView extends GetView<SurveyController> {
             width: 24,
             height: 24,
             colorFilter: ColorFilter.mode(
-              AppColor.labelNormal,
+              colors.labelNormal,
               BlendMode.srcIn,
             ),
           ),
@@ -52,7 +53,7 @@ class SurveyResultView extends GetView<SurveyController> {
         title: Text(
           '나의 커피 취향',
           style: AppTextStyles.headline1Bold.copyWith(
-            color: AppColor.labelNormal,
+            color: colors.labelNormal,
           ),
         ),
       ),
@@ -79,12 +80,14 @@ class SurveyResultView extends GetView<SurveyController> {
           SliverToBoxAdapter(
             child: Padding(
               padding: const EdgeInsets.symmetric(horizontal: 20),
-              child: Divider(height: 1, color: AppColor.lineNormalNeutral),
+              child: Divider(height: 1, color: colors.lineNormalNeutral),
             ),
           ),
 
           // ── 추천 원두 ──
-          SliverToBoxAdapter(child: _buildRecommendationsSection(result)),
+          SliverToBoxAdapter(
+            child: _buildRecommendationsSection(colors, result),
+          ),
 
           // ── 하단 액션 링크 ──
           SliverToBoxAdapter(
@@ -120,7 +123,10 @@ class SurveyResultView extends GetView<SurveyController> {
   }
 
   /// 추천 원두 섹션 — 헤더 + 추천 카드 리스트
-  Widget _buildRecommendationsSection(SurveyResultModel? result) {
+  Widget _buildRecommendationsSection(
+    AppColorScheme colors,
+    SurveyResultModel? result,
+  ) {
     final recommendations = result?.recommendations ?? [];
     if (recommendations.isEmpty) return const SizedBox.shrink();
 
@@ -132,7 +138,7 @@ class SurveyResultView extends GetView<SurveyController> {
           SectionTitle(
             title: '추천 원두',
             titleStyle: AppTextStyles.headline1Bold.copyWith(
-              color: AppColor.labelNormal,
+              color: colors.labelNormal,
             ),
             subtitle: '${controller.userName}님의 취향과 가까운 원두예요 🤗',
           ),

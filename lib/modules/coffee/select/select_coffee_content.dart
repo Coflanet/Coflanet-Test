@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:coflanet/constants/app_color_scheme.dart';
 import 'package:coflanet/constants/color_constant.dart';
 import 'package:coflanet/constants/style_constant.dart';
 import 'package:coflanet/data/models/coffee_item_model.dart';
@@ -23,21 +24,22 @@ class SelectCoffeeContent extends GetView<SelectCoffeeController> {
 
   @override
   Widget build(BuildContext context) {
+    final colors = AppColorScheme.of(context);
     // Scaffold/SafeArea 는 MainShellView 가 담당.
     // SizedBox.expand 로 가용 공간 전체 채움. 배경: Figma #F4F4F5
     return SizedBox.expand(
       child: Container(
-        color: AppColor.backgroundNormalAlternative,
+        color: colors.backgroundNormalAlternative,
         child: Obx(() {
           if (controller.isLoading) {
             return Center(
-              child: CircularProgressIndicator(color: AppColor.primaryNormal),
+              child: CircularProgressIndicator(color: colors.primaryNormal),
             );
           }
 
           return controller.coffeeItems.isEmpty
-              ? _buildEmptyState()
-              : _buildCoffeeList();
+              ? _buildEmptyState(colors)
+              : _buildCoffeeList(colors);
         }),
       ),
     );
@@ -46,7 +48,7 @@ class SelectCoffeeContent extends GetView<SelectCoffeeController> {
   /// 빈 상태 — Figma 'Home_Item_yes' 시안 기준
   /// 보라색 박스 카드 + 안내 텍스트 (좌) + 원두 일러스트 placeholder (우)
   /// 탭하면 원두 추가 화면으로 진입
-  Widget _buildEmptyState() {
+  Widget _buildEmptyState(AppColorScheme colors) {
     return Padding(
       padding: const EdgeInsets.fromLTRB(20, 20, 20, 20),
       child: Column(
@@ -57,7 +59,7 @@ class SelectCoffeeContent extends GetView<SelectCoffeeController> {
             child: Container(
               padding: const EdgeInsets.fromLTRB(20, 24, 20, 24),
               decoration: BoxDecoration(
-                color: AppColor.primaryNormal, // Figma 보라 #6541F2
+                color: colors.primaryNormal, // Figma 보라 #6541F2
                 borderRadius: BorderRadius.circular(24),
               ),
               child: Row(
@@ -113,7 +115,7 @@ class SelectCoffeeContent extends GetView<SelectCoffeeController> {
     );
   }
 
-  Widget _buildCoffeeList() {
+  Widget _buildCoffeeList(AppColorScheme colors) {
     final items = controller.coffeeItems;
     final isEditing = controller.isEditing;
 
@@ -121,7 +123,7 @@ class SelectCoffeeContent extends GetView<SelectCoffeeController> {
       children: [
         Expanded(
           child: isEditing
-              ? _buildEditModeList(items)
+              ? _buildEditModeList(colors, items)
               : _buildNormalModeList(items),
         ),
         // 편집 모드 하단 액션 바
@@ -154,7 +156,7 @@ class SelectCoffeeContent extends GetView<SelectCoffeeController> {
   }
 
   /// 편집 모드 — 순서 변경 가능 리스트
-  Widget _buildEditModeList(List<CoffeeItem> items) {
+  Widget _buildEditModeList(AppColorScheme colors, List<CoffeeItem> items) {
     return Column(
       children: [
         Expanded(
@@ -191,18 +193,20 @@ class SelectCoffeeContent extends GetView<SelectCoffeeController> {
                         // 체크박스 (카드 밖 좌측)
                         GestureDetector(
                           onTap: () => controller.toggleEditSelection(item.id),
-                          child: _buildEditCheckbox(isSelected),
+                          child: _buildEditCheckbox(colors, isSelected),
                         ),
                         const SizedBox(width: 12),
                         // 카드
-                        Expanded(child: _buildEditModeCard(item, isSelected)),
+                        Expanded(
+                          child: _buildEditModeCard(colors, item, isSelected),
+                        ),
                         const SizedBox(width: 12),
                         // 드래그 핸들
                         ReorderableDragStartListener(
                           index: index,
                           child: Icon(
                             Icons.drag_handle,
-                            color: AppColor.labelNormal,
+                            color: colors.labelNormal,
                             size: 24,
                           ),
                         ),
@@ -266,7 +270,11 @@ class SelectCoffeeContent extends GetView<SelectCoffeeController> {
 
   /// 편집 모드 카드 — Figma: List/Coffee List/Accordion
   /// Height 80, 흰 배경, radius 20, padding 16
-  Widget _buildEditModeCard(CoffeeItem item, bool isSelected) {
+  Widget _buildEditModeCard(
+    AppColorScheme colors,
+    CoffeeItem item,
+    bool isSelected,
+  ) {
     final displayImage = item.displayImageUrl;
 
     return GestureDetector(
@@ -275,10 +283,10 @@ class SelectCoffeeContent extends GetView<SelectCoffeeController> {
         height: 80,
         padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
         decoration: BoxDecoration(
-          color: AppColor.colorGlobalCommon100, // Figma: #FFFFFF
+          color: colors.surfaceCard, // Figma: #FFFFFF (다크: coolNeutral15)
           borderRadius: BorderRadius.circular(20),
           border: isSelected
-              ? Border.all(color: AppColor.primaryNormal, width: 2)
+              ? Border.all(color: colors.primaryNormal, width: 2)
               : null,
           boxShadow: [
             BoxShadow(
@@ -295,7 +303,7 @@ class SelectCoffeeContent extends GetView<SelectCoffeeController> {
               width: 48,
               height: 48,
               decoration: BoxDecoration(
-                color: AppColor.colorGlobalCoolNeutral95,
+                color: colors.componentFillStrong,
                 borderRadius: BorderRadius.circular(12),
                 image: displayImage != null
                     ? DecorationImage(
@@ -318,7 +326,7 @@ class SelectCoffeeContent extends GetView<SelectCoffeeController> {
                   Text(
                     item.brand ?? '브랜드명',
                     style: AppTextStyles.caption1Regular.copyWith(
-                      color: AppColor.labelAssistive,
+                      color: colors.labelAssistive,
                     ),
                     maxLines: 1,
                     overflow: TextOverflow.ellipsis,
@@ -327,7 +335,7 @@ class SelectCoffeeContent extends GetView<SelectCoffeeController> {
                   Text(
                     item.name,
                     style: AppTextStyles.body2NormalBold.copyWith(
-                      color: AppColor.labelNormal,
+                      color: colors.labelNormal,
                     ),
                     maxLines: 1,
                     overflow: TextOverflow.ellipsis,
@@ -343,7 +351,7 @@ class SelectCoffeeContent extends GetView<SelectCoffeeController> {
 
   /// 편집 모드 체크박스 — 카드 밖 좌측
   /// Figma: 24x24 외곽, 18x18 내부, border 1.5px, radius 5px
-  Widget _buildEditCheckbox(bool isSelected) {
+  Widget _buildEditCheckbox(AppColorScheme colors, bool isSelected) {
     return Container(
       width: 24,
       height: 24,
@@ -354,12 +362,10 @@ class SelectCoffeeContent extends GetView<SelectCoffeeController> {
         height: 18,
         decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(5), // Figma: 5px radius
-          color: isSelected ? AppColor.primaryNormal : AppColor.transparent,
+          color: isSelected ? colors.primaryNormal : AppColor.transparent,
           border: Border.all(
-            // Figma: rgba(112,115,124,0.22)
-            color: isSelected
-                ? AppColor.primaryNormal
-                : AppColor.colorGlobalCoolNeutral50.withValues(alpha: 0.22),
+            // Figma: rgba(112,115,124,0.22) → 시맨틱 보더
+            color: isSelected ? colors.primaryNormal : colors.lineNormalNormal,
             width: 1.5, // Figma: 1.5px border
           ),
         ),
@@ -380,6 +386,7 @@ class SelectCoffeeContent extends GetView<SelectCoffeeController> {
     return Obx(() {
       final hasSelection = controller.selectedEditCount > 0;
 
+      // 고정 다크 액션 바(순흑 + LiquidGlass 버튼) — 의도된 디자인. 테마 무관.
       return Container(
         padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 16),
         decoration: const BoxDecoration(
@@ -401,11 +408,11 @@ class SelectCoffeeContent extends GetView<SelectCoffeeController> {
                     size: 44,
                   ),
                 ),
-                // 선택 카운트 — Figma: Body 1/Normal - Regular
+                // 선택 카운트 — 검은 바 위 고정 흰 텍스트
                 Text(
                   '${controller.selectedEditCount}개가 선택됨',
                   style: AppTextStyles.body1NormalRegular.copyWith(
-                    color: AppColor.inverseLabelNormal,
+                    color: AppColor.staticLabelWhiteNormal,
                   ),
                 ),
                 // 삭제 버튼 — Figma: Button/Icon/LiquidGlass 44x44

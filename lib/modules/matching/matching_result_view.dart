@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
+import 'package:coflanet/constants/app_color_scheme.dart';
 import 'package:coflanet/constants/asset_constant.dart';
 import 'package:coflanet/constants/color_constant.dart';
 import 'package:coflanet/constants/style_constant.dart';
@@ -15,15 +16,16 @@ class MatchingResultView extends GetView<MatchingController> {
 
   @override
   Widget build(BuildContext context) {
+    final colors = AppColorScheme.of(context);
     return Scaffold(
-      backgroundColor: AppColor.backgroundNormalAlternative,
+      backgroundColor: colors.backgroundNormalAlternative,
       body: Obx(() {
         if (controller.isLoading) {
           return const Center(child: CircularProgressIndicator());
         }
 
         if (!controller.hasResult) {
-          return _buildNoResultState();
+          return _buildNoResultState(colors);
         }
 
         return CustomScrollView(
@@ -37,7 +39,7 @@ class MatchingResultView extends GetView<MatchingController> {
                 icon: Container(
                   padding: const EdgeInsets.all(8),
                   decoration: BoxDecoration(
-                    color: AppColor.backgroundNormalNormal,
+                    color: colors.backgroundNormalNormal,
                     borderRadius: AppRadius.lgBorder,
                     boxShadow: AppShadows.shadowBlackNormal,
                   ),
@@ -46,7 +48,7 @@ class MatchingResultView extends GetView<MatchingController> {
                     width: 24,
                     height: 24,
                     colorFilter: ColorFilter.mode(
-                      AppColor.labelNormal,
+                      colors.labelNormal,
                       BlendMode.srcIn,
                     ),
                   ),
@@ -61,10 +63,10 @@ class MatchingResultView extends GetView<MatchingController> {
             SliverToBoxAdapter(child: _buildHeroCard()),
 
             // Taste profile section
-            SliverToBoxAdapter(child: _buildTasteProfileSection()),
+            SliverToBoxAdapter(child: _buildTasteProfileSection(colors)),
 
             // Recommendations section
-            SliverToBoxAdapter(child: _buildRecommendationsSection()),
+            SliverToBoxAdapter(child: _buildRecommendationsSection(colors)),
 
             // Bottom spacing
             const SliverToBoxAdapter(child: SizedBox(height: 120)),
@@ -78,7 +80,7 @@ class MatchingResultView extends GetView<MatchingController> {
     );
   }
 
-  Widget _buildNoResultState() {
+  Widget _buildNoResultState(AppColorScheme colors) {
     return Center(
       child: Padding(
         padding: const EdgeInsets.all(32),
@@ -102,7 +104,7 @@ class MatchingResultView extends GetView<MatchingController> {
             Text(
               '아직 취향 테스트를 하지 않으셨네요',
               style: AppTextStyles.headline1Bold.copyWith(
-                color: AppColor.labelNormal,
+                color: colors.labelNormal,
               ),
               textAlign: TextAlign.center,
             ),
@@ -110,7 +112,7 @@ class MatchingResultView extends GetView<MatchingController> {
             Text(
               '간단한 설문으로 나만의 커피 취향을\n찾아보세요!',
               style: AppTextStyles.body1NormalRegular.copyWith(
-                color: AppColor.labelAlternative,
+                color: colors.labelAlternative,
               ),
               textAlign: TextAlign.center,
             ),
@@ -240,14 +242,14 @@ class MatchingResultView extends GetView<MatchingController> {
     );
   }
 
-  Widget _buildTasteProfileSection() {
+  Widget _buildTasteProfileSection(AppColorScheme colors) {
     final profile = controller.surveyResult!.tasteProfile;
 
     return Container(
       margin: const EdgeInsets.fromLTRB(20, 0, 20, 24),
       padding: const EdgeInsets.all(24),
       decoration: BoxDecoration(
-        color: AppColor.backgroundNormalNormal,
+        color: colors.surfaceCard,
         borderRadius: AppRadius.xxlBorder,
         boxShadow: AppShadows.shadowBlackEmphasize,
       ),
@@ -260,12 +262,12 @@ class MatchingResultView extends GetView<MatchingController> {
                 width: 40,
                 height: 40,
                 decoration: BoxDecoration(
-                  color: AppColor.primaryLight,
+                  color: colors.primaryLight,
                   borderRadius: AppRadius.lgBorder,
                 ),
                 child: Icon(
                   Icons.equalizer_rounded,
-                  color: AppColor.primaryNormal,
+                  color: colors.primaryNormal,
                   size: 22,
                 ),
               ),
@@ -273,7 +275,7 @@ class MatchingResultView extends GetView<MatchingController> {
               Text(
                 '맛 프로필',
                 style: AppTextStyles.headline1Bold.copyWith(
-                  color: AppColor.labelNormal,
+                  color: colors.labelNormal,
                 ),
               ),
             ],
@@ -313,7 +315,7 @@ class MatchingResultView extends GetView<MatchingController> {
     );
   }
 
-  Widget _buildRecommendationsSection() {
+  Widget _buildRecommendationsSection(AppColorScheme colors) {
     final recommendations = controller.surveyResult!.recommendations;
     if (recommendations.isEmpty) return const SizedBox.shrink();
 
@@ -341,7 +343,7 @@ class MatchingResultView extends GetView<MatchingController> {
               Text(
                 '추천 원두',
                 style: AppTextStyles.headline1Bold.copyWith(
-                  color: AppColor.labelNormal,
+                  color: colors.labelNormal,
                 ),
               ),
             ],
@@ -362,7 +364,7 @@ class MatchingResultView extends GetView<MatchingController> {
               final rec = recommendations[index];
               return KeyedSubtree(
                 key: ValueKey(rec.id),
-                child: _buildRecommendationCard(rec, index),
+                child: _buildRecommendationCard(colors, rec, index),
               );
             },
           ),
@@ -371,20 +373,21 @@ class MatchingResultView extends GetView<MatchingController> {
     );
   }
 
-  Widget _buildRecommendationCard(rec, int index) {
-    final colors = [
+  Widget _buildRecommendationCard(AppColorScheme colors, rec, int index) {
+    // 카드 헤더 강조색 팔레트 (accent — 라이트/다크 공통 고정)
+    final accentColors = [
       AppColor.colorGlobalOrange50,
       AppColor.colorGlobalViolet50,
       AppColor.colorGlobalCyan50,
       AppColor.colorGlobalGreen50,
     ];
-    final color = colors[index % colors.length];
+    final color = accentColors[index % accentColors.length];
 
     return Container(
       width: 180,
       margin: const EdgeInsets.only(right: 16),
       decoration: BoxDecoration(
-        color: AppColor.backgroundNormalNormal,
+        color: colors.surfaceCard,
         borderRadius: AppRadius.xxlBorder,
         boxShadow: AppShadows.shadowBlackEmphasize,
       ),
@@ -437,7 +440,7 @@ class MatchingResultView extends GetView<MatchingController> {
                   Text(
                     rec.name,
                     style: AppTextStyles.headline2Bold.copyWith(
-                      color: AppColor.labelNormal,
+                      color: colors.labelNormal,
                     ),
                     maxLines: 1,
                     overflow: TextOverflow.ellipsis,
@@ -446,7 +449,7 @@ class MatchingResultView extends GetView<MatchingController> {
                   Text(
                     '${rec.origin} \u00B7 ${rec.roastLevel}',
                     style: AppTextStyles.caption1Regular.copyWith(
-                      color: AppColor.labelAlternative,
+                      color: colors.labelAlternative,
                     ),
                     maxLines: 1,
                     overflow: TextOverflow.ellipsis,

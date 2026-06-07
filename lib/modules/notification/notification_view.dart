@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:coflanet/constants/app_color_scheme.dart';
 import 'package:coflanet/constants/color_constant.dart';
 import 'package:coflanet/constants/style_constant.dart';
 import 'package:coflanet/constants/util_constant.dart';
@@ -14,13 +15,14 @@ class NotificationView extends GetView<NotificationController> {
 
   @override
   Widget build(BuildContext context) {
+    final colors = AppColorScheme.of(context);
     return Scaffold(
-      backgroundColor: AppColor.backgroundNormalNormal,
+      backgroundColor: colors.backgroundNormalNormal,
       body: SafeArea(
         child: Column(
           children: [
-            _buildHeader(),
-            Expanded(child: _buildBody()),
+            _buildHeader(colors),
+            Expanded(child: _buildBody(colors)),
           ],
         ),
       ),
@@ -28,7 +30,7 @@ class NotificationView extends GetView<NotificationController> {
   }
 
   /// 공통 AppHeader 재사용 — 전체 삭제 버튼은 Obx 로 감싸 trailing 슬롯에 주입
-  Widget _buildHeader() {
+  Widget _buildHeader(AppColorScheme colors) {
     return AppHeader(
       title: '알림',
       trailing: Obx(() {
@@ -41,7 +43,7 @@ class NotificationView extends GetView<NotificationController> {
             child: Text(
               '전체 삭제',
               style: AppTextStyles.caption1Medium.copyWith(
-                color: AppColor.labelAlternative,
+                color: colors.labelAlternative,
               ),
             ),
           ),
@@ -50,7 +52,7 @@ class NotificationView extends GetView<NotificationController> {
     );
   }
 
-  Widget _buildBody() {
+  Widget _buildBody(AppColorScheme colors) {
     return Obx(() {
       if (controller.isEmpty) {
         return const AppEmptyState(
@@ -64,17 +66,18 @@ class NotificationView extends GetView<NotificationController> {
         padding: const EdgeInsets.symmetric(vertical: 8),
         itemCount: items.length,
         separatorBuilder: (_, __) =>
-            Divider(height: 1, color: AppColor.lineSolidNormal),
-        itemBuilder: (context, index) => _buildNotificationTile(items[index]),
+            Divider(height: 1, color: colors.lineSolidNormal),
+        itemBuilder: (context, index) =>
+            _buildNotificationTile(colors, items[index]),
       );
     });
   }
 
-  Widget _buildNotificationTile(AppNotification item) {
+  Widget _buildNotificationTile(AppColorScheme colors, AppNotification item) {
     return Container(
       color: item.isRead
           ? AppColor.transparent
-          : AppColor.primaryLight.withValues(alpha: 0.4),
+          : colors.primaryLight.withValues(alpha: 0.4),
       padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 14),
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -84,13 +87,13 @@ class NotificationView extends GetView<NotificationController> {
             height: 40,
             alignment: Alignment.center,
             decoration: BoxDecoration(
-              color: AppColor.primaryLight,
+              color: colors.primaryLight,
               shape: BoxShape.circle,
             ),
             child: Icon(
               Icons.notifications,
               size: 20,
-              color: AppColor.primaryNormal,
+              color: colors.primaryNormal,
             ),
           ),
           const SizedBox(width: 12),
@@ -101,21 +104,21 @@ class NotificationView extends GetView<NotificationController> {
                 Text(
                   item.title,
                   style: AppTextStyles.body2NormalBold.copyWith(
-                    color: AppColor.labelNormal,
+                    color: colors.labelNormal,
                   ),
                 ),
                 const SizedBox(height: 4),
                 Text(
                   item.body,
                   style: AppTextStyles.caption1Regular.copyWith(
-                    color: AppColor.labelAlternative,
+                    color: colors.labelAlternative,
                   ),
                 ),
                 const SizedBox(height: 6),
                 Text(
                   AppUtil.changeDateToAgo(item.createdAt.toIso8601String()),
                   style: AppTextStyles.caption2Regular.copyWith(
-                    color: AppColor.labelAssistive,
+                    color: colors.labelAssistive,
                   ),
                 ),
               ],
@@ -129,7 +132,7 @@ class NotificationView extends GetView<NotificationController> {
               margin: const EdgeInsets.only(top: 4),
               decoration: BoxDecoration(
                 shape: BoxShape.circle,
-                color: AppColor.primaryNormal,
+                color: colors.primaryNormal,
               ),
             ),
           ],

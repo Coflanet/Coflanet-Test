@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:coflanet/constants/color_constant.dart';
+import 'package:coflanet/constants/app_color_scheme.dart';
 import 'package:coflanet/constants/style_constant.dart';
 // [리팩토링 대상] HandDripStep 모델이 controller 파일에 정의되어 있어 부득이 import
 // (위젯은 모델 클래스만 사용 — GetX controller 인스턴스 미참조)
@@ -43,6 +43,7 @@ class ExtractionStepTile extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final colors = AppColorScheme.of(context);
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
@@ -52,7 +53,7 @@ class ExtractionStepTile extends StatelessWidget {
               child: Text(
                 step.title,
                 style: AppTextStyles.body1NormalBold.copyWith(
-                  color: AppColor.labelNormal,
+                  color: colors.labelNormal,
                 ),
               ),
             ),
@@ -62,7 +63,7 @@ class ExtractionStepTile extends StatelessWidget {
               child: Icon(
                 Icons.delete_outline,
                 size: 20,
-                color: AppColor.labelAlternative,
+                color: colors.labelAlternative,
               ),
             ),
           ],
@@ -75,7 +76,7 @@ class ExtractionStepTile extends StatelessWidget {
               child: Text(
                 '물의 양',
                 style: AppTextStyles.label1NormalRegular.copyWith(
-                  color: AppColor.labelAlternative,
+                  color: colors.labelAlternative,
                 ),
               ),
             ),
@@ -95,7 +96,7 @@ class ExtractionStepTile extends StatelessWidget {
                 Text(
                   '시간',
                   style: AppTextStyles.label1NormalRegular.copyWith(
-                    color: AppColor.labelAlternative,
+                    color: colors.labelAlternative,
                   ),
                 ),
                 const SizedBox(width: 4),
@@ -105,7 +106,7 @@ class ExtractionStepTile extends StatelessWidget {
                   child: Icon(
                     Icons.info_outline,
                     size: 16,
-                    color: AppColor.labelAlternative,
+                    color: colors.labelAlternative,
                   ),
                 ),
               ],

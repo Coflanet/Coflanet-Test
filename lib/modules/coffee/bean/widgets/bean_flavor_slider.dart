@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:coflanet/constants/color_constant.dart';
+import 'package:coflanet/constants/app_color_scheme.dart';
 import 'package:coflanet/constants/style_constant.dart';
 
 /// 향미 프로필 슬라이더 — 라벨 + 현재 값 + Material Slider (0-100).
@@ -25,6 +25,8 @@ class BeanFlavorSlider extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final colors = AppColorScheme.of(context);
+
     return Padding(
       padding: const EdgeInsets.only(bottom: 20),
       child: Column(
@@ -35,13 +37,13 @@ class BeanFlavorSlider extends StatelessWidget {
               Text(
                 label,
                 style: AppTextStyles.body2NormalMedium.copyWith(
-                  color: AppColor.colorGlobalCoolNeutral60,
+                  color: colors.labelAlternative,
                 ),
               ),
               Text(
                 value.round().toString(),
                 style: AppTextStyles.body2NormalBold.copyWith(
-                  color: AppColor.primaryNormal,
+                  color: colors.primaryNormal,
                 ),
               ),
             ],
@@ -49,10 +51,10 @@ class BeanFlavorSlider extends StatelessWidget {
           const SizedBox(height: 8),
           SliderTheme(
             data: SliderTheme.of(context).copyWith(
-              activeTrackColor: AppColor.primaryNormal,
-              inactiveTrackColor: AppColor.colorGlobalCoolNeutral25,
-              thumbColor: AppColor.primaryNormal,
-              overlayColor: AppColor.primaryNormal.withValues(alpha: 0.15),
+              activeTrackColor: colors.primaryNormal,
+              inactiveTrackColor: colors.lineSolidNormal,
+              thumbColor: colors.primaryNormal,
+              overlayColor: colors.primaryNormal.withValues(alpha: 0.15),
               trackHeight: 6,
               thumbShape: const RoundSliderThumbShape(enabledThumbRadius: 10),
             ),

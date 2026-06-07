@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
+import 'package:coflanet/constants/app_color_scheme.dart';
 import 'package:coflanet/constants/asset_constant.dart';
 import 'package:coflanet/constants/color_constant.dart';
 import 'package:coflanet/constants/style_constant.dart';
@@ -16,21 +17,23 @@ class SurveyIndexView extends GetView<SurveyController> {
   // Figma 사양: Pretendard SemiBold 22 / lineHeight 1.36 / letterSpacing -0.4268
   // 색상은 Label/strong (#000000) 토큰 매핑
   // Auth 카테고리에서 통일한 페이지 헤더 스타일과 동일
-  TextStyle get _screenHeaderStyle => AppTextStyles.heading1Bold.copyWith(
-    fontWeight: FontWeight.w600,
-    height: 1.36,
-    letterSpacing: -0.4268,
-    color: AppColor.labelStrong,
-  );
+  TextStyle _screenHeaderStyle(AppColorScheme colors) =>
+      AppTextStyles.heading1Bold.copyWith(
+        fontWeight: FontWeight.w600,
+        height: 1.36,
+        letterSpacing: -0.4268,
+        color: colors.labelStrong,
+      );
 
   @override
   Widget build(BuildContext context) {
+    final colors = AppColorScheme.of(context);
     final storage = Get.find<LocalStorage>();
     final userName = storage.getUserName() ?? '사용자';
 
     return Scaffold(
-      backgroundColor: AppColor.backgroundNormalNormal,
-      appBar: _buildAppBar(),
+      backgroundColor: colors.backgroundNormalNormal,
+      appBar: _buildAppBar(colors),
       body: SafeArea(
         top: false,
         child: Padding(
@@ -44,43 +47,43 @@ class SurveyIndexView extends GetView<SurveyController> {
               Text(
                 '첫번째 취향 조사를 시작할게요!',
                 style: AppTextStyles.caption1Regular.copyWith(
-                  color: AppColor.primaryNormal,
+                  color: colors.primaryNormal,
                 ),
               ),
               const SizedBox(height: 8),
 
               // Main title
-              Text('$userName님께', style: _screenHeaderStyle),
-              Text('커피 경험 질문을 드릴게요!', style: _screenHeaderStyle),
+              Text('$userName님께', style: _screenHeaderStyle(colors)),
+              Text('커피 경험 질문을 드릴게요!', style: _screenHeaderStyle(colors)),
               const SizedBox(height: 16),
 
               // Subtitle
               Text(
                 '취향 분석은 이런 단계로 진행돼요.',
                 style: AppTextStyles.body1NormalRegular.copyWith(
-                  color: AppColor.labelAlternative,
+                  color: colors.labelAlternative,
                 ),
               ),
               Text(
                 '예상 소요 시간은 3분 입니다.',
                 style: AppTextStyles.body1NormalRegular.copyWith(
-                  color: AppColor.labelAlternative,
+                  color: colors.labelAlternative,
                 ),
               ),
               const SizedBox(height: 32),
 
               // 3-step vertical stepper (Figma: Survey_01.png)
-              _buildStepIndicator(1, '커피 경험 질문', isActive: true),
-              _buildVerticalLine(),
-              _buildStepIndicator(2, '기본 맛 취향', isActive: false),
-              _buildVerticalLine(),
-              _buildStepIndicator(3, '특성 향미 취향', isActive: false),
+              _buildStepIndicator(colors, 1, '커피 경험 질문', isActive: true),
+              _buildVerticalLine(colors),
+              _buildStepIndicator(colors, 2, '기본 맛 취향', isActive: false),
+              _buildVerticalLine(colors),
+              _buildStepIndicator(colors, 3, '특성 향미 취향', isActive: false),
 
               const Spacer(),
 
               // No bottom button - navigate via AppBar or auto-continue
               // Start button at bottom
-              _buildStartButton(),
+              _buildStartButton(colors),
 
               const SizedBox(height: 34),
             ],
@@ -90,7 +93,7 @@ class SurveyIndexView extends GetView<SurveyController> {
     );
   }
 
-  PreferredSizeWidget _buildAppBar() {
+  PreferredSizeWidget _buildAppBar(AppColorScheme colors) {
     return AppBar(
       backgroundColor: AppColor.transparent,
       elevation: 0,
@@ -99,7 +102,7 @@ class SurveyIndexView extends GetView<SurveyController> {
           AssetPath.iconArrowBack,
           width: 24,
           height: 24,
-          colorFilter: ColorFilter.mode(AppColor.labelNormal, BlendMode.srcIn),
+          colorFilter: ColorFilter.mode(colors.labelNormal, BlendMode.srcIn),
         ),
         onPressed: () => Get.back(),
       ),
@@ -107,14 +110,19 @@ class SurveyIndexView extends GetView<SurveyController> {
       title: Text(
         '취향 분석',
         style: AppTextStyles.headline2Bold.copyWith(
-          color: AppColor.labelNormal,
+          color: colors.labelNormal,
         ),
       ),
     );
   }
 
   /// Build a step indicator row with circle and text (Figma: Survey_01.png)
-  Widget _buildStepIndicator(int step, String label, {required bool isActive}) {
+  Widget _buildStepIndicator(
+    AppColorScheme colors,
+    int step,
+    String label, {
+    required bool isActive,
+  }) {
     return Row(
       children: [
         // Circle with number
@@ -123,10 +131,10 @@ class SurveyIndexView extends GetView<SurveyController> {
           height: 32,
           decoration: BoxDecoration(
             shape: BoxShape.circle,
-            color: isActive ? AppColor.primaryNormal : AppColor.transparent,
+            color: isActive ? colors.primaryNormal : AppColor.transparent,
             border: isActive
                 ? null
-                : Border.all(color: AppColor.lineNormalNormal, width: 1.5),
+                : Border.all(color: colors.lineNormalNormal, width: 1.5),
           ),
           child: Center(
             child: Text(
@@ -134,7 +142,7 @@ class SurveyIndexView extends GetView<SurveyController> {
               style: AppTextStyles.label1NormalBold.copyWith(
                 color: isActive
                     ? AppColor.staticLabelWhiteNormal
-                    : AppColor.labelAlternative,
+                    : colors.labelAlternative,
               ),
             ),
           ),
@@ -144,7 +152,7 @@ class SurveyIndexView extends GetView<SurveyController> {
         Text(
           label,
           style: AppTextStyles.body1NormalMedium.copyWith(
-            color: isActive ? AppColor.primaryNormal : AppColor.labelNormal,
+            color: isActive ? colors.primaryNormal : colors.labelNormal,
             fontWeight: isActive ? FontWeight.w600 : FontWeight.w400,
           ),
         ),
@@ -153,25 +161,25 @@ class SurveyIndexView extends GetView<SurveyController> {
   }
 
   /// Build vertical connecting line between steps
-  Widget _buildVerticalLine() {
+  Widget _buildVerticalLine(AppColorScheme colors) {
     return Padding(
       padding: const EdgeInsets.only(left: 15), // Center under 32px circle
       child: Container(
         width: 2,
         height: 24,
-        color: AppColor.lineNormalNormal.withValues(alpha: 0.5),
+        color: colors.lineNormalNormal.withValues(alpha: 0.5),
       ),
     );
   }
 
-  Widget _buildStartButton() {
+  Widget _buildStartButton(AppColorScheme colors) {
     return SizedBox(
       width: double.infinity,
       height: 56,
       child: ElevatedButton(
         onPressed: () => controller.startSurvey(),
         style: ElevatedButton.styleFrom(
-          backgroundColor: AppColor.primaryNormal,
+          backgroundColor: colors.primaryNormal,
           foregroundColor: AppColor.staticLabelWhiteNormal,
           shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(12),

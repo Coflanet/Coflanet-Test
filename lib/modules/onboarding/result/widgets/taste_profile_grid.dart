@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:coflanet/constants/app_color_scheme.dart';
 import 'package:coflanet/constants/color_constant.dart';
 import 'package:coflanet/constants/style_constant.dart';
 import 'package:coflanet/data/models/survey_result_model.dart';
@@ -16,6 +17,8 @@ class TasteProfileGrid extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final colors = AppColorScheme.of(context);
+
     final items = [
       ('산미', profile.acidity),
       ('바디감', profile.body),
@@ -30,6 +33,7 @@ class TasteProfileGrid extends StatelessWidget {
           for (int i = 0; i < items.length; i++)
             Expanded(
               child: _buildTile(
+                colors: colors,
                 label: items[i].$1,
                 value: items[i].$2,
                 showDivider: i < items.length - 1,
@@ -42,6 +46,7 @@ class TasteProfileGrid extends StatelessWidget {
 
   /// 개별 타일 — 라벨 + 이모지 + 레벨 텍스트 (+ 우측 세로 구분선)
   Widget _buildTile({
+    required AppColorScheme colors,
     required String label,
     required int value,
     required bool showDivider,
@@ -65,7 +70,7 @@ class TasteProfileGrid extends StatelessWidget {
           child: Container(
             padding: const EdgeInsets.symmetric(vertical: 16, horizontal: 8),
             decoration: BoxDecoration(
-              color: AppColor.backgroundNormalNormal,
+              color: colors.backgroundNormalNormal,
               borderRadius: BorderRadius.circular(12),
               boxShadow: [
                 BoxShadow(
@@ -82,7 +87,7 @@ class TasteProfileGrid extends StatelessWidget {
                 Text(
                   label,
                   style: AppTextStyles.caption1Medium.copyWith(
-                    color: AppColor.labelAlternative,
+                    color: colors.labelAlternative,
                   ),
                 ),
                 const SizedBox(height: 8),
@@ -91,7 +96,7 @@ class TasteProfileGrid extends StatelessWidget {
                 Text(
                   levelText,
                   style: AppTextStyles.caption2Medium.copyWith(
-                    color: AppColor.labelAlternative,
+                    color: colors.labelAlternative,
                   ),
                 ),
               ],
@@ -104,7 +109,7 @@ class TasteProfileGrid extends StatelessWidget {
             width: 1,
             height: 40,
             margin: const EdgeInsets.symmetric(horizontal: 4),
-            color: AppColor.lineNormalNeutral,
+            color: colors.lineNormalNeutral,
           ),
       ],
     );

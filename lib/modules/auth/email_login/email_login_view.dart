@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
+import 'package:coflanet/constants/app_color_scheme.dart';
 import 'package:coflanet/constants/asset_constant.dart';
-import 'package:coflanet/constants/color_constant.dart';
 import 'package:coflanet/constants/style_constant.dart';
 import 'package:coflanet/constants/radius_constant.dart';
 import 'package:coflanet/modules/auth/email_login/email_login_controller.dart';
@@ -13,10 +13,11 @@ class EmailLoginView extends GetView<EmailLoginController> {
 
   @override
   Widget build(BuildContext context) {
+    final colors = AppColorScheme.of(context);
     return Scaffold(
-      backgroundColor: AppColor.backgroundNormalNormal,
+      backgroundColor: colors.backgroundNormalNormal,
       appBar: AppBar(
-        backgroundColor: AppColor.backgroundNormalNormal,
+        backgroundColor: colors.backgroundNormalNormal,
         elevation: 0,
         leading: IconButton(
           onPressed: () => Get.back(),
@@ -25,7 +26,7 @@ class EmailLoginView extends GetView<EmailLoginController> {
             width: 24,
             height: 24,
             colorFilter: ColorFilter.mode(
-              AppColor.labelNormal,
+              colors.labelNormal,
               BlendMode.srcIn,
             ),
           ),
@@ -42,24 +43,24 @@ class EmailLoginView extends GetView<EmailLoginController> {
                 Text(
                   '이메일로 로그인',
                   style: AppTextStyles.heading1Bold.copyWith(
-                    color: AppColor.labelNormal,
+                    color: colors.labelNormal,
                   ),
                 ),
                 const SizedBox(height: 8),
                 Text(
                   '가입한 이메일과 비밀번호를 입력해주세요',
                   style: AppTextStyles.body2NormalRegular.copyWith(
-                    color: AppColor.labelAlternative,
+                    color: colors.labelAlternative,
                   ),
                 ),
                 const SizedBox(height: 40),
-                _buildEmailField(),
+                _buildEmailField(colors),
                 const SizedBox(height: 20),
-                _buildPasswordField(),
+                _buildPasswordField(colors),
                 const SizedBox(height: 32),
                 _buildLoginButton(),
                 const SizedBox(height: 24),
-                _buildSignUpLink(),
+                _buildSignUpLink(colors),
                 const SizedBox(height: 48),
               ],
             ),
@@ -69,9 +70,10 @@ class EmailLoginView extends GetView<EmailLoginController> {
     );
   }
 
-  Widget _buildEmailField() {
+  Widget _buildEmailField(AppColorScheme colors) {
     return Obx(
       () => _buildTextField(
+        colors: colors,
         label: '이메일',
         hintText: 'example@email.com',
         textController: controller.emailTextController,
@@ -83,9 +85,10 @@ class EmailLoginView extends GetView<EmailLoginController> {
     );
   }
 
-  Widget _buildPasswordField() {
+  Widget _buildPasswordField(AppColorScheme colors) {
     return Obx(
       () => _buildTextField(
+        colors: colors,
         label: '비밀번호',
         hintText: '비밀번호를 입력해주세요',
         textController: controller.passwordTextController,
@@ -98,6 +101,7 @@ class EmailLoginView extends GetView<EmailLoginController> {
   }
 
   Widget _buildTextField({
+    required AppColorScheme colors,
     required String label,
     required String hintText,
     TextEditingController? textController,
@@ -114,18 +118,18 @@ class EmailLoginView extends GetView<EmailLoginController> {
         Text(
           label,
           style: AppTextStyles.label1NormalMedium.copyWith(
-            color: AppColor.labelNormal,
+            color: colors.labelNormal,
           ),
         ),
         const SizedBox(height: 8),
         Container(
           decoration: BoxDecoration(
-            color: AppColor.componentFillAlternative,
+            color: colors.componentFillAlternative,
             borderRadius: AppRadius.lgBorder,
             border: Border.all(
               color: hasError
-                  ? AppColor.statusNegative
-                  : AppColor.lineNormalNeutral,
+                  ? colors.statusNegative
+                  : colors.lineNormalNeutral,
               width: 1,
             ),
           ),
@@ -135,19 +139,19 @@ class EmailLoginView extends GetView<EmailLoginController> {
             obscureText: obscureText,
             keyboardType: keyboardType,
             style: AppTextStyles.body1NormalRegular.copyWith(
-              color: AppColor.labelNormal,
+              color: colors.labelNormal,
             ),
             decoration: InputDecoration(
               hintText: hintText,
               hintStyle: AppTextStyles.body1NormalRegular.copyWith(
-                color: AppColor.labelAssistive,
+                color: colors.labelAssistive,
               ),
               prefixIcon: prefixIcon != null
                   ? Icon(
                       prefixIcon,
                       color: hasError
-                          ? AppColor.statusNegative
-                          : AppColor.labelAlternative,
+                          ? colors.statusNegative
+                          : colors.labelAlternative,
                       size: 20,
                     )
                   : null,
@@ -166,13 +170,13 @@ class EmailLoginView extends GetView<EmailLoginController> {
               Icon(
                 Icons.error_outline,
                 size: 14,
-                color: AppColor.statusNegative,
+                color: colors.statusNegative,
               ),
               const SizedBox(width: 4),
               Text(
                 errorText,
                 style: AppTextStyles.caption1Regular.copyWith(
-                  color: AppColor.statusNegative,
+                  color: colors.statusNegative,
                 ),
               ),
             ],
@@ -193,14 +197,14 @@ class EmailLoginView extends GetView<EmailLoginController> {
     );
   }
 
-  Widget _buildSignUpLink() {
+  Widget _buildSignUpLink(AppColorScheme colors) {
     return Row(
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
         Text(
           '계정이 없으신가요?',
           style: AppTextStyles.label1NormalRegular.copyWith(
-            color: AppColor.labelAlternative,
+            color: colors.labelAlternative,
           ),
         ),
         TextButton(
@@ -208,7 +212,7 @@ class EmailLoginView extends GetView<EmailLoginController> {
           child: Text(
             '회원가입',
             style: AppTextStyles.label1NormalMedium.copyWith(
-              color: AppColor.primaryNormal,
+              color: colors.primaryNormal,
             ),
           ),
         ),

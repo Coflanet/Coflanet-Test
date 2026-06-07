@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:coflanet/constants/app_color_scheme.dart';
 import 'package:coflanet/constants/color_constant.dart';
 import 'package:coflanet/constants/style_constant.dart';
 import 'package:coflanet/constants/util_constant.dart';
@@ -53,18 +54,19 @@ class ProductCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final colors = AppColorScheme.of(context);
     return GestureDetector(
       onTap: onTap,
       child: Container(
         decoration: BoxDecoration(
-          color: AppColor.colorGlobalCommon100,
+          color: colors.surfaceCard,
           borderRadius: BorderRadius.circular(12),
-          border: Border.all(color: AppColor.colorGlobalCoolNeutral95),
+          border: Border.all(color: colors.lineNormalNormal),
         ),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            _buildImage(),
+            _buildImage(colors),
             // Expanded 로 텍스트 영역을 셀 잔여 높이에 가둬 오버플로우를 구조적으로 차단.
             Expanded(
               child: Padding(
@@ -74,12 +76,12 @@ class ProductCard extends StatelessWidget {
                   children: [
                     // 취향 일치율
                     if (matchPercent != null && matchPercent! > 0)
-                      _buildSmallTag('취향 $matchPercent%'),
+                      _buildSmallTag('취향 $matchPercent%', colors),
                     const SizedBox(height: 4),
                     Text(
                       subtitle,
                       style: AppTextStyles.caption1Regular.copyWith(
-                        color: AppColor.labelAlternative,
+                        color: colors.labelAlternative,
                       ),
                       maxLines: 1,
                       overflow: TextOverflow.ellipsis,
@@ -90,14 +92,14 @@ class ProductCard extends StatelessWidget {
                       child: Text(
                         name,
                         style: AppTextStyles.caption1Medium.copyWith(
-                          color: AppColor.labelNormal,
+                          color: colors.labelNormal,
                         ),
                         maxLines: 2,
                         overflow: TextOverflow.ellipsis,
                       ),
                     ),
                     const SizedBox(height: 4),
-                    _buildPriceRow(),
+                    _buildPriceRow(colors),
                   ],
                 ),
               ),
@@ -109,14 +111,14 @@ class ProductCard extends StatelessWidget {
   }
 
   /// 이미지(1:1) + 좋아요 오버레이
-  Widget _buildImage() {
+  Widget _buildImage(AppColorScheme colors) {
     return Stack(
       children: [
         AspectRatio(
           aspectRatio: 1,
           child: Container(
             decoration: BoxDecoration(
-              color: AppColor.colorGlobalCoolNeutral98,
+              color: colors.surfaceCardStrong,
               borderRadius: const BorderRadius.only(
                 topLeft: Radius.circular(12),
                 topRight: Radius.circular(12),
@@ -129,7 +131,7 @@ class ProductCard extends StatelessWidget {
                   : null,
             ),
             child: imageUrl == null
-                ? Icon(Icons.coffee, size: 48, color: AppColor.primaryNormal)
+                ? Icon(Icons.coffee, size: 48, color: colors.primaryNormal)
                 : null,
           ),
         ),
@@ -146,13 +148,14 @@ class ProductCard extends StatelessWidget {
                 height: 32,
                 alignment: Alignment.center,
                 decoration: BoxDecoration(
+                  // 이미지 위 오버레이 칩은 항상 밝은 배경을 유지해 좋아요 아이콘 가독성 확보
                   color: AppColor.colorGlobalCommon100.withValues(alpha: 0.9),
                   shape: BoxShape.circle,
                 ),
                 child: Icon(
                   isLiked ? Icons.favorite : Icons.favorite_border,
                   size: 18,
-                  color: AppColor.primaryNormal,
+                  color: colors.primaryNormal,
                 ),
               ),
             ),
@@ -163,7 +166,7 @@ class ProductCard extends StatelessWidget {
   }
 
   /// 가격 행 — 할인율 + 가격. 가격 정보 없으면 표시 안 함.
-  Widget _buildPriceRow() {
+  Widget _buildPriceRow(AppColorScheme colors) {
     if (price == null && discountPercent == null) {
       return const SizedBox.shrink();
     }
@@ -173,7 +176,7 @@ class ProductCard extends StatelessWidget {
           Text(
             '$discountPercent%',
             style: AppTextStyles.caption1Medium.copyWith(
-              color: AppColor.primaryNormal,
+              color: colors.primaryNormal,
             ),
           ),
           const SizedBox(width: 4),
@@ -182,24 +185,24 @@ class ProductCard extends StatelessWidget {
           Text(
             AppUtil.changeNumberToWon(price),
             style: AppTextStyles.body2NormalBold.copyWith(
-              color: AppColor.labelNormal,
+              color: colors.labelNormal,
             ),
           ),
       ],
     );
   }
 
-  Widget _buildSmallTag(String label) {
+  Widget _buildSmallTag(String label, AppColorScheme colors) {
     return Container(
       padding: const EdgeInsets.symmetric(horizontal: 4, vertical: 1),
       decoration: BoxDecoration(
-        color: AppColor.primaryNormal.withValues(alpha: 0.1),
+        color: colors.primaryNormal.withValues(alpha: 0.1),
         borderRadius: BorderRadius.circular(4),
       ),
       child: Text(
         label,
         style: AppTextStyles.caption2Medium.copyWith(
-          color: AppColor.primaryNormal,
+          color: colors.primaryNormal,
         ),
       ),
     );

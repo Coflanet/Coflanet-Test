@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:coflanet/constants/color_constant.dart';
+import 'package:coflanet/constants/app_color_scheme.dart';
 import 'package:coflanet/constants/style_constant.dart';
 import 'package:coflanet/constants/util_constant.dart';
 import 'package:coflanet/data/models/cart_item_model.dart';
@@ -15,14 +15,15 @@ class CartView extends GetView<CartController> {
 
   @override
   Widget build(BuildContext context) {
+    final colors = AppColorScheme.of(context);
     return Scaffold(
-      backgroundColor: AppColor.backgroundNormalNormal,
+      backgroundColor: colors.backgroundNormalNormal,
       body: SafeArea(
         child: Column(
           children: [
-            _buildHeader(),
-            Expanded(child: _buildBody()),
-            _buildBottomBar(),
+            _buildHeader(colors),
+            Expanded(child: _buildBody(colors)),
+            _buildBottomBar(colors),
           ],
         ),
       ),
@@ -30,7 +31,7 @@ class CartView extends GetView<CartController> {
   }
 
   /// 공통 AppHeader 재사용 — 비우기 버튼은 Obx 로 감싸 trailing 슬롯에 주입
-  Widget _buildHeader() {
+  Widget _buildHeader(AppColorScheme colors) {
     return AppHeader(
       title: '장바구니',
       trailing: Obx(() {
@@ -43,7 +44,7 @@ class CartView extends GetView<CartController> {
             child: Text(
               '비우기',
               style: AppTextStyles.caption1Medium.copyWith(
-                color: AppColor.labelAlternative,
+                color: colors.labelAlternative,
               ),
             ),
           ),
@@ -52,7 +53,7 @@ class CartView extends GetView<CartController> {
     );
   }
 
-  Widget _buildBody() {
+  Widget _buildBody(AppColorScheme colors) {
     return Obx(() {
       if (controller.isEmpty) {
         return const AppEmptyState(
@@ -66,13 +67,13 @@ class CartView extends GetView<CartController> {
         padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
         itemCount: items.length,
         separatorBuilder: (_, __) =>
-            Divider(height: 1, color: AppColor.lineSolidNormal),
-        itemBuilder: (context, index) => _buildCartTile(items[index]),
+            Divider(height: 1, color: colors.lineSolidNormal),
+        itemBuilder: (context, index) => _buildCartTile(colors, items[index]),
       );
     });
   }
 
-  Widget _buildCartTile(CartItem item) {
+  Widget _buildCartTile(AppColorScheme colors, CartItem item) {
     return Padding(
       padding: const EdgeInsets.symmetric(vertical: 12),
       child: Row(
@@ -82,7 +83,7 @@ class CartView extends GetView<CartController> {
             width: 64,
             height: 64,
             decoration: BoxDecoration(
-              color: AppColor.colorGlobalCoolNeutral97,
+              color: colors.surfaceCardStrong,
               borderRadius: BorderRadius.circular(8),
               image: item.imageUrl != null
                   ? DecorationImage(
@@ -92,7 +93,7 @@ class CartView extends GetView<CartController> {
                   : null,
             ),
             child: item.imageUrl == null
-                ? Icon(Icons.coffee, color: AppColor.primaryNormal, size: 28)
+                ? Icon(Icons.coffee, color: colors.primaryNormal, size: 28)
                 : null,
           ),
           const SizedBox(width: 12),
@@ -104,7 +105,7 @@ class CartView extends GetView<CartController> {
                   Text(
                     item.brand!,
                     style: AppTextStyles.caption1Regular.copyWith(
-                      color: AppColor.labelAlternative,
+                      color: colors.labelAlternative,
                     ),
                     maxLines: 1,
                     overflow: TextOverflow.ellipsis,
@@ -114,7 +115,7 @@ class CartView extends GetView<CartController> {
                 Text(
                   item.name,
                   style: AppTextStyles.body2NormalBold.copyWith(
-                    color: AppColor.labelNormal,
+                    color: colors.labelNormal,
                   ),
                   maxLines: 2,
                   overflow: TextOverflow.ellipsis,
@@ -126,10 +127,10 @@ class CartView extends GetView<CartController> {
                     Text(
                       AppUtil.changeNumberToWon(item.lineTotal),
                       style: AppTextStyles.body1NormalBold.copyWith(
-                        color: AppColor.labelNormal,
+                        color: colors.labelNormal,
                       ),
                     ),
-                    _buildQuantityStepper(item),
+                    _buildQuantityStepper(colors, item),
                   ],
                 ),
               ],
@@ -146,7 +147,7 @@ class CartView extends GetView<CartController> {
                 child: Icon(
                   Icons.close,
                   size: 18,
-                  color: AppColor.labelAssistive,
+                  color: colors.labelAssistive,
                 ),
               ),
             ),
@@ -156,15 +157,16 @@ class CartView extends GetView<CartController> {
     );
   }
 
-  Widget _buildQuantityStepper(CartItem item) {
+  Widget _buildQuantityStepper(AppColorScheme colors, CartItem item) {
     return Container(
       decoration: BoxDecoration(
-        border: Border.all(color: AppColor.lineNormalNormal),
+        border: Border.all(color: colors.lineNormalNormal),
         borderRadius: BorderRadius.circular(8),
       ),
       child: Row(
         children: [
           _stepperButton(
+            colors: colors,
             icon: Icons.remove,
             label: '수량 감소',
             onTap: () => controller.decrease(item.beanId),
@@ -175,11 +177,12 @@ class CartView extends GetView<CartController> {
               '${item.quantity}',
               textAlign: TextAlign.center,
               style: AppTextStyles.body2NormalMedium.copyWith(
-                color: AppColor.labelNormal,
+                color: colors.labelNormal,
               ),
             ),
           ),
           _stepperButton(
+            colors: colors,
             icon: Icons.add,
             label: '수량 증가',
             onTap: () => controller.increase(item.beanId),
@@ -190,6 +193,7 @@ class CartView extends GetView<CartController> {
   }
 
   Widget _stepperButton({
+    required AppColorScheme colors,
     required IconData icon,
     required String label,
     required VoidCallback onTap,
@@ -203,20 +207,20 @@ class CartView extends GetView<CartController> {
         child: SizedBox(
           width: 32,
           height: 32,
-          child: Icon(icon, size: 16, color: AppColor.labelNeutral),
+          child: Icon(icon, size: 16, color: colors.labelNeutral),
         ),
       ),
     );
   }
 
-  Widget _buildBottomBar() {
+  Widget _buildBottomBar(AppColorScheme colors) {
     return Obx(() {
       if (controller.isEmpty) return const SizedBox.shrink();
       return Container(
         padding: const EdgeInsets.fromLTRB(16, 12, 16, 16),
         decoration: BoxDecoration(
-          color: AppColor.backgroundNormalNormal,
-          border: Border(top: BorderSide(color: AppColor.lineSolidNormal)),
+          color: colors.backgroundNormalNormal,
+          border: Border(top: BorderSide(color: colors.lineSolidNormal)),
         ),
         child: Column(
           mainAxisSize: MainAxisSize.min,
@@ -227,13 +231,13 @@ class CartView extends GetView<CartController> {
                 Text(
                   '총 ${controller.totalQuantity}개',
                   style: AppTextStyles.body2NormalMedium.copyWith(
-                    color: AppColor.labelAlternative,
+                    color: colors.labelAlternative,
                   ),
                 ),
                 Text(
                   AppUtil.changeNumberToWon(controller.totalPrice),
                   style: AppTextStyles.headline2Bold.copyWith(
-                    color: AppColor.labelNormal,
+                    color: colors.labelNormal,
                   ),
                 ),
               ],

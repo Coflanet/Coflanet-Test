@@ -2,6 +2,7 @@ import 'dart:ui';
 
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:coflanet/constants/app_color_scheme.dart';
 import 'package:coflanet/constants/color_constant.dart';
 import 'package:coflanet/constants/style_constant.dart';
 import 'package:coflanet/modules/shell/main_shell_controller.dart';
@@ -55,6 +56,7 @@ class MainShellView extends GetView<MainShellController> {
   @override
   Widget build(BuildContext context) {
     final topPadding = MediaQuery.of(context).padding.top;
+    final colors = AppColorScheme.of(context);
 
     // Layout constants
     const topNavHeight = 64.0;
@@ -63,7 +65,7 @@ class MainShellView extends GetView<MainShellController> {
     const contentTopRadius = 40.0;
 
     return Scaffold(
-      backgroundColor: AppColor.colorGlobalCommon0,
+      backgroundColor: colors.backgroundNormalAlternative,
       body: Stack(
         children: [
           // ===== CONTENT AREA (Obx: only content rebuilds on tab switch) =====
@@ -93,11 +95,9 @@ class MainShellView extends GetView<MainShellController> {
                   child: const MyPlanetContent(),
                 );
               }
-              // 홈 탭은 다크 테마 → 배경 검은색
-              // 그 외 탭은 기존 밝은 배경 유지
-              final Color contentBgColor = isHomeTab
-                  ? AppColor.colorGlobalCommon0
-                  : AppColor.backgroundNormalAlternative;
+              // 콘텐츠 배경 — 테마 스킴 기반
+              // (다크: 순검정 / 라이트: 밝은 회색 — 홈/일반 탭 공통)
+              final Color contentBgColor = colors.backgroundNormalAlternative;
               return Padding(
                 padding: EdgeInsets.only(top: topInset),
                 child: Container(
@@ -139,6 +139,8 @@ class MainShellView extends GetView<MainShellController> {
               if (currentIndex == MainShellController.tabHome) {
                 return const SizedBox.shrink();
               }
+              // 페이지 배경색 기반 페이드 그라데이션 (테마 반응)
+              final Color navBase = colors.backgroundNormalAlternative;
               return Container(
                 padding: EdgeInsets.only(top: topPadding),
                 height: topPadding + topNavHeight,
@@ -148,14 +150,14 @@ class MainShellView extends GetView<MainShellController> {
                     end: Alignment.bottomCenter,
                     stops: const [0.0, 0.4, 0.7, 1.0],
                     colors: [
-                      AppColor.colorGlobalCommon0.withValues(alpha: 0.0),
-                      AppColor.colorGlobalCommon0.withValues(alpha: 0.1),
-                      AppColor.colorGlobalCommon0.withValues(alpha: 0.3),
-                      AppColor.colorGlobalCommon0.withValues(alpha: 0.5),
+                      navBase.withValues(alpha: 0.0),
+                      navBase.withValues(alpha: 0.1),
+                      navBase.withValues(alpha: 0.3),
+                      navBase.withValues(alpha: 0.5),
                     ],
                   ),
                 ),
-                child: _buildTopNavigation(),
+                child: _buildTopNavigation(colors),
               );
             }),
           ),
@@ -199,7 +201,7 @@ class MainShellView extends GetView<MainShellController> {
   /// Custom top navigation (NOT AppBar) - Figma: Top Navigation/Top Navigation
   /// Height: 56px, title LEFT-ALIGNED per Figma design
   /// Edit mode: Back button + centered title + violet "완료" button
-  Widget _buildTopNavigation() {
+  Widget _buildTopNavigation(AppColorScheme colors) {
     final currentIndex = controller.currentTabIndex.value;
 
     // 원두 탭 (index 1) 의 편집 모드 여부
@@ -232,7 +234,7 @@ class MainShellView extends GetView<MainShellController> {
           // Leading: Back button in edit mode only
           // Figma: In normal mode, title is flush left (no spacer)
           if (currentIndex == MainShellController.tabBean && isEditMode)
-            _buildBackButton(),
+            _buildBackButton(colors),
 
           // Title - Centered in edit mode, Left aligned (flush) in normal mode
           // Figma Edit Mode: Headline 2/Bold - 17px, weight 600, line-height 141.2%
@@ -242,29 +244,30 @@ class MainShellView extends GetView<MainShellController> {
                     child: Text(
                       title,
                       style: AppTextStyles.headline2Bold.copyWith(
-                        color: AppColor.colorGlobalCommon100,
+                        color: colors.labelStrong,
                       ),
                     ),
                   )
                 : Text(
                     title,
                     style: AppTextStyles.title3Bold.copyWith(
-                      color: AppColor.colorGlobalCommon100,
+                      color: colors.labelStrong,
                       letterSpacing: -0.023,
                     ),
                   ),
           ),
 
           // Trailing action button (only for 원두 tab)
-          if (currentIndex == MainShellController.tabBean) _buildEditButton(),
+          if (currentIndex == MainShellController.tabBean)
+            _buildEditButton(colors),
         ],
       ),
     );
   }
 
   /// Back button for edit mode - Figma: Button/Icon/LiquidGlass
-  /// Size: 40x40, Liquid Glass effect with Fill layer, icon #F7F7F8 (20x20)
-  Widget _buildBackButton() {
+  /// Size: 40x40, 테마 반응 — 페이지 배경 위에서 대비되는 원형 fill + 라벨색 아이콘
+  Widget _buildBackButton(AppColorScheme colors) {
     final selectController = Get.find<SelectCoffeeController>();
 
     return GestureDetector(
@@ -275,28 +278,13 @@ class MainShellView extends GetView<MainShellController> {
         padding: const EdgeInsets.all(6), // Figma: padding 6px
         decoration: BoxDecoration(
           shape: BoxShape.circle,
-          // Figma: Fill layer - complex gradient with opacity 0.67
-          gradient: LinearGradient(
-            begin: Alignment.topCenter,
-            end: Alignment.bottomCenter,
-            colors: [
-              AppColor.colorGlobalCommon100.withValues(alpha: 0.25 * 0.67),
-              AppColor.colorGlobalCommon0.withValues(alpha: 0.6 * 0.67),
-            ],
-          ),
+          color: colors.componentFillStrong,
         ),
-        child: Container(
-          decoration: BoxDecoration(
-            shape: BoxShape.circle,
-            // Figma: Glass Effect - rgba(0,0,0,0.2)
-            color: AppColor.colorGlobalCommon0.withValues(alpha: 0.2),
-          ),
-          child: const Center(
-            child: Icon(
-              Icons.chevron_left,
-              color: AppColor.colorGlobalCoolNeutral99, // Figma: #F7F7F8
-              size: 20, // Figma: 20x20 icon
-            ),
+        child: Center(
+          child: Icon(
+            Icons.chevron_left,
+            color: colors.labelNormal,
+            size: 20, // Figma: 20x20 icon
           ),
         ),
       ),
@@ -304,9 +292,9 @@ class MainShellView extends GetView<MainShellController> {
   }
 
   /// Edit/Done pill button for 원두 tab
-  /// Normal mode: "편집" - Glass effect button
+  /// Normal mode: "편집" - 페이지 배경 위 대비 pill (테마 반응)
   /// Edit mode: "완료" - Button/Solid/LiquidGlass Primary (48x40)
-  Widget _buildEditButton() {
+  Widget _buildEditButton(AppColorScheme colors) {
     // Get SelectCoffeeController for edit mode state
     // Use isRegistered check to avoid errors during lazy initialization
     if (!Get.isRegistered<SelectCoffeeController>()) {
@@ -327,10 +315,7 @@ class MainShellView extends GetView<MainShellController> {
           decoration: BoxDecoration(
             borderRadius: BorderRadius.circular(99), // Figma: 99px pill
             // Figma: Tint layer for edit mode (Violet Liquid Glass Primary)
-            color: isEditing
-                ? AppColor
-                      .colorGlobalViolet60 // Figma: #7D5EF7 violet
-                : AppColor.colorGlobalCommon100.withValues(alpha: 0.25),
+            color: isEditing ? colors.primaryNormal : colors.componentFillStrong,
             // Figma: box-shadow: 0px 0px 2px rgba(0,0,0,0.1), 0px 1px 8px rgba(0,0,0,0.12)
             boxShadow: isEditing
                 ? [
@@ -351,13 +336,16 @@ class MainShellView extends GetView<MainShellController> {
           ),
           child: Text(
             isEditing ? '완료' : '편집',
-            style: const TextStyle(
+            style: TextStyle(
               fontFamily: 'Pretendard',
               fontSize: 15, // Slightly smaller for better fit
               fontWeight: FontWeight.w600, // Figma: 600
               height: 1.2, // Reduced line height
               letterSpacing: 0.01,
-              color: AppColor.colorGlobalCoolNeutral99, // Figma: #F7F7F8
+              // 완료(보라 배경): 항상 흰색 / 편집(중립 pill): 테마 라벨색
+              color: isEditing
+                  ? AppColor.staticLabelWhiteStrong
+                  : colors.labelNormal,
             ),
           ),
         ),
@@ -368,8 +356,8 @@ class MainShellView extends GetView<MainShellController> {
   /// Custom tab bar - Figma `Home_Item_yes` 기준 5탭
   /// 배경 패널 없이 투명 — pill-shaped glass 컨테이너만 화면 위에 떠 있다.
   /// Liquid Glass: BackdropFilter 블러 + 어두운 틴트.
-  /// 밝은 콘텐츠(원두/커뮤니티/쇼핑)가 탭바 뒤로 깔려도 항상 다크 글래스로 보이도록
-  /// 배경 의존적인 반투명 회색 대신 어두운 틴트를 고정 사용한다.
+  /// 의도적으로 테마와 무관한 "항상 다크 글래스" 고정 디자인 —
+  /// 어떤 배경(라이트/다크) 위에서도 동일한 룩을 유지한다. (static 토큰 사용)
   Widget _buildTabBar() {
     return Builder(
       builder: (context) {

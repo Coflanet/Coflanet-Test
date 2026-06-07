@@ -1,6 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:coflanet/constants/app_color_scheme.dart';
 import 'package:coflanet/constants/color_constant.dart';
 import 'package:coflanet/constants/style_constant.dart';
 import 'package:coflanet/constants/radius_constant.dart';
@@ -61,7 +62,7 @@ class TimePickerModal extends StatefulWidget {
         barrierDismissible: barrierDismissible,
       ),
       barrierDismissible: barrierDismissible,
-      barrierColor: AppColor.componentMaterialDimmer,
+      barrierColor: AppColorScheme.of(Get.context!).componentMaterialDimmer,
     );
   }
 
@@ -134,6 +135,7 @@ class _TimePickerModalState extends State<TimePickerModal>
 
   @override
   Widget build(BuildContext context) {
+    final colors = AppColorScheme.of(context);
     return FadeTransition(
       opacity: _fadeAnimation,
       child: ScaleTransition(
@@ -142,13 +144,17 @@ class _TimePickerModalState extends State<TimePickerModal>
           child: Container(
             width: MediaQuery.of(context).size.width - 48,
             decoration: BoxDecoration(
-              color: AppColor.backgroundElevatedNormal,
+              color: colors.backgroundElevatedNormal,
               borderRadius: AppRadius.modalBorder,
               boxShadow: AppShadows.shadowBlackHeavy,
             ),
             child: Column(
               mainAxisSize: MainAxisSize.min,
-              children: [_buildHeader(), _buildPickers(), _buildActions()],
+              children: [
+                _buildHeader(colors),
+                _buildPickers(colors),
+                _buildActions(),
+              ],
             ),
           ),
         ),
@@ -156,18 +162,18 @@ class _TimePickerModalState extends State<TimePickerModal>
     );
   }
 
-  Widget _buildHeader() {
+  Widget _buildHeader(AppColorScheme colors) {
     return Container(
       padding: const EdgeInsets.fromLTRB(24, 24, 24, 8),
       child: Text(
         widget.title,
-        style: AppTextStyles.heading1Bold.copyWith(color: AppColor.labelNormal),
+        style: AppTextStyles.heading1Bold.copyWith(color: colors.labelNormal),
         textAlign: TextAlign.center,
       ),
     );
   }
 
-  Widget _buildPickers() {
+  Widget _buildPickers(AppColorScheme colors) {
     return Container(
       height: 200,
       padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 16),
@@ -177,6 +183,7 @@ class _TimePickerModalState extends State<TimePickerModal>
           // Minutes picker
           Expanded(
             child: _buildWheelPicker(
+              colors: colors,
               controller: _minutesController,
               itemCount: widget.maxMinutes + 1,
               label: '분',
@@ -191,13 +198,14 @@ class _TimePickerModalState extends State<TimePickerModal>
               child: Text(
                 ':',
                 style: AppTextStyles.title2Bold.copyWith(
-                  color: AppColor.labelAlternative,
+                  color: colors.labelAlternative,
                 ),
               ),
             ),
             // Seconds picker
             Expanded(
               child: _buildWheelPicker(
+                colors: colors,
                 controller: _secondsController,
                 itemCount: widget.maxSeconds + 1,
                 label: '초',
@@ -213,6 +221,7 @@ class _TimePickerModalState extends State<TimePickerModal>
   }
 
   Widget _buildWheelPicker({
+    required AppColorScheme colors,
     required FixedExtentScrollController controller,
     required int itemCount,
     required String label,
@@ -226,7 +235,7 @@ class _TimePickerModalState extends State<TimePickerModal>
           child: Container(
             height: 44,
             decoration: BoxDecoration(
-              color: AppColor.primaryNormal.withValues(alpha: 0.08),
+              color: colors.primaryNormal.withValues(alpha: 0.08),
               borderRadius: AppRadius.buttonBorder,
             ),
           ),
@@ -247,7 +256,7 @@ class _TimePickerModalState extends State<TimePickerModal>
                     child: Text(
                       index.toString().padLeft(2, '0'),
                       style: AppTextStyles.title2MediumMono.copyWith(
-                        color: AppColor.labelNormal,
+                        color: colors.labelNormal,
                       ),
                     ),
                   ),
@@ -259,7 +268,7 @@ class _TimePickerModalState extends State<TimePickerModal>
               child: Text(
                 label,
                 style: AppTextStyles.body1NormalMedium.copyWith(
-                  color: AppColor.labelAlternative,
+                  color: colors.labelAlternative,
                 ),
               ),
             ),
@@ -308,13 +317,14 @@ class _ActionButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final colors = AppColorScheme.of(context);
     if (isPrimary) {
       return SizedBox(
         height: 48,
         child: ElevatedButton(
           onPressed: onPressed,
           style: ElevatedButton.styleFrom(
-            backgroundColor: AppColor.primaryNormal,
+            backgroundColor: colors.primaryNormal,
             foregroundColor: AppColor.staticLabelWhiteStrong,
             elevation: 0,
             shape: RoundedRectangleBorder(borderRadius: AppRadius.buttonBorder),
@@ -329,8 +339,8 @@ class _ActionButton extends StatelessWidget {
       child: OutlinedButton(
         onPressed: onPressed,
         style: OutlinedButton.styleFrom(
-          foregroundColor: AppColor.labelNormal,
-          side: BorderSide(color: AppColor.lineNormalNormal),
+          foregroundColor: colors.labelNormal,
+          side: BorderSide(color: colors.lineNormalNormal),
           shape: RoundedRectangleBorder(borderRadius: AppRadius.buttonBorder),
         ),
         child: Text(text, style: AppTextStyles.headline2Bold),

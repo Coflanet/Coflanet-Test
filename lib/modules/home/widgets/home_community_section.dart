@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
-import 'package:coflanet/constants/color_constant.dart';
+import 'package:coflanet/constants/app_color_scheme.dart';
 import 'package:coflanet/constants/radius_constant.dart';
 import 'package:coflanet/constants/style_constant.dart';
 import 'package:coflanet/modules/home/widgets/home_empty_card.dart';
 import 'package:coflanet/modules/home/widgets/home_section_more_button.dart';
 
-/// 홈 '커피 기록 커뮤니티' 섹션 — 다크 카드 안에 기록 리스트를 표시한다.
+/// 홈 '커피 기록 커뮤니티' 섹션 — 테마 반응 섹션 카드 안에 기록 리스트를 표시한다.
 ///
 /// [백엔드 API 연동 대기] 커뮤니티 API 연동 전까지 목데이터 없이
 /// 빈 상태 카드를 노출한다 (다른 상품 섹션과 동일 패턴).
@@ -17,10 +17,12 @@ class HomeCommunitySection extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final colors = AppColorScheme.of(context);
+
     return Container(
       padding: const EdgeInsets.all(16),
       decoration: BoxDecoration(
-        color: AppColor.colorGlobalCoolNeutral15,
+        color: colors.surfaceCard,
         borderRadius: AppRadius.xxlBorder,
       ),
       child: Column(
@@ -29,7 +31,7 @@ class HomeCommunitySection extends StatelessWidget {
           Text(
             '커피 기록 커뮤니티',
             style: AppTextStyles.body1NormalBold.copyWith(
-              color: AppColor.colorGlobalCommon100,
+              color: colors.labelStrong,
             ),
           ),
           const SizedBox(height: 16),

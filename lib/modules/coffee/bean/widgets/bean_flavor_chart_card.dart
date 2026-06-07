@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:coflanet/constants/color_constant.dart';
+import 'package:coflanet/constants/app_color_scheme.dart';
 import 'package:coflanet/constants/radius_constant.dart';
 import 'package:coflanet/constants/style_constant.dart';
 import 'package:coflanet/data/models/coffee_item_model.dart';
@@ -19,6 +19,7 @@ class BeanFlavorChartCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final colors = AppColorScheme.of(context);
     final profile = bean.flavorProfile ?? const FlavorProfile();
 
     return Padding(
@@ -26,7 +27,7 @@ class BeanFlavorChartCard extends StatelessWidget {
       child: Container(
         padding: const EdgeInsets.all(24),
         decoration: BoxDecoration(
-          color: AppColor.colorGlobalCoolNeutral15,
+          color: colors.surfaceCard,
           borderRadius: AppRadius.xlBorder,
         ),
         child: Column(
@@ -39,19 +40,19 @@ class BeanFlavorChartCard extends StatelessWidget {
                   Text(
                     '향의 진함',
                     style: AppTextStyles.body2NormalMedium.copyWith(
-                      color: AppColor.colorGlobalCoolNeutral60,
+                      color: colors.labelAlternative,
                     ),
                   ),
                   Text(
                     bean.aromaIntensity!.round().toString(),
                     style: AppTextStyles.body2NormalBold.copyWith(
-                      color: AppColor.primaryNormal,
+                      color: colors.primaryNormal,
                     ),
                   ),
                 ],
               ),
               const SizedBox(height: 8),
-              _buildAromaBar(bean.aromaIntensity!),
+              _buildAromaBar(colors, bean.aromaIntensity!),
               const SizedBox(height: 24),
             ],
             // 레이더 차트
@@ -62,15 +63,15 @@ class BeanFlavorChartCard extends StatelessWidget {
                 showLabels: true,
                 showValues: true,
                 animate: true,
-                fillColor: AppColor.primaryNormal.withValues(alpha: 0.15),
-                strokeColor: AppColor.primaryNormal,
-                gridColor: AppColor.colorGlobalCoolNeutral30,
-                labelColor: AppColor.colorGlobalCommon100,
+                fillColor: colors.primaryNormal.withValues(alpha: 0.15),
+                strokeColor: colors.primaryNormal,
+                gridColor: colors.lineSolidNormal,
+                labelColor: colors.labelStrong,
               ),
             ),
             const SizedBox(height: 24),
             // 맛 5축 값 바
-            _buildFlavorValuesList(profile),
+            _buildFlavorValuesList(colors, profile),
           ],
         ),
       ),
@@ -78,11 +79,11 @@ class BeanFlavorChartCard extends StatelessWidget {
   }
 
   /// 향의 진함 바 (그라데이션, 800ms 애니메이션)
-  Widget _buildAromaBar(double value) {
+  Widget _buildAromaBar(AppColorScheme colors, double value) {
     return Container(
       height: 8,
       decoration: BoxDecoration(
-        color: AppColor.colorGlobalCoolNeutral25,
+        color: colors.lineSolidNormal,
         borderRadius: AppRadius.xxxlBorder,
       ),
       child: LayoutBuilder(
@@ -96,8 +97,8 @@ class BeanFlavorChartCard extends StatelessWidget {
                 decoration: BoxDecoration(
                   gradient: LinearGradient(
                     colors: [
-                      AppColor.primaryNormal.withValues(alpha: 0.7),
-                      AppColor.primaryNormal,
+                      colors.primaryNormal.withValues(alpha: 0.7),
+                      colors.primaryNormal,
                     ],
                   ),
                   borderRadius: AppRadius.xxxlBorder,
@@ -111,7 +112,7 @@ class BeanFlavorChartCard extends StatelessWidget {
   }
 
   /// 맛 5축 라벨 + 값 바 + 정수 점수
-  Widget _buildFlavorValuesList(FlavorProfile profile) {
+  Widget _buildFlavorValuesList(AppColorScheme colors, FlavorProfile profile) {
     final items = [
       ('산미', profile.acidity),
       ('바디감', profile.body),
@@ -131,18 +132,18 @@ class BeanFlavorChartCard extends StatelessWidget {
                 child: Text(
                   item.$1,
                   style: AppTextStyles.body2NormalRegular.copyWith(
-                    color: AppColor.colorGlobalCoolNeutral60,
+                    color: colors.labelAlternative,
                   ),
                 ),
               ),
-              Expanded(child: _buildValueBar(item.$2)),
+              Expanded(child: _buildValueBar(colors, item.$2)),
               const SizedBox(width: 12),
               SizedBox(
                 width: 30,
                 child: Text(
                   item.$2.round().toString(),
                   style: AppTextStyles.body2NormalMedium.copyWith(
-                    color: AppColor.colorGlobalCommon100,
+                    color: colors.labelStrong,
                   ),
                   textAlign: TextAlign.right,
                 ),
@@ -155,11 +156,11 @@ class BeanFlavorChartCard extends StatelessWidget {
   }
 
   /// 단색 값 바 (800ms 애니메이션)
-  Widget _buildValueBar(double value) {
+  Widget _buildValueBar(AppColorScheme colors, double value) {
     return Container(
       height: 6,
       decoration: BoxDecoration(
-        color: AppColor.colorGlobalCoolNeutral25,
+        color: colors.lineSolidNormal,
         borderRadius: AppRadius.xxxlBorder,
       ),
       child: LayoutBuilder(
@@ -171,7 +172,7 @@ class BeanFlavorChartCard extends StatelessWidget {
               curve: Curves.easeOutCubic,
               width: constraints.maxWidth * (value / 100.0),
               decoration: BoxDecoration(
-                color: AppColor.primaryNormal,
+                color: colors.primaryNormal,
                 borderRadius: AppRadius.xxxlBorder,
               ),
             ),

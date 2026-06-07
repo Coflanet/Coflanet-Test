@@ -1,137 +1,81 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:coflanet/core/storage/local_storage.dart';
-import 'package:coflanet/constants/color_constant.dart';
 
-/// Simple theme controller for managing app-wide theme state.
+import 'package:coflanet/core/storage/local_storage.dart';
+
+/// 앱 테마 모드 — 시스템 추종 / 라이트 고정 / 다크 고정 3상태
+enum AppThemeMode {
+  system('system', '시스템 설정'),
+  light('light', '라이트'),
+  dark('dark', '다크');
+
+  /// LocalStorage 영속용 문자열
+  final String storageValue;
+
+  /// 설정 UI 표시용 한국어 라벨
+  final String label;
+
+  const AppThemeMode(this.storageValue, this.label);
+
+  static AppThemeMode fromStorage(String? value) {
+    return AppThemeMode.values.firstWhere(
+      (mode) => mode.storageValue == value,
+      orElse: () => AppThemeMode.system,
+    );
+  }
+
+  /// Flutter ThemeMode 변환
+  ThemeMode get themeMode => switch (this) {
+    AppThemeMode.system => ThemeMode.system,
+    AppThemeMode.light => ThemeMode.light,
+    AppThemeMode.dark => ThemeMode.dark,
+  };
+}
+
+/// 앱 전역 테마 상태 관리.
 ///
-/// This controller handles:
-/// - Light/Dark mode switching
-/// - Theme persistence using existing LocalStorage
+/// - 3상태(시스템/라이트/다크) 모드 전환 + LocalStorage 영속
+/// - `Get.changeThemeMode` 로 GetMaterialApp 의 themeMode 갱신
+/// - 색 참조는 위젯에서 `AppColorScheme.of(context)` 사용 (이 컨트롤러 경유 금지)
 ///
-/// Usage:
+/// 사용:
 /// ```dart
 /// final themeController = Get.find<ThemeController>();
-///
-/// // Toggle theme
-/// themeController.toggleTheme();
-///
-/// // Set specific theme
-/// themeController.setDarkMode(true);
-///
-/// // Listen to theme changes
-/// Obx(() => Text(
-///   'Current theme: ${themeController.isDarkMode.value ? 'Dark' : 'Light'}'
-/// ))
+/// themeController.setMode(AppThemeMode.dark);
+/// Obx(() => Text(themeController.mode.label));
 /// ```
 class ThemeController extends GetxController {
   final LocalStorage _localStorage = LocalStorage();
 
-  late RxBool _isDarkMode;
+  final Rx<AppThemeMode> _mode = AppThemeMode.system.obs;
 
-  /// Observable dark mode status
-  RxBool get isDarkMode => _isDarkMode;
+  /// 현재 선택된 테마 모드 (Obx 안에서 읽으면 반응형)
+  AppThemeMode get mode => _mode.value;
 
-  /// Whether dark mode is currently active (non-observable)
-  bool get isDarkModeValue => _isDarkMode.value;
+  /// GetMaterialApp 에 전달할 ThemeMode
+  ThemeMode get themeMode => _mode.value.themeMode;
+
+  /// 현재 실제로 다크 테마인지 (system 모드면 OS 설정 기준).
+  /// 위젯 색 분기에는 사용 금지 — `AppColorScheme.of(context)` 를 쓸 것.
+  bool get isDarkMode => switch (_mode.value) {
+    AppThemeMode.dark => true,
+    AppThemeMode.light => false,
+    AppThemeMode.system =>
+      WidgetsBinding.instance.platformDispatcher.platformBrightness ==
+          Brightness.dark,
+  };
 
   @override
   void onInit() {
     super.onInit();
-    _initializeTheme();
+    _mode.value = AppThemeMode.fromStorage(_localStorage.themeMode);
   }
 
-  /// Initialize theme from storage or system settings
-  void _initializeTheme() {
-    // Use existing dark mode setting from LocalStorage
-    final savedDarkMode = _localStorage.isDarkMode;
-    _isDarkMode = savedDarkMode.obs;
-
-    // Apply initial theme
-    Get.changeThemeMode(_isDarkMode.value ? ThemeMode.dark : ThemeMode.light);
+  /// 테마 모드 변경 + 영속화
+  void setMode(AppThemeMode newMode) {
+    if (_mode.value == newMode) return;
+    _mode.value = newMode;
+    _localStorage.setThemeMode(newMode.storageValue);
+    Get.changeThemeMode(newMode.themeMode);
   }
-
-  /// Toggle between light and dark theme
-  void toggleTheme() {
-    final newDarkMode = !_isDarkMode.value;
-    setDarkMode(newDarkMode);
-  }
-
-  /// Set dark mode directly
-  void setDarkMode(bool isDark) {
-    if (_isDarkMode.value != isDark) {
-      _isDarkMode.value = isDark;
-
-      // Save to storage using existing method
-      _localStorage.setDarkMode(isDark);
-
-      // Apply theme
-      Get.changeThemeMode(isDark ? ThemeMode.dark : ThemeMode.light);
-
-      // Trigger update
-      update();
-    }
-  }
-
-  /// Get theme-appropriate color
-  Color getThemeColor({required Color lightColor, required Color darkColor}) {
-    return _isDarkMode.value ? darkColor : lightColor;
-  }
-
-  /// Get appropriate app color based on theme
-  AppColorTheme getAppColors() {
-    return _isDarkMode.value ? DarkAppColors() : LightAppColors();
-  }
-}
-
-/// Light theme colors
-class LightAppColors implements AppColorTheme {
-  @override
-  Color get primaryNormal => AppColor.primaryNormal;
-
-  @override
-  Color get labelNormal => AppColor.labelNormal;
-
-  @override
-  Color get backgroundNormal => AppColor.backgroundNormalNormal;
-
-  @override
-  Color get backgroundElevated => AppColor.backgroundElevatedNormal;
-
-  @override
-  Color get componentFill => AppColor.componentFillNormal;
-
-  @override
-  Color get lineColor => AppColor.lineNormalNormal;
-}
-
-/// Dark theme colors
-class DarkAppColors implements AppColorTheme {
-  @override
-  Color get primaryNormal => AppColor.darkPrimaryNormal;
-
-  @override
-  Color get labelNormal => AppColor.darkLabelNormal;
-
-  @override
-  Color get backgroundNormal => AppColor.darkBackgroundNormalNormal;
-
-  @override
-  Color get backgroundElevated => AppColor.darkBackgroundElevatedNormal;
-
-  @override
-  Color get componentFill => AppColor.darkComponentFillNormal;
-
-  @override
-  Color get lineColor => AppColor.darkLineNormalNormal;
-}
-
-/// Abstract theme color interface
-abstract class AppColorTheme {
-  Color get primaryNormal;
-  Color get labelNormal;
-  Color get backgroundNormal;
-  Color get backgroundElevated;
-  Color get componentFill;
-  Color get lineColor;
 }

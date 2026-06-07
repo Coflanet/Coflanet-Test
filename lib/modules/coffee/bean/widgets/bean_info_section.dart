@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:coflanet/constants/color_constant.dart';
+import 'package:coflanet/constants/app_color_scheme.dart';
 import 'package:coflanet/constants/radius_constant.dart';
 import 'package:coflanet/constants/style_constant.dart';
 import 'package:coflanet/data/models/coffee_item_model.dart';
@@ -16,6 +16,8 @@ class BeanInfoSection extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final colors = AppColorScheme.of(context);
+
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 24),
       child: Column(
@@ -24,24 +26,26 @@ class BeanInfoSection extends StatelessWidget {
           SectionTitle(
             title: '원두 정보',
             titleStyle: AppTextStyles.headline2Bold.copyWith(
-              color: AppColor.colorGlobalCommon100,
+              color: colors.labelStrong,
             ),
           ),
           const SizedBox(height: 16),
           Container(
             padding: const EdgeInsets.all(16),
             decoration: BoxDecoration(
-              color: AppColor.colorGlobalCoolNeutral15,
+              color: colors.surfaceCard,
               borderRadius: AppRadius.xlBorder,
             ),
             child: Column(
               children: [
-                if (bean.origin != null) _buildInfoRow('원산지', bean.origin!),
+                if (bean.origin != null)
+                  _buildInfoRow(colors, '원산지', bean.origin!),
                 if (bean.roastLevel != null)
-                  _buildInfoRow('로스팅', bean.roastLevel!),
+                  _buildInfoRow(colors, '로스팅', bean.roastLevel!),
                 if (bean.processMethod != null)
-                  _buildInfoRow('가공 방식', bean.processMethod!),
-                if (bean.brand != null) _buildInfoRow('브랜드', bean.brand!),
+                  _buildInfoRow(colors, '가공 방식', bean.processMethod!),
+                if (bean.brand != null)
+                  _buildInfoRow(colors, '브랜드', bean.brand!),
               ],
             ),
           ),
@@ -51,7 +55,7 @@ class BeanInfoSection extends StatelessWidget {
   }
 
   /// 라벨 + 값 행
-  Widget _buildInfoRow(String label, String value) {
+  Widget _buildInfoRow(AppColorScheme colors, String label, String value) {
     return Padding(
       padding: const EdgeInsets.only(bottom: 12),
       child: Row(
@@ -60,13 +64,13 @@ class BeanInfoSection extends StatelessWidget {
           Text(
             label,
             style: AppTextStyles.body2NormalRegular.copyWith(
-              color: AppColor.colorGlobalCoolNeutral60,
+              color: colors.labelAlternative,
             ),
           ),
           Text(
             value,
             style: AppTextStyles.body2NormalMedium.copyWith(
-              color: AppColor.colorGlobalCommon100,
+              color: colors.labelStrong,
             ),
           ),
         ],

@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:coflanet/constants/color_constant.dart';
+import 'package:coflanet/constants/app_color_scheme.dart';
 import 'package:coflanet/constants/style_constant.dart';
 
 /// 좌측정렬 타이틀 + 뒤로가기 + 선택적 우측 액션 헤더.
@@ -28,6 +28,7 @@ class AppHeader extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final colors = AppColorScheme.of(context);
     return Padding(
       padding: const EdgeInsets.fromLTRB(8, 8, 12, 8),
       child: Row(
@@ -37,14 +38,14 @@ class AppHeader extends StatelessWidget {
             button: true,
             child: IconButton(
               onPressed: onBack ?? Get.back,
-              icon: Icon(Icons.arrow_back, color: AppColor.labelNormal),
+              icon: Icon(Icons.arrow_back, color: colors.labelNormal),
             ),
           ),
           Expanded(
             child: Text(
               title,
               style: AppTextStyles.headline2Bold.copyWith(
-                color: AppColor.labelNormal,
+                color: colors.labelNormal,
               ),
             ),
           ),

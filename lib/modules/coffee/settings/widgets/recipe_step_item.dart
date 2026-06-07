@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:coflanet/constants/color_constant.dart';
+import 'package:coflanet/constants/app_color_scheme.dart';
 
 /// 레시피 진행 스텝 데이터
 class RecipeStep {
@@ -30,6 +30,7 @@ class RecipeStepItem extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final colors = AppColorScheme.of(context);
     return Row(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
@@ -40,7 +41,8 @@ class RecipeStepItem extends StatelessWidget {
               width: 20,
               height: 20,
               decoration: BoxDecoration(
-                color: AppColor.colorGlobalCoolNeutral96,
+                // Figma CoolNeutral96 → 시맨틱 보더/트랙
+                color: colors.lineSolidNormal,
                 borderRadius: BorderRadius.circular(1000),
               ),
               child: Center(
@@ -50,7 +52,7 @@ class RecipeStepItem extends StatelessWidget {
                     fontFamily: 'Pretendard',
                     fontSize: 12,
                     fontWeight: FontWeight.w600,
-                    color: AppColor.labelAlternative,
+                    color: colors.labelAlternative,
                   ),
                 ),
               ),
@@ -59,7 +61,7 @@ class RecipeStepItem extends StatelessWidget {
               Container(
                 width: 1,
                 height: 28,
-                color: AppColor.colorGlobalCoolNeutral96,
+                color: colors.lineSolidNormal,
               ),
           ],
         ),
@@ -73,7 +75,7 @@ class RecipeStepItem extends StatelessWidget {
               fontFamily: 'Pretendard',
               fontSize: 16,
               fontWeight: FontWeight.w500,
-              color: AppColor.labelAlternative,
+              color: colors.labelAlternative,
             ),
           ),
         ),
@@ -85,7 +87,7 @@ class RecipeStepItem extends StatelessWidget {
             fontFamily: 'Pretendard',
             fontSize: 14,
             fontWeight: FontWeight.w400,
-            color: AppColor.labelAssistive,
+            color: colors.labelAssistive,
           ),
           textAlign: TextAlign.right,
         ),

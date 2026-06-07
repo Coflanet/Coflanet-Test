@@ -329,6 +329,23 @@ class AppColor {
   static Color get componentMaterialDimmer =>
       const Color(0xFF171719).withValues(alpha:0.52);
 
+  // ===== FIXED ACCENT COLORS (테마 무관 고정색) =====
+
+  /// 홈 취향 설문 배너 노랑 — Figma 시안 고정색 (라이트/다크 공통)
+  static const Color accentTasteBanner = Color(0xFFFFE15A);
+
+  /// My 행성 취향 태그 — 산미 (Figma 파스텔 고정색)
+  static const Color tasteTagAcidity = Color(0xFFFFAA5C);
+
+  /// My 행성 취향 태그 — 바디감
+  static const Color tasteTagBody = Color(0xFFFFD966);
+
+  /// My 행성 취향 태그 — 단맛
+  static const Color tasteTagSweetness = Color(0xFFFF8FAB);
+
+  /// My 행성 취향 태그 — 쓴맛
+  static const Color tasteTagBitterness = Color(0xFFB39DDB);
+
   // ===== SOCIAL LOGIN COLORS =====
 
   /// Kakao yellow - official brand color
@@ -393,7 +410,7 @@ class AppColor {
 
   // Dark Mode Status Colors
   static Color get darkStatusPositive => colorGlobalGreen60;
-  static Color get darkStatusPositiveBlue => colorGlobalGreen60;
+  static Color get darkStatusPositiveBlue => colorGlobalBlue60;
   static Color get darkStatusCautionary => colorGlobalOrange60;
   static Color get darkStatusNegative => colorGlobalRed60;
 

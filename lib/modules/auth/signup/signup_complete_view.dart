@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:coflanet/constants/app_color_scheme.dart';
 import 'package:coflanet/constants/asset_constant.dart';
-import 'package:coflanet/constants/color_constant.dart';
 import 'package:coflanet/constants/style_constant.dart';
 import 'package:coflanet/core/storage/local_storage.dart';
 import 'package:coflanet/routes/app_pages.dart';
@@ -17,9 +17,10 @@ class SignUpCompleteView extends StatelessWidget {
     // Get user name from storage
     final storage = Get.find<LocalStorage>();
     final userName = storage.getUserName() ?? '사용자';
+    final colors = AppColorScheme.of(context);
 
     return Scaffold(
-      backgroundColor: AppColor.backgroundNormalNormal,
+      backgroundColor: colors.backgroundNormalNormal,
       body: SafeArea(
         child: Padding(
           padding: const EdgeInsets.symmetric(horizontal: 24),
@@ -28,12 +29,12 @@ class SignUpCompleteView extends StatelessWidget {
               const Spacer(flex: 2),
 
               // Celebration illustration (182x182 per Figma)
-              _buildCelebrationIllustration(),
+              _buildCelebrationIllustration(colors),
 
               const SizedBox(height: 40),
 
               // Welcome text
-              _buildWelcomeText(userName),
+              _buildWelcomeText(colors, userName),
 
               const Spacer(flex: 3),
 
@@ -49,7 +50,7 @@ class SignUpCompleteView extends StatelessWidget {
   }
 
   /// Celebration illustration - clapping hands image (Figma: 182x182)
-  Widget _buildCelebrationIllustration() {
+  Widget _buildCelebrationIllustration(AppColorScheme colors) {
     return Image.asset(
       AssetPath.completionClappingHands,
       width: 182,
@@ -59,7 +60,7 @@ class SignUpCompleteView extends StatelessWidget {
         width: 182,
         height: 182,
         decoration: BoxDecoration(
-          color: AppColor.primaryLight.withValues(alpha: 0.2),
+          color: colors.primaryLight.withValues(alpha: 0.2),
           shape: BoxShape.circle,
         ),
         child: const Center(child: Text('👏', style: TextStyle(fontSize: 80))),
@@ -70,13 +71,13 @@ class SignUpCompleteView extends StatelessWidget {
   /// Welcome text per Figma (937:45601)
   /// - "홍길동님, 환영합니다!" (28px, Bold)
   /// - "회원가입이 완료되었어요" (16px, Regular)
-  Widget _buildWelcomeText(String userName) {
+  Widget _buildWelcomeText(AppColorScheme colors, String userName) {
     return Column(
       children: [
         Text(
           '$userName님, 환영합니다!',
           style: AppTextStyles.heading1Bold.copyWith(
-            color: AppColor.labelNormal,
+            color: colors.labelNormal,
             fontSize: 28,
           ),
           textAlign: TextAlign.center,
@@ -85,7 +86,7 @@ class SignUpCompleteView extends StatelessWidget {
         Text(
           '회원가입이 완료되었어요',
           style: AppTextStyles.body1NormalRegular.copyWith(
-            color: AppColor.labelAlternative,
+            color: colors.labelAlternative,
             fontSize: 16,
           ),
           textAlign: TextAlign.center,

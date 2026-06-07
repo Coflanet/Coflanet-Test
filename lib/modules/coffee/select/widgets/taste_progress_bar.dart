@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:coflanet/constants/app_color_scheme.dart';
 import 'package:coflanet/constants/color_constant.dart';
 import 'package:coflanet/constants/radius_constant.dart';
 import 'package:coflanet/constants/style_constant.dart';
@@ -23,6 +24,7 @@ class TasteProgressBar extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final colors = AppColorScheme.of(context);
     final clampedValue = value.clamp(0.0, _maxValue);
     // 채울 세그먼트 수 (6칸 기준)
     final filledSegments = (clampedValue / _maxValue * _segmentCount).ceil();
@@ -38,7 +40,7 @@ class TasteProgressBar extends StatelessWidget {
             child: Text(
               label,
               style: AppTextStyles.label1NormalMedium.copyWith(
-                color: AppColor.colorGlobalCoolNeutral10, // #171719
+                color: colors.labelNormal,
                 letterSpacing: 0.0145,
               ),
             ),
@@ -50,16 +52,14 @@ class TasteProgressBar extends StatelessWidget {
             child: Container(
               height: 8,
               decoration: BoxDecoration(
-                // Figma: rgba(112, 115, 124, 0.12)
-                color: AppColor.colorGlobalCoolNeutral50.withValues(
-                  alpha: 0.12,
-                ),
+                // Figma: rgba(112, 115, 124, 0.12) → 시맨틱 fill
+                color: colors.componentFillNormal,
                 borderRadius: AppRadius.fullBorder,
               ),
               child: ClipRRect(
                 borderRadius: AppRadius.fullBorder,
                 child: Row(
-                  children: _buildSegmentsWithDividers(filledSegments),
+                  children: _buildSegmentsWithDividers(colors, filledSegments),
                 ),
               ),
             ),
@@ -71,7 +71,7 @@ class TasteProgressBar extends StatelessWidget {
             child: Text(
               clampedValue.toStringAsFixed(1),
               style: AppTextStyles.label1NormalRegular.copyWith(
-                color: AppColor.labelAlternative,
+                color: colors.labelAlternative,
                 letterSpacing: 0.0145,
                 fontFeatures: const [FontFeature.tabularFigures()],
               ),
@@ -84,15 +84,18 @@ class TasteProgressBar extends StatelessWidget {
   }
 
   /// 세그먼트 + 1px divider 인라인 구성 (Figma 스펙)
-  List<Widget> _buildSegmentsWithDividers(int filledSegments) {
+  List<Widget> _buildSegmentsWithDividers(
+    AppColorScheme colors,
+    int filledSegments,
+  ) {
     final List<Widget> children = [];
-    final dividerColor =
-        AppColor.colorGlobalCoolNeutral50; // Figma: rgba(112, 115, 124, 0.16)
+    // 세그먼트 사이 1px divider — Figma rgba(112,115,124,0.16) → 시맨틱 보더
+    final dividerColor = colors.lineNormalNeutral;
 
     for (int i = 0; i < _segmentCount; i++) {
       final isFilled = i < filledSegments;
 
-      // 세그먼트 (Expanded 로 균등 분할)
+      // 세그먼트 (Expanded 로 균등 분할) — 채움색은 브랜드 보라(의미색) raw 유지
       children.add(
         Expanded(
           child: Container(
@@ -110,7 +113,7 @@ class TasteProgressBar extends StatelessWidget {
           Container(
             width: 1, // Figma: 1px divider
             height: 8,
-            color: dividerColor.withValues(alpha: 0.16),
+            color: dividerColor,
           ),
         );
       }

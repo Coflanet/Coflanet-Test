@@ -1,13 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:coflanet/constants/app_color_scheme.dart';
 import 'package:coflanet/constants/color_constant.dart';
 import 'package:coflanet/constants/style_constant.dart';
 
-/// 홈 헤더용 — 반투명 회색 원 안에 SVG 아이콘 (다크 테마 헤더용).
+/// 홈 헤더용 — 반투명 회색 원 안에 SVG 아이콘 (테마 반응).
 ///
-/// 배경: 헤더 뒤가 단색 검정이라 BackdropFilter 블러는 시각 효과가 없고
-/// 아이콘 가장자리에 뿌연 샘플링 아티팩트만 유발 → 불투명 회색 fill 로 대체.
-/// 아이콘: SVG `fill="currentColor"` + Colors.white 로 확실한 흰색 tint.
+/// 배경: 헤더 뒤가 단색이라 BackdropFilter 블러는 시각 효과가 없고
+/// 아이콘 가장자리에 뿌연 샘플링 아티팩트만 유발 → 단색 fill 로 대체.
+/// 아이콘: SVG `fill="currentColor"` + 테마별 라벨색 tint.
 /// [hasNotification] true → 우상단에 보라 점 (알림 dot).
 /// [badgeCount] > 0 → 우상단에 숫자 뱃지 (장바구니 수량).
 class HomeHeaderIconButton extends StatelessWidget {
@@ -37,6 +38,8 @@ class HomeHeaderIconButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final colors = AppColorScheme.of(context);
+
     return Semantics(
       label: label,
       button: true,
@@ -56,16 +59,15 @@ class HomeHeaderIconButton extends StatelessWidget {
                 alignment: Alignment.center,
                 decoration: BoxDecoration(
                   shape: BoxShape.circle,
-                  color: AppColor.colorGlobalCoolNeutral60.withValues(
-                    alpha: 0.8,
-                  ),
+                  // 다크: 회색 원 + 흰 아이콘 (Figma), 라이트: 옅은 회색 원 + 검정 아이콘
+                  color: colors.componentFillStrong,
                 ),
                 child: SvgPicture.asset(
                   svgPath,
                   width: 22,
                   height: 22,
-                  colorFilter: const ColorFilter.mode(
-                    Colors.white,
+                  colorFilter: ColorFilter.mode(
+                    colors.labelNormal,
                     BlendMode.srcIn,
                   ),
                 ),
@@ -80,7 +82,7 @@ class HomeHeaderIconButton extends StatelessWidget {
                     height: 8,
                     decoration: BoxDecoration(
                       shape: BoxShape.circle,
-                      color: AppColor.primaryNormal,
+                      color: colors.primaryNormal,
                     ),
                   ),
                 ),
@@ -95,7 +97,7 @@ class HomeHeaderIconButton extends StatelessWidget {
                     padding: const EdgeInsets.symmetric(horizontal: 4),
                     alignment: Alignment.center,
                     decoration: BoxDecoration(
-                      color: AppColor.primaryNormal,
+                      color: colors.primaryNormal,
                       borderRadius: BorderRadius.circular(99),
                     ),
                     child: Text(

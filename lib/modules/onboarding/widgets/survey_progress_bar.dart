@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:coflanet/constants/color_constant.dart';
+import 'package:coflanet/constants/app_color_scheme.dart';
 import 'package:coflanet/constants/radius_constant.dart';
 import 'package:coflanet/constants/style_constant.dart';
 
@@ -15,19 +15,21 @@ class SurveyProgressBar extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final colors = AppColorScheme.of(context);
+
     return Row(
       mainAxisSize: MainAxisSize.min,
       children: [
         Text(
           '$current',
           style: AppTextStyles.label1NormalBold.copyWith(
-            color: AppColor.primaryNormal,
+            color: colors.primaryNormal,
           ),
         ),
         Text(
           ' / $total',
           style: AppTextStyles.label1NormalRegular.copyWith(
-            color: AppColor.labelAssistive,
+            color: colors.labelAssistive,
           ),
         ),
       ],
@@ -42,6 +44,8 @@ class SurveyProgressIndicator extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final colors = AppColorScheme.of(context);
+
     return LayoutBuilder(
       builder: (context, constraints) {
         return Align(
@@ -51,7 +55,7 @@ class SurveyProgressIndicator extends StatelessWidget {
             width: constraints.maxWidth * progress.clamp(0.0, 1.0),
             height: 4,
             decoration: BoxDecoration(
-              color: AppColor.primaryNormal,
+              color: colors.primaryNormal,
               borderRadius: AppRadius.xxsBorder,
             ),
           ),

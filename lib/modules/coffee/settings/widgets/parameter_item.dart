@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:coflanet/constants/color_constant.dart';
+import 'package:coflanet/constants/app_color_scheme.dart';
 
 /// 파라미터 그리드 1칸 — 값 + 라벨 (원두/물 온도/추출 시간/물의 양).
 ///
@@ -24,6 +24,7 @@ class ParameterItem extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final colors = AppColorScheme.of(context);
     return GestureDetector(
       onTap: onTap,
       child: Column(
@@ -36,7 +37,7 @@ class ParameterItem extends StatelessWidget {
               fontFamily: 'Pretendard',
               fontSize: 15,
               fontWeight: FontWeight.w500,
-              color: AppColor.labelNeutral,
+              color: colors.labelNeutral,
             ),
             textAlign: TextAlign.center,
           ),
@@ -48,7 +49,7 @@ class ParameterItem extends StatelessWidget {
               fontFamily: 'Pretendard',
               fontSize: 14,
               fontWeight: FontWeight.w400,
-              color: AppColor.labelAlternative,
+              color: colors.labelAlternative,
             ),
             textAlign: TextAlign.center,
           ),

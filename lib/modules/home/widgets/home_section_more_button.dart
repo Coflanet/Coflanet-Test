@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
-import 'package:coflanet/constants/color_constant.dart';
+import 'package:coflanet/constants/app_color_scheme.dart';
 import 'package:coflanet/constants/radius_constant.dart';
 import 'package:coflanet/constants/style_constant.dart';
 
-/// 홈 섹션 카드 하단 공통 '더 보기' 버튼 — 다크 pill (Figma: 추천 원두 더 보기).
+/// 홈 섹션 카드 하단 공통 '더 보기' 버튼 — pill (Figma: 추천 원두 더 보기).
 ///
-/// 상품 섹션 / 커뮤니티 섹션이 공유한다. 다크 카드(CoolNeutral15) 위에서
-/// 한 단계 밝은 회색 pill 로 표시된다.
+/// 상품 섹션 / 커뮤니티 섹션이 공유한다. 섹션 카드(surfaceCard) 위에서
+/// 한 단계 대비되는 pill 로 표시된다 (테마 반응).
 class HomeSectionMoreButton extends StatelessWidget {
   const HomeSectionMoreButton({super.key, required this.label, this.onTap});
 
@@ -18,6 +18,8 @@ class HomeSectionMoreButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final colors = AppColorScheme.of(context);
+
     return Semantics(
       button: true,
       label: label,
@@ -27,14 +29,14 @@ class HomeSectionMoreButton extends StatelessWidget {
           width: double.infinity,
           padding: const EdgeInsets.symmetric(vertical: 14),
           decoration: BoxDecoration(
-            color: AppColor.colorGlobalCoolNeutral22,
+            color: colors.componentFillStrong,
             borderRadius: AppRadius.fullBorder,
           ),
           child: Center(
             child: Text(
               label,
               style: AppTextStyles.body2NormalBold.copyWith(
-                color: AppColor.colorGlobalCommon100,
+                color: colors.labelStrong,
               ),
             ),
           ),

@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:coflanet/constants/color_constant.dart';
+import 'package:coflanet/constants/app_color_scheme.dart';
 import 'package:coflanet/constants/radius_constant.dart';
 import 'package:coflanet/constants/style_constant.dart';
 
@@ -17,10 +17,11 @@ class SummaryBox extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final colors = AppColorScheme.of(context);
     return Container(
       height: 84,
       decoration: BoxDecoration(
-        color: AppColor.componentFillNormal,
+        color: colors.componentFillNormal,
         borderRadius: AppRadius.xxlBorder,
       ),
       child: Column(
@@ -29,14 +30,14 @@ class SummaryBox extends StatelessWidget {
           Text(
             value,
             style: AppTextStyles.headline1Bold.copyWith(
-              color: AppColor.labelNeutral,
+              color: colors.labelNeutral,
             ),
           ),
           const SizedBox(height: 2),
           Text(
             label,
             style: AppTextStyles.label1NormalRegular.copyWith(
-              color: AppColor.labelAlternative,
+              color: colors.labelAlternative,
             ),
           ),
         ],

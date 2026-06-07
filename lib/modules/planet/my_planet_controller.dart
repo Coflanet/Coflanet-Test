@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:url_launcher/url_launcher.dart';
+import 'package:coflanet/constants/color_constant.dart';
 import 'package:coflanet/core/base/base_controller.dart';
 import 'package:coflanet/core/services/auth_service.dart';
 import 'package:coflanet/core/services/survey_service.dart';
@@ -181,7 +182,11 @@ class MyPlanetController extends BaseController {
               Get.back(); // close dialog
               await _executeWithdrawal();
             },
-            child: const Text('탈퇴', style: TextStyle(color: Color(0xFFFF4242))),
+            // 탈퇴 강조색 — statusNegative 토큰 (#FF4242)
+            child: Text(
+              '탈퇴',
+              style: TextStyle(color: AppColor.statusNegative),
+            ),
           ),
         ],
       ),

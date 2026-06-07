@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:coflanet/constants/app_color_scheme.dart';
 import 'package:coflanet/constants/color_constant.dart';
 import 'package:coflanet/constants/style_constant.dart';
 import 'package:coflanet/constants/util_constant.dart';
@@ -39,6 +40,7 @@ class RecommendationCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final colors = AppColorScheme.of(context);
     final rec = recommendation;
     // [임시] 일치율 0 이하일 때 placeholder 값 (서버가 0 을 보내는 경우 대비)
     final matchPercent = rec.matchPercent > 0
@@ -52,10 +54,10 @@ class RecommendationCard extends StatelessWidget {
         margin: const EdgeInsets.only(bottom: 16),
         padding: const EdgeInsets.all(24), // Figma: padding 24px
         decoration: BoxDecoration(
-          color: AppColor.backgroundNormalNormal,
+          color: colors.backgroundNormalNormal,
           borderRadius: BorderRadius.circular(40), // Figma: border-radius 40px
           border: Border.all(
-            color: AppColor.primaryNormal, // Figma: 항상 보라 보더
+            color: colors.primaryNormal, // Figma: 항상 보라 보더
             width: 1,
           ),
         ),
@@ -65,7 +67,7 @@ class RecommendationCard extends StatelessWidget {
             // ── 상단: 체크박스 + 일치율 뱃지 ──
             Row(
               children: [
-                _buildCheckbox(),
+                _buildCheckbox(colors),
                 const Spacer(),
                 Container(
                   padding: const EdgeInsets.symmetric(
@@ -98,7 +100,7 @@ class RecommendationCard extends StatelessWidget {
                       width: 88,
                       height: 88,
                       decoration: BoxDecoration(
-                        color: AppColor.backgroundNormalAlternative,
+                        color: colors.backgroundNormalAlternative,
                         borderRadius: BorderRadius.circular(12),
                       ),
                       clipBehavior: Clip.antiAlias,
@@ -108,13 +110,13 @@ class RecommendationCard extends StatelessWidget {
                               fit: BoxFit.cover,
                               errorBuilder: (_, __, ___) => Icon(
                                 Icons.coffee_rounded,
-                                color: AppColor.labelAssistive,
+                                color: colors.labelAssistive,
                                 size: 40,
                               ),
                             )
                           : Icon(
                               Icons.coffee_rounded,
-                              color: AppColor.labelAssistive,
+                              color: colors.labelAssistive,
                               size: 40,
                             ),
                     ),
@@ -131,13 +133,13 @@ class RecommendationCard extends StatelessWidget {
                       Text(
                         rec.name,
                         style: AppTextStyles.body1NormalMedium.copyWith(
-                          color: AppColor.labelNormal,
+                          color: colors.labelNormal,
                         ),
                         maxLines: 1,
                         overflow: TextOverflow.ellipsis,
                       ),
                       const SizedBox(height: 4),
-                      _buildPriceRow(rec),
+                      _buildPriceRow(colors, rec),
                     ],
                   ),
                 ),
@@ -149,18 +151,18 @@ class RecommendationCard extends StatelessWidget {
             Container(
               padding: const EdgeInsets.fromLTRB(24, 16, 24, 24),
               decoration: BoxDecoration(
-                color: AppColor.componentFillNormal,
+                color: colors.componentFillNormal,
                 borderRadius: BorderRadius.circular(24),
               ),
               child: Column(
                 children: [
-                  _buildTasteBars(rec.tasteProfile),
+                  _buildTasteBars(colors, rec.tasteProfile),
                   Container(
                     height: 1,
                     margin: const EdgeInsets.symmetric(vertical: 16),
-                    color: AppColor.componentFillNormal,
+                    color: colors.componentFillNormal,
                   ),
-                  _buildFlavorTags(rec.flavorTags),
+                  _buildFlavorTags(colors, rec.flavorTags),
                 ],
               ),
             ),
@@ -168,7 +170,7 @@ class RecommendationCard extends StatelessWidget {
 
             // ── 하단: 판매링크 버튼 (Figma: 회색 배경, 보라 텍스트) ──
             // [백엔드 API 연동 대기] 판매 링크 이동 동작
-            _buildPurchaseButton(),
+            _buildPurchaseButton(colors),
           ],
         ),
       ),
@@ -176,7 +178,7 @@ class RecommendationCard extends StatelessWidget {
   }
 
   /// Figma 체크박스: 24x24 외곽, 18x18 내부, radius 3px
-  Widget _buildCheckbox() {
+  Widget _buildCheckbox(AppColorScheme colors) {
     return Container(
       width: 24,
       height: 24,
@@ -185,8 +187,8 @@ class RecommendationCard extends StatelessWidget {
         width: 18,
         height: 18,
         decoration: BoxDecoration(
-          color: isSelected ? AppColor.primaryNormal : AppColor.transparent,
-          border: Border.all(color: AppColor.primaryNormal, width: 1.5),
+          color: isSelected ? colors.primaryNormal : AppColor.transparent,
+          border: Border.all(color: colors.primaryNormal, width: 1.5),
           borderRadius: BorderRadius.circular(3),
         ),
         child: isSelected
@@ -197,7 +199,7 @@ class RecommendationCard extends StatelessWidget {
   }
 
   /// Figma 가격: "12,000" (16px Bold) + "원" (15px Regular)
-  Widget _buildPriceRow(CoffeeRecommendationModel rec) {
+  Widget _buildPriceRow(AppColorScheme colors, CoffeeRecommendationModel rec) {
     final price = rec.discountPrice ?? rec.originalPrice;
     if (price == null) return const SizedBox.shrink();
 
@@ -206,14 +208,14 @@ class RecommendationCard extends StatelessWidget {
         Text(
           AppUtil.formatNumberWithComma(price),
           style: AppTextStyles.body1NormalBold.copyWith(
-            color: AppColor.labelNormal,
+            color: colors.labelNormal,
             fontWeight: FontWeight.w600,
           ),
         ),
         Text(
           '원',
           style: AppTextStyles.body2NormalRegular.copyWith(
-            color: AppColor.labelNeutral,
+            color: colors.labelNeutral,
           ),
         ),
       ],
@@ -223,7 +225,7 @@ class RecommendationCard extends StatelessWidget {
   /// Figma 맛바: 라벨(40px) + 게이지 + 5점 환산 점수(28px).
   /// 정적 바(violet70) — AppAnimatedTasteBar 와 트랙색/점수 표기/애니메이션이
   /// 달라 공통화하지 않는다 (시각 변화 0 원칙).
-  Widget _buildTasteBars(TasteProfileModel profile) {
+  Widget _buildTasteBars(AppColorScheme colors, TasteProfileModel profile) {
     double toFiveScale(int value) => (value / 20).clamp(0.0, 5.0);
 
     final items = [
@@ -247,7 +249,7 @@ class RecommendationCard extends StatelessWidget {
                 child: Text(
                   item.$1,
                   style: AppTextStyles.label1NormalMedium.copyWith(
-                    color: AppColor.labelNormal,
+                    color: colors.labelNormal,
                     fontSize: 14,
                   ),
                 ),
@@ -258,7 +260,7 @@ class RecommendationCard extends StatelessWidget {
                 child: Container(
                   height: 8,
                   decoration: BoxDecoration(
-                    color: AppColor.componentFillNormal,
+                    color: colors.componentFillNormal,
                     borderRadius: BorderRadius.circular(99),
                   ),
                   child: FractionallySizedBox(
@@ -280,7 +282,7 @@ class RecommendationCard extends StatelessWidget {
                 child: Text(
                   fiveScaleValue.toStringAsFixed(1),
                   style: AppTextStyles.label1NormalRegular.copyWith(
-                    color: AppColor.labelAlternative,
+                    color: colors.labelAlternative,
                     fontSize: 14,
                   ),
                   textAlign: TextAlign.right,
@@ -295,7 +297,7 @@ class RecommendationCard extends StatelessWidget {
 
   /// Figma 향미 태그: 회색 칩 (radius 99, 무보더, h8/v6) —
   /// FlavorTag.secondary 와 패딩/보더/radius 가 달라 공통화하지 않는다.
-  Widget _buildFlavorTags(List<String> tags) {
+  Widget _buildFlavorTags(AppColorScheme colors, List<String> tags) {
     return Wrap(
       spacing: 4,
       runSpacing: 4,
@@ -303,13 +305,13 @@ class RecommendationCard extends StatelessWidget {
         return Container(
           padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 6),
           decoration: BoxDecoration(
-            color: AppColor.componentFillNormal,
+            color: colors.componentFillNormal,
             borderRadius: BorderRadius.circular(99),
           ),
           child: Text(
             tag,
             style: AppTextStyles.label1NormalMedium.copyWith(
-              color: AppColor.labelNormal,
+              color: colors.labelNormal,
               fontSize: 14,
             ),
           ),
@@ -319,19 +321,19 @@ class RecommendationCard extends StatelessWidget {
   }
 
   /// Figma 판매링크 버튼: 회색 배경, radius 99, 보라 텍스트
-  Widget _buildPurchaseButton() {
+  Widget _buildPurchaseButton(AppColorScheme colors) {
     return Container(
       width: double.infinity,
       padding: const EdgeInsets.symmetric(vertical: 9, horizontal: 20),
       decoration: BoxDecoration(
-        color: AppColor.componentFillNormal,
+        color: colors.componentFillNormal,
         borderRadius: BorderRadius.circular(99),
       ),
       child: Center(
         child: Text(
           '판매링크 바로가기',
           style: AppTextStyles.body2NormalBold.copyWith(
-            color: AppColor.primaryNormal,
+            color: colors.primaryNormal,
             fontWeight: FontWeight.w600,
           ),
         ),

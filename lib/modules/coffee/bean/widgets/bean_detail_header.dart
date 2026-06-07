@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:coflanet/constants/color_constant.dart';
+import 'package:coflanet/constants/app_color_scheme.dart';
 import 'package:coflanet/constants/radius_constant.dart';
 import 'package:coflanet/constants/style_constant.dart';
 import 'package:coflanet/constants/util_constant.dart';
@@ -17,6 +17,7 @@ class BeanDetailHeader extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final colors = AppColorScheme.of(context);
     final displayImage = bean.displayImageUrl;
 
     return Padding(
@@ -38,7 +39,7 @@ class BeanDetailHeader extends StatelessWidget {
                     width: 200,
                     height: 200,
                     decoration: BoxDecoration(
-                      color: AppColor.colorGlobalCoolNeutral15,
+                      color: colors.surfaceCard,
                       borderRadius: AppRadius.xlBorder,
                     ),
                     child: Icon(Icons.coffee, size: 64, color: bean.color),
@@ -53,7 +54,7 @@ class BeanDetailHeader extends StatelessWidget {
             Text(
               bean.brand!,
               style: AppTextStyles.body2NormalRegular.copyWith(
-                color: AppColor.colorGlobalCoolNeutral60,
+                color: colors.labelAlternative,
               ),
             ),
           const SizedBox(height: 4),
@@ -61,7 +62,7 @@ class BeanDetailHeader extends StatelessWidget {
           Text(
             bean.name,
             style: AppTextStyles.title1Bold.copyWith(
-              color: AppColor.colorGlobalCommon100,
+              color: colors.labelStrong,
             ),
           ),
           const SizedBox(height: 8),
@@ -69,13 +70,13 @@ class BeanDetailHeader extends StatelessWidget {
           Text(
             bean.description,
             style: AppTextStyles.body1NormalRegular.copyWith(
-              color: AppColor.colorGlobalCoolNeutral60,
+              color: colors.labelAlternative,
             ),
           ),
           // 네이버 쇼핑 가격 정보
           if (bean.naverLprice != null) ...[
             const SizedBox(height: 12),
-            _buildPriceRow(),
+            _buildPriceRow(colors),
           ],
           // 원산지/로스팅/가공 칩
           if (bean.origin != null || bean.roastLevel != null) ...[
@@ -85,14 +86,16 @@ class BeanDetailHeader extends StatelessWidget {
               runSpacing: 8,
               children: [
                 if (bean.origin != null)
-                  _buildInfoChip(Icons.place_outlined, bean.origin!),
+                  _buildInfoChip(colors, Icons.place_outlined, bean.origin!),
                 if (bean.roastLevel != null)
                   _buildInfoChip(
+                    colors,
                     Icons.local_fire_department_outlined,
                     bean.roastLevel!,
                   ),
                 if (bean.processMethod != null)
                   _buildInfoChip(
+                    colors,
                     Icons.water_drop_outlined,
                     bean.processMethod!,
                   ),
@@ -105,14 +108,14 @@ class BeanDetailHeader extends StatelessWidget {
   }
 
   /// 네이버 쇼핑 가격 정보 행
-  Widget _buildPriceRow() {
+  Widget _buildPriceRow(AppColorScheme colors) {
     final formatter = AppUtil.changeNumberToWon(bean.naverLprice!);
     final mallName = bean.naverMallName;
 
     return Container(
       padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 10),
       decoration: BoxDecoration(
-        color: AppColor.colorGlobalCoolNeutral15,
+        color: colors.surfaceCard,
         borderRadius: AppRadius.lgBorder,
       ),
       child: Row(
@@ -120,13 +123,13 @@ class BeanDetailHeader extends StatelessWidget {
           Icon(
             Icons.shopping_bag_outlined,
             size: 18,
-            color: AppColor.primaryNormal,
+            color: colors.primaryNormal,
           ),
           const SizedBox(width: 8),
           Text(
             formatter,
             style: AppTextStyles.body1NormalBold.copyWith(
-              color: AppColor.primaryNormal,
+              color: colors.primaryNormal,
             ),
           ),
           if (bean.naverHprice != null &&
@@ -134,7 +137,7 @@ class BeanDetailHeader extends StatelessWidget {
             Text(
               ' ~ ${AppUtil.changeNumberToWon(bean.naverHprice!)}',
               style: AppTextStyles.body2NormalRegular.copyWith(
-                color: AppColor.colorGlobalCoolNeutral60,
+                color: colors.labelAlternative,
               ),
             ),
           ],
@@ -143,7 +146,7 @@ class BeanDetailHeader extends StatelessWidget {
             Text(
               mallName,
               style: AppTextStyles.caption1Medium.copyWith(
-                color: AppColor.colorGlobalCoolNeutral60,
+                color: colors.labelAlternative,
               ),
             ),
         ],
@@ -152,22 +155,22 @@ class BeanDetailHeader extends StatelessWidget {
   }
 
   /// 원산지/로스팅/가공 정보 칩 (아이콘 + 라벨)
-  Widget _buildInfoChip(IconData icon, String label) {
+  Widget _buildInfoChip(AppColorScheme colors, IconData icon, String label) {
     return Container(
       padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 6),
       decoration: BoxDecoration(
-        color: AppColor.colorGlobalCoolNeutral15,
+        color: colors.surfaceCard,
         borderRadius: AppRadius.xxxlBorder,
       ),
       child: Row(
         mainAxisSize: MainAxisSize.min,
         children: [
-          Icon(icon, size: 14, color: AppColor.colorGlobalCoolNeutral60),
+          Icon(icon, size: 14, color: colors.labelAlternative),
           const SizedBox(width: 6),
           Text(
             label,
             style: AppTextStyles.caption1Medium.copyWith(
-              color: AppColor.colorGlobalCoolNeutral60,
+              color: colors.labelAlternative,
             ),
           ),
         ],

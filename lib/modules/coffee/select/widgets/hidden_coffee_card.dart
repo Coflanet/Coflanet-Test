@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:coflanet/constants/color_constant.dart';
+import 'package:coflanet/constants/app_color_scheme.dart';
 import 'package:coflanet/constants/radius_constant.dart';
 import 'package:coflanet/constants/style_constant.dart';
 import 'package:coflanet/data/models/coffee_item_model.dart';
@@ -26,12 +26,13 @@ class HiddenCoffeeCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final colors = AppColorScheme.of(context);
     return Padding(
       padding: const EdgeInsets.only(bottom: 8),
       child: Container(
         padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 10),
         decoration: BoxDecoration(
-          color: AppColor.backgroundNormalNormal.withValues(alpha: 0.5),
+          color: colors.backgroundNormalNormal.withValues(alpha: 0.5),
           borderRadius: AppRadius.lgBorder,
         ),
         child: Row(
@@ -41,7 +42,7 @@ class HiddenCoffeeCard extends StatelessWidget {
               width: 40,
               height: 40,
               decoration: BoxDecoration(
-                color: AppColor.backgroundNormalAlternative,
+                color: colors.backgroundNormalAlternative,
                 borderRadius: AppRadius.mdBorder,
               ),
               child: Center(
@@ -63,13 +64,13 @@ class HiddenCoffeeCard extends StatelessWidget {
                     Text(
                       item.brand!,
                       style: AppTextStyles.caption1Regular.copyWith(
-                        color: AppColor.labelAssistive,
+                        color: colors.labelAssistive,
                       ),
                     ),
                   Text(
                     item.name,
                     style: AppTextStyles.body2NormalMedium.copyWith(
-                      color: AppColor.labelAlternative,
+                      color: colors.labelAlternative,
                     ),
                     maxLines: 1,
                     overflow: TextOverflow.ellipsis,
@@ -86,13 +87,13 @@ class HiddenCoffeeCard extends StatelessWidget {
                   vertical: 6,
                 ),
                 decoration: BoxDecoration(
-                  color: AppColor.primaryNormal.withValues(alpha: 0.1),
+                  color: colors.primaryNormal.withValues(alpha: 0.1),
                   borderRadius: AppRadius.smBorder,
                 ),
                 child: Text(
                   '복원',
                   style: AppTextStyles.caption1Medium.copyWith(
-                    color: AppColor.primaryNormal,
+                    color: colors.primaryNormal,
                   ),
                 ),
               ),
@@ -103,7 +104,7 @@ class HiddenCoffeeCard extends StatelessWidget {
               onTap: onDelete,
               child: Icon(
                 Icons.close,
-                color: AppColor.labelAssistive,
+                color: colors.labelAssistive,
                 size: 20,
               ),
             ),

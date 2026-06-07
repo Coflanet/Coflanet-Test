@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:coflanet/constants/color_constant.dart';
+import 'package:coflanet/constants/app_color_scheme.dart';
 import 'package:coflanet/constants/style_constant.dart';
 import 'package:coflanet/constants/radius_constant.dart';
 import 'package:coflanet/constants/spacing_constant.dart';
@@ -314,25 +314,26 @@ class _AppTextFieldState extends State<AppTextField>
 
   @override
   Widget build(BuildContext context) {
+    final colors = AppColorScheme.of(context);
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       mainAxisSize: MainAxisSize.min,
       children: [
         if (widget.label != null) ...[
-          _buildLabel(),
+          _buildLabel(colors),
           SizedBox(height: AppSpacing.xs),
         ],
-        _buildTextField(),
+        _buildTextField(colors),
         if (_hasError || widget.helperText != null) ...[
           SizedBox(height: AppSpacing.xxs),
-          _buildHelperOrError(),
+          _buildHelperOrError(colors),
         ],
       ],
     );
   }
 
-  Widget _buildLabel() {
-    final color = _isDisabled ? AppColor.labelDisable : AppColor.labelNormal;
+  Widget _buildLabel(AppColorScheme colors) {
+    final color = _isDisabled ? colors.labelDisable : colors.labelNormal;
 
     return Text(
       widget.label!,
@@ -340,7 +341,7 @@ class _AppTextFieldState extends State<AppTextField>
     );
   }
 
-  Widget _buildTextField() {
+  Widget _buildTextField(AppColorScheme colors) {
     return SizedBox(
       height: _height,
       child: AnimatedBuilder(
@@ -350,21 +351,21 @@ class _AppTextFieldState extends State<AppTextField>
           final Color fillColor;
 
           if (_isDisabled) {
-            borderColor = AppColor.lineNormalAlternative;
-            fillColor = AppColor.interactionDisable;
+            borderColor = colors.lineNormalAlternative;
+            fillColor = colors.interactionDisable;
           } else if (_hasError) {
-            borderColor = AppColor.statusNegative;
-            fillColor = AppColor.componentFillNormal;
+            borderColor = colors.statusNegative;
+            fillColor = colors.componentFillNormal;
           } else if (_hasFocus) {
             borderColor = Color.lerp(
-              AppColor.lineNormalNormal,
-              AppColor.primaryNormal,
+              colors.lineNormalNormal,
+              colors.primaryNormal,
               _borderAnimation.value,
             )!;
-            fillColor = AppColor.backgroundNormalNormal;
+            fillColor = colors.backgroundNormalNormal;
           } else {
-            borderColor = AppColor.lineNormalNormal;
-            fillColor = AppColor.componentFillNormal;
+            borderColor = colors.lineNormalNormal;
+            fillColor = colors.componentFillNormal;
           }
 
           return AnimatedContainer(
@@ -380,7 +381,7 @@ class _AppTextFieldState extends State<AppTextField>
               boxShadow: _hasFocus && !_isDisabled && !_hasError
                   ? [
                       BoxShadow(
-                        color: AppColor.primaryNormal.withValues(alpha: 0.1),
+                        color: colors.primaryNormal.withValues(alpha: 0.1),
                         blurRadius: 8,
                         offset: const Offset(0, 2),
                       ),
@@ -390,19 +391,17 @@ class _AppTextFieldState extends State<AppTextField>
             child: child,
           );
         },
-        child: _buildTextFieldContent(),
+        child: _buildTextFieldContent(colors),
       ),
     );
   }
 
-  Widget _buildTextFieldContent() {
-    final textColor = _isDisabled
-        ? AppColor.labelDisable
-        : AppColor.labelNormal;
-    final hintColor = AppColor.labelAssistive;
+  Widget _buildTextFieldContent(AppColorScheme colors) {
+    final textColor = _isDisabled ? colors.labelDisable : colors.labelNormal;
+    final hintColor = colors.labelAssistive;
     final cursorColor = _hasError
-        ? AppColor.statusNegative
-        : AppColor.primaryNormal;
+        ? colors.statusNegative
+        : colors.primaryNormal;
 
     return TextField(
       controller: widget.controller,
@@ -438,12 +437,12 @@ class _AppTextFieldState extends State<AppTextField>
         errorBorder: InputBorder.none,
         focusedErrorBorder: InputBorder.none,
         counterText: '',
-        prefixIcon: _buildPrefixIcon(),
+        prefixIcon: _buildPrefixIcon(colors),
         prefixIconConstraints: const BoxConstraints(
           minWidth: 48,
           minHeight: 48,
         ),
-        suffixIcon: _buildSuffixIcon(),
+        suffixIcon: _buildSuffixIcon(colors),
         suffixIconConstraints: const BoxConstraints(
           minWidth: 48,
           minHeight: 48,
@@ -452,7 +451,7 @@ class _AppTextFieldState extends State<AppTextField>
     );
   }
 
-  Widget? _buildPrefixIcon() {
+  Widget? _buildPrefixIcon(AppColorScheme colors) {
     if (widget.prefix != null) {
       return Padding(
         padding: EdgeInsets.only(left: AppSpacing.sm),
@@ -462,8 +461,8 @@ class _AppTextFieldState extends State<AppTextField>
 
     if (widget.prefixIcon != null) {
       final iconColor = _isDisabled
-          ? AppColor.labelDisable
-          : AppColor.labelAlternative;
+          ? colors.labelDisable
+          : colors.labelAlternative;
 
       return Icon(widget.prefixIcon, size: 20, color: iconColor);
     }
@@ -471,12 +470,12 @@ class _AppTextFieldState extends State<AppTextField>
     return null;
   }
 
-  Widget? _buildSuffixIcon() {
+  Widget? _buildSuffixIcon(AppColorScheme colors) {
     // Password visibility toggle takes precedence
     if (widget.showPasswordToggle && widget.obscureText) {
       final iconColor = _isDisabled
-          ? AppColor.labelDisable
-          : AppColor.labelAlternative;
+          ? colors.labelDisable
+          : colors.labelAlternative;
 
       return GestureDetector(
         onTap: _isDisabled ? null : _toggleObscure,
@@ -499,8 +498,8 @@ class _AppTextFieldState extends State<AppTextField>
 
     if (widget.suffixIcon != null) {
       final iconColor = _isDisabled
-          ? AppColor.labelDisable
-          : AppColor.labelAlternative;
+          ? colors.labelDisable
+          : colors.labelAlternative;
 
       return GestureDetector(
         onTap: _isDisabled ? null : widget.onSuffixTap,
@@ -511,21 +510,21 @@ class _AppTextFieldState extends State<AppTextField>
     return null;
   }
 
-  Widget _buildHelperOrError() {
+  Widget _buildHelperOrError(AppColorScheme colors) {
     if (_hasError) {
       return Row(
         children: [
           Icon(
             Icons.error_outline_rounded,
             size: 14,
-            color: AppColor.statusNegative,
+            color: colors.statusNegative,
           ),
           SizedBox(width: AppSpacing.xxs),
           Expanded(
             child: Text(
               widget.errorText!,
               style: AppTextStyles.caption1Regular.copyWith(
-                color: AppColor.statusNegative,
+                color: colors.statusNegative,
               ),
             ),
           ),
@@ -537,7 +536,7 @@ class _AppTextFieldState extends State<AppTextField>
       return Text(
         widget.helperText!,
         style: AppTextStyles.caption1Regular.copyWith(
-          color: AppColor.labelAlternative,
+          color: colors.labelAlternative,
         ),
       );
     }

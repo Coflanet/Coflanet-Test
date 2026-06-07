@@ -9,6 +9,8 @@ import 'package:coflanet/widgets/typography/section_title.dart';
 ///
 /// 다른 섹션 카드들과 동일하게 풀폭 + radius 20 독립 카드다.
 /// [beans] 가 비어 있으면 빈 안내 카드를 노출한다.
+/// 카드가 브랜드 보라 고정색이므로 내부 색은 테마 무관 static 토큰을 쓴다
+/// (흰 내부 카드 + 검정 계열 텍스트 — 라이트/다크 동일).
 class HomeMyBeanSection extends StatelessWidget {
   const HomeMyBeanSection({
     super.key,
@@ -135,7 +137,7 @@ class HomeMyBeanSection extends StatelessWidget {
                       child: Text(
                         item.brand ?? '브랜드명',
                         style: AppTextStyles.caption1Regular.copyWith(
-                          color: AppColor.labelAlternative,
+                          color: AppColor.staticLabelBlackAlternative,
                         ),
                         maxLines: 1,
                         overflow: TextOverflow.ellipsis,
@@ -164,7 +166,7 @@ class HomeMyBeanSection extends StatelessWidget {
                 Text(
                   item.name,
                   style: AppTextStyles.body2NormalBold.copyWith(
-                    color: AppColor.labelNormal,
+                    color: AppColor.staticLabelBlackNormal,
                   ),
                   maxLines: 2,
                   overflow: TextOverflow.ellipsis,

@@ -65,15 +65,8 @@ void main() async {
     DeviceOrientation.portraitDown,
   ]);
 
-  // Set system UI overlay style
-  SystemChrome.setSystemUIOverlayStyle(
-    SystemUiOverlayStyle(
-      statusBarColor: Colors.transparent,
-      statusBarIconBrightness: Brightness.dark,
-      systemNavigationBarColor: AppColor.staticLabelWhiteStrong,
-      systemNavigationBarIconBrightness: Brightness.dark,
-    ),
-  );
+  // 시스템 UI 오버레이는 테마에 따라 달라지므로 여기서 고정하지 않고
+  // CoflanetApp.builder 의 AnnotatedRegion 에서 테마 반응형으로 적용한다.
 
   // GetX 의 initialBinding 은 putAsync 를 await 하지 않아 SplashController 가
   // SurveyService 등록 전에 onInit 을 실행하면 "not found" 에러 발생.
@@ -117,14 +110,36 @@ void main() async {
 class CoflanetApp extends StatelessWidget {
   const CoflanetApp({super.key});
 
+  /// 라이트 테마용 시스템 UI 오버레이 (상태바 어두운 아이콘 + 흰 내비바)
+  static const SystemUiOverlayStyle _lightOverlay = SystemUiOverlayStyle(
+    statusBarColor: AppColor.transparent,
+    statusBarIconBrightness: Brightness.dark,
+    statusBarBrightness: Brightness.light,
+    systemNavigationBarColor: AppColor.colorGlobalCommon100,
+    systemNavigationBarIconBrightness: Brightness.dark,
+  );
+
+  /// 다크 테마용 시스템 UI 오버레이 (상태바 밝은 아이콘 + 검정 내비바)
+  static const SystemUiOverlayStyle _darkOverlay = SystemUiOverlayStyle(
+    statusBarColor: AppColor.transparent,
+    statusBarIconBrightness: Brightness.light,
+    statusBarBrightness: Brightness.dark,
+    systemNavigationBarColor: AppColor.colorGlobalCommon0,
+    systemNavigationBarIconBrightness: Brightness.light,
+  );
+
   @override
   Widget build(BuildContext context) {
+    final themeController = Get.find<ThemeController>();
+
     return GetMaterialApp(
       title: 'Coflanet',
       debugShowCheckedModeBanner: false,
       theme: AppTheme.light,
       darkTheme: AppTheme.dark,
-      themeMode: ThemeMode.system,
+      // 저장된 모드로 시작, 이후 변경은 ThemeController.setMode →
+      // Get.changeThemeMode 가 반영 (이전에는 system 고정과 저장값이 충돌)
+      themeMode: themeController.themeMode,
       initialBinding: AppBinding(),
       initialRoute: AppPages.initial,
       getPages: AppPages.routes,
@@ -132,12 +147,24 @@ class CoflanetApp extends StatelessWidget {
       locale: const Locale('ko', 'KR'),
       fallbackLocale: const Locale('ko', 'KR'),
       builder: (context, child) {
-        return MediaQuery(
-          data: MediaQuery.of(
-            context,
-          ).copyWith(textScaler: const TextScaler.linear(1.0)),
-          child: child!,
-        );
+        return Obx(() {
+          // 모드 + OS 밝기 기준으로 유효 테마를 계산해 시스템 UI 동기화
+          final platformBrightness = MediaQuery.platformBrightnessOf(context);
+          final isDark = switch (themeController.mode) {
+            AppThemeMode.dark => true,
+            AppThemeMode.light => false,
+            AppThemeMode.system => platformBrightness == Brightness.dark,
+          };
+          return AnnotatedRegion<SystemUiOverlayStyle>(
+            value: isDark ? _darkOverlay : _lightOverlay,
+            child: MediaQuery(
+              data: MediaQuery.of(
+                context,
+              ).copyWith(textScaler: const TextScaler.linear(1.0)),
+              child: child!,
+            ),
+          );
+        });
       },
     );
   }

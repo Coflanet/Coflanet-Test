@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
+import 'package:coflanet/constants/app_color_scheme.dart';
 import 'package:coflanet/constants/asset_constant.dart';
 import 'package:coflanet/constants/color_constant.dart';
 import 'package:coflanet/constants/style_constant.dart';
@@ -15,17 +16,20 @@ class SurveyIntroView extends GetView<SurveyController> {
   // Figma 사양: Pretendard SemiBold 22 / lineHeight 1.36 / letterSpacing -0.4268
   // 색상은 Label/strong (#000000) 토큰 매핑
   // Auth 카테고리에서 통일한 페이지 헤더 스타일과 동일
-  TextStyle get _screenHeaderStyle => AppTextStyles.heading1Bold.copyWith(
-    fontWeight: FontWeight.w600,
-    height: 1.36,
-    letterSpacing: -0.4268,
-    color: AppColor.labelStrong,
-  );
+  TextStyle _screenHeaderStyle(AppColorScheme colors) =>
+      AppTextStyles.heading1Bold.copyWith(
+        fontWeight: FontWeight.w600,
+        height: 1.36,
+        letterSpacing: -0.4268,
+        color: colors.labelStrong,
+      );
 
   @override
   Widget build(BuildContext context) {
+    final colors = AppColorScheme.of(context);
+
     return Scaffold(
-      backgroundColor: AppColor.backgroundNormalNormal,
+      backgroundColor: colors.backgroundNormalNormal,
       appBar: AppBar(
         backgroundColor: AppColor.transparent,
         elevation: 0,
@@ -35,7 +39,7 @@ class SurveyIntroView extends GetView<SurveyController> {
             width: 24,
             height: 24,
             colorFilter: ColorFilter.mode(
-              AppColor.labelNormal,
+              colors.labelNormal,
               BlendMode.srcIn,
             ),
           ),
@@ -53,15 +57,18 @@ class SurveyIntroView extends GetView<SurveyController> {
               const SizedBox(height: 24),
 
               // Figma: "[이름]님의 취향을 찾으러 가볼까요?"
-              Text('${controller.userName}님의 취향을', style: _screenHeaderStyle),
-              Text('찾으러 가볼까요?', style: _screenHeaderStyle),
+              Text(
+                '${controller.userName}님의 취향을',
+                style: _screenHeaderStyle(colors),
+              ),
+              Text('찾으러 가볼까요?', style: _screenHeaderStyle(colors)),
               const SizedBox(height: 16),
 
               // 안내 문구
               Text(
                 '간단한 설문으로 나에게 맞는 커피를 찾아드려요',
                 style: AppTextStyles.body1NormalRegular.copyWith(
-                  color: AppColor.labelAlternative,
+                  color: colors.labelAlternative,
                 ),
               ),
 
@@ -97,9 +104,9 @@ class SurveyIntroView extends GetView<SurveyController> {
                     child: Text(
                       '나중에 찾기',
                       style: AppTextStyles.body2NormalMedium.copyWith(
-                        color: AppColor.labelAssistive,
+                        color: colors.labelAssistive,
                         decoration: TextDecoration.underline,
-                        decorationColor: AppColor.labelAssistive,
+                        decorationColor: colors.labelAssistive,
                       ),
                     ),
                   ),

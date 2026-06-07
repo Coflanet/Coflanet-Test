@@ -7,15 +7,13 @@ import 'package:coflanet/data/models/survey_result_model.dart';
 /// 홈 취향 배너 (노랑) — 설문 완료 시 표시. 풀폭 + 둥근 코너 카드.
 ///
 /// 취향 타입 라벨 + 향미 칩 (최대 3개 + "외 N개").
+/// 배너가 노랑 고정색이므로 텍스트는 테마 무관 static 검정 토큰을 쓴다.
 class HomeTasteBanner extends StatelessWidget {
   const HomeTasteBanner({
     super.key,
     required this.typeLabel,
     required this.flavors,
   });
-
-  /// [디자인 토큰 부재] Figma 노랑 — 토큰화 검토 대상
-  static const Color _bannerYellow = Color(0xFFFFE15A);
 
   /// 향미 칩 최대 표시 개수
   static const int _maxChips = 3;
@@ -31,7 +29,7 @@ class HomeTasteBanner extends StatelessWidget {
     return Container(
       padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 14),
       decoration: BoxDecoration(
-        color: _bannerYellow,
+        color: AppColor.accentTasteBanner,
         borderRadius: AppRadius.xxlBorder,
       ),
       child: Column(
@@ -43,10 +41,14 @@ class HomeTasteBanner extends StatelessWidget {
               Text(
                 '어떤 커피를 추천해드릴까요?',
                 style: AppTextStyles.body2NormalBold.copyWith(
-                  color: AppColor.labelNormal,
+                  color: AppColor.staticLabelBlackNormal,
                 ),
               ),
-              Icon(Icons.help_outline, size: 18, color: AppColor.labelNeutral),
+              Icon(
+                Icons.help_outline,
+                size: 18,
+                color: AppColor.staticLabelBlackNeutral,
+              ),
             ],
           ),
           const SizedBox(height: 12),
@@ -67,7 +69,7 @@ class HomeTasteBanner extends StatelessWidget {
                       child: Text(
                         typeLabel.isNotEmpty ? typeLabel : '나의 커피 취향',
                         style: AppTextStyles.body1NormalBold.copyWith(
-                          color: AppColor.labelNormal,
+                          color: AppColor.staticLabelBlackNormal,
                         ),
                         maxLines: 1,
                         overflow: TextOverflow.ellipsis,
@@ -77,7 +79,11 @@ class HomeTasteBanner extends StatelessWidget {
                 ),
               ),
               const SizedBox(width: 8),
-              Icon(Icons.swap_horiz, size: 22, color: AppColor.labelNeutral),
+              Icon(
+                Icons.swap_horiz,
+                size: 22,
+                color: AppColor.staticLabelBlackNeutral,
+              ),
             ],
           ),
           const SizedBox(height: 12),
@@ -109,7 +115,7 @@ class HomeTasteBanner extends StatelessWidget {
       child: Text(
         label,
         style: AppTextStyles.caption1Medium.copyWith(
-          color: AppColor.labelNormal,
+          color: AppColor.staticLabelBlackNormal,
         ),
       ),
     );

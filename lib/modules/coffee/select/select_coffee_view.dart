@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
+import 'package:coflanet/constants/app_color_scheme.dart';
 import 'package:coflanet/constants/asset_constant.dart';
 import 'package:coflanet/constants/color_constant.dart';
 import 'package:coflanet/constants/radius_constant.dart';
@@ -23,9 +24,10 @@ class SelectCoffeeView extends GetView<SelectCoffeeController> {
 
   @override
   Widget build(BuildContext context) {
+    final colors = AppColorScheme.of(context);
     return Scaffold(
-      backgroundColor: AppColor.backgroundNormalNormal,
-      appBar: _buildAppBar(),
+      backgroundColor: colors.backgroundNormalNormal,
+      appBar: _buildAppBar(colors),
       body: SafeArea(
         child: Column(
           children: [
@@ -38,19 +40,19 @@ class SelectCoffeeView extends GetView<SelectCoffeeController> {
                 return controller.visibleCoffeeItems.isEmpty &&
                         controller.hiddenCoffeeItems.isEmpty
                     ? _buildEmptyState()
-                    : _buildCoffeeList();
+                    : _buildCoffeeList(colors);
               }),
             ),
-            _buildBottomBar(),
+            _buildBottomBar(colors),
           ],
         ),
       ),
     );
   }
 
-  PreferredSizeWidget _buildAppBar() {
+  PreferredSizeWidget _buildAppBar(AppColorScheme colors) {
     return AppBar(
-      backgroundColor: AppColor.backgroundNormalNormal,
+      backgroundColor: colors.backgroundNormalNormal,
       elevation: 0,
       leading: Obx(
         () => IconButton(
@@ -59,7 +61,7 @@ class SelectCoffeeView extends GetView<SelectCoffeeController> {
             height: 36,
             decoration: BoxDecoration(
               color: controller.isEditing
-                  ? AppColor.backgroundNormalAlternative
+                  ? colors.backgroundNormalAlternative
                   : AppColor.transparent,
               shape: BoxShape.circle,
             ),
@@ -68,7 +70,7 @@ class SelectCoffeeView extends GetView<SelectCoffeeController> {
               width: 24,
               height: 24,
               colorFilter: ColorFilter.mode(
-                AppColor.labelNormal,
+                colors.labelNormal,
                 BlendMode.srcIn,
               ),
             ),
@@ -86,7 +88,7 @@ class SelectCoffeeView extends GetView<SelectCoffeeController> {
         () => Text(
           controller.isEditing ? '원두 목록 편집' : '커피 선택',
           style: AppTextStyles.headline1Bold.copyWith(
-            color: AppColor.labelNormal,
+            color: colors.labelNormal,
           ),
         ),
       ),
@@ -99,14 +101,14 @@ class SelectCoffeeView extends GetView<SelectCoffeeController> {
                   child: Text(
                     '완료',
                     style: AppTextStyles.headline2Bold.copyWith(
-                      color: AppColor.primaryNormal,
+                      color: colors.primaryNormal,
                     ),
                   ),
                 )
               : IconButton(
                   icon: Icon(
                     Icons.edit_outlined,
-                    color: AppColor.labelNormal,
+                    color: colors.labelNormal,
                     size: 22,
                   ),
                   onPressed: controller.toggleEditMode,
@@ -126,7 +128,7 @@ class SelectCoffeeView extends GetView<SelectCoffeeController> {
     );
   }
 
-  Widget _buildCoffeeList() {
+  Widget _buildCoffeeList(AppColorScheme colors) {
     return Obx(() {
       final visibleItems = controller.visibleCoffeeItems;
       final hiddenItems = controller.hiddenCoffeeItems;
@@ -143,7 +145,7 @@ class SelectCoffeeView extends GetView<SelectCoffeeController> {
               Container(
                 decoration: BoxDecoration(
                   color: isEditing
-                      ? AppColor.backgroundNormalAlternative
+                      ? colors.backgroundNormalAlternative
                       : AppColor.transparent,
                   borderRadius: AppRadius.xlBorder,
                 ),
@@ -184,16 +186,16 @@ class SelectCoffeeView extends GetView<SelectCoffeeController> {
                             width: 48,
                             height: 48,
                             decoration: BoxDecoration(
-                              color: AppColor.backgroundNormalNormal,
+                              color: colors.backgroundNormalNormal,
                               shape: BoxShape.circle,
                               border: Border.all(
-                                color: AppColor.lineNormalNeutral,
+                                color: colors.lineNormalNeutral,
                                 width: 1,
                               ),
                             ),
                             child: Icon(
                               Icons.add,
-                              color: AppColor.labelAlternative,
+                              color: colors.labelAlternative,
                               size: 24,
                             ),
                           ),
@@ -210,7 +212,7 @@ class SelectCoffeeView extends GetView<SelectCoffeeController> {
                   child: Text(
                     '표시할 커피가 없습니다',
                     style: AppTextStyles.body1NormalMedium.copyWith(
-                      color: AppColor.labelAssistive,
+                      color: colors.labelAssistive,
                     ),
                   ),
                 ),
@@ -220,7 +222,7 @@ class SelectCoffeeView extends GetView<SelectCoffeeController> {
             // 숨겨진 원두 섹션
             if (hiddenItems.isNotEmpty) ...[
               const SizedBox(height: 24),
-              _buildHiddenBeansSection(hiddenItems, showHidden),
+              _buildHiddenBeansSection(colors, hiddenItems, showHidden),
             ],
           ],
         ),
@@ -229,12 +231,13 @@ class SelectCoffeeView extends GetView<SelectCoffeeController> {
   }
 
   Widget _buildHiddenBeansSection(
+    AppColorScheme colors,
     List<CoffeeItem> hiddenItems,
     bool isExpanded,
   ) {
     return Container(
       decoration: BoxDecoration(
-        color: AppColor.backgroundNormalAlternative,
+        color: colors.backgroundNormalAlternative,
         borderRadius: AppRadius.lgBorder,
       ),
       child: Column(
@@ -249,7 +252,7 @@ class SelectCoffeeView extends GetView<SelectCoffeeController> {
                 children: [
                   Icon(
                     Icons.visibility_off_outlined,
-                    color: AppColor.labelAssistive,
+                    color: colors.labelAssistive,
                     size: 20,
                   ),
                   const SizedBox(width: 8),
@@ -257,7 +260,7 @@ class SelectCoffeeView extends GetView<SelectCoffeeController> {
                     child: Text(
                       '숨겨진 원두 (${hiddenItems.length})',
                       style: AppTextStyles.body1NormalMedium.copyWith(
-                        color: AppColor.labelAlternative,
+                        color: colors.labelAlternative,
                       ),
                     ),
                   ),
@@ -266,7 +269,7 @@ class SelectCoffeeView extends GetView<SelectCoffeeController> {
                     duration: const Duration(milliseconds: 200),
                     child: Icon(
                       Icons.keyboard_arrow_down,
-                      color: AppColor.labelAssistive,
+                      color: colors.labelAssistive,
                       size: 24,
                     ),
                   ),
@@ -279,7 +282,7 @@ class SelectCoffeeView extends GetView<SelectCoffeeController> {
             firstChild: const SizedBox.shrink(),
             secondChild: Column(
               children: [
-                Divider(height: 1, color: AppColor.lineNormalNeutral),
+                Divider(height: 1, color: colors.lineNormalNeutral),
                 Padding(
                   padding: const EdgeInsets.all(12),
                   child: Column(
@@ -304,7 +307,7 @@ class SelectCoffeeView extends GetView<SelectCoffeeController> {
                       padding: const EdgeInsets.symmetric(vertical: 12),
                       decoration: BoxDecoration(
                         border: Border.all(
-                          color: AppColor.lineNormalNeutral,
+                          color: colors.lineNormalNeutral,
                           width: 1,
                         ),
                         borderRadius: AppRadius.mdBorder,
@@ -313,7 +316,7 @@ class SelectCoffeeView extends GetView<SelectCoffeeController> {
                         child: Text(
                           '전체 복원',
                           style: AppTextStyles.body2NormalMedium.copyWith(
-                            color: AppColor.labelAlternative,
+                            color: colors.labelAlternative,
                           ),
                         ),
                       ),
@@ -332,20 +335,20 @@ class SelectCoffeeView extends GetView<SelectCoffeeController> {
     );
   }
 
-  Widget _buildBottomBar() {
+  Widget _buildBottomBar(AppColorScheme colors) {
     return Obx(() {
       if (controller.isEditing) {
-        return _buildEditingBottomBar();
+        return _buildEditingBottomBar(colors);
       }
       return _buildNormalBottomBar();
     });
   }
 
-  Widget _buildEditingBottomBar() {
+  Widget _buildEditingBottomBar(AppColorScheme colors) {
     return Container(
       padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 16),
       decoration: BoxDecoration(
-        color: AppColor.backgroundNormalAlternative,
+        color: colors.backgroundNormalAlternative,
         boxShadow: AppShadows.shadowBlackHeavyBottom,
       ),
       child: SafeArea(
@@ -361,14 +364,14 @@ class SelectCoffeeView extends GetView<SelectCoffeeController> {
                 width: 44,
                 height: 44,
                 decoration: BoxDecoration(
-                  color: AppColor.backgroundNormalNormal,
+                  color: colors.backgroundNormalNormal,
                   shape: BoxShape.circle,
                 ),
                 child: Icon(
                   Icons.ios_share,
                   color: controller.selectedEditCount > 0
-                      ? AppColor.labelNormal
-                      : AppColor.labelDisable,
+                      ? colors.labelNormal
+                      : colors.labelDisable,
                   size: 22,
                 ),
               ),
@@ -377,7 +380,7 @@ class SelectCoffeeView extends GetView<SelectCoffeeController> {
             Text(
               '${controller.selectedEditCount}개가 선택됨',
               style: AppTextStyles.body1NormalMedium.copyWith(
-                color: AppColor.labelNormal,
+                color: colors.labelNormal,
               ),
             ),
             // 삭제 버튼
@@ -389,14 +392,14 @@ class SelectCoffeeView extends GetView<SelectCoffeeController> {
                 width: 44,
                 height: 44,
                 decoration: BoxDecoration(
-                  color: AppColor.backgroundNormalNormal,
+                  color: colors.backgroundNormalNormal,
                   shape: BoxShape.circle,
                 ),
                 child: Icon(
                   Icons.delete_outline,
                   color: controller.selectedEditCount > 0
-                      ? AppColor.statusNegative
-                      : AppColor.labelDisable,
+                      ? colors.statusNegative
+                      : colors.labelDisable,
                   size: 22,
                 ),
               ),

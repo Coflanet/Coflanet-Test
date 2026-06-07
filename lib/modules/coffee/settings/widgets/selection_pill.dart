@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:coflanet/constants/color_constant.dart';
+import 'package:coflanet/constants/app_color_scheme.dart';
 
 /// 잔수/진하기 선택 필 — 보라 연배경 + 보라 보더 카드.
 ///
@@ -26,13 +26,15 @@ class SelectionPill extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final colors = AppColorScheme.of(context);
     return GestureDetector(
       onTap: onTap,
       child: Container(
         padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 14),
         decoration: BoxDecoration(
-          color: AppColor.colorGlobalViolet95,
-          border: Border.all(color: AppColor.colorGlobalViolet80, width: 1),
+          // Figma: Violet95 연배경 / Violet80 보더 → 시맨틱 primary 토큰
+          color: colors.primaryLight,
+          border: Border.all(color: colors.primarySecondary, width: 1),
           borderRadius: BorderRadius.circular(24),
         ),
         child: Column(
@@ -46,7 +48,7 @@ class SelectionPill extends StatelessWidget {
                 fontFamily: 'Pretendard',
                 fontSize: 18,
                 fontWeight: FontWeight.w600,
-                color: AppColor.primaryStrong,
+                color: colors.primaryStrong,
               ),
               textAlign: TextAlign.center,
             ),
@@ -58,7 +60,7 @@ class SelectionPill extends StatelessWidget {
                 fontFamily: 'Pretendard',
                 fontSize: 14,
                 fontWeight: FontWeight.w400,
-                color: AppColor.labelAlternative,
+                color: colors.labelAlternative,
               ),
               textAlign: TextAlign.center,
             ),

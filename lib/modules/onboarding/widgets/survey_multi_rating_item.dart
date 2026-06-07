@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:coflanet/constants/app_color_scheme.dart';
 import 'package:coflanet/constants/color_constant.dart';
 import 'package:coflanet/constants/radius_constant.dart';
 import 'package:coflanet/constants/style_constant.dart';
@@ -30,12 +31,14 @@ class SurveyMultiRatingItem extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final colors = AppColorScheme.of(context);
+
     return Container(
       padding: const EdgeInsets.all(16),
       decoration: BoxDecoration(
-        color: AppColor.backgroundNormalNormal,
+        color: colors.backgroundNormalNormal,
         borderRadius: AppRadius.lgBorder,
-        border: Border.all(color: AppColor.lineNormalNeutral, width: 1),
+        border: Border.all(color: colors.lineNormalNeutral, width: 1),
       ),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -44,7 +47,7 @@ class SurveyMultiRatingItem extends StatelessWidget {
           Text(
             item.question,
             style: AppTextStyles.body1NormalMedium.copyWith(
-              color: AppColor.labelNormal,
+              color: colors.labelNormal,
             ),
           ),
           const SizedBox(height: 4),
@@ -54,7 +57,7 @@ class SurveyMultiRatingItem extends StatelessWidget {
             Text(
               item.description,
               style: AppTextStyles.caption1Regular.copyWith(
-                color: AppColor.labelAlternative,
+                color: colors.labelAlternative,
               ),
             ),
             const SizedBox(height: 12),
@@ -120,6 +123,8 @@ class _RatingButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final colors = AppColorScheme.of(context);
+
     return GestureDetector(
       onTap: onTap,
       child: AnimatedContainer(
@@ -127,11 +132,11 @@ class _RatingButton extends StatelessWidget {
         padding: const EdgeInsets.symmetric(vertical: 12, horizontal: 8),
         decoration: BoxDecoration(
           color: isSelected
-              ? AppColor.primaryLight
-              : AppColor.componentFillNormal,
+              ? colors.primaryLight
+              : colors.componentFillNormal,
           borderRadius: AppRadius.mdBorder,
           border: Border.all(
-            color: isSelected ? AppColor.primaryNormal : AppColor.transparent,
+            color: isSelected ? colors.primaryNormal : AppColor.transparent,
             width: isSelected ? 1.5 : 1,
           ),
         ),
@@ -144,8 +149,8 @@ class _RatingButton extends StatelessWidget {
               label,
               style: AppTextStyles.caption1Medium.copyWith(
                 color: isSelected
-                    ? AppColor.primaryNormal
-                    : AppColor.labelNormal,
+                    ? colors.primaryNormal
+                    : colors.labelNormal,
               ),
             ),
           ],

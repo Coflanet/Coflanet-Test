@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:coflanet/constants/color_constant.dart';
+import 'package:coflanet/constants/app_color_scheme.dart';
 import 'package:coflanet/constants/radius_constant.dart';
 import 'package:coflanet/constants/style_constant.dart';
 import 'package:coflanet/data/models/survey_result_model.dart';
@@ -12,7 +12,7 @@ import 'package:coflanet/widgets/typography/section_title.dart';
 /// 홈 상품 섹션 — 섹션 타이틀 + 2열 상품 그리드 (또는 빈 상태 카드) + 하단 '더 보기' 버튼.
 ///
 /// 취향 추천 / 인기 랭킹 / 실시간 인기 등 모든 상품 섹션이 공유한다.
-/// 모든 섹션을 풀폭 다크 둥근 카드(CoolNeutral15, radius 20)로 통일하며,
+/// 모든 섹션을 풀폭 둥근 섹션 카드(surfaceCard, radius 20)로 통일하며,
 /// 그리드 하단에 항상 [HomeSectionMoreButton] 더 보기 버튼을 노출한다.
 ///
 /// 좋아요 반응성: 카드 단위 Obx 로 [isLiked] 를 구독 — 한 카드 토글이
@@ -52,11 +52,13 @@ class HomeProductSection extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final colors = AppColorScheme.of(context);
+
     return Container(
       width: double.infinity,
       padding: const EdgeInsets.all(16),
       decoration: BoxDecoration(
-        color: AppColor.colorGlobalCoolNeutral15,
+        color: colors.surfaceCard,
         borderRadius: AppRadius.xxlBorder,
       ),
       child: Column(
@@ -65,7 +67,7 @@ class HomeProductSection extends StatelessWidget {
           SectionTitle(
             title: title,
             titleStyle: AppTextStyles.body1NormalBold.copyWith(
-              color: AppColor.colorGlobalCommon100,
+              color: colors.labelStrong,
             ),
           ),
           const SizedBox(height: 12),

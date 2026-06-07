@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:coflanet/constants/app_color_scheme.dart';
 import 'package:coflanet/constants/color_constant.dart';
 import 'package:coflanet/constants/radius_constant.dart';
 import 'package:coflanet/constants/style_constant.dart';
@@ -27,11 +28,12 @@ class RecipeFormView extends GetView<CoffeeController> {
 
   @override
   Widget build(BuildContext context) {
+    final colors = AppColorScheme.of(context);
     return Scaffold(
-      backgroundColor: AppColor.backgroundNormalAlternative,
+      backgroundColor: colors.backgroundNormalAlternative,
       body: Column(
         children: [
-          _buildHeader(context),
+          _buildHeader(context, colors),
           Expanded(
             child: SingleChildScrollView(
               physics: const AlwaysScrollableScrollPhysics(),
@@ -41,22 +43,22 @@ class RecipeFormView extends GetView<CoffeeController> {
                 children: [
                   const SizedBox(height: 24),
                   if (!isEditMode) ...[
-                    _buildRecipeNameCard(),
+                    _buildRecipeNameCard(colors),
                     const SizedBox(height: 16),
                   ],
-                  _buildBasicSettingsCard(),
+                  _buildBasicSettingsCard(colors),
                   const SizedBox(height: 16),
-                  _buildDetailedSettingsCard(),
+                  _buildDetailedSettingsCard(colors),
                   const SizedBox(height: 16),
-                  _buildExtractionSettingsCard(),
+                  _buildExtractionSettingsCard(colors),
                   const SizedBox(height: 20),
-                  _buildAddStepButton(),
+                  _buildAddStepButton(colors),
                   const SizedBox(height: 20),
                 ],
               ),
             ),
           ),
-          _buildBottomSaveButton(context),
+          _buildBottomSaveButton(context, colors),
         ],
       ),
     );
@@ -65,12 +67,12 @@ class RecipeFormView extends GetView<CoffeeController> {
   // ===== 공통 위젯 =====
 
   /// 섹션 카드 (흰 배경, 둥근 모서리)
-  Widget _buildCard({required Widget child}) {
+  Widget _buildCard({required AppColorScheme colors, required Widget child}) {
     return Container(
       width: double.infinity,
       padding: const EdgeInsets.all(20),
       decoration: BoxDecoration(
-        color: AppColor.backgroundNormalNormal,
+        color: colors.backgroundNormalNormal,
         borderRadius: AppRadius.xxxlBorder,
       ),
       child: child,
@@ -78,32 +80,32 @@ class RecipeFormView extends GetView<CoffeeController> {
   }
 
   /// 섹션 제목 (기본 설정 / 상세 설정 / 추출 설정) — 공통 SectionTitle 재사용
-  Widget _buildSectionTitle(String title) {
+  Widget _buildSectionTitle(AppColorScheme colors, String title) {
     return SectionTitle(
       title: title,
       titleStyle: AppTextStyles.headline1Bold.copyWith(
-        color: AppColor.labelNormal,
+        color: colors.labelNormal,
       ),
     );
   }
 
   /// 필드 라벨 (원두 이름 / 잔수 / 진하기 정도 ...)
-  Widget _buildFieldLabel(String label) {
+  Widget _buildFieldLabel(AppColorScheme colors, String label) {
     return Text(
       label,
       style: AppTextStyles.label1NormalRegular.copyWith(
-        color: AppColor.labelAlternative,
+        color: colors.labelAlternative,
       ),
     );
   }
 
   /// 헤더 - 뒤로가기 + 중앙 타이틀
-  Widget _buildHeader(BuildContext context) {
+  Widget _buildHeader(BuildContext context, AppColorScheme colors) {
     final topPadding = MediaQuery.of(context).padding.top;
 
     return Container(
       padding: EdgeInsets.only(top: topPadding),
-      color: AppColor.backgroundNormalAlternative,
+      color: colors.backgroundNormalAlternative,
       child: SizedBox(
         height: 56,
         child: Row(
@@ -116,7 +118,7 @@ class RecipeFormView extends GetView<CoffeeController> {
                 height: 56,
                 child: Icon(
                   Icons.arrow_back_ios_new,
-                  color: AppColor.labelNormal,
+                  color: colors.labelNormal,
                   size: 20,
                 ),
               ),
@@ -125,7 +127,7 @@ class RecipeFormView extends GetView<CoffeeController> {
               child: Text(
                 isEditMode ? '원두 레시피 편집' : '원두 레시피 추가',
                 style: AppTextStyles.headline1Bold.copyWith(
-                  color: AppColor.labelNormal,
+                  color: colors.labelNormal,
                 ),
                 textAlign: TextAlign.center,
               ),
@@ -139,15 +141,17 @@ class RecipeFormView extends GetView<CoffeeController> {
 
   // ===== 레시피 이름 (add 모드 전용) =====
 
-  Widget _buildRecipeNameCard() {
+  Widget _buildRecipeNameCard(AppColorScheme colors) {
     return _buildCard(
+      colors: colors,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           // "기본 설정"과 동일한 섹션 타이틀 스타일
-          _buildSectionTitle('레시피 이름'),
+          _buildSectionTitle(colors, '레시피 이름'),
           const SizedBox(height: 20),
           _buildTextField(
+            colors: colors,
             initialValue: controller.recipeName,
             hint: '레시피 이름을 입력해주세요.',
             onChanged: (value) => controller.recipeName = value,
@@ -159,34 +163,41 @@ class RecipeFormView extends GetView<CoffeeController> {
 
   // ===== 기본 설정 =====
 
-  Widget _buildBasicSettingsCard() {
+  Widget _buildBasicSettingsCard(AppColorScheme colors) {
     return _buildCard(
+      colors: colors,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          _buildSectionTitle('기본 설정'),
+          _buildSectionTitle(colors, '기본 설정'),
           const SizedBox(height: 20),
-          _buildBeanNameRow(),
+          _buildBeanNameRow(colors),
           const SizedBox(height: 24),
-          _buildCupsSection(),
+          _buildCupsSection(colors),
           const SizedBox(height: 24),
-          _buildIntensitySection(),
+          _buildIntensitySection(colors),
         ],
       ),
     );
   }
 
   /// 원두 이름 행 (add=입력 / edit=읽기전용)
-  Widget _buildBeanNameRow() {
+  Widget _buildBeanNameRow(AppColorScheme colors) {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        _buildFieldLabel('원두 이름'),
+        _buildFieldLabel(colors, '원두 이름'),
         const SizedBox(height: 8),
         if (isEditMode)
-          Obx(() => _buildReadOnlyField(value: controller.selectedBeanName))
+          Obx(
+            () => _buildReadOnlyField(
+              colors: colors,
+              value: controller.selectedBeanName,
+            ),
+          )
         else
           _buildTextField(
+            colors: colors,
             initialValue: controller.newRecipeBeanName,
             hint: '원두 이름을 입력해주세요.',
             onChanged: (value) => controller.newRecipeBeanName = value,
@@ -197,6 +208,7 @@ class RecipeFormView extends GetView<CoffeeController> {
 
   /// 인라인 텍스트 입력 필드 (Figma: 흰 배경 + 얇은 테두리, 포커스 시 보라 테두리)
   Widget _buildTextField({
+    required AppColorScheme colors,
     required String initialValue,
     required String hint,
     required ValueChanged<String> onChanged,
@@ -206,50 +218,53 @@ class RecipeFormView extends GetView<CoffeeController> {
       onChanged: onChanged,
       maxLines: 1,
       style: AppTextStyles.body1NormalMedium.copyWith(
-        color: AppColor.labelNormal,
+        color: colors.labelNormal,
       ),
-      cursorColor: AppColor.primaryNormal,
+      cursorColor: colors.primaryNormal,
       decoration: InputDecoration(
         hintText: hint,
         hintStyle: AppTextStyles.body1NormalMedium.copyWith(
-          color: AppColor.labelAssistive,
+          color: colors.labelAssistive,
         ),
         isDense: true,
         filled: true,
-        fillColor: AppColor.backgroundNormalNormal,
+        fillColor: colors.backgroundNormalNormal,
         contentPadding: const EdgeInsets.symmetric(
           horizontal: 20,
           vertical: 16,
         ),
         enabledBorder: OutlineInputBorder(
           borderRadius: AppRadius.fullBorder,
-          borderSide: BorderSide(color: AppColor.lineNormalNormal),
+          borderSide: BorderSide(color: colors.lineNormalNormal),
         ),
         focusedBorder: OutlineInputBorder(
           borderRadius: AppRadius.fullBorder,
-          borderSide: BorderSide(color: AppColor.primaryNormal, width: 1.5),
+          borderSide: BorderSide(color: colors.primaryNormal, width: 1.5),
         ),
       ),
     );
   }
 
   /// 읽기전용 필드 (edit 모드 — 선택된 원두 이름 표시)
-  Widget _buildReadOnlyField({required String value}) {
+  Widget _buildReadOnlyField({
+    required AppColorScheme colors,
+    required String value,
+  }) {
     return Container(
       height: 52,
       width: double.infinity,
       padding: const EdgeInsets.symmetric(horizontal: 20),
       alignment: Alignment.centerLeft,
       decoration: BoxDecoration(
-        color: AppColor.componentFillNormal,
+        color: colors.componentFillNormal,
         borderRadius: AppRadius.fullBorder,
       ),
       child: Text(
         value.isNotEmpty ? value : '선택한 원두의 이름이 자동으로 들어갑니다',
         style: AppTextStyles.body1NormalMedium.copyWith(
           color: value.isNotEmpty
-              ? AppColor.labelNormal
-              : AppColor.labelAssistive,
+              ? colors.labelNormal
+              : colors.labelAssistive,
         ),
         maxLines: 1,
         overflow: TextOverflow.ellipsis,
@@ -258,11 +273,11 @@ class RecipeFormView extends GetView<CoffeeController> {
   }
 
   /// 잔수 섹션 (1~6잔, 2x3 grid)
-  Widget _buildCupsSection() {
+  Widget _buildCupsSection(AppColorScheme colors) {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        _buildFieldLabel('잔수'),
+        _buildFieldLabel(colors, '잔수'),
         const SizedBox(height: 12),
         Obx(
           () => Column(
@@ -305,11 +320,11 @@ class RecipeFormView extends GetView<CoffeeController> {
   }
 
   /// 진하기 정도 섹션
-  Widget _buildIntensitySection() {
+  Widget _buildIntensitySection(AppColorScheme colors) {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        _buildFieldLabel('진하기 정도'),
+        _buildFieldLabel(colors, '진하기 정도'),
         const SizedBox(height: 12),
         Obx(
           () => Column(
@@ -354,17 +369,19 @@ class RecipeFormView extends GetView<CoffeeController> {
 
   // ===== 상세 설정 =====
 
-  Widget _buildDetailedSettingsCard() {
+  Widget _buildDetailedSettingsCard(AppColorScheme colors) {
     return _buildCard(
+      colors: colors,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          _buildSectionTitle('상세 설정'),
+          _buildSectionTitle(colors, '상세 설정'),
           const SizedBox(height: 20),
-          _buildDeviceRow(),
+          _buildDeviceRow(colors),
           const SizedBox(height: 20),
           Obx(
             () => _buildStepperRow(
+              colors: colors,
               label: '원두',
               text: '${controller.coffeeAmount}g',
               onIncrement: () => controller.customCoffeeAmount =
@@ -376,6 +393,7 @@ class RecipeFormView extends GetView<CoffeeController> {
           const SizedBox(height: 20),
           Obx(
             () => _buildStepperRow(
+              colors: colors,
               label: '물 온도',
               text: '${controller.waterTemperature}°C',
               onIncrement: () =>
@@ -387,6 +405,7 @@ class RecipeFormView extends GetView<CoffeeController> {
           const SizedBox(height: 20),
           Obx(
             () => _buildStepperRow(
+              colors: colors,
               label: '분쇄도',
               text: '${controller.grindSize}μm',
               onIncrement: () =>
@@ -401,14 +420,14 @@ class RecipeFormView extends GetView<CoffeeController> {
   }
 
   /// 추출 기기 행
-  Widget _buildDeviceRow() {
+  Widget _buildDeviceRow(AppColorScheme colors) {
     return Row(
       children: [
         Expanded(
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              _buildFieldLabel('추출 기기'),
+              _buildFieldLabel(colors, '추출 기기'),
               const SizedBox(height: 4),
               Obx(
                 () => Text(
@@ -416,7 +435,7 @@ class RecipeFormView extends GetView<CoffeeController> {
                       ? '에스프레소'
                       : '핸드드립',
                   style: AppTextStyles.body1NormalMedium.copyWith(
-                    color: AppColor.labelNormal,
+                    color: colors.labelNormal,
                   ),
                 ),
               ),
@@ -429,13 +448,13 @@ class RecipeFormView extends GetView<CoffeeController> {
           padding: const EdgeInsets.symmetric(horizontal: 12),
           alignment: Alignment.center,
           decoration: BoxDecoration(
-            color: AppColor.componentFillNormal,
+            color: colors.componentFillNormal,
             borderRadius: AppRadius.fullBorder,
           ),
           child: Text(
             '변경하기',
             style: AppTextStyles.label2Medium.copyWith(
-              color: AppColor.labelAlternative,
+              color: colors.labelAlternative,
             ),
           ),
         ),
@@ -445,6 +464,7 @@ class RecipeFormView extends GetView<CoffeeController> {
 
   /// 라벨 + 스테퍼 행 — text 평가는 호출부 Obx 클로저 안에서 수행
   Widget _buildStepperRow({
+    required AppColorScheme colors,
     required String label,
     required String text,
     required VoidCallback onIncrement,
@@ -456,7 +476,7 @@ class RecipeFormView extends GetView<CoffeeController> {
           child: Text(
             label,
             style: AppTextStyles.label1NormalRegular.copyWith(
-              color: AppColor.labelAlternative,
+              color: colors.labelAlternative,
             ),
           ),
         ),
@@ -471,15 +491,16 @@ class RecipeFormView extends GetView<CoffeeController> {
 
   // ===== 추출 설정 =====
 
-  Widget _buildExtractionSettingsCard() {
+  Widget _buildExtractionSettingsCard(AppColorScheme colors) {
     return Obx(() {
       final steps = controller.extractionSteps;
 
       return _buildCard(
+        colors: colors,
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            _buildSectionTitle('추출 설정'),
+            _buildSectionTitle(colors, '추출 설정'),
             const SizedBox(height: 20),
             _buildExtractionSummary(),
             const SizedBox(height: 20),
@@ -545,7 +566,7 @@ class RecipeFormView extends GetView<CoffeeController> {
   }
 
   /// 스텝 추가 버튼
-  Widget _buildAddStepButton() {
+  Widget _buildAddStepButton(AppColorScheme colors) {
     return Center(
       child: GestureDetector(
         onTap: () => controller.addExtractionStep(),
@@ -553,10 +574,10 @@ class RecipeFormView extends GetView<CoffeeController> {
           width: 48,
           height: 48,
           decoration: BoxDecoration(
-            color: AppColor.componentFillNormal,
+            color: colors.componentFillNormal,
             shape: BoxShape.circle,
           ),
-          child: Icon(Icons.add, size: 20, color: AppColor.labelNormal),
+          child: Icon(Icons.add, size: 20, color: colors.labelNormal),
         ),
       ),
     );
@@ -564,12 +585,12 @@ class RecipeFormView extends GetView<CoffeeController> {
 
   // ===== 하단 확인 버튼 =====
 
-  Widget _buildBottomSaveButton(BuildContext context) {
+  Widget _buildBottomSaveButton(BuildContext context, AppColorScheme colors) {
     final bottomPadding = MediaQuery.of(context).padding.bottom;
 
     return Container(
       padding: EdgeInsets.fromLTRB(16, 16, 16, 16 + bottomPadding),
-      color: AppColor.backgroundNormalAlternative,
+      color: colors.backgroundNormalAlternative,
       child: SizedBox(
         width: double.infinity,
         height: 56,
@@ -582,11 +603,12 @@ class RecipeFormView extends GetView<CoffeeController> {
             }
           },
           style: ElevatedButton.styleFrom(
-            backgroundColor: AppColor.primaryNormal,
+            backgroundColor: colors.primaryNormal,
             foregroundColor: AppColor.staticLabelWhiteStrong,
             elevation: 0,
             shape: RoundedRectangleBorder(borderRadius: AppRadius.xlBorder),
           ),
+          // 보라 solid 버튼 위 흰 텍스트 — static 유지
           child: Text(
             '확인',
             style: AppTextStyles.headline1Bold.copyWith(

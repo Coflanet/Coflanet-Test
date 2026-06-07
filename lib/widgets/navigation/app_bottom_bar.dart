@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:coflanet/constants/color_constant.dart';
+import 'package:coflanet/constants/app_color_scheme.dart';
 import 'package:coflanet/constants/radius_constant.dart';
 import 'package:coflanet/constants/style_constant.dart';
 import 'package:coflanet/widgets/buttons/primary_button.dart';
@@ -90,23 +90,28 @@ class AppBottomBar extends StatelessWidget {
       child: Row(
         children: [
           Expanded(
-            child: GestureDetector(
-              onTap: onSecondary,
-              child: Container(
-                height: 52,
-                decoration: BoxDecoration(
-                  color: AppColor.componentFillNormal,
-                  borderRadius: AppRadius.lgBorder,
-                ),
-                child: Center(
-                  child: Text(
-                    secondaryText,
-                    style: AppTextStyles.headline2Medium.copyWith(
-                      color: AppColor.labelNormal,
+            child: Builder(
+              builder: (context) {
+                final colors = AppColorScheme.of(context);
+                return GestureDetector(
+                  onTap: onSecondary,
+                  child: Container(
+                    height: 52,
+                    decoration: BoxDecoration(
+                      color: colors.componentFillNormal,
+                      borderRadius: AppRadius.lgBorder,
+                    ),
+                    child: Center(
+                      child: Text(
+                        secondaryText,
+                        style: AppTextStyles.headline2Medium.copyWith(
+                          color: colors.labelNormal,
+                        ),
+                      ),
                     ),
                   ),
-                ),
-              ),
+                );
+              },
             ),
           ),
           const SizedBox(width: 12),
@@ -124,10 +129,11 @@ class AppBottomBar extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final colors = AppColorScheme.of(context);
     return Container(
       padding: padding,
       decoration: BoxDecoration(
-        color: backgroundColor ?? AppColor.backgroundNormalNormal,
+        color: backgroundColor ?? colors.backgroundNormalNormal,
         boxShadow: AppShadows.shadowBlackHeavyBottom,
         borderRadius: hasTopRadius ? AppRadius.top(AppRadius.xxxl) : null,
       ),

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:coflanet/constants/app_color_scheme.dart';
 import 'package:coflanet/constants/color_constant.dart';
 import 'package:coflanet/constants/style_constant.dart';
 import 'package:coflanet/constants/radius_constant.dart';
@@ -63,7 +64,7 @@ class UnsavedChangesModal extends StatefulWidget {
         barrierDismissible: barrierDismissible,
       ),
       barrierDismissible: barrierDismissible,
-      barrierColor: AppColor.componentMaterialDimmer,
+      barrierColor: AppColorScheme.of(Get.context!).componentMaterialDimmer,
     );
   }
 
@@ -112,6 +113,7 @@ class _UnsavedChangesModalState extends State<UnsavedChangesModal>
 
   @override
   Widget build(BuildContext context) {
+    final colors = AppColorScheme.of(context);
     return FadeTransition(
       opacity: _fadeAnimation,
       child: ScaleTransition(
@@ -120,13 +122,13 @@ class _UnsavedChangesModalState extends State<UnsavedChangesModal>
           child: Container(
             width: MediaQuery.of(context).size.width - 48,
             decoration: BoxDecoration(
-              color: AppColor.backgroundElevatedNormal,
+              color: colors.backgroundElevatedNormal,
               borderRadius: AppRadius.xlBorder,
               boxShadow: AppShadows.shadowBlackHeavy,
             ),
             child: Column(
               mainAxisSize: MainAxisSize.min,
-              children: [_buildContent(), _buildActions()],
+              children: [_buildContent(colors), _buildActions(colors)],
             ),
           ),
         ),
@@ -134,7 +136,7 @@ class _UnsavedChangesModalState extends State<UnsavedChangesModal>
     );
   }
 
-  Widget _buildContent() {
+  Widget _buildContent(AppColorScheme colors) {
     // Figma: No icon, just title and message centered
     return Padding(
       padding: const EdgeInsets.fromLTRB(24, 28, 24, 20),
@@ -145,7 +147,7 @@ class _UnsavedChangesModalState extends State<UnsavedChangesModal>
           Text(
             widget.title ?? '편집 내용이 저장되지 않았어요',
             style: AppTextStyles.title2Bold.copyWith(
-              color: AppColor.labelNormal,
+              color: colors.labelNormal,
             ),
             textAlign: TextAlign.center,
           ),
@@ -154,7 +156,7 @@ class _UnsavedChangesModalState extends State<UnsavedChangesModal>
           Text(
             widget.message ?? '저장하지 않고 나가시겠어요?',
             style: AppTextStyles.body1NormalRegular.copyWith(
-              color: AppColor.labelAlternative,
+              color: colors.labelAlternative,
             ),
             textAlign: TextAlign.center,
           ),
@@ -163,7 +165,7 @@ class _UnsavedChangesModalState extends State<UnsavedChangesModal>
     );
   }
 
-  Widget _buildActions() {
+  Widget _buildActions(AppColorScheme colors) {
     // Figma: Horizontal button layout, equal width, 12-16px gap
     // Left: Secondary (gray), Right: Destructive (red)
     return Container(
@@ -177,8 +179,8 @@ class _UnsavedChangesModalState extends State<UnsavedChangesModal>
               child: ElevatedButton(
                 onPressed: _onContinueEditing,
                 style: ElevatedButton.styleFrom(
-                  backgroundColor: AppColor.componentFillNormal,
-                  foregroundColor: AppColor.labelNormal,
+                  backgroundColor: colors.componentFillNormal,
+                  foregroundColor: colors.labelNormal,
                   elevation: 0,
                   shape: RoundedRectangleBorder(
                     borderRadius: AppRadius.xxxlBorder,
@@ -187,7 +189,7 @@ class _UnsavedChangesModalState extends State<UnsavedChangesModal>
                 child: Text(
                   widget.continueText ?? '편집 계속하기',
                   style: AppTextStyles.headline2Bold.copyWith(
-                    color: AppColor.labelNormal,
+                    color: colors.labelNormal,
                   ),
                 ),
               ),
@@ -201,7 +203,7 @@ class _UnsavedChangesModalState extends State<UnsavedChangesModal>
               child: ElevatedButton(
                 onPressed: _onDiscardAndExit,
                 style: ElevatedButton.styleFrom(
-                  backgroundColor: AppColor.statusNegative,
+                  backgroundColor: colors.statusNegative,
                   foregroundColor: AppColor.staticLabelWhiteStrong,
                   elevation: 0,
                   shape: RoundedRectangleBorder(

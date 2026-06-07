@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:coflanet/constants/app_color_scheme.dart';
 import 'package:coflanet/constants/color_constant.dart';
 import 'package:coflanet/constants/radius_constant.dart';
 import 'package:coflanet/constants/style_constant.dart';
@@ -52,6 +53,8 @@ class SurveyRatingChip extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final colors = AppColorScheme.of(context);
+
     final double verticalPadding = switch (size) {
       RatingChipSize.large => 20,
       RatingChipSize.xlarge => 24,
@@ -75,57 +78,59 @@ class SurveyRatingChip extends StatelessWidget {
         duration: const Duration(milliseconds: 200),
         padding: EdgeInsets.symmetric(vertical: verticalPadding),
         decoration: BoxDecoration(
-          color: _backgroundColor,
+          color: _backgroundColor(colors),
           borderRadius: AppRadius.lgBorder,
-          border: Border.all(color: _borderColor, width: 2),
+          border: Border.all(color: _borderColor(colors), width: 2),
         ),
         child: Column(
           mainAxisSize: MainAxisSize.min,
           children: [
             Text(emoji, style: TextStyle(fontSize: emojiSize)),
             SizedBox(height: gap),
-            Text(label, style: labelBase.copyWith(color: _labelColor)),
+            Text(label, style: labelBase.copyWith(color: _labelColor(colors))),
           ],
         ),
       ),
     );
   }
 
-  Color get _backgroundColor {
+  // dislike(빨강)/like(파랑) 은 의미색이라 raw 팔레트 유지,
+  // neutral 의 회색/라벨 계열만 시맨틱 스킴으로 교체한다.
+  Color _backgroundColor(AppColorScheme colors) {
     if (isSelected) {
       return switch (sentiment) {
         RatingSentiment.dislike => AppColor.colorGlobalRed50,
-        RatingSentiment.neutral => AppColor.labelAssistive,
+        RatingSentiment.neutral => colors.labelAssistive,
         RatingSentiment.like => AppColor.colorGlobalBlue50,
       };
     }
     return switch (sentiment) {
       RatingSentiment.dislike => AppColor.colorGlobalRed95,
-      RatingSentiment.neutral => AppColor.componentFillNormal,
+      RatingSentiment.neutral => colors.componentFillNormal,
       RatingSentiment.like => AppColor.colorGlobalBlue95,
     };
   }
 
-  Color get _borderColor {
+  Color _borderColor(AppColorScheme colors) {
     if (isSelected) {
       return switch (sentiment) {
         RatingSentiment.dislike => AppColor.colorGlobalRed40,
-        RatingSentiment.neutral => AppColor.labelNormal,
+        RatingSentiment.neutral => colors.labelNormal,
         RatingSentiment.like => AppColor.colorGlobalBlue40,
       };
     }
     return switch (sentiment) {
       RatingSentiment.dislike => AppColor.colorGlobalRed90,
-      RatingSentiment.neutral => AppColor.lineNormalNeutral,
+      RatingSentiment.neutral => colors.lineNormalNeutral,
       RatingSentiment.like => AppColor.colorGlobalBlue90,
     };
   }
 
-  Color get _labelColor {
+  Color _labelColor(AppColorScheme colors) {
     if (isSelected) return AppColor.colorGlobalCommon100;
     return switch (sentiment) {
       RatingSentiment.dislike => AppColor.colorGlobalRed50,
-      RatingSentiment.neutral => AppColor.labelNormal,
+      RatingSentiment.neutral => colors.labelNormal,
       RatingSentiment.like => AppColor.colorGlobalBlue50,
     };
   }

@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:coflanet/constants/color_constant.dart';
+import 'package:coflanet/constants/app_color_scheme.dart';
 import 'package:coflanet/constants/radius_constant.dart';
 import 'package:coflanet/constants/style_constant.dart';
 
@@ -29,17 +29,18 @@ class ValueStepper extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final colors = AppColorScheme.of(context);
     return Container(
       height: 40,
       padding: const EdgeInsets.symmetric(horizontal: 4),
       decoration: BoxDecoration(
-        color: AppColor.componentFillNormal,
+        color: colors.componentFillNormal,
         borderRadius: AppRadius.mdBorder,
       ),
       child: Row(
         mainAxisSize: MainAxisSize.min,
         children: [
-          _buildButton(Icons.add, onIncrement),
+          _buildButton(colors, Icons.add, onIncrement),
           Container(
             height: 32,
             constraints: const BoxConstraints(minWidth: 64),
@@ -47,30 +48,34 @@ class ValueStepper extends StatelessWidget {
             padding: const EdgeInsets.symmetric(horizontal: 8),
             alignment: Alignment.center,
             decoration: BoxDecoration(
-              color: AppColor.backgroundNormalNormal,
+              color: colors.backgroundNormalNormal,
               borderRadius: AppRadius.smBorder,
             ),
             child: Text(
               text,
               style: AppTextStyles.body2NormalBold.copyWith(
-                color: AppColor.labelNormal,
+                color: colors.labelNormal,
               ),
             ),
           ),
-          _buildButton(Icons.remove, onDecrement),
+          _buildButton(colors, Icons.remove, onDecrement),
         ],
       ),
     );
   }
 
-  Widget _buildButton(IconData icon, VoidCallback onTap) {
+  Widget _buildButton(
+    AppColorScheme colors,
+    IconData icon,
+    VoidCallback onTap,
+  ) {
     return GestureDetector(
       onTap: onTap,
       behavior: HitTestBehavior.opaque,
       child: SizedBox(
         width: 32,
         height: 40,
-        child: Icon(icon, size: 18, color: AppColor.labelAlternative),
+        child: Icon(icon, size: 18, color: colors.labelAlternative),
       ),
     );
   }

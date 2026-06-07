@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:coflanet/constants/app_color_scheme.dart';
 import 'package:coflanet/constants/asset_constant.dart';
 import 'package:coflanet/constants/color_constant.dart';
 import 'package:coflanet/constants/radius_constant.dart';
@@ -12,22 +13,25 @@ class SurveyAnalyzingView extends GetView<SurveyController> {
   // Figma 사양: Pretendard SemiBold 22 / lineHeight 1.36 / letterSpacing -0.4268
   // 색상은 Label/strong (#000000) 토큰 매핑
   // Auth 카테고리에서 통일한 페이지 헤더 스타일과 동일
-  TextStyle get _screenHeaderStyle => AppTextStyles.heading1Bold.copyWith(
-    fontWeight: FontWeight.w600,
-    height: 1.36,
-    letterSpacing: -0.4268,
-    color: AppColor.labelStrong,
-  );
+  TextStyle _screenHeaderStyle(AppColorScheme colors) =>
+      AppTextStyles.heading1Bold.copyWith(
+        fontWeight: FontWeight.w600,
+        height: 1.36,
+        letterSpacing: -0.4268,
+        color: colors.labelStrong,
+      );
 
   @override
   Widget build(BuildContext context) {
+    final colors = AppColorScheme.of(context);
+
     // Start analysis when view is loaded
     WidgetsBinding.instance.addPostFrameCallback((_) {
       controller.analyzeSurvey();
     });
 
     return Scaffold(
-      backgroundColor: AppColor.backgroundNormalNormal,
+      backgroundColor: colors.backgroundNormalNormal,
       appBar: AppBar(
         backgroundColor: AppColor.transparent,
         elevation: 0,
@@ -51,7 +55,7 @@ class SurveyAnalyzingView extends GetView<SurveyController> {
                     width: double.infinity,
                     height: 240,
                     decoration: BoxDecoration(
-                      color: AppColor.componentFillNormal,
+                      color: colors.componentFillNormal,
                       borderRadius: AppRadius.xlBorder,
                     ),
                     child: Column(
@@ -60,15 +64,15 @@ class SurveyAnalyzingView extends GetView<SurveyController> {
                         Icon(
                           Icons.show_chart_rounded,
                           size: 64,
-                          color: AppColor.labelAssistive,
+                          color: colors.labelAssistive,
                         ),
                         const SizedBox(height: 8),
                         SizedBox(
                           width: 120,
                           child: LinearProgressIndicator(
-                            backgroundColor: AppColor.lineNormalAlternative,
+                            backgroundColor: colors.lineNormalAlternative,
                             valueColor: AlwaysStoppedAnimation<Color>(
-                              AppColor.primaryNormal,
+                              colors.primaryNormal,
                             ),
                           ),
                         ),
@@ -84,7 +88,7 @@ class SurveyAnalyzingView extends GetView<SurveyController> {
               Text(
                 '${controller.userName}님의 취향을\n분석하고 있어요.',
                 textAlign: TextAlign.center,
-                style: _screenHeaderStyle,
+                style: _screenHeaderStyle(colors),
               ),
 
               const SizedBox(height: 60),
@@ -127,6 +131,8 @@ class _LoadingDotsState extends State<_LoadingDots>
 
   @override
   Widget build(BuildContext context) {
+    final colors = AppColorScheme.of(context);
+
     return AnimatedBuilder(
       animation: _controller,
       builder: (context, child) {
@@ -142,7 +148,7 @@ class _LoadingDotsState extends State<_LoadingDots>
               width: 8,
               height: 8,
               decoration: BoxDecoration(
-                color: AppColor.primaryNormal.withValues(alpha: opacity),
+                color: colors.primaryNormal.withValues(alpha: opacity),
                 shape: BoxShape.circle,
               ),
             );

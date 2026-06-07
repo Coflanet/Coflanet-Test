@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
+import 'package:coflanet/constants/app_color_scheme.dart';
 import 'package:coflanet/constants/asset_constant.dart';
-import 'package:coflanet/constants/color_constant.dart';
 import 'package:coflanet/constants/style_constant.dart';
 import 'package:coflanet/data/models/coffee_item_model.dart';
 import 'package:coflanet/data/repositories/repository_provider.dart';
@@ -31,20 +31,21 @@ class BeanDetailView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final colors = AppColorScheme.of(context);
     final bean = _beanArg;
     if (bean == null) {
-      return _buildNotFound();
+      return _buildNotFound(colors);
     }
-    return _buildDetail(bean);
+    return _buildDetail(colors, bean);
   }
 
-  Widget _buildDetail(CoffeeItem bean) {
+  Widget _buildDetail(AppColorScheme colors, CoffeeItem bean) {
     return Scaffold(
-      backgroundColor: AppColor.colorGlobalCommon0,
+      backgroundColor: colors.backgroundNormalAlternative,
       body: SafeArea(
         child: Column(
           children: [
-            _buildAppBar(bean),
+            _buildAppBar(colors, bean),
             Expanded(
               child: SingleChildScrollView(
                 child: Column(
@@ -54,7 +55,7 @@ class BeanDetailView extends StatelessWidget {
                     const SizedBox(height: 24),
                     BeanFlavorChartCard(bean: bean),
                     const SizedBox(height: 32),
-                    _buildFlavorTags(bean),
+                    _buildFlavorTags(colors, bean),
                     const SizedBox(height: 32),
                     BeanInfoSection(bean: bean),
                     const SizedBox(height: 100),
@@ -70,9 +71,9 @@ class BeanDetailView extends StatelessWidget {
   }
 
   /// 인자 없이 진입한 경우 표시되는 안내 화면
-  Widget _buildNotFound() {
+  Widget _buildNotFound(AppColorScheme colors) {
     return Scaffold(
-      backgroundColor: AppColor.colorGlobalCommon0,
+      backgroundColor: colors.backgroundNormalAlternative,
       body: SafeArea(
         child: Column(
           children: [
@@ -86,7 +87,7 @@ class BeanDetailView extends StatelessWidget {
                       width: 24,
                       height: 24,
                       colorFilter: ColorFilter.mode(
-                        AppColor.colorGlobalCommon100,
+                        colors.labelStrong,
                         BlendMode.srcIn,
                       ),
                     ),
@@ -103,13 +104,13 @@ class BeanDetailView extends StatelessWidget {
                     Icon(
                       Icons.coffee_outlined,
                       size: 48,
-                      color: AppColor.colorGlobalCoolNeutral50,
+                      color: colors.labelAssistive,
                     ),
                     const SizedBox(height: 16),
                     Text(
                       '원두 정보를 불러올 수 없어요.',
                       style: AppTextStyles.body1NormalMedium.copyWith(
-                        color: AppColor.colorGlobalCoolNeutral60,
+                        color: colors.labelAlternative,
                       ),
                     ),
                   ],
@@ -122,7 +123,7 @@ class BeanDetailView extends StatelessWidget {
     );
   }
 
-  Widget _buildAppBar(CoffeeItem bean) {
+  Widget _buildAppBar(AppColorScheme colors, CoffeeItem bean) {
     return Container(
       padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 8),
       child: Row(
@@ -133,7 +134,7 @@ class BeanDetailView extends StatelessWidget {
               width: 24,
               height: 24,
               colorFilter: ColorFilter.mode(
-                AppColor.colorGlobalCommon100,
+                colors.labelStrong,
                 BlendMode.srcIn,
               ),
             ),
@@ -143,14 +144,14 @@ class BeanDetailView extends StatelessWidget {
           Text(
             '원두 상세',
             style: AppTextStyles.headline1Bold.copyWith(
-              color: AppColor.colorGlobalCommon100,
+              color: colors.labelStrong,
             ),
           ),
           const Spacer(),
           IconButton(
             icon: Icon(
               Icons.edit_outlined,
-              color: AppColor.colorGlobalCommon100,
+              color: colors.labelStrong,
               size: 24,
             ),
             onPressed: () async {
@@ -172,7 +173,7 @@ class BeanDetailView extends StatelessWidget {
     );
   }
 
-  Widget _buildFlavorTags(CoffeeItem bean) {
+  Widget _buildFlavorTags(AppColorScheme colors, CoffeeItem bean) {
     final hasCommon =
         bean.commonFlavors != null && bean.commonFlavors!.isNotEmpty;
     final hasCharacteristic =
@@ -187,24 +188,28 @@ class BeanDetailView extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           if (hasCommon) ...[
-            _buildTagSection('공통 향미', bean.commonFlavors!),
+            _buildTagSection(colors, '공통 향미', bean.commonFlavors!),
             const SizedBox(height: 20),
           ],
           if (hasCharacteristic)
-            _buildTagSection('특성 향미', bean.characteristicFlavors!),
+            _buildTagSection(colors, '특성 향미', bean.characteristicFlavors!),
         ],
       ),
     );
   }
 
-  Widget _buildTagSection(String title, List<String> tags) {
+  Widget _buildTagSection(
+    AppColorScheme colors,
+    String title,
+    List<String> tags,
+  ) {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         SectionTitle(
           title: title,
           titleStyle: AppTextStyles.headline2Bold.copyWith(
-            color: AppColor.colorGlobalCommon100,
+            color: colors.labelStrong,
           ),
         ),
         const SizedBox(height: 12),

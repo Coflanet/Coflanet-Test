@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
+import 'package:coflanet/constants/app_color_scheme.dart';
 import 'package:coflanet/constants/asset_constant.dart';
 import 'package:coflanet/constants/color_constant.dart';
 import 'package:coflanet/constants/style_constant.dart';
@@ -15,8 +16,9 @@ class ProfileSetupView extends GetView<ProfileSetupController> {
 
   @override
   Widget build(BuildContext context) {
+    final colors = AppColorScheme.of(context);
     return Scaffold(
-      backgroundColor: AppColor.backgroundNormalNormal,
+      backgroundColor: colors.backgroundNormalNormal,
       appBar: AppBar(
         backgroundColor: AppColor.transparent,
         elevation: 0,
@@ -26,7 +28,7 @@ class ProfileSetupView extends GetView<ProfileSetupController> {
             width: 24,
             height: 24,
             colorFilter: ColorFilter.mode(
-              AppColor.labelNormal,
+              colors.labelNormal,
               BlendMode.srcIn,
             ),
           ),
@@ -55,7 +57,7 @@ class ProfileSetupView extends GetView<ProfileSetupController> {
                     const SizedBox(height: 24),
 
                     // Welcome title with emoji
-                    _buildHeader(),
+                    _buildHeader(colors),
 
                     const SizedBox(height: 48),
 
@@ -78,18 +80,18 @@ class ProfileSetupView extends GetView<ProfileSetupController> {
     );
   }
 
-  Widget _buildHeader() {
+  Widget _buildHeader(AppColorScheme colors) {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Text(
           '반가워요! 👋',
-          style: AppTextStyles.title2Bold.copyWith(color: AppColor.labelNormal),
+          style: AppTextStyles.title2Bold.copyWith(color: colors.labelNormal),
         ),
         const SizedBox(height: 12),
         Text(
           '이름을 입력해주세요',
-          style: AppTextStyles.title2Bold.copyWith(color: AppColor.labelNormal),
+          style: AppTextStyles.title2Bold.copyWith(color: colors.labelNormal),
         ),
       ],
     );

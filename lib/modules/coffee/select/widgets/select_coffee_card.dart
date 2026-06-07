@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:coflanet/constants/app_color_scheme.dart';
 import 'package:coflanet/constants/color_constant.dart';
 import 'package:coflanet/constants/radius_constant.dart';
 import 'package:coflanet/constants/style_constant.dart';
@@ -52,13 +53,14 @@ class SelectCoffeeCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final colors = AppColorScheme.of(context);
     if (isEditing) {
-      return _buildEditingCard(context);
+      return _buildEditingCard(colors);
     }
-    return _buildNormalCard();
+    return _buildNormalCard(colors);
   }
 
-  Widget _buildNormalCard() {
+  Widget _buildNormalCard(AppColorScheme colors) {
     return Padding(
       padding: const EdgeInsets.only(bottom: 12),
       child: GestureDetector(
@@ -68,13 +70,13 @@ class SelectCoffeeCard extends StatelessWidget {
           padding: const EdgeInsets.all(16),
           decoration: BoxDecoration(
             color: isSelected
-                ? AppColor.primaryNormal.withValues(alpha: 0.08)
-                : AppColor.backgroundNormalNormal,
+                ? colors.primaryNormal.withValues(alpha: 0.08)
+                : colors.backgroundNormalNormal,
             borderRadius: AppRadius.xlBorder,
             border: Border.all(
               color: isSelected
-                  ? AppColor.primaryNormal
-                  : AppColor.lineNormalNeutral,
+                  ? colors.primaryNormal
+                  : colors.lineNormalNeutral,
               width: isSelected ? 2 : 1,
             ),
             boxShadow: isSelected ? AppShadows.shadowPrimaryNormalList : null,
@@ -85,7 +87,7 @@ class SelectCoffeeCard extends StatelessWidget {
               _buildCoffeeIcon(),
               const SizedBox(width: 16),
               // 커피 정보
-              _buildCoffeeInfo(),
+              _buildCoffeeInfo(colors),
               // 상세 버튼
               if (onDetail != null)
                 GestureDetector(
@@ -95,13 +97,13 @@ class SelectCoffeeCard extends StatelessWidget {
                     padding: const EdgeInsets.all(8),
                     child: Icon(
                       Icons.chevron_right,
-                      color: AppColor.labelAssistive,
+                      color: colors.labelAssistive,
                       size: 24,
                     ),
                   ),
                 ),
               // 선택 표시
-              _buildSelectionIndicator(),
+              _buildSelectionIndicator(colors),
             ],
           ),
         ),
@@ -109,7 +111,7 @@ class SelectCoffeeCard extends StatelessWidget {
     );
   }
 
-  Widget _buildEditingCard(BuildContext context) {
+  Widget _buildEditingCard(AppColorScheme colors) {
     return Padding(
       padding: const EdgeInsets.only(bottom: 8),
       child: GestureDetector(
@@ -117,16 +119,16 @@ class SelectCoffeeCard extends StatelessWidget {
         child: Container(
           padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 10),
           decoration: BoxDecoration(
-            color: AppColor.backgroundNormalNormal,
+            color: colors.backgroundNormalNormal,
             borderRadius: AppRadius.lgBorder,
           ),
           child: Row(
             children: [
               // 체크박스
-              _buildCheckbox(),
+              _buildCheckbox(colors),
               const SizedBox(width: 12),
               // 커피 백 썸네일
-              _buildCoffeeThumbnail(),
+              _buildCoffeeThumbnail(colors),
               const SizedBox(width: 12),
               // 커피 정보 (컴팩트)
               Expanded(
@@ -137,14 +139,14 @@ class SelectCoffeeCard extends StatelessWidget {
                     Text(
                       '브랜드명',
                       style: AppTextStyles.caption1Regular.copyWith(
-                        color: AppColor.labelAssistive,
+                        color: colors.labelAssistive,
                       ),
                     ),
                     const SizedBox(height: 2),
                     Text(
                       item.name,
                       style: AppTextStyles.body2NormalMedium.copyWith(
-                        color: AppColor.labelNormal,
+                        color: colors.labelNormal,
                       ),
                       maxLines: 1,
                       overflow: TextOverflow.ellipsis,
@@ -159,7 +161,7 @@ class SelectCoffeeCard extends StatelessWidget {
                   padding: const EdgeInsets.all(8.0),
                   child: Icon(
                     Icons.drag_handle,
-                    color: AppColor.labelAssistive,
+                    color: colors.labelAssistive,
                     size: 22,
                   ),
                 ),
@@ -171,18 +173,18 @@ class SelectCoffeeCard extends StatelessWidget {
     );
   }
 
-  Widget _buildCheckbox() {
+  Widget _buildCheckbox(AppColorScheme colors) {
     return AnimatedContainer(
       duration: const Duration(milliseconds: 150),
       width: 24,
       height: 24,
       decoration: BoxDecoration(
         shape: BoxShape.circle,
-        color: isSelected ? AppColor.primaryNormal : AppColor.transparent,
+        color: isSelected ? colors.primaryNormal : AppColor.transparent,
         border: Border.all(
           color: isSelected
-              ? AppColor.primaryNormal
-              : AppColor.interactionInactive,
+              ? colors.primaryNormal
+              : colors.interactionInactive,
           width: 2,
         ),
       ),
@@ -192,12 +194,12 @@ class SelectCoffeeCard extends StatelessWidget {
     );
   }
 
-  Widget _buildCoffeeThumbnail() {
+  Widget _buildCoffeeThumbnail(AppColorScheme colors) {
     return Container(
       width: 48,
       height: 48,
       decoration: BoxDecoration(
-        color: AppColor.backgroundNormalAlternative,
+        color: colors.backgroundNormalAlternative,
         borderRadius: AppRadius.mdBorder,
       ),
       child: Center(child: Icon(Icons.coffee, color: item.color, size: 24)),
@@ -223,7 +225,7 @@ class SelectCoffeeCard extends StatelessWidget {
     );
   }
 
-  Widget _buildCoffeeInfo() {
+  Widget _buildCoffeeInfo(AppColorScheme colors) {
     return Expanded(
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -231,14 +233,14 @@ class SelectCoffeeCard extends StatelessWidget {
           Text(
             item.name,
             style: AppTextStyles.headline2Bold.copyWith(
-              color: AppColor.labelNormal,
+              color: colors.labelNormal,
             ),
           ),
           const SizedBox(height: 4),
           Text(
             item.description,
             style: AppTextStyles.body2NormalRegular.copyWith(
-              color: AppColor.labelAlternative,
+              color: colors.labelAlternative,
             ),
             maxLines: 1,
             overflow: TextOverflow.ellipsis,
@@ -248,18 +250,18 @@ class SelectCoffeeCard extends StatelessWidget {
     );
   }
 
-  Widget _buildSelectionIndicator() {
+  Widget _buildSelectionIndicator(AppColorScheme colors) {
     return AnimatedContainer(
       duration: const Duration(milliseconds: 200),
       width: 24,
       height: 24,
       decoration: BoxDecoration(
         shape: BoxShape.circle,
-        color: isSelected ? AppColor.primaryNormal : AppColor.transparent,
+        color: isSelected ? colors.primaryNormal : AppColor.transparent,
         border: Border.all(
           color: isSelected
-              ? AppColor.primaryNormal
-              : AppColor.interactionInactive,
+              ? colors.primaryNormal
+              : colors.interactionInactive,
           width: 2,
         ),
       ),

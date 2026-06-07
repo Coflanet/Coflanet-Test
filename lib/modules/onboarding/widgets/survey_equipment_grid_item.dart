@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:coflanet/constants/app_color_scheme.dart';
 import 'package:coflanet/constants/color_constant.dart';
 import 'package:coflanet/constants/radius_constant.dart';
 import 'package:coflanet/constants/style_constant.dart';
@@ -26,17 +27,19 @@ class SurveyEquipmentGridItem extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final colors = AppColorScheme.of(context);
+
     return GestureDetector(
       onTap: onTap,
       child: AnimatedContainer(
         duration: const Duration(milliseconds: 200),
         decoration: BoxDecoration(
           color: isSelected
-              ? AppColor.primaryLight
-              : AppColor.componentFillNormal,
+              ? colors.primaryLight
+              : colors.componentFillNormal,
           borderRadius: AppRadius.lgBorder,
           border: Border.all(
-            color: isSelected ? AppColor.primaryNormal : AppColor.transparent,
+            color: isSelected ? colors.primaryNormal : AppColor.transparent,
             width: isSelected ? 2 : 1,
           ),
         ),
@@ -48,14 +51,14 @@ class SurveyEquipmentGridItem extends StatelessWidget {
               width: 48,
               height: 48,
               decoration: BoxDecoration(
-                color: AppColor.backgroundNormalAlternative,
+                color: colors.backgroundNormalAlternative,
                 borderRadius: AppRadius.mdBorder,
               ),
               child: Icon(
                 Icons.coffee_rounded,
                 color: isSelected
-                    ? AppColor.primaryNormal
-                    : AppColor.labelAssistive,
+                    ? colors.primaryNormal
+                    : colors.labelAssistive,
                 size: 24,
               ),
             ),
@@ -64,8 +67,8 @@ class SurveyEquipmentGridItem extends StatelessWidget {
               label,
               style: AppTextStyles.label1NormalMedium.copyWith(
                 color: isSelected
-                    ? AppColor.primaryNormal
-                    : AppColor.labelNormal,
+                    ? colors.primaryNormal
+                    : colors.labelNormal,
               ),
               textAlign: TextAlign.center,
             ),

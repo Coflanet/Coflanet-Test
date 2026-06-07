@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:coflanet/constants/color_constant.dart';
+import 'package:coflanet/constants/app_color_scheme.dart';
 import 'package:coflanet/constants/radius_constant.dart';
 import 'package:coflanet/constants/style_constant.dart';
 import 'package:coflanet/modules/home/widgets/home_empty_card.dart';
 
-/// 홈 '커피 메이커가 필요하신가요?' 섹션 — 다크 카드.
+/// 홈 '커피 메이커가 필요하신가요?' 섹션 — 테마 반응 섹션 카드.
 ///
 /// [백엔드 API 연동 대기] 커피 메이커 상품 API 연동 전까지 목데이터 없이
 /// 빈 상태 카드를 노출한다 (다른 상품 섹션과 동일 패턴).
@@ -16,11 +16,13 @@ class HomeMakerSection extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final colors = AppColorScheme.of(context);
+
     return Container(
       width: double.infinity,
       padding: const EdgeInsets.all(16),
       decoration: BoxDecoration(
-        color: AppColor.colorGlobalCoolNeutral15,
+        color: colors.surfaceCard,
         borderRadius: AppRadius.xxlBorder,
       ),
       child: Column(
@@ -29,14 +31,14 @@ class HomeMakerSection extends StatelessWidget {
           Text(
             '커피 메이커가 필요하신가요?',
             style: AppTextStyles.body1NormalBold.copyWith(
-              color: AppColor.colorGlobalCommon100,
+              color: colors.labelStrong,
             ),
           ),
           const SizedBox(height: 4),
           Text(
             '#$userName님의 #취향저격',
             style: AppTextStyles.caption1Regular.copyWith(
-              color: AppColor.colorGlobalCoolNeutral70,
+              color: colors.labelAlternative,
             ),
           ),
           const SizedBox(height: 12),

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
+import 'package:coflanet/constants/app_color_scheme.dart';
 import 'package:coflanet/constants/asset_constant.dart';
 import 'package:coflanet/constants/color_constant.dart';
 import 'package:coflanet/constants/style_constant.dart';
@@ -17,18 +18,21 @@ class SurveyReasonView extends GetView<SurveyReasonController> {
   // Figma 사양: Pretendard SemiBold 22 / lineHeight 1.36 / letterSpacing -0.4268
   // 색상은 Label/strong (#000000) 토큰 매핑
   // Auth 카테고리에서 통일한 페이지 헤더 스타일과 동일
-  TextStyle get _screenHeaderStyle => AppTextStyles.heading1Bold.copyWith(
-    fontWeight: FontWeight.w600,
-    height: 1.36,
-    letterSpacing: -0.4268,
-    color: AppColor.labelStrong,
-  );
+  TextStyle _screenHeaderStyle(AppColorScheme colors) =>
+      AppTextStyles.heading1Bold.copyWith(
+        fontWeight: FontWeight.w600,
+        height: 1.36,
+        letterSpacing: -0.4268,
+        color: colors.labelStrong,
+      );
 
   @override
   Widget build(BuildContext context) {
+    final colors = AppColorScheme.of(context);
+
     return Scaffold(
-      backgroundColor: AppColor.backgroundNormalNormal,
-      appBar: _buildAppBar(),
+      backgroundColor: colors.backgroundNormalNormal,
+      appBar: _buildAppBar(colors),
       body: SafeArea(
         top: false,
         child: Column(
@@ -49,15 +53,15 @@ class SurveyReasonView extends GetView<SurveyReasonController> {
                     const SizedBox(height: 24),
 
                     // Title
-                    Text('커플래닛을 찾게 된', style: _screenHeaderStyle),
-                    Text('이유를 알려주세요.', style: _screenHeaderStyle),
+                    Text('커플래닛을 찾게 된', style: _screenHeaderStyle(colors)),
+                    Text('이유를 알려주세요.', style: _screenHeaderStyle(colors)),
                     const SizedBox(height: 8),
 
                     // Subtitle
                     Text(
                       '중복 선택 가능해요.',
                       style: AppTextStyles.body1NormalRegular.copyWith(
-                        color: AppColor.labelAlternative,
+                        color: colors.labelAlternative,
                       ),
                     ),
                     const SizedBox(height: 32),
@@ -70,14 +74,14 @@ class SurveyReasonView extends GetView<SurveyReasonController> {
             ),
 
             // Bottom CTA
-            _buildBottomCTA(),
+            _buildBottomCTA(colors),
           ],
         ),
       ),
     );
   }
 
-  PreferredSizeWidget _buildAppBar() {
+  PreferredSizeWidget _buildAppBar(AppColorScheme colors) {
     return AppBar(
       backgroundColor: AppColor.transparent,
       elevation: 0,
@@ -86,7 +90,7 @@ class SurveyReasonView extends GetView<SurveyReasonController> {
           AssetPath.iconArrowBack,
           width: 24,
           height: 24,
-          colorFilter: ColorFilter.mode(AppColor.labelNormal, BlendMode.srcIn),
+          colorFilter: ColorFilter.mode(colors.labelNormal, BlendMode.srcIn),
         ),
         tooltip: '뒤로 가기',
         onPressed: () => Get.back(),
@@ -113,10 +117,10 @@ class SurveyReasonView extends GetView<SurveyReasonController> {
     );
   }
 
-  Widget _buildBottomCTA() {
+  Widget _buildBottomCTA(AppColorScheme colors) {
     return Container(
       padding: const EdgeInsets.fromLTRB(24, 16, 24, 34),
-      decoration: BoxDecoration(color: AppColor.backgroundNormalNormal),
+      decoration: BoxDecoration(color: colors.backgroundNormalNormal),
       child: Obx(
         () => PrimaryButton(
           text: '원두 취향 찾으러 가기',
