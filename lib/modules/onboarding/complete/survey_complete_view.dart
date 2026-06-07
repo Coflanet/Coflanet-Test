@@ -35,8 +35,7 @@ class SurveyCompleteView extends GetView<SurveyController> {
             color: AppColor.labelNormal,
           ),
         ),
-        leading:
-            const SizedBox.shrink(), // 뒤로 가기 버튼 없음 — offNamed로 진입
+        leading: const SizedBox.shrink(), // 뒤로 가기 버튼 없음 — offNamed로 진입
         actions: [
           IconButton(
             icon: SvgPicture.asset(

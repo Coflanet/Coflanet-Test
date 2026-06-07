@@ -53,14 +53,8 @@ class SurveyIntroView extends GetView<SurveyController> {
               const SizedBox(height: 24),
 
               // Figma: "[이름]님의 취향을 찾으러 가볼까요?"
-              Text(
-                '${controller.userName}님의 취향을',
-                style: _screenHeaderStyle,
-              ),
-              Text(
-                '찾으러 가볼까요?',
-                style: _screenHeaderStyle,
-              ),
+              Text('${controller.userName}님의 취향을', style: _screenHeaderStyle),
+              Text('찾으러 가볼까요?', style: _screenHeaderStyle),
               const SizedBox(height: 16),
 
               // 안내 문구
@@ -80,10 +74,8 @@ class SurveyIntroView extends GetView<SurveyController> {
                   width: 200,
                   height: 200,
                   fit: BoxFit.contain,
-                  errorBuilder: (_, __, ___) => const Text(
-                    '☕',
-                    style: TextStyle(fontSize: 80),
-                  ),
+                  errorBuilder: (_, __, ___) =>
+                      const Text('☕', style: TextStyle(fontSize: 80)),
                 ),
               ),
 

@@ -1,0 +1,77 @@
+import 'package:flutter/material.dart';
+import 'package:coflanet/constants/color_constant.dart';
+import 'package:coflanet/constants/radius_constant.dart';
+import 'package:coflanet/constants/style_constant.dart';
+
+/// 추출 기구 선택 그리드 셀 — 기구 이미지 placeholder + 라벨.
+///
+/// 선택 시 보라 단색 강조 (primaryLight 배경 + primaryNormal 보더).
+/// 호출부 Obx 클로저 안에서 [isSelected] 를 읽어 주입한다 (controller 미참조).
+class SurveyEquipmentGridItem extends StatelessWidget {
+  const SurveyEquipmentGridItem({
+    super.key,
+    required this.label,
+    required this.isSelected,
+    required this.onTap,
+  });
+
+  /// 기구 이름
+  final String label;
+
+  /// 선택 여부
+  final bool isSelected;
+
+  /// 탭 콜백
+  final VoidCallback onTap;
+
+  @override
+  Widget build(BuildContext context) {
+    return GestureDetector(
+      onTap: onTap,
+      child: AnimatedContainer(
+        duration: const Duration(milliseconds: 200),
+        decoration: BoxDecoration(
+          color: isSelected
+              ? AppColor.primaryLight
+              : AppColor.componentFillNormal,
+          borderRadius: AppRadius.lgBorder,
+          border: Border.all(
+            color: isSelected ? AppColor.primaryNormal : AppColor.transparent,
+            width: isSelected ? 2 : 1,
+          ),
+        ),
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            // 기구 이미지 placeholder — [백엔드 API 연동 대기] 실제 기구 이미지
+            Container(
+              width: 48,
+              height: 48,
+              decoration: BoxDecoration(
+                color: AppColor.backgroundNormalAlternative,
+                borderRadius: AppRadius.mdBorder,
+              ),
+              child: Icon(
+                Icons.coffee_rounded,
+                color: isSelected
+                    ? AppColor.primaryNormal
+                    : AppColor.labelAssistive,
+                size: 24,
+              ),
+            ),
+            const SizedBox(height: 8),
+            Text(
+              label,
+              style: AppTextStyles.label1NormalMedium.copyWith(
+                color: isSelected
+                    ? AppColor.primaryNormal
+                    : AppColor.labelNormal,
+              ),
+              textAlign: TextAlign.center,
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+}

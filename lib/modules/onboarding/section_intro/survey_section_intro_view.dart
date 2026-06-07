@@ -212,14 +212,8 @@ class SurveySectionIntroView extends GetView<SurveyController> {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        Text(
-          line1,
-          style: _screenHeaderStyle,
-        ),
-        Text(
-          line2,
-          style: _screenHeaderStyle,
-        ),
+        Text(line1, style: _screenHeaderStyle),
+        Text(line2, style: _screenHeaderStyle),
       ],
     );
   }

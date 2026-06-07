@@ -49,14 +49,8 @@ class SurveyReasonView extends GetView<SurveyReasonController> {
                     const SizedBox(height: 24),
 
                     // Title
-                    Text(
-                      '커플래닛을 찾게 된',
-                      style: _screenHeaderStyle,
-                    ),
-                    Text(
-                      '이유를 알려주세요.',
-                      style: _screenHeaderStyle,
-                    ),
+                    Text('커플래닛을 찾게 된', style: _screenHeaderStyle),
+                    Text('이유를 알려주세요.', style: _screenHeaderStyle),
                     const SizedBox(height: 8),
 
                     // Subtitle

@@ -50,14 +50,8 @@ class SurveyIndexView extends GetView<SurveyController> {
               const SizedBox(height: 8),
 
               // Main title
-              Text(
-                '$userName님께',
-                style: _screenHeaderStyle,
-              ),
-              Text(
-                '커피 경험 질문을 드릴게요!',
-                style: _screenHeaderStyle,
-              ),
+              Text('$userName님께', style: _screenHeaderStyle),
+              Text('커피 경험 질문을 드릴게요!', style: _screenHeaderStyle),
               const SizedBox(height: 16),
 
               // Subtitle
