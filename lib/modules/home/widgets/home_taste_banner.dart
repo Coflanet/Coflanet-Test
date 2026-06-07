@@ -1,0 +1,104 @@
+import 'package:flutter/material.dart';
+import 'package:coflanet/constants/color_constant.dart';
+import 'package:coflanet/constants/style_constant.dart';
+import 'package:coflanet/data/models/survey_result_model.dart';
+
+/// 홈 취향 배너 (노랑) — 설문 완료 시 표시. 좌우 여백 0.
+///
+/// 취향 타입 라벨 + 향미 칩 (최대 3개 + "외 N개").
+class HomeTasteBanner extends StatelessWidget {
+  const HomeTasteBanner({
+    super.key,
+    required this.typeLabel,
+    required this.flavors,
+  });
+
+  /// [디자인 토큰 부재] Figma 노랑 — 토큰화 검토 대상
+  static const Color _bannerYellow = Color(0xFFFFE15A);
+
+  /// 향미 칩 최대 표시 개수
+  static const int _maxChips = 3;
+
+  /// 커피 타입 라벨 (예: '시트러스 러버') — 비어 있으면 기본 문구
+  final String typeLabel;
+
+  /// 향미 설명 목록 (이름/이모지)
+  final List<FlavorDescriptionModel> flavors;
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 14),
+      decoration: const BoxDecoration(color: _bannerYellow),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              Text(
+                '어떤 커피를 추천해드릴까요?',
+                style: AppTextStyles.body2NormalBold.copyWith(
+                  color: AppColor.labelNormal,
+                ),
+              ),
+              Icon(Icons.help_outline, size: 18, color: AppColor.labelNeutral),
+            ],
+          ),
+          const SizedBox(height: 12),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              Row(
+                children: [
+                  Text(
+                    flavors.isNotEmpty ? flavors.first.emoji : '☕',
+                    style: const TextStyle(fontSize: 18),
+                  ),
+                  const SizedBox(width: 6),
+                  Text(
+                    typeLabel.isNotEmpty ? typeLabel : '나의 커피 취향',
+                    style: AppTextStyles.body1NormalBold.copyWith(
+                      color: AppColor.labelNormal,
+                    ),
+                  ),
+                ],
+              ),
+              Icon(Icons.swap_horiz, size: 22, color: AppColor.labelNeutral),
+            ],
+          ),
+          const SizedBox(height: 12),
+          Wrap(spacing: 6, runSpacing: 6, children: _buildChips()),
+        ],
+      ),
+    );
+  }
+
+  /// 취향 향미 칩 목록 — 최대 3개 + "외 N개"
+  List<Widget> _buildChips() {
+    if (flavors.isEmpty) return const [];
+    final chips = <Widget>[
+      for (final f in flavors.take(_maxChips)) _buildChip(f.name),
+    ];
+    if (flavors.length > _maxChips) {
+      chips.add(_buildChip('외 ${flavors.length - _maxChips}개'));
+    }
+    return chips;
+  }
+
+  Widget _buildChip(String label) {
+    return Container(
+      padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 6),
+      decoration: BoxDecoration(
+        color: AppColor.colorGlobalCommon100.withValues(alpha: 0.55),
+        borderRadius: BorderRadius.circular(99),
+      ),
+      child: Text(
+        label,
+        style: AppTextStyles.caption1Medium.copyWith(
+          color: AppColor.labelNormal,
+        ),
+      ),
+    );
+  }
+}
