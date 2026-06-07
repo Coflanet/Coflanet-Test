@@ -8,11 +8,13 @@ import 'package:coflanet/constants/style_constant.dart';
 import 'package:coflanet/core/services/app_config_service.dart';
 import 'package:coflanet/data/models/bean_option_model.dart';
 import 'package:coflanet/data/models/coffee_item_model.dart';
+import 'package:coflanet/modules/coffee/bean/widgets/bean_flavor_slider.dart';
 import 'package:coflanet/widgets/charts/flavor_radar_chart.dart';
 import 'package:coflanet/widgets/tags/flavor_tag.dart';
 import 'package:coflanet/widgets/navigation/app_bottom_bar.dart';
 import 'package:coflanet/widgets/modals/modal_utils.dart';
 import 'package:coflanet/widgets/modals/unsaved_changes_modal.dart';
+import 'package:coflanet/widgets/typography/section_title.dart';
 
 /// Bean Edit View (원두 추가/편집)
 ///
@@ -21,6 +23,11 @@ import 'package:coflanet/widgets/modals/unsaved_changes_modal.dart';
 /// - Flavor profile sliders
 /// - Flavor tags selection
 /// - Origin, roast level, process method
+///
+/// 슬라이더는 widgets/BeanFlavorSlider, 섹션 타이틀은 공통 SectionTitle 재사용.
+/// 파일이 400줄 임계값을 초과하지만, 잔여 코드는 TextEditingController
+/// 생명주기/저장 플로우/PopScope 등 폼 State 와 강결합되어 있어
+/// 순수 위젯으로 추출할 수 없는 정당한 예외다.
 class BeanEditView extends StatefulWidget {
   const BeanEditView({super.key});
 
@@ -328,39 +335,63 @@ class _BeanEditViewState extends State<BeanEditView> {
             showLabels: true,
             showValues: false,
             animate: false,
-            fillColor: AppColor.primaryNormal.withValues(alpha:0.15),
+            fillColor: AppColor.primaryNormal.withValues(alpha: 0.15),
             strokeColor: AppColor.primaryNormal,
             gridColor: AppColor.colorGlobalCoolNeutral30,
             labelColor: AppColor.colorGlobalCommon100,
           ),
         ),
         const SizedBox(height: 24),
-        // Sliders
-        _buildFlavorSlider('산미', _acidity, (v) {
-          setState(() => _acidity = v);
-          _markChanged();
-        }),
-        _buildFlavorSlider('바디감', _body, (v) {
-          setState(() => _body = v);
-          _markChanged();
-        }),
-        _buildFlavorSlider('단맛', _sweetness, (v) {
-          setState(() => _sweetness = v);
-          _markChanged();
-        }),
-        _buildFlavorSlider('쓴맛', _bitterness, (v) {
-          setState(() => _bitterness = v);
-          _markChanged();
-        }),
-        _buildFlavorSlider('밸런스', _balance, (v) {
-          setState(() => _balance = v);
-          _markChanged();
-        }),
+        // 슬라이더 — setState + 변경 플래그는 클로저에 잔류 (위젯은 값/콜백만)
+        BeanFlavorSlider(
+          label: '산미',
+          value: _acidity,
+          onChanged: (v) {
+            setState(() => _acidity = v);
+            _markChanged();
+          },
+        ),
+        BeanFlavorSlider(
+          label: '바디감',
+          value: _body,
+          onChanged: (v) {
+            setState(() => _body = v);
+            _markChanged();
+          },
+        ),
+        BeanFlavorSlider(
+          label: '단맛',
+          value: _sweetness,
+          onChanged: (v) {
+            setState(() => _sweetness = v);
+            _markChanged();
+          },
+        ),
+        BeanFlavorSlider(
+          label: '쓴맛',
+          value: _bitterness,
+          onChanged: (v) {
+            setState(() => _bitterness = v);
+            _markChanged();
+          },
+        ),
+        BeanFlavorSlider(
+          label: '밸런스',
+          value: _balance,
+          onChanged: (v) {
+            setState(() => _balance = v);
+            _markChanged();
+          },
+        ),
         const SizedBox(height: 16),
-        _buildFlavorSlider('향의 진함', _aromaIntensity, (v) {
-          setState(() => _aromaIntensity = v);
-          _markChanged();
-        }),
+        BeanFlavorSlider(
+          label: '향의 진함',
+          value: _aromaIntensity,
+          onChanged: (v) {
+            setState(() => _aromaIntensity = v);
+            _markChanged();
+          },
+        ),
       ],
     );
   }
@@ -431,7 +462,8 @@ class _BeanEditViewState extends State<BeanEditView> {
         // 로스팅 — 라벨 4단계(라이트/미디엄/미디엄 다크/다크) 표시
         _buildDropdownField<String>(
           label: '로스팅',
-          value: _roastLevelGroups.any((r) => r.levelCode == _selectedRoastLevel)
+          value:
+              _roastLevelGroups.any((r) => r.levelCode == _selectedRoastLevel)
               ? _selectedRoastLevel
               : null,
           items: _roastLevelGroups
@@ -471,10 +503,11 @@ class _BeanEditViewState extends State<BeanEditView> {
     );
   }
 
+  /// 섹션 타이틀 — 공통 SectionTitle 재사용 (titleStyle 명시 주입)
   Widget _buildSectionTitle(String title) {
-    return Text(
-      title,
-      style: AppTextStyles.headline2Bold.copyWith(
+    return SectionTitle(
+      title: title,
+      titleStyle: AppTextStyles.headline2Bold.copyWith(
         color: AppColor.colorGlobalCommon100,
       ),
     );
@@ -533,55 +566,6 @@ class _BeanEditViewState extends State<BeanEditView> {
           ),
         ),
       ],
-    );
-  }
-
-  Widget _buildFlavorSlider(
-    String label,
-    double value,
-    ValueChanged<double> onChanged,
-  ) {
-    return Padding(
-      padding: const EdgeInsets.only(bottom: 20),
-      child: Column(
-        children: [
-          Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              Text(
-                label,
-                style: AppTextStyles.body2NormalMedium.copyWith(
-                  color: AppColor.colorGlobalCoolNeutral60,
-                ),
-              ),
-              Text(
-                value.round().toString(),
-                style: AppTextStyles.body2NormalBold.copyWith(
-                  color: AppColor.primaryNormal,
-                ),
-              ),
-            ],
-          ),
-          const SizedBox(height: 8),
-          SliderTheme(
-            data: SliderTheme.of(context).copyWith(
-              activeTrackColor: AppColor.primaryNormal,
-              inactiveTrackColor: AppColor.colorGlobalCoolNeutral25,
-              thumbColor: AppColor.primaryNormal,
-              overlayColor: AppColor.primaryNormal.withValues(alpha:0.15),
-              trackHeight: 6,
-              thumbShape: const RoundSliderThumbShape(enabledThumbRadius: 10),
-            ),
-            child: Slider(
-              value: value,
-              min: 0,
-              max: 100,
-              divisions: 100,
-              onChanged: onChanged,
-            ),
-          ),
-        ],
-      ),
     );
   }
 
