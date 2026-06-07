@@ -7,10 +7,17 @@ import 'package:coflanet/constants/color_constant.dart';
 import 'package:coflanet/constants/style_constant.dart';
 import 'package:coflanet/constants/radius_constant.dart';
 import 'package:coflanet/modules/matching/matching_controller.dart';
+import 'package:coflanet/modules/matching/widgets/matching_hero_card.dart';
+import 'package:coflanet/modules/matching/widgets/matching_recommendations_section.dart';
+import 'package:coflanet/modules/matching/widgets/matching_taste_profile_card.dart';
 import 'package:coflanet/widgets/buttons/primary_button.dart';
 import 'package:coflanet/widgets/navigation/app_bottom_bar.dart';
-import 'package:coflanet/widgets/gauge/app_animated_taste_bar.dart';
 
+/// 매칭 결과 화면 — 히어로 카드 + 맛 프로필 + 추천 원두 (섹션 위젯은 widgets/ 분리).
+///
+/// 반응형 getter(isLoading/hasResult/surveyResult/userName)는 body 의 Obx
+/// 클로저 안에서 평가해 값으로 주입한다. bottomNavigationBar 는 hasResult 만
+/// 구독하는 별도 Obx 경계 (원본 구조 보존).
 class MatchingResultView extends GetView<MatchingController> {
   const MatchingResultView({super.key});
 
@@ -59,14 +66,28 @@ class MatchingResultView extends GetView<MatchingController> {
               floating: true,
             ),
 
-            // Hero card with coffee type
-            SliverToBoxAdapter(child: _buildHeroCard()),
+            // 히어로 카드 — Rx getter 는 Obx 클로저 안에서 평가해 주입
+            SliverToBoxAdapter(
+              child: MatchingHeroCard(
+                userName: controller.userName,
+                coffeeType: controller.surveyResult!.coffeeType,
+                description: controller.surveyResult!.coffeeTypeDescription,
+              ),
+            ),
 
-            // Taste profile section
-            SliverToBoxAdapter(child: _buildTasteProfileSection(colors)),
+            // 맛 프로필 카드 (tasteProfile 은 모델의 required 비-null 필드)
+            SliverToBoxAdapter(
+              child: MatchingTasteProfileCard(
+                profile: controller.surveyResult!.tasteProfile,
+              ),
+            ),
 
-            // Recommendations section
-            SliverToBoxAdapter(child: _buildRecommendationsSection(colors)),
+            // 추천 원두 섹션 (isEmpty 가드는 위젯 내부)
+            SliverToBoxAdapter(
+              child: MatchingRecommendationsSection(
+                recommendations: controller.surveyResult!.recommendations,
+              ),
+            ),
 
             // Bottom spacing
             const SliverToBoxAdapter(child: SizedBox(height: 120)),
@@ -124,358 +145,6 @@ class MatchingResultView extends GetView<MatchingController> {
             ),
           ],
         ),
-      ),
-    );
-  }
-
-  Widget _buildHeroCard() {
-    final result = controller.surveyResult!;
-
-    return Container(
-      margin: const EdgeInsets.fromLTRB(20, 0, 20, 24),
-      decoration: BoxDecoration(
-        gradient: LinearGradient(
-          begin: Alignment.topLeft,
-          end: Alignment.bottomRight,
-          colors: [AppColor.colorGlobalOrange50, AppColor.colorGlobalOrange70],
-        ),
-        borderRadius: AppRadius.xxxlBorder,
-        boxShadow: [
-          BoxShadow(
-            color: AppColor.colorGlobalOrange50.withValues(alpha:0.3),
-            blurRadius: 24,
-            offset: const Offset(0, 12),
-          ),
-        ],
-      ),
-      child: Stack(
-        children: [
-          // Background pattern
-          Positioned(
-            right: -40,
-            top: -40,
-            child: Container(
-              width: 160,
-              height: 160,
-              decoration: BoxDecoration(
-                shape: BoxShape.circle,
-                color: AppColor.staticLabelWhiteStrong.withValues(alpha:0.1),
-              ),
-            ),
-          ),
-          Positioned(
-            right: 20,
-            bottom: -30,
-            child: Container(
-              width: 100,
-              height: 100,
-              decoration: BoxDecoration(
-                shape: BoxShape.circle,
-                color: AppColor.staticLabelWhiteStrong.withValues(alpha:0.08),
-              ),
-            ),
-          ),
-
-          // Content
-          Padding(
-            padding: const EdgeInsets.all(28),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                // User badge
-                Container(
-                  padding: const EdgeInsets.symmetric(
-                    horizontal: 14,
-                    vertical: 6,
-                  ),
-                  decoration: BoxDecoration(
-                    color: AppColor.staticLabelWhiteStrong.withValues(alpha:0.2),
-                    borderRadius: AppRadius.xxlBorder,
-                  ),
-                  child: Row(
-                    mainAxisSize: MainAxisSize.min,
-                    children: [
-                      Icon(
-                        Icons.person_rounded,
-                        color: AppColor.staticLabelWhiteStrong,
-                        size: 16,
-                      ),
-                      const SizedBox(width: 6),
-                      Text(
-                        '${controller.userName}님의 커피 매칭',
-                        style: AppTextStyles.caption1Medium.copyWith(
-                          color: AppColor.staticLabelWhiteStrong,
-                        ),
-                      ),
-                    ],
-                  ),
-                ),
-
-                const SizedBox(height: 28),
-
-                // Coffee type
-                Text(
-                  result.coffeeType,
-                  style: AppTextStyles.display2Bold.copyWith(
-                    color: AppColor.staticLabelWhiteStrong,
-                    letterSpacing: -0.5,
-                  ),
-                ),
-
-                const SizedBox(height: 12),
-
-                // Description
-                Text(
-                  result.coffeeTypeDescription,
-                  style: AppTextStyles.body2NormalRegular.copyWith(
-                    color: AppColor.staticLabelWhiteStrong.withValues(alpha:0.9),
-                    height: 1.6,
-                  ),
-                ),
-
-                const SizedBox(height: 8),
-              ],
-            ),
-          ),
-        ],
-      ),
-    );
-  }
-
-  Widget _buildTasteProfileSection(AppColorScheme colors) {
-    final profile = controller.surveyResult!.tasteProfile;
-
-    return Container(
-      margin: const EdgeInsets.fromLTRB(20, 0, 20, 24),
-      padding: const EdgeInsets.all(24),
-      decoration: BoxDecoration(
-        color: colors.surfaceCard,
-        borderRadius: AppRadius.xxlBorder,
-        boxShadow: AppShadows.shadowBlackEmphasize,
-      ),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Row(
-            children: [
-              Container(
-                width: 40,
-                height: 40,
-                decoration: BoxDecoration(
-                  color: colors.primaryLight,
-                  borderRadius: AppRadius.lgBorder,
-                ),
-                child: Icon(
-                  Icons.equalizer_rounded,
-                  color: colors.primaryNormal,
-                  size: 22,
-                ),
-              ),
-              const SizedBox(width: 14),
-              Text(
-                '맛 프로필',
-                style: AppTextStyles.headline1Bold.copyWith(
-                  color: colors.labelNormal,
-                ),
-              ),
-            ],
-          ),
-
-          const SizedBox(height: 24),
-
-          // Taste bars with animation
-          AppAnimatedTasteBar(
-            label: '산미',
-            value: profile.acidity,
-            color: AppColor.colorGlobalYellow50,
-          ),
-          AppAnimatedTasteBar(
-            label: '단맛',
-            value: profile.sweetness,
-            color: AppColor.colorGlobalPink50,
-          ),
-          AppAnimatedTasteBar(
-            label: '쓴맛',
-            value: profile.bitterness,
-            color: AppColor.colorGlobalOrange50,
-          ),
-          AppAnimatedTasteBar(
-            label: '바디감',
-            value: profile.body,
-            color: AppColor.colorGlobalViolet50,
-          ),
-          AppAnimatedTasteBar(
-            label: '향',
-            value: profile.aroma,
-            color: AppColor.colorGlobalGreen50,
-            isLast: true,
-          ),
-        ],
-      ),
-    );
-  }
-
-  Widget _buildRecommendationsSection(AppColorScheme colors) {
-    final recommendations = controller.surveyResult!.recommendations;
-    if (recommendations.isEmpty) return const SizedBox.shrink();
-
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 20),
-          child: Row(
-            children: [
-              Container(
-                width: 40,
-                height: 40,
-                decoration: BoxDecoration(
-                  color: AppColor.colorGlobalOrange95,
-                  borderRadius: AppRadius.lgBorder,
-                ),
-                child: Icon(
-                  Icons.coffee_rounded,
-                  color: AppColor.colorGlobalOrange50,
-                  size: 22,
-                ),
-              ),
-              const SizedBox(width: 14),
-              Text(
-                '추천 원두',
-                style: AppTextStyles.headline1Bold.copyWith(
-                  color: colors.labelNormal,
-                ),
-              ),
-            ],
-          ),
-        ),
-
-        const SizedBox(height: 16),
-
-        // Horizontal scrolling recommendations
-        SizedBox(
-          height: 200,
-          child: ListView.builder(
-            scrollDirection: Axis.horizontal,
-            physics: const BouncingScrollPhysics(),
-            padding: const EdgeInsets.symmetric(horizontal: 20),
-            itemCount: recommendations.length,
-            itemBuilder: (context, index) {
-              final rec = recommendations[index];
-              return KeyedSubtree(
-                key: ValueKey(rec.id),
-                child: _buildRecommendationCard(colors, rec, index),
-              );
-            },
-          ),
-        ),
-      ],
-    );
-  }
-
-  Widget _buildRecommendationCard(AppColorScheme colors, rec, int index) {
-    // 카드 헤더 강조색 팔레트 (accent — 라이트/다크 공통 고정)
-    final accentColors = [
-      AppColor.colorGlobalOrange50,
-      AppColor.colorGlobalViolet50,
-      AppColor.colorGlobalCyan50,
-      AppColor.colorGlobalGreen50,
-    ];
-    final color = accentColors[index % accentColors.length];
-
-    return Container(
-      width: 180,
-      margin: const EdgeInsets.only(right: 16),
-      decoration: BoxDecoration(
-        color: colors.surfaceCard,
-        borderRadius: AppRadius.xxlBorder,
-        boxShadow: AppShadows.shadowBlackEmphasize,
-      ),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          // Header with icon
-          Container(
-            height: 80,
-            decoration: BoxDecoration(
-              gradient: LinearGradient(
-                begin: Alignment.topLeft,
-                end: Alignment.bottomRight,
-                colors: [color.withValues(alpha:0.8), color],
-              ),
-              borderRadius: AppRadius.top(AppRadius.xxl),
-            ),
-            child: Stack(
-              children: [
-                Positioned(
-                  right: -20,
-                  top: -20,
-                  child: Container(
-                    width: 80,
-                    height: 80,
-                    decoration: BoxDecoration(
-                      shape: BoxShape.circle,
-                      color: AppColor.staticLabelWhiteStrong.withValues(alpha:0.1),
-                    ),
-                  ),
-                ),
-                Center(
-                  child: Icon(
-                    Icons.coffee,
-                    color: AppColor.staticLabelWhiteStrong,
-                    size: 36,
-                  ),
-                ),
-              ],
-            ),
-          ),
-
-          // Content
-          Expanded(
-            child: Padding(
-              padding: const EdgeInsets.all(16),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Text(
-                    rec.name,
-                    style: AppTextStyles.headline2Bold.copyWith(
-                      color: colors.labelNormal,
-                    ),
-                    maxLines: 1,
-                    overflow: TextOverflow.ellipsis,
-                  ),
-                  const SizedBox(height: 4),
-                  Text(
-                    '${rec.origin} \u00B7 ${rec.roastLevel}',
-                    style: AppTextStyles.caption1Regular.copyWith(
-                      color: colors.labelAlternative,
-                    ),
-                    maxLines: 1,
-                    overflow: TextOverflow.ellipsis,
-                  ),
-                  const Spacer(),
-                  Container(
-                    padding: const EdgeInsets.symmetric(
-                      horizontal: 10,
-                      vertical: 5,
-                    ),
-                    decoration: BoxDecoration(
-                      color: color.withValues(alpha: 0.1),
-                      borderRadius: AppRadius.mdBorder,
-                    ),
-                    child: Text(
-                      '자세히 보기',
-                      style: AppTextStyles.caption1Medium.copyWith(
-                        color: color,
-                      ),
-                    ),
-                  ),
-                ],
-              ),
-            ),
-          ),
-        ],
       ),
     );
   }
