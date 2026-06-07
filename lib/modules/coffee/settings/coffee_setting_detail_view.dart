@@ -19,6 +19,11 @@ import 'package:coflanet/widgets/navigation/app_bottom_bar.dart';
 ///   - `'waterTemperature'` → 물 온도 (80-100°C)
 ///   - `'extractionTime'`   → 추출 시간 (time picker)
 ///   - `'waterAmount'`      → 물 양 (100-400ml)
+///
+/// 파일이 400줄 경계값을 초과하지만, 본문 대부분이 `_ParamConfig`(controller
+/// getter/updater 클로저 묶음) 5분기 + 모달 핸들러 3종 + 자체 Obx 경계를 가진
+/// 단신 빌더들이라 controller 미참조 위젯으로 추출할 수 없어 View 잔류가
+/// 정당한 예외다 (coffee_settings_view 와 동일 사유).
 class CoffeeSettingDetailView extends GetView<CoffeeController> {
   const CoffeeSettingDetailView({super.key});
 
