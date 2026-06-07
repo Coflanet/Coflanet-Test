@@ -6,6 +6,7 @@ import 'package:coflanet/constants/util_constant.dart';
 import 'package:coflanet/data/models/app_notification_model.dart';
 import 'package:coflanet/modules/notification/notification_controller.dart';
 import 'package:coflanet/widgets/feedback/app_empty_state.dart';
+import 'package:coflanet/widgets/navigation/app_header.dart';
 
 /// 알림 화면 — 알림 목록 / 빈 상태
 class NotificationView extends GetView<NotificationController> {
@@ -26,45 +27,26 @@ class NotificationView extends GetView<NotificationController> {
     );
   }
 
+  /// 공통 AppHeader 재사용 — 전체 삭제 버튼은 Obx 로 감싸 trailing 슬롯에 주입
   Widget _buildHeader() {
-    return Padding(
-      padding: const EdgeInsets.fromLTRB(8, 8, 12, 8),
-      child: Row(
-        children: [
-          Semantics(
-            label: '뒤로가기',
-            button: true,
-            child: IconButton(
-              onPressed: Get.back,
-              icon: Icon(Icons.arrow_back, color: AppColor.labelNormal),
-            ),
-          ),
-          Expanded(
+    return AppHeader(
+      title: '알림',
+      trailing: Obx(() {
+        if (controller.isEmpty) return const SizedBox.shrink();
+        return Semantics(
+          label: '알림 전체 삭제',
+          button: true,
+          child: TextButton(
+            onPressed: controller.clearAll,
             child: Text(
-              '알림',
-              style: AppTextStyles.headline2Bold.copyWith(
-                color: AppColor.labelNormal,
+              '전체 삭제',
+              style: AppTextStyles.caption1Medium.copyWith(
+                color: AppColor.labelAlternative,
               ),
             ),
           ),
-          Obx(() {
-            if (controller.isEmpty) return const SizedBox.shrink();
-            return Semantics(
-              label: '알림 전체 삭제',
-              button: true,
-              child: TextButton(
-                onPressed: controller.clearAll,
-                child: Text(
-                  '전체 삭제',
-                  style: AppTextStyles.caption1Medium.copyWith(
-                    color: AppColor.labelAlternative,
-                  ),
-                ),
-              ),
-            );
-          }),
-        ],
-      ),
+        );
+      }),
     );
   }
 
@@ -81,10 +63,8 @@ class NotificationView extends GetView<NotificationController> {
       return ListView.separated(
         padding: const EdgeInsets.symmetric(vertical: 8),
         itemCount: items.length,
-        separatorBuilder: (_, __) => Divider(
-          height: 1,
-          color: AppColor.lineSolidNormal,
-        ),
+        separatorBuilder: (_, __) =>
+            Divider(height: 1, color: AppColor.lineSolidNormal),
         itemBuilder: (context, index) => _buildNotificationTile(items[index]),
       );
     });

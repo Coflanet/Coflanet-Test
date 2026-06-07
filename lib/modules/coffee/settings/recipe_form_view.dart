@@ -5,11 +5,21 @@ import 'package:coflanet/constants/radius_constant.dart';
 import 'package:coflanet/constants/style_constant.dart';
 import 'package:coflanet/data/models/coffee_item_model.dart';
 import 'package:coflanet/modules/coffee/coffee_controller.dart';
+import 'package:coflanet/modules/coffee/settings/widgets/extraction_step_tile.dart';
+import 'package:coflanet/modules/coffee/settings/widgets/selectable_chip.dart';
+import 'package:coflanet/modules/coffee/settings/widgets/summary_box.dart';
+import 'package:coflanet/modules/coffee/settings/widgets/value_stepper.dart';
+import 'package:coflanet/widgets/typography/section_title.dart';
 
 /// 원두 레시피 추가/편집 폼 (Figma: 원두 레시피 추가 / 원두 레시피 편집)
 ///
 /// - add 모드: 레시피 이름 + 원두 이름 입력 (원두 목록 "직접 추가하기" 진입)
 /// - edit 모드: 레시피 이름 카드 숨김, 원두 이름 읽기전용(선택된 원두)
+///
+/// 표시용 위젯(SelectableChip/ValueStepper/SummaryBox/ExtractionStepTile)은
+/// widgets/ 로 분리. 파일이 400줄 임계값을 초과하지만, 잔여 코드는 Obx 경계가
+/// 산재한 카드 빌더와 저장 플로우(controller 직접 쓰기)라 controller 미참조
+/// 위젯으로 추출할 수 없어 View 잔류가 정당한 예외다.
 class RecipeFormView extends GetView<CoffeeController> {
   final bool isEditMode;
 
@@ -67,11 +77,13 @@ class RecipeFormView extends GetView<CoffeeController> {
     );
   }
 
-  /// 섹션 제목 (기본 설정 / 상세 설정 / 추출 설정)
+  /// 섹션 제목 (기본 설정 / 상세 설정 / 추출 설정) — 공통 SectionTitle 재사용
   Widget _buildSectionTitle(String title) {
-    return Text(
-      title,
-      style: AppTextStyles.headline1Bold.copyWith(color: AppColor.labelNormal),
+    return SectionTitle(
+      title: title,
+      titleStyle: AppTextStyles.headline1Bold.copyWith(
+        color: AppColor.labelNormal,
+      ),
     );
   }
 
@@ -281,8 +293,9 @@ class RecipeFormView extends GetView<CoffeeController> {
     );
   }
 
+  /// 잔수 칩 — isSelected 평가는 호출부 Obx 클로저 안에서 수행 (반응성 유지)
   Widget _buildCupChip(int cups) {
-    return _buildSelectableChip(
+    return SelectableChip(
       label: '$cups잔',
       isSelected: controller.cupsCount == cups,
       height: 44,
@@ -313,6 +326,7 @@ class RecipeFormView extends GetView<CoffeeController> {
     );
   }
 
+  /// 진하기 칩 — strength 임계값(30/60) 평가는 호출부 Obx 클로저 안에서 수행
   Widget _buildIntensityChip(String label, int intensity) {
     final strength = controller.strength;
     final isSelected =
@@ -320,7 +334,7 @@ class RecipeFormView extends GetView<CoffeeController> {
         (intensity == 1 && strength >= 30 && strength <= 60) ||
         (intensity == 2 && strength > 60);
 
-    return _buildSelectableChip(
+    return SelectableChip(
       label: label,
       isSelected: isSelected,
       height: 48,
@@ -335,42 +349,6 @@ class RecipeFormView extends GetView<CoffeeController> {
           controller.strength = 80;
         }
       },
-    );
-  }
-
-  /// 선택형 칩 공통 (회색 fill + 선택 시 보라 테두리·텍스트)
-  Widget _buildSelectableChip({
-    required String label,
-    required bool isSelected,
-    required double height,
-    required double radius,
-    required VoidCallback onTap,
-    bool fullWidth = false,
-  }) {
-    return GestureDetector(
-      onTap: onTap,
-      child: AnimatedContainer(
-        duration: const Duration(milliseconds: 150),
-        height: height,
-        width: fullWidth ? double.infinity : null,
-        alignment: Alignment.center,
-        decoration: BoxDecoration(
-          color: AppColor.componentFillNormal,
-          borderRadius: BorderRadius.circular(radius),
-          border: Border.all(
-            color: isSelected ? AppColor.primaryNormal : AppColor.transparent,
-            width: 1.5,
-          ),
-        ),
-        child: Text(
-          label,
-          style: AppTextStyles.body2NormalMedium.copyWith(
-            color: isSelected
-                ? AppColor.primaryNormal
-                : AppColor.labelAlternative,
-          ),
-        ),
-      ),
     );
   }
 
@@ -465,7 +443,7 @@ class RecipeFormView extends GetView<CoffeeController> {
     );
   }
 
-  /// 라벨 + 스테퍼 행
+  /// 라벨 + 스테퍼 행 — text 평가는 호출부 Obx 클로저 안에서 수행
   Widget _buildStepperRow({
     required String label,
     required String text,
@@ -482,64 +460,12 @@ class RecipeFormView extends GetView<CoffeeController> {
             ),
           ),
         ),
-        _buildStepper(
+        ValueStepper(
           text: text,
           onIncrement: onIncrement,
           onDecrement: onDecrement,
         ),
       ],
-    );
-  }
-
-  /// 스테퍼 컨트롤 (Figma: [+] 값 [−])
-  Widget _buildStepper({
-    required String text,
-    required VoidCallback onIncrement,
-    required VoidCallback onDecrement,
-  }) {
-    return Container(
-      height: 40,
-      padding: const EdgeInsets.symmetric(horizontal: 4),
-      decoration: BoxDecoration(
-        color: AppColor.componentFillNormal,
-        borderRadius: AppRadius.mdBorder,
-      ),
-      child: Row(
-        mainAxisSize: MainAxisSize.min,
-        children: [
-          _buildStepperButton(Icons.add, onIncrement),
-          Container(
-            height: 32,
-            constraints: const BoxConstraints(minWidth: 64),
-            margin: const EdgeInsets.symmetric(horizontal: 4),
-            padding: const EdgeInsets.symmetric(horizontal: 8),
-            alignment: Alignment.center,
-            decoration: BoxDecoration(
-              color: AppColor.backgroundNormalNormal,
-              borderRadius: AppRadius.smBorder,
-            ),
-            child: Text(
-              text,
-              style: AppTextStyles.body2NormalBold.copyWith(
-                color: AppColor.labelNormal,
-              ),
-            ),
-          ),
-          _buildStepperButton(Icons.remove, onDecrement),
-        ],
-      ),
-    );
-  }
-
-  Widget _buildStepperButton(IconData icon, VoidCallback onTap) {
-    return GestureDetector(
-      onTap: onTap,
-      behavior: HitTestBehavior.opaque,
-      child: SizedBox(
-        width: 32,
-        height: 40,
-        child: Icon(icon, size: 18, color: AppColor.labelAlternative),
-      ),
     );
   }
 
@@ -562,7 +488,31 @@ class RecipeFormView extends GetView<CoffeeController> {
               final step = entry.value;
               return Column(
                 children: [
-                  _buildExtractionStep(step),
+                  ExtractionStepTile(
+                    step: step,
+                    onDelete: () => controller.deleteExtractionStep(step.id),
+                    onWaterIncrement: () => controller.updateStepWaterAmount(
+                      step.id,
+                      step.waterAmount + 10,
+                    ),
+                    onWaterDecrement: () => controller.updateStepWaterAmount(
+                      step.id,
+                      step.waterAmount - 10,
+                    ),
+                    onDurationIncrement: () => controller.updateStepDuration(
+                      step.id,
+                      step.duration + const Duration(seconds: 5),
+                    ),
+                    // 최소 5초 가드 — 원본 동작 1:1 보존
+                    onDurationDecrement: () {
+                      if (step.duration.inSeconds > 5) {
+                        controller.updateStepDuration(
+                          step.id,
+                          step.duration - const Duration(seconds: 5),
+                        );
+                      }
+                    },
+                  ),
                   if (index < steps.length - 1) const SizedBox(height: 16),
                 ],
               );
@@ -573,156 +523,25 @@ class RecipeFormView extends GetView<CoffeeController> {
     });
   }
 
-  /// 총 물의 양 / 총 추출시간 요약
+  /// 총 물의 양 / 총 추출시간 요약 — 값 평가는 부모 Obx 클로저 안에서 수행
   Widget _buildExtractionSummary() {
     return Row(
       children: [
         Expanded(
-          child: _buildSummaryBox(
+          child: SummaryBox(
             value: '${controller.totalStepsWaterAmount}ml',
             label: '총 물의 양',
           ),
         ),
         const SizedBox(width: 8),
         Expanded(
-          child: _buildSummaryBox(
+          child: SummaryBox(
             value: controller.totalStepsTimeFormatted,
             label: '총 추출시간',
           ),
         ),
       ],
     );
-  }
-
-  Widget _buildSummaryBox({required String value, required String label}) {
-    return Container(
-      height: 84,
-      decoration: BoxDecoration(
-        color: AppColor.componentFillNormal,
-        borderRadius: AppRadius.xxlBorder,
-      ),
-      child: Column(
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: [
-          Text(
-            value,
-            style: AppTextStyles.headline1Bold.copyWith(
-              color: AppColor.labelNeutral,
-            ),
-          ),
-          const SizedBox(height: 2),
-          Text(
-            label,
-            style: AppTextStyles.label1NormalRegular.copyWith(
-              color: AppColor.labelAlternative,
-            ),
-          ),
-        ],
-      ),
-    );
-  }
-
-  /// 추출 스텝 항목 (타이틀 + 삭제 + 물의 양 + 시간)
-  Widget _buildExtractionStep(HandDripStep step) {
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        Row(
-          children: [
-            Expanded(
-              child: Text(
-                step.title,
-                style: AppTextStyles.body1NormalBold.copyWith(
-                  color: AppColor.labelNormal,
-                ),
-              ),
-            ),
-            GestureDetector(
-              onTap: () => controller.deleteExtractionStep(step.id),
-              behavior: HitTestBehavior.opaque,
-              child: Icon(
-                Icons.delete_outline,
-                size: 20,
-                color: AppColor.labelAlternative,
-              ),
-            ),
-          ],
-        ),
-        const SizedBox(height: 12),
-        // 물의 양
-        Row(
-          children: [
-            Expanded(
-              child: Text(
-                '물의 양',
-                style: AppTextStyles.label1NormalRegular.copyWith(
-                  color: AppColor.labelAlternative,
-                ),
-              ),
-            ),
-            _buildStepper(
-              text: '${step.waterAmount}ml',
-              onIncrement: () => controller.updateStepWaterAmount(
-                step.id,
-                step.waterAmount + 10,
-              ),
-              onDecrement: () => controller.updateStepWaterAmount(
-                step.id,
-                step.waterAmount - 10,
-              ),
-            ),
-          ],
-        ),
-        const SizedBox(height: 12),
-        // 시간
-        Row(
-          children: [
-            Row(
-              children: [
-                Text(
-                  '시간',
-                  style: AppTextStyles.label1NormalRegular.copyWith(
-                    color: AppColor.labelAlternative,
-                  ),
-                ),
-                const SizedBox(width: 4),
-                Tooltip(
-                  message: '물을 붓는 시간과 기다리는 시간을 포함해요.',
-                  triggerMode: TooltipTriggerMode.tap,
-                  child: Icon(
-                    Icons.info_outline,
-                    size: 16,
-                    color: AppColor.labelAlternative,
-                  ),
-                ),
-              ],
-            ),
-            const Spacer(),
-            _buildStepper(
-              text: _formatDuration(step.duration),
-              onIncrement: () => controller.updateStepDuration(
-                step.id,
-                step.duration + const Duration(seconds: 5),
-              ),
-              onDecrement: () {
-                if (step.duration.inSeconds > 5) {
-                  controller.updateStepDuration(
-                    step.id,
-                    step.duration - const Duration(seconds: 5),
-                  );
-                }
-              },
-            ),
-          ],
-        ),
-      ],
-    );
-  }
-
-  String _formatDuration(Duration duration) {
-    final minutes = duration.inMinutes.toString().padLeft(2, '0');
-    final seconds = (duration.inSeconds % 60).toString().padLeft(2, '0');
-    return '$minutes:$seconds';
   }
 
   /// 스텝 추가 버튼

@@ -3,24 +3,20 @@ import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 import 'package:coflanet/constants/color_constant.dart';
 import 'package:coflanet/modules/coffee/coffee_controller.dart';
+import 'package:coflanet/modules/coffee/settings/widgets/parameter_item.dart';
+import 'package:coflanet/modules/coffee/settings/widgets/recipe_step_item.dart';
+import 'package:coflanet/modules/coffee/settings/widgets/selection_pill.dart';
 import 'package:coflanet/routes/app_pages.dart';
 import 'package:coflanet/widgets/modals/input_modal.dart';
 import 'package:coflanet/widgets/modals/selection_modal.dart';
 import 'package:coflanet/widgets/modals/time_picker_modal.dart';
 
-/// Recipe step data model
-class RecipeStep {
-  final int number;
-  final String title;
-  final String description;
-
-  const RecipeStep({
-    required this.number,
-    required this.title,
-    required this.description,
-  });
-}
-
+/// 레시피 설정 화면 — 원두 프로필 / 추출 설정 / 진행 트래커 / 하단 CTA.
+///
+/// 표시용 위젯(SelectionPill/ParameterItem/RecipeStepItem)은 widgets/ 로 분리.
+/// 파일이 400줄 임계값을 초과하지만, 잔여 코드는 모달 핸들러 7종
+/// (controller 직접 쓰기)과 Obx 경계를 가진 섹션 빌더라
+/// controller 미참조 위젯으로 추출할 수 없어 View 잔류가 정당한 예외다.
 class CoffeeSettingsView extends GetView<CoffeeController> {
   const CoffeeSettingsView({super.key});
 
@@ -289,11 +285,13 @@ class CoffeeSettingsView extends GetView<CoffeeController> {
   /// Figma: gap 4px, height 80px
   Widget _buildSelectionPillsRow() {
     return Obx(() {
+      // mainText 평가(cupsCount read + strength 라벨 계산)는
+      // 이 Obx 클로저 안에서 동기 실행되어야 반응성이 유지된다.
       return Row(
         children: [
           // Cups pill
           Expanded(
-            child: _SelectionPill(
+            child: SelectionPill(
               mainText: '${controller.cupsCount}잔',
               subText: '잔수',
               onTap: _showCupsSelectionModal,
@@ -302,7 +300,7 @@ class CoffeeSettingsView extends GetView<CoffeeController> {
           const SizedBox(width: 4),
           // Strength pill
           Expanded(
-            child: _SelectionPill(
+            child: SelectionPill(
               mainText: _getStrengthDisplayLabel(),
               subText: '진하기 정도',
               onTap: _showStrengthSelectionModal,
@@ -332,7 +330,7 @@ class CoffeeSettingsView extends GetView<CoffeeController> {
         () => Row(
           children: [
             Expanded(
-              child: _ParameterItem(
+              child: ParameterItem(
                 value: '${controller.coffeeAmount}g',
                 label: '원두',
                 onTap: _showCoffeeAmountModal,
@@ -340,7 +338,7 @@ class CoffeeSettingsView extends GetView<CoffeeController> {
             ),
             _buildVerticalDivider(),
             Expanded(
-              child: _ParameterItem(
+              child: ParameterItem(
                 value: '${controller.waterTemperature}°C',
                 label: '물 온도',
                 onTap: _showWaterTemperatureModal,
@@ -348,7 +346,7 @@ class CoffeeSettingsView extends GetView<CoffeeController> {
             ),
             _buildVerticalDivider(),
             Expanded(
-              child: _ParameterItem(
+              child: ParameterItem(
                 value: controller.extractionTimeFormatted,
                 label: '추출 시간',
                 onTap: _showExtractionTimeModal,
@@ -356,7 +354,7 @@ class CoffeeSettingsView extends GetView<CoffeeController> {
             ),
             _buildVerticalDivider(),
             Expanded(
-              child: _ParameterItem(
+              child: ParameterItem(
                 value: '${controller.waterAmount}ml',
                 label: '물의 양',
                 onTap: _showWaterAmountModal,
@@ -430,7 +428,7 @@ class CoffeeSettingsView extends GetView<CoffeeController> {
         child: Column(
           children: [
             for (int i = 0; i < displaySteps.length; i++)
-              _RecipeStepItem(
+              RecipeStepItem(
                 step: displaySteps[i],
                 isLast: i == displaySteps.length - 1,
               ),
@@ -623,194 +621,5 @@ class CoffeeSettingsView extends GetView<CoffeeController> {
     if (result != null) {
       controller.customWaterAmount = int.parse(result);
     }
-  }
-}
-
-/// Selection Pill
-/// Figma: background #F0ECFE, border 1px solid #C0B0FF, border-radius 24px, width 162px, height 80px, padding 16px, gap 2px
-class _SelectionPill extends StatelessWidget {
-  final String mainText;
-  final String subText;
-  final VoidCallback onTap;
-
-  const _SelectionPill({
-    required this.mainText,
-    required this.subText,
-    required this.onTap,
-  });
-
-  @override
-  Widget build(BuildContext context) {
-    return GestureDetector(
-      onTap: onTap,
-      child: Container(
-        padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 14),
-        decoration: BoxDecoration(
-          color: AppColor.colorGlobalViolet95,
-          border: Border.all(color: AppColor.colorGlobalViolet80, width: 1),
-          borderRadius: BorderRadius.circular(24),
-        ),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.center,
-          mainAxisSize: MainAxisSize.min,
-          children: [
-            // Main text - Figma: Pretendard 18px/600, color #5B35F2
-            Text(
-              mainText,
-              style: TextStyle(
-                fontFamily: 'Pretendard',
-                fontSize: 18,
-                fontWeight: FontWeight.w600,
-                color: AppColor.primaryStrong,
-              ),
-              textAlign: TextAlign.center,
-            ),
-            const SizedBox(height: 2),
-            // Sub text - Figma: Pretendard 14px/400, color rgba(55,56,60,0.61)
-            Text(
-              subText,
-              style: TextStyle(
-                fontFamily: 'Pretendard',
-                fontSize: 14,
-                fontWeight: FontWeight.w400,
-                color: AppColor.labelAlternative,
-              ),
-              textAlign: TextAlign.center,
-            ),
-          ],
-        ),
-      ),
-    );
-  }
-}
-
-/// Parameter Item
-/// Value: Figma: Pretendard 15px/500, color rgba(46,47,51,0.88)
-/// Label: Figma: Pretendard 14px/400, color rgba(55,56,60,0.61)
-class _ParameterItem extends StatelessWidget {
-  final String value;
-  final String label;
-  final VoidCallback onTap;
-
-  const _ParameterItem({
-    required this.value,
-    required this.label,
-    required this.onTap,
-  });
-
-  @override
-  Widget build(BuildContext context) {
-    return GestureDetector(
-      onTap: onTap,
-      child: Column(
-        mainAxisSize: MainAxisSize.min,
-        children: [
-          // Value - Figma: Pretendard 15px/500, color rgba(46,47,51,0.88)
-          Text(
-            value,
-            style: TextStyle(
-              fontFamily: 'Pretendard',
-              fontSize: 15,
-              fontWeight: FontWeight.w500,
-              color: AppColor.labelNeutral,
-            ),
-            textAlign: TextAlign.center,
-          ),
-          const SizedBox(height: 4),
-          // Label - Figma: Pretendard 14px/400, color rgba(55,56,60,0.61)
-          Text(
-            label,
-            style: TextStyle(
-              fontFamily: 'Pretendard',
-              fontSize: 14,
-              fontWeight: FontWeight.w400,
-              color: AppColor.labelAlternative,
-            ),
-            textAlign: TextAlign.center,
-          ),
-        ],
-      ),
-    );
-  }
-}
-
-/// Recipe Step Item with numbered badge (vertical stepper)
-/// Badge: 20x20px circle, background #E1E2E4, border-radius 1000px
-/// Badge number: Pretendard 12px/600, color #FFFFFF
-/// Vertical divider line: 1px width, 28px height, background #E1E2E4
-/// Step title: Pretendard 16px/500, color rgba(55,56,60,0.61), width 100px
-/// Step description: Pretendard 14px/400, color rgba(55,56,60,0.35), aligned right
-class _RecipeStepItem extends StatelessWidget {
-  final RecipeStep step;
-  final bool isLast;
-
-  const _RecipeStepItem({required this.step, required this.isLast});
-
-  @override
-  Widget build(BuildContext context) {
-    return Row(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        // Left column: badge + vertical line
-        Column(
-          children: [
-            // Badge - Figma: 20x20px, background #E1E2E4, border-radius 1000px
-            Container(
-              width: 20,
-              height: 20,
-              decoration: BoxDecoration(
-                color: AppColor.colorGlobalCoolNeutral96,
-                borderRadius: BorderRadius.circular(1000),
-              ),
-              child: Center(
-                // Badge number - Figma: Pretendard 12px/600
-                child: Text(
-                  '${step.number}',
-                  style: TextStyle(
-                    fontFamily: 'Pretendard',
-                    fontSize: 12,
-                    fontWeight: FontWeight.w600,
-                    color: AppColor.labelAlternative,
-                  ),
-                ),
-              ),
-            ),
-            // Vertical divider line - Figma: 1px width, 28px height, background #E1E2E4
-            if (!isLast)
-              Container(
-                width: 1,
-                height: 28,
-                color: AppColor.colorGlobalCoolNeutral96,
-              ),
-          ],
-        ),
-        const SizedBox(width: 12),
-        // Step title - Figma: Pretendard 16px/500, color rgba(55,56,60,0.61), width 100px
-        SizedBox(
-          width: 100,
-          child: Text(
-            step.title,
-            style: TextStyle(
-              fontFamily: 'Pretendard',
-              fontSize: 16,
-              fontWeight: FontWeight.w500,
-              color: AppColor.labelAlternative,
-            ),
-          ),
-        ),
-        const Spacer(),
-        // Step description - Figma: Pretendard 14px/400, color rgba(55,56,60,0.35), aligned right
-        Text(
-          step.description,
-          style: TextStyle(
-            fontFamily: 'Pretendard',
-            fontSize: 14,
-            fontWeight: FontWeight.w400,
-            color: AppColor.labelAssistive,
-          ),
-          textAlign: TextAlign.right,
-        ),
-      ],
-    );
   }
 }

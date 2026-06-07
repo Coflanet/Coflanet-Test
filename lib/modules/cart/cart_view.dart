@@ -7,6 +7,7 @@ import 'package:coflanet/data/models/cart_item_model.dart';
 import 'package:coflanet/modules/cart/cart_controller.dart';
 import 'package:coflanet/widgets/buttons/primary_button.dart';
 import 'package:coflanet/widgets/feedback/app_empty_state.dart';
+import 'package:coflanet/widgets/navigation/app_header.dart';
 
 /// 장바구니 화면 — 담은 상품 목록 / 빈 상태 + 합계 바
 class CartView extends GetView<CartController> {
@@ -28,45 +29,26 @@ class CartView extends GetView<CartController> {
     );
   }
 
+  /// 공통 AppHeader 재사용 — 비우기 버튼은 Obx 로 감싸 trailing 슬롯에 주입
   Widget _buildHeader() {
-    return Padding(
-      padding: const EdgeInsets.fromLTRB(8, 8, 12, 8),
-      child: Row(
-        children: [
-          Semantics(
-            label: '뒤로가기',
-            button: true,
-            child: IconButton(
-              onPressed: Get.back,
-              icon: Icon(Icons.arrow_back, color: AppColor.labelNormal),
-            ),
-          ),
-          Expanded(
+    return AppHeader(
+      title: '장바구니',
+      trailing: Obx(() {
+        if (controller.isEmpty) return const SizedBox.shrink();
+        return Semantics(
+          label: '장바구니 비우기',
+          button: true,
+          child: TextButton(
+            onPressed: controller.clearCart,
             child: Text(
-              '장바구니',
-              style: AppTextStyles.headline2Bold.copyWith(
-                color: AppColor.labelNormal,
+              '비우기',
+              style: AppTextStyles.caption1Medium.copyWith(
+                color: AppColor.labelAlternative,
               ),
             ),
           ),
-          Obx(() {
-            if (controller.isEmpty) return const SizedBox.shrink();
-            return Semantics(
-              label: '장바구니 비우기',
-              button: true,
-              child: TextButton(
-                onPressed: controller.clearCart,
-                child: Text(
-                  '비우기',
-                  style: AppTextStyles.caption1Medium.copyWith(
-                    color: AppColor.labelAlternative,
-                  ),
-                ),
-              ),
-            );
-          }),
-        ],
-      ),
+        );
+      }),
     );
   }
 
@@ -83,10 +65,8 @@ class CartView extends GetView<CartController> {
       return ListView.separated(
         padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
         itemCount: items.length,
-        separatorBuilder: (_, __) => Divider(
-          height: 1,
-          color: AppColor.lineSolidNormal,
-        ),
+        separatorBuilder: (_, __) =>
+            Divider(height: 1, color: AppColor.lineSolidNormal),
         itemBuilder: (context, index) => _buildCartTile(items[index]),
       );
     });
@@ -259,10 +239,7 @@ class CartView extends GetView<CartController> {
               ],
             ),
             const SizedBox(height: 12),
-            PrimaryButton(
-              text: '주문하기',
-              onPressed: controller.checkout,
-            ),
+            PrimaryButton(text: '주문하기', onPressed: controller.checkout),
           ],
         ),
       );
