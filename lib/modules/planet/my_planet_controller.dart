@@ -183,10 +183,7 @@ class MyPlanetController extends BaseController {
               await _executeWithdrawal();
             },
             // 탈퇴 강조색 — statusNegative 토큰 (#FF4242)
-            child: Text(
-              '탈퇴',
-              style: TextStyle(color: AppColor.statusNegative),
-            ),
+            child: Text('탈퇴', style: TextStyle(color: AppColor.statusNegative)),
           ),
         ],
       ),
