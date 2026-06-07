@@ -5,7 +5,6 @@ import 'package:coflanet/constants/radius_constant.dart';
 import 'package:coflanet/constants/style_constant.dart';
 import 'package:coflanet/data/models/coffee_item_model.dart';
 import 'package:coflanet/modules/coffee/coffee_controller.dart';
-import 'package:coflanet/widgets/modals/input_modal.dart';
 
 /// 원두 레시피 추가/편집 폼 (Figma: 원두 레시피 추가 / 원두 레시피 편집)
 ///
@@ -136,34 +135,14 @@ class RecipeFormView extends GetView<CoffeeController> {
           // "기본 설정"과 동일한 섹션 타이틀 스타일
           _buildSectionTitle('레시피 이름'),
           const SizedBox(height: 20),
-          Obx(
-            () => _buildInputField(
-              value: controller.recipeName,
-              placeholder: '레시피 이름을 입력해주세요.',
-              onTap: _showRecipeNameModal,
-            ),
+          _buildTextField(
+            initialValue: controller.recipeName,
+            hint: '레시피 이름을 입력해주세요.',
+            onChanged: (value) => controller.recipeName = value,
           ),
         ],
       ),
     );
-  }
-
-  Future<void> _showRecipeNameModal() async {
-    final result = await InputModal.show(
-      title: '레시피 이름',
-      message: '레시피 이름을 입력해주세요.',
-      hint: '예: 주말 아침 핸드드립',
-      initialValue: controller.recipeName,
-      validator: (value) {
-        if (value == null || value.trim().isEmpty) {
-          return '레시피 이름을 입력하세요';
-        }
-        return null;
-      },
-    );
-    if (result != null) {
-      controller.recipeName = result.trim();
-    }
   }
 
   // ===== 기본 설정 =====
@@ -193,78 +172,76 @@ class RecipeFormView extends GetView<CoffeeController> {
         _buildFieldLabel('원두 이름'),
         const SizedBox(height: 8),
         if (isEditMode)
-          Obx(
-            () => _buildInputField(
-              value: controller.selectedBeanName,
-              placeholder: '선택한 원두의 이름이 자동으로 들어갑니다',
-              onTap: null,
-            ),
-          )
+          Obx(() => _buildReadOnlyField(value: controller.selectedBeanName))
         else
-          Obx(
-            () => _buildInputField(
-              value: controller.newRecipeBeanName,
-              placeholder: '원두 이름을 입력해주세요.',
-              onTap: _showBeanNameModal,
-            ),
+          _buildTextField(
+            initialValue: controller.newRecipeBeanName,
+            hint: '원두 이름을 입력해주세요.',
+            onChanged: (value) => controller.newRecipeBeanName = value,
           ),
       ],
     );
   }
 
-  Future<void> _showBeanNameModal() async {
-    final result = await InputModal.show(
-      title: '원두 이름',
-      message: '레시피에 사용할 원두 이름을 입력하세요',
-      hint: '예: 에티오피아 예가체프',
-      initialValue: controller.newRecipeBeanName,
+  /// 인라인 텍스트 입력 필드 (Figma: 흰 배경 + 얇은 테두리, 포커스 시 보라 테두리)
+  Widget _buildTextField({
+    required String initialValue,
+    required String hint,
+    required ValueChanged<String> onChanged,
+  }) {
+    return TextFormField(
+      initialValue: initialValue,
+      onChanged: onChanged,
+      maxLines: 1,
+      style: AppTextStyles.body1NormalMedium.copyWith(
+        color: AppColor.labelNormal,
+      ),
+      cursorColor: AppColor.primaryNormal,
+      decoration: InputDecoration(
+        hintText: hint,
+        hintStyle: AppTextStyles.body1NormalMedium.copyWith(
+          color: AppColor.labelAssistive,
+        ),
+        isDense: true,
+        filled: true,
+        fillColor: AppColor.backgroundNormalNormal,
+        contentPadding: const EdgeInsets.symmetric(
+          horizontal: 20,
+          vertical: 16,
+        ),
+        enabledBorder: OutlineInputBorder(
+          borderRadius: AppRadius.fullBorder,
+          borderSide: BorderSide(color: AppColor.lineNormalNormal),
+        ),
+        focusedBorder: OutlineInputBorder(
+          borderRadius: AppRadius.fullBorder,
+          borderSide: BorderSide(color: AppColor.primaryNormal, width: 1.5),
+        ),
+      ),
     );
-    if (result != null) {
-      controller.newRecipeBeanName = result.trim();
-    }
   }
 
-  /// 입력 필드 (탭하면 InputModal, onTap null이면 읽기전용)
-  Widget _buildInputField({
-    required String value,
-    required String placeholder,
-    required VoidCallback? onTap,
-  }) {
-    final hasValue = value.isNotEmpty;
-    final field = Container(
+  /// 읽기전용 필드 (edit 모드 — 선택된 원두 이름 표시)
+  Widget _buildReadOnlyField({required String value}) {
+    return Container(
       height: 52,
-      padding: const EdgeInsets.symmetric(horizontal: 16),
+      width: double.infinity,
+      padding: const EdgeInsets.symmetric(horizontal: 20),
+      alignment: Alignment.centerLeft,
       decoration: BoxDecoration(
         color: AppColor.componentFillNormal,
-        borderRadius: AppRadius.lgBorder,
+        borderRadius: AppRadius.fullBorder,
       ),
-      child: Row(
-        children: [
-          Expanded(
-            child: Text(
-              hasValue ? value : placeholder,
-              style: AppTextStyles.body1NormalMedium.copyWith(
-                color: hasValue
-                    ? AppColor.labelNormal
-                    : AppColor.labelAssistive,
-              ),
-              maxLines: 1,
-              overflow: TextOverflow.ellipsis,
-            ),
-          ),
-          if (onTap != null) ...[
-            const SizedBox(width: 8),
-            Icon(Icons.edit_outlined, size: 18, color: AppColor.labelAlternative),
-          ],
-        ],
+      child: Text(
+        value.isNotEmpty ? value : '선택한 원두의 이름이 자동으로 들어갑니다',
+        style: AppTextStyles.body1NormalMedium.copyWith(
+          color: value.isNotEmpty
+              ? AppColor.labelNormal
+              : AppColor.labelAssistive,
+        ),
+        maxLines: 1,
+        overflow: TextOverflow.ellipsis,
       ),
-    );
-
-    if (onTap == null) return field;
-    return GestureDetector(
-      onTap: onTap,
-      behavior: HitTestBehavior.opaque,
-      child: field,
     );
   }
 

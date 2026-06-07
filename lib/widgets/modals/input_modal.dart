@@ -283,18 +283,19 @@ class _InputModalState extends State<InputModal> {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
+          // 단일 테두리 1겹 — 회색 fill + 두꺼운 테두리 조합이 만드는 다층 ring 방지
           Container(
             height: 56,
             decoration: BoxDecoration(
-              color: AppColor.componentFillNormal,
+              color: AppColor.backgroundElevatedNormal,
               borderRadius: AppRadius.fullBorder,
               border: Border.all(
                 color: hasError
                     ? AppColor.statusNegative
                     : hasFocus
                     ? AppColor.primaryNormal
-                    : AppColor.transparent,
-                width: 2,
+                    : AppColor.lineNormalNormal,
+                width: 1.5,
               ),
             ),
             child: Row(
@@ -309,19 +310,18 @@ class _InputModalState extends State<InputModal> {
                     inputFormatters: widget.inputFormatters,
                     onChanged: _onTextChanged,
                     onSubmitted: (_) => _onConfirm(),
-                    textAlign: TextAlign.center,
                     style: AppTextStyles.title3Bold.copyWith(
                       color: AppColor.labelNormal,
                     ),
+                    cursorColor: AppColor.primaryNormal,
                     decoration: InputDecoration(
                       hintText: widget.hint,
                       hintStyle: AppTextStyles.title3Medium.copyWith(
                         color: AppColor.labelAssistive,
                       ),
                       border: InputBorder.none,
-                      contentPadding: EdgeInsets.only(
-                        left: hasValue ? 48 : 16,
-                        right: 16,
+                      contentPadding: const EdgeInsets.symmetric(
+                        horizontal: 20,
                       ),
                       counterText: '',
                     ),
