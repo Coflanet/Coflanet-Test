@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:coflanet/constants/app_color_scheme.dart';
 import 'package:coflanet/constants/asset_constant.dart';
 import 'package:coflanet/constants/color_constant.dart';
 import 'package:coflanet/constants/style_constant.dart';
@@ -20,6 +21,13 @@ class SocialButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final colors = AppColorScheme.of(context);
+    // 애플 버튼은 검정 고정이라 다크 배경(순검정)과 구분되지 않으므로
+    // 테두리만 추가해 경계를 살린다. (브랜드 색 자체는 유지)
+    final BorderSide side = type == SocialButtonType.apple
+        ? BorderSide(color: colors.lineNormalNormal)
+        : BorderSide.none;
+
     return Semantics(
       button: true,
       label: _semanticLabel,
@@ -36,7 +44,7 @@ class SocialButton extends StatelessWidget {
               // Figma 사양 borderRadius 10. 토큰 AppRadius.lg(=12) 과 차이가 있어
               // 컴포넌트 단위로 override (전역 토큰 영향 방지).
               borderRadius: BorderRadius.circular(10),
-              side: BorderSide.none,
+              side: side,
             ),
           ),
           child: isLoading

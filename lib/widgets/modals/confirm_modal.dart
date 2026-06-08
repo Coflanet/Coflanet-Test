@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:coflanet/constants/app_color_scheme.dart';
 import 'package:coflanet/constants/color_constant.dart';
 import 'package:coflanet/constants/style_constant.dart';
 import 'package:coflanet/constants/radius_constant.dart';
@@ -62,7 +63,7 @@ class ConfirmModal extends StatefulWidget {
         icon: icon,
       ),
       barrierDismissible: barrierDismissible,
-      barrierColor: AppColor.componentMaterialDimmer,
+      barrierColor: AppColorScheme.of(Get.context!).componentMaterialDimmer,
     );
   }
 
@@ -129,21 +130,32 @@ class _ConfirmModalState extends State<ConfirmModal>
 
   @override
   Widget build(BuildContext context) {
-    return FadeTransition(
-      opacity: _fadeAnimation,
-      child: ScaleTransition(
-        scale: _scaleAnimation,
-        child: Center(
-          child: Container(
-            width: MediaQuery.of(context).size.width - 48,
-            decoration: BoxDecoration(
-              color: AppColor.backgroundElevatedNormal,
-              borderRadius: AppRadius.modalBorder,
-              boxShadow: AppShadows.shadowBlackHeavy,
-            ),
-            child: Column(
-              mainAxisSize: MainAxisSize.min,
-              children: [_buildContent(), _buildActions()],
+    final colors = AppColorScheme.of(context);
+    // Get.dialog 는 Material 조상을 제공하지 않으므로 직접 감싼다 —
+    // 없으면 모든 Text 에 노란 이중 밑줄이 그려진다.
+    return Material(
+      type: MaterialType.transparency,
+      child: FadeTransition(
+        opacity: _fadeAnimation,
+        child: ScaleTransition(
+          scale: _scaleAnimation,
+          child: Center(
+            child: Container(
+              width: MediaQuery.of(context).size.width - 48,
+              decoration: BoxDecoration(
+                color: colors.backgroundElevatedNormal,
+                borderRadius: AppRadius.modalBorder,
+                boxShadow: AppShadows.shadowBlackHeavy,
+                // 다크 모드는 검정 그림자가 어두운 배경에 흡수되어 카드 경계가
+                // 약해지므로 1px 보더로 경계를 보강한다. 라이트 외형은 불변.
+                border: Theme.of(context).brightness == Brightness.dark
+                    ? Border.all(color: colors.lineSolidNormal, width: 1)
+                    : null,
+              ),
+              child: Column(
+                mainAxisSize: MainAxisSize.min,
+                children: [_buildContent(colors), _buildActions()],
+              ),
             ),
           ),
         ),
@@ -151,7 +163,7 @@ class _ConfirmModalState extends State<ConfirmModal>
     );
   }
 
-  Widget _buildContent() {
+  Widget _buildContent(AppColorScheme colors) {
     return Padding(
       padding: const EdgeInsets.fromLTRB(24, 28, 24, 16),
       child: Column(
@@ -164,7 +176,7 @@ class _ConfirmModalState extends State<ConfirmModal>
           Text(
             widget.title,
             style: AppTextStyles.heading1Bold.copyWith(
-              color: AppColor.labelNormal,
+              color: colors.labelNormal,
             ),
             textAlign: TextAlign.center,
           ),
@@ -173,7 +185,7 @@ class _ConfirmModalState extends State<ConfirmModal>
             Text(
               widget.message!,
               style: AppTextStyles.body1NormalRegular.copyWith(
-                color: AppColor.labelAlternative,
+                color: colors.labelAlternative,
               ),
               textAlign: TextAlign.center,
             ),
@@ -237,6 +249,7 @@ class _ActionButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final colors = AppColorScheme.of(context);
     switch (type) {
       case _ButtonType.primary:
         return SizedBox(
@@ -244,7 +257,7 @@ class _ActionButton extends StatelessWidget {
           child: ElevatedButton(
             onPressed: onPressed,
             style: ElevatedButton.styleFrom(
-              backgroundColor: AppColor.primaryNormal,
+              backgroundColor: colors.primaryNormal,
               foregroundColor: AppColor.staticLabelWhiteStrong,
               elevation: 0,
               shape: RoundedRectangleBorder(
@@ -261,7 +274,7 @@ class _ActionButton extends StatelessWidget {
           child: ElevatedButton(
             onPressed: onPressed,
             style: ElevatedButton.styleFrom(
-              backgroundColor: AppColor.statusNegative,
+              backgroundColor: colors.statusNegative,
               foregroundColor: AppColor.staticLabelWhiteStrong,
               elevation: 0,
               shape: RoundedRectangleBorder(
@@ -278,8 +291,8 @@ class _ActionButton extends StatelessWidget {
           child: OutlinedButton(
             onPressed: onPressed,
             style: OutlinedButton.styleFrom(
-              foregroundColor: AppColor.labelNormal,
-              side: BorderSide(color: AppColor.lineNormalNormal),
+              foregroundColor: colors.labelNormal,
+              side: BorderSide(color: colors.lineNormalNormal),
               shape: RoundedRectangleBorder(
                 borderRadius: AppRadius.buttonBorder,
               ),

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:coflanet/constants/app_color_scheme.dart';
 import 'package:coflanet/constants/asset_constant.dart';
 import 'package:coflanet/constants/color_constant.dart';
 import 'package:coflanet/constants/radius_constant.dart';
@@ -170,24 +171,25 @@ class EquipmentChecklist extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final colors = AppColorScheme.of(context);
     return Container(
       decoration: BoxDecoration(
-        color: AppColor.colorGlobalCoolNeutral15,
+        color: colors.surfaceCard,
         borderRadius: AppRadius.lgBorder,
       ),
       padding: EdgeInsets.all(compact ? 16 : 20),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          _buildHeader(),
+          _buildHeader(colors),
           SizedBox(height: compact ? 12 : 16),
-          ...items.map((item) => _buildChecklistItem(item)),
+          ...items.map((item) => _buildChecklistItem(item, colors)),
         ],
       ),
     );
   }
 
-  Widget _buildHeader() {
+  Widget _buildHeader(AppColorScheme colors) {
     return Row(
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: [
@@ -197,7 +199,7 @@ class EquipmentChecklist extends StatelessWidget {
               (compact
                       ? AppTextStyles.body1NormalBold
                       : AppTextStyles.headline2Bold)
-                  .copyWith(color: AppColor.colorGlobalCommon100),
+                  .copyWith(color: colors.labelStrong),
         ),
         if (showChangeButton)
           GestureDetector(
@@ -205,7 +207,7 @@ class EquipmentChecklist extends StatelessWidget {
             child: Text(
               '변경하기',
               style: AppTextStyles.body2NormalMedium.copyWith(
-                color: AppColor.primaryNormal,
+                color: colors.primaryNormal,
               ),
             ),
           ),
@@ -213,7 +215,7 @@ class EquipmentChecklist extends StatelessWidget {
     );
   }
 
-  Widget _buildChecklistItem(EquipmentItem item) {
+  Widget _buildChecklistItem(EquipmentItem item, AppColorScheme colors) {
     final isChecked = checkedItems.contains(item.id);
 
     return Padding(
@@ -225,7 +227,7 @@ class EquipmentChecklist extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             // Checkbox
-            _buildCheckbox(isChecked),
+            _buildCheckbox(isChecked, colors),
             SizedBox(width: compact ? 10 : 12),
             // Content
             Expanded(
@@ -242,8 +244,8 @@ class EquipmentChecklist extends StatelessWidget {
                                     : AppTextStyles.body1NormalMedium)
                                 .copyWith(
                                   color: isChecked
-                                      ? AppColor.colorGlobalCommon100
-                                      : AppColor.colorGlobalCoolNeutral60,
+                                      ? colors.labelStrong
+                                      : colors.labelAlternative,
                                   decoration: isChecked ? null : null,
                                 ),
                       ),
@@ -255,13 +257,13 @@ class EquipmentChecklist extends StatelessWidget {
                             vertical: 2,
                           ),
                           decoration: BoxDecoration(
-                            color: AppColor.primaryNormal.withValues(alpha:0.15),
+                            color: colors.primaryNormal.withValues(alpha: 0.15),
                             borderRadius: AppRadius.xsBorder,
                           ),
                           child: Text(
                             '필수',
                             style: AppTextStyles.caption1Regular.copyWith(
-                              color: AppColor.primaryNormal,
+                              color: colors.primaryNormal,
                             ),
                           ),
                         ),
@@ -273,7 +275,7 @@ class EquipmentChecklist extends StatelessWidget {
                     Text(
                       item.description!,
                       style: AppTextStyles.caption1Regular.copyWith(
-                        color: AppColor.colorGlobalCoolNeutral50,
+                        color: colors.labelAssistive,
                       ),
                     ),
                   ],
@@ -286,18 +288,16 @@ class EquipmentChecklist extends StatelessWidget {
     );
   }
 
-  Widget _buildCheckbox(bool isChecked) {
+  Widget _buildCheckbox(bool isChecked, AppColorScheme colors) {
     return AnimatedContainer(
       duration: const Duration(milliseconds: 150),
       width: compact ? 20 : 24,
       height: compact ? 20 : 24,
       decoration: BoxDecoration(
-        color: isChecked ? AppColor.primaryNormal : AppColor.transparent,
+        color: isChecked ? colors.primaryNormal : AppColor.transparent,
         borderRadius: BorderRadius.circular(compact ? 5 : 6),
         border: Border.all(
-          color: isChecked
-              ? AppColor.primaryNormal
-              : AppColor.colorGlobalCoolNeutral40,
+          color: isChecked ? colors.primaryNormal : colors.interactionInactive,
           width: 2,
         ),
       ),

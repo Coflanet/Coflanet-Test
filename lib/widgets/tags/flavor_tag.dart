@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:coflanet/constants/app_color_scheme.dart';
 import 'package:coflanet/constants/color_constant.dart';
 import 'package:coflanet/constants/style_constant.dart';
 import 'package:coflanet/constants/radius_constant.dart';
@@ -57,24 +58,25 @@ class FlavorTag extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final colors = AppColorScheme.of(context);
     return GestureDetector(
       onTap: onTap,
       child: AnimatedContainer(
         duration: const Duration(milliseconds: 150),
         padding: _getPadding(),
         decoration: BoxDecoration(
-          color: _getBackgroundColor(),
+          color: _getBackgroundColor(colors),
           borderRadius: _getBorderRadius(),
-          border: _getBorder(),
+          border: _getBorder(colors),
         ),
         child: Row(
           mainAxisSize: MainAxisSize.min,
           children: [
             if (icon != null) ...[
-              Icon(icon, size: _getIconSize(), color: _getTextColor()),
+              Icon(icon, size: _getIconSize(), color: _getTextColor(colors)),
               SizedBox(width: style == FlavorTagStyle.compact ? 4 : 6),
             ],
-            Text(label, style: _getTextStyle()),
+            Text(label, style: _getTextStyle(colors)),
             if (onDelete != null) ...[
               SizedBox(width: style == FlavorTagStyle.compact ? 4 : 6),
               GestureDetector(
@@ -82,7 +84,7 @@ class FlavorTag extends StatelessWidget {
                 child: Icon(
                   Icons.close,
                   size: _getIconSize(),
-                  color: _getTextColor().withValues(alpha:0.7),
+                  color: _getTextColor(colors).withValues(alpha: 0.7),
                 ),
               ),
             ],
@@ -107,44 +109,44 @@ class FlavorTag extends StatelessWidget {
     return AppRadius.xxxlBorder;
   }
 
-  Color _getBackgroundColor() {
+  Color _getBackgroundColor(AppColorScheme colors) {
     if (isSelected) {
-      return AppColor.primaryNormal;
+      return colors.primaryNormal;
     }
 
     switch (style) {
       case FlavorTagStyle.primary:
-        return AppColor.primaryNormal.withValues(alpha:0.12);
+        return colors.primaryNormal.withValues(alpha: 0.12);
       case FlavorTagStyle.secondary:
-        return AppColor.componentFillNormal;
+        return colors.componentFillNormal;
       case FlavorTagStyle.outlined:
         return Colors.transparent;
       case FlavorTagStyle.compact:
-        return AppColor.primaryNormal.withValues(alpha:0.08);
+        return colors.primaryNormal.withValues(alpha: 0.08);
     }
   }
 
-  Border? _getBorder() {
+  Border? _getBorder(AppColorScheme colors) {
     if (isSelected) {
-      return Border.all(color: AppColor.primaryNormal, width: 2);
+      return Border.all(color: colors.primaryNormal, width: 2);
     }
 
     switch (style) {
       case FlavorTagStyle.primary:
         return Border.all(
-          color: AppColor.primaryNormal.withValues(alpha:0.3),
+          color: colors.primaryNormal.withValues(alpha: 0.3),
           width: 1,
         );
       case FlavorTagStyle.secondary:
-        return Border.all(color: AppColor.lineNormalNormal, width: 1);
+        return Border.all(color: colors.lineNormalNormal, width: 1);
       case FlavorTagStyle.outlined:
-        return Border.all(color: AppColor.lineNormalNormal, width: 1);
+        return Border.all(color: colors.lineNormalNormal, width: 1);
       case FlavorTagStyle.compact:
         return null;
     }
   }
 
-  Color _getTextColor() {
+  Color _getTextColor(AppColorScheme colors) {
     if (isSelected) {
       return AppColor.staticLabelWhiteStrong;
     }
@@ -152,15 +154,15 @@ class FlavorTag extends StatelessWidget {
     switch (style) {
       case FlavorTagStyle.primary:
       case FlavorTagStyle.compact:
-        return AppColor.primaryNormal;
+        return colors.primaryNormal;
       case FlavorTagStyle.secondary:
       case FlavorTagStyle.outlined:
-        return AppColor.labelNormal;
+        return colors.labelNormal;
     }
   }
 
-  TextStyle _getTextStyle() {
-    final color = _getTextColor();
+  TextStyle _getTextStyle(AppColorScheme colors) {
+    final color = _getTextColor(colors);
 
     switch (style) {
       case FlavorTagStyle.compact:

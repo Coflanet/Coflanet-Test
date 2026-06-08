@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:coflanet/constants/color_constant.dart';
+import 'package:coflanet/constants/app_color_scheme.dart';
 import 'package:coflanet/constants/radius_constant.dart';
 import 'package:coflanet/constants/style_constant.dart';
 
@@ -28,6 +28,8 @@ class SurveyCheckboxItem extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final colors = AppColorScheme.of(context);
+
     return GestureDetector(
       onTap: onTap,
       child: AnimatedContainer(
@@ -36,12 +38,13 @@ class SurveyCheckboxItem extends StatelessWidget {
         decoration: BoxDecoration(
           // Figma: 선택됨 = 흰색 배경, 미선택 = 연한 회색 배경
           color: isSelected
-              ? AppColor.backgroundNormalNormal
-              : AppColor.componentFillNormal,
+              ? colors.backgroundNormalNormal
+              : colors.componentFillNormal,
           borderRadius: AppRadius.lgBorder,
           border: Border.all(
-            // Figma: 선택됨 = Violet 테두리 2px, 미선택 = 테두리 없음
-            color: isSelected ? AppColor.primaryNormal : AppColor.transparent,
+            // Figma: 선택됨 = Violet 테두리 2px.
+            // 미선택 = 연한 회색 1px 상시 표시 (다크 검정 배경에서 외곽 확보).
+            color: isSelected ? colors.primaryNormal : colors.lineNormalNeutral,
             width: isSelected ? 2 : 1,
           ),
         ),
@@ -68,8 +71,8 @@ class SurveyCheckboxItem extends StatelessWidget {
                     // Storyboard: 선택됨 = Violet 텍스트, 미선택 = 검정 텍스트
                     style: AppTextStyles.body1NormalMedium.copyWith(
                       color: isSelected
-                          ? AppColor.primaryNormal
-                          : AppColor.labelNormal,
+                          ? colors.primaryNormal
+                          : colors.labelNormal,
                     ),
                   ),
                   if (description != null) ...[
@@ -78,8 +81,8 @@ class SurveyCheckboxItem extends StatelessWidget {
                       description!,
                       style: AppTextStyles.caption1Regular.copyWith(
                         color: isSelected
-                            ? AppColor.primarySecondary
-                            : AppColor.labelAlternative,
+                            ? colors.primarySecondary
+                            : colors.labelAlternative,
                       ),
                     ),
                   ],
@@ -92,8 +95,8 @@ class SurveyCheckboxItem extends StatelessWidget {
               Icons.check,
               size: 24,
               color: isSelected
-                  ? AppColor.primaryNormal
-                  : AppColor.interactionInactive,
+                  ? colors.primaryNormal
+                  : colors.interactionInactive,
             ),
           ],
         ),

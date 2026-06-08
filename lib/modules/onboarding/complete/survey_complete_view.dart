@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
+import 'package:coflanet/constants/app_color_scheme.dart';
 import 'package:coflanet/constants/asset_constant.dart';
 import 'package:coflanet/constants/color_constant.dart';
 import 'package:coflanet/constants/radius_constant.dart';
@@ -14,17 +15,20 @@ class SurveyCompleteView extends GetView<SurveyController> {
   // Figma 사양: Pretendard SemiBold 22 / lineHeight 1.36 / letterSpacing -0.4268
   // 색상은 Label/strong (#000000) 토큰 매핑
   // Auth 카테고리에서 통일한 페이지 헤더 스타일과 동일
-  TextStyle get _screenHeaderStyle => AppTextStyles.heading1Bold.copyWith(
-    fontWeight: FontWeight.w600,
-    height: 1.36,
-    letterSpacing: -0.4268,
-    color: AppColor.labelStrong,
-  );
+  TextStyle _screenHeaderStyle(AppColorScheme colors) =>
+      AppTextStyles.heading1Bold.copyWith(
+        fontWeight: FontWeight.w600,
+        height: 1.36,
+        letterSpacing: -0.4268,
+        color: colors.labelStrong,
+      );
 
   @override
   Widget build(BuildContext context) {
+    final colors = AppColorScheme.of(context);
+
     return Scaffold(
-      backgroundColor: AppColor.backgroundNormalNormal,
+      backgroundColor: colors.backgroundNormalNormal,
       appBar: AppBar(
         backgroundColor: AppColor.transparent,
         elevation: 0,
@@ -32,11 +36,10 @@ class SurveyCompleteView extends GetView<SurveyController> {
         title: Text(
           '취향 분석',
           style: AppTextStyles.headline2Bold.copyWith(
-            color: AppColor.labelNormal,
+            color: colors.labelNormal,
           ),
         ),
-        leading:
-            const SizedBox.shrink(), // 뒤로 가기 버튼 없음 — offNamed로 진입
+        leading: const SizedBox.shrink(), // 뒤로 가기 버튼 없음 — offNamed로 진입
         actions: [
           IconButton(
             icon: SvgPicture.asset(
@@ -44,7 +47,7 @@ class SurveyCompleteView extends GetView<SurveyController> {
               width: 24,
               height: 24,
               colorFilter: ColorFilter.mode(
-                AppColor.labelAlternative,
+                colors.labelAlternative,
                 BlendMode.srcIn,
               ),
             ),
@@ -67,7 +70,7 @@ class SurveyCompleteView extends GetView<SurveyController> {
                   Text(
                     '${controller.userName}님의\n커피 취향을 찾았어요!',
                     textAlign: TextAlign.center,
-                    style: _screenHeaderStyle,
+                    style: _screenHeaderStyle(colors),
                   ),
 
                   const Spacer(flex: 1),
@@ -84,7 +87,7 @@ class SurveyCompleteView extends GetView<SurveyController> {
                         width: 200,
                         height: 200,
                         decoration: BoxDecoration(
-                          color: AppColor.primaryLight,
+                          color: colors.primaryLight,
                           borderRadius: AppRadius.fullBorder,
                         ),
                         child: Column(
@@ -93,13 +96,13 @@ class SurveyCompleteView extends GetView<SurveyController> {
                             Icon(
                               Icons.card_giftcard_rounded,
                               size: 64,
-                              color: AppColor.primaryNormal,
+                              color: colors.primaryNormal,
                             ),
                             const SizedBox(height: 8),
                             Text(
                               'Mascot',
                               style: AppTextStyles.caption1Regular.copyWith(
-                                color: AppColor.primaryNormal,
+                                color: colors.primaryNormal,
                               ),
                             ),
                           ],
@@ -115,12 +118,17 @@ class SurveyCompleteView extends GetView<SurveyController> {
           ),
 
           // Bottom CTA area (BottomSheet_CTA style)
+          // SafeArea minimum: 제스처 네비=기존 34px 유지, 3버튼 네비=시스템 바 위로
           Container(
-            padding: const EdgeInsets.fromLTRB(24, 16, 24, 34),
-            decoration: BoxDecoration(color: AppColor.backgroundNormalNormal),
-            child: PrimaryButton(
-              text: '내 취향 커피 만나러 가기',
-              onPressed: () => controller.viewResult(),
+            padding: const EdgeInsets.fromLTRB(24, 16, 24, 0),
+            decoration: BoxDecoration(color: colors.backgroundNormalNormal),
+            child: SafeArea(
+              top: false,
+              minimum: const EdgeInsets.only(bottom: 34),
+              child: PrimaryButton(
+                text: '내 취향 커피 만나러 가기',
+                onPressed: () => controller.viewResult(),
+              ),
             ),
           ),
         ],

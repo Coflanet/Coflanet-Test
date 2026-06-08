@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
+import 'package:coflanet/constants/app_color_scheme.dart';
 import 'package:coflanet/constants/asset_constant.dart';
 import 'package:coflanet/constants/color_constant.dart';
 import 'package:coflanet/constants/style_constant.dart';
@@ -15,9 +16,10 @@ class EspressoSettingsView extends GetView<EspressoSettingsController> {
 
   @override
   Widget build(BuildContext context) {
+    final colors = AppColorScheme.of(context);
     return Scaffold(
-      backgroundColor: AppColor.backgroundNormalNormal,
-      appBar: _buildAppBar(),
+      backgroundColor: colors.backgroundNormalNormal,
+      appBar: _buildAppBar(colors),
       body: SafeArea(
         child: Column(
           children: [
@@ -31,6 +33,7 @@ class EspressoSettingsView extends GetView<EspressoSettingsController> {
                   itemBuilder: (context, index) {
                     if (index == controller.steps.length) {
                       return _buildAddStepButton(
+                        colors: colors,
                         key: const ValueKey('add_button'),
                       );
                     }
@@ -48,30 +51,30 @@ class EspressoSettingsView extends GetView<EspressoSettingsController> {
                 ),
               ),
             ),
-            _buildBottomBar(),
+            _buildBottomBar(colors),
           ],
         ),
       ),
     );
   }
 
-  PreferredSizeWidget _buildAppBar() {
+  PreferredSizeWidget _buildAppBar(AppColorScheme colors) {
     return AppBar(
-      backgroundColor: AppColor.backgroundNormalNormal,
+      backgroundColor: colors.backgroundNormalNormal,
       elevation: 0,
       leading: IconButton(
         icon: SvgPicture.asset(
           AssetPath.iconArrowBack,
           width: 24,
           height: 24,
-          colorFilter: ColorFilter.mode(AppColor.labelNormal, BlendMode.srcIn),
+          colorFilter: ColorFilter.mode(colors.labelNormal, BlendMode.srcIn),
         ),
         onPressed: () => Get.back(),
       ),
       title: Text(
         '추출 설정',
         style: AppTextStyles.headline1Bold.copyWith(
-          color: AppColor.labelNormal,
+          color: colors.labelNormal,
         ),
       ),
       centerTitle: true,
@@ -82,7 +85,7 @@ class EspressoSettingsView extends GetView<EspressoSettingsController> {
             child: Text(
               controller.isEditing ? '완료' : '편집',
               style: AppTextStyles.body1NormalMedium.copyWith(
-                color: AppColor.primaryNormal,
+                color: colors.primaryNormal,
               ),
             ),
           ),
@@ -91,7 +94,10 @@ class EspressoSettingsView extends GetView<EspressoSettingsController> {
     );
   }
 
-  Widget _buildAddStepButton({required Key key}) {
+  Widget _buildAddStepButton({
+    required AppColorScheme colors,
+    required Key key,
+  }) {
     return Container(
       key: key,
       margin: const EdgeInsets.only(top: 12),
@@ -100,10 +106,10 @@ class EspressoSettingsView extends GetView<EspressoSettingsController> {
         child: Container(
           padding: const EdgeInsets.all(16),
           decoration: BoxDecoration(
-            color: AppColor.componentFillNormal,
+            color: colors.componentFillNormal,
             borderRadius: AppRadius.xlBorder,
             border: Border.all(
-              color: AppColor.lineNormalNeutral,
+              color: colors.lineNormalNeutral,
               style: BorderStyle.solid,
             ),
           ),
@@ -112,14 +118,14 @@ class EspressoSettingsView extends GetView<EspressoSettingsController> {
             children: [
               Icon(
                 Icons.add_circle_outline,
-                color: AppColor.primaryNormal,
+                color: colors.primaryNormal,
                 size: 24,
               ),
               const SizedBox(width: 8),
               Text(
                 '단계 추가',
                 style: AppTextStyles.body1NormalMedium.copyWith(
-                  color: AppColor.primaryNormal,
+                  color: colors.primaryNormal,
                 ),
               ),
             ],
@@ -129,7 +135,7 @@ class EspressoSettingsView extends GetView<EspressoSettingsController> {
     );
   }
 
-  Widget _buildBottomBar() {
+  Widget _buildBottomBar(AppColorScheme colors) {
     return AppBottomBar(
       child: SizedBox(
         width: double.infinity,
@@ -137,7 +143,7 @@ class EspressoSettingsView extends GetView<EspressoSettingsController> {
         child: ElevatedButton(
           onPressed: controller.saveSettings,
           style: ElevatedButton.styleFrom(
-            backgroundColor: AppColor.primaryNormal,
+            backgroundColor: colors.primaryNormal,
             foregroundColor: AppColor.staticLabelWhiteStrong,
             elevation: 0,
             shape: RoundedRectangleBorder(borderRadius: AppRadius.lgBorder),
@@ -170,12 +176,13 @@ class _StepCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final colors = AppColorScheme.of(context);
     return Container(
       margin: const EdgeInsets.only(bottom: 12),
       decoration: BoxDecoration(
-        color: AppColor.backgroundNormalNormal,
+        color: colors.backgroundNormalNormal,
         borderRadius: AppRadius.xlBorder,
-        border: Border.all(color: AppColor.lineNormalNeutral),
+        border: Border.all(color: colors.lineNormalNeutral),
         boxShadow: AppShadows.shadowBlackNormal,
       ),
       child: Column(
@@ -184,7 +191,7 @@ class _StepCard extends StatelessWidget {
           Container(
             padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
             decoration: BoxDecoration(
-              color: _getStepColor().withValues(alpha:0.1),
+              color: _getStepColor(colors).withValues(alpha: 0.1),
               borderRadius: const BorderRadius.vertical(
                 top: Radius.circular(16),
               ),
@@ -195,7 +202,7 @@ class _StepCard extends StatelessWidget {
                   width: 28,
                   height: 28,
                   decoration: BoxDecoration(
-                    color: _getStepColor(),
+                    color: _getStepColor(colors),
                     borderRadius: AppRadius.smBorder,
                   ),
                   child: Center(
@@ -215,13 +222,13 @@ class _StepCard extends StatelessWidget {
                       Text(
                         step.name,
                         style: AppTextStyles.headline2Bold.copyWith(
-                          color: AppColor.labelNormal,
+                          color: colors.labelNormal,
                         ),
                       ),
                       Text(
                         _getStepTypeLabel(),
                         style: AppTextStyles.caption1Regular.copyWith(
-                          color: AppColor.labelAssistive,
+                          color: colors.labelAssistive,
                         ),
                       ),
                     ],
@@ -232,7 +239,7 @@ class _StepCard extends StatelessWidget {
                     IconButton(
                       icon: Icon(
                         Icons.delete_outline,
-                        color: AppColor.statusNegative,
+                        color: colors.statusNegative,
                       ),
                       onPressed: onDelete,
                     ),
@@ -242,7 +249,7 @@ class _StepCard extends StatelessWidget {
                       padding: const EdgeInsets.all(8),
                       child: Icon(
                         Icons.drag_handle,
-                        color: AppColor.labelAssistive,
+                        color: colors.labelAssistive,
                       ),
                     ),
                   ),
@@ -250,7 +257,7 @@ class _StepCard extends StatelessWidget {
                   IconButton(
                     icon: Icon(
                       Icons.edit_outlined,
-                      color: AppColor.labelAlternative,
+                      color: colors.labelAlternative,
                     ),
                     onPressed: onEdit,
                   ),
@@ -262,14 +269,15 @@ class _StepCard extends StatelessWidget {
             padding: const EdgeInsets.all(16),
             child: Column(
               children: [
-                _buildSettingRow('시간', _formatDuration(step.duration)),
+                _buildSettingRow(colors, '시간', _formatDuration(step.duration)),
                 const SizedBox(height: 8),
                 _buildSettingRow(
+                  colors,
                   '압력',
                   '${step.pressure.toStringAsFixed(1)} bar',
                 ),
                 const SizedBox(height: 8),
-                _buildSettingRow('온도', '${step.temperature}°C'),
+                _buildSettingRow(colors, '온도', '${step.temperature}°C'),
               ],
             ),
           ),
@@ -278,34 +286,35 @@ class _StepCard extends StatelessWidget {
     );
   }
 
-  Widget _buildSettingRow(String label, String value) {
+  Widget _buildSettingRow(AppColorScheme colors, String label, String value) {
     return Row(
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: [
         Text(
           label,
           style: AppTextStyles.body2NormalRegular.copyWith(
-            color: AppColor.labelAlternative,
+            color: colors.labelAlternative,
           ),
         ),
         Text(
           value,
           style: AppTextStyles.body2NormalMedium.copyWith(
-            color: AppColor.labelNormal,
+            color: colors.labelNormal,
           ),
         ),
       ],
     );
   }
 
-  Color _getStepColor() {
+  Color _getStepColor(AppColorScheme colors) {
     switch (step.type) {
+      // 스텝 분류 의미색(파랑/초록/주황)은 raw 유지, 메인 추출만 테마 보라
       case ExtractionStepType.preInfusion:
         return AppColor.colorGlobalBlue50;
       case ExtractionStepType.blooming:
         return AppColor.colorGlobalGreen50;
       case ExtractionStepType.mainExtraction:
-        return AppColor.primaryNormal;
+        return colors.primaryNormal;
       case ExtractionStepType.additionalExtraction:
         return AppColor.colorGlobalOrange50;
     }

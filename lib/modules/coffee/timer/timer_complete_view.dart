@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
+import 'package:coflanet/constants/app_color_scheme.dart';
 import 'package:coflanet/constants/asset_constant.dart';
 import 'package:coflanet/constants/color_constant.dart';
 import 'package:coflanet/constants/style_constant.dart';
@@ -14,10 +15,11 @@ class TimerCompleteView extends GetView<CoffeeTimerController> {
 
   @override
   Widget build(BuildContext context) {
+    final colors = AppColorScheme.of(context);
     final recipe = controller.recipe;
 
     return Scaffold(
-      backgroundColor: AppColor.backgroundNormalNormal,
+      backgroundColor: colors.backgroundNormalNormal,
       appBar: AppBar(
         backgroundColor: AppColor.transparent,
         elevation: 0,
@@ -28,7 +30,7 @@ class TimerCompleteView extends GetView<CoffeeTimerController> {
             width: 24,
             height: 24,
             colorFilter: ColorFilter.mode(
-              AppColor.labelNormal,
+              colors.labelNormal,
               BlendMode.srcIn,
             ),
           ),
@@ -41,12 +43,12 @@ class TimerCompleteView extends GetView<CoffeeTimerController> {
             const Spacer(flex: 2),
 
             // ─── Coffee mug illustration ───
-            _buildMugIllustration(),
+            _buildMugIllustration(colors),
 
             const SizedBox(height: 32),
 
             // ─── Completion message ───
-            _buildCompletionMessage(recipe),
+            _buildCompletionMessage(colors, recipe),
 
             const SizedBox(height: 32),
 
@@ -56,7 +58,7 @@ class TimerCompleteView extends GetView<CoffeeTimerController> {
                     recipe.aromaTags.isNotEmpty))
               Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 24),
-                child: _buildAromaCard(recipe),
+                child: _buildAromaCard(colors, recipe),
               ),
 
             const Spacer(flex: 3),
@@ -75,7 +77,7 @@ class TimerCompleteView extends GetView<CoffeeTimerController> {
     );
   }
 
-  Widget _buildMugIllustration() {
+  Widget _buildMugIllustration(AppColorScheme colors) {
     return TweenAnimationBuilder<double>(
       tween: Tween(begin: 0.0, end: 1.0),
       duration: const Duration(milliseconds: 700),
@@ -88,7 +90,7 @@ class TimerCompleteView extends GetView<CoffeeTimerController> {
         height: 120,
         decoration: BoxDecoration(
           shape: BoxShape.circle,
-          color: AppColor.primaryLight,
+          color: colors.primaryLight,
         ),
         child: const Center(
           child: Text('\u2615', style: AppTextStyles.emojiLarge),
@@ -97,7 +99,10 @@ class TimerCompleteView extends GetView<CoffeeTimerController> {
     );
   }
 
-  Widget _buildCompletionMessage(TimerRecipeModel? recipe) {
+  Widget _buildCompletionMessage(
+    AppColorScheme colors,
+    TimerRecipeModel? recipe,
+  ) {
     final message = recipe?.completionMessage ?? '맛있는 커피가 완성되었어요!';
 
     return TweenAnimationBuilder<double>(
@@ -117,14 +122,14 @@ class TimerCompleteView extends GetView<CoffeeTimerController> {
         padding: const EdgeInsets.symmetric(horizontal: 24),
         child: Text(
           message,
-          style: AppTextStyles.title2Bold.copyWith(color: AppColor.labelNormal),
+          style: AppTextStyles.title2Bold.copyWith(color: colors.labelNormal),
           textAlign: TextAlign.center,
         ),
       ),
     );
   }
 
-  Widget _buildAromaCard(TimerRecipeModel recipe) {
+  Widget _buildAromaCard(AppColorScheme colors, TimerRecipeModel recipe) {
     return TweenAnimationBuilder<double>(
       tween: Tween(begin: 0.0, end: 1.0),
       duration: const Duration(milliseconds: 800),
@@ -142,7 +147,7 @@ class TimerCompleteView extends GetView<CoffeeTimerController> {
         width: double.infinity,
         padding: const EdgeInsets.all(20),
         decoration: BoxDecoration(
-          color: AppColor.primaryLight,
+          color: colors.primaryLight,
           borderRadius: AppRadius.xlBorder,
         ),
         child: Column(
@@ -152,7 +157,7 @@ class TimerCompleteView extends GetView<CoffeeTimerController> {
             Text(
               '이런 향을 느껴보세요',
               style: AppTextStyles.headline2Bold.copyWith(
-                color: AppColor.primaryNormal,
+                color: colors.primaryNormal,
               ),
             ),
 
@@ -162,7 +167,7 @@ class TimerCompleteView extends GetView<CoffeeTimerController> {
               Text(
                 recipe.aromaDescription!,
                 style: AppTextStyles.body2NormalRegular.copyWith(
-                  color: AppColor.labelAlternative,
+                  color: colors.labelAlternative,
                 ),
               ),
             ],
@@ -170,7 +175,7 @@ class TimerCompleteView extends GetView<CoffeeTimerController> {
             // Flavor tags
             if (recipe.aromaTags.isNotEmpty) ...[
               const SizedBox(height: 16),
-              _buildFlavorTags(recipe.aromaTags),
+              _buildFlavorTags(colors, recipe.aromaTags),
             ],
           ],
         ),
@@ -178,7 +183,7 @@ class TimerCompleteView extends GetView<CoffeeTimerController> {
     );
   }
 
-  Widget _buildFlavorTags(List<AromaTagModel> tags) {
+  Widget _buildFlavorTags(AppColorScheme colors, List<AromaTagModel> tags) {
     return Wrap(
       spacing: 8,
       runSpacing: 8,
@@ -186,7 +191,7 @@ class TimerCompleteView extends GetView<CoffeeTimerController> {
         return Container(
           padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 8),
           decoration: BoxDecoration(
-            color: AppColor.backgroundNormalNormal,
+            color: colors.backgroundNormalNormal,
             borderRadius: AppRadius.xxlBorder,
           ),
           child: Row(
@@ -197,7 +202,7 @@ class TimerCompleteView extends GetView<CoffeeTimerController> {
               Text(
                 tag.name,
                 style: AppTextStyles.label1NormalMedium.copyWith(
-                  color: AppColor.labelNormal,
+                  color: colors.labelNormal,
                 ),
               ),
             ],

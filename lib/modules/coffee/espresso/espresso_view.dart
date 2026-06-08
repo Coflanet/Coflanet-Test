@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
+import 'package:coflanet/constants/app_color_scheme.dart';
 import 'package:coflanet/constants/asset_constant.dart';
 import 'package:coflanet/constants/color_constant.dart';
 import 'package:coflanet/constants/style_constant.dart';
@@ -17,8 +18,9 @@ class EspressoView extends GetView<CoffeeController> {
 
   @override
   Widget build(BuildContext context) {
+    final colors = AppColorScheme.of(context);
     return Scaffold(
-      backgroundColor: AppColor.backgroundNormalNormal,
+      backgroundColor: colors.backgroundNormalNormal,
       appBar: AppBar(
         backgroundColor: AppColor.transparent,
         elevation: 0,
@@ -28,7 +30,7 @@ class EspressoView extends GetView<CoffeeController> {
             width: 24,
             height: 24,
             colorFilter: ColorFilter.mode(
-              AppColor.labelNormal,
+              colors.labelNormal,
               BlendMode.srcIn,
             ),
           ),
@@ -37,7 +39,7 @@ class EspressoView extends GetView<CoffeeController> {
         title: Text(
           '에스프레소',
           style: AppTextStyles.headline1Bold.copyWith(
-            color: AppColor.labelNormal,
+            color: colors.labelNormal,
           ),
         ),
         actions: [
@@ -47,7 +49,7 @@ class EspressoView extends GetView<CoffeeController> {
               width: 24,
               height: 24,
               colorFilter: ColorFilter.mode(
-                AppColor.labelAlternative,
+                colors.labelAlternative,
                 BlendMode.srcIn,
               ),
             ),
@@ -70,18 +72,20 @@ class EspressoView extends GetView<CoffeeController> {
               Text(
                 '추출 설정',
                 style: AppTextStyles.headline1Bold.copyWith(
-                  color: AppColor.labelNormal,
+                  color: colors.labelNormal,
                 ),
               ),
               const SizedBox(height: 16),
 
               _buildSettingItem(
+                colors: colors,
                 icon: Icons.local_drink,
                 title: '싱글 샷',
                 description: '30ml 추출',
                 isSelected: true,
               ),
               _buildSettingItem(
+                colors: colors,
                 icon: Icons.local_drink,
                 title: '더블 샷',
                 description: '60ml 추출',
@@ -94,14 +98,14 @@ class EspressoView extends GetView<CoffeeController> {
               Text(
                 '팁',
                 style: AppTextStyles.headline1Bold.copyWith(
-                  color: AppColor.labelNormal,
+                  color: colors.labelNormal,
                 ),
               ),
               const SizedBox(height: 16),
 
-              _buildTip('원두는 에스프레소용 분쇄로 곱게 갈아주세요'),
-              _buildTip('추출 시간은 25-30초가 적당해요'),
-              _buildTip('크레마가 고르게 형성되는지 확인하세요'),
+              _buildTip(colors, '원두는 에스프레소용 분쇄로 곱게 갈아주세요'),
+              _buildTip(colors, '추출 시간은 25-30초가 적당해요'),
+              _buildTip(colors, '크레마가 고르게 형성되는지 확인하세요'),
 
               const SizedBox(height: 32),
 
@@ -132,6 +136,7 @@ class EspressoView extends GetView<CoffeeController> {
   }
 
   Widget _buildSettingItem({
+    required AppColorScheme colors,
     required IconData icon,
     required String title,
     required String description,
@@ -142,13 +147,13 @@ class EspressoView extends GetView<CoffeeController> {
       padding: const EdgeInsets.all(16),
       decoration: BoxDecoration(
         color: isSelected
-            ? AppColor.primaryLight
-            : AppColor.backgroundNormalNormal,
+            ? colors.primaryLight
+            : colors.backgroundNormalNormal,
         borderRadius: AppRadius.lgBorder,
         border: Border.all(
           color: isSelected
-              ? AppColor.primaryNormal
-              : AppColor.lineNormalNeutral,
+              ? colors.primaryNormal
+              : colors.lineNormalNeutral,
           width: isSelected ? 2 : 1,
         ),
       ),
@@ -157,8 +162,8 @@ class EspressoView extends GetView<CoffeeController> {
           Icon(
             icon,
             color: isSelected
-                ? AppColor.primaryNormal
-                : AppColor.labelAlternative,
+                ? colors.primaryNormal
+                : colors.labelAlternative,
           ),
           const SizedBox(width: 12),
           Expanded(
@@ -168,26 +173,26 @@ class EspressoView extends GetView<CoffeeController> {
                 Text(
                   title,
                   style: AppTextStyles.body1NormalMedium.copyWith(
-                    color: AppColor.labelNormal,
+                    color: colors.labelNormal,
                   ),
                 ),
                 Text(
                   description,
                   style: AppTextStyles.caption1Regular.copyWith(
-                    color: AppColor.labelAlternative,
+                    color: colors.labelAlternative,
                   ),
                 ),
               ],
             ),
           ),
           if (isSelected)
-            Icon(Icons.check_circle, color: AppColor.primaryNormal),
+            Icon(Icons.check_circle, color: colors.primaryNormal),
         ],
       ),
     );
   }
 
-  Widget _buildTip(String text) {
+  Widget _buildTip(AppColorScheme colors, String text) {
     return Padding(
       padding: const EdgeInsets.only(bottom: 12),
       child: Row(
@@ -203,7 +208,7 @@ class EspressoView extends GetView<CoffeeController> {
             child: Text(
               text,
               style: AppTextStyles.body2NormalRegular.copyWith(
-                color: AppColor.labelAlternative,
+                color: colors.labelAlternative,
               ),
             ),
           ),

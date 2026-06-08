@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:coflanet/constants/app_color_scheme.dart';
 import 'package:coflanet/constants/color_constant.dart';
 import 'package:coflanet/constants/radius_constant.dart';
 import 'package:coflanet/constants/style_constant.dart';
@@ -38,7 +39,7 @@ class BeanAddMethodModal extends StatelessWidget {
       enableDrag: true,
       isScrollControlled: true,
       backgroundColor: AppColor.transparent,
-      barrierColor: AppColor.componentMaterialDimmer,
+      barrierColor: AppColorScheme.of(Get.context!).componentMaterialDimmer,
       enterBottomSheetDuration: const Duration(milliseconds: 300),
       exitBottomSheetDuration: const Duration(milliseconds: 200),
     );
@@ -48,18 +49,29 @@ class BeanAddMethodModal extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final colors = AppColorScheme.of(context);
     final bottomPadding = MediaQuery.of(context).viewPadding.bottom;
 
     return Container(
       decoration: BoxDecoration(
-        color: AppColor.backgroundElevatedNormal,
+        color: colors.backgroundElevatedNormal,
         borderRadius: AppRadius.top(AppRadius.xxl),
+        // 다크 모드는 어두운 배경 위에서 시트 상단 경계가 약해지므로
+        // 둥근 상단 모서리를 따라 좌/상/우 1px 보더만 추가한다.
+        // 화면 하단에 붙는 아래쪽은 선을 긋지 않는다. 라이트 외형은 불변.
+        border: Theme.of(context).brightness == Brightness.dark
+            ? Border(
+                top: BorderSide(color: colors.lineSolidNormal, width: 1),
+                left: BorderSide(color: colors.lineSolidNormal, width: 1),
+                right: BorderSide(color: colors.lineSolidNormal, width: 1),
+              )
+            : null,
       ),
       child: Column(
         mainAxisSize: MainAxisSize.min,
         children: [
-          _buildDragHandle(),
-          _buildHeader(),
+          _buildDragHandle(colors),
+          _buildHeader(colors),
           _buildContent(),
           // iOS Home Indicator 영역
           SizedBox(height: bottomPadding > 0 ? bottomPadding : 20),
@@ -69,20 +81,20 @@ class BeanAddMethodModal extends StatelessWidget {
   }
 
   /// Drag handle - 40x4px pill
-  Widget _buildDragHandle() {
+  Widget _buildDragHandle(AppColorScheme colors) {
     return Container(
       margin: const EdgeInsets.only(top: 12),
       width: 40,
       height: 4,
       decoration: BoxDecoration(
-        color: AppColor.lineSolidNormal,
+        color: colors.interactionInactive,
         borderRadius: AppRadius.fullBorder,
       ),
     );
   }
 
   /// 헤더 - 제목(중앙) + 닫기 버튼(우측)
-  Widget _buildHeader() {
+  Widget _buildHeader(AppColorScheme colors) {
     return Padding(
       padding: const EdgeInsets.fromLTRB(24, 24, 16, 0),
       child: Row(
@@ -93,7 +105,7 @@ class BeanAddMethodModal extends StatelessWidget {
             child: Text(
               '원두 추가',
               style: AppTextStyles.headline1Bold.copyWith(
-                color: AppColor.labelNormal,
+                color: colors.labelNormal,
               ),
               textAlign: TextAlign.center,
             ),
@@ -103,7 +115,7 @@ class BeanAddMethodModal extends StatelessWidget {
             behavior: HitTestBehavior.opaque,
             child: Padding(
               padding: const EdgeInsets.all(8),
-              child: Icon(Icons.close, size: 24, color: AppColor.labelNormal),
+              child: Icon(Icons.close, size: 24, color: colors.labelNormal),
             ),
           ),
         ],
@@ -155,21 +167,22 @@ class _MethodCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final colors = AppColorScheme.of(context);
     final cardColor = isHighlighted
-        ? AppColor.primaryNormal.withValues(alpha: 0.06)
-        : AppColor.colorGlobalCoolNeutral97;
+        ? colors.primaryNormal.withValues(alpha: 0.06)
+        : colors.componentFillNormal;
     final borderColor = isHighlighted
-        ? AppColor.primaryNormal
+        ? colors.primaryNormal
         : AppColor.transparent;
     final placeholderColor = isHighlighted
-        ? AppColor.primaryNormal.withValues(alpha: 0.12)
-        : AppColor.colorGlobalCoolNeutral96;
+        ? colors.primaryNormal.withValues(alpha: 0.12)
+        : colors.componentFillStrong;
     final iconColor = isHighlighted
-        ? AppColor.primaryNormal.withValues(alpha: 0.45)
-        : AppColor.labelAssistive;
+        ? colors.primaryNormal.withValues(alpha: 0.45)
+        : colors.labelAssistive;
     final labelColor = isHighlighted
-        ? AppColor.primaryNormal
-        : AppColor.labelAlternative;
+        ? colors.primaryNormal
+        : colors.labelAlternative;
 
     return GestureDetector(
       onTap: onTap,

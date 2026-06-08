@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
+import 'package:coflanet/constants/app_color_scheme.dart';
 import 'package:coflanet/constants/asset_constant.dart';
 import 'package:coflanet/constants/color_constant.dart';
 import 'package:coflanet/constants/style_constant.dart';
@@ -13,17 +14,19 @@ class CoffeeMainView extends GetView<CoffeeController> {
   // Figma 사양: Pretendard SemiBold 22 / lineHeight 1.36 / letterSpacing -0.4268
   // 색상은 Label/strong (#000000) 토큰 매핑
   // Auth 카테고리에서 통일한 페이지 헤더 스타일과 동일
-  TextStyle get _screenHeaderStyle => AppTextStyles.heading1Bold.copyWith(
-    fontWeight: FontWeight.w600,
-    height: 1.36,
-    letterSpacing: -0.4268,
-    color: AppColor.labelStrong,
-  );
+  TextStyle _screenHeaderStyle(AppColorScheme colors) =>
+      AppTextStyles.heading1Bold.copyWith(
+        fontWeight: FontWeight.w600,
+        height: 1.36,
+        letterSpacing: -0.4268,
+        color: colors.labelStrong,
+      );
 
   @override
   Widget build(BuildContext context) {
+    final colors = AppColorScheme.of(context);
     return Scaffold(
-      backgroundColor: AppColor.backgroundNormalNormal,
+      backgroundColor: colors.backgroundNormalNormal,
       appBar: AppBar(
         backgroundColor: AppColor.transparent,
         elevation: 0,
@@ -31,7 +34,7 @@ class CoffeeMainView extends GetView<CoffeeController> {
         title: Text(
           '커피 마시기',
           style: AppTextStyles.headline1Bold.copyWith(
-            color: AppColor.labelNormal,
+            color: colors.labelNormal,
           ),
         ),
       ),
@@ -43,13 +46,14 @@ class CoffeeMainView extends GetView<CoffeeController> {
             children: [
               Text(
                 '어떤 방식으로\n커피를 즐기시겠어요?',
-                style: _screenHeaderStyle,
+                style: _screenHeaderStyle(colors),
               ),
 
               const SizedBox(height: 32),
 
               // Coffee type cards
               _buildCoffeeTypeCard(
+                colors: colors,
                 type: CoffeeType.handDrip,
                 title: '핸드드립',
                 description: '직접 손으로 내리는 커피',
@@ -61,6 +65,7 @@ class CoffeeMainView extends GetView<CoffeeController> {
               const SizedBox(height: 16),
 
               _buildCoffeeTypeCard(
+                colors: colors,
                 type: CoffeeType.espresso,
                 title: '에스프레소 머신',
                 description: '기계로 추출하는 진한 커피',
@@ -76,6 +81,7 @@ class CoffeeMainView extends GetView<CoffeeController> {
   }
 
   Widget _buildCoffeeTypeCard({
+    required AppColorScheme colors,
     required CoffeeType type,
     required String title,
     required String description,
@@ -88,11 +94,11 @@ class CoffeeMainView extends GetView<CoffeeController> {
       child: Container(
         padding: const EdgeInsets.all(16),
         decoration: BoxDecoration(
-          color: AppColor.backgroundNormalNormal,
+          color: colors.backgroundNormalNormal,
           borderRadius: AppRadius.xlBorder,
           boxShadow: [
             BoxShadow(
-              color: AppColor.labelNormal.withValues(alpha: 0.08),
+              color: colors.labelNormal.withValues(alpha: 0.08),
               blurRadius: 8,
               offset: const Offset(0, 2),
             ),
@@ -128,14 +134,14 @@ class CoffeeMainView extends GetView<CoffeeController> {
                   Text(
                     title,
                     style: AppTextStyles.headline1Bold.copyWith(
-                      color: AppColor.labelNormal,
+                      color: colors.labelNormal,
                     ),
                   ),
                   const SizedBox(height: 4),
                   Text(
                     description,
                     style: AppTextStyles.body2NormalRegular.copyWith(
-                      color: AppColor.labelAlternative,
+                      color: colors.labelAlternative,
                     ),
                   ),
                 ],
@@ -146,7 +152,7 @@ class CoffeeMainView extends GetView<CoffeeController> {
               width: 20,
               height: 20,
               colorFilter: ColorFilter.mode(
-                AppColor.labelAssistive,
+                colors.labelAssistive,
                 BlendMode.srcIn,
               ),
             ),

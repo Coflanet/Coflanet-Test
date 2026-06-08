@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart' hide SearchController;
 import 'package:get/get.dart';
-import 'package:coflanet/constants/color_constant.dart';
+import 'package:coflanet/constants/app_color_scheme.dart';
 import 'package:coflanet/constants/style_constant.dart';
 import 'package:coflanet/constants/util_constant.dart';
 import 'package:coflanet/data/models/catalog_bean_model.dart';
@@ -14,13 +14,14 @@ class SearchView extends GetView<SearchController> {
 
   @override
   Widget build(BuildContext context) {
+    final colors = AppColorScheme.of(context);
     return Scaffold(
-      backgroundColor: AppColor.backgroundNormalNormal,
+      backgroundColor: colors.backgroundNormalNormal,
       body: SafeArea(
         child: Column(
           children: [
-            _buildHeader(),
-            Expanded(child: _buildBody()),
+            _buildHeader(colors),
+            Expanded(child: _buildBody(colors)),
           ],
         ),
       ),
@@ -28,7 +29,7 @@ class SearchView extends GetView<SearchController> {
   }
 
   // ===== 헤더 (뒤로가기 + 검색 입력) =====
-  Widget _buildHeader() {
+  Widget _buildHeader(AppColorScheme colors) {
     return Padding(
       padding: const EdgeInsets.fromLTRB(8, 8, 16, 8),
       child: Row(
@@ -38,7 +39,7 @@ class SearchView extends GetView<SearchController> {
             button: true,
             child: IconButton(
               onPressed: Get.back,
-              icon: Icon(Icons.arrow_back, color: AppColor.labelNormal),
+              icon: Icon(Icons.arrow_back, color: colors.labelNormal),
             ),
           ),
           Expanded(child: _buildSearchField()),
@@ -58,15 +59,15 @@ class SearchView extends GetView<SearchController> {
   }
 
   // ===== 본문 (상태별 분기) =====
-  Widget _buildBody() {
+  Widget _buildBody(AppColorScheme colors) {
     return Obx(() {
       if (controller.isSearching) {
         return Center(
-          child: CircularProgressIndicator(color: AppColor.primaryNormal),
+          child: CircularProgressIndicator(color: colors.primaryNormal),
         );
       }
       if (!controller.hasSearched) {
-        return _buildHint();
+        return _buildHint(colors);
       }
       if (controller.results.isEmpty) {
         return const AppEmptyState(
@@ -75,12 +76,12 @@ class SearchView extends GetView<SearchController> {
           description: '다른 검색어로 다시 시도해보세요',
         );
       }
-      return _buildResultList();
+      return _buildResultList(colors);
     });
   }
 
   /// 검색 전 초기 안내
-  Widget _buildHint() {
+  Widget _buildHint(AppColorScheme colors) {
     return Center(
       child: Padding(
         padding: const EdgeInsets.all(32),
@@ -90,13 +91,13 @@ class SearchView extends GetView<SearchController> {
             Icon(
               Icons.coffee_outlined,
               size: 48,
-              color: AppColor.labelAssistive,
+              color: colors.labelAssistive,
             ),
             const SizedBox(height: 16),
             Text(
               '찾고 싶은 원두를 검색해보세요',
               style: AppTextStyles.body1NormalMedium.copyWith(
-                color: AppColor.labelAlternative,
+                color: colors.labelAlternative,
               ),
             ),
           ],
@@ -105,20 +106,20 @@ class SearchView extends GetView<SearchController> {
     );
   }
 
-  Widget _buildResultList() {
+  Widget _buildResultList(AppColorScheme colors) {
     return ListView.separated(
       padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
       itemCount: controller.results.length,
       separatorBuilder: (_, __) => Divider(
         height: 1,
-        color: AppColor.lineSolidNormal,
+        color: colors.lineSolidNormal,
       ),
       itemBuilder: (context, index) =>
-          _buildResultTile(controller.results[index]),
+          _buildResultTile(colors, controller.results[index]),
     );
   }
 
-  Widget _buildResultTile(CatalogBean bean) {
+  Widget _buildResultTile(AppColorScheme colors, CatalogBean bean) {
     return Padding(
       padding: const EdgeInsets.symmetric(vertical: 12),
       child: Row(
@@ -129,7 +130,7 @@ class SearchView extends GetView<SearchController> {
             width: 56,
             height: 56,
             decoration: BoxDecoration(
-              color: AppColor.colorGlobalCoolNeutral97,
+              color: colors.surfaceCardStrong,
               borderRadius: BorderRadius.circular(8),
               image: bean.imageUrl != null
                   ? DecorationImage(
@@ -139,7 +140,7 @@ class SearchView extends GetView<SearchController> {
                   : null,
             ),
             child: bean.imageUrl == null
-                ? Icon(Icons.coffee, color: AppColor.primaryNormal, size: 24)
+                ? Icon(Icons.coffee, color: colors.primaryNormal, size: 24)
                 : null,
           ),
           const SizedBox(width: 12),
@@ -151,7 +152,7 @@ class SearchView extends GetView<SearchController> {
                 Text(
                   bean.name,
                   style: AppTextStyles.body2NormalBold.copyWith(
-                    color: AppColor.labelNormal,
+                    color: colors.labelNormal,
                   ),
                   maxLines: 1,
                   overflow: TextOverflow.ellipsis,
@@ -160,7 +161,7 @@ class SearchView extends GetView<SearchController> {
                 Text(
                   _subtitle(bean),
                   style: AppTextStyles.caption1Regular.copyWith(
-                    color: AppColor.labelAlternative,
+                    color: colors.labelAlternative,
                   ),
                   maxLines: 1,
                   overflow: TextOverflow.ellipsis,
@@ -170,7 +171,7 @@ class SearchView extends GetView<SearchController> {
                   Text(
                     AppUtil.changeNumberToWon(bean.displayPrice),
                     style: AppTextStyles.body2NormalBold.copyWith(
-                      color: AppColor.labelNormal,
+                      color: colors.labelNormal,
                     ),
                   ),
                 ],
@@ -190,13 +191,13 @@ class SearchView extends GetView<SearchController> {
                 height: 36,
                 alignment: Alignment.center,
                 decoration: BoxDecoration(
-                  color: AppColor.primaryLight,
+                  color: colors.primaryLight,
                   shape: BoxShape.circle,
                 ),
                 child: Icon(
                   Icons.add_shopping_cart,
                   size: 18,
-                  color: AppColor.primaryNormal,
+                  color: colors.primaryNormal,
                 ),
               ),
             ),

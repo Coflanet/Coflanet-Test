@@ -2,8 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
+import 'package:coflanet/constants/app_color_scheme.dart';
 import 'package:coflanet/constants/asset_constant.dart';
-import 'package:coflanet/constants/color_constant.dart';
 import 'package:coflanet/constants/radius_constant.dart';
 import 'package:coflanet/constants/style_constant.dart';
 import 'package:coflanet/modules/coffee/coffee_controller.dart';
@@ -19,6 +19,7 @@ import 'package:coflanet/widgets/navigation/app_bottom_bar.dart';
 ///   - `'waterTemperature'` → 물 온도 (80-100°C)
 ///   - `'extractionTime'`   → 추출 시간 (time picker)
 ///   - `'waterAmount'`      → 물 양 (100-400ml)
+///
 class CoffeeSettingDetailView extends GetView<CoffeeController> {
   const CoffeeSettingDetailView({super.key});
 
@@ -141,30 +142,28 @@ class CoffeeSettingDetailView extends GetView<CoffeeController> {
 
   @override
   Widget build(BuildContext context) {
+    final colors = AppColorScheme.of(context);
     final cfg = _config;
 
-    // Fixed per Figma CSS: Recipe Setting Detail uses #000000 background
+    // 페이지 배경 — 다크에서는 순검정(Figma), 라이트에서는 밝은 회색으로 자동 전환
     return Scaffold(
-      backgroundColor: AppColor.colorGlobalCommon0, // #000000 black
+      backgroundColor: colors.backgroundNormalAlternative,
       appBar: AppBar(
-        backgroundColor: AppColor.colorGlobalCommon0,
+        backgroundColor: colors.backgroundNormalAlternative,
         elevation: 0,
         leading: IconButton(
           icon: SvgPicture.asset(
             AssetPath.iconArrowBack,
             width: 24,
             height: 24,
-            colorFilter: ColorFilter.mode(
-              AppColor.colorGlobalCommon100, // White icon on black bg
-              BlendMode.srcIn,
-            ),
+            colorFilter: ColorFilter.mode(colors.labelStrong, BlendMode.srcIn),
           ),
           onPressed: () => Get.back(),
         ),
         title: Text(
           cfg.title,
           style: AppTextStyles.headline1Bold.copyWith(
-            color: AppColor.colorGlobalCommon100, // White text on black bg
+            color: colors.labelStrong,
           ),
         ),
       ),
@@ -179,27 +178,27 @@ class CoffeeSettingDetailView extends GetView<CoffeeController> {
                     const SizedBox(height: 40),
 
                     // ── icon badge ──
-                    _buildIconBadge(cfg),
+                    _buildIconBadge(colors, cfg),
 
                     const SizedBox(height: 32),
 
                     // ── large value display ──
-                    _buildValueDisplay(cfg),
+                    _buildValueDisplay(colors, cfg),
 
                     const SizedBox(height: 48),
 
                     // ── slider ──
-                    _buildSlider(cfg),
+                    _buildSlider(colors, cfg),
 
                     const SizedBox(height: 32),
 
                     // ── "직접 입력" button ──
-                    _buildDirectInputButton(cfg),
+                    _buildDirectInputButton(colors, cfg),
 
                     const SizedBox(height: 24),
 
                     // ── range hint ──
-                    _buildRangeHint(cfg),
+                    _buildRangeHint(colors, cfg),
                   ],
                 ),
               ),
@@ -215,7 +214,7 @@ class CoffeeSettingDetailView extends GetView<CoffeeController> {
 
   // ── UI pieces ────────────────────────────────────────────────────────
 
-  Widget _buildIconBadge(_ParamConfig cfg) {
+  Widget _buildIconBadge(AppColorScheme colors, _ParamConfig cfg) {
     return Container(
       width: 72,
       height: 72,
@@ -224,18 +223,18 @@ class CoffeeSettingDetailView extends GetView<CoffeeController> {
           begin: Alignment.topLeft,
           end: Alignment.bottomRight,
           colors: [
-            AppColor.primaryNormal.withValues(alpha:0.3),
-            AppColor.primaryNormal.withValues(alpha:0.15),
+            colors.primaryNormal.withValues(alpha: 0.3),
+            colors.primaryNormal.withValues(alpha: 0.15),
           ],
         ),
         borderRadius: AppRadius.xxxlBorder,
         boxShadow: AppShadows.shadowPrimaryEmphasize,
       ),
-      child: Icon(cfg.icon, color: AppColor.primaryNormal, size: 32),
+      child: Icon(cfg.icon, color: colors.primaryNormal, size: 32),
     );
   }
 
-  Widget _buildValueDisplay(_ParamConfig cfg) {
+  Widget _buildValueDisplay(AppColorScheme colors, _ParamConfig cfg) {
     return Obx(() {
       final value = cfg.getValue();
       final displayText = cfg.isTimePicker
@@ -247,14 +246,14 @@ class CoffeeSettingDetailView extends GetView<CoffeeController> {
           Text(
             displayText,
             style: AppTextStyles.display2Bold.copyWith(
-              color: AppColor.colorGlobalCommon100, // White on black bg
+              color: colors.labelStrong,
             ),
           ),
           const SizedBox(height: 8),
           Text(
             cfg.title,
             style: AppTextStyles.body1NormalRegular.copyWith(
-              color: AppColor.colorGlobalCoolNeutral60, // Light gray on black
+              color: colors.labelAlternative,
             ),
           ),
         ],
@@ -262,7 +261,7 @@ class CoffeeSettingDetailView extends GetView<CoffeeController> {
     });
   }
 
-  Widget _buildSlider(_ParamConfig cfg) {
+  Widget _buildSlider(AppColorScheme colors, _ParamConfig cfg) {
     return Obx(() {
       final current = cfg.getValue().toDouble();
 
@@ -270,11 +269,10 @@ class CoffeeSettingDetailView extends GetView<CoffeeController> {
         children: [
           SliderTheme(
             data: SliderTheme.of(Get.context!).copyWith(
-              activeTrackColor: AppColor.primaryNormal,
-              inactiveTrackColor:
-                  AppColor.colorGlobalCoolNeutral25, // Dark track
-              thumbColor: AppColor.primaryNormal,
-              overlayColor: AppColor.primaryNormal.withValues(alpha:0.15),
+              activeTrackColor: colors.primaryNormal,
+              inactiveTrackColor: colors.lineSolidNormal,
+              thumbColor: colors.primaryNormal,
+              overlayColor: colors.primaryNormal.withValues(alpha: 0.15),
               trackHeight: 6,
               thumbShape: const RoundSliderThumbShape(enabledThumbRadius: 14),
               overlayShape: const RoundSliderOverlayShape(overlayRadius: 24),
@@ -296,8 +294,7 @@ class CoffeeSettingDetailView extends GetView<CoffeeController> {
                     ? _formatSeconds(cfg.min)
                     : '${cfg.min}${cfg.unit}',
                 style: AppTextStyles.caption1Regular.copyWith(
-                  color:
-                      AppColor.colorGlobalCoolNeutral60, // Light gray on black
+                  color: colors.labelAlternative,
                 ),
               ),
               Text(
@@ -305,8 +302,7 @@ class CoffeeSettingDetailView extends GetView<CoffeeController> {
                     ? _formatSeconds(cfg.max)
                     : '${cfg.max}${cfg.unit}',
                 style: AppTextStyles.caption1Regular.copyWith(
-                  color:
-                      AppColor.colorGlobalCoolNeutral60, // Light gray on black
+                  color: colors.labelAlternative,
                 ),
               ),
             ],
@@ -316,33 +312,30 @@ class CoffeeSettingDetailView extends GetView<CoffeeController> {
     });
   }
 
-  Widget _buildDirectInputButton(_ParamConfig cfg) {
+  Widget _buildDirectInputButton(AppColorScheme colors, _ParamConfig cfg) {
     return GestureDetector(
       onTap: () => _openDirectInput(cfg),
       child: Container(
         width: double.infinity,
         padding: const EdgeInsets.symmetric(vertical: 14),
         decoration: BoxDecoration(
-          color: AppColor.colorGlobalCoolNeutral15, // Dark button bg
+          color: colors.surfaceCard,
           borderRadius: AppRadius.lgBorder,
-          border: Border.all(
-            color: AppColor.colorGlobalCoolNeutral25,
-            width: 1,
-          ), // Dark border
+          border: Border.all(color: colors.lineSolidNormal, width: 1),
         ),
         child: Row(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             Icon(
               cfg.isTimePicker ? Icons.access_time : Icons.edit_outlined,
-              color: AppColor.primaryNormal,
+              color: colors.primaryNormal,
               size: 20,
             ),
             const SizedBox(width: 8),
             Text(
               '직접 입력',
               style: AppTextStyles.headline2Medium.copyWith(
-                color: AppColor.primaryNormal,
+                color: colors.primaryNormal,
               ),
             ),
           ],
@@ -351,7 +344,7 @@ class CoffeeSettingDetailView extends GetView<CoffeeController> {
     );
   }
 
-  Widget _buildRangeHint(_ParamConfig cfg) {
+  Widget _buildRangeHint(AppColorScheme colors, _ParamConfig cfg) {
     final range = cfg.isTimePicker
         ? '${_formatSeconds(cfg.min)} ~ ${_formatSeconds(cfg.max)}'
         : '${cfg.min}${cfg.unit} ~ ${cfg.max}${cfg.unit}';
@@ -359,22 +352,18 @@ class CoffeeSettingDetailView extends GetView<CoffeeController> {
     return Container(
       padding: const EdgeInsets.all(16),
       decoration: BoxDecoration(
-        color: AppColor.colorGlobalCoolNeutral15, // Dark hint bg
+        color: colors.surfaceCard,
         borderRadius: AppRadius.lgBorder,
       ),
       child: Row(
         children: [
-          Icon(
-            Icons.info_outline,
-            color: AppColor.colorGlobalCoolNeutral50,
-            size: 18,
-          ), // Gray icon
+          Icon(Icons.info_outline, color: colors.labelAssistive, size: 18),
           const SizedBox(width: 10),
           Expanded(
             child: Text(
               '설정 가능 범위: $range',
               style: AppTextStyles.label1NormalRegular.copyWith(
-                color: AppColor.colorGlobalCoolNeutral60, // Light gray text
+                color: colors.labelAlternative,
               ),
             ),
           ),

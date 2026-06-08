@@ -1,38 +1,53 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
+import 'package:coflanet/constants/app_color_scheme.dart';
 import 'package:coflanet/constants/asset_constant.dart';
 import 'package:coflanet/constants/color_constant.dart';
-import 'package:coflanet/constants/radius_constant.dart';
 import 'package:coflanet/constants/style_constant.dart';
 import 'package:coflanet/data/models/survey_question_model.dart';
 import 'package:coflanet/modules/onboarding/survey_controller.dart';
-import 'package:coflanet/modules/onboarding/widgets/survey_progress_bar.dart';
 import 'package:coflanet/modules/onboarding/widgets/survey_checkbox_item.dart';
+import 'package:coflanet/modules/onboarding/widgets/survey_equipment_grid_item.dart';
+import 'package:coflanet/modules/onboarding/widgets/survey_multi_rating_item.dart';
+import 'package:coflanet/modules/onboarding/widgets/survey_progress_bar.dart';
+import 'package:coflanet/modules/onboarding/widgets/survey_rating_row.dart';
 import 'package:coflanet/widgets/buttons/primary_button.dart';
 
+/// 설문 질문 화면 — 진행바 / 질문 / 유형별 옵션 / 하단 버튼.
+///
+/// 옵션 UI 는 widgets/ 로 분리 (SurveyRatingRow, SurveyMultiRatingItem,
+/// SurveyEquipmentGridItem, SurveyCheckboxItem).
+///
+/// 반응성: L45 의 `Obx(() => _buildContent())` 가 currentQuestion 과
+/// answers(선택 상태) 를 함께 구독한다. 선택 상태 read
+/// (_getSelectedRatingValue, isOptionSelected, getMultiRating) 는
+/// 반드시 이 Obx 클로저 안(= _buildContent 호출 경로)에서 실행되어야 한다.
 class SurveyQuestionView extends GetView<SurveyController> {
   const SurveyQuestionView({super.key});
 
   // Figma 사양: Pretendard SemiBold 22 / lineHeight 1.36 / letterSpacing -0.4268
   // 색상은 Label/strong (#000000) 토큰 매핑
   // Auth 카테고리에서 통일한 페이지 헤더 스타일과 동일
-  TextStyle get _screenHeaderStyle => AppTextStyles.heading1Bold.copyWith(
-    fontWeight: FontWeight.w600,
-    height: 1.36,
-    letterSpacing: -0.4268,
-    color: AppColor.labelStrong,
-  );
+  TextStyle _screenHeaderStyle(AppColorScheme colors) =>
+      AppTextStyles.heading1Bold.copyWith(
+        fontWeight: FontWeight.w600,
+        height: 1.36,
+        letterSpacing: -0.4268,
+        color: colors.labelStrong,
+      );
 
   @override
   Widget build(BuildContext context) {
+    final colors = AppColorScheme.of(context);
+
     return Scaffold(
-      backgroundColor: AppColor.backgroundNormalNormal,
-      appBar: _buildAppBar(),
+      backgroundColor: colors.backgroundNormalNormal,
+      appBar: _buildAppBar(colors),
       body: SafeArea(
         child: Column(
           children: [
-            // Progress bar below AppBar - section-specific progress
+            // AppBar 아래 진행바 — 섹션별 진행률
             Obx(
               () => Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 24),
@@ -42,15 +57,15 @@ class SurveyQuestionView extends GetView<SurveyController> {
               ),
             ),
             const SizedBox(height: 8),
-            Expanded(child: Obx(() => _buildContent())),
-            _buildBottomButton(),
+            Expanded(child: Obx(() => _buildContent(colors))),
+            _buildBottomButton(colors),
           ],
         ),
       ),
     );
   }
 
-  PreferredSizeWidget _buildAppBar() {
+  PreferredSizeWidget _buildAppBar(AppColorScheme colors) {
     return AppBar(
       backgroundColor: AppColor.transparent,
       elevation: 0,
@@ -59,7 +74,7 @@ class SurveyQuestionView extends GetView<SurveyController> {
           AssetPath.iconArrowBack,
           width: 24,
           height: 24,
-          colorFilter: ColorFilter.mode(AppColor.labelNormal, BlendMode.srcIn),
+          colorFilter: ColorFilter.mode(colors.labelNormal, BlendMode.srcIn),
         ),
         onPressed: () => controller.previousQuestion(),
       ),
@@ -68,7 +83,7 @@ class SurveyQuestionView extends GetView<SurveyController> {
         () => Text(
           controller.currentStepTitle,
           style: AppTextStyles.headline2Bold.copyWith(
-            color: AppColor.labelNormal,
+            color: colors.labelNormal,
           ),
         ),
       ),
@@ -79,10 +94,7 @@ class SurveyQuestionView extends GetView<SurveyController> {
             AssetPath.iconClose,
             width: 24,
             height: 24,
-            colorFilter: ColorFilter.mode(
-              AppColor.labelNormal,
-              BlendMode.srcIn,
-            ),
+            colorFilter: ColorFilter.mode(colors.labelNormal, BlendMode.srcIn),
           ),
           onPressed: () => controller.skipSurvey(),
         ),
@@ -90,11 +102,11 @@ class SurveyQuestionView extends GetView<SurveyController> {
     );
   }
 
-  Widget _buildContent() {
+  Widget _buildContent(AppColorScheme colors) {
     final question = controller.currentQuestion;
     if (question == null) return const SizedBox();
 
-    // For rating questions, center the options vertically
+    // rating 질문은 옵션을 세로 중앙 부근에 배치
     final isRatingQuestion = question.questionType == SurveyQuestionType.rating;
 
     if (isRatingQuestion) {
@@ -103,13 +115,10 @@ class SurveyQuestionView extends GetView<SurveyController> {
         child: Column(
           children: [
             const SizedBox(height: 24),
-            // Question text at top
+            // 질문 텍스트 (상단)
             Align(
               alignment: Alignment.centerLeft,
-              child: Text(
-                question.question,
-                style: _screenHeaderStyle,
-              ),
+              child: Text(question.question, style: _screenHeaderStyle(colors)),
             ),
             if (question.description.isNotEmpty) ...[
               const SizedBox(height: 8),
@@ -118,16 +127,16 @@ class SurveyQuestionView extends GetView<SurveyController> {
                 child: Text(
                   question.description,
                   style: AppTextStyles.body2NormalRegular.copyWith(
-                    color: AppColor.labelAlternative,
+                    color: colors.labelAlternative,
                   ),
                 ),
               ),
             ],
-            // Position rating buttons slightly above center (per Figma)
+            // rating 버튼은 중앙보다 약간 위 (Figma)
             Expanded(
               child: Align(
                 alignment: const Alignment(0, -0.4),
-                child: _buildOptionsForType(question),
+                child: _buildOptionsForType(colors, question),
               ),
             ),
           ],
@@ -135,7 +144,7 @@ class SurveyQuestionView extends GetView<SurveyController> {
       );
     }
 
-    // For other question types, use scrollable layout
+    // 그 외 질문 유형은 스크롤 레이아웃
     return SingleChildScrollView(
       padding: const EdgeInsets.symmetric(horizontal: 24),
       child: Column(
@@ -143,26 +152,23 @@ class SurveyQuestionView extends GetView<SurveyController> {
         children: [
           const SizedBox(height: 24),
 
-          // Question text
-          Text(
-            question.question,
-            style: _screenHeaderStyle,
-          ),
+          // 질문 텍스트
+          Text(question.question, style: _screenHeaderStyle(colors)),
 
           if (question.description.isNotEmpty) ...[
             const SizedBox(height: 8),
             Text(
               question.description,
               style: AppTextStyles.body2NormalRegular.copyWith(
-                color: AppColor.labelAlternative,
+                color: colors.labelAlternative,
               ),
             ),
           ],
 
           const SizedBox(height: 32),
 
-          // Render options based on question type
-          _buildOptionsForType(question),
+          // 질문 유형별 옵션 렌더링
+          _buildOptionsForType(colors, question),
 
           const SizedBox(height: 24),
         ],
@@ -170,20 +176,20 @@ class SurveyQuestionView extends GetView<SurveyController> {
     );
   }
 
-  Widget _buildBottomButton() {
+  Widget _buildBottomButton(AppColorScheme colors) {
     return Obx(() {
-      // Section 2-3 (steps 2-9): rating questions - no button, auto-advance
+      // 섹션 2-3 (step 2-9): rating 질문 — 버튼 없음, 자동 진행
       if (controller.currentStep >= 2) {
         return const SizedBox.shrink();
       }
 
-      // Section 1 (steps 0-1): checkbox questions - show button
+      // 섹션 1 (step 0-1): 체크박스 질문 — 버튼 표시
       final buttonText = '선택했어요';
 
       return Container(
         padding: const EdgeInsets.all(24),
         decoration: BoxDecoration(
-          color: AppColor.backgroundNormalNormal,
+          color: colors.backgroundNormalNormal,
           boxShadow: AppShadows.shadowBlackNormal,
         ),
         child: PrimaryButton(
@@ -195,7 +201,7 @@ class SurveyQuestionView extends GetView<SurveyController> {
     });
   }
 
-  /// Calculate progress within current section
+  /// 현재 섹션 내 진행률 계산
   /// Standard: Section 1 (0-1), Section 2 (2-5), Section 3 (6-9)
   /// Lifestyle: Section 1 (0-1), Section 2 (2-5), Section 3 (6-9), Section 4 (10-11)
   double _calculateSectionProgress() {
@@ -203,104 +209,24 @@ class SurveyQuestionView extends GetView<SurveyController> {
     final isLifestyle = controller.surveyType == SurveyType.lifestyle;
 
     if (step <= 1) {
-      // Section 1: steps 0-1 (2 questions)
+      // 섹션 1: step 0-1 (질문 2개)
       return (step + 1) / 2;
     } else if (step <= 5) {
-      // Section 2: steps 2-5 (4 questions)
+      // 섹션 2: step 2-5 (질문 4개)
       return (step - 2 + 1) / 4;
     } else if (step <= 9) {
-      // Section 3: steps 6-9 (4 questions)
+      // 섹션 3: step 6-9 (질문 4개)
       return (step - 6 + 1) / 4;
     } else if (isLifestyle && step <= 11) {
-      // Section 4 (lifestyle only): steps 10-11 (2 questions)
+      // 섹션 4 (lifestyle 전용): step 10-11 (질문 2개)
       return (step - 10 + 1) / 2;
     } else {
       return 1.0;
     }
   }
 
-  /// Build options based on question type
-  Widget _buildOptionsForType(SurveyQuestionModel question) {
-    switch (question.questionType) {
-      case SurveyQuestionType.checkbox:
-        // Text-only checkboxes (step 0)
-        return Column(
-          children: question.options
-              .map(
-                (option) => Padding(
-                  padding: const EdgeInsets.only(bottom: 12),
-                  child: SurveyCheckboxItem(
-                    label: option.label,
-                    icon: option.icon,
-                    description: option.description,
-                    isSelected: controller.isOptionSelected(option.id),
-                    onTap: () => controller.selectOption(option.id),
-                    showIcon: false, // Text-only
-                  ),
-                ),
-              )
-              .toList(),
-        );
-
-      case SurveyQuestionType.checkboxWithIcon:
-        // Emoji + label + description checkboxes
-        return Column(
-          children: question.options
-              .map(
-                (option) => Padding(
-                  padding: const EdgeInsets.only(bottom: 12),
-                  child: SurveyCheckboxItem(
-                    label: option.label,
-                    icon: option.icon,
-                    description: option.description,
-                    isSelected: controller.isOptionSelected(option.id),
-                    onTap: () => controller.selectOption(option.id),
-                    showIcon: true, // Show emoji
-                  ),
-                ),
-              )
-              .toList(),
-        );
-
-      case SurveyQuestionType.rating:
-        // Check if question has 3 options (기본 맛 취향) or 2 options (특성 향미 취향)
-        if (question.options.length == 3) {
-          return _buildTernaryRating(question); // 싫어요/보통/좋아요
-        } else {
-          return _buildBinaryRating(question); // 싫어요/좋아요
-        }
-
-      case SurveyQuestionType.imageGrid:
-        // Image grid for equipment selection
-        return _buildImageGrid(question);
-
-      case SurveyQuestionType.multiRating:
-        // Multiple rating items on one screen
-        return _buildMultiRating(question);
-    }
-  }
-
-  /// Build multi-rating items for taste/aroma preferences
-  Widget _buildMultiRating(SurveyQuestionModel question) {
-    final items = question.multiRatingItems;
-    if (items == null || items.isEmpty) return const SizedBox();
-
-    return Column(
-      children: items.map((item) {
-        return Padding(
-          padding: const EdgeInsets.only(bottom: 16),
-          child: _MultiRatingItemWidget(
-            item: item,
-            selectedValue: controller.getMultiRating(item.id),
-            onValueChanged: (value) =>
-                controller.setMultiRating(item.id, value),
-          ),
-        );
-      }).toList(),
-    );
-  }
-
-  /// Get selected rating value from current answers
+  /// 현재 답변에서 선택된 rating 값 추출 (-1/0/1)
+  /// 주의: answers(.obs) 를 읽으므로 반드시 Obx 클로저 안에서 호출
   int? _getSelectedRatingValue() {
     final stepAnswers = controller.answers[controller.currentStep];
     if (stepAnswers == null || stepAnswers.isEmpty) return null;
@@ -313,228 +239,97 @@ class SurveyQuestionView extends GetView<SurveyController> {
     };
   }
 
-  /// Build ternary rating (싫어요/보통/좋아요 - 3 options for 기본 맛 취향)
-  Widget _buildTernaryRating(SurveyQuestionModel question) {
-    final selectedValue = _getSelectedRatingValue();
-
-    return Row(
-      children: [
-        // 싫어요 (Dislike) - RED
-        Expanded(
-          child: GestureDetector(
-            onTap: () => controller.selectOption('dislike'),
-            child: AnimatedContainer(
-              duration: const Duration(milliseconds: 200),
-              padding: const EdgeInsets.symmetric(vertical: 20),
-              decoration: BoxDecoration(
-                color: selectedValue == -1
-                    ? AppColor.colorGlobalRed50
-                    : AppColor.colorGlobalRed95,
-                borderRadius: AppRadius.lgBorder,
-                border: Border.all(
-                  color: selectedValue == -1
-                      ? AppColor.colorGlobalRed40
-                      : AppColor.colorGlobalRed90,
-                  width: 2,
-                ),
-              ),
-              child: Column(
-                mainAxisSize: MainAxisSize.min,
-                children: [
-                  Text('👎', style: const TextStyle(fontSize: 36)),
-                  const SizedBox(height: 8),
-                  Text(
-                    '싫어요',
-                    style: AppTextStyles.body1NormalBold.copyWith(
-                      color: selectedValue == -1
-                          ? AppColor.colorGlobalCommon100
-                          : AppColor.colorGlobalRed50,
-                    ),
+  /// 질문 유형별 옵션 렌더링
+  Widget _buildOptionsForType(
+    AppColorScheme colors,
+    SurveyQuestionModel question,
+  ) {
+    switch (question.questionType) {
+      case SurveyQuestionType.checkbox:
+        // 텍스트 전용 체크박스 (step 0)
+        return Column(
+          children: question.options
+              .map(
+                (option) => Padding(
+                  padding: const EdgeInsets.only(bottom: 12),
+                  child: SurveyCheckboxItem(
+                    label: option.label,
+                    icon: option.icon,
+                    description: option.description,
+                    isSelected: controller.isOptionSelected(option.id),
+                    onTap: () => controller.selectOption(option.id),
+                    showIcon: false,
                   ),
-                ],
-              ),
-            ),
-          ),
-        ),
-
-        const SizedBox(width: 12),
-
-        // 보통 (Neutral) - GRAY
-        Expanded(
-          child: GestureDetector(
-            onTap: () => controller.selectOption('neutral'),
-            child: AnimatedContainer(
-              duration: const Duration(milliseconds: 200),
-              padding: const EdgeInsets.symmetric(vertical: 20),
-              decoration: BoxDecoration(
-                color: selectedValue == 0
-                    ? AppColor.labelAssistive
-                    : AppColor.componentFillNormal,
-                borderRadius: AppRadius.lgBorder,
-                border: Border.all(
-                  color: selectedValue == 0
-                      ? AppColor.labelNormal
-                      : AppColor.lineNormalNeutral,
-                  width: 2,
                 ),
-              ),
-              child: Column(
-                mainAxisSize: MainAxisSize.min,
-                children: [
-                  Text('😐', style: const TextStyle(fontSize: 36)),
-                  const SizedBox(height: 8),
-                  Text(
-                    '보통',
-                    style: AppTextStyles.body1NormalBold.copyWith(
-                      color: selectedValue == 0
-                          ? AppColor.colorGlobalCommon100
-                          : AppColor.labelNormal,
-                    ),
+              )
+              .toList(),
+        );
+
+      case SurveyQuestionType.checkboxWithIcon:
+        // 이모지 + 라벨 + 설명 체크박스
+        return Column(
+          children: question.options
+              .map(
+                (option) => Padding(
+                  padding: const EdgeInsets.only(bottom: 12),
+                  child: SurveyCheckboxItem(
+                    label: option.label,
+                    icon: option.icon,
+                    description: option.description,
+                    isSelected: controller.isOptionSelected(option.id),
+                    onTap: () => controller.selectOption(option.id),
+                    showIcon: true,
                   ),
-                ],
-              ),
-            ),
-          ),
-        ),
-
-        const SizedBox(width: 12),
-
-        // 좋아요 (Like) - BLUE
-        Expanded(
-          child: GestureDetector(
-            onTap: () => controller.selectOption('like'),
-            child: AnimatedContainer(
-              duration: const Duration(milliseconds: 200),
-              padding: const EdgeInsets.symmetric(vertical: 20),
-              decoration: BoxDecoration(
-                color: selectedValue == 1
-                    ? AppColor.colorGlobalBlue50
-                    : AppColor.colorGlobalBlue95,
-                borderRadius: AppRadius.lgBorder,
-                border: Border.all(
-                  color: selectedValue == 1
-                      ? AppColor.colorGlobalBlue40
-                      : AppColor.colorGlobalBlue90,
-                  width: 2,
                 ),
-              ),
-              child: Column(
-                mainAxisSize: MainAxisSize.min,
-                children: [
-                  Text('👍', style: const TextStyle(fontSize: 36)),
-                  const SizedBox(height: 8),
-                  Text(
-                    '좋아요',
-                    style: AppTextStyles.body1NormalBold.copyWith(
-                      color: selectedValue == 1
-                          ? AppColor.colorGlobalCommon100
-                          : AppColor.colorGlobalBlue50,
-                    ),
-                  ),
-                ],
-              ),
-            ),
+              )
+              .toList(),
+        );
+
+      case SurveyQuestionType.rating:
+        // 3개 옵션 (기본 맛 취향) → ternary / 2개 옵션 (특성 향미) → binary
+        return SurveyRatingRow(
+          hasNeutral: question.options.length == 3,
+          selectedValue: _getSelectedRatingValue(),
+          onSelect: controller.selectOption,
+        );
+
+      case SurveyQuestionType.imageGrid:
+        // 추출 기구 선택 그리드
+        return _buildImageGrid(colors, question);
+
+      case SurveyQuestionType.multiRating:
+        // 한 화면에 여러 레이팅 항목
+        return _buildMultiRating(question);
+    }
+  }
+
+  /// 멀티레이팅 항목 리스트 — 맛/향 선호
+  Widget _buildMultiRating(SurveyQuestionModel question) {
+    final items = question.multiRatingItems;
+    if (items == null || items.isEmpty) return const SizedBox();
+
+    return Column(
+      children: items.map((item) {
+        return Padding(
+          padding: const EdgeInsets.only(bottom: 16),
+          child: SurveyMultiRatingItem(
+            item: item,
+            selectedValue: controller.getMultiRating(item.id),
+            onValueChanged: (value) =>
+                controller.setMultiRating(item.id, value),
           ),
-        ),
-      ],
+        );
+      }).toList(),
     );
   }
 
-  /// Build binary rating (싫어요/좋아요 with Red/Blue colors - for 특성 향미 취향)
-  Widget _buildBinaryRating(SurveyQuestionModel question) {
-    final selectedValue = _getSelectedRatingValue();
-
-    return Row(
-      children: [
-        // 싫어요 (Dislike) - RED
-        Expanded(
-          child: GestureDetector(
-            onTap: () => controller.selectOption('dislike'),
-            child: AnimatedContainer(
-              duration: const Duration(milliseconds: 200),
-              padding: const EdgeInsets.symmetric(vertical: 24),
-              decoration: BoxDecoration(
-                color: selectedValue == -1
-                    ? AppColor.colorGlobalRed50
-                    : AppColor.colorGlobalRed95,
-                borderRadius: AppRadius.lgBorder,
-                border: Border.all(
-                  color: selectedValue == -1
-                      ? AppColor.colorGlobalRed40
-                      : AppColor.colorGlobalRed90,
-                  width: 2,
-                ),
-              ),
-              child: Column(
-                mainAxisSize: MainAxisSize.min,
-                children: [
-                  Text('👎', style: const TextStyle(fontSize: 48)),
-                  const SizedBox(height: 12),
-                  Text(
-                    '싫어요',
-                    style: AppTextStyles.headline1Bold.copyWith(
-                      color: selectedValue == -1
-                          ? AppColor.colorGlobalCommon100
-                          : AppColor.colorGlobalRed50,
-                    ),
-                  ),
-                ],
-              ),
-            ),
-          ),
-        ),
-
-        const SizedBox(width: 16),
-
-        // 좋아요 (Like) - BLUE
-        Expanded(
-          child: GestureDetector(
-            onTap: () => controller.selectOption('like'),
-            child: AnimatedContainer(
-              duration: const Duration(milliseconds: 200),
-              padding: const EdgeInsets.symmetric(vertical: 24),
-              decoration: BoxDecoration(
-                color: selectedValue == 1
-                    ? AppColor.colorGlobalBlue50
-                    : AppColor.colorGlobalBlue95,
-                borderRadius: AppRadius.lgBorder,
-                border: Border.all(
-                  color: selectedValue == 1
-                      ? AppColor.colorGlobalBlue40
-                      : AppColor.colorGlobalBlue90,
-                  width: 2,
-                ),
-              ),
-              child: Column(
-                mainAxisSize: MainAxisSize.min,
-                children: [
-                  Text('👍', style: const TextStyle(fontSize: 48)),
-                  const SizedBox(height: 12),
-                  Text(
-                    '좋아요',
-                    style: AppTextStyles.headline1Bold.copyWith(
-                      color: selectedValue == 1
-                          ? AppColor.colorGlobalCommon100
-                          : AppColor.colorGlobalBlue50,
-                    ),
-                  ),
-                ],
-              ),
-            ),
-          ),
-        ),
-      ],
-    );
-  }
-
-  /// Build image grid for equipment selection (2 columns)
-  /// Per Figma: Grid shows 5 equipment options, "잘 모르겠어요" is a separate link below
-  Widget _buildImageGrid(SurveyQuestionModel question) {
+  /// 추출 기구 선택 그리드 (2열) + "잘 모르겠어요" 링크
+  Widget _buildImageGrid(AppColorScheme colors, SurveyQuestionModel question) {
     final isUnknownSelected = controller.isOptionSelected('unknown');
 
     return Column(
       children: [
-        // Equipment grid (5 options)
+        // 기구 그리드 (5개 옵션)
         GridView.count(
           crossAxisCount: 2,
           shrinkWrap: true,
@@ -543,60 +338,15 @@ class SurveyQuestionView extends GetView<SurveyController> {
           crossAxisSpacing: 12,
           childAspectRatio: 1.2,
           children: question.options.map((option) {
-            final isSelected = controller.isOptionSelected(option.id);
-            return GestureDetector(
+            return SurveyEquipmentGridItem(
+              label: option.label,
+              isSelected: controller.isOptionSelected(option.id),
               onTap: () => controller.selectOption(option.id),
-              child: AnimatedContainer(
-                duration: const Duration(milliseconds: 200),
-                decoration: BoxDecoration(
-                  color: isSelected
-                      ? AppColor.primaryLight
-                      : AppColor.componentFillNormal,
-                  borderRadius: AppRadius.lgBorder,
-                  border: Border.all(
-                    color: isSelected
-                        ? AppColor.primaryNormal
-                        : AppColor.transparent,
-                    width: isSelected ? 2 : 1,
-                  ),
-                ),
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    // Placeholder for equipment image
-                    Container(
-                      width: 48,
-                      height: 48,
-                      decoration: BoxDecoration(
-                        color: AppColor.backgroundNormalAlternative,
-                        borderRadius: AppRadius.mdBorder,
-                      ),
-                      child: Icon(
-                        Icons.coffee_rounded,
-                        color: isSelected
-                            ? AppColor.primaryNormal
-                            : AppColor.labelAssistive,
-                        size: 24,
-                      ),
-                    ),
-                    const SizedBox(height: 8),
-                    Text(
-                      option.label,
-                      style: AppTextStyles.label1NormalMedium.copyWith(
-                        color: isSelected
-                            ? AppColor.primaryNormal
-                            : AppColor.labelNormal,
-                      ),
-                      textAlign: TextAlign.center,
-                    ),
-                  ],
-                ),
-              ),
             );
           }).toList(),
         ),
 
-        // "잘 모르겠어요" link below the grid (per Figma)
+        // "잘 모르겠어요" 링크 (그리드 아래, Figma)
         const SizedBox(height: 20),
         GestureDetector(
           onTap: () => controller.selectOption('unknown'),
@@ -604,156 +354,16 @@ class SurveyQuestionView extends GetView<SurveyController> {
             '잘 모르겠어요',
             style: AppTextStyles.body2NormalMedium.copyWith(
               color: isUnknownSelected
-                  ? AppColor.primaryNormal
-                  : AppColor.labelAssistive,
+                  ? colors.primaryNormal
+                  : colors.labelAssistive,
               decoration: TextDecoration.underline,
               decorationColor: isUnknownSelected
-                  ? AppColor.primaryNormal
-                  : AppColor.labelAssistive,
+                  ? colors.primaryNormal
+                  : colors.labelAssistive,
             ),
           ),
         ),
       ],
-    );
-  }
-}
-
-/// Widget for a single multi-rating item in the survey
-/// Displays question, description, and rating buttons
-class _MultiRatingItemWidget extends StatelessWidget {
-  final MultiRatingItem item;
-  final int? selectedValue; // -1: dislike, 0: neutral, 1: like
-  final ValueChanged<int> onValueChanged;
-
-  const _MultiRatingItemWidget({
-    required this.item,
-    required this.selectedValue,
-    required this.onValueChanged,
-  });
-
-  @override
-  Widget build(BuildContext context) {
-    return Container(
-      padding: const EdgeInsets.all(16),
-      decoration: BoxDecoration(
-        color: AppColor.backgroundNormalNormal,
-        borderRadius: AppRadius.lgBorder,
-        border: Border.all(color: AppColor.lineNormalNeutral, width: 1),
-      ),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          // Question text
-          Text(
-            item.question,
-            style: AppTextStyles.body1NormalMedium.copyWith(
-              color: AppColor.labelNormal,
-            ),
-          ),
-          const SizedBox(height: 4),
-
-          // Description text
-          if (item.description.isNotEmpty) ...[
-            Text(
-              item.description,
-              style: AppTextStyles.caption1Regular.copyWith(
-                color: AppColor.labelAlternative,
-              ),
-            ),
-            const SizedBox(height: 12),
-          ],
-
-          // Rating buttons row
-          Row(
-            children: [
-              // Dislike button
-              Expanded(
-                child: _RatingButton(
-                  emoji: '👎',
-                  label: '싫어요',
-                  isSelected: selectedValue == -1,
-                  onTap: () => onValueChanged(-1),
-                ),
-              ),
-
-              // Neutral button (only if hasNeutral is true)
-              if (item.hasNeutral) ...[
-                const SizedBox(width: 8),
-                Expanded(
-                  child: _RatingButton(
-                    emoji: '😐',
-                    label: '보통',
-                    isSelected: selectedValue == 0,
-                    onTap: () => onValueChanged(0),
-                  ),
-                ),
-              ],
-
-              // Like button
-              const SizedBox(width: 8),
-              Expanded(
-                child: _RatingButton(
-                  emoji: '👍',
-                  label: '좋아요',
-                  isSelected: selectedValue == 1,
-                  onTap: () => onValueChanged(1),
-                ),
-              ),
-            ],
-          ),
-        ],
-      ),
-    );
-  }
-}
-
-/// Individual rating button for multi-rating items
-class _RatingButton extends StatelessWidget {
-  final String emoji;
-  final String label;
-  final bool isSelected;
-  final VoidCallback onTap;
-
-  const _RatingButton({
-    required this.emoji,
-    required this.label,
-    required this.isSelected,
-    required this.onTap,
-  });
-
-  @override
-  Widget build(BuildContext context) {
-    return GestureDetector(
-      onTap: onTap,
-      child: AnimatedContainer(
-        duration: const Duration(milliseconds: 150),
-        padding: const EdgeInsets.symmetric(vertical: 12, horizontal: 8),
-        decoration: BoxDecoration(
-          color: isSelected
-              ? AppColor.primaryLight
-              : AppColor.componentFillNormal,
-          borderRadius: AppRadius.mdBorder,
-          border: Border.all(
-            color: isSelected ? AppColor.primaryNormal : AppColor.transparent,
-            width: isSelected ? 1.5 : 1,
-          ),
-        ),
-        child: Column(
-          mainAxisSize: MainAxisSize.min,
-          children: [
-            Text(emoji, style: const TextStyle(fontSize: 24)),
-            const SizedBox(height: 4),
-            Text(
-              label,
-              style: AppTextStyles.caption1Medium.copyWith(
-                color: isSelected
-                    ? AppColor.primaryNormal
-                    : AppColor.labelNormal,
-              ),
-            ),
-          ],
-        ),
-      ),
     );
   }
 }

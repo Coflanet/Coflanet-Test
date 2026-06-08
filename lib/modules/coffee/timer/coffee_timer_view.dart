@@ -1,27 +1,38 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
+import 'package:coflanet/constants/app_color_scheme.dart';
 import 'package:coflanet/constants/asset_constant.dart';
 import 'package:coflanet/constants/color_constant.dart';
 import 'package:coflanet/constants/style_constant.dart';
 import 'package:coflanet/constants/radius_constant.dart';
 import 'package:coflanet/modules/coffee/timer/coffee_timer_controller.dart';
+import 'package:coflanet/modules/coffee/timer/widgets/timer_action_text.dart';
+import 'package:coflanet/modules/coffee/timer/widgets/timer_step_illustration.dart';
+import 'package:coflanet/modules/coffee/timer/widgets/timer_water_amount_chip.dart';
 import 'package:coflanet/widgets/timer/circular_timer.dart';
 import 'package:coflanet/widgets/modals/confirm_modal.dart';
 
+/// 타이머 진행 화면 — 스텝 dot / 정보 바 / 준비·타이머 콘텐츠 / 하단 네비게이션.
+///
+/// 순수 표시 위젯(TimerActionText/TimerStepIllustration/TimerWaterAmountChip)은
+/// widgets/ 로 분리. 1초 틱 Obx 경계(CircularTimer/preCountdown 오버레이)와
+/// 타이머 상태 5분기 네비게이션은 controller 강결합이라 View 에 잔류한다 —
+/// 400줄 임계값 초과의 정당한 예외.
 class CoffeeTimerView extends GetView<CoffeeTimerController> {
   const CoffeeTimerView({super.key});
 
   @override
   Widget build(BuildContext context) {
+    final colors = AppColorScheme.of(context);
     return PopScope(
       canPop: false,
       onPopInvokedWithResult: (didPop, _) {
         if (!didPop) _showStopConfirmation();
       },
       child: Scaffold(
-        backgroundColor: AppColor.backgroundNormalNormal, // White per Figma
-        appBar: _buildAppBar(),
+        backgroundColor: colors.backgroundNormalNormal,
+        appBar: _buildAppBar(colors),
         body: SafeArea(
           top: false,
           child: Obx(() {
@@ -40,24 +51,24 @@ class CoffeeTimerView extends GetView<CoffeeTimerController> {
                         child: Column(
                           children: [
                             const SizedBox(height: 16),
-                            _buildStepDotIndicator(),
+                            _buildStepDotIndicator(colors),
                             const SizedBox(height: 12),
-                            _buildInfoBar(),
+                            _buildInfoBar(colors),
                             const SizedBox(height: 28),
                             if (step.isPreparation)
-                              _buildPreparationContent(step)
+                              _buildPreparationContent(colors, step)
                             else
-                              _buildTimedContent(step),
+                              _buildTimedContent(colors, step),
                           ],
                         ),
                       ),
                       // Pre-countdown overlay
                       if (controller.state == TimerState.preCountdown)
-                        _buildPreCountdownOverlay(),
+                        _buildPreCountdownOverlay(colors),
                     ],
                   ),
                 ),
-                _buildBottomNavigation(),
+                _buildBottomNavigation(colors),
               ],
             );
           }),
@@ -68,10 +79,9 @@ class CoffeeTimerView extends GetView<CoffeeTimerController> {
 
   // ─── App Bar ───
 
-  PreferredSizeWidget _buildAppBar() {
-    // White background, dark text/icons
+  PreferredSizeWidget _buildAppBar(AppColorScheme colors) {
     return AppBar(
-      backgroundColor: AppColor.backgroundNormalNormal,
+      backgroundColor: colors.backgroundNormalNormal,
       elevation: 0,
       scrolledUnderElevation: 0,
       leading: IconButton(
@@ -80,7 +90,7 @@ class CoffeeTimerView extends GetView<CoffeeTimerController> {
           width: 24,
           height: 24,
           colorFilter: ColorFilter.mode(
-            AppColor.labelNormal, // Dark icon on white bg
+            colors.labelNormal,
             BlendMode.srcIn,
           ),
         ),
@@ -93,7 +103,7 @@ class CoffeeTimerView extends GetView<CoffeeTimerController> {
               ? 'Step ${step.stepNumber}. ${step.title}'
               : controller.recipe?.name ?? '타이머',
           style: AppTextStyles.headline2Bold.copyWith(
-            color: AppColor.labelNormal, // Dark text on white bg
+            color: colors.labelNormal,
           ),
         );
       }),
@@ -103,7 +113,7 @@ class CoffeeTimerView extends GetView<CoffeeTimerController> {
 
   // ─── Step Dot Indicator ───
 
-  Widget _buildStepDotIndicator() {
+  Widget _buildStepDotIndicator(AppColorScheme colors) {
     return Obx(() {
       final total = controller.totalSteps;
       final current = controller.currentStepIndex;
@@ -124,10 +134,10 @@ class CoffeeTimerView extends GetView<CoffeeTimerController> {
               height: dotSize,
               decoration: BoxDecoration(
                 shape: BoxShape.circle,
+                // 비활성 dot 트랙 — 라이트 회색을 시맨틱 비활성 토큰으로
                 color: (isActive || isPast)
-                    ? AppColor.primaryNormal
-                    : AppColor
-                          .colorGlobalCoolNeutral80, // Light gray for inactive
+                    ? colors.primaryNormal
+                    : colors.interactionInactive,
               ),
             ),
           );
@@ -138,18 +148,18 @@ class CoffeeTimerView extends GetView<CoffeeTimerController> {
 
   // ─── Info Bar (Total water | time pill) ───
 
-  Widget _buildInfoBar() {
+  Widget _buildInfoBar(AppColorScheme colors) {
     return Obx(() {
       return Container(
         padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 6),
         decoration: BoxDecoration(
-          color: AppColor.backgroundNormalAlternative, // Light gray pill
+          color: colors.backgroundNormalAlternative,
           borderRadius: AppRadius.xxlBorder,
         ),
         child: Text(
           '${controller.totalWaterLabel} | ${controller.totalTimeLabel}',
           style: AppTextStyles.caption1Medium.copyWith(
-            color: AppColor.labelAlternative, // Dark gray text
+            color: colors.labelAlternative,
           ),
         ),
       );
@@ -158,14 +168,14 @@ class CoffeeTimerView extends GetView<CoffeeTimerController> {
 
   // ─── Preparation Step Content ───
 
-  Widget _buildPreparationContent(dynamic step) {
+  Widget _buildPreparationContent(AppColorScheme colors, dynamic step) {
     return Column(
       children: [
         // Title
         Text(
           step.title,
           style: AppTextStyles.title2Bold.copyWith(
-            color: AppColor.labelNormal, // Dark on white bg
+            color: colors.labelNormal,
           ),
           textAlign: TextAlign.center,
         ),
@@ -174,30 +184,33 @@ class CoffeeTimerView extends GetView<CoffeeTimerController> {
         Text(
           step.description,
           style: AppTextStyles.body2NormalRegular.copyWith(
-            color: AppColor.labelAlternative, // Gray on white bg
+            color: colors.labelAlternative,
           ),
           textAlign: TextAlign.center,
         ),
         const SizedBox(height: 36),
-        // Step illustration
-        _buildStepIllustration(step),
+        // 스텝 일러스트
+        TimerStepIllustration(
+          title: step.title,
+          illustrationEmoji: step.illustrationEmoji,
+        ),
         const SizedBox(height: 36),
-        // Action text with highlighted keywords
-        if (step.actionText != null) _buildActionText(step.actionText!),
+        // 수치 강조 액션 안내
+        if (step.actionText != null) TimerActionText(text: step.actionText!),
       ],
     );
   }
 
   // ─── Timed Step Content (Brewing / Waiting) ───
 
-  Widget _buildTimedContent(dynamic step) {
+  Widget _buildTimedContent(AppColorScheme colors, dynamic step) {
     return Column(
       children: [
         // Title
         Text(
           step.title,
           style: AppTextStyles.title2Bold.copyWith(
-            color: AppColor.labelNormal, // Dark on white bg
+            color: colors.labelNormal,
           ),
           textAlign: TextAlign.center,
         ),
@@ -206,7 +219,7 @@ class CoffeeTimerView extends GetView<CoffeeTimerController> {
         Text(
           step.description,
           style: AppTextStyles.body2NormalRegular.copyWith(
-            color: AppColor.labelAlternative, // Gray on white bg
+            color: colors.labelAlternative,
           ),
           textAlign: TextAlign.center,
         ),
@@ -216,18 +229,21 @@ class CoffeeTimerView extends GetView<CoffeeTimerController> {
           () => Text(
             controller.stepDurationString,
             style: AppTextStyles.caption1Medium.copyWith(
-              color: AppColor.labelAssistive, // Light gray
+              color: colors.labelAssistive,
             ),
           ),
         ),
         const SizedBox(height: 8),
-        // Circular timer
+        // Circular timer — 1초 틱 사이를 선형 보간해 연속 스윕으로 표시.
+        // key 를 스텝 단위로 바꿔 스텝 전환 시 되감기 애니메이션 방지.
         Obx(
           () => CircularTimer(
+            key: ValueKey(controller.currentStepIndex),
             progress: controller.stepProgress,
-            progressColor: AppColor.primaryNormal,
-            backgroundColor:
-                AppColor.colorGlobalCoolNeutral90, // Light gray track
+            animationDuration: const Duration(seconds: 1),
+            progressColor: colors.primaryNormal,
+            // 타이머 트랙 — 라이트 회색을 시맨틱 비활성 토큰으로
+            backgroundColor: colors.componentFillStrong,
             size: 240,
             strokeWidth: 10,
             child: Column(
@@ -236,7 +252,7 @@ class CoffeeTimerView extends GetView<CoffeeTimerController> {
                 Text(
                   controller.remainingTimeString,
                   style: AppTextStyles.display2Bold.copyWith(
-                    color: AppColor.labelNormal, // Dark on white bg
+                    color: colors.labelNormal,
                     fontFeatures: [const FontFeature.tabularFigures()],
                   ),
                 ),
@@ -244,7 +260,7 @@ class CoffeeTimerView extends GetView<CoffeeTimerController> {
                 Text(
                   '남은 시간',
                   style: AppTextStyles.caption1Regular.copyWith(
-                    color: AppColor.labelAssistive, // Light gray
+                    color: colors.labelAssistive,
                   ),
                 ),
               ],
@@ -252,158 +268,17 @@ class CoffeeTimerView extends GetView<CoffeeTimerController> {
           ),
         ),
         const SizedBox(height: 24),
-        // Action text with water amount highlighted
-        if (step.actionText != null) _buildActionText(step.actionText!),
+        // 수치 강조 액션 안내 / 물의 양 칩
+        if (step.actionText != null) TimerActionText(text: step.actionText!),
         if (step.waterAmount != null && step.actionText == null)
-          _buildWaterAmountChip(step.waterAmount!),
+          TimerWaterAmountChip(waterAmount: step.waterAmount!),
       ],
-    );
-  }
-
-  // ─── Action Text with highlighted numbers/measurements ───
-
-  Widget _buildActionText(String text) {
-    // Highlight patterns: numbers followed by g, ml, 초, 번, etc.
-    final regex = RegExp(r'(\d+\s*(?:g|ml|초|번|회|분|μm))');
-    final spans = <TextSpan>[];
-    int lastEnd = 0;
-
-    for (final match in regex.allMatches(text)) {
-      if (match.start > lastEnd) {
-        spans.add(
-          TextSpan(
-            text: text.substring(lastEnd, match.start),
-            style: AppTextStyles.body1NormalMedium.copyWith(
-              color: AppColor.labelNormal, // Dark text
-            ),
-          ),
-        );
-      }
-      spans.add(
-        TextSpan(
-          text: match.group(0),
-          style: AppTextStyles.body1NormalBold.copyWith(
-            color: AppColor.primaryNormal, // Violet highlight
-          ),
-        ),
-      );
-      lastEnd = match.end;
-    }
-    if (lastEnd < text.length) {
-      spans.add(
-        TextSpan(
-          text: text.substring(lastEnd),
-          style: AppTextStyles.body1NormalMedium.copyWith(
-            color: AppColor.labelNormal, // Dark text
-          ),
-        ),
-      );
-    }
-
-    // Fallback: no matches → plain text
-    if (spans.isEmpty) {
-      spans.add(
-        TextSpan(
-          text: text,
-          style: AppTextStyles.body1NormalMedium.copyWith(
-            color: AppColor.labelNormal, // Dark text
-          ),
-        ),
-      );
-    }
-
-    return Container(
-      width: double.infinity,
-      padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 14),
-      decoration: BoxDecoration(
-        color: AppColor.backgroundNormalAlternative, // Light gray card
-        borderRadius: AppRadius.lgBorder,
-      ),
-      child: RichText(
-        textAlign: TextAlign.center,
-        text: TextSpan(children: spans),
-      ),
-    );
-  }
-
-  // ─── Step Illustration (real images for preparation steps) ───
-
-  Widget _buildStepIllustration(dynamic step) {
-    final assetPath = _getIllustrationAsset(step.title);
-
-    if (assetPath != null) {
-      // Use real illustration image
-      return Image.asset(
-        assetPath,
-        width: 280,
-        height: 280,
-        fit: BoxFit.contain,
-        errorBuilder: (context, error, stackTrace) {
-          // Fallback to emoji if image fails to load
-          return _buildEmojiPlaceholder(step.illustrationEmoji ?? '☕');
-        },
-      );
-    }
-
-    // Fallback to emoji placeholder
-    return _buildEmojiPlaceholder(step.illustrationEmoji ?? '☕');
-  }
-
-  String? _getIllustrationAsset(String stepTitle) {
-    // Map step titles to illustration assets
-    switch (stepTitle) {
-      case '원두 분쇄':
-        return AssetPath.timerStepGrinder;
-      case '예열하기':
-        return AssetPath.timerStepPourover;
-      default:
-        return null;
-    }
-  }
-
-  Widget _buildEmojiPlaceholder(String emoji) {
-    return Container(
-      width: 120,
-      height: 120,
-      decoration: BoxDecoration(
-        color: AppColor.primaryLight,
-        shape: BoxShape.circle,
-      ),
-      alignment: Alignment.center,
-      child: Text(emoji, style: AppTextStyles.emojiLarge),
-    );
-  }
-
-  Widget _buildWaterAmountChip(int waterAmount) {
-    return Container(
-      padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 10),
-      decoration: BoxDecoration(
-        color: AppColor.backgroundNormalAlternative, // Light gray card
-        borderRadius: AppRadius.lgBorder,
-      ),
-      child: Row(
-        mainAxisSize: MainAxisSize.min,
-        children: [
-          Icon(
-            Icons.water_drop_outlined,
-            color: AppColor.primaryNormal,
-            size: 18,
-          ),
-          const SizedBox(width: 6),
-          Text(
-            '${waterAmount}ml',
-            style: AppTextStyles.body1NormalBold.copyWith(
-              color: AppColor.primaryNormal,
-            ),
-          ),
-        ],
-      ),
     );
   }
 
   // ─── Pre-Countdown Overlay ───
 
-  Widget _buildPreCountdownOverlay() {
+  Widget _buildPreCountdownOverlay(AppColorScheme colors) {
     return Positioned(
       top: 16,
       left: 24,
@@ -411,10 +286,11 @@ class CoffeeTimerView extends GetView<CoffeeTimerController> {
       child: Obx(() {
         final nextName =
             controller.nextTimedStepName ?? controller.currentStep?.title ?? '';
+        // 대비 토스트 — 배경/텍스트를 inverse 토큰으로 묶어 테마와 함께 반전
         return Container(
           padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
           decoration: BoxDecoration(
-            color: AppColor.labelNormal,
+            color: colors.inverseBackground,
             borderRadius: AppRadius.lgBorder,
             boxShadow: AppShadows.shadowBlackEmphasize,
           ),
@@ -422,7 +298,7 @@ class CoffeeTimerView extends GetView<CoffeeTimerController> {
             children: [
               Icon(
                 Icons.access_time_rounded,
-                color: AppColor.staticLabelWhiteStrong,
+                color: colors.inverseLabelStrong,
                 size: 20,
               ),
               const SizedBox(width: 10),
@@ -430,7 +306,7 @@ class CoffeeTimerView extends GetView<CoffeeTimerController> {
                 child: Text(
                   '${controller.preCountdownSeconds}초 뒤에 $nextName이 시작됩니다',
                   style: AppTextStyles.label1NormalMedium.copyWith(
-                    color: AppColor.staticLabelWhiteStrong,
+                    color: colors.inverseLabelStrong,
                   ),
                 ),
               ),
@@ -443,7 +319,7 @@ class CoffeeTimerView extends GetView<CoffeeTimerController> {
 
   // ─── Bottom Navigation ───
 
-  Widget _buildBottomNavigation() {
+  Widget _buildBottomNavigation(AppColorScheme colors) {
     return Obx(() {
       final step = controller.currentStep;
       if (step == null) return const SizedBox();
@@ -451,20 +327,21 @@ class CoffeeTimerView extends GetView<CoffeeTimerController> {
       return Container(
         padding: const EdgeInsets.fromLTRB(24, 12, 24, 16),
         decoration: BoxDecoration(
-          color: AppColor.backgroundNormalNormal, // White
+          color: colors.backgroundNormalNormal,
         ),
         child: step.isPreparation
-            ? _buildPrepNavigationButtons()
-            : _buildTimedNavigationButtons(),
+            ? _buildPrepNavigationButtons(colors)
+            : _buildTimedNavigationButtons(colors),
       );
     });
   }
 
-  Widget _buildPrepNavigationButtons() {
+  Widget _buildPrepNavigationButtons(AppColorScheme colors) {
     return Obx(() {
       return Row(
         children: [
-          // Previous button
+          // Previous button — 비활성 시에도 형태/라벨이 보이도록
+          // 옅은 fill + labelAssistive 사용 (labelDisable 은 다크에서 거의 투명)
           Expanded(
             child: SizedBox(
               height: 52,
@@ -473,23 +350,24 @@ class CoffeeTimerView extends GetView<CoffeeTimerController> {
                     ? null
                     : () => controller.previousStep(),
                 style: OutlinedButton.styleFrom(
+                  backgroundColor: colors.componentFillAlternative,
                   side: BorderSide(
                     color: controller.isFirstStep
-                        ? AppColor.lineNormalNormal
-                        : AppColor.lineNormalAlternative,
+                        ? colors.lineNormalNeutral
+                        : colors.lineNormalNormal,
                   ),
                   shape: RoundedRectangleBorder(
                     borderRadius: AppRadius.lgBorder,
                   ),
-                  foregroundColor: AppColor.labelNormal,
-                  disabledForegroundColor: AppColor.labelDisable,
+                  foregroundColor: colors.labelNormal,
+                  disabledForegroundColor: colors.labelAssistive,
                 ),
                 child: Text(
                   '이전',
                   style: AppTextStyles.body1NormalMedium.copyWith(
                     color: controller.isFirstStep
-                        ? AppColor.labelDisable
-                        : AppColor.labelNormal,
+                        ? colors.labelAssistive
+                        : colors.labelNormal,
                   ),
                 ),
               ),
@@ -504,7 +382,7 @@ class CoffeeTimerView extends GetView<CoffeeTimerController> {
               child: ElevatedButton(
                 onPressed: () => controller.nextStep(),
                 style: ElevatedButton.styleFrom(
-                  backgroundColor: AppColor.primaryNormal,
+                  backgroundColor: colors.primaryNormal,
                   foregroundColor: AppColor.staticLabelWhiteStrong,
                   elevation: 0,
                   shape: RoundedRectangleBorder(
@@ -525,7 +403,7 @@ class CoffeeTimerView extends GetView<CoffeeTimerController> {
     });
   }
 
-  Widget _buildTimedNavigationButtons() {
+  Widget _buildTimedNavigationButtons(AppColorScheme colors) {
     return Obx(() {
       final state = controller.state;
       final isRunning = state == TimerState.running;
@@ -534,7 +412,8 @@ class CoffeeTimerView extends GetView<CoffeeTimerController> {
 
       return Row(
         children: [
-          // Previous button
+          // Previous button — 비활성 시에도 형태/라벨이 보이도록
+          // 옅은 fill + labelAssistive 사용 (labelDisable 은 다크에서 거의 투명)
           Expanded(
             child: SizedBox(
               height: 52,
@@ -543,23 +422,24 @@ class CoffeeTimerView extends GetView<CoffeeTimerController> {
                     ? null
                     : () => controller.previousStep(),
                 style: OutlinedButton.styleFrom(
+                  backgroundColor: colors.componentFillAlternative,
                   side: BorderSide(
                     color: controller.isFirstStep
-                        ? AppColor.lineNormalNormal
-                        : AppColor.lineNormalAlternative,
+                        ? colors.lineNormalNeutral
+                        : colors.lineNormalNormal,
                   ),
                   shape: RoundedRectangleBorder(
                     borderRadius: AppRadius.lgBorder,
                   ),
-                  foregroundColor: AppColor.labelNormal,
-                  disabledForegroundColor: AppColor.labelDisable,
+                  foregroundColor: colors.labelNormal,
+                  disabledForegroundColor: colors.labelAssistive,
                 ),
                 child: Text(
                   '이전',
                   style: AppTextStyles.body1NormalMedium.copyWith(
                     color: controller.isFirstStep
-                        ? AppColor.labelDisable
-                        : AppColor.labelNormal,
+                        ? colors.labelAssistive
+                        : colors.labelNormal,
                   ),
                 ),
               ),
@@ -588,8 +468,8 @@ class CoffeeTimerView extends GetView<CoffeeTimerController> {
                       ),
                       style: ElevatedButton.styleFrom(
                         backgroundColor: isRunning
-                            ? AppColor.primaryNormal
-                            : AppColor.labelAssistive,
+                            ? colors.primaryNormal
+                            : colors.labelAssistive,
                         foregroundColor: AppColor.staticLabelWhiteStrong,
                         elevation: 0,
                         shape: RoundedRectangleBorder(
@@ -608,7 +488,7 @@ class CoffeeTimerView extends GetView<CoffeeTimerController> {
                         ),
                       ),
                       style: ElevatedButton.styleFrom(
-                        backgroundColor: AppColor.primaryNormal,
+                        backgroundColor: colors.primaryNormal,
                         foregroundColor: AppColor.staticLabelWhiteStrong,
                         elevation: 0,
                         shape: RoundedRectangleBorder(
@@ -621,10 +501,10 @@ class CoffeeTimerView extends GetView<CoffeeTimerController> {
                           ? null
                           : () => controller.nextStep(),
                       style: ElevatedButton.styleFrom(
-                        backgroundColor: AppColor.primaryNormal,
+                        backgroundColor: colors.primaryNormal,
                         foregroundColor: AppColor.staticLabelWhiteStrong,
-                        disabledBackgroundColor: AppColor.interactionDisable,
-                        disabledForegroundColor: AppColor.labelDisable,
+                        disabledBackgroundColor: colors.interactionDisable,
+                        disabledForegroundColor: colors.labelDisable,
                         elevation: 0,
                         shape: RoundedRectangleBorder(
                           borderRadius: AppRadius.lgBorder,
@@ -634,7 +514,7 @@ class CoffeeTimerView extends GetView<CoffeeTimerController> {
                         controller.isLastStep ? '완료' : '다음',
                         style: AppTextStyles.body1NormalMedium.copyWith(
                           color: isTimerActive
-                              ? AppColor.labelDisable
+                              ? colors.labelAssistive
                               : AppColor.staticLabelWhiteStrong,
                         ),
                       ),

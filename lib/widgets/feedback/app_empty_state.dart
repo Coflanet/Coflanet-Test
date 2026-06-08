@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:coflanet/constants/color_constant.dart';
+import 'package:coflanet/constants/app_color_scheme.dart';
 import 'package:coflanet/constants/style_constant.dart';
 import 'package:coflanet/widgets/buttons/primary_button.dart';
 
@@ -62,18 +62,19 @@ class AppEmptyState extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final colors = AppColorScheme.of(context);
     return Center(
       child: Padding(
         padding: const EdgeInsets.all(32),
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            _buildIconCircle(),
+            _buildIconCircle(colors),
             const SizedBox(height: 32),
-            _buildTitle(),
+            _buildTitle(colors),
             if (description != null) ...[
               const SizedBox(height: 12),
-              _buildDescription(),
+              _buildDescription(colors),
             ],
             if (actionLabel != null && onAction != null) ...[
               const SizedBox(height: 40),
@@ -85,35 +86,35 @@ class AppEmptyState extends StatelessWidget {
     );
   }
 
-  Widget _buildIconCircle() {
+  Widget _buildIconCircle(AppColorScheme colors) {
     return Container(
       width: iconCircleSize,
       height: iconCircleSize,
       decoration: BoxDecoration(
-        color: iconBackgroundColor ?? AppColor.primaryLight,
+        color: iconBackgroundColor ?? colors.primaryLight,
         shape: BoxShape.circle,
       ),
       child: Icon(
         icon,
         size: iconSize,
-        color: iconColor ?? AppColor.primaryNormal,
+        color: iconColor ?? colors.primaryNormal,
       ),
     );
   }
 
-  Widget _buildTitle() {
+  Widget _buildTitle(AppColorScheme colors) {
     return Text(
       title,
-      style: AppTextStyles.headline1Bold.copyWith(color: AppColor.labelNormal),
+      style: AppTextStyles.headline1Bold.copyWith(color: colors.labelNormal),
       textAlign: TextAlign.center,
     );
   }
 
-  Widget _buildDescription() {
+  Widget _buildDescription(AppColorScheme colors) {
     return Text(
       description!,
       style: AppTextStyles.body1NormalRegular.copyWith(
-        color: AppColor.labelAlternative,
+        color: colors.labelAlternative,
       ),
       textAlign: TextAlign.center,
     );

@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:supabase_flutter/supabase_flutter.dart'
     hide LocalStorage, AuthException;
-import 'package:coflanet/constants/color_constant.dart';
+import 'package:coflanet/constants/util_constant.dart';
 import 'package:coflanet/core/base/base_controller.dart';
 import 'package:coflanet/core/services/auth_service.dart';
 import 'package:coflanet/data/models/user_model.dart';
@@ -73,16 +73,6 @@ class SignInController extends BaseController {
   /// Show error message via Snackbar
   void _showErrorSnackbar(String message) {
     setError(message);
-    Get.snackbar(
-      '로그인 실패',
-      message,
-      snackPosition: SnackPosition.BOTTOM,
-      backgroundColor: AppColor.statusNegative.withValues(alpha: 0.9),
-      colorText: Colors.white,
-      margin: const EdgeInsets.all(16),
-      borderRadius: 12,
-      duration: const Duration(seconds: 4),
-      icon: const Icon(Icons.error_outline, color: Colors.white),
-    );
+    AppUtil.showErrorSnackbar('로그인 실패', message);
   }
 }

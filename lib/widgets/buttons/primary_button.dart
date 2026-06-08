@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:coflanet/constants/app_color_scheme.dart';
 import 'package:coflanet/constants/color_constant.dart';
 import 'package:coflanet/constants/style_constant.dart';
 import 'package:coflanet/constants/radius_constant.dart';
@@ -156,6 +157,7 @@ class PrimaryButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final colors = AppColorScheme.of(context);
     final enabled = isEnabled && !isLoading && onPressed != null;
 
     return SizedBox(
@@ -165,14 +167,14 @@ class PrimaryButton extends StatelessWidget {
         onPressed: enabled ? onPressed : null,
         style: ElevatedButton.styleFrom(
           backgroundColor: enabled
-              ? AppColor.primaryNormal
-              : AppColor.interactionDisable,
+              ? colors.primaryNormal
+              : colors.interactionDisable,
           foregroundColor: AppColor.staticLabelWhiteStrong,
           elevation: 0,
           padding: _padding,
           shape: RoundedRectangleBorder(borderRadius: AppRadius.buttonBorder),
-          disabledBackgroundColor: AppColor.interactionDisable,
-          disabledForegroundColor: AppColor.labelDisable,
+          disabledBackgroundColor: colors.interactionDisable,
+          disabledForegroundColor: colors.labelDisable,
         ),
         child: isLoading
             ? SizedBox(

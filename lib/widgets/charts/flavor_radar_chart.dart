@@ -1,6 +1,6 @@
 import 'dart:math' as math;
 import 'package:flutter/material.dart';
-import 'package:coflanet/constants/color_constant.dart';
+import 'package:coflanet/constants/app_color_scheme.dart';
 import 'package:coflanet/constants/style_constant.dart';
 
 /// Data model for flavor profile values.
@@ -219,6 +219,7 @@ class _FlavorRadarChartState extends State<FlavorRadarChart>
 
   @override
   Widget build(BuildContext context) {
+    final colors = AppColorScheme.of(context);
     return SizedBox(
       width: widget.size,
       height: widget.size,
@@ -235,10 +236,11 @@ class _FlavorRadarChartState extends State<FlavorRadarChart>
               showLabels: widget.showLabels,
               showValues: widget.showValues,
               fillColor:
-                  widget.fillColor ?? AppColor.primaryNormal.withValues(alpha:0.2),
-              strokeColor: widget.strokeColor ?? AppColor.primaryNormal,
-              gridColor: widget.gridColor ?? AppColor.lineNormalNormal,
-              labelColor: widget.labelColor ?? AppColor.labelNormal,
+                  widget.fillColor ??
+                  colors.primaryNormal.withValues(alpha: 0.2),
+              strokeColor: widget.strokeColor ?? colors.primaryNormal,
+              gridColor: widget.gridColor ?? colors.lineNormalNormal,
+              labelColor: widget.labelColor ?? colors.labelNormal,
             ),
           );
         },

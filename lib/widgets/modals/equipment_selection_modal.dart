@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:coflanet/constants/app_color_scheme.dart';
 import 'package:coflanet/constants/color_constant.dart';
 import 'package:coflanet/constants/style_constant.dart';
 import 'package:coflanet/constants/radius_constant.dart';
@@ -111,7 +112,7 @@ class EquipmentSelectionModal extends StatefulWidget {
         barrierDismissible: barrierDismissible,
       ),
       barrierDismissible: barrierDismissible,
-      barrierColor: AppColor.componentMaterialDimmer,
+      barrierColor: AppColorScheme.of(Get.context!).componentMaterialDimmer,
     );
   }
 
@@ -173,28 +174,39 @@ class _EquipmentSelectionModalState extends State<EquipmentSelectionModal>
 
   @override
   Widget build(BuildContext context) {
-    return FadeTransition(
-      opacity: _fadeAnimation,
-      child: ScaleTransition(
-        scale: _scaleAnimation,
-        child: Center(
-          child: Container(
-            width: MediaQuery.of(context).size.width - 48,
-            constraints: BoxConstraints(
-              maxHeight: MediaQuery.of(context).size.height * 0.75,
-            ),
-            decoration: BoxDecoration(
-              color: AppColor.backgroundElevatedNormal,
-              borderRadius: AppRadius.modalBorder,
-              boxShadow: AppShadows.shadowBlackHeavy,
-            ),
-            child: Column(
-              mainAxisSize: MainAxisSize.min,
-              children: [
-                _buildHeader(),
-                _buildEquipmentGrid(),
-                _buildActions(),
-              ],
+    final colors = AppColorScheme.of(context);
+    // Get.dialog 는 Material 조상을 제공하지 않으므로 직접 감싼다 —
+    // 없으면 모든 Text 에 노란 이중 밑줄이 그려진다.
+    return Material(
+      type: MaterialType.transparency,
+      child: FadeTransition(
+        opacity: _fadeAnimation,
+        child: ScaleTransition(
+          scale: _scaleAnimation,
+          child: Center(
+            child: Container(
+              width: MediaQuery.of(context).size.width - 48,
+              constraints: BoxConstraints(
+                maxHeight: MediaQuery.of(context).size.height * 0.75,
+              ),
+              decoration: BoxDecoration(
+                color: colors.backgroundElevatedNormal,
+                borderRadius: AppRadius.modalBorder,
+                boxShadow: AppShadows.shadowBlackHeavy,
+                // 다크 모드는 검정 그림자가 어두운 배경에 흡수되어 카드 경계가
+                // 약해지므로 1px 보더로 경계를 보강한다. 라이트 외형은 불변.
+                border: Theme.of(context).brightness == Brightness.dark
+                    ? Border.all(color: colors.lineSolidNormal, width: 1)
+                    : null,
+              ),
+              child: Column(
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  _buildHeader(colors),
+                  _buildEquipmentGrid(),
+                  _buildActions(colors),
+                ],
+              ),
             ),
           ),
         ),
@@ -202,12 +214,12 @@ class _EquipmentSelectionModalState extends State<EquipmentSelectionModal>
     );
   }
 
-  Widget _buildHeader() {
+  Widget _buildHeader(AppColorScheme colors) {
     return Container(
       padding: const EdgeInsets.fromLTRB(24, 24, 24, 16),
       child: Text(
         widget.title ?? '커피 기구 선택',
-        style: AppTextStyles.heading1Bold.copyWith(color: AppColor.labelNormal),
+        style: AppTextStyles.heading1Bold.copyWith(color: colors.labelNormal),
         textAlign: TextAlign.center,
       ),
     );
@@ -233,7 +245,7 @@ class _EquipmentSelectionModalState extends State<EquipmentSelectionModal>
     );
   }
 
-  Widget _buildActions() {
+  Widget _buildActions(AppColorScheme colors) {
     return Container(
       padding: const EdgeInsets.fromLTRB(16, 16, 16, 20),
       child: Row(
@@ -244,8 +256,8 @@ class _EquipmentSelectionModalState extends State<EquipmentSelectionModal>
               child: OutlinedButton(
                 onPressed: _onCancel,
                 style: OutlinedButton.styleFrom(
-                  foregroundColor: AppColor.labelNormal,
-                  side: BorderSide(color: AppColor.lineNormalNormal),
+                  foregroundColor: colors.labelNormal,
+                  side: BorderSide(color: colors.lineNormalNormal),
                   shape: RoundedRectangleBorder(
                     borderRadius: AppRadius.buttonBorder,
                   ),
@@ -261,10 +273,10 @@ class _EquipmentSelectionModalState extends State<EquipmentSelectionModal>
               child: ElevatedButton(
                 onPressed: _selectedEquipment != null ? _onConfirm : null,
                 style: ElevatedButton.styleFrom(
-                  backgroundColor: AppColor.primaryNormal,
+                  backgroundColor: colors.primaryNormal,
                   foregroundColor: AppColor.staticLabelWhiteStrong,
-                  disabledBackgroundColor: AppColor.interactionInactive,
-                  disabledForegroundColor: AppColor.labelDisable,
+                  disabledBackgroundColor: colors.interactionInactive,
+                  disabledForegroundColor: colors.labelDisable,
                   elevation: 0,
                   shape: RoundedRectangleBorder(
                     borderRadius: AppRadius.buttonBorder,
@@ -294,6 +306,7 @@ class _EquipmentCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final colors = AppColorScheme.of(context);
     // Calculate width for 2 items per row with spacing
     final cardWidth = (MediaQuery.of(context).size.width - 48 - 32 - 12) / 2;
 
@@ -305,11 +318,11 @@ class _EquipmentCard extends StatelessWidget {
         padding: const EdgeInsets.all(16),
         decoration: BoxDecoration(
           color: isSelected
-              ? AppColor.primaryNormal.withValues(alpha:0.08)
-              : AppColor.componentFillNormal,
+              ? colors.primaryNormal.withValues(alpha: 0.08)
+              : colors.componentFillNormal,
           borderRadius: AppRadius.lgBorder,
           border: Border.all(
-            color: isSelected ? AppColor.primaryNormal : Colors.transparent,
+            color: isSelected ? colors.primaryNormal : Colors.transparent,
             width: 2,
           ),
         ),
@@ -322,15 +335,15 @@ class _EquipmentCard extends StatelessWidget {
               height: 48,
               decoration: BoxDecoration(
                 color: isSelected
-                    ? AppColor.primaryNormal.withValues(alpha:0.15)
-                    : AppColor.backgroundNormalAlternative,
+                    ? colors.primaryNormal.withValues(alpha: 0.15)
+                    : colors.backgroundNormalAlternative,
                 borderRadius: AppRadius.mdBorder,
               ),
               child: Icon(
                 equipment.icon,
                 color: isSelected
-                    ? AppColor.primaryNormal
-                    : AppColor.labelAlternative,
+                    ? colors.primaryNormal
+                    : colors.labelAlternative,
                 size: 24,
               ),
             ),
@@ -340,8 +353,8 @@ class _EquipmentCard extends StatelessWidget {
               equipment.label,
               style: AppTextStyles.body2NormalMedium.copyWith(
                 color: isSelected
-                    ? AppColor.primaryNormal
-                    : AppColor.labelNormal,
+                    ? colors.primaryNormal
+                    : colors.labelNormal,
               ),
               textAlign: TextAlign.center,
               maxLines: 1,
@@ -352,7 +365,7 @@ class _EquipmentCard extends StatelessWidget {
             Text(
               equipment.description,
               style: AppTextStyles.caption1Regular.copyWith(
-                color: AppColor.labelAssistive,
+                color: colors.labelAssistive,
               ),
               textAlign: TextAlign.center,
               maxLines: 1,

@@ -18,6 +18,7 @@ class LocalStorage {
   static const String keySurveyAnswers = 'survey_answers';
   static const String keySurveyResult = 'survey_result';
   static const String keyDarkMode = 'dark_mode';
+  static const String keyThemeMode = 'theme_mode';
 
   /// Initialize storage
   Future<void> init() async {
@@ -143,5 +144,16 @@ class LocalStorage {
 
   bool get isDarkMode {
     return read<bool>(keyDarkMode) ?? false;
+  }
+
+  /// 테마 모드 저장 ('system' | 'light' | 'dark')
+  /// 기기별 설정이므로 서버 동기화 없이 로컬에만 영속한다.
+  Future<void> setThemeMode(String mode) async {
+    await write(keyThemeMode, mode);
+  }
+
+  /// 저장된 테마 모드. 미설정 시 null (→ 시스템 추종)
+  String? get themeMode {
+    return read<String>(keyThemeMode);
   }
 }

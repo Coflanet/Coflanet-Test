@@ -2,7 +2,7 @@ import 'dart:async';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:coflanet/constants/color_constant.dart';
+import 'package:coflanet/constants/app_color_scheme.dart';
 import 'package:coflanet/constants/style_constant.dart';
 import 'package:coflanet/core/base/base_controller.dart';
 import 'package:coflanet/core/services/survey_service.dart';
@@ -518,12 +518,14 @@ class _ErrorDialogState extends State<_ErrorDialog> {
 
   @override
   Widget build(BuildContext context) {
+    final colors = AppColorScheme.of(context);
+
     return AlertDialog(
-      backgroundColor: AppColor.backgroundNormalNormal,
+      backgroundColor: colors.backgroundElevatedNormal,
       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
       title: Text(
         '분석 오류',
-        style: AppTextStyles.heading2Bold.copyWith(color: AppColor.labelNormal),
+        style: AppTextStyles.heading2Bold.copyWith(color: colors.labelNormal),
       ),
       content: Column(
         mainAxisSize: MainAxisSize.min,
@@ -532,7 +534,7 @@ class _ErrorDialogState extends State<_ErrorDialog> {
           Text(
             widget.message,
             style: AppTextStyles.body1NormalRegular.copyWith(
-              color: AppColor.labelNeutral,
+              color: colors.labelNeutral,
               height: 1.5,
             ),
           ),
@@ -545,13 +547,13 @@ class _ErrorDialogState extends State<_ErrorDialog> {
                   Icon(
                     _showDetail ? Icons.expand_less : Icons.expand_more,
                     size: 18,
-                    color: AppColor.labelAssistive,
+                    color: colors.labelAssistive,
                   ),
                   const SizedBox(width: 4),
                   Text(
                     '오류 상세보기',
                     style: AppTextStyles.caption1Regular.copyWith(
-                      color: AppColor.labelAssistive,
+                      color: colors.labelAssistive,
                     ),
                   ),
                 ],
@@ -563,13 +565,13 @@ class _ErrorDialogState extends State<_ErrorDialog> {
                 width: double.infinity,
                 padding: const EdgeInsets.all(10),
                 decoration: BoxDecoration(
-                  color: AppColor.componentFillNormal,
+                  color: colors.componentFillNormal,
                   borderRadius: BorderRadius.circular(8),
                 ),
                 child: SelectableText(
                   widget.errorDetail!,
                   style: AppTextStyles.caption1Regular.copyWith(
-                    color: AppColor.labelAlternative,
+                    color: colors.labelAlternative,
                     fontFamily: 'monospace',
                     fontSize: 11,
                     height: 1.4,
@@ -586,7 +588,7 @@ class _ErrorDialogState extends State<_ErrorDialog> {
           child: Text(
             '돌아가기',
             style: AppTextStyles.body1NormalMedium.copyWith(
-              color: AppColor.labelAssistive,
+              color: colors.labelAssistive,
             ),
           ),
         ),
@@ -595,7 +597,7 @@ class _ErrorDialogState extends State<_ErrorDialog> {
           child: Text(
             '재시도',
             style: AppTextStyles.body1NormalMedium.copyWith(
-              color: AppColor.primaryNormal,
+              color: colors.primaryNormal,
             ),
           ),
         ),

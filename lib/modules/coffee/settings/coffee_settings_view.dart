@@ -1,36 +1,36 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
+import 'package:coflanet/constants/app_color_scheme.dart';
 import 'package:coflanet/constants/color_constant.dart';
 import 'package:coflanet/modules/coffee/coffee_controller.dart';
+import 'package:coflanet/modules/coffee/settings/widgets/parameter_item.dart';
+import 'package:coflanet/modules/coffee/settings/widgets/recipe_step_item.dart';
+import 'package:coflanet/modules/coffee/settings/widgets/selection_pill.dart';
 import 'package:coflanet/routes/app_pages.dart';
 import 'package:coflanet/widgets/modals/input_modal.dart';
 import 'package:coflanet/widgets/modals/selection_modal.dart';
 import 'package:coflanet/widgets/modals/time_picker_modal.dart';
 
-/// Recipe step data model
-class RecipeStep {
-  final int number;
-  final String title;
-  final String description;
-
-  const RecipeStep({
-    required this.number,
-    required this.title,
-    required this.description,
-  });
-}
-
+/// 레시피 설정 화면 — 원두 프로필 / 추출 설정 / 진행 트래커 / 하단 CTA.
+///
+/// 표시용 위젯(SelectionPill/ParameterItem/RecipeStepItem)은 widgets/ 로 분리.
+/// 파일이 400줄 임계값을 초과하지만, 잔여 코드는 모달 핸들러 7종
+/// (controller 직접 쓰기)과 Obx 경계를 가진 섹션 빌더라
+/// controller 미참조 위젯으로 추출할 수 없어 View 잔류가 정당한 예외다.
 class CoffeeSettingsView extends GetView<CoffeeController> {
   const CoffeeSettingsView({super.key});
 
   @override
   Widget build(BuildContext context) {
+    final colors = AppColorScheme.of(context);
+
     return Scaffold(
-      backgroundColor: AppColor.colorGlobalCommon0, // Figma: #000000 (BLACK)
+      // 다크: 순검정(Figma) / 라이트: 밝은 회색 페이지 배경
+      backgroundColor: colors.backgroundNormalAlternative,
       body: Column(
         children: [
-          _buildTopNavigation(context),
+          _buildTopNavigation(context, colors),
           Expanded(
             child: SingleChildScrollView(
               physics: const AlwaysScrollableScrollPhysics(),
@@ -38,79 +38,79 @@ class CoffeeSettingsView extends GetView<CoffeeController> {
               child: Column(
                 children: [
                   const SizedBox(height: 16),
-                  _buildProfileCard(),
+                  _buildProfileCard(colors),
                   const SizedBox(height: 12),
-                  _buildSettingsCard(),
+                  _buildSettingsCard(colors),
                   const SizedBox(height: 12),
-                  _buildProgressTracker(),
+                  _buildProgressTracker(colors),
                   const SizedBox(height: 24),
                 ],
               ),
             ),
           ),
-          _buildBottomCTA(),
+          _buildBottomCTA(colors),
         ],
       ),
     );
   }
 
-  /// Top Navigation - Dark with glass effect
-  /// Figma: height 110px (54px status + 56px nav), background #000000
-  Widget _buildTopNavigation(BuildContext context) {
+  /// Top Navigation — 테마 반응 (페이지 배경색 + 대비 fill 버튼)
+  /// Figma: height 110px (54px status + 56px nav)
+  Widget _buildTopNavigation(BuildContext context, AppColorScheme colors) {
     final statusBarHeight = MediaQuery.of(context).padding.top;
 
     return Container(
       height: statusBarHeight + 56,
       padding: EdgeInsets.only(top: statusBarHeight, left: 16, right: 16),
-      color: AppColor.colorGlobalCommon0,
+      color: colors.backgroundNormalAlternative,
       child: Row(
         children: [
-          // Back button - Figma: 40x40px, rgba(77,77,77,0.6), border-radius 99px
+          // Back button - Figma: 40x40px, border-radius 99px
           GestureDetector(
             onTap: () => Get.back(),
             child: Container(
               width: 40,
               height: 40,
               decoration: BoxDecoration(
-                color: AppColor.componentFillScroll,
+                color: colors.componentFillStrong,
                 borderRadius: BorderRadius.circular(99),
               ),
               child: Icon(
                 Icons.chevron_left,
-                color: AppColor.staticLabelWhiteStrong,
+                color: colors.labelNormal,
                 size: 24,
               ),
             ),
           ),
-          // Centered title - Figma: Pretendard 17px/600, color #FFFFFF
-          const Expanded(
+          // Centered title - Figma: Pretendard 17px/600
+          Expanded(
             child: Text(
               '레시피',
               style: TextStyle(
                 fontFamily: 'Pretendard',
                 fontSize: 17,
                 fontWeight: FontWeight.w600,
-                color: AppColor.colorGlobalCommon100,
+                color: colors.labelStrong,
               ),
               textAlign: TextAlign.center,
             ),
           ),
-          // Edit button - Figma: Pretendard 16px/600, color #F7F7F8, glass background
+          // Edit button - Figma: Pretendard 16px/600, 대비 pill 배경
           GestureDetector(
             onTap: () => Get.toNamed(Routes.recipeEdit),
             child: Container(
               padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
               decoration: BoxDecoration(
-                color: AppColor.componentFillScroll,
+                color: colors.componentFillStrong,
                 borderRadius: BorderRadius.circular(99),
               ),
-              child: const Text(
+              child: Text(
                 '편집',
                 style: TextStyle(
                   fontFamily: 'Pretendard',
                   fontSize: 16,
                   fontWeight: FontWeight.w600,
-                  color: AppColor.colorGlobalCoolNeutral99,
+                  color: colors.labelNormal,
                 ),
               ),
             ),
@@ -121,13 +121,13 @@ class CoffeeSettingsView extends GetView<CoffeeController> {
   }
 
   /// Profile Card (Coffee Bean)
-  /// Figma: background #FFFFFF, border-radius 40px, padding 16px, gap 12px, height 112px
-  Widget _buildProfileCard() {
+  /// Figma: 카드 surfaceCard, border-radius 40px, padding 16px, gap 12px, height 112px
+  Widget _buildProfileCard(AppColorScheme colors) {
     return Container(
       height: 112,
       padding: const EdgeInsets.all(16),
       decoration: BoxDecoration(
-        color: AppColor.colorGlobalCommon100,
+        color: colors.surfaceCard,
         borderRadius: BorderRadius.circular(40),
       ),
       child: Row(
@@ -137,15 +137,11 @@ class CoffeeSettingsView extends GetView<CoffeeController> {
             width: 64,
             height: 64,
             decoration: BoxDecoration(
-              color: AppColor.colorGlobalCoolNeutral98,
+              color: colors.surfaceCardStrong,
               borderRadius: BorderRadius.circular(20),
             ),
-            child: const Center(
-              child: Icon(
-                Icons.coffee,
-                size: 32,
-                color: AppColor.colorGlobalNeutral60,
-              ),
+            child: Center(
+              child: Icon(Icons.coffee, size: 32, color: colors.labelAssistive),
             ),
           ),
           const SizedBox(width: 12),
@@ -162,11 +158,11 @@ class CoffeeSettingsView extends GetView<CoffeeController> {
                     fontFamily: 'Pretendard',
                     fontSize: 14,
                     fontWeight: FontWeight.w400,
-                    color: AppColor.labelAlternative,
+                    color: colors.labelAlternative,
                   ),
                 ),
                 const SizedBox(height: 4),
-                // Bean name - Figma: Pretendard 18px/600, color #171719
+                // Bean name - Figma: Pretendard 18px/600
                 Obx(() {
                   final beanName = controller.selectedBeanName;
                   return Text(
@@ -175,7 +171,7 @@ class CoffeeSettingsView extends GetView<CoffeeController> {
                       fontFamily: 'Pretendard',
                       fontSize: 18,
                       fontWeight: FontWeight.w600,
-                      color: AppColor.labelNormal,
+                      color: colors.labelNormal,
                     ),
                   );
                 }),
@@ -183,41 +179,41 @@ class CoffeeSettingsView extends GetView<CoffeeController> {
             ),
           ),
           // Chevron
-          Icon(Icons.chevron_right, color: AppColor.labelAlternative, size: 24),
+          Icon(Icons.chevron_right, color: colors.labelAlternative, size: 24),
         ],
       ),
     );
   }
 
   /// Settings Card (Background+Shadow)
-  /// Figma: background #FFFFFF, border-radius 40px, padding 16px, gap 8px, height 324px
-  Widget _buildSettingsCard() {
+  /// Figma: 카드 surfaceCard, border-radius 40px, padding 16px, gap 8px, height 324px
+  Widget _buildSettingsCard(AppColorScheme colors) {
     return Container(
       padding: const EdgeInsets.all(16),
       decoration: BoxDecoration(
-        color: AppColor.colorGlobalCommon100,
+        color: colors.surfaceCard,
         borderRadius: BorderRadius.circular(40),
       ),
       child: Column(
         children: [
-          _buildExtractionDeviceSection(),
+          _buildExtractionDeviceSection(colors),
           const SizedBox(height: 8),
           _buildSelectionPillsRow(),
           const SizedBox(height: 8),
-          _buildParametersGrid(),
+          _buildParametersGrid(colors),
         ],
       ),
     );
   }
 
   /// Extraction Device Section (Contents)
-  /// Figma: background rgba(112,115,124,0.12), border-radius 24px, padding 24px, gap 12px, height 104px
-  Widget _buildExtractionDeviceSection() {
+  /// Figma: 옅은 회색 fill, border-radius 24px, padding 24px, gap 12px, height 104px
+  Widget _buildExtractionDeviceSection(AppColorScheme colors) {
     return Container(
       height: 104,
       padding: const EdgeInsets.all(24),
       decoration: BoxDecoration(
-        color: AppColor.colorGlobalCoolNeutral50.withValues(alpha: 0.12),
+        color: colors.componentFillNormal,
         borderRadius: BorderRadius.circular(24),
       ),
       child: Row(
@@ -234,11 +230,11 @@ class CoffeeSettingsView extends GetView<CoffeeController> {
                     fontFamily: 'Pretendard',
                     fontSize: 16,
                     fontWeight: FontWeight.w400,
-                    color: AppColor.labelAlternative,
+                    color: colors.labelAlternative,
                   ),
                 ),
                 const SizedBox(height: 4),
-                // Value - Figma: Pretendard 16px/400, color #171719
+                // Value - Figma: Pretendard 16px/400
                 Obx(
                   () => Text(
                     controller.selectedType == CoffeeType.espresso
@@ -248,7 +244,7 @@ class CoffeeSettingsView extends GetView<CoffeeController> {
                       fontFamily: 'Pretendard',
                       fontSize: 16,
                       fontWeight: FontWeight.w400,
-                      color: AppColor.labelNormal,
+                      color: colors.labelNormal,
                     ),
                   ),
                 ),
@@ -263,18 +259,18 @@ class CoffeeSettingsView extends GetView<CoffeeController> {
               height: 32,
               padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 7),
               decoration: BoxDecoration(
-                color: AppColor.componentFillNormal,
+                color: colors.componentFillNormal,
                 borderRadius: BorderRadius.circular(99),
               ),
               child: Center(
-                // Button text - Figma: Pretendard 13px/600, color rgba(55,56,60,0.61)
+                // Button text - Figma: Pretendard 13px/600
                 child: Text(
                   '변경하기',
                   style: TextStyle(
                     fontFamily: 'Pretendard',
                     fontSize: 13,
                     fontWeight: FontWeight.w600,
-                    color: AppColor.labelAlternative,
+                    color: colors.labelAlternative,
                   ),
                 ),
               ),
@@ -289,11 +285,13 @@ class CoffeeSettingsView extends GetView<CoffeeController> {
   /// Figma: gap 4px, height 80px
   Widget _buildSelectionPillsRow() {
     return Obx(() {
+      // mainText 평가(cupsCount read + strength 라벨 계산)는
+      // 이 Obx 클로저 안에서 동기 실행되어야 반응성이 유지된다.
       return Row(
         children: [
           // Cups pill
           Expanded(
-            child: _SelectionPill(
+            child: SelectionPill(
               mainText: '${controller.cupsCount}잔',
               subText: '잔수',
               onTap: _showCupsSelectionModal,
@@ -302,7 +300,7 @@ class CoffeeSettingsView extends GetView<CoffeeController> {
           const SizedBox(width: 4),
           // Strength pill
           Expanded(
-            child: _SelectionPill(
+            child: SelectionPill(
               mainText: _getStrengthDisplayLabel(),
               subText: '진하기 정도',
               onTap: _showStrengthSelectionModal,
@@ -320,43 +318,43 @@ class CoffeeSettingsView extends GetView<CoffeeController> {
   }
 
   /// Parameters Grid
-  /// Figma: background rgba(112,115,124,0.12), border-radius 32px, padding 24px 8px, height 92px
-  Widget _buildParametersGrid() {
+  /// Figma: 옅은 회색 fill, border-radius 32px, padding 24px 8px, height 92px
+  Widget _buildParametersGrid(AppColorScheme colors) {
     return Container(
       padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 16),
       decoration: BoxDecoration(
-        color: AppColor.colorGlobalCoolNeutral50.withValues(alpha: 0.12),
+        color: colors.componentFillNormal,
         borderRadius: BorderRadius.circular(32),
       ),
       child: Obx(
         () => Row(
           children: [
             Expanded(
-              child: _ParameterItem(
+              child: ParameterItem(
                 value: '${controller.coffeeAmount}g',
                 label: '원두',
                 onTap: _showCoffeeAmountModal,
               ),
             ),
-            _buildVerticalDivider(),
+            _buildVerticalDivider(colors),
             Expanded(
-              child: _ParameterItem(
+              child: ParameterItem(
                 value: '${controller.waterTemperature}°C',
                 label: '물 온도',
                 onTap: _showWaterTemperatureModal,
               ),
             ),
-            _buildVerticalDivider(),
+            _buildVerticalDivider(colors),
             Expanded(
-              child: _ParameterItem(
+              child: ParameterItem(
                 value: controller.extractionTimeFormatted,
                 label: '추출 시간',
                 onTap: _showExtractionTimeModal,
               ),
             ),
-            _buildVerticalDivider(),
+            _buildVerticalDivider(colors),
             Expanded(
-              child: _ParameterItem(
+              child: ParameterItem(
                 value: '${controller.waterAmount}ml',
                 label: '물의 양',
                 onTap: _showWaterAmountModal,
@@ -369,14 +367,14 @@ class CoffeeSettingsView extends GetView<CoffeeController> {
   }
 
   /// Vertical Divider between parameter columns
-  /// Figma: width 1px, height 24px, color rgba(112,115,124,0.16)
-  Widget _buildVerticalDivider() {
-    return Container(width: 1, height: 24, color: AppColor.componentFillStrong);
+  /// Figma: width 1px, height 24px
+  Widget _buildVerticalDivider(AppColorScheme colors) {
+    return Container(width: 1, height: 24, color: colors.componentFillStrong);
   }
 
   /// Progress Tracker (Recipe Steps)
-  /// Figma: background #FFFFFF, border-radius 40px, padding 32px 24px, gap 16px, height 324px
-  Widget _buildProgressTracker() {
+  /// Figma: 카드 surfaceCard, border-radius 40px, padding 32px 24px, gap 16px, height 324px
+  Widget _buildProgressTracker(AppColorScheme colors) {
     return Obx(() {
       // Obx 반응성 트래킹을 위해 length 접근
       final steps = controller.extractionSteps;
@@ -424,13 +422,13 @@ class CoffeeSettingsView extends GetView<CoffeeController> {
       return Container(
         padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 32),
         decoration: BoxDecoration(
-          color: AppColor.colorGlobalCommon100,
+          color: colors.surfaceCard,
           borderRadius: BorderRadius.circular(40),
         ),
         child: Column(
           children: [
             for (int i = 0; i < displaySteps.length; i++)
-              _RecipeStepItem(
+              RecipeStepItem(
                 step: displaySteps[i],
                 isLast: i == displaySteps.length - 1,
               ),
@@ -441,11 +439,11 @@ class CoffeeSettingsView extends GetView<CoffeeController> {
   }
 
   /// Bottom CTA
-  /// Figma: background #6541F2, border-radius 99px, width 328px, height 52px, padding 12px 28px
-  Widget _buildBottomCTA() {
+  /// Figma: 보라 solid 버튼, border-radius 99px, width 328px, height 52px, padding 12px 28px
+  Widget _buildBottomCTA(AppColorScheme colors) {
     return Container(
       padding: const EdgeInsets.fromLTRB(16, 12, 16, 16),
-      color: AppColor.colorGlobalCommon0,
+      color: colors.backgroundNormalAlternative,
       child: SafeArea(
         top: false,
         child: SizedBox(
@@ -454,7 +452,7 @@ class CoffeeSettingsView extends GetView<CoffeeController> {
           child: ElevatedButton(
             onPressed: () => Get.toNamed(Routes.timerActive),
             style: ElevatedButton.styleFrom(
-              backgroundColor: AppColor.primaryNormal,
+              backgroundColor: colors.primaryNormal,
               foregroundColor: AppColor.staticLabelWhiteStrong,
               elevation: 0,
               shape: RoundedRectangleBorder(
@@ -623,194 +621,5 @@ class CoffeeSettingsView extends GetView<CoffeeController> {
     if (result != null) {
       controller.customWaterAmount = int.parse(result);
     }
-  }
-}
-
-/// Selection Pill
-/// Figma: background #F0ECFE, border 1px solid #C0B0FF, border-radius 24px, width 162px, height 80px, padding 16px, gap 2px
-class _SelectionPill extends StatelessWidget {
-  final String mainText;
-  final String subText;
-  final VoidCallback onTap;
-
-  const _SelectionPill({
-    required this.mainText,
-    required this.subText,
-    required this.onTap,
-  });
-
-  @override
-  Widget build(BuildContext context) {
-    return GestureDetector(
-      onTap: onTap,
-      child: Container(
-        padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 14),
-        decoration: BoxDecoration(
-          color: AppColor.colorGlobalViolet95,
-          border: Border.all(color: AppColor.colorGlobalViolet80, width: 1),
-          borderRadius: BorderRadius.circular(24),
-        ),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.center,
-          mainAxisSize: MainAxisSize.min,
-          children: [
-            // Main text - Figma: Pretendard 18px/600, color #5B35F2
-            Text(
-              mainText,
-              style: TextStyle(
-                fontFamily: 'Pretendard',
-                fontSize: 18,
-                fontWeight: FontWeight.w600,
-                color: AppColor.primaryStrong,
-              ),
-              textAlign: TextAlign.center,
-            ),
-            const SizedBox(height: 2),
-            // Sub text - Figma: Pretendard 14px/400, color rgba(55,56,60,0.61)
-            Text(
-              subText,
-              style: TextStyle(
-                fontFamily: 'Pretendard',
-                fontSize: 14,
-                fontWeight: FontWeight.w400,
-                color: AppColor.labelAlternative,
-              ),
-              textAlign: TextAlign.center,
-            ),
-          ],
-        ),
-      ),
-    );
-  }
-}
-
-/// Parameter Item
-/// Value: Figma: Pretendard 15px/500, color rgba(46,47,51,0.88)
-/// Label: Figma: Pretendard 14px/400, color rgba(55,56,60,0.61)
-class _ParameterItem extends StatelessWidget {
-  final String value;
-  final String label;
-  final VoidCallback onTap;
-
-  const _ParameterItem({
-    required this.value,
-    required this.label,
-    required this.onTap,
-  });
-
-  @override
-  Widget build(BuildContext context) {
-    return GestureDetector(
-      onTap: onTap,
-      child: Column(
-        mainAxisSize: MainAxisSize.min,
-        children: [
-          // Value - Figma: Pretendard 15px/500, color rgba(46,47,51,0.88)
-          Text(
-            value,
-            style: TextStyle(
-              fontFamily: 'Pretendard',
-              fontSize: 15,
-              fontWeight: FontWeight.w500,
-              color: AppColor.labelNeutral,
-            ),
-            textAlign: TextAlign.center,
-          ),
-          const SizedBox(height: 4),
-          // Label - Figma: Pretendard 14px/400, color rgba(55,56,60,0.61)
-          Text(
-            label,
-            style: TextStyle(
-              fontFamily: 'Pretendard',
-              fontSize: 14,
-              fontWeight: FontWeight.w400,
-              color: AppColor.labelAlternative,
-            ),
-            textAlign: TextAlign.center,
-          ),
-        ],
-      ),
-    );
-  }
-}
-
-/// Recipe Step Item with numbered badge (vertical stepper)
-/// Badge: 20x20px circle, background #E1E2E4, border-radius 1000px
-/// Badge number: Pretendard 12px/600, color #FFFFFF
-/// Vertical divider line: 1px width, 28px height, background #E1E2E4
-/// Step title: Pretendard 16px/500, color rgba(55,56,60,0.61), width 100px
-/// Step description: Pretendard 14px/400, color rgba(55,56,60,0.35), aligned right
-class _RecipeStepItem extends StatelessWidget {
-  final RecipeStep step;
-  final bool isLast;
-
-  const _RecipeStepItem({required this.step, required this.isLast});
-
-  @override
-  Widget build(BuildContext context) {
-    return Row(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        // Left column: badge + vertical line
-        Column(
-          children: [
-            // Badge - Figma: 20x20px, background #E1E2E4, border-radius 1000px
-            Container(
-              width: 20,
-              height: 20,
-              decoration: BoxDecoration(
-                color: AppColor.colorGlobalCoolNeutral96,
-                borderRadius: BorderRadius.circular(1000),
-              ),
-              child: Center(
-                // Badge number - Figma: Pretendard 12px/600
-                child: Text(
-                  '${step.number}',
-                  style: TextStyle(
-                    fontFamily: 'Pretendard',
-                    fontSize: 12,
-                    fontWeight: FontWeight.w600,
-                    color: AppColor.labelAlternative,
-                  ),
-                ),
-              ),
-            ),
-            // Vertical divider line - Figma: 1px width, 28px height, background #E1E2E4
-            if (!isLast)
-              Container(
-                width: 1,
-                height: 28,
-                color: AppColor.colorGlobalCoolNeutral96,
-              ),
-          ],
-        ),
-        const SizedBox(width: 12),
-        // Step title - Figma: Pretendard 16px/500, color rgba(55,56,60,0.61), width 100px
-        SizedBox(
-          width: 100,
-          child: Text(
-            step.title,
-            style: TextStyle(
-              fontFamily: 'Pretendard',
-              fontSize: 16,
-              fontWeight: FontWeight.w500,
-              color: AppColor.labelAlternative,
-            ),
-          ),
-        ),
-        const Spacer(),
-        // Step description - Figma: Pretendard 14px/400, color rgba(55,56,60,0.35), aligned right
-        Text(
-          step.description,
-          style: TextStyle(
-            fontFamily: 'Pretendard',
-            fontSize: 14,
-            fontWeight: FontWeight.w400,
-            color: AppColor.labelAssistive,
-          ),
-          textAlign: TextAlign.right,
-        ),
-      ],
-    );
   }
 }

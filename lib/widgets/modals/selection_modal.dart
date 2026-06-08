@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:coflanet/constants/app_color_scheme.dart';
 import 'package:coflanet/constants/color_constant.dart';
 import 'package:coflanet/constants/style_constant.dart';
 import 'package:coflanet/constants/radius_constant.dart';
@@ -86,7 +87,7 @@ class SelectionModal extends StatefulWidget {
       enableDrag: true,
       isScrollControlled: true,
       backgroundColor: AppColor.transparent,
-      barrierColor: AppColor.componentMaterialDimmer,
+      barrierColor: AppColorScheme.of(Get.context!).componentMaterialDimmer,
       enterBottomSheetDuration: const Duration(milliseconds: 300),
       exitBottomSheetDuration: const Duration(milliseconds: 200),
     );
@@ -99,17 +100,6 @@ class SelectionModal extends StatefulWidget {
 class _SelectionModalState extends State<SelectionModal> {
   late int? _selectedIndex;
   late Set<int> _selectedIndices;
-
-  // Figma colors (semantic mapping)
-  static final Color _dragHandleColor = AppColor.lineSolidNormal;
-  static final Color _closeIconColor = AppColor.labelNormal;
-  static final Color _titleColor = AppColor.labelNormal;
-  static final Color _descriptionColor = AppColor.labelAlternative;
-  static final Color _selectedBorderColor = AppColor.primaryNormal;
-  static final Color _selectedTextColor = AppColor.primaryNormal;
-  static final Color _selectedBgColor = AppColor.backgroundNormalNormal;
-  static final Color _unselectedBgColor = AppColor.colorGlobalCoolNeutral99;
-  static final Color _unselectedTextColor = AppColor.labelNormal;
 
   @override
   void initState() {
@@ -148,6 +138,7 @@ class _SelectionModalState extends State<SelectionModal> {
 
   @override
   Widget build(BuildContext context) {
+    final colors = AppColorScheme.of(context);
     final bottomPadding = MediaQuery.of(context).viewPadding.bottom;
 
     return Container(
@@ -155,16 +146,26 @@ class _SelectionModalState extends State<SelectionModal> {
         maxHeight: MediaQuery.of(context).size.height * 0.85,
       ),
       decoration: BoxDecoration(
-        color: AppColor.backgroundElevatedNormal,
+        color: colors.backgroundElevatedNormal,
         borderRadius: AppRadius.top(AppRadius.xxl),
+        // 다크 모드는 어두운 배경 위에서 시트 상단 경계가 약해지므로
+        // 둥근 상단 모서리를 따라 좌/상/우 1px 보더만 추가한다.
+        // 화면 하단에 붙는 아래쪽은 선을 긋지 않는다. 라이트 외형은 불변.
+        border: Theme.of(context).brightness == Brightness.dark
+            ? Border(
+                top: BorderSide(color: colors.lineSolidNormal, width: 1),
+                left: BorderSide(color: colors.lineSolidNormal, width: 1),
+                right: BorderSide(color: colors.lineSolidNormal, width: 1),
+              )
+            : null,
       ),
       child: Column(
         mainAxisSize: MainAxisSize.min,
         children: [
-          _buildDragHandle(),
-          _buildHeader(),
-          _buildContent(),
-          if (widget.isMultiSelect) _buildConfirmButton(),
+          _buildDragHandle(colors),
+          _buildHeader(colors),
+          _buildContent(colors),
+          if (widget.isMultiSelect) _buildConfirmButton(colors),
           // iOS Home Indicator area
           SizedBox(height: bottomPadding > 0 ? bottomPadding : 20),
         ],
@@ -173,20 +174,20 @@ class _SelectionModalState extends State<SelectionModal> {
   }
 
   /// Drag handle - 40x4px pill shape
-  Widget _buildDragHandle() {
+  Widget _buildDragHandle(AppColorScheme colors) {
     return Container(
       margin: const EdgeInsets.only(top: 12),
       width: 40,
       height: 4,
       decoration: BoxDecoration(
-        color: _dragHandleColor,
+        color: colors.interactionInactive,
         borderRadius: AppRadius.fullBorder,
       ),
     );
   }
 
   /// Header with close button and title
-  Widget _buildHeader() {
+  Widget _buildHeader(AppColorScheme colors) {
     return Padding(
       padding: const EdgeInsets.fromLTRB(24, 16, 16, 0),
       child: Stack(
@@ -201,7 +202,7 @@ class _SelectionModalState extends State<SelectionModal> {
               behavior: HitTestBehavior.opaque,
               child: Padding(
                 padding: const EdgeInsets.all(8),
-                child: Icon(Icons.close, size: 24, color: _closeIconColor),
+                child: Icon(Icons.close, size: 24, color: colors.labelNormal),
               ),
             ),
           ),
@@ -213,7 +214,7 @@ class _SelectionModalState extends State<SelectionModal> {
                 Text(
                   widget.title,
                   style: AppTextStyles.heading1Bold.copyWith(
-                    color: _titleColor,
+                    color: colors.labelNormal,
                   ),
                   textAlign: TextAlign.center,
                 ),
@@ -222,7 +223,7 @@ class _SelectionModalState extends State<SelectionModal> {
                   Text(
                     widget.description!,
                     style: AppTextStyles.body2NormalRegular.copyWith(
-                      color: _descriptionColor,
+                      color: colors.labelAlternative,
                     ),
                     textAlign: TextAlign.center,
                   ),
@@ -236,7 +237,7 @@ class _SelectionModalState extends State<SelectionModal> {
   }
 
   /// Scrollable option list
-  Widget _buildContent() {
+  Widget _buildContent(AppColorScheme colors) {
     return Flexible(
       child: Padding(
         padding: const EdgeInsets.fromLTRB(20, 24, 20, 16),
@@ -251,6 +252,7 @@ class _SelectionModalState extends State<SelectionModal> {
                 : _selectedIndex == index;
 
             return _buildOptionButton(
+              colors: colors,
               label: widget.options[index],
               isSelected: isSelected,
               onTap: () => _onOptionTap(index),
@@ -263,6 +265,7 @@ class _SelectionModalState extends State<SelectionModal> {
 
   /// Option button - 56px height, pill shape
   Widget _buildOptionButton({
+    required AppColorScheme colors,
     required String label,
     required bool isSelected,
     required VoidCallback onTap,
@@ -274,10 +277,13 @@ class _SelectionModalState extends State<SelectionModal> {
         curve: Curves.easeOutCubic,
         height: 56,
         decoration: BoxDecoration(
-          color: isSelected ? _selectedBgColor : _unselectedBgColor,
+          // 선택: 모달 배경색(테두리만 강조), 미선택: 옅은 회색 fill
+          color: isSelected
+              ? colors.backgroundElevatedNormal
+              : colors.componentFillNormal,
           borderRadius: AppRadius.fullBorder,
           border: Border.all(
-            color: isSelected ? _selectedBorderColor : AppColor.transparent,
+            color: isSelected ? colors.primaryNormal : AppColor.transparent,
             width: 2,
           ),
         ),
@@ -285,7 +291,7 @@ class _SelectionModalState extends State<SelectionModal> {
           child: Text(
             label,
             style: AppTextStyles.body1NormalMedium.copyWith(
-              color: isSelected ? _selectedTextColor : _unselectedTextColor,
+              color: isSelected ? colors.primaryNormal : colors.labelNormal,
             ),
           ),
         ),
@@ -294,7 +300,7 @@ class _SelectionModalState extends State<SelectionModal> {
   }
 
   /// Confirm button for multi-select mode
-  Widget _buildConfirmButton() {
+  Widget _buildConfirmButton(AppColorScheme colors) {
     final hasSelection = _selectedIndices.isNotEmpty;
 
     return Padding(
@@ -305,10 +311,10 @@ class _SelectionModalState extends State<SelectionModal> {
         child: ElevatedButton(
           onPressed: hasSelection ? _onConfirm : null,
           style: ElevatedButton.styleFrom(
-            backgroundColor: AppColor.primaryNormal,
-            disabledBackgroundColor: AppColor.interactionDisable,
+            backgroundColor: colors.primaryNormal,
+            disabledBackgroundColor: colors.interactionDisable,
             foregroundColor: AppColor.staticLabelWhiteStrong,
-            disabledForegroundColor: AppColor.labelDisable,
+            disabledForegroundColor: colors.labelDisable,
             elevation: 0,
             shape: RoundedRectangleBorder(borderRadius: AppRadius.fullBorder),
           ),

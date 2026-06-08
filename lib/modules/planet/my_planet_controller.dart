@@ -6,6 +6,7 @@ import 'package:coflanet/core/services/auth_service.dart';
 import 'package:coflanet/core/services/survey_service.dart';
 import 'package:coflanet/data/models/survey_result_model.dart';
 import 'package:coflanet/routes/app_pages.dart';
+import 'package:coflanet/widgets/modals/confirm_modal.dart';
 
 /// Taste preference item (e.g. 산미 / 좋음)
 class TastePreference {
@@ -168,24 +169,18 @@ class MyPlanetController extends BaseController {
     Get.offAllNamed(Routes.signIn);
   }
 
-  /// Withdraw account (회원탈퇴)
-  void withdrawAccount() {
-    Get.dialog(
-      AlertDialog(
-        title: const Text('회원탈퇴'),
-        content: const Text('정말 탈퇴하시겠습니까?\n모든 데이터가 삭제됩니다.'),
-        actions: [
-          TextButton(onPressed: () => Get.back(), child: const Text('취소')),
-          TextButton(
-            onPressed: () async {
-              Get.back(); // close dialog
-              await _executeWithdrawal();
-            },
-            child: const Text('탈퇴', style: TextStyle(color: Color(0xFFFF4242))),
-          ),
-        ],
-      ),
+  /// Withdraw account (회원탈퇴) — 앱 공통 ConfirmModal (테마 반응 + destructive 스타일)
+  Future<void> withdrawAccount() async {
+    final confirmed = await ConfirmModal.show(
+      title: '회원탈퇴',
+      message: '정말 탈퇴하시겠습니까?\n모든 데이터가 삭제됩니다.',
+      confirmText: '탈퇴',
+      cancelText: '취소',
+      isDestructive: true,
     );
+    if (confirmed == true) {
+      await _executeWithdrawal();
+    }
   }
 
   Future<void> _executeWithdrawal() async {

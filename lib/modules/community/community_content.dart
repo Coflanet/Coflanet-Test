@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:coflanet/constants/color_constant.dart';
+import 'package:coflanet/constants/app_color_scheme.dart';
 import 'package:coflanet/constants/style_constant.dart';
 
 /// 커뮤니티 탭 콘텐츠 — [백엔드 API 연동 대기]
@@ -9,8 +9,9 @@ class CommunityContent extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final colors = AppColorScheme.of(context);
     return Container(
-      color: AppColor.backgroundNormalAlternative,
+      color: colors.backgroundNormalAlternative,
       child: Center(
         child: Padding(
           padding: const EdgeInsets.symmetric(horizontal: 32),
@@ -20,13 +21,13 @@ class CommunityContent extends StatelessWidget {
               Icon(
                 Icons.chat_bubble_outline_rounded,
                 size: 56,
-                color: AppColor.primaryNormal.withValues(alpha: 0.6),
+                color: colors.primaryNormal.withValues(alpha: 0.6),
               ),
               const SizedBox(height: 20),
               Text(
                 '커뮤니티',
                 style: AppTextStyles.headline1Bold.copyWith(
-                  color: AppColor.labelNormal,
+                  color: colors.labelNormal,
                 ),
                 textAlign: TextAlign.center,
               ),
@@ -34,7 +35,7 @@ class CommunityContent extends StatelessWidget {
               Text(
                 '커피러버들의 이야기를 나눌 수 있는\n공간을 준비 중이에요',
                 style: AppTextStyles.body2NormalRegular.copyWith(
-                  color: AppColor.labelAlternative,
+                  color: colors.labelAlternative,
                 ),
                 textAlign: TextAlign.center,
               ),

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:coflanet/constants/app_color_scheme.dart';
 import 'package:coflanet/constants/color_constant.dart';
 import 'package:coflanet/constants/style_constant.dart';
 import 'package:coflanet/constants/radius_constant.dart';
@@ -63,7 +64,7 @@ class UnsavedChangesModal extends StatefulWidget {
         barrierDismissible: barrierDismissible,
       ),
       barrierDismissible: barrierDismissible,
-      barrierColor: AppColor.componentMaterialDimmer,
+      barrierColor: AppColorScheme.of(Get.context!).componentMaterialDimmer,
     );
   }
 
@@ -112,21 +113,32 @@ class _UnsavedChangesModalState extends State<UnsavedChangesModal>
 
   @override
   Widget build(BuildContext context) {
-    return FadeTransition(
-      opacity: _fadeAnimation,
-      child: ScaleTransition(
-        scale: _scaleAnimation,
-        child: Center(
-          child: Container(
-            width: MediaQuery.of(context).size.width - 48,
-            decoration: BoxDecoration(
-              color: AppColor.backgroundElevatedNormal,
-              borderRadius: AppRadius.xlBorder,
-              boxShadow: AppShadows.shadowBlackHeavy,
-            ),
-            child: Column(
-              mainAxisSize: MainAxisSize.min,
-              children: [_buildContent(), _buildActions()],
+    final colors = AppColorScheme.of(context);
+    // Get.dialog 는 Material 조상을 제공하지 않으므로 직접 감싼다 —
+    // 없으면 모든 Text 에 노란 이중 밑줄이 그려진다.
+    return Material(
+      type: MaterialType.transparency,
+      child: FadeTransition(
+        opacity: _fadeAnimation,
+        child: ScaleTransition(
+          scale: _scaleAnimation,
+          child: Center(
+            child: Container(
+              width: MediaQuery.of(context).size.width - 48,
+              decoration: BoxDecoration(
+                color: colors.backgroundElevatedNormal,
+                borderRadius: AppRadius.xlBorder,
+                boxShadow: AppShadows.shadowBlackHeavy,
+                // 다크 모드는 검정 그림자가 어두운 배경에 흡수되어 카드 경계가
+                // 약해지므로 1px 보더로 경계를 보강한다. 라이트 외형은 불변.
+                border: Theme.of(context).brightness == Brightness.dark
+                    ? Border.all(color: colors.lineSolidNormal, width: 1)
+                    : null,
+              ),
+              child: Column(
+                mainAxisSize: MainAxisSize.min,
+                children: [_buildContent(colors), _buildActions(colors)],
+              ),
             ),
           ),
         ),
@@ -134,7 +146,7 @@ class _UnsavedChangesModalState extends State<UnsavedChangesModal>
     );
   }
 
-  Widget _buildContent() {
+  Widget _buildContent(AppColorScheme colors) {
     // Figma: No icon, just title and message centered
     return Padding(
       padding: const EdgeInsets.fromLTRB(24, 28, 24, 20),
@@ -145,7 +157,7 @@ class _UnsavedChangesModalState extends State<UnsavedChangesModal>
           Text(
             widget.title ?? '편집 내용이 저장되지 않았어요',
             style: AppTextStyles.title2Bold.copyWith(
-              color: AppColor.labelNormal,
+              color: colors.labelNormal,
             ),
             textAlign: TextAlign.center,
           ),
@@ -154,7 +166,7 @@ class _UnsavedChangesModalState extends State<UnsavedChangesModal>
           Text(
             widget.message ?? '저장하지 않고 나가시겠어요?',
             style: AppTextStyles.body1NormalRegular.copyWith(
-              color: AppColor.labelAlternative,
+              color: colors.labelAlternative,
             ),
             textAlign: TextAlign.center,
           ),
@@ -163,7 +175,7 @@ class _UnsavedChangesModalState extends State<UnsavedChangesModal>
     );
   }
 
-  Widget _buildActions() {
+  Widget _buildActions(AppColorScheme colors) {
     // Figma: Horizontal button layout, equal width, 12-16px gap
     // Left: Secondary (gray), Right: Destructive (red)
     return Container(
@@ -177,8 +189,8 @@ class _UnsavedChangesModalState extends State<UnsavedChangesModal>
               child: ElevatedButton(
                 onPressed: _onContinueEditing,
                 style: ElevatedButton.styleFrom(
-                  backgroundColor: AppColor.componentFillNormal,
-                  foregroundColor: AppColor.labelNormal,
+                  backgroundColor: colors.componentFillNormal,
+                  foregroundColor: colors.labelNormal,
                   elevation: 0,
                   shape: RoundedRectangleBorder(
                     borderRadius: AppRadius.xxxlBorder,
@@ -187,7 +199,7 @@ class _UnsavedChangesModalState extends State<UnsavedChangesModal>
                 child: Text(
                   widget.continueText ?? '편집 계속하기',
                   style: AppTextStyles.headline2Bold.copyWith(
-                    color: AppColor.labelNormal,
+                    color: colors.labelNormal,
                   ),
                 ),
               ),
@@ -201,7 +213,7 @@ class _UnsavedChangesModalState extends State<UnsavedChangesModal>
               child: ElevatedButton(
                 onPressed: _onDiscardAndExit,
                 style: ElevatedButton.styleFrom(
-                  backgroundColor: AppColor.statusNegative,
+                  backgroundColor: colors.statusNegative,
                   foregroundColor: AppColor.staticLabelWhiteStrong,
                   elevation: 0,
                   shape: RoundedRectangleBorder(

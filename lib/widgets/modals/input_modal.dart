@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
+import 'package:coflanet/constants/app_color_scheme.dart';
 import 'package:coflanet/constants/color_constant.dart';
 import 'package:coflanet/constants/style_constant.dart';
 import 'package:coflanet/constants/radius_constant.dart';
@@ -97,7 +98,7 @@ class InputModal extends StatefulWidget {
       isScrollControlled: true,
       isDismissible: barrierDismissible,
       enableDrag: true,
-      barrierColor: AppColor.componentMaterialDimmer,
+      barrierColor: AppColorScheme.of(Get.context!).componentMaterialDimmer,
     );
   }
 
@@ -205,12 +206,23 @@ class _InputModalState extends State<InputModal> {
 
   @override
   Widget build(BuildContext context) {
+    final colors = AppColorScheme.of(context);
     final bottomPadding = MediaQuery.of(context).viewInsets.bottom;
 
     return Container(
       decoration: BoxDecoration(
-        color: AppColor.backgroundElevatedNormal,
+        color: colors.backgroundElevatedNormal,
         borderRadius: AppRadius.top(AppRadius.xxxl),
+        // 다크 모드는 어두운 배경 위에서 시트 상단 경계가 약해지므로
+        // 둥근 상단 모서리를 따라 좌/상/우 1px 보더만 추가한다.
+        // 화면 하단에 붙는 아래쪽은 선을 긋지 않는다. 라이트 외형은 불변.
+        border: Theme.of(context).brightness == Brightness.dark
+            ? Border(
+                top: BorderSide(color: colors.lineSolidNormal, width: 1),
+                left: BorderSide(color: colors.lineSolidNormal, width: 1),
+                right: BorderSide(color: colors.lineSolidNormal, width: 1),
+              )
+            : null,
       ),
       child: SafeArea(
         top: false,
@@ -219,13 +231,13 @@ class _InputModalState extends State<InputModal> {
           child: Column(
             mainAxisSize: MainAxisSize.min,
             children: [
-              _buildDragHandle(),
-              _buildTitleSection(),
-              _buildInputField(),
+              _buildDragHandle(colors),
+              _buildTitleSection(colors),
+              _buildInputField(colors),
               if (widget.quickSelectOptions != null &&
                   widget.quickSelectOptions!.isNotEmpty)
-                _buildQuickSelectChips(),
-              _buildConfirmButton(),
+                _buildQuickSelectChips(colors),
+              _buildConfirmButton(colors),
               const SizedBox(height: 8),
             ],
           ),
@@ -234,19 +246,19 @@ class _InputModalState extends State<InputModal> {
     );
   }
 
-  Widget _buildDragHandle() {
+  Widget _buildDragHandle(AppColorScheme colors) {
     return Container(
       margin: const EdgeInsets.only(top: 12, bottom: 8),
       width: 40,
       height: 4,
       decoration: BoxDecoration(
-        color: AppColor.lineSolidNormal,
+        color: colors.interactionInactive,
         borderRadius: AppRadius.fullBorder,
       ),
     );
   }
 
-  Widget _buildTitleSection() {
+  Widget _buildTitleSection(AppColorScheme colors) {
     return Padding(
       padding: const EdgeInsets.fromLTRB(24, 8, 24, 16),
       child: Column(
@@ -254,7 +266,7 @@ class _InputModalState extends State<InputModal> {
           Text(
             widget.title,
             style: AppTextStyles.heading2Bold.copyWith(
-              color: AppColor.labelNormal,
+              color: colors.labelNormal,
             ),
             textAlign: TextAlign.center,
           ),
@@ -263,7 +275,7 @@ class _InputModalState extends State<InputModal> {
             Text(
               widget.message!,
               style: AppTextStyles.label1NormalRegular.copyWith(
-                color: AppColor.labelAlternative,
+                color: colors.labelAlternative,
               ),
               textAlign: TextAlign.center,
             ),
@@ -273,7 +285,7 @@ class _InputModalState extends State<InputModal> {
     );
   }
 
-  Widget _buildInputField() {
+  Widget _buildInputField(AppColorScheme colors) {
     final bool hasFocus = _focusNode.hasFocus;
     final bool hasError = _errorText != null;
     final bool hasValue = _controller.text.isNotEmpty;
@@ -283,18 +295,19 @@ class _InputModalState extends State<InputModal> {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
+          // 단일 테두리 1겹 — 회색 fill + 두꺼운 테두리 조합이 만드는 다층 ring 방지
           Container(
             height: 56,
             decoration: BoxDecoration(
-              color: AppColor.componentFillNormal,
+              color: colors.backgroundElevatedNormal,
               borderRadius: AppRadius.fullBorder,
               border: Border.all(
                 color: hasError
-                    ? AppColor.statusNegative
+                    ? colors.statusNegative
                     : hasFocus
-                    ? AppColor.primaryNormal
-                    : AppColor.transparent,
-                width: 2,
+                    ? colors.primaryNormal
+                    : colors.lineNormalNormal,
+                width: 1.5,
               ),
             ),
             child: Row(
@@ -309,19 +322,18 @@ class _InputModalState extends State<InputModal> {
                     inputFormatters: widget.inputFormatters,
                     onChanged: _onTextChanged,
                     onSubmitted: (_) => _onConfirm(),
-                    textAlign: TextAlign.center,
                     style: AppTextStyles.title3Bold.copyWith(
-                      color: AppColor.labelNormal,
+                      color: colors.labelNormal,
                     ),
+                    cursorColor: colors.primaryNormal,
                     decoration: InputDecoration(
                       hintText: widget.hint,
                       hintStyle: AppTextStyles.title3Medium.copyWith(
-                        color: AppColor.labelAssistive,
+                        color: colors.labelAssistive,
                       ),
                       border: InputBorder.none,
-                      contentPadding: EdgeInsets.only(
-                        left: hasValue ? 48 : 16,
-                        right: 16,
+                      contentPadding: const EdgeInsets.symmetric(
+                        horizontal: 20,
                       ),
                       counterText: '',
                     ),
@@ -333,7 +345,7 @@ class _InputModalState extends State<InputModal> {
                     child: Text(
                       widget.suffix!,
                       style: AppTextStyles.title3Bold.copyWith(
-                        color: AppColor.labelNormal,
+                        color: colors.labelNormal,
                       ),
                     ),
                   ),
@@ -345,13 +357,13 @@ class _InputModalState extends State<InputModal> {
                       width: 24,
                       height: 24,
                       decoration: BoxDecoration(
-                        color: AppColor.componentFillStrong,
+                        color: colors.componentFillStrong,
                         shape: BoxShape.circle,
                       ),
                       child: Icon(
                         Icons.close,
                         size: 14,
-                        color: AppColor.labelAlternative,
+                        color: colors.labelAlternative,
                       ),
                     ),
                   ),
@@ -366,13 +378,13 @@ class _InputModalState extends State<InputModal> {
                   Icon(
                     Icons.error_outline,
                     size: 14,
-                    color: AppColor.statusNegative,
+                    color: colors.statusNegative,
                   ),
                   const SizedBox(width: 4),
                   Text(
                     _errorText!,
                     style: AppTextStyles.caption1Regular.copyWith(
-                      color: AppColor.statusNegative,
+                      color: colors.statusNegative,
                     ),
                   ),
                 ],
@@ -383,7 +395,7 @@ class _InputModalState extends State<InputModal> {
     );
   }
 
-  Widget _buildQuickSelectChips() {
+  Widget _buildQuickSelectChips(AppColorScheme colors) {
     final options = widget.quickSelectOptions!;
     // Split into rows of 4
     final int rowCount = (options.length / 4).ceil();
@@ -409,6 +421,7 @@ class _InputModalState extends State<InputModal> {
                       right: colIndex < rowItems.length - 1 ? 8 : 0,
                     ),
                     child: _QuickSelectChip(
+                      colors: colors,
                       label: rowItems[colIndex],
                       isSelected: isSelected,
                       onTap: () =>
@@ -424,7 +437,7 @@ class _InputModalState extends State<InputModal> {
     );
   }
 
-  Widget _buildConfirmButton() {
+  Widget _buildConfirmButton(AppColorScheme colors) {
     return Padding(
       padding: const EdgeInsets.fromLTRB(24, 0, 24, 16),
       child: SizedBox(
@@ -433,7 +446,7 @@ class _InputModalState extends State<InputModal> {
         child: ElevatedButton(
           onPressed: _onConfirm,
           style: ElevatedButton.styleFrom(
-            backgroundColor: AppColor.primaryNormal,
+            backgroundColor: colors.primaryNormal,
             foregroundColor: AppColor.staticLabelWhiteStrong,
             elevation: 0,
             shape: RoundedRectangleBorder(borderRadius: AppRadius.fullBorder),
@@ -451,11 +464,13 @@ class _InputModalState extends State<InputModal> {
 }
 
 class _QuickSelectChip extends StatelessWidget {
+  final AppColorScheme colors;
   final String label;
   final bool isSelected;
   final VoidCallback onTap;
 
   const _QuickSelectChip({
+    required this.colors,
     required this.label,
     required this.isSelected,
     required this.onTap,
@@ -469,10 +484,10 @@ class _QuickSelectChip extends StatelessWidget {
         duration: const Duration(milliseconds: 150),
         height: 44,
         decoration: BoxDecoration(
-          color: AppColor.componentFillNormal,
+          color: colors.componentFillNormal,
           borderRadius: AppRadius.xxxlBorder,
           border: Border.all(
-            color: isSelected ? AppColor.primaryNormal : AppColor.transparent,
+            color: isSelected ? colors.primaryNormal : AppColor.transparent,
             width: 1.5,
           ),
         ),
@@ -481,8 +496,8 @@ class _QuickSelectChip extends StatelessWidget {
             label,
             style: AppTextStyles.body2NormalMedium.copyWith(
               color: isSelected
-                  ? AppColor.primaryNormal
-                  : AppColor.labelAlternative,
+                  ? colors.primaryNormal
+                  : colors.labelAlternative,
             ),
           ),
         ),

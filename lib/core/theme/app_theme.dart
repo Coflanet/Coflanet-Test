@@ -1,181 +1,174 @@
 import 'package:flutter/material.dart';
+
+import 'package:coflanet/constants/app_color_scheme.dart';
 import 'package:coflanet/constants/color_constant.dart';
 import 'package:coflanet/constants/style_constant.dart';
 import 'package:coflanet/constants/radius_constant.dart';
 
-/// App-wide theme configuration
+/// 앱 전역 테마 설정.
+///
+/// 라이트/다크 모두 [AppColorScheme] 시맨틱 스킴에서 색을 가져오는
+/// 단일 빌더(_build)로 생성한다 — 서브테마 누락/비대칭 방지.
 class AppTheme {
   AppTheme._();
 
   /// Light theme
-  static ThemeData get light => ThemeData(
-    useMaterial3: true,
-    brightness: Brightness.light,
-    primaryColor: AppColor.primaryNormal,
-    scaffoldBackgroundColor: AppColor.backgroundNormalNormal,
-    colorScheme: ColorScheme.light(
-      primary: AppColor.primaryNormal,
-      secondary: AppColor.primarySecondary,
-      surface: AppColor.backgroundNormalNormal,
-      error: AppColor.statusNegative,
-      onPrimary: AppColor.staticLabelWhiteStrong,
-      onSecondary: AppColor.staticLabelWhiteStrong,
-      onSurface: AppColor.labelNormal,
-      onError: AppColor.staticLabelWhiteStrong,
-    ),
-    appBarTheme: AppBarTheme(
-      backgroundColor: AppColor.backgroundNormalNormal,
-      foregroundColor: AppColor.labelNormal,
-      elevation: 0,
-      centerTitle: true,
-      titleTextStyle: AppTextStyles.headline1Bold.copyWith(
-        color: AppColor.labelNormal,
-      ),
-    ),
-    textTheme: const TextTheme(
-      displayLarge: AppTextStyles.display1Bold,
-      displayMedium: AppTextStyles.display2Bold,
-      headlineLarge: AppTextStyles.heading1Bold,
-      headlineMedium: AppTextStyles.heading2Bold,
-      titleLarge: AppTextStyles.title1Bold,
-      titleMedium: AppTextStyles.title2Bold,
-      titleSmall: AppTextStyles.title3Bold,
-      bodyLarge: AppTextStyles.body1NormalRegular,
-      bodyMedium: AppTextStyles.body2NormalRegular,
-      labelLarge: AppTextStyles.label1NormalMedium,
-      labelMedium: AppTextStyles.label2Medium,
-      labelSmall: AppTextStyles.caption1Regular,
-    ),
-    elevatedButtonTheme: ElevatedButtonThemeData(
-      style: ElevatedButton.styleFrom(
-        backgroundColor: AppColor.primaryNormal,
-        foregroundColor: AppColor.staticLabelWhiteStrong,
-        minimumSize: const Size(double.infinity, 52),
-        shape: RoundedRectangleBorder(borderRadius: AppRadius.lgBorder),
-        textStyle: AppTextStyles.headline1Bold,
-      ),
-    ),
-    outlinedButtonTheme: OutlinedButtonThemeData(
-      style: OutlinedButton.styleFrom(
-        foregroundColor: AppColor.labelNormal,
-        minimumSize: const Size(double.infinity, 52),
-        shape: RoundedRectangleBorder(borderRadius: AppRadius.lgBorder),
-        side: BorderSide(color: AppColor.lineNormalNormal),
-        textStyle: AppTextStyles.headline1Bold,
-      ),
-    ),
-    textButtonTheme: TextButtonThemeData(
-      style: TextButton.styleFrom(
-        foregroundColor: AppColor.primaryNormal,
-        textStyle: AppTextStyles.label1NormalMedium,
-      ),
-    ),
-    inputDecorationTheme: InputDecorationTheme(
-      filled: true,
-      fillColor: AppColor.componentFillNormal,
-      border: OutlineInputBorder(
-        borderRadius: AppRadius.lgBorder,
-        borderSide: BorderSide.none,
-      ),
-      enabledBorder: OutlineInputBorder(
-        borderRadius: AppRadius.lgBorder,
-        borderSide: BorderSide.none,
-      ),
-      focusedBorder: OutlineInputBorder(
-        borderRadius: AppRadius.lgBorder,
-        borderSide: BorderSide(color: AppColor.primaryNormal, width: 2),
-      ),
-      errorBorder: OutlineInputBorder(
-        borderRadius: AppRadius.lgBorder,
-        borderSide: BorderSide(color: AppColor.statusNegative, width: 2),
-      ),
-      contentPadding: const EdgeInsets.symmetric(horizontal: 16, vertical: 14),
-    ),
-    checkboxTheme: CheckboxThemeData(
-      fillColor: WidgetStateProperty.resolveWith((states) {
-        if (states.contains(WidgetState.selected)) {
-          return AppColor.primaryNormal;
-        }
-        return Colors.transparent;
-      }),
-      shape: RoundedRectangleBorder(borderRadius: AppRadius.xsBorder),
-    ),
-    dividerTheme: DividerThemeData(
-      color: AppColor.lineNormalNeutral,
-      thickness: 1,
-    ),
-    bottomNavigationBarTheme: BottomNavigationBarThemeData(
-      backgroundColor: AppColor.backgroundNormalNormal,
-      selectedItemColor: AppColor.primaryNormal,
-      unselectedItemColor: AppColor.labelAssistive,
-      type: BottomNavigationBarType.fixed,
-      selectedLabelStyle: AppTextStyles.caption1Medium,
-      unselectedLabelStyle: AppTextStyles.caption1Regular,
-    ),
-  );
+  static ThemeData get light => _build(AppColorScheme.light, Brightness.light);
 
   /// Dark theme
-  static ThemeData get dark => ThemeData(
-    useMaterial3: true,
-    brightness: Brightness.dark,
-    primaryColor: AppColor.darkPrimaryNormal,
-    scaffoldBackgroundColor: AppColor.darkBackgroundNormalNormal,
-    colorScheme: ColorScheme.dark(
-      primary: AppColor.darkPrimaryNormal,
-      secondary: AppColor.darkPrimarySecondary,
-      surface: AppColor.darkBackgroundNormalNormal,
-      error: AppColor.darkStatusNegative,
-      onPrimary: AppColor.staticLabelWhiteStrong,
-      onSecondary: AppColor.staticLabelWhiteStrong,
-      onSurface: AppColor.darkLabelNormal,
-      onError: AppColor.staticLabelWhiteStrong,
-    ),
-    appBarTheme: AppBarTheme(
-      backgroundColor: AppColor.darkBackgroundNormalNormal,
-      foregroundColor: AppColor.darkLabelNormal,
-      elevation: 0,
-      centerTitle: true,
-      titleTextStyle: AppTextStyles.headline1Bold.copyWith(
-        color: AppColor.darkLabelNormal,
+  static ThemeData get dark => _build(AppColorScheme.dark, Brightness.dark);
+
+  static ThemeData _build(AppColorScheme colors, Brightness brightness) {
+    final bool isDark = brightness == Brightness.dark;
+
+    return ThemeData(
+      useMaterial3: true,
+      brightness: brightness,
+      primaryColor: colors.primaryNormal,
+      scaffoldBackgroundColor: colors.backgroundNormalNormal,
+      colorScheme: ColorScheme(
+        brightness: brightness,
+        primary: colors.primaryNormal,
+        onPrimary: AppColor.staticLabelWhiteStrong,
+        secondary: colors.primarySecondary,
+        onSecondary: AppColor.staticLabelWhiteStrong,
+        surface: colors.backgroundNormalNormal,
+        onSurface: colors.labelNormal,
+        error: colors.statusNegative,
+        onError: AppColor.staticLabelWhiteStrong,
       ),
-    ),
-    textTheme: TextTheme(
-      displayLarge: AppTextStyles.display1Bold.copyWith(
-        color: AppColor.darkLabelNormal,
+      appBarTheme: AppBarTheme(
+        backgroundColor: colors.backgroundNormalNormal,
+        foregroundColor: colors.labelNormal,
+        elevation: 0,
+        centerTitle: true,
+        titleTextStyle: AppTextStyles.headline1Bold.copyWith(
+          color: colors.labelNormal,
+        ),
       ),
-      displayMedium: AppTextStyles.display2Bold.copyWith(
-        color: AppColor.darkLabelNormal,
+      textTheme: TextTheme(
+        displayLarge: AppTextStyles.display1Bold.copyWith(
+          color: colors.labelNormal,
+        ),
+        displayMedium: AppTextStyles.display2Bold.copyWith(
+          color: colors.labelNormal,
+        ),
+        headlineLarge: AppTextStyles.heading1Bold.copyWith(
+          color: colors.labelNormal,
+        ),
+        headlineMedium: AppTextStyles.heading2Bold.copyWith(
+          color: colors.labelNormal,
+        ),
+        titleLarge: AppTextStyles.title1Bold.copyWith(
+          color: colors.labelNormal,
+        ),
+        titleMedium: AppTextStyles.title2Bold.copyWith(
+          color: colors.labelNormal,
+        ),
+        titleSmall: AppTextStyles.title3Bold.copyWith(
+          color: colors.labelNormal,
+        ),
+        bodyLarge: AppTextStyles.body1NormalRegular.copyWith(
+          color: colors.labelNormal,
+        ),
+        bodyMedium: AppTextStyles.body2NormalRegular.copyWith(
+          color: colors.labelNormal,
+        ),
+        labelLarge: AppTextStyles.label1NormalMedium.copyWith(
+          color: colors.labelNormal,
+        ),
+        labelMedium: AppTextStyles.label2Medium.copyWith(
+          color: colors.labelNormal,
+        ),
+        labelSmall: AppTextStyles.caption1Regular.copyWith(
+          color: colors.labelNormal,
+        ),
       ),
-      headlineLarge: AppTextStyles.heading1Bold.copyWith(
-        color: AppColor.darkLabelNormal,
+      elevatedButtonTheme: ElevatedButtonThemeData(
+        style: ElevatedButton.styleFrom(
+          backgroundColor: colors.primaryNormal,
+          foregroundColor: AppColor.staticLabelWhiteStrong,
+          minimumSize: const Size(double.infinity, 52),
+          shape: RoundedRectangleBorder(borderRadius: AppRadius.lgBorder),
+          textStyle: AppTextStyles.headline1Bold,
+        ),
       ),
-      headlineMedium: AppTextStyles.heading2Bold.copyWith(
-        color: AppColor.darkLabelNormal,
+      outlinedButtonTheme: OutlinedButtonThemeData(
+        style: OutlinedButton.styleFrom(
+          foregroundColor: colors.labelNormal,
+          minimumSize: const Size(double.infinity, 52),
+          shape: RoundedRectangleBorder(borderRadius: AppRadius.lgBorder),
+          side: BorderSide(color: colors.lineNormalNormal),
+          textStyle: AppTextStyles.headline1Bold,
+        ),
       ),
-      titleLarge: AppTextStyles.title1Bold.copyWith(
-        color: AppColor.darkLabelNormal,
+      textButtonTheme: TextButtonThemeData(
+        style: TextButton.styleFrom(
+          foregroundColor: colors.primaryNormal,
+          textStyle: AppTextStyles.label1NormalMedium,
+        ),
       ),
-      titleMedium: AppTextStyles.title2Bold.copyWith(
-        color: AppColor.darkLabelNormal,
+      inputDecorationTheme: InputDecorationTheme(
+        filled: true,
+        fillColor: colors.componentFillNormal,
+        border: OutlineInputBorder(
+          borderRadius: AppRadius.lgBorder,
+          borderSide: BorderSide.none,
+        ),
+        enabledBorder: OutlineInputBorder(
+          borderRadius: AppRadius.lgBorder,
+          borderSide: BorderSide.none,
+        ),
+        focusedBorder: OutlineInputBorder(
+          borderRadius: AppRadius.lgBorder,
+          borderSide: BorderSide(color: colors.primaryNormal, width: 2),
+        ),
+        errorBorder: OutlineInputBorder(
+          borderRadius: AppRadius.lgBorder,
+          borderSide: BorderSide(color: colors.statusNegative, width: 2),
+        ),
+        contentPadding: const EdgeInsets.symmetric(
+          horizontal: 16,
+          vertical: 14,
+        ),
       ),
-      titleSmall: AppTextStyles.title3Bold.copyWith(
-        color: AppColor.darkLabelNormal,
+      checkboxTheme: CheckboxThemeData(
+        fillColor: WidgetStateProperty.resolveWith((states) {
+          if (states.contains(WidgetState.selected)) {
+            return colors.primaryNormal;
+          }
+          return AppColor.transparent;
+        }),
+        shape: RoundedRectangleBorder(borderRadius: AppRadius.xsBorder),
       ),
-      bodyLarge: AppTextStyles.body1NormalRegular.copyWith(
-        color: AppColor.darkLabelNormal,
+      dividerTheme: DividerThemeData(
+        color: colors.lineNormalNeutral,
+        thickness: 1,
       ),
-      bodyMedium: AppTextStyles.body2NormalRegular.copyWith(
-        color: AppColor.darkLabelNormal,
+      bottomSheetTheme: BottomSheetThemeData(
+        backgroundColor: colors.backgroundElevatedNormal,
+        modalBackgroundColor: colors.backgroundElevatedNormal,
+        surfaceTintColor: AppColor.transparent,
       ),
-      labelLarge: AppTextStyles.label1NormalMedium.copyWith(
-        color: AppColor.darkLabelNormal,
+      dialogTheme: DialogThemeData(
+        backgroundColor: colors.backgroundElevatedNormal,
+        surfaceTintColor: AppColor.transparent,
       ),
-      labelMedium: AppTextStyles.label2Medium.copyWith(
-        color: AppColor.darkLabelNormal,
+      bottomNavigationBarTheme: BottomNavigationBarThemeData(
+        backgroundColor: colors.backgroundNormalNormal,
+        selectedItemColor: colors.primaryNormal,
+        unselectedItemColor: colors.labelAssistive,
+        type: BottomNavigationBarType.fixed,
+        selectedLabelStyle: AppTextStyles.caption1Medium,
+        unselectedLabelStyle: AppTextStyles.caption1Regular,
       ),
-      labelSmall: AppTextStyles.caption1Regular.copyWith(
-        color: AppColor.darkLabelNormal,
-      ),
-    ),
-  );
+      // 다크에서 splash/highlight 가 라이트 기본값으로 남지 않도록 명시
+      splashColor: isDark
+          ? AppColor.colorGlobalCommon100.withValues(alpha: 0.06)
+          : null,
+      highlightColor: isDark
+          ? AppColor.colorGlobalCommon100.withValues(alpha: 0.04)
+          : null,
+    );
+  }
 }
