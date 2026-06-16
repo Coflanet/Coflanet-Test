@@ -17,6 +17,14 @@ class NaverAuthProvider implements AuthProvider {
 
   @override
   Future<UserModel> signIn() async {
+    // 네이버 키가 비어 있으면 네이티브 SDK 가 미초기화 상태가 되어
+    // 'SDK 초기화 필요' 에러로 먹통이 된다. 설정 누락을 먼저 명확히 차단한다.
+    if (!SocialLoginConfig.isNaverConfigured) {
+      throw AuthException(
+        '네이버 로그인이 설정되지 않았습니다. 앱 설정(.env)을 확인해주세요.',
+        code: 'NAVER_NOT_CONFIGURED',
+      );
+    }
     try {
       final NaverLoginResult result = await FlutterNaverLogin.logIn();
 
@@ -46,6 +54,9 @@ class NaverAuthProvider implements AuthProvider {
       } else if (result.status == NaverLoginStatus.loggedOut) {
         throw AuthException('로그인이 취소되었습니다.', code: 'CANCELED');
       } else {
+        // 네이티브 SDK 의 실제 에러 메시지를 로그로 남겨 원인 파악을 돕는다.
+        // (예: 'SDK not initialized. Please call initSdk first.', 'errorCode:...')
+        _logDebug('네이버 로그인 실패: ${result.errorMessage}');
         throw AuthException('네이버 로그인에 실패했습니다.', code: 'NAVER_LOGIN_FAILED');
       }
     } on AuthException {
