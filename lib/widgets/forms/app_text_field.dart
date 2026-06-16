@@ -371,8 +371,10 @@ class _AppTextFieldState extends State<AppTextField>
           return AnimatedContainer(
             duration: const Duration(milliseconds: 200),
             curve: Curves.easeOutCubic,
-            // 고정 높이 박스 안에서 TextField 를 항상 세로 중앙에 배치
-            // (기기/폰트 배율에 따라 위로 치우치는 케이스 방지)
+            // 고정 높이([_height]) 박스 안에서 입력 내용을 항상 세로 중앙에 배치한다.
+            // alignment 가 없으면 일부 사이즈(특히 lg)에서 입력 영역이 위로 치우치거나
+            // 박스 높이가 늘어나는 문제가 생긴다. 아이콘(prefix/suffix) 유무와 무관하게
+            // 동작하도록 위젯 자체에서 중앙 정렬을 보장한다.
             alignment: Alignment.center,
             decoration: BoxDecoration(
               color: fillColor,
@@ -431,7 +433,11 @@ class _AppTextFieldState extends State<AppTextField>
       decoration: InputDecoration(
         hintText: widget.hintText,
         hintStyle: AppTextStyles.body1NormalRegular.copyWith(color: hintColor),
-        isDense: true,
+        // isDense/isCollapsed 를 쓰지 않는다 — 이 옵션들은 InputDecorator 를 내용물
+        // (텍스트 한 줄) 높이로 축소시켜, 아이콘 없는 bare 필드에서 textAlignVertical.
+        // center 가 중앙 정렬할 여백을 없앤다(텍스트가 위로 붙음). 기본 동작으로 두면
+        // InputDecorator 가 고정 높이([_height]) 박스를 채우고 textAlignVertical.center
+        // 가 텍스트를 세로 중앙에 둔다. (아이콘 유무와 무관하게 동일하게 동작)
         contentPadding: _contentPadding,
         border: InputBorder.none,
         enabledBorder: InputBorder.none,
