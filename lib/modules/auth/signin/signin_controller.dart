@@ -62,11 +62,18 @@ class SignInController extends BaseController {
           Get.offAllNamed(Routes.mainShell, arguments: {'initialTab': 0});
           return;
         }
+        // 이미 이름(닉네임)이 있는 사용자(재로그인/기가입)는 이름 입력 단계를
+        // 건너뛰고 곧장 설문 흐름으로 보낸다. (이메일 로그인 경로와 동일하게 정렬)
+        final hasNickname = result['has_nickname'] as bool? ?? false;
+        if (hasNickname) {
+          Get.offAllNamed(Routes.surveyIntro);
+          return;
+        }
       }
     } catch (e) {
       debugPrint('[SignIn] get_onboarding_status error: $e');
     }
-    // 온보딩 미완료 → 프로필 설정
+    // 이름 없음(신규) 또는 상태 확인 실패 → 프로필(이름) 설정
     Get.offAllNamed(Routes.profileSetup);
   }
 
