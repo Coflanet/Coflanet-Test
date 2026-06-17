@@ -18,6 +18,15 @@
               android:name="io.flutter.embedding.android.NormalTheme"
               android:resource="@style/NormalTheme"
               />
+            <!-- Flutter 기본 딥링크 라우팅 비활성화.
+                 Supabase OAuth 콜백(com.coflanet.tech.app://callback?code=...)이
+                 Flutter 라우터를 타면 GetX 가 '/'(=splash) 로 네비게이트해 로그인 직후
+                 SplashView 가 다시 뜬다. 콜백은 supabase_flutter(app_links) 가 직접
+                 처리하므로 Flutter 자동 라우팅은 끈다. -->
+            <meta-data
+              android:name="flutter_deeplinking_enabled"
+              android:value="false"
+              />
             <intent-filter>
                 <action android:name="android.intent.action.MAIN"/>
                 <category android:name="android.intent.category.LAUNCHER"/>
