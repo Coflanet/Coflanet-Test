@@ -254,11 +254,12 @@ class _AppTextFieldState extends State<AppTextField>
     }
   }
 
-  /// 세로 패딩은 0 — 고정 높이([_height]) 안에서 [TextAlignVertical.center] 로
-  /// 텍스트를 중앙 정렬한다. (prefix/suffix 아이콘이 있을 때 세로 패딩이 크면
-  /// 중앙 정렬이 무시되고 위로 치우치는 Flutter 동작을 회피)
-  EdgeInsets get _contentPadding {
-    return EdgeInsets.symmetric(horizontal: AppSpacing.md, vertical: 0);
+  /// 단일 줄 여부 — 멀티라인([maxLines] > 1)이나 [expands] 가 아니면 단일 줄이다.
+  /// (비밀번호 필드는 항상 단일 줄)
+  bool get _isSingleLine {
+    if (widget.obscureText) return true;
+    if (widget.expands) return false;
+    return widget.maxLines == 1;
   }
 
   @override
@@ -371,9 +372,13 @@ class _AppTextFieldState extends State<AppTextField>
           return AnimatedContainer(
             duration: const Duration(milliseconds: 200),
             curve: Curves.easeOutCubic,
-            // 고정 높이 박스 안에서 TextField 를 항상 세로 중앙에 배치
-            // (기기/폰트 배율에 따라 위로 치우치는 케이스 방지)
-            alignment: Alignment.center,
+            // 세로 정렬은 자식([_buildTextFieldContent])이 담당하므로 컨테이너는
+            // alignment 로 개입하지 않는다(자식에 고정 높이 [_height] 제약을 그대로
+            // 전달). 자식 분기:
+            //  - 단일 줄: [Row(crossAxisAlignment.center)] 가 줄 박스를 세로 중앙에.
+            //  - 멀티라인/expands: [TextField] 가 박스를 위에서부터 채운다(top-anchor).
+            // (alignment: center 를 주면 멀티라인 [TextField] 가 자기 높이로 줄어들어
+            // expands/top-anchor 동작이 깨지므로 의도적으로 생략한다.)
             decoration: BoxDecoration(
               color: fillColor,
               borderRadius: AppRadius.inputBorder,
@@ -406,7 +411,37 @@ class _AppTextFieldState extends State<AppTextField>
         ? colors.statusNegative
         : colors.primaryNormal;
 
-    return TextField(
+    // 단일 줄에서는 디자인 토큰의 line-height(height 1.4~1.6)를 1.0 으로 눌러
+    // 텍스트의 '줄 박스'를 글리프 박스와 같게 만든다. 이렇게 해야 바깥 레이아웃
+    // ([Row] crossAxis center)가 줄 박스를 중앙에 둘 때 '글리프'도 정확히 중앙에
+    // 온다. (height 1.5 인 줄 박스는 leading 이 baseline 위/아래로 비대칭 분배되어
+    // 줄 박스를 중앙에 둬도 글리프가 사이즈별로 위/아래로 어긋나는 원인이 된다.)
+    // 멀티라인은 가독성을 위해 토큰 line-height 를 그대로 유지한다.
+    final inputStyle = _isSingleLine
+        ? _textStyle.copyWith(color: textColor, height: 1.0)
+        : _textStyle.copyWith(color: textColor);
+
+    // hint 스타일은 입력 텍스트와 동일한 메트릭(폰트 크기/높이)을 사용해야
+    // 빈 필드의 hint 와 입력된 텍스트가 같은 세로 위치에 놓인다.
+    // (기존에는 size 와 무관하게 body1 로 고정되어 sm/lg 에서 hint 가 어긋났다.)
+    final hintStyle = _isSingleLine
+        ? _textStyle.copyWith(color: hintColor, height: 1.0)
+        : _textStyle.copyWith(color: hintColor);
+
+    // strut 을 글리프 박스에 고정해 한글/영문/숫자 등 문자 구성에 관계없이
+    // 줄 높이가 흔들리지 않도록 한다(단일 줄 중앙 정렬 안정화).
+    final strutStyle = _isSingleLine
+        ? StrutStyle(
+            fontFamily: _textStyle.fontFamily,
+            fontSize: _textStyle.fontSize,
+            height: 1.0,
+            forceStrutHeight: true,
+          )
+        : null;
+
+    // 입력 필드 본체. 단일 줄/멀티라인 모두 [TextField] 의 데코레이션은
+    // 테두리 없이 hint 만 담당하고, 세로 정렬은 바깥 레이아웃이 결정한다.
+    final textField = TextField(
       controller: widget.controller,
       focusNode: _focusNode,
       enabled: widget.isEnabled,
@@ -416,7 +451,7 @@ class _AppTextFieldState extends State<AppTextField>
       inputFormatters: widget.inputFormatters,
       maxLength: widget.maxLength,
       maxLines: widget.obscureText ? 1 : widget.maxLines,
-      minLines: widget.minLines,
+      minLines: _isSingleLine ? null : widget.minLines,
       expands: widget.expands,
       autofocus: widget.autofocus,
       readOnly: widget.readOnly,
@@ -425,36 +460,74 @@ class _AppTextFieldState extends State<AppTextField>
       enableSuggestions: widget.enableSuggestions,
       onChanged: widget.onChanged,
       onEditingComplete: widget.onEditingComplete,
-      style: _textStyle.copyWith(color: textColor),
+      onSubmitted: widget.onSubmitted,
+      style: inputStyle,
+      strutStyle: strutStyle,
       cursorColor: cursorColor,
-      textAlignVertical: TextAlignVertical.center,
+      // 멀티라인은 위에서부터 채우고(top), 단일 줄은 바깥 [Row] 가 줄 박스를
+      // 세로 중앙에 배치하므로 데코레이터 자체 정렬은 사용하지 않는다.
+      textAlignVertical: _isSingleLine ? null : TextAlignVertical.top,
       decoration: InputDecoration(
         hintText: widget.hintText,
-        hintStyle: AppTextStyles.body1NormalRegular.copyWith(color: hintColor),
-        isDense: true,
-        contentPadding: _contentPadding,
+        hintStyle: hintStyle,
+        // isCollapsed: InputDecorator 의 기본 세로 패딩/라벨 baseline 예약을 제거해
+        // 데코레이터 높이를 '입력 줄 박스' 높이로 정확히 축소한다. 가로 패딩만 직접
+        // 부여하고, 단일 줄 세로 정렬은 바깥 [Row] 가 결정론적으로 처리한다.
+        // (멀티라인은 [_multiLineContentPadding] 으로 상하 여백을 부여)
+        isCollapsed: true,
+        contentPadding: _isSingleLine
+            ? _singleLineTextPadding
+            : _multiLineContentPadding,
         border: InputBorder.none,
         enabledBorder: InputBorder.none,
         focusedBorder: InputBorder.none,
         disabledBorder: InputBorder.none,
         errorBorder: InputBorder.none,
         focusedErrorBorder: InputBorder.none,
+        // 채움색은 바깥 AnimatedContainer 가 담당한다. 테마의 InputDecorationTheme
+        // (filled: true)가 새어들어 텍스트 영역에만 채움이 한 번 더 겹쳐 그 부분만
+        // 진해 보이는 문제를 막기 위해 명시적으로 끈다.
+        filled: false,
         counterText: '',
-        prefixIcon: _buildPrefixIcon(colors),
-        prefixIconConstraints: const BoxConstraints(
-          minWidth: 48,
-          minHeight: 48,
-        ),
-        suffixIcon: _buildSuffixIcon(colors),
-        suffixIconConstraints: const BoxConstraints(
-          minWidth: 48,
-          minHeight: 48,
-        ),
       ),
+    );
+
+    // 멀티라인/expands: 고정 높이 박스를 위에서부터 채운다(정상 동작).
+    // [_multiLineContentPadding] 의 가로 패딩이 좌우 여백을 담당하므로 [Row] 불필요.
+    if (!_isSingleLine) {
+      return textField;
+    }
+
+    // 단일 줄: [Row(crossAxisAlignment.center)] 로 아이콘과 입력 줄 박스를
+    // 고정 높이([_height]) 박스 안에서 결정론적으로 세로 중앙에 배치한다.
+    // (InputDecorator 의 textAlignVertical 에 의존하지 않으므로 사이즈(sm/md/lg)·
+    // 구성(bare/prefix/suffix/toggle)과 무관하게 동일하게 동작한다.)
+    final prefixWidget = _buildPrefixWidget(colors);
+    final suffixWidget = _buildSuffixWidget(colors);
+
+    return Row(
+      crossAxisAlignment: CrossAxisAlignment.center,
+      children: [
+        prefixWidget ?? SizedBox(width: AppSpacing.md),
+        Expanded(child: textField),
+        suffixWidget ?? SizedBox(width: AppSpacing.md),
+      ],
     );
   }
 
-  Widget? _buildPrefixIcon(AppColorScheme colors) {
+  /// 단일 줄 입력 텍스트의 가로 패딩. 좌우 끝은 [Row] 가 아이콘/여백([AppSpacing.md])
+  /// 으로 처리하므로 텍스트 자체에는 추가 가로 패딩을 두지 않는다(0).
+  /// 세로 패딩도 0 — 중앙 정렬은 [Row] 가 담당한다.
+  EdgeInsets get _singleLineTextPadding => EdgeInsets.zero;
+
+  /// 멀티라인 입력의 내용 패딩. 고정 높이 박스를 위에서부터 채우되 좌우/상하 여백을 둔다.
+  EdgeInsets get _multiLineContentPadding =>
+      EdgeInsets.symmetric(horizontal: AppSpacing.md, vertical: AppSpacing.sm);
+
+  /// 단일 줄 모드의 선행(prefix) 위젯. 아이콘은 48dp 폭 슬롯에 중앙 정렬하여
+  /// 기존 [prefixIconConstraints] minWidth 48 동작을 유지한다. 세로 중앙 정렬은
+  /// 바깥 [Row] 가 담당하므로 여기서는 가로 슬롯/여백만 책임진다.
+  Widget? _buildPrefixWidget(AppColorScheme colors) {
     if (widget.prefix != null) {
       return Padding(
         padding: EdgeInsets.only(left: AppSpacing.sm),
@@ -467,27 +540,42 @@ class _AppTextFieldState extends State<AppTextField>
           ? colors.labelDisable
           : colors.labelAlternative;
 
-      return Icon(widget.prefixIcon, size: 20, color: iconColor);
+      return SizedBox(
+        width: 48,
+        child: Center(
+          widthFactor: 1.0,
+          child: Icon(widget.prefixIcon, size: 20, color: iconColor),
+        ),
+      );
     }
 
     return null;
   }
 
-  Widget? _buildSuffixIcon(AppColorScheme colors) {
+  /// 단일 줄 모드의 후행(suffix) 위젯. 비밀번호 토글 > 커스텀 suffix > suffixIcon 순.
+  /// 세로 중앙 정렬은 바깥 [Row] 가 담당한다.
+  Widget? _buildSuffixWidget(AppColorScheme colors) {
     // Password visibility toggle takes precedence
     if (widget.showPasswordToggle && widget.obscureText) {
       final iconColor = _isDisabled
           ? colors.labelDisable
           : colors.labelAlternative;
 
-      return GestureDetector(
-        onTap: _isDisabled ? null : _toggleObscure,
-        child: Icon(
-          _isObscured
-              ? Icons.visibility_off_outlined
-              : Icons.visibility_outlined,
-          size: 20,
-          color: iconColor,
+      return SizedBox(
+        width: 48,
+        child: Center(
+          widthFactor: 1.0,
+          child: GestureDetector(
+            behavior: HitTestBehavior.opaque,
+            onTap: _isDisabled ? null : _toggleObscure,
+            child: Icon(
+              _isObscured
+                  ? Icons.visibility_off_outlined
+                  : Icons.visibility_outlined,
+              size: 20,
+              color: iconColor,
+            ),
+          ),
         ),
       );
     }
@@ -504,9 +592,16 @@ class _AppTextFieldState extends State<AppTextField>
           ? colors.labelDisable
           : colors.labelAlternative;
 
-      return GestureDetector(
-        onTap: _isDisabled ? null : widget.onSuffixTap,
-        child: Icon(widget.suffixIcon, size: 20, color: iconColor),
+      return SizedBox(
+        width: 48,
+        child: Center(
+          widthFactor: 1.0,
+          child: GestureDetector(
+            behavior: HitTestBehavior.opaque,
+            onTap: _isDisabled ? null : widget.onSuffixTap,
+            child: Icon(widget.suffixIcon, size: 20, color: iconColor),
+          ),
+        ),
       );
     }
 
