@@ -101,7 +101,6 @@ class ProfileSetupView extends GetView<ProfileSetupController> {
     return AppTextField(
       controller: controller.nameController,
       hintText: '이름 또는 닉네임',
-      size: TextFieldSize.lg,
       autofocus: true,
       textCapitalization: TextCapitalization.words,
     );
