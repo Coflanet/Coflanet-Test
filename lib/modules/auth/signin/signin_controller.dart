@@ -5,6 +5,7 @@ import 'package:supabase_flutter/supabase_flutter.dart'
 import 'package:coflanet/constants/util_constant.dart';
 import 'package:coflanet/core/base/base_controller.dart';
 import 'package:coflanet/core/services/auth_service.dart';
+import 'package:coflanet/core/services/survey_service.dart';
 import 'package:coflanet/data/models/user_model.dart';
 import 'package:coflanet/data/providers/auth_provider.dart';
 import 'package:coflanet/data/repositories/repository_config.dart';
@@ -12,6 +13,7 @@ import 'package:coflanet/routes/app_pages.dart';
 
 class SignInController extends BaseController {
   final AuthService _authService = Get.find<AuthService>();
+  final SurveyService _surveyService = Get.find<SurveyService>();
 
   /// Handle social login
   Future<void> signInWithSocial(SocialLoginType type) async {
@@ -62,11 +64,37 @@ class SignInController extends BaseController {
           Get.offAllNamed(Routes.mainShell, arguments: {'initialTab': 0});
           return;
         }
+        // 이미 이름(닉네임)이 있는 사용자(재로그인/기가입)는 이름 입력 단계를
+        // 건너뛰고 곧장 설문 흐름으로 보낸다. (이메일 로그인 경로와 동일하게 정렬)
+        final hasNickname = result['has_nickname'] as bool? ?? false;
+        if (hasNickname) {
+          Get.offAllNamed(Routes.surveyIntro);
+          return;
+        }
+        // 서버에 이름이 없지만 소셜 계정(카카오 등)이 이름(닉네임)을 제공하면,
+        // 이름 입력 화면을 띄우지 않고 그 이름을 자동 저장한 뒤 다음 온보딩
+        // 단계로 보낸다. (소셜 사용자가 이미 가진 이름을 다시 입력하지 않도록)
+        final socialName = _authService.currentUser?.name?.trim();
+        if (socialName != null && socialName.isNotEmpty) {
+          try {
+            await _surveyService.updateUserName(socialName);
+            await _authService.updateUserName(socialName);
+            final hasReasons = result['has_signup_reasons'] as bool? ?? false;
+            // 이유 미선택(신규)이면 이유 선택부터, 선택돼 있으면 설문 인트로로.
+            Get.offAllNamed(
+              hasReasons ? Routes.surveyIntro : Routes.surveyReason,
+            );
+            return;
+          } catch (e) {
+            debugPrint('[SignIn] 소셜 이름 자동 저장 실패 — 이름 입력으로 폴백: $e');
+            // 저장 실패 시 아래 프로필(이름) 설정 화면으로 폴백한다.
+          }
+        }
       }
     } catch (e) {
       debugPrint('[SignIn] get_onboarding_status error: $e');
     }
-    // 온보딩 미완료 → 프로필 설정
+    // 이름 없음(신규·소셜 이름 미제공) 또는 상태 확인 실패 → 프로필(이름) 설정
     Get.offAllNamed(Routes.profileSetup);
   }
 

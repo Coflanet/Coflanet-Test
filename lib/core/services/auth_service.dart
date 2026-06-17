@@ -91,6 +91,11 @@ class AuthService extends GetxService with WidgetsBindingObserver {
   // 세션 만료 처리 중복 실행 방지 플래그
   bool _handlingSessionExpiry = false;
 
+  // 의도된 로그아웃/탈퇴/세션만료 진행 중에는 전역 리스너의 자동 로그인-화면 이동을
+  // 막는다. 각 호출자가 단일하게 네비게이션을 책임지므로, signedOut 이벤트로 리스너가
+  // 또 offAllNamed 하면 로그인 화면이 두 번 슬라이드되는 이중 전환이 생긴다.
+  bool _suppressAutoSignOutRedirect = false;
+
   AuthService({this.config = const AuthServiceConfig()});
 
   bool get _isSupabase => RepositoryConfig.dataSource == DataSource.supabase;
@@ -206,6 +211,10 @@ class AuthService extends GetxService with WidgetsBindingObserver {
           _currentUser.value = null;
           _storage.clearUserData();
         }
+        // 의도된 로그아웃/탈퇴/세션만료는 각 호출자가 로그인 화면으로 직접 보낸다.
+        // 여기서는 예기치 않은 외부 세션 종료(백그라운드 토큰 만료 등)만 처리해
+        // 정상 로그아웃 시 이중 전환이 발생하지 않게 한다.
+        if (_suppressAutoSignOutRedirect) return;
         // 세션이 사라졌으면 어느 화면에 있든 로그인 화면으로 이동
         if (Get.currentRoute != Routes.signIn) {
           Get.offAllNamed(Routes.signIn);
@@ -226,6 +235,9 @@ class AuthService extends GetxService with WidgetsBindingObserver {
     if (_handlingSessionExpiry) return;
     if (Get.currentRoute == Routes.signIn) return;
     _handlingSessionExpiry = true;
+    // 만료 처리도 내부 signOut 으로 signedOut 이벤트를 유발하므로 리스너 자동 이동을
+    // 막고, 아래에서 한 번만 로그인 화면으로 이동한다.
+    _suppressAutoSignOutRedirect = true;
 
     try {
       debugPrint('[AuthService] 세션 만료 감지 — 로그인 화면으로 이동');
@@ -244,6 +256,7 @@ class AuthService extends GetxService with WidgetsBindingObserver {
       AppUtil.showErrorSnackbar('세션 만료', '세션이 만료되었습니다. 다시 로그인해주세요.');
     } finally {
       _handlingSessionExpiry = false;
+      _suppressAutoSignOutRedirect = false;
     }
   }
 
@@ -426,6 +439,9 @@ class AuthService extends GetxService with WidgetsBindingObserver {
     if (user == null) return;
 
     _isLoading.value = true;
+    // 정상 로그아웃 — signedOut 이벤트로 전역 리스너가 또 네비게이트하지 않게 막는다.
+    // (네비게이션은 호출자(예: MyPlanetController.logout)가 단일하게 책임진다.)
+    _suppressAutoSignOutRedirect = true;
 
     try {
       if (_isSupabase) {
@@ -460,6 +476,7 @@ class AuthService extends GetxService with WidgetsBindingObserver {
       _currentUser.value = null;
     } finally {
       _isLoading.value = false;
+      _suppressAutoSignOutRedirect = false;
     }
   }
 
@@ -469,6 +486,9 @@ class AuthService extends GetxService with WidgetsBindingObserver {
     if (user == null) return;
 
     _isLoading.value = true;
+    // 회원탈퇴도 내부적으로 signOut 을 유발하므로 리스너 자동 이동을 막는다.
+    // (네비게이션은 호출자(MyPlanetController._executeWithdrawal)가 책임진다.)
+    _suppressAutoSignOutRedirect = true;
 
     try {
       if (_isSupabase) {
@@ -511,6 +531,7 @@ class AuthService extends GetxService with WidgetsBindingObserver {
       _currentUser.value = null;
     } finally {
       _isLoading.value = false;
+      _suppressAutoSignOutRedirect = false;
     }
   }
 

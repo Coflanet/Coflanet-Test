@@ -46,6 +46,11 @@
 	<key>UIApplicationSupportsIndirectInputEvents</key>
 	<true/>
 
+	<!-- Flutter 기본 딥링크 라우팅 비활성화 — Supabase OAuth 콜백이 Flutter 라우터를
+	     타고 splash('/')로 네비게이트되는 것을 막는다. 콜백은 supabase_flutter 가 직접 처리. -->
+	<key>FlutterDeepLinkingEnabled</key>
+	<false/>
+
 	<!-- Social Login URL Schemes -->
 	<key>CFBundleURLTypes</key>
 	<array>

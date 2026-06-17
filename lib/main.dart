@@ -3,6 +3,7 @@ import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:kakao_flutter_sdk_user/kakao_flutter_sdk_user.dart';
+import 'package:flutter_naver_login/flutter_naver_login.dart';
 import 'package:supabase_flutter/supabase_flutter.dart' hide LocalStorage;
 import 'package:coflanet/app_binding.dart';
 import 'package:coflanet/routes/app_pages.dart';
@@ -31,7 +32,7 @@ void main() async {
   SocialLoginConfig.loadFromDotenv();
 
   // Initialize Social Login SDKs
-  _initSocialLoginSdks();
+  await _initSocialLoginSdks();
 
   // Initialize Supabase (always — some controllers reference Supabase.instance directly)
   final supabaseUrl = dotenv.env['SUPABASE_URL'] ?? '';
@@ -170,7 +171,7 @@ class CoflanetApp extends StatelessWidget {
   }
 }
 
-void _initSocialLoginSdks() {
+Future<void> _initSocialLoginSdks() async {
   if (SocialLoginConfig.useDummyProviders) {
     SocialLoginConfig.printConfigStatus();
     return;
@@ -183,6 +184,23 @@ void _initSocialLoginSdks() {
           ? SocialLoginConfig.kakaoJavaScriptAppKey
           : null,
     );
+  }
+
+  // 네이버 SDK 명시 초기화.
+  // flutter_naver_login 2.1.1 의 Dart API(FlutterNaverLogin)는 initSdk 를
+  // 노출하지 않으므로 네이티브 메서드 채널로 직접 초기화한다. 네이티브 manifest
+  // meta-data 자동 초기화가 비어 있을 때(키 미주입)에도 Dart 설정(.env) 값으로
+  // SDK 를 초기화해, 로그인 시 'SDK 초기화 필요' 에러로 막히는 것을 방지한다.
+  if (SocialLoginConfig.isNaverConfigured) {
+    try {
+      await FlutterNaverLogin.channel.invokeMethod('initSdk', {
+        'clientId': SocialLoginConfig.naverClientId,
+        'clientSecret': SocialLoginConfig.naverClientSecret,
+        'clientName': SocialLoginConfig.naverClientName,
+      });
+    } catch (e) {
+      debugPrint('[main] 네이버 SDK 초기화 실패: $e');
+    }
   }
 
   SocialLoginConfig.printConfigStatus();
