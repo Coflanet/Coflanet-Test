@@ -484,6 +484,10 @@ class _AppTextFieldState extends State<AppTextField>
         disabledBorder: InputBorder.none,
         errorBorder: InputBorder.none,
         focusedErrorBorder: InputBorder.none,
+        // 채움색은 바깥 AnimatedContainer 가 담당한다. 테마의 InputDecorationTheme
+        // (filled: true)가 새어들어 텍스트 영역에만 채움이 한 번 더 겹쳐 그 부분만
+        // 진해 보이는 문제를 막기 위해 명시적으로 끈다.
+        filled: false,
         counterText: '',
       ),
     );
