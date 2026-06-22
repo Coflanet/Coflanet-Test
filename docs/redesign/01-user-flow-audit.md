@@ -2,6 +2,8 @@
 
 > 목표: 앱의 전체 내비게이션을 지도화하고, 막히거나 끊기는 지점을 식별해 수정 계획을 제공.
 > 출처: `lib/routes/app_routes.dart`, `lib/routes/app_pages.dart`, `lib/modules/**`, `lib/main.dart`.
+>
+> 🔎 **탭/버튼/데이터 레벨의 실제 깨진 인터랙션**(탭 무반응, 안 먹는 버튼, 빈 데이터 영역)은 별도 전수 감사 → **`01a-flow-defects.md`**. "새 데이터 만들기 전에 고칠 목록"은 그쪽을 본다.
 
 ## 1. 라우트 맵 (30+ named routes)
 

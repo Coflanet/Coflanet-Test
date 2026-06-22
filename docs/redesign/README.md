@@ -12,6 +12,7 @@ docs/redesign/
 ├── README.md                  ← (이 파일) 인덱스 · 상태판
 ├── 00-master-plan.md          전체 계획 · 의사결정 · Phase 순서 · 리스크 · DoD
 ├── 01-user-flow-audit.md      [task 1] 라우트 맵 · E2E 여정 · 블로커 + 수정안
+├── 01a-flow-defects.md        [task 1] 인터랙션·데이터 결함 전수 감사(탭 무반응/안 먹는 버튼/빈 데이터) + 수리 우선순위
 ├── 02-library-migration.md    [task 2] component_lab 흡수 전략 · 단계별 실행
 ├── 03-style-application.md     [task 3] 간격/타이포/반경/색 전면 적용
 ├── 04-static-black-theme.md    [task 4] iyumi 카드형 + Static/Black 배경(정확 변경)
