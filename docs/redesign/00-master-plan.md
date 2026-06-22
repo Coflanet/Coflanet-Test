@@ -65,6 +65,7 @@ Phase G. 통합 검증
 | Component/fill 8% vs 5% 충돌 | 색 미세 불일치 | 값 변경 금지·주석화, 디자이너 합의 |
 | 순환 의존 | 빌드 불가 | 소스 흡수(D1) |
 | 회귀 | 플로우/시각 깨짐 | 통합테스트 + 스냅샷 게이트 |
+| **CI Format Check 선행 부채** | `dart format` 미적용 Dart 31개로 CI 빨강(문서 PR과 무관) | 로컬 세션이 **첫 단계로 `dart format .` 실행** 후 작업 시작 |
 
 ## 5. 완료 기준 (Definition of Done)
 
