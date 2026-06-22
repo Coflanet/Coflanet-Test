@@ -26,7 +26,8 @@
 | D2 | 컬러 아키텍처 = **앱의 `AppColorScheme` 유지**, component_lab 값만 흡수 | ✅ 권장 확정 |
 | D3 | 타깃 구조 = 토큰 `lib/constants/` 병합 + 컴포넌트 `lib/widgets/<category>/` | ✅ 권장 |
 | D4 | 배경 = 라이트/다크 모두 `Static/Black`(#000000) 고정 | ✅ 요구사항 |
-| D5 | 카드 방향 = **B 확정**(캔버스 검정 양쪽 / 라이트=흰 카드 · 다크=다크 카드) | ✅ 사용자 확정. on-canvas 텍스트는 static white 처리 |
+| D5 | 카드 방향 = **B 확정**(캔버스 검정 양쪽 / 라이트=흰 카드 · 다크=다크 카드) | ✅ 사용자 확정 |
+| D8 | 색 적용 규칙 = **캔버스(카드 밖)=다크 스킴 고정, 카드 안=활성 스킴** (`AppColorScheme.canvas=>dark`) | ✅ 사용자 확정. 토글 시 캔버스 불변·카드만 전환 |
 | D6 | `AppShadow` 토큰 신설 여부 | ✅ **카드엔 불필요**(iyumi 카드=무그림자). FAB 한정 검토 |
 | D7 | iyumi 카드 패턴 = `CardSection`/`CardItem`/`ScreenScaffold` 이식, radius 40/24 | ✅ 확정(iyumi 스펙) |
 

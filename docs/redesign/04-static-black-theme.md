@@ -36,19 +36,26 @@ iyumi의 **중첩 카드 레이어**를 그대로 가져오고, 캔버스만 검
 
 > ⚠️ **방향 B의 인셋 규칙 변경**: iyumi 원본은 작은 카드 = `alternative`(=캔버스색)로 인셋. 하지만 B는 캔버스가 **검정**이라, 라이트 흰 카드 안에 검정 인셋을 넣으면 과한 대비가 된다. → **작은 카드는 `surfaceCardStrong`**(큰 카드 표면에 가까운 톤)을 써서 라이트·다크 모두 은은한 중첩을 만든다.
 
-### ⚠️ 방향 B의 최대 함정 — "텍스트가 어디 위에 있나"
+### 텍스트/크롬 색 규칙 — "캔버스=다크 스킴 고정, 카드=활성 스킴"
 
-B에서는 **같은 라이트 모드 안에서도 배경이 두 종류**다: 검정 캔버스 vs 흰 카드. 따라서 텍스트 색을 한 토큰(`labelNormal`)으로 통일할 수 없다.
+B에서는 같은 라이트 모드 안에서도 배경이 두 종류(검정 캔버스 vs 흰 카드)다. 이를 가장 깔끔하게 푸는 규칙:
 
-| 위치 | 라이트 모드 텍스트 | 다크 모드 텍스트 | 규칙 |
+> **검정 캔버스(카드 밖)는 라이트·다크 모두 항상 `AppColorScheme.dark`(=`canvas` 별칭)로,
+> 카드 안은 `AppColorScheme.of(context)`(활성 스킴)로 그린다.**
+
+| 영역 | 사용 스킴 | 결과(라이트) | 결과(다크) |
 |---|---|---|---|
-| **카드 밖**(검정 캔버스 위 헤더·섹션 타이틀) | **밝은색**(검정 위) | 밝은색 | 테마 무관 고정 밝은색 |
-| **카드 안**(흰/다크 카드 내부 본문) | 어두운색(흰 카드 위) | 밝은색(다크 카드 위) | 일반 테마 토큰 |
+| **카드 밖**(헤더·섹션타이틀·캔버스 위 아이콘/디바이더/보조텍스트) | **항상 `AppColorScheme.dark`** | 밝은 텍스트(검정 위) | 밝은 텍스트 |
+| **카드 안**(CardSection/CardItem 내부) | **`AppColorScheme.of(context)`** | 흰 카드 + 어두운 텍스트 | 다크 카드 + 밝은 텍스트 |
 
-- **카드 밖(on-canvas)**: 셸 탭바가 이미 쓰는 방식 그대로 — `staticLabelWhite*`(테마 무관 고정 밝은색) 사용. 라이트에서 `labelNormal`(어두운색)을 검정 캔버스에 쓰면 **검정 위 검정**이 된다.
-- **카드 안(in-card)**: `AppColorScheme.of(context).labelNormal` 그대로(라이트=어두움, 다크=밝음) — 카드 표면이 모드별로 흰/다크라 정상 동작.
-- 권장: **on-canvas 전용 시맨틱 토큰**(예: `labelOnCanvas`/`labelOnCanvasAssistive` = static white 계열)을 추가하고, `ScreenScaffold` 헤더는 이 토큰을 강제. CardSection/CardItem 내부는 일반 토큰.
-- 같은 원리로 **카드 밖 아이콘/디바이더/보조 텍스트**도 on-canvas 토큰을 써야 검정 위에서 보인다.
+- **토글 동작**: 라이트↔다크를 바꿔도 **캔버스·크롬은 불변(항상 다크 스킴)**, **카드만** 흰↔다크로 바뀌고 카드 내부 텍스트도 카드에 맞게 바뀐다 — 사용자 의도와 정확히 일치.
+- 다크 스킴은 이미 어두운 표면용(labelNormal 밝음, line/status/assistive 모두 다크 튜닝) → **검정 캔버스 위에서 그대로 정답**. 별도 `labelOnCanvas` 정적 토큰 **불필요**(다크 스킴 전체를 재사용하므로 더 완전).
+- **구현**:
+  - `AppColorScheme`에 `static AppColorScheme get canvas => dark;` 추가(의미 명확화).
+  - `ScreenScaffold`(캔버스 소유)의 헤더·캔버스 크롬은 `AppColorScheme.canvas` 사용.
+  - `CardSection`/`CardItem`은 표면색에 `AppColorScheme.of(context)` 사용, 그 자식도 그대로 `of(context)`를 읽음(활성 스킴).
+  - (대안) 캔버스 크롬이 Material 위젯을 많이 쓰면, 캔버스 영역을 `Theme(data: AppTheme.dark, …)`로 감싸고 카드 서브트리만 활성 테마로 되돌리는 방식도 가능. 단 카드가 다수라 **명시적 `canvas`/`of(context)` 규칙이 더 단순**.
+- **시스템 UI 오버레이**(상태바/내비바): 캔버스가 검정 → 라이트 모드에서도 **항상 밝은 아이콘**(다크 스킴 오버레이). §5 단순화.
 
 ## 3. 정확한 기계적 변경 (코드)
 
@@ -70,8 +77,8 @@ backgroundNormalAlternative: AppColor.staticBlack,  // was CoolNeutral99
 ### 3-3. 카드 표면 — ✅ 방향 B 확정
 - 라이트: `surfaceCard`=#FFFFFF(흰 카드) / `surfaceCardStrong`=#F4F4F5 유지.
 - 다크: `surfaceCard`=#1B1C1E / `surfaceCardStrong`=#292A2D 유지.
-- **카드 내부** `labelNormal` 등은 현행 유지(라이트=어두움/다크=밝음) — 카드 표면이 모드별로 맞으므로 정상.
-- **카드 밖(on-canvas)** 텍스트/아이콘만 static white 계열로 전환(§2 함정 표).
+- **카드 내부**(`of(context)`): `labelNormal` 등 현행 유지(라이트=어두움/다크=밝음) — 카드 표면이 모드별로 맞으므로 정상.
+- **카드 밖(on-canvas)**: `AppColorScheme.canvas`(=dark) 사용 — 새 토큰 없이 다크 스킴 재사용(§2 규칙 표).
 
 ### 3-4. 카드 패턴 토큰 추가 — `AppSpacing`/`AppRadius` (`token-mapping.md` §3·§7)
 신규 시맨틱 토큰(iyumi 값):
@@ -113,9 +120,9 @@ iyumi 위젯을 coflanet 토큰으로 이식:
 
 1. (의존) task 2 단계1 — Static 토큰 + 카드 패턴 토큰 흡수.
 2. §3-1·3-2 적용(캔버스 검정) — 최소 변경으로 전체 톤 확인.
-3. **on-canvas 라벨 토큰 추가**(§2 함정) + `ScreenScaffold` 헤더가 이를 강제하도록.
-4. §3-5 카드 위젯 신설(CardSection/CardItem/ScreenScaffold) — 방향 B 색값(§3-3) 적용.
-5. §5 부작용 전수 점검(특히 검정 위 텍스트/아이콘).
+3. `AppColorScheme.canvas`(=dark) 별칭 추가 + `ScreenScaffold` 헤더·캔버스 크롬이 `canvas` 사용(§2 규칙).
+4. §3-5 카드 위젯 신설(CardSection/CardItem/ScreenScaffold) — 카드는 `of(context)`, 방향 B 색값(§3-3) 적용.
+5. §5 부작용 전수 점검(특히 검정 위 텍스트/아이콘이 다크 스킴을 쓰는지).
 6. 화면을 ScreenScaffold + CardSection/CardItem 패턴으로 재구성(task 3와 통합).
 
 ## 7. 검증
