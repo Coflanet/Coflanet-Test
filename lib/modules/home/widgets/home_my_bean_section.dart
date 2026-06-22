@@ -17,6 +17,7 @@ class HomeMyBeanSection extends StatelessWidget {
     required this.beans,
     required this.onEditTap,
     required this.onViewAllTap,
+    this.onBeanTap,
   });
 
   /// 보유 원두 목록 (최대 3개만 표시)
@@ -27,6 +28,9 @@ class HomeMyBeanSection extends StatelessWidget {
 
   /// '전체보기' 탭 콜백
   final VoidCallback onViewAllTap;
+
+  /// 개별 원두 카드 탭 콜백 — 원두 상세로 이동 (null 이면 비탭)
+  final void Function(CoffeeItem item)? onBeanTap;
 
   @override
   Widget build(BuildContext context) {
@@ -97,9 +101,9 @@ class HomeMyBeanSection extends StatelessWidget {
     );
   }
 
-  /// 단일 원두 카드 — 썸네일 + 브랜드/구독중 뱃지 + 이름
+  /// 단일 원두 카드 — 썸네일 + 브랜드/구독중 뱃지 + 이름. 탭 시 상세로 이동.
   Widget _buildBeanCard(CoffeeItem item) {
-    return Container(
+    final Widget card = Container(
       margin: const EdgeInsets.only(bottom: 8),
       padding: const EdgeInsets.all(12),
       decoration: BoxDecoration(
@@ -179,6 +183,13 @@ class HomeMyBeanSection extends StatelessWidget {
           ),
         ],
       ),
+    );
+
+    if (onBeanTap == null) return card;
+    return GestureDetector(
+      behavior: HitTestBehavior.opaque,
+      onTap: () => onBeanTap!(item),
+      child: card,
     );
   }
 

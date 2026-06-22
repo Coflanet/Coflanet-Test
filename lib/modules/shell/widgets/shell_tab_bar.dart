@@ -3,6 +3,7 @@ import 'dart:ui';
 import 'package:flutter/material.dart';
 import 'package:coflanet/constants/color_constant.dart';
 import 'package:coflanet/constants/style_constant.dart';
+import 'package:coflanet/modules/shell/main_shell_controller.dart';
 
 /// 셸 하단 탭바 — Figma `Home_Item_yes` 기준 5탭, pill-shaped liquid glass.
 ///
@@ -97,17 +98,21 @@ class ShellTabBar extends StatelessWidget {
                 ),
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                  children: List.generate(tabs.length, (index) {
-                    // key 부여 금지 — 위치 기반 엘리먼트 매칭이
-                    // AnimatedContainer 의 암시적 애니메이션을 보존한다.
-                    return Expanded(
-                      child: _ShellTabItem(
-                        tab: tabs[index],
-                        isActive: index == currentIndex,
-                        onTap: () => onTabTapped(index),
-                      ),
-                    );
-                  }),
+                  // 커뮤니티(index 2)는 MVP 비노출 — 탭 인덱스는 보존하고
+                  // 탭바에서만 제외한다(컨트롤러/콘텐츠 스위치는 그대로).
+                  // key 부여 금지 — 위치 기반 엘리먼트 매칭이
+                  // AnimatedContainer 의 암시적 애니메이션을 보존한다.
+                  children: [
+                    for (int index = 0; index < tabs.length; index++)
+                      if (index != MainShellController.tabCommunity)
+                        Expanded(
+                          child: _ShellTabItem(
+                            tab: tabs[index],
+                            isActive: index == currentIndex,
+                            onTap: () => onTabTapped(index),
+                          ),
+                        ),
+                  ],
                 ),
               ),
             ),

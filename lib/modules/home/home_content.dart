@@ -5,7 +5,6 @@ import 'package:coflanet/core/services/cart_service.dart';
 import 'package:coflanet/core/services/notification_service.dart';
 import 'package:coflanet/modules/home/home_controller.dart';
 import 'package:coflanet/modules/home/widgets/home_carousel.dart';
-import 'package:coflanet/modules/home/widgets/home_community_section.dart';
 import 'package:coflanet/modules/home/widgets/home_footer.dart';
 import 'package:coflanet/modules/home/widgets/home_maker_section.dart';
 import 'package:coflanet/modules/home/widgets/home_my_bean_section.dart';
@@ -86,6 +85,10 @@ class HomeContent extends GetView<HomeController> {
                   beans: controller.myBeans,
                   onEditTap: _goToCoffeeTab,
                   onViewAllTap: _goToCoffeeTab,
+                  onBeanTap: (bean) => Get.toNamed(
+                    Routes.beanDetail,
+                    arguments: {'bean': bean},
+                  ),
                 ),
                 const SizedBox(height: _sectionGap),
                 if (controller.hasTasteProfile) ...[
@@ -125,8 +128,7 @@ class HomeContent extends GetView<HomeController> {
                 const SizedBox(height: _sectionGap),
                 HomeMakerSection(userName: controller.userName),
                 const SizedBox(height: _sectionGap),
-                HomeCommunitySection(onMoreTap: _goToCommunityTab),
-                const SizedBox(height: _sectionGap),
+                // 커뮤니티 섹션은 커뮤니티 탭 비노출(MVP)에 맞춰 제거.
                 const HomeFooter(),
               ],
             ),
@@ -147,13 +149,6 @@ class HomeContent extends GetView<HomeController> {
   void _goToShoppingTab() {
     if (Get.isRegistered<MainShellController>()) {
       Get.find<MainShellController>().goToShopping();
-    }
-  }
-
-  /// 커뮤니티 탭으로 이동
-  void _goToCommunityTab() {
-    if (Get.isRegistered<MainShellController>()) {
-      Get.find<MainShellController>().goToCommunity();
     }
   }
 }

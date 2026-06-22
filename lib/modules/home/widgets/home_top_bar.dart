@@ -85,13 +85,7 @@ class HomeTopBar extends StatelessWidget {
                 hasNotification: hasUnread,
                 onTap: onNotificationTap,
               ),
-              const SizedBox(width: 8),
-              HomeHeaderIconButton(
-                svgPath: 'assets/icons/ic_bag.svg',
-                label: '장바구니',
-                badgeCount: cartBadgeCount,
-                onTap: onCartTap,
-              ),
+              // 장바구니/결제는 MVP 비포함 — 아이콘(진입점) 비노출.
             ],
           ),
         ],

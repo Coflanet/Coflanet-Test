@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:url_launcher/url_launcher.dart';
 import 'package:coflanet/constants/app_color_scheme.dart';
 import 'package:coflanet/constants/radius_constant.dart';
 import 'package:coflanet/constants/style_constant.dart';
@@ -107,12 +108,15 @@ class BeanDetailHeader extends StatelessWidget {
     );
   }
 
-  /// 네이버 쇼핑 가격 정보 행
+  /// 네이버 쇼핑 가격 정보 행.
+  /// `naverLink`(판매 URL)가 있으면 행 전체가 탭 가능 — 외부 브라우저로 연다.
   Widget _buildPriceRow(AppColorScheme colors) {
     final formatter = AppUtil.changeNumberToWon(bean.naverLprice!);
     final mallName = bean.naverMallName;
+    final naverLink = bean.naverLink;
+    final bool tappable = naverLink != null && naverLink.isNotEmpty;
 
-    return Container(
+    final row = Container(
       padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 10),
       decoration: BoxDecoration(
         color: colors.surfaceCard,
@@ -149,9 +153,33 @@ class BeanDetailHeader extends StatelessWidget {
                 color: colors.labelAlternative,
               ),
             ),
+          // 판매 링크가 있으면 탭 가능 표시(구매로 이동)
+          if (tappable) ...[
+            const SizedBox(width: 6),
+            Icon(
+              Icons.chevron_right,
+              size: 18,
+              color: colors.labelAlternative,
+            ),
+          ],
         ],
       ),
     );
+
+    if (!tappable) return row;
+    return GestureDetector(
+      behavior: HitTestBehavior.opaque,
+      onTap: () => _openPurchaseLink(naverLink),
+      child: row,
+    );
+  }
+
+  /// 네이버 판매 링크를 외부 브라우저로 연다.
+  Future<void> _openPurchaseLink(String? url) async {
+    if (url == null || url.isEmpty) return;
+    final uri = Uri.tryParse(url);
+    if (uri == null) return;
+    await launchUrl(uri, mode: LaunchMode.externalApplication);
   }
 
   /// 원산지/로스팅/가공 정보 칩 (아이콘 + 라벨)
