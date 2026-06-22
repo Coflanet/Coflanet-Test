@@ -58,6 +58,9 @@ abstract class Routes {
   static const recipeEdit = '/coffee/recipe/edit';
   static const recipeAdd = '/coffee/recipe/add';
 
+  // === Extraction Routes ===
+  static const extractionList = '/extraction/list';
+
   // === Auth (Additional) ===
   static const emailLogin = '/login/email-login';
   static const emailSignUp = '/login/email-sign-up';

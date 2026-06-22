@@ -79,6 +79,17 @@ class MyPlanetContent extends GetView<MyPlanetController> {
               onWithdraw: () => controller.withdrawAccount(),
             ),
 
+            // ===== 내 활동 =====
+            const SizedBox(height: 16),
+            Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 24),
+              child: PlanetTextCell(
+                text: '추출 기록',
+                color: colors.labelNormal,
+                onTap: () => controller.goToExtractionList(),
+              ),
+            ),
+
             // ===== LEGAL LINKS (페이지 배경 위 직접) =====
             const SizedBox(height: 16),
             _buildLegalLinks(colors),

@@ -149,6 +149,11 @@ class MyPlanetController extends BaseController {
     Get.toNamed(Routes.accountLink);
   }
 
+  /// 추출 기록(커피 저널) 화면으로 이동
+  void goToExtractionList() {
+    Get.toNamed(Routes.extractionList);
+  }
+
   /// Navigate to survey
   void goToSurvey() {
     Get.toNamed(Routes.surveyIntro);

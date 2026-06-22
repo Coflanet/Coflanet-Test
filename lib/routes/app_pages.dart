@@ -47,6 +47,10 @@ import 'package:coflanet/modules/coffee/bean/bean_detail_view.dart';
 import 'package:coflanet/modules/coffee/bean/bean_edit_view.dart';
 import 'package:coflanet/modules/coffee/settings/recipe_form_view.dart';
 
+// Modules - Extraction
+import 'package:coflanet/modules/extraction/extraction_list_view.dart';
+import 'package:coflanet/modules/extraction/extraction_list_binding.dart';
+
 // Modules - Matching
 import 'package:coflanet/modules/matching/matching_binding.dart';
 import 'package:coflanet/modules/matching/matching_result_view.dart';
@@ -252,6 +256,14 @@ class AppPages {
       page: () => const TimerCompleteView(),
       binding: CoffeeTimerBinding(),
       transition: Transition.fade,
+    ),
+
+    // === Extraction ===
+    GetPage(
+      name: Routes.extractionList,
+      page: () => const ExtractionListView(),
+      binding: ExtractionListBinding(),
+      transition: Transition.cupertino,
     ),
 
     // === Matching ===
