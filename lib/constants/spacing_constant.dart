@@ -118,6 +118,41 @@ class AppSpacing {
   /// Section spacing (24px)
   static const double sectionSpacing = space24;
 
+  // ===== CARD PATTERN (iyumi 카드 패턴, task 4) =====
+
+  /// 화면 최상단 텍스트 위 마진 (32) — 전 화면 통일
+  static const double screenTopMargin = space32;
+
+  /// 헤더(카드 밖) 좌우 패딩 (20)
+  static const double headerHorizontalPadding = space20;
+
+  /// 큰 카드(CardSection) 좌우/상하 패딩
+  static const double sectionPaddingHorizontal = space24;
+  static const double sectionPaddingVertical = space32;
+  static const EdgeInsets sectionPadding = EdgeInsets.symmetric(
+    horizontal: space24,
+    vertical: space32,
+  );
+
+  /// 작은 카드(CardItem) 패딩 (24)
+  static const EdgeInsets itemPadding = EdgeInsets.all(space24);
+
+  /// 카드 사이 간격 (4) — section/item 공통
+  static const double cardGap = space4;
+  static const double sectionGap = space4;
+  static const double itemGap = space4;
+
+  /// OS 독바(홈 인디케이터) 여유 (96) + 그 위 호흡 (16)
+  static const double bottomDockAllowance = space80 + space16;
+  static const double bottomBreathingRoom = space16;
+
+  /// 스크롤 최하단 패딩 — safe area + 독바 여유 + 호흡.
+  /// 자체 스크롤 화면(scrollable:false)의 리스트 하단에 직접 적용한다.
+  static double bottomScrollInset(BuildContext context) =>
+      MediaQuery.of(context).padding.bottom +
+      bottomDockAllowance +
+      bottomBreathingRoom;
+
   // ===== EDGE INSETS HELPERS =====
 
   /// All sides padding

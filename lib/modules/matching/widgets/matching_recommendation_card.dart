@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:url_launcher/url_launcher.dart';
 import 'package:coflanet/constants/app_color_scheme.dart';
 import 'package:coflanet/constants/color_constant.dart';
 import 'package:coflanet/constants/radius_constant.dart';
@@ -28,7 +29,7 @@ class MatchingRecommendationCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final colors = AppColorScheme.of(context);
-    return Container(
+    final card = Container(
       width: 180,
       margin: const EdgeInsets.only(right: 16),
       decoration: BoxDecoration(
@@ -125,5 +126,21 @@ class MatchingRecommendationCard extends StatelessWidget {
         ],
       ),
     );
+
+    // '자세히 보기' — 상품 상세 화면이 없으므로 판매(네이버) 링크로 연결.
+    final url = recommendation.purchaseUrl;
+    if (url == null || url.isEmpty) return card;
+    return GestureDetector(
+      behavior: HitTestBehavior.opaque,
+      onTap: () => _openLink(url),
+      child: card,
+    );
+  }
+
+  /// 추천 원두의 판매(네이버) 링크를 외부 브라우저로 연다.
+  Future<void> _openLink(String url) async {
+    final uri = Uri.tryParse(url);
+    if (uri == null) return;
+    await launchUrl(uri, mode: LaunchMode.externalApplication);
   }
 }

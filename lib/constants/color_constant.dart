@@ -353,6 +353,10 @@ class AppColor {
   static Color get inverseLabelDisable =>
       const Color(0xFF989BA2).withValues(alpha:0.16);
 
+  /// Static — 테마 무관 고정 캔버스 색 (task 4: 라이트/다크 공통 검정 배경)
+  static const Color staticBlack = colorGlobalCommon0; // #000000
+  static const Color staticWhite = colorGlobalCommon100; // #FFFFFF
+
   // Static Label Colors (Black)
   static Color get staticLabelBlackNormal => colorGlobalCoolNeutral10;
   static Color get staticLabelBlackStrong => colorGlobalCommon0;

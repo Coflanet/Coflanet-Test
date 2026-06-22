@@ -132,6 +132,11 @@ class AppColorScheme {
     return Theme.of(context).brightness == Brightness.dark ? dark : light;
   }
 
+  /// 검정 캔버스(카드 밖: 헤더·섹션타이틀·캔버스 위 텍스트/아이콘)용 스킴.
+  /// task 4 방향 B — 캔버스는 라이트/다크 모두 검정이므로 어두운 표면용으로
+  /// 설계된 다크 스킴을 그대로 쓴다. 카드 안은 `of(context)`(활성 스킴).
+  static AppColorScheme get canvas => dark;
+
   /// 라이트 스킴 — 기존 AppColor 라이트 시맨틱 토큰과 동일 값
   static final AppColorScheme light = AppColorScheme(
     primaryNormal: AppColor.colorGlobalViolet50,

@@ -122,6 +122,17 @@ class AppRadius {
   static const double avatar = full;
   static BorderRadius get avatarBorder => fullBorder;
 
+  // ===== CARD PATTERN (iyumi 카드 패턴, task 4) =====
+
+  /// CardSection radius (40px) — 큰 카드
+  static const double sectionRadius = 40.0;
+  static BorderRadius get sectionRadiusBorder =>
+      BorderRadius.circular(sectionRadius);
+
+  /// CardItem radius (24px) — 작은 카드 (= xxxl)
+  static const double itemRadius = xxxl;
+  static BorderRadius get itemRadiusBorder => xxxlBorder;
+
   // ===== DIRECTIONAL RADIUS =====
 
   /// Top only radius
