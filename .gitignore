@@ -50,6 +50,7 @@ app.*.map.json
 # Private docs & scripts (local only)
 docs/*
 !docs/legal/
+!docs/redesign/
 CLAUDE.md
 CHANGELOG.md
 REFACTOR.md
