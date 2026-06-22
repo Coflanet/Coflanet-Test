@@ -26,7 +26,7 @@
 | D2 | 컬러 아키텍처 = **앱의 `AppColorScheme` 유지**, component_lab 값만 흡수 | ✅ 권장 확정 |
 | D3 | 타깃 구조 = 토큰 `lib/constants/` 병합 + 컴포넌트 `lib/widgets/<category>/` | ✅ 권장 |
 | D4 | 배경 = 라이트/다크 모두 `Static/Black`(#000000) 고정 | ✅ 요구사항 |
-| D5 | 라이트 카드 방향 A(다크 수렴) vs B(검정 위 흰 카드) | 🟡 **A 권장**(iyumi 확인 완료, 최종 confirm만) |
+| D5 | 카드 방향 = **B 확정**(캔버스 검정 양쪽 / 라이트=흰 카드 · 다크=다크 카드) | ✅ 사용자 확정. on-canvas 텍스트는 static white 처리 |
 | D6 | `AppShadow` 토큰 신설 여부 | ✅ **카드엔 불필요**(iyumi 카드=무그림자). FAB 한정 검토 |
 | D7 | iyumi 카드 패턴 = `CardSection`/`CardItem`/`ScreenScaffold` 이식, radius 40/24 | ✅ 확정(iyumi 스펙) |
 
@@ -80,6 +80,5 @@ Phase G. 통합 검증
 ## 6. 미결 질문 (사용자/기획 확인)
 
 1. ~~iyumi 접근~~ → ✅ 해소(docs 전달).
-2. 라이트 카드 방향 **A(권장) vs B**? (`04` §4) — A로 진행해도 되는지 최종 confirm만.
-3. task 1: ExtractionList·TastingNotes / 커뮤니티·쇼핑 탭 / SurveyReason 처리 방침? (`01` §7)
-4. 라이트/다크 토글 **유지**(배경만 고정, 방향 A면 사실상 단일 톤) vs 명시적 단일 테마화?
+2. ~~카드 방향~~ → ✅ **B 확정**(라이트 흰 카드 / 다크 다크 카드, 캔버스 검정).
+3. task 1: ExtractionList·TastingNotes / 커뮤니티·쇼핑 탭 / SurveyReason 처리 방침? (`01` §7) — **유일하게 남은 미결**.

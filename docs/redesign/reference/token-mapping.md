@@ -31,6 +31,7 @@
 | Inverse | ✅ 있음(8) | 값 대조만 |
 | **Accent** | ⚠️ 부분(`accentTasteBanner` 등 산발) | 그룹으로 정리 |
 | **Static** | ⚠️ `staticLabelWhite*`만 일부 | **`staticBlack`/`staticWhite` 명시 추가 (task 4 필수)** |
+| **On-canvas Label** | ❌ | **신규** — 검정 캔버스 위(카드 밖) 텍스트/아이콘용 고정 밝은색(`labelOnCanvas` 등). 방향 B 필수(`04` §2 함정) |
 | Opacity(15단계) | 부분(`colorGlobalOpacity*`) | 누락 단계 추가 |
 
 ### ⚠️ Component/fill 네이밍 충돌 (HANDOFF 알려진 이슈)
@@ -112,6 +113,7 @@
 
 - [ ] 팔레트 색 대조 → 앱 누락 색 추가
 - [ ] `Static` 그룹 명시화(`staticBlack`/`staticWhite`)
+- [ ] **on-canvas 라벨 토큰 추가**(`labelOnCanvas` 계열 — 검정 캔버스 위 카드 밖 텍스트, 방향 B)
 - [ ] Component/fill 네이밍 충돌 주석 처리(값 변경 금지)
 - [ ] Spacing 34/36/44 추가
 - [ ] **iyumi 카드 패턴 시맨틱 spacing 추가**(screenTopMargin/sectionPadding/itemPadding/gap/bottomScrollInset 등)

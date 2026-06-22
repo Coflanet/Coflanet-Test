@@ -23,17 +23,32 @@ iyumi의 **중첩 카드 레이어**를 그대로 가져오고, 캔버스만 검
 - iyumi: `normal`=카드 표면, `alternative`=캔버스(인셋/더 어두움).
 - coflanet: `normal`=메인 배경, `alternative`=보조 배경, **별도 `surfaceCard`/`surfaceCardStrong`** 보유.
 
-→ coflanet은 **자기 토큰 체계를 유지**하며 다음과 같이 매핑한다(권장):
+→ coflanet은 **자기 토큰 체계를 유지**하며 다음과 같이 매핑한다.
 
-| iyumi 역할 | coflanet 토큰 | 라이트(방향 A) | 다크 |
+> ✅ **방향 B 확정** (사용자): 캔버스는 양쪽 검정, **라이트=흰 카드 / 다크=다크 카드**.
+
+| iyumi 역할 | coflanet 토큰 | 라이트(B) | 다크(B) |
 |---|---|---|---|
 | 캔버스(화면 배경) | `backgroundNormalNormal` **및** `backgroundNormalAlternative` | **Static/Black #000000** | **Static/Black #000000** |
-| 큰 카드 CardSection | `surfaceCard` | (방향 A) CN15류 다크 표면 | CN15 #1B1C1E (현행) |
-| 작은 카드 CardItem(인셋) | `backgroundNormalAlternative`(=캔버스 검정) | 검정 인셋 | 검정 인셋 |
-| 작은 카드(레이즈드 대안) | `surfaceCardStrong` | CN20류 | CN20 #292A2D |
-| 틴트 카드 | `primaryLight` | (현행) | violet60 @20% |
+| 큰 카드 CardSection | `surfaceCard` | **#FFFFFF (흰 카드)** | **#1B1C1E CN15 (다크 카드)** |
+| 작은 카드 CardItem(인셋) | `surfaceCardStrong` | #F4F4F5 CN98(흰 카드 속 미세 인셋) | #292A2D CN20 |
+| 틴트 카드 | `primaryLight` | violet95 류 | violet60 @20% |
 
-> 즉 **큰 카드 = `surfaceCard`(CN15), 작은 카드 = 캔버스 검정 인셋**이 기본. iyumi의 "normal 카드 / alternative 인셋" 관계를 coflanet의 "surfaceCard / 캔버스" 로 옮긴 것.
+> ⚠️ **방향 B의 인셋 규칙 변경**: iyumi 원본은 작은 카드 = `alternative`(=캔버스색)로 인셋. 하지만 B는 캔버스가 **검정**이라, 라이트 흰 카드 안에 검정 인셋을 넣으면 과한 대비가 된다. → **작은 카드는 `surfaceCardStrong`**(큰 카드 표면에 가까운 톤)을 써서 라이트·다크 모두 은은한 중첩을 만든다.
+
+### ⚠️ 방향 B의 최대 함정 — "텍스트가 어디 위에 있나"
+
+B에서는 **같은 라이트 모드 안에서도 배경이 두 종류**다: 검정 캔버스 vs 흰 카드. 따라서 텍스트 색을 한 토큰(`labelNormal`)으로 통일할 수 없다.
+
+| 위치 | 라이트 모드 텍스트 | 다크 모드 텍스트 | 규칙 |
+|---|---|---|---|
+| **카드 밖**(검정 캔버스 위 헤더·섹션 타이틀) | **밝은색**(검정 위) | 밝은색 | 테마 무관 고정 밝은색 |
+| **카드 안**(흰/다크 카드 내부 본문) | 어두운색(흰 카드 위) | 밝은색(다크 카드 위) | 일반 테마 토큰 |
+
+- **카드 밖(on-canvas)**: 셸 탭바가 이미 쓰는 방식 그대로 — `staticLabelWhite*`(테마 무관 고정 밝은색) 사용. 라이트에서 `labelNormal`(어두운색)을 검정 캔버스에 쓰면 **검정 위 검정**이 된다.
+- **카드 안(in-card)**: `AppColorScheme.of(context).labelNormal` 그대로(라이트=어두움, 다크=밝음) — 카드 표면이 모드별로 흰/다크라 정상 동작.
+- 권장: **on-canvas 전용 시맨틱 토큰**(예: `labelOnCanvas`/`labelOnCanvasAssistive` = static white 계열)을 추가하고, `ScreenScaffold` 헤더는 이 토큰을 강제. CardSection/CardItem 내부는 일반 토큰.
+- 같은 원리로 **카드 밖 아이콘/디바이더/보조 텍스트**도 on-canvas 토큰을 써야 검정 위에서 보인다.
 
 ## 3. 정확한 기계적 변경 (코드)
 
@@ -52,9 +67,11 @@ backgroundNormalAlternative: AppColor.staticBlack,  // was CoolNeutral99
 **다크**: 이미 `Common0` → `staticBlack`으로 명칭만 통일.
 > `AppTheme._build`의 `scaffoldBackgroundColor: colors.backgroundNormalNormal`이 자동으로 검정이 됨.
 
-### 3-3. 라이트 카드 표면 — 방향 결정(§4)
-- **방향 A(권장)**: 라이트 `surfaceCard`/`surfaceCardStrong`/`labelNormal` 등을 다크 값에 수렴 → 통일된 다크 캔버스. 라이트/다크 토글은 사실상 거의 동일.
-- **방향 B**: 라이트 `surfaceCard`=#FFFFFF 유지 → 검정 캔버스 + 흰 카드(고대비). 모드 간 외형 차이 큼.
+### 3-3. 카드 표면 — ✅ 방향 B 확정
+- 라이트: `surfaceCard`=#FFFFFF(흰 카드) / `surfaceCardStrong`=#F4F4F5 유지.
+- 다크: `surfaceCard`=#1B1C1E / `surfaceCardStrong`=#292A2D 유지.
+- **카드 내부** `labelNormal` 등은 현행 유지(라이트=어두움/다크=밝음) — 카드 표면이 모드별로 맞으므로 정상.
+- **카드 밖(on-canvas)** 텍스트/아이콘만 static white 계열로 전환(§2 함정 표).
 
 ### 3-4. 카드 패턴 토큰 추가 — `AppSpacing`/`AppRadius` (`token-mapping.md` §3·§7)
 신규 시맨틱 토큰(iyumi 값):
@@ -76,13 +93,11 @@ iyumi 위젯을 coflanet 토큰으로 이식:
 - `ScreenScaffold`(배경 캔버스 + 상단 마진 32 + 통일 타이틀 title2Bold + back 자동 + bottomScrollInset). 셸 탭 내부는 `useScaffold:false`.
 - (선택) `SectionBox` 레거시 래퍼는 도입 불필요 — coflanet 신규 코드는 `CardSection` 직접.
 
-## 4. 남은 결정 (1건만)
+## 4. 결정 완료 ✅
 
-> iyumi 스펙으로 그림자·radius·구조는 모두 확정. **라이트 카드 톤만** 남음:
-
-- [ ] **방향 A(통일 다크 캔버스, 권장) vs B(검정 위 흰 카드)** — `04` §3-3.
-  - 권장 = **A**. 근거: 사용자가 "라이트·다크 모두 검정 캔버스"를 원함 → 일관성·구현 단순성↑, coflanet 셸이 이미 고정 다크, iyumi 프리미엄 톤과 부합.
-  - B를 원하면(라이트=흰 카드 강조) 라이트 모드 가독성 별도 검증 필요.
+- 캔버스 = Static/Black(양쪽), 카드 = **방향 B**(라이트 흰 카드 / 다크 다크 카드) — **확정**.
+- 카드 패턴 = iyumi `CardSection`(40)/`CardItem`(24), 무그림자.
+- 남은 작업은 결정이 아니라 **구현·검증**: 특히 §2 "텍스트 위치" 함정(on-canvas vs in-card)과 §5 부작용 점검을 빠짐없이.
 
 ## 5. 배경 검정화 부작용 점검 (라이트 "흰 배경 가정" 화면)
 
@@ -98,9 +113,9 @@ iyumi 위젯을 coflanet 토큰으로 이식:
 
 1. (의존) task 2 단계1 — Static 토큰 + 카드 패턴 토큰 흡수.
 2. §3-1·3-2 적용(캔버스 검정) — 최소 변경으로 전체 톤 확인.
-3. §3-5 카드 위젯 신설(CardSection/CardItem/ScreenScaffold).
-4. §3-3 방향 A 적용(라이트 표면 다크 수렴) — B 선택 시 분기.
-5. §5 부작용 전수 점검.
+3. **on-canvas 라벨 토큰 추가**(§2 함정) + `ScreenScaffold` 헤더가 이를 강제하도록.
+4. §3-5 카드 위젯 신설(CardSection/CardItem/ScreenScaffold) — 방향 B 색값(§3-3) 적용.
+5. §5 부작용 전수 점검(특히 검정 위 텍스트/아이콘).
 6. 화면을 ScreenScaffold + CardSection/CardItem 패턴으로 재구성(task 3와 통합).
 
 ## 7. 검증
