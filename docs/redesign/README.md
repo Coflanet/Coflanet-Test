@@ -37,10 +37,13 @@ docs/redesign/
 | 4 Static/Black | `04` | ✅ **방향 B 확정**(라이트 흰 카드/다크 다크 카드) · 토큰·위젯 명세 | iyumi 반영 완료 |
 | 5 iyumi 참고 | `05` | ✅ **해소** — docs vendored | `reference/iyumi/` |
 
-## 남은 결정 (사용자)
+## 결정 현황 — 모두 확정 ✅
 
-1. **task 1 정책** — 죽은 화면(ExtractionList·TastingNotes)/플레이스홀더 탭(커뮤니티·쇼핑) 처리. (`01` §7) — 유일한 미결.
-   - (카드 방향·iyumi·Static/Black·radius·그림자는 모두 확정.)
+- 디자인: iyumi 카드 패턴 · Static/Black 캔버스 · 방향 B · 캔버스=다크 스킴/카드=활성 스킴.
+- task 1: 커뮤니티·쇼핑 탭 숨김(3탭) · ExtractionList+TastingNotes 활성화(커피 저널) · SurveyReason 항상 노출.
+- (선택 미정) 셸 탭 상태 영속화 — 진행에 지장 없음.
+
+→ **로컬 세션은 `00-master-plan.md`의 Phase A부터 바로 착수 가능.**
 
 ## 근거(외부 소스)
 

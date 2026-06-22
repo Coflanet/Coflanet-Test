@@ -61,18 +61,23 @@ splash(/) ─ config 로드 ─┬─ 비로그인 → signIn → (소셜/이메
    - `Get.toNamed(beanDetail, arguments: beanObject)` 패턴. 딥링크/복원 시 객체 유실 가능.
    - **수정**: ID 기반 인자(`{'beanId': ...}`) + 컨트롤러에서 조회로 전환 검토.
 
-### P1 — 죽은 화면/일관성
-3. **`ExtractionListView`, `TastingNotesView` 진입점 없음** — 둘은 성격이 다르다:
-   - **`ExtractionListView` = 완성된 "추출 기록" 화면**. 과거 brewLog를 통계 카드 + 무한스크롤 + 삭제/새로고침으로 표시, Supabase `BrewLogRepository` 실연결. 라우트·진입점만 없음. 타이머 추출 시 brewLog가 저장되므로 이 화면이 그 귀결지.
-     → **권장: 활성화**. `app_pages.dart`에 라우트 추가 + 마이/홈에 "추출 기록" 진입점. (사용자 확정 대기)
-   - **`TastingNotesView` = 빈 플레이스홀더**. 컨트롤러 주석 "Placeholder ... Future: tasting notes, flavor wheel". 미구현.
-     → **권장: 제거**(view/controller/binding) 또는 명시적 백로그. 정식 설계 시 재도입. (사용자 확정 대기)
+### P1 — 죽은 화면/일관성 → ✅ "커피 저널" 루프로 통합
+3. **`ExtractionListView` + `TastingNotesView` → 하나의 "커피 저널" 기능으로 활성화**.
+   - **`ExtractionListView` = 완성된 "추출 기록"** (brewLog 통계+무한스크롤+삭제, `BrewLogRepository` 실연결). 진입점만 없음.
+     → ✅ **결정: 활성화**. `app_pages.dart` 라우트 추가 + 마이 탭에 "추출 기록" 진입점.
+   - **`TastingNotesView` = 빈 스텁이지만 UI 부품은 이미 존재** (`FlavorRadarChart`·`FlavorTag`·`AppAnimatedTasteBar`).
+     → ✅ **결정: 활성화(커피 저널로 편입)**. 위치:
+       1. **추출 직후** `TimerCompleteView`에 "시음 노트 남기기" CTA → `TastingNotesView(brewLogId)` (맛이 생생할 때 1차 진입).
+       2. **추출 기록 상세**: ExtractionList 항목 → 상세 → 시음 노트 보기/수정 (소급 진입).
+       3. 독립 탭/메뉴는 두지 않음 — 노트는 항상 특정 brew에 귀속.
+   - **구현 범위 주의**: ExtractionList는 이미 완성 → 라우트+진입점만. TastingNotes는 **신규 구현 필요**: `TastingNoteModel`(맛 점수·태그·메모·평점) + 저장(브루로그에 부착 또는 별도 repo) + 폼 UI(기존 flavor 위젯 재사용). brewLog ↔ 노트 1:1 매핑.
+   - 산출물: "원두선택→설정→타이머→완료→**시음 노트**→추출 기록" 으로 닫히는 저널 루프.
 4. **`MyTasteView`가 셸에서 접근 불가**
    - `'/profile/my-taste'`는 `surveyResult` 하단 링크에서만 진입. 메인 셸에 상시 진입점 없음.
    - **수정**: 마이 탭(`MyPlanetContent`)에 "내 취향" 항목 추가.
-5. **`SurveyReasonView` 트리거 조건 협소**
-   - 소셜 로그인이 이름을 제공하고 signup_reasons 없을 때만 진입. 일반 플로우는 건너뜀 → 과소 테스트.
-   - **수정**: 의도된 분기인지 확인. 항상 거치게 할지/스킵 유지할지 결정 후 주석화.
+5. **`SurveyReasonView`(가입 이유 설문) — ✅ 결정: 항상 노출**
+   - 현재: 소셜 로그인이 이름 제공 + signup_reasons 없을 때만 진입(일부 경로 스킵).
+   - **수정**: 모든 가입 경로(소셜/이메일/게스트)가 가입 완료 전 **한 번은 `surveyReason`을 거치도록 통일**. 진입 분기를 `signIn`/`profileSetup` 이후 공통 단계로 승격. 이미 제출한 사용자는 재노출 안 되게 가드(중복 저장 방지).
 6. **`AccountLink` 이후 온보딩 체크 불명확**
    - 기존 계정 연동 후 온보딩 완료 검사가 도는지/바로 셸로 가는지 코드상 모호.
    - **수정**: 연동 성공 콜백에서 `SurveyService` 온보딩 상태 재조회 → 분기 명시.
@@ -99,9 +104,11 @@ splash(/) ─ config 로드 ─┬─ 비로그인 → signIn → (소셜/이메
 - 수동: §3의 A~E 여정을 라이트/다크 양쪽에서 1회씩.
 - **권장 산출물**: 각 블로커별 "before/after 내비게이션" 캡처를 `verification/`에 첨부.
 
-## 7. 의사결정 현황
+## 7. 의사결정 현황 (모두 확정 ✅)
 
-- ✅ **커뮤니티·쇼핑 탭: 숨김(3탭으로 축소)** — 확정(§4-7).
-- 🟡 **ExtractionList: 활성화** 권장 / **TastingNotes: 제거** 권장 — 사용자 확정 대기(§4-3).
-- 🟡 **SurveyReason**: 가입 이유 설문(가입 플로우 연결됨). 항상 노출 vs 조건부 유지 — 확정 대기(§4-5).
-- [ ] 셸 탭 상태 영속화 필요 여부? (선택)
+- ✅ **커뮤니티·쇼핑 탭: 숨김** — 5탭→3탭(홈/원두/마이) (§4-7).
+- ✅ **ExtractionList: 활성화** + **TastingNotes: 활성화(커피 저널 편입)** — 추출완료/추출기록에 시음 노트 부착 (§4-3).
+- ✅ **SurveyReason: 항상 노출** — 모든 가입 경로 공통 단계로 승격 (§4-5).
+- [ ] 셸 탭 상태 영속화 필요 여부? (선택 — 미정이어도 진행 무방)
+
+> task 1 정책 확정 완료. 로컬 세션은 위 결정대로 구현하면 된다.

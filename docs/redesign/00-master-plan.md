@@ -82,4 +82,7 @@ Phase G. 통합 검증
 
 1. ~~iyumi 접근~~ → ✅ 해소(docs 전달).
 2. ~~카드 방향~~ → ✅ **B 확정**(라이트 흰 카드 / 다크 다크 카드, 캔버스 검정).
-3. task 1: ExtractionList·TastingNotes / 커뮤니티·쇼핑 탭 / SurveyReason 처리 방침? (`01` §7) — **유일하게 남은 미결**.
+3. ~~색 적용 규칙~~ → ✅ 캔버스=다크 스킴 / 카드=활성 스킴.
+4. ~~task 1 정책~~ → ✅ 확정: 커뮤니티·쇼핑 숨김 / ExtractionList·TastingNotes 활성화(커피 저널) / SurveyReason 항상 노출 (`01` §7).
+
+> **모든 핵심 결정 완료.** 로컬 세션은 Phase A부터 바로 구현 착수 가능.
