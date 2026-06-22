@@ -62,9 +62,11 @@ splash(/) ─ config 로드 ─┬─ 비로그인 → signIn → (소셜/이메
    - **수정**: ID 기반 인자(`{'beanId': ...}`) + 컨트롤러에서 조회로 전환 검토.
 
 ### P1 — 죽은 화면/일관성
-3. **`ExtractionListView`, `TastingNotesView` 진입점 없음**
-   - 라우트/화면은 있으나 어떤 플로우에서도 호출되지 않음.
-   - **수정**: (a) 마이/홈에 진입점 추가해 활성화, 또는 (b) 정식 미사용이면 라우트·화면 제거하고 백로그로 이동. **결정 필요**.
+3. **`ExtractionListView`, `TastingNotesView` 진입점 없음** — 둘은 성격이 다르다:
+   - **`ExtractionListView` = 완성된 "추출 기록" 화면**. 과거 brewLog를 통계 카드 + 무한스크롤 + 삭제/새로고침으로 표시, Supabase `BrewLogRepository` 실연결. 라우트·진입점만 없음. 타이머 추출 시 brewLog가 저장되므로 이 화면이 그 귀결지.
+     → **권장: 활성화**. `app_pages.dart`에 라우트 추가 + 마이/홈에 "추출 기록" 진입점. (사용자 확정 대기)
+   - **`TastingNotesView` = 빈 플레이스홀더**. 컨트롤러 주석 "Placeholder ... Future: tasting notes, flavor wheel". 미구현.
+     → **권장: 제거**(view/controller/binding) 또는 명시적 백로그. 정식 설계 시 재도입. (사용자 확정 대기)
 4. **`MyTasteView`가 셸에서 접근 불가**
    - `'/profile/my-taste'`는 `surveyResult` 하단 링크에서만 진입. 메인 셸에 상시 진입점 없음.
    - **수정**: 마이 탭(`MyPlanetContent`)에 "내 취향" 항목 추가.
@@ -76,7 +78,9 @@ splash(/) ─ config 로드 ─┬─ 비로그인 → signIn → (소셜/이메
    - **수정**: 연동 성공 콜백에서 `SurveyService` 온보딩 상태 재조회 → 분기 명시.
 
 ### P2 — 미완 기능(플레이스홀더)
-7. **커뮤니티·쇼핑 탭** 콘텐츠 플레이스홀더 → MVP 범위 결정(빈 상태 UI `AppEmptyState`로 정식화할지, 탭 자체를 숨길지).
+7. **커뮤니티·쇼핑 탭** — ✅ **결정: 숨김(MVP 제외)**.
+   - 5탭(홈/원두/커뮤니티/쇼핑/마이) → **3탭(홈/원두/마이)** 로 축소.
+   - 구현: `main_shell_controller.dart`의 탭 목록에서 커뮤니티(2)·쇼핑(3) 제거 + `shell_tab_bar.dart` 항목 제거 + 탭 인덱스 재정렬(마이 4→2). `CommunityContent`/`ShoppingContent` 코드는 보존(추후 복원), **탭만 비노출**. `mainShell` `initialTab` 인자 사용처 인덱스 점검.
 8. **검색/알림/장바구니** 모달 라우트는 있으나 실연동 최소.
 9. **레시피 add/edit** 단일 뷰 `isEditMode` 분기 — 라우트 분리 불필요하나 진입 인자 검증 필요.
 10. **셸 탭 상태 비영속** — 앱 재시작 시 항상 초기 탭. 의도면 유지, 아니면 마지막 탭 복원 추가.
@@ -95,9 +99,9 @@ splash(/) ─ config 로드 ─┬─ 비로그인 → signIn → (소셜/이메
 - 수동: §3의 A~E 여정을 라이트/다크 양쪽에서 1회씩.
 - **권장 산출물**: 각 블로커별 "before/after 내비게이션" 캡처를 `verification/`에 첨부.
 
-## 7. 미결 질문 (로컬 세션/기획 확인 필요)
+## 7. 의사결정 현황
 
-- [ ] ExtractionList/TastingNotes: 활성화 vs 제거?
-- [ ] 커뮤니티·쇼핑 탭: MVP에 포함? (빈 상태 vs 탭 숨김)
-- [ ] SurveyReason: 항상 노출 vs 조건부 유지?
-- [ ] 셸 탭 상태 영속화 필요 여부?
+- ✅ **커뮤니티·쇼핑 탭: 숨김(3탭으로 축소)** — 확정(§4-7).
+- 🟡 **ExtractionList: 활성화** 권장 / **TastingNotes: 제거** 권장 — 사용자 확정 대기(§4-3).
+- 🟡 **SurveyReason**: 가입 이유 설문(가입 플로우 연결됨). 항상 노출 vs 조건부 유지 — 확정 대기(§4-5).
+- [ ] 셸 탭 상태 영속화 필요 여부? (선택)
