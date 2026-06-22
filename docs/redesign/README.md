@@ -38,13 +38,18 @@ docs/redesign/
 | 4 Static/Black | `04` | ✅ **방향 B 확정**(라이트 흰 카드/다크 다크 카드) · 토큰·위젯 명세 | iyumi 반영 완료 |
 | 5 iyumi 참고 | `05` | ✅ **해소** — docs vendored | `reference/iyumi/` |
 
-## 결정 현황 — 모두 확정 ✅
+## 결정 현황
 
 - 디자인: iyumi 카드 패턴 · Static/Black 캔버스 · 방향 B · 캔버스=다크 스킴/카드=활성 스킴.
-- task 1: 커뮤니티·쇼핑 탭 숨김(3탭) · ExtractionList+TastingNotes 활성화(커피 저널) · SurveyReason 항상 노출.
+- task 1: **쇼핑 탭 유지(취향 추천)** · **커뮤니티 탭 숨김(4탭)** · **장바구니/결제 숨김** · ExtractionList+TastingNotes 활성화(커피 저널) · SurveyReason 항상 노출.
 - (선택 미정) 셸 탭 상태 영속화 — 진행에 지장 없음.
 
-→ **로컬 세션은 `00-master-plan.md`의 Phase A부터 바로 착수 가능.**
+## 구현 현황 (이 브랜치에서 직접 수정)
+
+- ✅ **commit `a45605a`** (CI analyze+test 통과): 홈 원두 카드→상세, 원두 상세 네이버 판매링크, 커뮤니티 탭 숨김, 장바구니 아이콘 숨김. → `01a-flow-defects.md` §0.
+- 📋 **이미지 제작 리스트**: `image-production-list.md` (Claude-in-Chrome 자동 생성용).
+- ⏳ 테스트 릴리즈 APK: 권한상 봇이 트리거 불가 → 사용자가 Actions에서 `Release` 워크플로 실행(브랜치 지정) 필요.
+- ⬜ 대형 작업(Static/Black 카드 전면 적용 + 라이브러리 마이그레이션)은 로컬 세션. 디자인 강제는 `coflanet-design-guide` 스킬.
 
 ## 근거(외부 소스)
 
