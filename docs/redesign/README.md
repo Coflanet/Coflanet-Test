@@ -19,7 +19,12 @@ docs/redesign/
 └── reference/
     ├── current-design-system.md   현재 앱 토큰/위젯 스냅샷 (AS-IS)
     ├── component-lab-inventory.md  가져올 라이브러리 인벤토리 (TO-BE)
-    └── token-mapping.md            AS-IS→TO-BE 변환표 · 체크리스트
+    ├── token-mapping.md            AS-IS→TO-BE 변환표 · 체크리스트
+    └── iyumi/                      iyumi 디자인 스펙 vendored (카드/바텀시트/홈IA)
+        ├── README.md               iyumi↔coflanet↔CDS 관계 + 수록 안내
+        ├── card-design-spec.md     ★ 카드형 패턴 원본 스펙
+        ├── bottom-sheet-guide.md   바텀시트 표준
+        └── home-restructure.md     IA 결정 기록 예시
 ```
 
 ## 상태판
@@ -29,17 +34,16 @@ docs/redesign/
 | 1 유저플로우 | `01` | ✅ 감사 완료, 수정안 제시 | 코드 수정은 로컬 |
 | 2 라이브러리 | `02` | ✅ 전략·단계 확정 | 소스 흡수 방식 |
 | 3 스타일 | `03` | ✅ 절차·체크리스트 | task2 단계1 의존 |
-| 4 Static/Black | `04` | 🟡 배경 변경 확정 / 카드방향 보류 | iyumi 의존 |
-| 5 iyumi 참고 | `05` | ⛔ **접근 불가(블로커)** | 사용자 액션 필요 |
+| 4 Static/Black | `04` | ✅ 카드 스펙·토큰 확정 / 방향 A 권장 confirm | iyumi 반영 완료 |
+| 5 iyumi 참고 | `05` | ✅ **해소** — docs vendored | `reference/iyumi/` |
 
 ## 가장 먼저 필요한 결정 (사용자)
 
-1. **iyumi 레포 접근** — 비공개/404. 공개 전환 · 세션 스코프 추가 · 내용 전달 · 없이 진행 중 택1. (`05-iyumi-reference.md`)
-2. **라이트 카드 방향** — A(다크 수렴) vs B(검정 위 흰 카드). (`04` §4)
-3. **task 1 정책** — 죽은 화면/플레이스홀더 탭 처리. (`01` §7)
+1. **라이트 카드 방향** — A(다크 수렴, 권장) vs B(검정 위 흰 카드). 나머지(radius 40/24, 무그림자, Static/Black)는 확정. (`04` §4)
+2. **task 1 정책** — 죽은 화면/플레이스홀더 탭 처리. (`01` §7)
 
 ## 근거(외부 소스)
 
 - 라이브러리: `Coflanet/Coflanet-Test` → `Library/component_lab/` (HANDOFF.md, ACTION_PLAN.md, foundation/, components/).
-- iyumi: `IYUMI-org/iyumi/docs` — **현재 접근 불가**(`05` 참조).
+- iyumi: `IYUMI-org/iyumi/docs` — ✅ docs zip 전달받아 `reference/iyumi/`에 vendoring(`05` 참조).
 - 현재 앱: `lib/constants/`, `lib/core/theme/`, `lib/routes/`, `lib/modules/`, `lib/widgets/`.

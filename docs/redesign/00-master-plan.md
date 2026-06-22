@@ -26,8 +26,9 @@
 | D2 | 컬러 아키텍처 = **앱의 `AppColorScheme` 유지**, component_lab 값만 흡수 | ✅ 권장 확정 |
 | D3 | 타깃 구조 = 토큰 `lib/constants/` 병합 + 컴포넌트 `lib/widgets/<category>/` | ✅ 권장 |
 | D4 | 배경 = 라이트/다크 모두 `Static/Black`(#000000) 고정 | ✅ 요구사항 |
-| D5 | 라이트 카드 방향 A(다크 수렴) vs B(검정 위 흰 카드) | ⛔ **iyumi 확인 필요** |
-| D6 | `AppShadow` 토큰 신설 여부 | ⛔ **iyumi 확인 필요** |
+| D5 | 라이트 카드 방향 A(다크 수렴) vs B(검정 위 흰 카드) | 🟡 **A 권장**(iyumi 확인 완료, 최종 confirm만) |
+| D6 | `AppShadow` 토큰 신설 여부 | ✅ **카드엔 불필요**(iyumi 카드=무그림자). FAB 한정 검토 |
+| D7 | iyumi 카드 패턴 = `CardSection`/`CardItem`/`ScreenScaffold` 이식, radius 40/24 | ✅ 확정(iyumi 스펙) |
 
 ## 3. 권장 실행 순서 (Phase)
 
@@ -60,7 +61,7 @@ Phase G. 통합 검증
 
 | 리스크 | 영향 | 완화 |
 |--------|------|------|
-| **iyumi 접근 불가** | 카드 최종 스타일·Static 정확값 확정 불가(D5/D6) | A~E 선행, iyumi 수령 시 F 마무리. `05-iyumi-reference.md` 해결책 4안 |
+| ~~iyumi 접근 불가~~ | ✅ **해소** — 사용자가 docs zip 전달, `reference/iyumi/`에 vendoring. 카드 스펙 확정 | — |
 | 배경 검정화 부작용 | 라이트 "흰 배경 가정" 화면 깨짐 | `04` §3 전수 체크리스트 |
 | Component/fill 8% vs 5% 충돌 | 색 미세 불일치 | 값 변경 금지·주석화, 디자이너 합의 |
 | 순환 의존 | 빌드 불가 | 소스 흡수(D1) |
@@ -78,7 +79,7 @@ Phase G. 통합 검증
 
 ## 6. 미결 질문 (사용자/기획 확인)
 
-1. **iyumi 접근**: 공개 전환 / 스코프 추가 / 내용 전달 / 없이 진행 중 무엇? (`05` 참조)
-2. 라이트 카드 방향 **A vs B**? (`04` §4)
+1. ~~iyumi 접근~~ → ✅ 해소(docs 전달).
+2. 라이트 카드 방향 **A(권장) vs B**? (`04` §4) — A로 진행해도 되는지 최종 confirm만.
 3. task 1: ExtractionList·TastingNotes / 커뮤니티·쇼핑 탭 / SurveyReason 처리 방침? (`01` §7)
-4. 라이트/다크 토글 **유지**(배경만 고정) vs 단일 테마화?
+4. 라이트/다크 토글 **유지**(배경만 고정, 방향 A면 사실상 단일 톤) vs 명시적 단일 테마화?

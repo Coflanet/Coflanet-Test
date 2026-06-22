@@ -48,9 +48,9 @@ component_lab `pubspec.yaml`은 `coflanet` 앱을 path 의존성으로 가진다
 1. [ ] **Buttons (✅완전검증)** — AppSolidButton, AppOutlinedButton, AppTextButton, AppIconButton, AppFloatingActionButton, AppSectionBottomButton.
    - 기존 `primary_button.dart`/`social_button.dart` 호출부를 신규 버튼으로 교체(사이즈 52/40/32 체계 재정렬).
 2. [ ] **Chips** — Action/Filter 변형(deprecated `app_chip.dart` 폐기). `flavor_tag.dart`는 flavor 색 유지하며 chips 기반으로 재구성.
-3. [ ] **Cards** — iyumi 카드 스타일 반영(task 4). `product_card`/`recipe_card`를 라이브러리 카드 위에 재구성.
+3. [ ] **Cards** — iyumi 카드 패턴(`CardSection`/`CardItem`/`ScreenScaffold`) 이식(`reference/iyumi/card-design-spec.md`, task 4 §3-5). `product_card`/`recipe_card`를 이 패턴 위에 재구성.
 4. [ ] **Forms / Inputs** — 기존 `app_text_field.dart` 교체 + P0 신규(AppSearchInput, AppTextArea).
-5. [ ] **Modals** — `components/modals/*` + P0 신규(AppFullModal, AppActionSheet). 기존 모달 7종 매핑.
+5. [ ] **Modals / 바텀시트** — `components/modals/*` + P0 신규(AppFullModal, AppActionSheet). 기존 모달 7종 매핑. 바텀시트는 **iyumi `showAppSheet()`/`AppBottomSheet` 표준 3축**(상단 노출·버튼 하단 고정·스크롤) 채택 검토(`reference/iyumi/bottom-sheet-guide.md`).
 6. [ ] **Feedback** — `AppEmptyState`(P0), AppSectionMessage(P0).
 7. [ ] **나머지** — avatars, dividers, indicators, gauge, controls, selection, tabs, thumbnails, ratio, scrolls, pagination, navigation, contents, control_box, presentation.
    - **도메인 특화(타이머·레이더차트·셸 탭바/탑내비)는 앱에 유지**, 토큰만 정합.

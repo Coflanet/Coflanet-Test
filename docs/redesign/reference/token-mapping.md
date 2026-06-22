@@ -64,17 +64,19 @@
 
 - 시맨틱(container/button/item/safe-area)은 앱의 컴포넌트별 상수와 1:1 대응 확인 후 명칭 통일.
 - 상세 규칙은 component_lab `docs/spacing-migration/`(01-audit→04-apply-log) 참조. → `03-style-application.md`.
+- **iyumi 카드 패턴 시맨틱 spacing(신규 추가)**: `screenTopMargin=32`, `headerHorizontalPadding=20`, `sectionPadding=(24,32)`, `sectionGap=4`, `itemPadding=24`, `itemGap=4`, `cardGap=4`, `bottomDockAllowance=96`, `bottomBreathingRoom=16`, `bottomScrollInset(context)`. → `04` §3-4. (기존 팔레트 값 `space*`는 변경 금지, 시맨틱만 추가.)
 
 ## 3. Radius
 
-| 값(px) | 앱 `AppRadius` | component_lab | 액션 |
+| 값(px) | 앱 `AppRadius` | component_lab / iyumi | 액션 |
 |---|---|---|---|
 | 2/4/6/8/12/14/16/20/24 | ✅ 다수 | ✅(2~40 연속) | 대조 |
 | 32 | `round` | (범위 내) | – |
-| **34/36/40** | ❌(round=32까지) | ✅(~40) | 필요 시 **추가** |
+| **40** | ❌(round=32까지) | ✅ iyumi `sectionRadius` | **추가**(카드 패턴 큰 카드) |
 | 100 | `full` | Pill(100) | 동일 |
 
 - 시맨틱: 앱 `button=12/card=16/modal=20` ↔ lib `radiusButton/radiusCard/radiusModal`. **값 동일 가능성 높음** — 명칭만 맞추거나 양쪽 별칭 유지.
+- **iyumi 카드 패턴 시맨틱(신규)**: `sectionRadius=40`, `itemRadius=24`(=기존 xxxl). → `04-static-black-theme.md` §3-4.
 
 ## 4. Typography
 
@@ -82,11 +84,11 @@
 - component_lab 66 스타일과 1:1 대조 → 앱에 **누락된 변형(Reading/Mono/특정 가중치)만 추가**.
 - 명칭 규칙 통일(예: `body1NormalRegular` vs Figma `Body/1/normal/regular`).
 
-## 5. Shadow (신규)
+## 5. Shadow
 
 - **현재 앱에 그림자 토큰이 없다**(카드 플랫 디자인). component_lab은 Black/Primary × Normal/Emphasize/Strong/Heavy 보유.
-- task 4의 "검정 캔버스 위 카드" 디자인에서는 **그림자보다 보더/표면 대비**가 핵심일 수 있으나, iyumi 카드 디자인이 그림자를 쓴다면 Shadow 토큰 도입이 필요. → iyumi 레퍼런스 확인 후 결정(`05-iyumi-reference.md`).
-- 도입 시 `lib/constants/shadow_constant.dart`(`AppShadow`) 신설 권장.
+- ✅ **확인됨**: iyumi 카드 패턴은 **아웃라인·그림자 없이 표면 명도 대비로 레이어 분리**(`reference/iyumi/card-design-spec.md`). → **카드용 `AppShadow`는 불필요**.
+- 단, FAB/플로팅 요소(component_lab `AppFloatingActionButton`은 shadow 사용)나 일부 버튼에는 그림자가 필요할 수 있음 → 그 경우에만 한정적으로 `lib/constants/shadow_constant.dart`(`AppShadow`) 신설.
 
 ## 6. 위젯 매핑 (앱 위젯 → component_lab 컴포넌트)
 
@@ -112,7 +114,9 @@
 - [ ] `Static` 그룹 명시화(`staticBlack`/`staticWhite`)
 - [ ] Component/fill 네이밍 충돌 주석 처리(값 변경 금지)
 - [ ] Spacing 34/36/44 추가
-- [ ] Radius 34/36/40 필요 시 추가, 시맨틱 명칭 통일
+- [ ] **iyumi 카드 패턴 시맨틱 spacing 추가**(screenTopMargin/sectionPadding/itemPadding/gap/bottomScrollInset 등)
+- [ ] **Radius `sectionRadius=40` 추가**, `itemRadius=24` 별칭, 시맨틱 명칭 통일
 - [ ] Typography 누락 변형 추가
-- [ ] `AppShadow` 신설 여부 결정(iyumi 확인 후)
+- [ ] `AppShadow` — 카드엔 불필요(확인됨), FAB/플로팅 한정 검토
+- [ ] **카드 위젯 신설**: `CardSection`/`CardItem`/`CardGap`/`ScreenScaffold` (iyumi 이식)
 - [ ] 위젯 1:1 교체 매핑 확정
