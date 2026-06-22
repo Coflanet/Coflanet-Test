@@ -87,7 +87,8 @@
 
 ## 5. Shadow
 
-- **현재 앱에 그림자 토큰이 없다**(카드 플랫 디자인). component_lab은 Black/Primary × Normal/Emphasize/Strong/Heavy 보유.
+- ✅ **정정**: 앱에 **`AppShadows` 가 이미 존재**한다(예: `AppShadows.shadowBlackEmphasize`, 매칭 카드에서 사용). 신설 불필요 — 필요한 변형만 확장.
+- component_lab은 Black/Primary × Normal/Emphasize/Strong/Heavy 보유.
 - ✅ **확인됨**: iyumi 카드 패턴은 **아웃라인·그림자 없이 표면 명도 대비로 레이어 분리**(`reference/iyumi/card-design-spec.md`). → **카드용 `AppShadow`는 불필요**.
 - 단, FAB/플로팅 요소(component_lab `AppFloatingActionButton`은 shadow 사용)나 일부 버튼에는 그림자가 필요할 수 있음 → 그 경우에만 한정적으로 `lib/constants/shadow_constant.dart`(`AppShadow`) 신설.
 

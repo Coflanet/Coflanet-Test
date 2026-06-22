@@ -65,6 +65,8 @@ Coflanet 화면을 **항상 같은 규칙**으로 만들기 위한 강제 가이
 
 ## 4. 사용 위젯 (직접 Container 조립 금지)
 
+> ✅ **구현됨**: `CardSection`·`CardItem`·`CardGap` = `lib/widgets/cards/card_section.dart`, `ScreenScaffold` = `lib/widgets/cards/screen_scaffold.dart`. 토큰도 추가됨(`AppRadius.sectionRadius/itemRadius`, `AppSpacing.screenTopMargin/sectionPadding/itemPadding/cardGap/bottomScrollInset`, `AppColor.staticBlack/staticWhite`, `AppColorScheme.canvas`). 그림자는 `AppShadows`(기존) 사용. 화면을 새로 만들거나 고칠 때 이 위젯들로 조립한다.
+
 | 위젯 | 역할 |
 |---|---|
 | `ScreenScaffold` | 화면 틀. 캔버스 배경 + 상단 마진 + 통일 타이틀(title2Bold) + back 자동 + 하단 `bottomScrollInset`. 셸 탭 내부 화면은 `useScaffold:false`(셸이 Scaffold 소유). |

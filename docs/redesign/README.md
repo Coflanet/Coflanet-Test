@@ -46,7 +46,8 @@ docs/redesign/
 
 ## 구현 현황 (이 브랜치에서 직접 수정)
 
-- ✅ **commit `a45605a`** (CI analyze+test 통과): 홈 원두 카드→상세, 원두 상세 네이버 판매링크, 커뮤니티 탭 숨김, 장바구니 아이콘 숨김. → `01a-flow-defects.md` §0.
+- ✅ **flow 수정** (CI analyze 통과): 홈 원두 카드→상세, 원두 상세 네이버 판매링크, **매칭 카드→판매링크(A2)**, 커뮤니티 탭 숨김, 장바구니 아이콘 숨김. → `01a-flow-defects.md` §0.
+- ✅ **카드 패턴 toolkit 구현**(additive, CI analyze 통과): `AppColor.staticBlack/staticWhite`, `AppColorScheme.canvas`, 카드 토큰(`sectionRadius 40`/`itemRadius 24`/`sectionPadding`/`bottomScrollInset` 등), `CardSection`·`CardItem`·`CardGap`·`ScreenScaffold`(`lib/widgets/cards/`). **기존 화면 영향 0** — 이걸로 화면을 점진 마이그레이션.
 - 📋 **이미지 제작 리스트**: `image-production-list.md` (Claude-in-Chrome 자동 생성용).
 - ⏳ 테스트 릴리즈 APK: 권한상 봇이 트리거 불가 → 사용자가 Actions에서 `Release` 워크플로 실행(브랜치 지정) 필요.
 - ⬜ 대형 작업(Static/Black 카드 전면 적용 + 라이브러리 마이그레이션)은 로컬 세션. 디자인 강제는 `coflanet-design-guide` 스킬.
