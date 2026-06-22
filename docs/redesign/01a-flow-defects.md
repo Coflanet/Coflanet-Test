@@ -9,7 +9,7 @@
 |---|------|------|:---:|:---:|:---:|
 | A1 | `home_my_bean_section.dart:101` | 개별 원두 카드 탭 무반응(Container, onTap 없음) | ✅ beanDetail | ✅ 배선만 | P1 |
 | A2 | `matching_recommendation_card.dart:11` | "자세히 보기" 칩 탭 무반응(의도적 미추가) | ✅ beanDetail | ✅ 배선/또는 칩 제거 | P1 |
-| B1 | `recommendation_card.dart:336` | "판매링크 바로가기" 안 눌림(핸들러 없음) | ❌ 판매링크 미구현 | △ 어포던스 정리 | P1 |
+| B1 | `bean_detail`·`recommendation_card.dart:336` | 판매링크 버튼이 URL 안 엶 | ✅ 데이터 `naverLink`/`purchaseUrl` 있음 | ✅ url_launcher 배선 | P1 |
 | B2 | `cart_controller.dart:35` | "주문하기" = underConstructionPopup(결제 없음) | ❌ 결제 미구현 | △ 어포던스 정리 | P2 |
 | B3 | `survey_result_view.dart:93` | "추천 원두 더 보기" 빈 콜백 `(){}` | △ 쇼핑(숨김 예정) | ✅ 정리 | P2 |
 | C1 | `home_product_section.dart:103` | 상품 카드 onTap 미전달 → 탭 무반응 | ❌ **상품 상세 화면 없음** | ❌ 화면 신설 필요 | P1 |
@@ -35,9 +35,16 @@
 
 ## 2. 그룹 B — 안 먹는 버튼 (대상 기능 자체가 미구현)
 
-### B1. 온보딩 결과 "판매링크 바로가기" (`recommendation_card.dart:155-157, 336-354`)
-- `_buildPurchaseButton`이 `Container`(GestureDetector 없음). 주석 "[백엔드 API 연동 대기] 판매 링크 이동". → 버튼처럼 보이는데 **안 눌림**.
-- **수리**: 판매 링크 URL이 없으면 **버튼을 노출하지 않거나** 비활성(disabled) 스타일 + 명시. URL 생기면 `url_launcher`로 연결(이미 의존성 있음).
+### B1. 판매링크 버튼이 URL을 안 연다 — ✅ 데이터 있음, 배선만 누락
+**정정**: "대상 없음"이 아니다. **데이터에 네이버 판매 URL이 이미 있다.**
+- 원두(`CoffeeItem`): **`naverLink`**(네이버 판매 URL) + `naverLprice`/`naverHprice`/`naverMallName`. DB→repository 로드됨(`supabase_coffee_repository.dart:223`).
+- 추천(`CoffeeRecommendationModel`): **`purchaseUrl`** = `naver_link` 매핑(`supabase_survey_repository.dart:243`).
+- 문제: `naverLink`/`purchaseUrl`을 **`launchUrl`로 여는 코드가 어디에도 없다**(전 코드 grep 결과 view/controller 미사용). 원두 상세는 네이버 가격·몰명만 표시(`bean_detail_header.dart:77,112,113,136`)하고 **판매링크 버튼이 없음**. 온보딩 `_buildPurchaseButton`(`recommendation_card.dart:336`)도 죽은 Container.
+- **정식 플로우(사용자 확정)**: **원두 리스트 → 상세 페이지 → "판매링크 바로가기" → `naverLink` 외부 열기.**
+- **수리**:
+  1. **원두 상세**(`bean_detail_view`/`bean_detail_header`)에 "판매링크 바로가기/구매하기" 버튼 추가 → `launchUrl(Uri.parse(bean.naverLink!), mode: LaunchMode.externalApplication)`. `url_launcher` 이미 사용 중(`home_controller.dart:143`).
+  2. 온보딩 `_buildPurchaseButton` → `recommendation.purchaseUrl` 열기.
+  3. `naverLink`/`purchaseUrl`이 null/빈값이면 버튼 숨김 또는 비활성.
 
 ### B2. 장바구니 "주문하기" (`cart_controller.dart:34-37`)
 - `checkout()` → `AppUtil.underConstructionPopup()` 만. 결제/주문 플로우 미구현.
@@ -88,8 +95,9 @@
 
 ## 6. 수리 우선순위 (새 데이터 없이 가능한 것부터)
 
-1. **지금 바로(배선만, 데이터 불필요)**: A1(원두 카드→beanDetail), A2(칩 연결 또는 제거), B3(빈 콜백 정리).
-2. **거짓 어포던스 제거**: B1·B2·C1 — 대상 없는 버튼/탭은 "준비 중"으로 두지 말고 **노출 자체를 빼거나 비활성 명시**(누르면 아무 일 없는 게 최악).
+1. **지금 바로(배선만, 데이터 있음)**: A1(원두 카드→beanDetail), A2(칩 연결 또는 제거), **B1(상세에 판매링크 버튼 추가→`naverLink` 열기)**, B3(빈 콜백 정리).
+   - → "**원두 리스트/홈 원두 카드 → 상세 → 네이버 판매링크**" 플로우가 한 번에 완성됨(A1 + B1). 원두 상세가 허브.
+2. **거짓 어포던스 제거**: B2·C1 — 대상 없는 버튼/탭은 "준비 중"으로 두지 말고 **노출 자체를 빼거나 비활성 명시**(누르면 아무 일 없는 게 최악).
 3. **홈 재구성 결정**(§5): 탭 숨김 파급 + 빈 섹션 정리. iyumi home-restructure 선례 참고.
 4. **데이터/화면 신설(별도 트랙)**: 상품 상세, 결제, 판매링크, 추천 API — MVP 범위 결정 후.
 
@@ -97,7 +105,8 @@
 
 ## 7. 미결 (사용자 결정)
 
-- [ ] **홈 상품 추천 섹션(C1·§5)**: 쇼핑 숨김 상태에서 — (a) 섹션 숨김, (b) 원두/취향 중심 콘텐츠로 교체, (c) 추후 쇼핑 부활까지 보류 중 무엇?
-- [ ] **판매링크/주문하기(B1·B2)**: 어포던스 숨김 vs "준비 중" 유지?
+- [ ] **홈 상품 추천 섹션(C1·§5)**: 쇼핑 숨김 상태에서 — (a) 섹션 숨김, (b) 원두/취향 중심 콘텐츠로 교체, (c) 추후 쇼핑 부활까지 보류 중 무엇? (참고: 추천 모델에 `purchaseUrl` 있으니 카드 탭→네이버 직접 열기도 가능)
+- ✅ **판매링크(B1)**: 원두 상세에 버튼 추가 → `naverLink` 외부 열기로 **확정**.
+- [ ] **주문하기/결제(B2)**: 장바구니 결제는 MVP 밖 → 어포던스 숨김 vs "준비 중" 유지?
 - [ ] **매칭 "자세히 보기" 칩(A2)**: beanDetail 연결 vs 칩 제거?
 - [ ] **홈 재구성(§5)**: 별도 라운드로 진행할지(권장).
