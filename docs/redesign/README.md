@@ -3,13 +3,16 @@
 이 폴더는 **유저 플로우 검증 + component_lab 라이브러리 마이그레이션 + 스타일(Static/Black 카드형) 적용**을 위한 설계·근거·체크리스트 모음이다.
 
 > **역할 분담**: 이 문서들은 *계획/설계*다. **실제 코드 개발은 로컬 세션**이 수행한다.
-> 로컬 세션은 `00-master-plan.md` → 해당 task 문서 → `reference/*` 순으로 읽고 실행한다.
+>
+> 👉 **로컬 세션은 [`HANDOFF.md`](./HANDOFF.md) 부터 읽는다** (현재 상태·완료분·다음 할 일·작업법·참고맵 총정리). 이후 `00-master-plan.md` → 해당 task 문서 → `reference/*`.
 
 ## 문서 구조
 
 ```
 docs/redesign/
 ├── README.md                  ← (이 파일) 인덱스 · 상태판
+├── HANDOFF.md                  ★ 로컬 세션 인수인계 — 여기부터 읽기
+├── image-production-list.md    이미지 제작 명세(Claude-in-Chrome 생성용)
 ├── 00-master-plan.md          전체 계획 · 의사결정 · Phase 순서 · 리스크 · DoD
 ├── 01-user-flow-audit.md      [task 1] 라우트 맵 · E2E 여정 · 블로커 + 수정안
 ├── 01a-flow-defects.md        [task 1] 인터랙션·데이터 결함 전수 감사(탭 무반응/안 먹는 버튼/빈 데이터) + 수리 우선순위
