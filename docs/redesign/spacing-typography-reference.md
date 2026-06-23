@@ -11,7 +11,7 @@
 ## 0. 검증 요약 (먼저 읽기)
 
 1. **Library 변수는 코드와 동기화돼 있다.** 각 Figma 변수의 description이 대응 Flutter 토큰을 명시한다(예: `Round/12` → "Flutter: AppRadius.lg (12.0) … Source: lib/constants/radius_constant.dart"). 즉 Library는 코드에서 역으로 매핑된 상태.
-2. **라이트 시맨틱 색은 Figma ↔ 코드 1:1 일치** (§4 표). `token-mapping.md`가 우려한 `Component/fill/alternative 8% vs 5%` 충돌은 **해소 상태** — Figma `Fill/Alternative`=5%, `Fill/Normal`=8%로 코드와 동일.
+2. **시맨틱 색은 Figma ↔ 코드 1:1 일치** — 라이트(§4) + **다크(§4-1)** 모두 검증 완료. 다크 카드 표면 #1B1C1E, fill 22%/28%, 60레벨 accent 전부 코드 `AppColorScheme.dart`와 일치. `Component/fill/alternative 8% vs 5%` 보류 충돌도 **해소**(Figma도 5%).
 3. **카드 패턴 토큰(`sectionRadius=40` 등)은 Library Foundation엔 없지만 POC 앱 시안엔 있다.** POC `My Planet` 프레임 변수에 `Round/40(Box)=40`, `Spacing/Padding/24(Contents in Box)=24`, `Spacing/Padding/16(Box in Box)=16`, `Static/Black=#000000` 실재 → 코드 `sectionRadius/itemPadding/staticBlack`는 **추정이 아니라 POC 근거**. **시정 방향**: 값을 바꾸는 게 아니라 이 토큰들을 **📚 Library Foundation에 승격**(디자이너 합의).
 4. **⚠️ 타이포 weight 불일치(실질적)**: Figma "Bold" 명칭 텍스트 스타일이 Heading/Headline/Body/Label 스케일에선 **SemiBold(weight 600)**, Title/Display에선 Bold(700)다. 코드는 전 스케일 `*Bold = FontWeight.w700` → **Heading~Label 계열에서 코드가 한 단계 더 무겁다**(§3). lineHeight도 Figma 실측(1.36~1.47)이 코드 라운드값(1.4/1.5)과 미세차, letterSpacing은 코드에 전무.
 5. `token-mapping.md`의 "spacing 34/36/44 추가" 액션은 **`component_lab`(별도 코드 인벤토리) 기준**이라 실제 Figma엔 34/36/44가 없다 → **무효/재검토**.
@@ -177,7 +177,23 @@ Figma `Semantic/*` 변수 ↔ 코드 `AppColorScheme.light`. 아래는 `get_vari
 | Material/Dimmer | `Material/Dimmer` | #171719 @52% | `componentMaterialDimmer` ✅ |
 
 > **`Fill/Alternative` 충돌 해소 확인**: `token-mapping.md`가 "Figma 8% vs 코드 5%"로 보류했으나, 실측 Figma `Fill/Alternative`=5% (`#70737c0d`)로 **코드와 일치**. 그 보류 항목은 닫아도 됨.
-> **다크 스킴**: Library 변수 덤프는 라이트 모드 기준. 코드 `AppColorScheme.dark`는 Figma 다크 시안(홈/원두 상세) 기반(코드 주석 명시). 다크 변수 모드 별도 대조는 후속.
+
+### 4-1. 다크 모드 (Home `Home_Item_yes` 다크 resolve ↔ `AppColorScheme.dark`) — ✅ 일치
+
+🏠 Home 파일(`RRCDc6hBHT4usSnD5DXV3Y`) 홈 노드의 변수가 **다크 값으로 resolve**됨. 코드 다크 스킴과 1:1.
+
+| 역할 | Figma 다크 | 코드 (`AppColorScheme.dark`) |
+|---|---|---|
+| 캔버스 | `Static/Black`·`Background/normal/Strong`=#000000 | `backgroundNormalNormal` (common0) ✅ |
+| 큰 카드 표면 | `Background/normal/normal`=**#1B1C1E** | `surfaceCard` (coolNeutral15) ✅ |
+| Label/Normal | #F7F7F8 (coolNeutral99) | `labelNormal` ✅ |
+| Label/Strong | #FFFFFF | `labelStrong` ✅ |
+| Label/Neutral | #C2C4C8 @88% | `labelNeutral` ✅ |
+| Component/fill/Normal | #70737C **@22%** | `componentFillNormal` (0.22) ✅ |
+| Component/fill/Strong | #70737C **@28%** | `componentFillStrong` (0.28) ✅ |
+| Status/Negative | `Accent/Background/Red`=#FF6363 (red60) | `statusNegative` (red60) ✅ |
+
+> 라이트는 fill 8%/16%, 다크는 22%/28% — Figma·코드 양쪽 동일하게 단계 상승. **다크 스킴 검증 완료**(과거 "후속" 항목 닫음).
 
 ---
 
@@ -204,7 +220,19 @@ Figma `Semantic/*` 변수 ↔ 코드 `AppColorScheme.light`. 아래는 `get_vari
 | 카드 내부 패딩(좌우) | `Spacing/Padding/24(Contents in Box)`=24 | `sectionPadding` h24 | ✅ |
 | 카드 사이 간격 | `Spacing/4`=4 | `CardGap`/`cardGap`=4 | ✅ |
 
-### 6-2. 상품 상세(쇼핑 `184:23579` ↔ `lib/modules/product/product_detail_view.dart`)
+### 6-2. 홈(`Home_Item_yes` Home `256-4567`) ↔ `lib/modules/home/home_content.dart`
+**일치** — 코드 주석이 "Figma `Home_Item_yes` 화면 구현"으로 직접 명시. 다크 모드.
+
+| 항목 | Home 시안 | 코드 | 상태 |
+|---|---|---|---|
+| 캔버스 | `Static/Black`=#000000 | `staticBlack` `ColoredBox` | ✅ |
+| 큰 카드 radius / 표면 | `rounded-[40px]` / #1B1C1E | `sectionRadius`=40 / `surfaceCard`(다크) | ✅ |
+| 인셋 카드 radius | `rounded-[24px]` | `itemRadius`=24 | ✅ |
+| 카드 내부 패딩 | `Spacing/Padding/24`·`/16` | `sectionPadding` 24 / box-in-box 16 | ✅ |
+| 섹션 간 간격 | 12px 리듬(`gap-[12px]` 다수) | `_sectionGap`=`sm`=12 | ✅(모순 없음) |
+| 다크 색 | §4-1 전부 | `AppColorScheme.dark` | ✅ |
+
+### 6-3. 상품 상세(쇼핑 `184:23579` ↔ `lib/modules/product/product_detail_view.dart`)
 **의도적 디자인 분기** — 쇼핑 상세는 **커머스 레이아웃**(flat 섹션, 좌우 마진 16/24, 리뷰 이미지·2열 추천 그리드·레시피 표), 코드는 동일 정보를 **iyumi 카드로 단순화**("모델에 없는 정보 미표시", commit "C1 본래 해법"). 1:1 픽셀 포트 아님. 측정 정합 지점:
 
 | 항목 | 쇼핑 시안 | 코드 | 비고 |
@@ -219,6 +247,7 @@ Figma `Semantic/*` 변수 ↔ 코드 `AppColorScheme.light`. 아래는 `get_vari
 
 ## 7. 후속(이 문서 범위 밖)
 
-- 홈(`home`) 화면 단위 대조 — POC 홈 프레임 ↔ `lib/modules/home/`.
-- **다크 모드 Figma 변수 대조** — POC 마이는 라이트 모드(검정 캔버스+흰 카드)였음. 순수 다크 모드 프레임을 찾아 `AppColorScheme.dark` 대조 필요.
-- 디자이너 합의: ① `Round/40` Library Foundation 승격 ② Heading~Label "Bold" weight(600 vs 700) 확정.
+- 디자이너 합의(시정 필요): ① `Round/40` Library Foundation 승격 ② Heading~Label "Bold" weight(Figma 600 vs 코드 700) 확정 후 코드 정렬 ③ lineHeight/letterSpacing 디테일 정합.
+- 잔여 화면(커피/원두/레시피·온보딩) 단위 대조 — POC에 노드 존재, 필요 시 진행.
+
+> ✅ 완료: Library 토큰(라이트)·다크 모드(Home)·홈/마이/상품상세 화면 대조.

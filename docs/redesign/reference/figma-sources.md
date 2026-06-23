@@ -12,6 +12,7 @@
 | ⭐️ **POC** (시안/프로토타입) | `EkpVnNrqyq9Agpy4aymv0j` | `0-1` | https://www.figma.com/design/EkpVnNrqyq9Agpy4aymv0j/%E2%AD%90%EF%B8%8F-POC?node-id=0-1 |
 | 🛍️ **쇼핑 — 상세페이지** | `3B84XdpmsEduuvPVJKdTm9` | `0-1` | https://www.figma.com/design/3B84XdpmsEduuvPVJKdTm9/?node-id=0-1 |
 | 🛍️ **쇼핑 — 상세페이지(특정 화면)** | `3B84XdpmsEduuvPVJKdTm9` | `1-58513` | https://www.figma.com/design/3B84XdpmsEduuvPVJKdTm9/?node-id=1-58513 |
+| 🏠 **Home** (홈 화면 시안, 다크 모드) | `RRCDc6hBHT4usSnD5DXV3Y` | `256-4567` (`Home_Item_yes`) | https://www.figma.com/design/RRCDc6hBHT4usSnD5DXV3Y/%F0%9F%8F%A0-Home?node-id=256-4567 |
 
 ## 노드 ID 표기
 
@@ -19,8 +20,9 @@
 
 ## 용도 매핑
 
-- **Library** → spacing / radius / typography / color **토큰(variable) 검증의 SoT**. 코드 `AppSpacing`/`AppRadius`/`AppTextStyles`/`AppColorScheme` 와 1:1 대조.
-- **POC** → 재구성 화면(홈·마이 등) 실제 레이아웃·간격 시안 대조.
-- **쇼핑/상세페이지** → 인앱 상품 상세 화면 시안 대조.
+- **Library** → spacing / radius / typography / color **토큰(variable) 검증의 SoT**(라이트). 코드 `AppSpacing`/`AppRadius`/`AppTextStyles`/`AppColorScheme` 와 1:1 대조.
+- **POC** → 재구성 화면(마이 등) 실제 레이아웃·간격 시안 대조. `Round/40(Box)`·카드 패턴 토큰의 근거.
+- **쇼핑/상세페이지** → 커머스 상품 상세 화면 시안(코드는 iyumi 카드로 단순화).
+- **Home** → 홈 화면(`Home_Item_yes`) 시안 + **다크 모드 변수 검증**(코드 `AppColorScheme.dart` 와 대조). 코드 `lib/modules/home/home_content.dart` 가 이 노드 직접 구현.
 
 > 수집: 사용자 전달 (2026-06-23).
