@@ -173,6 +173,18 @@ class HomeController extends BaseController {
     }
   }
 
+  /// 추천 상품 카드 탭 (C1) — 전용 상품 상세 화면이 없으므로 판매(구매) 링크를
+  /// 외부 브라우저로 연다. 매칭 추천 카드(A2)와 동일 패턴.
+  /// purchaseUrl 이 없으면 호출부에서 비탭 처리되지만, 방어적으로 한 번 더 가드.
+  Future<void> onRecommendationTap(CoffeeRecommendationModel item) async {
+    final url = item.purchaseUrl;
+    if (url == null || url.isEmpty) return;
+    final uri = Uri.tryParse(url);
+    if (uri != null) {
+      await launchUrl(uri, mode: LaunchMode.externalApplication);
+    }
+  }
+
   bool isLiked(String id) => _likedIds.contains(id);
 
   /// 좋아요 토글 — [백엔드 API 연동 대기] 서버 반영
