@@ -13,7 +13,7 @@
 1. **Library 변수는 코드와 동기화돼 있다.** 각 Figma 변수의 description이 대응 Flutter 토큰을 명시한다(예: `Round/12` → "Flutter: AppRadius.lg (12.0) … Source: lib/constants/radius_constant.dart"). 즉 Library는 코드에서 역으로 매핑된 상태.
 2. **시맨틱 색은 Figma ↔ 코드 1:1 일치** — 라이트(§4) + **다크(§4-1)** 모두 검증 완료. 다크 카드 표면 #1B1C1E, fill 22%/28%, 60레벨 accent 전부 코드 `AppColorScheme.dart`와 일치. `Component/fill/alternative 8% vs 5%` 보류 충돌도 **해소**(Figma도 5%).
 3. **카드 패턴 토큰(`sectionRadius=40` 등)은 Library Foundation엔 없지만 POC 앱 시안엔 있다.** POC `My Planet` 프레임 변수에 `Round/40(Box)=40`, `Spacing/Padding/24(Contents in Box)=24`, `Spacing/Padding/16(Box in Box)=16`, `Static/Black=#000000` 실재 → 코드 `sectionRadius/itemPadding/staticBlack`는 **추정이 아니라 POC 근거**. **시정 방향**: 값을 바꾸는 게 아니라 이 토큰들을 **📚 Library Foundation에 승격**(디자이너 합의).
-4. **✅ 타이포 정렬 완료**: ① "Bold" weight — Heading~Caption은 SemiBold(600)/Title·Display는 700로 코드 정렬. ② lineHeight·letterSpacing — 확정 스케일(Title3·Heading·Headline·Body·Label·Caption2) Figma 실측값 적용(§3-1). **보류**: Display/Title1/Title2/Caption1·Reading lineHeight(Figma 발행 스타일 미존재 → 미추정).
+4. **✅ 타이포 전면 정렬 완료**: ① "Bold" weight — Heading~Caption은 SemiBold(600)/Title·Display는 700. ② lineHeight·letterSpacing — **전 스케일**(Display~Caption, Reading 포함) Figma 실측값 적용(§3-1). 유일한 예외: `label1Reading` lineHeight(Figma Label Reading specimen 부재로 코드값 유지).
 5. `token-mapping.md`의 "spacing 34/36/44 추가" 액션은 **`component_lab`(별도 코드 인벤토리) 기준**이라 실제 Figma엔 34/36/44가 없다 → **무효/재검토**.
 6. 타이포 크기·family는 일치(Display1 56/Display2 40/heading 20/body 16/15, Pretendard). 발행 텍스트 스타일은 없고(specimen 문서화) **코드 type scale이 SoT**.
 
@@ -159,9 +159,18 @@
 > | Headline1 (18) | 1.445 | ~0 | | Label2 (13) | 1.385 | 0.2522 |
 > | Headline2 (17) | 1.412 | 0 | | Caption2 (11) | 1.273 | 0.3421 |
 >
-> (Reading 변형은 height 유지+letterSpacing만 적용. letterSpacing는 Figma %를 px 환산: pct/100×size.)
+> letterSpacing는 Figma %를 px 환산: pct/100×size.
 >
-> **⚠️ 보류(Figma 정의값 미확보)**: **Display1/2·Title1/2·Caption1**, 그리고 **Reading 변형의 lineHeight**. 이 스케일들은 Figma에서 발행 텍스트 스타일로 안 묶여 있어(specimen 원시 텍스트) 확정값을 못 구함 → **추정 안 하고 코드값 유지**. 해당 스케일을 쓰는 Figma 프레임 링크를 주면 마저 정렬.
+> **✅ 보류 스케일도 정렬 완료 (Library Typography specimen 확인)**: Display/Title/Caption1/Reading 값을 Library 각 스케일 specimen에서 추출해 적용.
+>
+> | 스케일(px) | height | letterSpacing(px) | | 스케일(px) | height | letterSpacing(px) |
+> |---|---|---|---|---|---|---|
+> | Display1 (56) | 1.286 | -1.7864 | | Title2 (28) | 1.358 | -0.6608 |
+> | Display2 (40) | 1.3 | -1.128 | | Caption1 (12) | 1.334 | 0.3024 |
+> | Title1 (36) | 1.334 | -0.972 | | Body1 Reading (16) | 1.625 | 0.0912 |
+> | | | | | Body2 Reading (15) | 1.6 | 0.144 |
+>
+> **유일한 미정렬**: `label1Reading` lineHeight(코드 1.5) — Library Label 섹션에 Reading specimen이 없어(Label1/2 Normal만 문서화) Figma 정의값 미확보 → 코드값 유지. letterSpacing(0.203)은 Label1 스케일값으로 적용됨.
 
 ---
 
@@ -262,10 +271,9 @@ Figma `Semantic/*` 변수 ↔ 코드 `AppColorScheme.light`. 아래는 `get_vari
 ## 7. 후속(이 문서 범위 밖)
 
 - 디자이너 작업: **① `Round/40` Library Foundation 승격(§8 스펙)**.
-- **타이포 보류 스케일 정렬**: Display1/2·Title1/2·Caption1·Reading lineHeight — Figma 발행 스타일이 없어 미확보. 해당 스케일을 쓰는 Figma 프레임 링크 받으면 정렬.
-- 잔여 화면(커피/원두/레시피·온보딩) 단위 대조 — POC에 노드 존재, 필요 시 진행.
+- 잔여 화면(커피/원두/레시피·온보딩) 단위 대조 — POC에 노드 존재, 진행 중.
 
-> ✅ 완료: Library 토큰(라이트)·다크 모드(Home)·홈/마이/상품상세 화면 대조·**타이포 weight + lineHeight/letterSpacing 코드 정렬(확정 스케일, §3-1)**.
+> ✅ 완료: Library 토큰(라이트)·다크 모드(Home)·홈/마이/상품상세 화면 대조·**타이포 weight + lineHeight/letterSpacing 전 스케일 정렬(§3-1)**.
 
 ## 8. Library 승격 제안 — `Round/40` (디자이너용)
 

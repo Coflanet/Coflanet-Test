@@ -12,42 +12,48 @@ class AppTextStyles {
     fontFamily: _fontFamily,
     fontWeight: FontWeight.w700,
     fontSize: 56.0,
-    height: 1.2,
+    height: 1.286,
+    letterSpacing: -1.7864,
   );
 
   static const TextStyle display1Medium = TextStyle(
     fontFamily: _fontFamily,
     fontWeight: FontWeight.w500,
     fontSize: 56.0,
-    height: 1.2,
+    height: 1.286,
+    letterSpacing: -1.7864,
   );
 
   static const TextStyle display1Regular = TextStyle(
     fontFamily: _fontFamily,
     fontWeight: FontWeight.w400,
     fontSize: 56.0,
-    height: 1.2,
+    height: 1.286,
+    letterSpacing: -1.7864,
   );
 
   static const TextStyle display2Bold = TextStyle(
     fontFamily: _fontFamily,
     fontWeight: FontWeight.w700,
     fontSize: 40.0,
-    height: 1.2,
+    height: 1.3,
+    letterSpacing: -1.128,
   );
 
   static const TextStyle display2Medium = TextStyle(
     fontFamily: _fontFamily,
     fontWeight: FontWeight.w500,
     fontSize: 40.0,
-    height: 1.2,
+    height: 1.3,
+    letterSpacing: -1.128,
   );
 
   static const TextStyle display2Regular = TextStyle(
     fontFamily: _fontFamily,
     fontWeight: FontWeight.w400,
     fontSize: 40.0,
-    height: 1.2,
+    height: 1.3,
+    letterSpacing: -1.128,
   );
 
   // ===== TITLE STYLES =====
@@ -55,49 +61,56 @@ class AppTextStyles {
     fontFamily: _fontFamily,
     fontWeight: FontWeight.w700,
     fontSize: 36.0,
-    height: 1.3,
+    height: 1.334,
+    letterSpacing: -0.972,
   );
 
   static const TextStyle title1Medium = TextStyle(
     fontFamily: _fontFamily,
     fontWeight: FontWeight.w500,
     fontSize: 36.0,
-    height: 1.3,
+    height: 1.334,
+    letterSpacing: -0.972,
   );
 
   static const TextStyle title1Regular = TextStyle(
     fontFamily: _fontFamily,
     fontWeight: FontWeight.w400,
     fontSize: 36.0,
-    height: 1.3,
+    height: 1.334,
+    letterSpacing: -0.972,
   );
 
   static const TextStyle title2Bold = TextStyle(
     fontFamily: _fontFamily,
     fontWeight: FontWeight.w700,
     fontSize: 28.0,
-    height: 1.3,
+    height: 1.358,
+    letterSpacing: -0.6608,
   );
 
   static const TextStyle title2Medium = TextStyle(
     fontFamily: _fontFamily,
     fontWeight: FontWeight.w500,
     fontSize: 28.0,
-    height: 1.3,
+    height: 1.358,
+    letterSpacing: -0.6608,
   );
 
   static const TextStyle title2Regular = TextStyle(
     fontFamily: _fontFamily,
     fontWeight: FontWeight.w400,
     fontSize: 28.0,
-    height: 1.3,
+    height: 1.358,
+    letterSpacing: -0.6608,
   );
 
   static const TextStyle title2MediumMono = TextStyle(
     fontFamily: _monospaceFontFamily,
     fontWeight: FontWeight.w500,
     fontSize: 28.0,
-    height: 1.3,
+    height: 1.358,
+    letterSpacing: -0.6608,
   );
 
   static const TextStyle title3Bold = TextStyle(
@@ -293,7 +306,7 @@ class AppTextStyles {
     fontFamily: _fontFamily,
     fontWeight: FontWeight.w400,
     fontSize: 16.0,
-    height: 1.6,
+    height: 1.625,
     letterSpacing: 0.0912,
   );
 
@@ -301,7 +314,7 @@ class AppTextStyles {
     fontFamily: _fontFamily,
     fontWeight: FontWeight.w500,
     fontSize: 16.0,
-    height: 1.6,
+    height: 1.625,
     letterSpacing: 0.0912,
   );
 
@@ -309,7 +322,7 @@ class AppTextStyles {
     fontFamily: _fontFamily,
     fontWeight: FontWeight.w600,
     fontSize: 16.0,
-    height: 1.6,
+    height: 1.625,
     letterSpacing: 0.0912,
   );
 
@@ -463,28 +476,32 @@ class AppTextStyles {
     fontFamily: _fontFamily,
     fontWeight: FontWeight.w400,
     fontSize: 12.0,
-    height: 1.3,
+    height: 1.334,
+    letterSpacing: 0.3024,
   );
 
   static const TextStyle caption1RegularMono = TextStyle(
     fontFamily: _monospaceFontFamily,
     fontWeight: FontWeight.w400,
     fontSize: 12.0,
-    height: 1.3,
+    height: 1.334,
+    letterSpacing: 0.3024,
   );
 
   static const TextStyle caption1Medium = TextStyle(
     fontFamily: _fontFamily,
     fontWeight: FontWeight.w500,
     fontSize: 12.0,
-    height: 1.3,
+    height: 1.334,
+    letterSpacing: 0.3024,
   );
 
   static const TextStyle caption1Bold = TextStyle(
     fontFamily: _fontFamily,
     fontWeight: FontWeight.w600,
     fontSize: 12.0,
-    height: 1.3,
+    height: 1.334,
+    letterSpacing: 0.3024,
   );
 
   static const TextStyle caption2Regular = TextStyle(
