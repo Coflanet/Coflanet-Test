@@ -27,6 +27,10 @@ Coflanet 화면을 **항상 같은 규칙**으로 만들기 위한 강제 가이
 
 ## 2. 마진·패딩·간격 토큰 (이유미 스펙)
 
+> 📐 **수치 SoT(Figma 검증 완료)**: `docs/redesign/spacing-typography-reference.md` — spacing/radius/typography/color를 토큰명+정확한 px+Figma 변수 대조로 정리. **화면 작업 전 이 문서의 §5 빠른 규칙을 먼저 본다.** (Library `q7yBPcHrid1CGQqFWEPwnR` 변수 1:1 검증, 2026-06-23.)
+>
+> 핵심 검증 결과: 라이트 시맨틱 색·라디우스(8·12·16·20·24·32)·spacing primitive는 **Figma=코드 일치**. 단 **`sectionRadius=40`은 iyumi 도입 토큰으로 Library에 없음**(디자이너 합의 전까지 코드값 유지).
+
 | 토큰 | 값 | 용도 |
 |---|---|---|
 | `AppSpacing.screenTopMargin` | 32 | 화면 최상단 텍스트 위 마진 — **이 값 하나로 전 화면 반영** |
@@ -91,8 +95,14 @@ Coflanet 화면을 **항상 같은 규칙**으로 만들기 위한 강제 가이
 
 ## 6. 검증 체크리스트
 
+수치 기준은 `docs/redesign/spacing-typography-reference.md`(Figma 검증). 핵심 px:
+- 최상단 텍스트: 위 마진 **32** / 스타일 **title2Bold(28·Bold)** / 좌우 **20**
+- 큰 카드 radius **40**(`sectionRadius`, Figma 미존재 iyumi 토큰) / 패딩 **(24,32)** / 간격 **4**
+- 작은 카드 radius **24**(`itemRadius`=Figma `Round/24`) / 패딩 **24** / 간격 **4**
+- 버튼·입력 **12** / 카드 **16** / 칩 **8** / 모달 **20** (전부 Figma `Round/*` 일치)
+
 - [ ] 화면 배경이 라이트·다크 모두 **검정**인가.
-- [ ] 큰 카드 radius 40 / 작은 카드 radius 24, 패딩·간격이 §2 토큰인가.
+- [ ] 큰 카드 radius 40 / 작은 카드 radius 24, 패딩·간격이 §2 토큰(위 px)인가.
 - [ ] **숫자 하드코딩 0** (`EdgeInsets.`/`circular(`/`SizedBox(height:` 직접 숫자 없음).
 - [ ] 카드 밖 텍스트·아이콘이 `AppColorScheme.canvas`(다크 스킴)라 검정 위에서 보이는가.
 - [ ] 카드 안 텍스트가 `of(context)`라 라이트(흰 카드=어두운 글자)/다크(다크 카드=밝은 글자) 정상인가.
@@ -106,5 +116,7 @@ Coflanet 화면을 **항상 같은 규칙**으로 만들기 위한 강제 가이
 - 색·배경 상세: `docs/redesign/04-static-black-theme.md`
 - 토큰 변환표: `docs/redesign/reference/token-mapping.md`
 - 현재 앱 토큰 현황: `docs/redesign/reference/current-design-system.md`
+- **수치 레퍼런스(Figma 검증)**: `docs/redesign/spacing-typography-reference.md` — spacing/radius/typography/color 정확한 px + Figma 변수 대조. **수치 의문이 생기면 여기부터.**
+- **Figma 원본 출처(파일 키·링크)**: `docs/redesign/reference/figma-sources.md` — Library(토큰 SoT)/POC/쇼핑. 토큰 검증·시안 대조 시 여기 링크 사용. **Figma 읽기 전용.**
 
 > 수치 디테일(8pt 그리드·대비·터치타깃)을 더 깐깐히 보려면 `ui-detail-check`, 인지 부담은 `ux-burden-check`와 함께 쓴다. 이 스킬은 그보다 앞단의 **"Coflanet 카드 디자인 규칙 강제"** 레이어다.
