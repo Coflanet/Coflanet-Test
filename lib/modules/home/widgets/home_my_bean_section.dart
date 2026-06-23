@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:coflanet/constants/color_constant.dart';
 import 'package:coflanet/constants/radius_constant.dart';
+import 'package:coflanet/constants/spacing_constant.dart';
 import 'package:coflanet/constants/style_constant.dart';
 import 'package:coflanet/data/models/coffee_item_model.dart';
 import 'package:coflanet/widgets/typography/section_title.dart';
@@ -35,11 +36,11 @@ class HomeMyBeanSection extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      padding: const EdgeInsets.fromLTRB(16, 16, 16, 16),
+      padding: const EdgeInsets.all(AppSpacing.md),
       decoration: BoxDecoration(
         // 브랜드 보라 고정 카드 (테마 무관) — raw 팔레트 직접 사용
         color: AppColor.colorGlobalViolet50,
-        borderRadius: AppRadius.xxlBorder,
+        borderRadius: AppRadius.sectionRadiusBorder,
       ),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -64,7 +65,7 @@ class HomeMyBeanSection extends StatelessWidget {
               ),
             ],
           ),
-          const SizedBox(height: 16),
+          const SizedBox(height: AppSpacing.md),
           if (beans.isNotEmpty) _buildBeanList() else _buildEmpty(),
         ],
       ),
@@ -77,12 +78,12 @@ class HomeMyBeanSection extends StatelessWidget {
     return Column(
       children: [
         for (final item in items) _buildBeanCard(item),
-        const SizedBox(height: 4),
+        const SizedBox(height: AppSpacing.xxs),
         GestureDetector(
           onTap: onViewAllTap,
           child: Container(
             width: double.infinity,
-            padding: const EdgeInsets.symmetric(vertical: 12),
+            padding: const EdgeInsets.symmetric(vertical: AppSpacing.sm),
             decoration: BoxDecoration(
               color: AppColor.colorGlobalCommon100.withValues(alpha: 0.2),
               borderRadius: AppRadius.fullBorder,
@@ -104,8 +105,8 @@ class HomeMyBeanSection extends StatelessWidget {
   /// 단일 원두 카드 — 썸네일 + 브랜드/구독중 뱃지 + 이름. 탭 시 상세로 이동.
   Widget _buildBeanCard(CoffeeItem item) {
     final Widget card = Container(
-      margin: const EdgeInsets.only(bottom: 8),
-      padding: const EdgeInsets.all(12),
+      margin: const EdgeInsets.only(bottom: AppSpacing.xs),
+      padding: const EdgeInsets.all(AppSpacing.sm),
       decoration: BoxDecoration(
         color: AppColor.colorGlobalCommon100,
         borderRadius: AppRadius.xlBorder,
@@ -129,7 +130,7 @@ class HomeMyBeanSection extends StatelessWidget {
                 ? Icon(Icons.coffee, color: item.color, size: 24)
                 : null,
           ),
-          const SizedBox(width: 12),
+          const SizedBox(width: AppSpacing.sm),
           Expanded(
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
@@ -148,11 +149,11 @@ class HomeMyBeanSection extends StatelessWidget {
                         overflow: TextOverflow.ellipsis,
                       ),
                     ),
-                    const SizedBox(width: 6),
+                    const SizedBox(width: AppSpacing.space6),
                     Container(
                       padding: const EdgeInsets.symmetric(
-                        horizontal: 6,
-                        vertical: 2,
+                        horizontal: AppSpacing.space6,
+                        vertical: AppSpacing.space2,
                       ),
                       decoration: BoxDecoration(
                         color: AppColor.colorGlobalViolet50.withValues(
@@ -169,7 +170,7 @@ class HomeMyBeanSection extends StatelessWidget {
                     ),
                   ],
                 ),
-                const SizedBox(height: 4),
+                const SizedBox(height: AppSpacing.xxs),
                 Text(
                   item.name,
                   style: AppTextStyles.body2NormalBold.copyWith(
@@ -197,7 +198,10 @@ class HomeMyBeanSection extends StatelessWidget {
   Widget _buildEmpty() {
     return Container(
       width: double.infinity,
-      padding: const EdgeInsets.symmetric(vertical: 24, horizontal: 16),
+      padding: const EdgeInsets.symmetric(
+        vertical: AppSpacing.xl,
+        horizontal: AppSpacing.md,
+      ),
       decoration: BoxDecoration(
         color: AppColor.colorGlobalCommon100.withValues(alpha: 0.16),
         borderRadius: AppRadius.xlBorder,
@@ -212,14 +216,14 @@ class HomeMyBeanSection extends StatelessWidget {
             color: AppColor.colorGlobalCommon100.withValues(alpha: 0.7),
             size: 28,
           ),
-          const SizedBox(height: 8),
+          const SizedBox(height: AppSpacing.xs),
           Text(
             '보유 중인 원두가 아직 없어요',
             style: AppTextStyles.body2NormalBold.copyWith(
               color: AppColor.colorGlobalCommon100,
             ),
           ),
-          const SizedBox(height: 4),
+          const SizedBox(height: AppSpacing.xxs),
           Text(
             '구독하거나 레시피를 등록해보세요',
             style: AppTextStyles.caption1Regular.copyWith(

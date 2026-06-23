@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:coflanet/constants/app_color_scheme.dart';
+import 'package:coflanet/constants/color_constant.dart';
+import 'package:coflanet/constants/spacing_constant.dart';
 import 'package:coflanet/core/services/cart_service.dart';
 import 'package:coflanet/core/services/notification_service.dart';
 import 'package:coflanet/modules/home/home_controller.dart';
@@ -34,28 +36,30 @@ class HomeContent extends GetView<HomeController> {
   const HomeContent({super.key});
 
   /// 최상위 섹션 사이 공통 간격
-  static const double _sectionGap = 12;
+  static const double _sectionGap = AppSpacing.sm;
 
   @override
   Widget build(BuildContext context) {
-    final colors = AppColorScheme.of(context);
+    // 카드 밖(검정 캔버스) 크롬용 — 항상 다크 스킴
+    final canvas = AppColorScheme.canvas;
 
     return Obx(() {
       if (controller.isLoading) {
-        return Container(
-          color: colors.backgroundNormalAlternative,
+        return ColoredBox(
+          color: AppColor.staticBlack,
           child: Center(
-            child: CircularProgressIndicator(color: colors.primaryNormal),
+            child: CircularProgressIndicator(color: canvas.primaryNormal),
           ),
         );
       }
-      // 페이지 배경 — 다크: 순검정(Figma), 라이트: 밝은 회색 위 흰 카드
-      return Container(
-        color: colors.backgroundNormalAlternative,
+      // 페이지 배경 — Static/Black 캔버스(라이트·다크 공통, task 4 방향 B)
+      return ColoredBox(
+        color: AppColor.staticBlack,
         child: SafeArea(
           bottom: false,
           child: SingleChildScrollView(
-            padding: const EdgeInsets.only(bottom: 16),
+            // 셸이 홈 탭에 하단 인셋(탭바 클리어)을 이미 적용하므로 호흡값만 추가
+            padding: const EdgeInsets.only(bottom: AppSpacing.md),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.stretch,
               children: [

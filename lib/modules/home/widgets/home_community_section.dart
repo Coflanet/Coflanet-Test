@@ -1,14 +1,14 @@
 import 'package:flutter/material.dart';
-import 'package:coflanet/constants/app_color_scheme.dart';
-import 'package:coflanet/constants/radius_constant.dart';
-import 'package:coflanet/constants/style_constant.dart';
+import 'package:coflanet/constants/spacing_constant.dart';
 import 'package:coflanet/modules/home/widgets/home_empty_card.dart';
 import 'package:coflanet/modules/home/widgets/home_section_more_button.dart';
+import 'package:coflanet/widgets/cards/card_section.dart';
 
-/// 홈 '커피 기록 커뮤니티' 섹션 — 테마 반응 섹션 카드 안에 기록 리스트를 표시한다.
+/// 홈 '커피 기록 커뮤니티' 섹션 — iyumi 큰 카드([CardSection]).
 ///
-/// [백엔드 API 연동 대기] 커뮤니티 API 연동 전까지 목데이터 없이
-/// 빈 상태 카드를 노출한다 (다른 상품 섹션과 동일 패턴).
+/// 현재 홈에서는 커뮤니티 탭 비노출(MVP)에 맞춰 미렌더이지만, 재노출 대비
+/// 다른 상품 섹션과 동일한 CardSection 패턴으로 유지한다.
+/// [백엔드 API 연동 대기] 커뮤니티 API 연동 전까지 빈 상태 카드 노출.
 class HomeCommunitySection extends StatelessWidget {
   const HomeCommunitySection({super.key, this.onMoreTap});
 
@@ -17,27 +17,14 @@ class HomeCommunitySection extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final colors = AppColorScheme.of(context);
-
-    return Container(
-      padding: const EdgeInsets.all(16),
-      decoration: BoxDecoration(
-        color: colors.surfaceCard,
-        borderRadius: AppRadius.xxlBorder,
-      ),
+    return CardSection(
+      title: '커피 기록 커뮤니티',
       child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
+        crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
-          Text(
-            '커피 기록 커뮤니티',
-            style: AppTextStyles.body1NormalBold.copyWith(
-              color: colors.labelStrong,
-            ),
-          ),
-          const SizedBox(height: 16),
           // [백엔드 API 연동 대기] 커뮤니티 기록 리스트
           const HomeEmptyCard(message: '커뮤니티 기록을 준비 중이에요'),
-          const SizedBox(height: 16),
+          const SizedBox(height: AppSpacing.md),
           HomeSectionMoreButton(label: '커뮤니티 더 보기', onTap: onMoreTap),
         ],
       ),

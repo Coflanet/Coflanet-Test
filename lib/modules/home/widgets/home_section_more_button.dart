@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:coflanet/constants/app_color_scheme.dart';
 import 'package:coflanet/constants/radius_constant.dart';
+import 'package:coflanet/constants/spacing_constant.dart';
 import 'package:coflanet/constants/style_constant.dart';
 
 /// 홈 섹션 카드 하단 공통 '더 보기' 버튼 — pill (Figma: 추천 원두 더 보기).
@@ -27,7 +28,9 @@ class HomeSectionMoreButton extends StatelessWidget {
         onTap: onTap,
         child: Container(
           width: double.infinity,
-          padding: const EdgeInsets.symmetric(vertical: 14),
+          padding: const EdgeInsets.symmetric(
+            vertical: AppSpacing.buttonPaddingV,
+          ),
           decoration: BoxDecoration(
             color: colors.componentFillStrong,
             borderRadius: AppRadius.fullBorder,

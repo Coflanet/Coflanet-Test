@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:coflanet/constants/color_constant.dart';
 import 'package:coflanet/constants/radius_constant.dart';
+import 'package:coflanet/constants/spacing_constant.dart';
 import 'package:coflanet/constants/style_constant.dart';
 import 'package:coflanet/data/models/survey_result_model.dart';
 
@@ -27,10 +28,13 @@ class HomeTasteBanner extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 14),
+      padding: const EdgeInsets.symmetric(
+        horizontal: AppSpacing.md,
+        vertical: AppSpacing.buttonPaddingV,
+      ),
       decoration: BoxDecoration(
         color: AppColor.accentTasteBanner,
-        borderRadius: AppRadius.xxlBorder,
+        borderRadius: AppRadius.sectionRadiusBorder,
       ),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -51,7 +55,7 @@ class HomeTasteBanner extends StatelessWidget {
               ),
             ],
           ),
-          const SizedBox(height: 12),
+          const SizedBox(height: AppSpacing.sm),
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
@@ -64,7 +68,7 @@ class HomeTasteBanner extends StatelessWidget {
                       flavors.isNotEmpty ? flavors.first.emoji : '☕',
                       style: const TextStyle(fontSize: 18),
                     ),
-                    const SizedBox(width: 6),
+                    const SizedBox(width: AppSpacing.space6),
                     Flexible(
                       child: Text(
                         typeLabel.isNotEmpty ? typeLabel : '나의 커피 취향',
@@ -78,7 +82,7 @@ class HomeTasteBanner extends StatelessWidget {
                   ],
                 ),
               ),
-              const SizedBox(width: 8),
+              const SizedBox(width: AppSpacing.xs),
               Icon(
                 Icons.swap_horiz,
                 size: 22,
@@ -86,8 +90,12 @@ class HomeTasteBanner extends StatelessWidget {
               ),
             ],
           ),
-          const SizedBox(height: 12),
-          Wrap(spacing: 6, runSpacing: 6, children: _buildChips()),
+          const SizedBox(height: AppSpacing.sm),
+          Wrap(
+            spacing: AppSpacing.space6,
+            runSpacing: AppSpacing.space6,
+            children: _buildChips(),
+          ),
         ],
       ),
     );
@@ -107,7 +115,10 @@ class HomeTasteBanner extends StatelessWidget {
 
   Widget _buildChip(String label) {
     return Container(
-      padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 6),
+      padding: const EdgeInsets.symmetric(
+        horizontal: AppSpacing.space10,
+        vertical: AppSpacing.space6,
+      ),
       decoration: BoxDecoration(
         color: AppColor.colorGlobalCommon100.withValues(alpha: 0.55),
         borderRadius: AppRadius.fullBorder,

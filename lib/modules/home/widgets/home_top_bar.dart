@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:coflanet/constants/app_color_scheme.dart';
+import 'package:coflanet/constants/spacing_constant.dart';
 import 'package:coflanet/modules/home/widgets/home_header_icon_button.dart';
 
 /// 홈 상단 헤더 — 좌측 보라 로고 SVG + 우측 검색/알림/장바구니 아이콘.
@@ -35,10 +36,17 @@ class HomeTopBar extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final colors = AppColorScheme.of(context);
+    // 헤더는 검정 캔버스 위(카드 밖) — 항상 다크 스킴으로 그려 로고/아이콘이
+    // 라이트 모드에서도 검정 위에서 사라지지 않게 한다.
+    final colors = AppColorScheme.canvas;
 
     return Padding(
-      padding: const EdgeInsets.fromLTRB(16, 8, 12, 4),
+      padding: const EdgeInsets.fromLTRB(
+        AppSpacing.md,
+        AppSpacing.xs,
+        AppSpacing.sm,
+        AppSpacing.xxs,
+      ),
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         crossAxisAlignment: CrossAxisAlignment.center,
@@ -78,7 +86,7 @@ class HomeTopBar extends StatelessWidget {
                 label: '검색',
                 onTap: onSearchTap,
               ),
-              const SizedBox(width: 8),
+              const SizedBox(width: AppSpacing.xs),
               HomeHeaderIconButton(
                 svgPath: 'assets/icons/ic_bell.svg',
                 label: '알림',

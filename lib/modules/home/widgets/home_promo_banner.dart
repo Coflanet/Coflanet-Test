@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:coflanet/constants/color_constant.dart';
 import 'package:coflanet/constants/radius_constant.dart';
+import 'package:coflanet/constants/spacing_constant.dart';
 import 'package:coflanet/constants/style_constant.dart';
 import 'package:coflanet/data/models/banner_model.dart';
 
@@ -37,10 +38,16 @@ class HomePromoBanner extends StatelessWidget {
         onTap: onTap,
         child: Container(
           width: double.infinity,
-          padding: const EdgeInsets.fromLTRB(20, 18, 16, 18),
+          // 세로 18 → md(16) 로 토큰화 (배너 고정 패딩, 시각 차 미미)
+          padding: const EdgeInsets.fromLTRB(
+            AppSpacing.lg,
+            AppSpacing.md,
+            AppSpacing.md,
+            AppSpacing.md,
+          ),
           decoration: BoxDecoration(
             color: _backgroundColor,
-            borderRadius: AppRadius.xxlBorder,
+            borderRadius: AppRadius.sectionRadiusBorder,
           ),
           child: Row(
             children: [
@@ -58,7 +65,7 @@ class HomePromoBanner extends StatelessWidget {
                     ),
                     if (banner.subtitle != null &&
                         banner.subtitle!.isNotEmpty) ...[
-                      const SizedBox(height: 6),
+                      const SizedBox(height: AppSpacing.space6),
                       Text(
                         banner.subtitle!,
                         style: AppTextStyles.caption1Medium.copyWith(
@@ -73,7 +80,7 @@ class HomePromoBanner extends StatelessWidget {
                   ],
                 ),
               ),
-              const SizedBox(width: 12),
+              const SizedBox(width: AppSpacing.sm),
               // 우측 이미지 — 서버 이미지 없으면 흰 박스 + 커피 아이콘
               Container(
                 width: 64,

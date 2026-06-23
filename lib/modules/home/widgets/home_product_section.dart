@@ -1,18 +1,16 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:coflanet/constants/app_color_scheme.dart';
-import 'package:coflanet/constants/radius_constant.dart';
-import 'package:coflanet/constants/style_constant.dart';
+import 'package:coflanet/constants/spacing_constant.dart';
 import 'package:coflanet/data/models/survey_result_model.dart';
 import 'package:coflanet/modules/home/widgets/home_empty_card.dart';
 import 'package:coflanet/modules/home/widgets/home_section_more_button.dart';
+import 'package:coflanet/widgets/cards/card_section.dart';
 import 'package:coflanet/widgets/cards/product_card.dart';
-import 'package:coflanet/widgets/typography/section_title.dart';
 
 /// 홈 상품 섹션 — 섹션 타이틀 + 2열 상품 그리드 (또는 빈 상태 카드) + 하단 '더 보기' 버튼.
 ///
 /// 취향 추천 / 인기 랭킹 / 실시간 인기 등 모든 상품 섹션이 공유한다.
-/// 모든 섹션을 풀폭 둥근 섹션 카드(surfaceCard, radius 20)로 통일하며,
+/// iyumi 카드 패턴의 큰 카드([CardSection], radius 40, surfaceCard)로 그리며,
 /// 그리드 하단에 항상 [HomeSectionMoreButton] 더 보기 버튼을 노출한다.
 ///
 /// 좋아요 반응성: 카드 단위 Obx 로 [isLiked] 를 구독 — 한 카드 토글이
@@ -57,30 +55,17 @@ class HomeProductSection extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final colors = AppColorScheme.of(context);
-
-    return Container(
-      width: double.infinity,
-      padding: const EdgeInsets.all(16),
-      decoration: BoxDecoration(
-        color: colors.surfaceCard,
-        borderRadius: AppRadius.xxlBorder,
-      ),
+    // 큰 카드(CardSection) — 카드 안이므로 색은 of(context). 타이틀은 CardSection 소유.
+    return CardSection(
+      title: title,
       child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
+        crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
-          SectionTitle(
-            title: title,
-            titleStyle: AppTextStyles.body1NormalBold.copyWith(
-              color: colors.labelStrong,
-            ),
-          ),
-          const SizedBox(height: 12),
           if (items.isNotEmpty)
             _buildGrid()
           else
             HomeEmptyCard(message: emptyMessage),
-          const SizedBox(height: 16),
+          const SizedBox(height: AppSpacing.md),
           HomeSectionMoreButton(label: moreLabel, onTap: onMoreTap),
         ],
       ),
@@ -94,8 +79,8 @@ class HomeProductSection extends StatelessWidget {
       physics: const NeverScrollableScrollPhysics(),
       gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
         crossAxisCount: 2,
-        crossAxisSpacing: 12,
-        mainAxisSpacing: 12,
+        crossAxisSpacing: AppSpacing.sm,
+        mainAxisSpacing: AppSpacing.sm,
         // 정사각 이미지 + 텍스트(태그/브랜드/이름 2줄/가격) 수용 여유 높이.
         // 오버플로우 방지는 ProductCard 내부 Expanded+Flexible 구조가 보장.
         childAspectRatio: 0.6,

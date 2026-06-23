@@ -68,9 +68,11 @@ class MainShellView extends GetView<MainShellController> {
                   ),
                 );
               }
-              // 콘텐츠 배경 — 테마 스킴 기반
-              // (다크: 순검정 / 라이트: 밝은 회색 — 홈/일반 탭 공통)
-              final Color contentBgColor = colors.backgroundNormalAlternative;
+              // 콘텐츠 배경 — 홈은 Static/Black 캔버스(라이트·다크 공통, task 4),
+              // 그 외 미마이그레이션 탭은 기존 테마 스킴 배경 유지.
+              final Color contentBgColor = isHomeTab
+                  ? AppColor.staticBlack
+                  : colors.backgroundNormalAlternative;
               return Padding(
                 padding: EdgeInsets.only(top: topInset),
                 child: Container(

@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:coflanet/constants/app_color_scheme.dart';
 import 'package:coflanet/constants/color_constant.dart';
+import 'package:coflanet/constants/radius_constant.dart';
+import 'package:coflanet/constants/spacing_constant.dart';
 import 'package:coflanet/constants/style_constant.dart';
 
 /// 홈 헤더용 — 반투명 회색 원 안에 SVG 아이콘 (테마 반응).
@@ -38,7 +40,8 @@ class HomeHeaderIconButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final colors = AppColorScheme.of(context);
+    // 검정 캔버스 위 헤더 버튼(카드 밖) — 항상 다크 스킴 (회색 원 + 밝은 아이콘)
+    final colors = AppColorScheme.canvas;
 
     return Semantics(
       label: label,
@@ -94,11 +97,13 @@ class HomeHeaderIconButton extends StatelessWidget {
                   child: Container(
                     constraints: const BoxConstraints(minWidth: 16),
                     height: 16,
-                    padding: const EdgeInsets.symmetric(horizontal: 4),
+                    padding: const EdgeInsets.symmetric(
+                      horizontal: AppSpacing.xxs,
+                    ),
                     alignment: Alignment.center,
                     decoration: BoxDecoration(
                       color: colors.primaryNormal,
-                      borderRadius: BorderRadius.circular(99),
+                      borderRadius: AppRadius.fullBorder,
                     ),
                     child: Text(
                       badgeCount > 9 ? '9+' : '$badgeCount',

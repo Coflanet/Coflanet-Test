@@ -1,19 +1,26 @@
 import 'package:flutter/material.dart';
 import 'package:coflanet/constants/app_color_scheme.dart';
+import 'package:coflanet/constants/spacing_constant.dart';
 import 'package:coflanet/constants/style_constant.dart';
 
-/// 홈 최하단 푸터 — 페이지 배경 위 보조 톤 텍스트 (카드 아님). 좌우 여백 0.
+/// 홈 최하단 푸터 — 검정 캔버스 위 보조 톤 텍스트 (카드 아님). 좌우 여백 0.
 ///
 /// 소셜 채널 아이콘 + 고객센터 안내 + 사업자 정보 펼침 행으로 구성된다.
+/// 카드 밖(캔버스)이므로 색은 캔버스(다크) 스킴 — 검정 위 가독 보조 톤.
 class HomeFooter extends StatelessWidget {
   const HomeFooter({super.key});
 
   @override
   Widget build(BuildContext context) {
-    final colors = AppColorScheme.of(context);
+    final colors = AppColorScheme.canvas;
 
     return Padding(
-      padding: const EdgeInsets.fromLTRB(16, 8, 16, 8),
+      padding: const EdgeInsets.fromLTRB(
+        AppSpacing.md,
+        AppSpacing.xs,
+        AppSpacing.md,
+        AppSpacing.xs,
+      ),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -25,13 +32,13 @@ class HomeFooter extends StatelessWidget {
                 size: 20,
                 color: colors.labelAlternative,
               ),
-              const SizedBox(width: 16),
+              const SizedBox(width: AppSpacing.md),
               Icon(
                 Icons.chat_bubble_outline,
                 size: 20,
                 color: colors.labelAlternative,
               ),
-              const SizedBox(width: 16),
+              const SizedBox(width: AppSpacing.md),
               Icon(
                 Icons.alternate_email,
                 size: 20,
@@ -39,14 +46,14 @@ class HomeFooter extends StatelessWidget {
               ),
             ],
           ),
-          const SizedBox(height: 16),
+          const SizedBox(height: AppSpacing.md),
           Text(
             '고객센터 (평일 오전 9시 ~ 오후 6시 운영)',
             style: AppTextStyles.caption1Medium.copyWith(
               color: colors.labelAlternative,
             ),
           ),
-          const SizedBox(height: 8),
+          const SizedBox(height: AppSpacing.xs),
           // [백엔드 API 연동 대기] 연락처/메일은 목업 표기 그대로 (placeholder)
           Text(
             '문의전화 0000-0000',
@@ -54,21 +61,21 @@ class HomeFooter extends StatelessWidget {
               color: colors.labelAssistive,
             ),
           ),
-          const SizedBox(height: 4),
+          const SizedBox(height: AppSpacing.xxs),
           Text(
             '고객문의 메일 : help.info@gmail.com',
             style: AppTextStyles.caption1Regular.copyWith(
               color: colors.labelAssistive,
             ),
           ),
-          const SizedBox(height: 4),
+          const SizedBox(height: AppSpacing.xxs),
           Text(
             '사업제휴 메일 : coplanet.biz@gmail.com',
             style: AppTextStyles.caption1Regular.copyWith(
               color: colors.labelAssistive,
             ),
           ),
-          const SizedBox(height: 16),
+          const SizedBox(height: AppSpacing.md),
           // [스펙 미확정] 사업자 정보 펼침 동작
           Row(
             children: [
@@ -78,7 +85,7 @@ class HomeFooter extends StatelessWidget {
                   color: colors.labelAlternative,
                 ),
               ),
-              const SizedBox(width: 4),
+              const SizedBox(width: AppSpacing.xxs),
               Icon(
                 Icons.keyboard_arrow_down,
                 size: 16,

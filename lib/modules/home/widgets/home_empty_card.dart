@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:coflanet/constants/app_color_scheme.dart';
+import 'package:coflanet/constants/radius_constant.dart';
+import 'package:coflanet/constants/spacing_constant.dart';
 import 'package:coflanet/constants/style_constant.dart';
 
 /// 홈 인라인 빈 상태 카드 — [백엔드 API 연동 대기] 섹션 placeholder.
@@ -19,10 +21,14 @@ class HomeEmptyCard extends StatelessWidget {
 
     return Container(
       width: double.infinity,
-      padding: const EdgeInsets.symmetric(vertical: 28, horizontal: 16),
+      padding: const EdgeInsets.symmetric(
+        vertical: AppSpacing.xl,
+        horizontal: AppSpacing.md,
+      ),
       decoration: BoxDecoration(
         color: colors.surfaceCardStrong,
-        borderRadius: BorderRadius.circular(12),
+        borderRadius: AppRadius.itemRadiusBorder,
+        // 빈 placeholder 식별용 hairline (콘텐츠 카드 아님 — 표면 대비가 약해 유지)
         border: Border.all(
           color: colors.lineSolidNormal,
           style: BorderStyle.solid,
@@ -35,7 +41,7 @@ class HomeEmptyCard extends StatelessWidget {
             color: colors.labelAssistive,
             size: 28,
           ),
-          const SizedBox(height: 8),
+          const SizedBox(height: AppSpacing.xs),
           Text(
             message,
             style: AppTextStyles.body2NormalRegular.copyWith(
