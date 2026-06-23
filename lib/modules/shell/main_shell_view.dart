@@ -57,9 +57,15 @@ class MainShellView extends GetView<MainShellController> {
               final topInset = isHomeTab ? 0.0 : (topPadding + topNavHeight);
 
               if (currentIndex == MainShellController.tabMy) {
-                return Padding(
-                  padding: EdgeInsets.only(top: topInset, bottom: bottomInset),
-                  child: const MyPlanetContent(),
+                // 마이 화면: Static/Black 캔버스(라이트·다크 공통, task 4 방향 B).
+                // 전역 스킴은 미변경 — 이 탭만 로컬 검정. 하단 인셋은
+                // MyPlanetContent 의 bottomScrollInset 가 소유하므로 여기선 미적용.
+                return ColoredBox(
+                  color: AppColor.staticBlack,
+                  child: Padding(
+                    padding: EdgeInsets.only(top: topInset),
+                    child: const MyPlanetContent(),
+                  ),
                 );
               }
               // 콘텐츠 배경 — 테마 스킴 기반
@@ -110,7 +116,7 @@ class MainShellView extends GetView<MainShellController> {
               // 타이틀 계산 — 마이탭 userName(RxString) 구독 보존을 위해
               // 반드시 이 Obx 클로저 안에서 동기 평가한다.
               final title = _resolveTitle(currentIndex, isEditMode);
-              return ShellTopNavigation(
+              final nav = ShellTopNavigation(
                 topPadding: topPadding,
                 title: title,
                 isEditMode: isEditMode,
@@ -121,6 +127,15 @@ class MainShellView extends GetView<MainShellController> {
                     ? _buildEditButton(colors)
                     : null,
               );
+              // 마이 탭은 Static/Black 캔버스 위 — 상단 네비(카드 밖 크롬)도
+              // 캔버스(다크) 스킴으로 그려 타이틀이 검정 위에서 사라지지 않게.
+              if (currentIndex == MainShellController.tabMy) {
+                return Theme(
+                  data: Theme.of(context).copyWith(brightness: Brightness.dark),
+                  child: nav,
+                );
+              }
+              return nav;
             }),
           ),
 

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:coflanet/constants/spacing_constant.dart';
 import 'package:coflanet/constants/style_constant.dart';
 
 /// 마이플래닛 탭 가능 텍스트 셀 — height 48, 좌측 정렬 단일 라벨.
@@ -29,8 +30,8 @@ class PlanetTextCell extends StatelessWidget {
       onTap: onTap,
       behavior: HitTestBehavior.opaque,
       child: Container(
-        height: 48, // Figma: 48px
-        padding: const EdgeInsets.symmetric(vertical: 12), // Figma: 12px 0
+        height: AppSpacing.xxxl, // 48 — 셀 터치 높이
+        padding: const EdgeInsets.symmetric(vertical: AppSpacing.sm), // 12px 0
         alignment: Alignment.centerLeft,
         child: Text(
           text,

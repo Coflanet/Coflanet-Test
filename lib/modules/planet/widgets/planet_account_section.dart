@@ -1,14 +1,16 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:coflanet/constants/app_color_scheme.dart';
+import 'package:coflanet/constants/spacing_constant.dart';
 import 'package:coflanet/constants/style_constant.dart';
 import 'package:coflanet/core/theme/theme_controller.dart';
 import 'package:coflanet/modules/planet/widgets/planet_text_cell.dart';
+import 'package:coflanet/widgets/cards/card_section.dart';
 import 'package:coflanet/widgets/modals/selection_modal.dart';
 
-/// 마이플래닛 계정 액션 컨테이너 — 테마 설정 / (게스트) 계정 연결 / 로그아웃 / 회원탈퇴.
+/// 마이플래닛 계정/설정 카드 — 테마 설정 / (게스트) 계정 연결 / 로그아웃 / 회원탈퇴.
 ///
-/// Figma: border-radius 40px, padding 12px 24px 독립 컨테이너.
+/// iyumi 카드 패턴의 큰 카드([CardSection], radius 40, surfaceCard 표면)로 그린다.
 /// 구분선은 각 셀 뒤 1px (마지막 회원탈퇴 뒤에는 없음).
 ///
 /// [themeController] 는 호출부에서 Get.find 해 주입한다 (위젯 내부 Get.find 금지
@@ -43,17 +45,10 @@ class PlanetAccountSection extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    // 카드 안 — 활성 스킴(of(context))
     final colors = AppColorScheme.of(context);
-    return Container(
-      width: double.infinity,
-      padding: const EdgeInsets.symmetric(
-        vertical: 12,
-        horizontal: 24,
-      ), // Figma: 12px 24px
-      decoration: BoxDecoration(
-        color: colors.surfaceCardStrong,
-        borderRadius: BorderRadius.circular(40), // Figma: 40px
-      ),
+    return CardSection(
+      title: '설정',
       child: Column(
         children: [
           // 테마 설정 cell — 현재 모드 라벨 표시 + 선택 모달
@@ -68,7 +63,7 @@ class PlanetAccountSection extends StatelessWidget {
             ),
             Container(height: 1, color: colors.lineNormalNeutral),
           ],
-          // 로그아웃 cell - Figma: height 48px, padding 12px 0
+          // 로그아웃 cell
           PlanetTextCell(
             text: '로그아웃',
             color: colors.labelNormal,
@@ -92,8 +87,8 @@ class PlanetAccountSection extends StatelessWidget {
       onTap: _showThemeModeModal,
       behavior: HitTestBehavior.opaque,
       child: Container(
-        height: 48,
-        padding: const EdgeInsets.symmetric(vertical: 12),
+        height: AppSpacing.xxxl, // 48 — 셀 터치 높이
+        padding: const EdgeInsets.symmetric(vertical: AppSpacing.sm),
         child: Row(
           children: [
             Expanded(
@@ -112,7 +107,7 @@ class PlanetAccountSection extends StatelessWidget {
                 ),
               ),
             ),
-            const SizedBox(width: 4),
+            const SizedBox(width: AppSpacing.xxs),
             Icon(Icons.chevron_right, size: 20, color: colors.labelAlternative),
           ],
         ),

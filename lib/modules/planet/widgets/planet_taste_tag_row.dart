@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:coflanet/constants/app_color_scheme.dart';
 import 'package:coflanet/constants/color_constant.dart';
+import 'package:coflanet/constants/radius_constant.dart';
+import 'package:coflanet/constants/spacing_constant.dart';
 import 'package:coflanet/constants/style_constant.dart';
 import 'package:coflanet/data/models/survey_result_model.dart';
 
@@ -66,7 +68,7 @@ class PlanetTasteTagRow extends StatelessWidget {
             ),
           ),
           // 태그 사이 갭
-          if (i < items.length - 1) const SizedBox(width: 8),
+          if (i < items.length - 1) const SizedBox(width: AppSpacing.xs),
         ],
       ],
     );
@@ -80,16 +82,17 @@ class PlanetTasteTagRow extends StatelessWidget {
     required Color color,
   }) {
     return Container(
-      height: 86, // Figma: 86px
+      height: 86, // Figma: 86px (타일 고정 높이 — 시맨틱 spacing 토큰 비대상)
       decoration: BoxDecoration(
-        borderRadius: BorderRadius.circular(16), // Figma: ~16px radius
+        borderRadius: AppRadius.xlBorder, // 16
         gradient: LinearGradient(
           begin: Alignment.topCenter,
           end: Alignment.bottomCenter,
           stops: const [0.0, 0.5, 1.0], // 카드색 50% 까지, 이후 강조색 페이드
+          // 흰 프로필 섹션 위에서 칩으로 분리되도록 인셋 톤(surfaceCardStrong) 기반
           colors: [
-            colors.surfaceCard,
-            colors.surfaceCard,
+            colors.surfaceCardStrong,
+            colors.surfaceCardStrong,
             color.withValues(alpha: 0.6),
           ],
         ),
@@ -105,7 +108,7 @@ class PlanetTasteTagRow extends StatelessWidget {
             ),
             textAlign: TextAlign.center,
           ),
-          const SizedBox(height: 4),
+          const SizedBox(height: AppSpacing.xxs),
           // 레벨 — Figma: 14px, 400 weight
           Text(
             level,

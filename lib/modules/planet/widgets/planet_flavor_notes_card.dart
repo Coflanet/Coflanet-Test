@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:coflanet/constants/app_color_scheme.dart';
 import 'package:coflanet/constants/asset_constant.dart';
 import 'package:coflanet/constants/radius_constant.dart';
+import 'package:coflanet/constants/spacing_constant.dart';
 import 'package:coflanet/constants/style_constant.dart';
 import 'package:coflanet/modules/planet/my_planet_controller.dart';
 
@@ -25,10 +26,11 @@ class PlanetFlavorNotesCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final colors = AppColorScheme.of(context);
+    // 프로필 CardSection(흰 카드) 안의 인셋 리스트 → CardItem 톤(surfaceCardStrong)
     return Container(
       decoration: BoxDecoration(
-        color: colors.surfaceCard,
-        borderRadius: AppRadius.xxlBorder,
+        color: colors.surfaceCardStrong,
+        borderRadius: AppRadius.itemRadiusBorder,
       ),
       child: Column(
         children: List.generate(flavors.length, (index) {
@@ -38,11 +40,12 @@ class PlanetFlavorNotesCard extends StatelessWidget {
               _buildFlavorNoteItem(flavor, colors),
               // 마지막 항목 뒤에는 구분선 없음 — 구분선 색은 lineSolidNeutral
               // (계정 컨테이너의 lineNormalNeutral 과 다른 토큰)
+              // indent 72 = 좌패딩(lg) + 아바타(40) + 텍스트갭(sm) — 텍스트 시작선 정렬
               if (index < flavors.length - 1)
                 Divider(
                   height: 1,
-                  indent: 72,
-                  endIndent: 20,
+                  indent: AppSpacing.lg + 40 + AppSpacing.sm,
+                  endIndent: AppSpacing.lg,
                   color: colors.lineSolidNeutral,
                 ),
             ],
@@ -54,7 +57,10 @@ class PlanetFlavorNotesCard extends StatelessWidget {
 
   Widget _buildFlavorNoteItem(FlavorDescription flavor, AppColorScheme colors) {
     return Padding(
-      padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 16),
+      padding: const EdgeInsets.symmetric(
+        horizontal: AppSpacing.lg,
+        vertical: AppSpacing.md,
+      ),
       child: Row(
         children: [
           // 아로마 이미지 — 로드 실패 시 회색 원 + 아이콘 폴백
@@ -83,7 +89,7 @@ class PlanetFlavorNotesCard extends StatelessWidget {
               },
             ),
           ),
-          const SizedBox(width: 12),
+          const SizedBox(width: AppSpacing.sm),
           Expanded(
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
@@ -94,7 +100,7 @@ class PlanetFlavorNotesCard extends StatelessWidget {
                     color: colors.labelNormal,
                   ),
                 ),
-                const SizedBox(height: 2),
+                const SizedBox(height: AppSpacing.space2),
                 Text(
                   flavor.description,
                   style: AppTextStyles.caption1Regular.copyWith(

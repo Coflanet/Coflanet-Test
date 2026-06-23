@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:coflanet/constants/app_color_scheme.dart';
+import 'package:coflanet/constants/radius_constant.dart';
+import 'package:coflanet/constants/spacing_constant.dart';
 import 'package:coflanet/constants/style_constant.dart';
 
 /// 마이플래닛 pill 액션 버튼 — 옅은 fill + 보라 텍스트, 풀폭 알약형.
@@ -24,10 +26,12 @@ class PlanetPillButton extends StatelessWidget {
       onTap: onTap,
       child: Container(
         width: double.infinity,
-        padding: const EdgeInsets.symmetric(vertical: 14),
+        padding: const EdgeInsets.symmetric(
+          vertical: AppSpacing.buttonPaddingV,
+        ),
         decoration: BoxDecoration(
           color: colors.componentFillNormal,
-          borderRadius: BorderRadius.circular(99), // Figma: pill (99px)
+          borderRadius: AppRadius.fullBorder, // pill
         ),
         child: Text(
           text,
