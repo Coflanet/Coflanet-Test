@@ -104,28 +104,32 @@ class AppTextStyles {
     fontFamily: _fontFamily,
     fontWeight: FontWeight.w700,
     fontSize: 24.0,
-    height: 1.3,
+    height: 1.334,
+    letterSpacing: -0.552,
   );
 
   static const TextStyle title3Medium = TextStyle(
     fontFamily: _fontFamily,
     fontWeight: FontWeight.w500,
     fontSize: 24.0,
-    height: 1.3,
+    height: 1.334,
+    letterSpacing: -0.552,
   );
 
   static const TextStyle title3Regular = TextStyle(
     fontFamily: _fontFamily,
     fontWeight: FontWeight.w400,
     fontSize: 24.0,
-    height: 1.3,
+    height: 1.334,
+    letterSpacing: -0.552,
   );
 
   static const TextStyle title3MediumMono = TextStyle(
     fontFamily: _monospaceFontFamily,
     fontWeight: FontWeight.w500,
     fontSize: 24.0,
-    height: 1.3,
+    height: 1.334,
+    letterSpacing: -0.552,
   );
 
   // ===== HEADING STYLES =====
@@ -135,28 +139,32 @@ class AppTextStyles {
     fontFamily: _fontFamily,
     fontWeight: FontWeight.w600,
     fontSize: 22.0,
-    height: 1.4,
+    height: 1.364,
+    letterSpacing: -0.427,
   );
 
   static const TextStyle heading1BoldMono = TextStyle(
     fontFamily: _monospaceFontFamily,
     fontWeight: FontWeight.w600,
     fontSize: 22.0,
-    height: 1.4,
+    height: 1.364,
+    letterSpacing: -0.427,
   );
 
   static const TextStyle heading1Medium = TextStyle(
     fontFamily: _fontFamily,
     fontWeight: FontWeight.w500,
     fontSize: 22.0,
-    height: 1.4,
+    height: 1.364,
+    letterSpacing: -0.427,
   );
 
   static const TextStyle heading1Regular = TextStyle(
     fontFamily: _fontFamily,
     fontWeight: FontWeight.w400,
     fontSize: 22.0,
-    height: 1.4,
+    height: 1.364,
+    letterSpacing: -0.427,
   );
 
   static const TextStyle heading2Bold = TextStyle(
@@ -164,6 +172,7 @@ class AppTextStyles {
     fontWeight: FontWeight.w600,
     fontSize: 20.0,
     height: 1.4,
+    letterSpacing: -0.24,
   );
 
   static const TextStyle heading2BoldMono = TextStyle(
@@ -171,6 +180,7 @@ class AppTextStyles {
     fontWeight: FontWeight.w600,
     fontSize: 20.0,
     height: 1.4,
+    letterSpacing: -0.24,
   );
 
   static const TextStyle heading2Medium = TextStyle(
@@ -178,6 +188,7 @@ class AppTextStyles {
     fontWeight: FontWeight.w500,
     fontSize: 20.0,
     height: 1.4,
+    letterSpacing: -0.24,
   );
 
   static const TextStyle heading2Regular = TextStyle(
@@ -185,6 +196,7 @@ class AppTextStyles {
     fontWeight: FontWeight.w400,
     fontSize: 20.0,
     height: 1.4,
+    letterSpacing: -0.24,
   );
 
   // ===== HEADLINE STYLES =====
@@ -192,56 +204,56 @@ class AppTextStyles {
     fontFamily: _fontFamily,
     fontWeight: FontWeight.w600,
     fontSize: 18.0,
-    height: 1.4,
+    height: 1.445,
   );
 
   static const TextStyle headline1BoldMono = TextStyle(
     fontFamily: _monospaceFontFamily,
     fontWeight: FontWeight.w600,
     fontSize: 18.0,
-    height: 1.4,
+    height: 1.445,
   );
 
   static const TextStyle headline1Medium = TextStyle(
     fontFamily: _fontFamily,
     fontWeight: FontWeight.w500,
     fontSize: 18.0,
-    height: 1.4,
+    height: 1.445,
   );
 
   static const TextStyle headline1Regular = TextStyle(
     fontFamily: _fontFamily,
     fontWeight: FontWeight.w400,
     fontSize: 18.0,
-    height: 1.4,
+    height: 1.445,
   );
 
   static const TextStyle headline2Bold = TextStyle(
     fontFamily: _fontFamily,
     fontWeight: FontWeight.w600,
     fontSize: 17.0,
-    height: 1.4,
+    height: 1.412,
   );
 
   static const TextStyle headline2BoldMono = TextStyle(
     fontFamily: _monospaceFontFamily,
     fontWeight: FontWeight.w600,
     fontSize: 17.0,
-    height: 1.4,
+    height: 1.412,
   );
 
   static const TextStyle headline2Medium = TextStyle(
     fontFamily: _fontFamily,
     fontWeight: FontWeight.w500,
     fontSize: 17.0,
-    height: 1.4,
+    height: 1.412,
   );
 
   static const TextStyle headline2Regular = TextStyle(
     fontFamily: _fontFamily,
     fontWeight: FontWeight.w400,
     fontSize: 17.0,
-    height: 1.4,
+    height: 1.412,
   );
 
   // ===== BODY STYLES =====
@@ -250,6 +262,7 @@ class AppTextStyles {
     fontWeight: FontWeight.w400,
     fontSize: 16.0,
     height: 1.5,
+    letterSpacing: 0.0912,
   );
 
   static const TextStyle body1NormalRegularMono = TextStyle(
@@ -257,6 +270,7 @@ class AppTextStyles {
     fontWeight: FontWeight.w400,
     fontSize: 16.0,
     height: 1.5,
+    letterSpacing: 0.0912,
   );
 
   static const TextStyle body1NormalMedium = TextStyle(
@@ -264,6 +278,7 @@ class AppTextStyles {
     fontWeight: FontWeight.w500,
     fontSize: 16.0,
     height: 1.5,
+    letterSpacing: 0.0912,
   );
 
   static const TextStyle body1NormalBold = TextStyle(
@@ -271,6 +286,7 @@ class AppTextStyles {
     fontWeight: FontWeight.w600,
     fontSize: 16.0,
     height: 1.5,
+    letterSpacing: 0.0912,
   );
 
   static const TextStyle body1ReadingRegular = TextStyle(
@@ -278,6 +294,7 @@ class AppTextStyles {
     fontWeight: FontWeight.w400,
     fontSize: 16.0,
     height: 1.6,
+    letterSpacing: 0.0912,
   );
 
   static const TextStyle body1ReadingMedium = TextStyle(
@@ -285,6 +302,7 @@ class AppTextStyles {
     fontWeight: FontWeight.w500,
     fontSize: 16.0,
     height: 1.6,
+    letterSpacing: 0.0912,
   );
 
   static const TextStyle body1ReadingBold = TextStyle(
@@ -292,34 +310,39 @@ class AppTextStyles {
     fontWeight: FontWeight.w600,
     fontSize: 16.0,
     height: 1.6,
+    letterSpacing: 0.0912,
   );
 
   static const TextStyle body2NormalRegular = TextStyle(
     fontFamily: _fontFamily,
     fontWeight: FontWeight.w400,
     fontSize: 15.0,
-    height: 1.5,
+    height: 1.467,
+    letterSpacing: 0.144,
   );
 
   static const TextStyle body2NormalRegularMono = TextStyle(
     fontFamily: _monospaceFontFamily,
     fontWeight: FontWeight.w400,
     fontSize: 15.0,
-    height: 1.5,
+    height: 1.467,
+    letterSpacing: 0.144,
   );
 
   static const TextStyle body2NormalMedium = TextStyle(
     fontFamily: _fontFamily,
     fontWeight: FontWeight.w500,
     fontSize: 15.0,
-    height: 1.5,
+    height: 1.467,
+    letterSpacing: 0.144,
   );
 
   static const TextStyle body2NormalBold = TextStyle(
     fontFamily: _fontFamily,
     fontWeight: FontWeight.w600,
     fontSize: 15.0,
-    height: 1.5,
+    height: 1.467,
+    letterSpacing: 0.144,
   );
 
   static const TextStyle body2ReadingRegular = TextStyle(
@@ -327,6 +350,7 @@ class AppTextStyles {
     fontWeight: FontWeight.w400,
     fontSize: 15.0,
     height: 1.6,
+    letterSpacing: 0.144,
   );
 
   static const TextStyle body2ReadingMedium = TextStyle(
@@ -334,6 +358,7 @@ class AppTextStyles {
     fontWeight: FontWeight.w500,
     fontSize: 15.0,
     height: 1.6,
+    letterSpacing: 0.144,
   );
 
   static const TextStyle body2ReadingBold = TextStyle(
@@ -341,6 +366,7 @@ class AppTextStyles {
     fontWeight: FontWeight.w600,
     fontSize: 15.0,
     height: 1.6,
+    letterSpacing: 0.144,
   );
 
   // ===== LABEL STYLES =====
@@ -348,28 +374,32 @@ class AppTextStyles {
     fontFamily: _fontFamily,
     fontWeight: FontWeight.w400,
     fontSize: 14.0,
-    height: 1.4,
+    height: 1.429,
+    letterSpacing: 0.203,
   );
 
   static const TextStyle label1NormalRegularMono = TextStyle(
     fontFamily: _monospaceFontFamily,
     fontWeight: FontWeight.w400,
     fontSize: 14.0,
-    height: 1.4,
+    height: 1.429,
+    letterSpacing: 0.203,
   );
 
   static const TextStyle label1NormalMedium = TextStyle(
     fontFamily: _fontFamily,
     fontWeight: FontWeight.w500,
     fontSize: 14.0,
-    height: 1.4,
+    height: 1.429,
+    letterSpacing: 0.203,
   );
 
   static const TextStyle label1NormalBold = TextStyle(
     fontFamily: _fontFamily,
     fontWeight: FontWeight.w600,
     fontSize: 14.0,
-    height: 1.4,
+    height: 1.429,
+    letterSpacing: 0.203,
   );
 
   static const TextStyle label1ReadingRegular = TextStyle(
@@ -377,6 +407,7 @@ class AppTextStyles {
     fontWeight: FontWeight.w400,
     fontSize: 14.0,
     height: 1.5,
+    letterSpacing: 0.203,
   );
 
   static const TextStyle label1ReadingMedium = TextStyle(
@@ -384,6 +415,7 @@ class AppTextStyles {
     fontWeight: FontWeight.w500,
     fontSize: 14.0,
     height: 1.5,
+    letterSpacing: 0.203,
   );
 
   static const TextStyle label1ReadingBold = TextStyle(
@@ -391,34 +423,39 @@ class AppTextStyles {
     fontWeight: FontWeight.w600,
     fontSize: 14.0,
     height: 1.5,
+    letterSpacing: 0.203,
   );
 
   static const TextStyle label2Regular = TextStyle(
     fontFamily: _fontFamily,
     fontWeight: FontWeight.w400,
     fontSize: 13.0,
-    height: 1.4,
+    height: 1.385,
+    letterSpacing: 0.2522,
   );
 
   static const TextStyle label2RegularMono = TextStyle(
     fontFamily: _monospaceFontFamily,
     fontWeight: FontWeight.w400,
     fontSize: 13.0,
-    height: 1.4,
+    height: 1.385,
+    letterSpacing: 0.2522,
   );
 
   static const TextStyle label2Medium = TextStyle(
     fontFamily: _fontFamily,
     fontWeight: FontWeight.w500,
     fontSize: 13.0,
-    height: 1.4,
+    height: 1.385,
+    letterSpacing: 0.2522,
   );
 
   static const TextStyle label2Bold = TextStyle(
     fontFamily: _fontFamily,
     fontWeight: FontWeight.w600,
     fontSize: 13.0,
-    height: 1.4,
+    height: 1.385,
+    letterSpacing: 0.2522,
   );
 
   // ===== CAPTION STYLES =====
@@ -454,28 +491,32 @@ class AppTextStyles {
     fontFamily: _fontFamily,
     fontWeight: FontWeight.w400,
     fontSize: 11.0,
-    height: 1.3,
+    height: 1.273,
+    letterSpacing: 0.3421,
   );
 
   static const TextStyle caption2RegularMono = TextStyle(
     fontFamily: _monospaceFontFamily,
     fontWeight: FontWeight.w400,
     fontSize: 11.0,
-    height: 1.3,
+    height: 1.273,
+    letterSpacing: 0.3421,
   );
 
   static const TextStyle caption2Medium = TextStyle(
     fontFamily: _fontFamily,
     fontWeight: FontWeight.w500,
     fontSize: 11.0,
-    height: 1.3,
+    height: 1.273,
+    letterSpacing: 0.3421,
   );
 
   static const TextStyle caption2Bold = TextStyle(
     fontFamily: _fontFamily,
     fontWeight: FontWeight.w600,
     fontSize: 11.0,
-    height: 1.3,
+    height: 1.273,
+    letterSpacing: 0.3421,
   );
 
   // ===== EMOJI STYLES =====
