@@ -13,7 +13,7 @@
 1. **Library 변수는 코드와 동기화돼 있다.** 각 Figma 변수의 description이 대응 Flutter 토큰을 명시한다(예: `Round/12` → "Flutter: AppRadius.lg (12.0) … Source: lib/constants/radius_constant.dart"). 즉 Library는 코드에서 역으로 매핑된 상태.
 2. **시맨틱 색은 Figma ↔ 코드 1:1 일치** — 라이트(§4) + **다크(§4-1)** 모두 검증 완료. 다크 카드 표면 #1B1C1E, fill 22%/28%, 60레벨 accent 전부 코드 `AppColorScheme.dart`와 일치. `Component/fill/alternative 8% vs 5%` 보류 충돌도 **해소**(Figma도 5%).
 3. **카드 패턴 토큰(`sectionRadius=40` 등)은 Library Foundation엔 없지만 POC 앱 시안엔 있다.** POC `My Planet` 프레임 변수에 `Round/40(Box)=40`, `Spacing/Padding/24(Contents in Box)=24`, `Spacing/Padding/16(Box in Box)=16`, `Static/Black=#000000` 실재 → 코드 `sectionRadius/itemPadding/staticBlack`는 **추정이 아니라 POC 근거**. **시정 방향**: 값을 바꾸는 게 아니라 이 토큰들을 **📚 Library Foundation에 승격**(디자이너 합의).
-4. **⚠️ 타이포 weight 불일치(실질적)**: Figma "Bold" 명칭 텍스트 스타일이 Heading/Headline/Body/Label 스케일에선 **SemiBold(weight 600)**, Title/Display에선 Bold(700)다. 코드는 전 스케일 `*Bold = FontWeight.w700` → **Heading~Label 계열에서 코드가 한 단계 더 무겁다**(§3). lineHeight도 Figma 실측(1.36~1.47)이 코드 라운드값(1.4/1.5)과 미세차, letterSpacing은 코드에 전무.
+4. **✅ 타이포 weight 정렬 완료**: Figma의 "Bold" 텍스트 스타일은 Heading/Headline/Body/Label/Caption에선 **SemiBold(600)**, Title/Display에선 Bold(700). → 코드 Heading~Caption `*Bold`를 **w600으로 정렬**(Title/Display는 700 유지, §3-1). lineHeight 미세차·letterSpacing은 잔여(§3-1).
 5. `token-mapping.md`의 "spacing 34/36/44 추가" 액션은 **`component_lab`(별도 코드 인벤토리) 기준**이라 실제 Figma엔 34/36/44가 없다 → **무효/재검토**.
 6. 타이포 크기·family는 일치(Display1 56/Display2 40/heading 20/body 16/15, Pretendard). 발행 텍스트 스타일은 없고(specimen 문서화) **코드 type scale이 SoT**.
 
@@ -138,16 +138,17 @@
 | 스타일 | Figma 실측 | 코드 토큰 | 불일치 |
 |---|---|---|---|
 | Title3/Bold | 24 / **700** / LH1.334 | `title3Bold` 24·w700·1.3 | weight ✅ (LH 미세) |
-| Heading1/Bold | 22 / **600** / 1.364 / ls-1.94 | `heading1Bold` 22·**w700**·1.4 | ⚠️ weight·LH·ls |
-| Heading2/Bold | 20 / **600** / 1.40 | `heading2Bold` 20·**w700**·1.4 | ⚠️ weight |
-| Headline2/Bold | 17 / **600** / 1.412 | `headline2Bold` 17·**w700**·1.4 | ⚠️ weight·LH |
-| Body1/Normal-Bold | 16 / **600** / 1.50 | `body1NormalBold` 16·**w700**·1.5 | ⚠️ weight |
+| Heading1/Bold | 22 / 600 / 1.364 / ls-1.94 | `heading1Bold` 22·w600·1.4 | ✅ weight 정렬 (LH·ls 미세) |
+| Heading2/Bold | 20 / 600 / 1.40 | `heading2Bold` 20·w600·1.4 | ✅ |
+| Headline2/Bold | 17 / 600 / 1.412 | `headline2Bold` 17·w600·1.4 | ✅ weight (LH 미세) |
+| Body1/Normal-Bold | 16 / 600 / 1.50 | `body1NormalBold` 16·w600·1.5 | ✅ |
 | Body2/Normal-Regular | 15 / 400 / 1.467 / ls0.96 | `body2NormalRegular` 15·w400·1.5 | LH·ls 미세 |
-| Label1/Normal-Bold | 14 / **600** / 1.429 | `label1NormalBold` 14·**w700**·1.4 | ⚠️ weight·LH |
+| Label1/Normal-Bold | 14 / 600 / 1.429 | `label1NormalBold` 14·w600·1.4 | ✅ weight (LH 미세) |
 | Label2/Regular | 13 / 400 / 1.385 | `label2Regular` 13·w400·1.4 | LH 미세 |
 | Caption2/Medium | 11 / 500 / 1.273 | `caption2Medium` 11·w500·1.3 | LH 미세 |
 
-> **시정 후보**: Display/Title "Bold"는 700 일치, **Heading·Headline·Body·Label "Bold"는 Figma 600 / 코드 700** — 코드가 더 굵게 렌더. 디자이너에게 "Bold 명칭=600 의도인지" 확인 후, 맞으면 해당 코드 토큰을 `w600`으로 정렬. lineHeight/letterSpacing 미세차는 Figma가 Pretendard 광학값(1.36~1.47)을 쓰고 코드는 1.4/1.5 라운드 — 디테일 정합 시 반영.
+> **✅ 정렬 완료 (2026-06-23)**: Figma 기준으로 코드 `style_constant.dart`의 Heading·Headline·Body·Label·Caption `*Bold`(+Mono)를 **w700 → w600(SemiBold)**으로 정렬. Title/Display `*Bold`는 700 유지. `flutter analyze` 0 에러.
+> **잔여(별도 정합 필요)**: lineHeight 미세차(Figma 광학값 1.36~1.47 vs 코드 1.4/1.5)·letterSpacing(코드 전무). 전 화면 세로 메트릭에 영향이 커 일괄 변경은 보류 — 디자이너 합의 후 별도 진행.
 
 ---
 
@@ -247,7 +248,22 @@ Figma `Semantic/*` 변수 ↔ 코드 `AppColorScheme.light`. 아래는 `get_vari
 
 ## 7. 후속(이 문서 범위 밖)
 
-- 디자이너 합의(시정 필요): ① `Round/40` Library Foundation 승격 ② Heading~Label "Bold" weight(Figma 600 vs 코드 700) 확정 후 코드 정렬 ③ lineHeight/letterSpacing 디테일 정합.
+- 디자이너 작업: **① `Round/40` Library Foundation 승격(§8 스펙)** ② lineHeight/letterSpacing 디테일 정합 합의.
 - 잔여 화면(커피/원두/레시피·온보딩) 단위 대조 — POC에 노드 존재, 필요 시 진행.
 
-> ✅ 완료: Library 토큰(라이트)·다크 모드(Home)·홈/마이/상품상세 화면 대조.
+> ✅ 완료: Library 토큰(라이트)·다크 모드(Home)·홈/마이/상품상세 화면 대조·**타이포 Bold weight 코드 정렬(§3-1)**.
+
+## 8. Library 승격 제안 — `Round/40` (디자이너용)
+
+> Figma는 읽기 전용 정책이라 **이 문서는 제안만** 한다(자동 쓰기 안 함). 디자이너가 📚 Library에서 아래대로 추가.
+
+- **추가 위치**: `📚 Library` → `Semantic` 컬렉션 → `float/Round/` (기존 `Round/8·12·16·20·24·32` 옆)
+- **변수명**: `Round/40(Box)`  |  **타입**: FLOAT  |  **값**: `40`  |  **scope**: ALL_SCOPES
+- **description**(기존 토큰 양식과 동일하게):
+  ```
+  Flutter: AppRadius.sectionRadius (40.0)
+  BorderRadius: AppRadius.sectionRadiusBorder
+  Source: lib/constants/radius_constant.dart
+  Usage: iyumi 큰 카드(CardSection) — 최상위 섹션 카드
+  ```
+- **근거**: 이미 ⭐️ POC(`Round/40(Box)`)·🏠 Home(`rounded-[40px]`) 시안과 코드(`sectionRadius=40`)에서 사용 중. Library Foundation에만 미등록 → 값 변경 없이 **등록만** 하면 토큰 일관성 완성.

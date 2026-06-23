@@ -29,7 +29,7 @@ Coflanet 화면을 **항상 같은 규칙**으로 만들기 위한 강제 가이
 
 > 📐 **수치 SoT(Figma 검증 완료)**: `docs/redesign/spacing-typography-reference.md` — spacing/radius/typography/color를 토큰명+정확한 px+Figma 변수 대조로 정리. **화면 작업 전 이 문서의 §5 빠른 규칙을 먼저 본다.** (Library `q7yBPcHrid1CGQqFWEPwnR` 변수 1:1 검증, 2026-06-23.)
 >
-> 핵심 검증 결과: 라이트 시맨틱 색·라디우스(8·12·16·20·24·32)·spacing primitive는 **Figma=코드 일치**. `sectionRadius=40`은 📚 Library Foundation엔 없지만 **⭐️ POC 시안엔 `Round/40(Box)`로 실재**(코드 근거 있음 — Library 승격만 디자이너 합의). ⚠️ **타이포 weight 주의**: Figma의 Heading·Headline·Body·Label "Bold"는 SemiBold(600)인데 코드 `*Bold`는 w700 → 해당 계열은 코드가 더 굵음(레퍼런스 §3-1). 디자이너 확정 전까지 임의 변경 금지.
+> 핵심 검증 결과: 라이트·**다크** 시맨틱 색·라디우스(8·12·16·20·24·32)·spacing primitive는 **Figma=코드 일치**. `sectionRadius=40`은 📚 Library Foundation엔 없지만 **⭐️ POC·🏠 Home 시안엔 `Round/40(Box)`로 실재**(코드 근거 있음 — Library 승격 제안=레퍼런스 §8). **타이포 "Bold" weight**: Heading·Headline·Body·Label·Caption은 SemiBold(**w600**), Title·Display만 w700 — 코드 정렬 완료(§3-1).
 
 | 토큰 | 값 | 용도 |
 |---|---|---|

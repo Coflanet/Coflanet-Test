@@ -129,16 +129,18 @@ class AppTextStyles {
   );
 
   // ===== HEADING STYLES =====
+  // Figma DS 기준: Heading~Caption 의 "Bold" 텍스트 스타일은 SemiBold(w600).
+  // Title/Display 의 Bold 만 w700. 출처: docs/redesign/spacing-typography-reference.md §3-1
   static const TextStyle heading1Bold = TextStyle(
     fontFamily: _fontFamily,
-    fontWeight: FontWeight.w700,
+    fontWeight: FontWeight.w600,
     fontSize: 22.0,
     height: 1.4,
   );
 
   static const TextStyle heading1BoldMono = TextStyle(
     fontFamily: _monospaceFontFamily,
-    fontWeight: FontWeight.w700,
+    fontWeight: FontWeight.w600,
     fontSize: 22.0,
     height: 1.4,
   );
@@ -159,14 +161,14 @@ class AppTextStyles {
 
   static const TextStyle heading2Bold = TextStyle(
     fontFamily: _fontFamily,
-    fontWeight: FontWeight.w700,
+    fontWeight: FontWeight.w600,
     fontSize: 20.0,
     height: 1.4,
   );
 
   static const TextStyle heading2BoldMono = TextStyle(
     fontFamily: _monospaceFontFamily,
-    fontWeight: FontWeight.w700,
+    fontWeight: FontWeight.w600,
     fontSize: 20.0,
     height: 1.4,
   );
@@ -188,14 +190,14 @@ class AppTextStyles {
   // ===== HEADLINE STYLES =====
   static const TextStyle headline1Bold = TextStyle(
     fontFamily: _fontFamily,
-    fontWeight: FontWeight.w700,
+    fontWeight: FontWeight.w600,
     fontSize: 18.0,
     height: 1.4,
   );
 
   static const TextStyle headline1BoldMono = TextStyle(
     fontFamily: _monospaceFontFamily,
-    fontWeight: FontWeight.w700,
+    fontWeight: FontWeight.w600,
     fontSize: 18.0,
     height: 1.4,
   );
@@ -216,14 +218,14 @@ class AppTextStyles {
 
   static const TextStyle headline2Bold = TextStyle(
     fontFamily: _fontFamily,
-    fontWeight: FontWeight.w700,
+    fontWeight: FontWeight.w600,
     fontSize: 17.0,
     height: 1.4,
   );
 
   static const TextStyle headline2BoldMono = TextStyle(
     fontFamily: _monospaceFontFamily,
-    fontWeight: FontWeight.w700,
+    fontWeight: FontWeight.w600,
     fontSize: 17.0,
     height: 1.4,
   );
@@ -266,7 +268,7 @@ class AppTextStyles {
 
   static const TextStyle body1NormalBold = TextStyle(
     fontFamily: _fontFamily,
-    fontWeight: FontWeight.w700,
+    fontWeight: FontWeight.w600,
     fontSize: 16.0,
     height: 1.5,
   );
@@ -287,7 +289,7 @@ class AppTextStyles {
 
   static const TextStyle body1ReadingBold = TextStyle(
     fontFamily: _fontFamily,
-    fontWeight: FontWeight.w700,
+    fontWeight: FontWeight.w600,
     fontSize: 16.0,
     height: 1.6,
   );
@@ -315,7 +317,7 @@ class AppTextStyles {
 
   static const TextStyle body2NormalBold = TextStyle(
     fontFamily: _fontFamily,
-    fontWeight: FontWeight.w700,
+    fontWeight: FontWeight.w600,
     fontSize: 15.0,
     height: 1.5,
   );
@@ -336,7 +338,7 @@ class AppTextStyles {
 
   static const TextStyle body2ReadingBold = TextStyle(
     fontFamily: _fontFamily,
-    fontWeight: FontWeight.w700,
+    fontWeight: FontWeight.w600,
     fontSize: 15.0,
     height: 1.6,
   );
@@ -365,7 +367,7 @@ class AppTextStyles {
 
   static const TextStyle label1NormalBold = TextStyle(
     fontFamily: _fontFamily,
-    fontWeight: FontWeight.w700,
+    fontWeight: FontWeight.w600,
     fontSize: 14.0,
     height: 1.4,
   );
@@ -386,7 +388,7 @@ class AppTextStyles {
 
   static const TextStyle label1ReadingBold = TextStyle(
     fontFamily: _fontFamily,
-    fontWeight: FontWeight.w700,
+    fontWeight: FontWeight.w600,
     fontSize: 14.0,
     height: 1.5,
   );
@@ -414,7 +416,7 @@ class AppTextStyles {
 
   static const TextStyle label2Bold = TextStyle(
     fontFamily: _fontFamily,
-    fontWeight: FontWeight.w700,
+    fontWeight: FontWeight.w600,
     fontSize: 13.0,
     height: 1.4,
   );
@@ -443,7 +445,7 @@ class AppTextStyles {
 
   static const TextStyle caption1Bold = TextStyle(
     fontFamily: _fontFamily,
-    fontWeight: FontWeight.w700,
+    fontWeight: FontWeight.w600,
     fontSize: 12.0,
     height: 1.3,
   );
@@ -471,7 +473,7 @@ class AppTextStyles {
 
   static const TextStyle caption2Bold = TextStyle(
     fontFamily: _fontFamily,
-    fontWeight: FontWeight.w700,
+    fontWeight: FontWeight.w600,
     fontSize: 11.0,
     height: 1.3,
   );
