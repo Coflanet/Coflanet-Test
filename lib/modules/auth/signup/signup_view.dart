@@ -45,9 +45,7 @@ class SignUpView extends GetView<SignUpController> {
                 child: SurveyProgressIndicator(progress: controller.progress),
               ),
             ),
-            Expanded(
-              child: Obx(() => _buildStepContent(colors)),
-            ),
+            Expanded(child: Obx(() => _buildStepContent(colors))),
           ],
         ),
       ),
@@ -90,10 +88,7 @@ class SignUpView extends GetView<SignUpController> {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           const SizedBox(height: AppSpacing.space32),
-          Text(
-            '서비스 약관에\n동의해 주세요',
-            style: _stepHeaderStyle(colors),
-          ),
+          Text('서비스 약관에\n동의해 주세요', style: _stepHeaderStyle(colors)),
           const SizedBox(height: AppSpacing.space40),
           _buildTermCheckbox(
             colors: colors,
@@ -109,8 +104,7 @@ class SignUpView extends GetView<SignUpController> {
             label: '회원 약관 동의',
             tag: '필수',
             value: controller.termsService.value,
-            onChanged: (v) =>
-                controller.toggleTerm(controller.termsService, v),
+            onChanged: (v) => controller.toggleTerm(controller.termsService, v),
           ),
           _buildTermCheckbox(
             colors: colors,
@@ -125,8 +119,7 @@ class SignUpView extends GetView<SignUpController> {
             label: '개인정보 수집 및 이용 동의',
             tag: '필수',
             value: controller.termsPrivacy.value,
-            onChanged: (v) =>
-                controller.toggleTerm(controller.termsPrivacy, v),
+            onChanged: (v) => controller.toggleTerm(controller.termsPrivacy, v),
           ),
           _buildTermCheckbox(
             colors: colors,
@@ -140,8 +133,9 @@ class SignUpView extends GetView<SignUpController> {
           const Spacer(),
           PrimaryButton(
             text: '다음',
-            onPressed:
-                controller.isCurrentStepValid ? controller.nextStep : null,
+            onPressed: controller.isCurrentStepValid
+                ? controller.nextStep
+                : null,
             isEnabled: controller.isCurrentStepValid,
           ),
           const SizedBox(height: AppSpacing.space48),
@@ -174,10 +168,7 @@ class SignUpView extends GetView<SignUpController> {
                   onChanged: onChanged,
                   activeColor: colors.primaryNormal,
                   shape: const CircleBorder(),
-                  side: BorderSide(
-                    color: colors.lineNormalNeutral,
-                    width: 1.5,
-                  ),
+                  side: BorderSide(color: colors.lineNormalNeutral, width: 1.5),
                 ),
               ),
               const SizedBox(width: AppSpacing.space12),
@@ -243,10 +234,7 @@ class SignUpView extends GetView<SignUpController> {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           const SizedBox(height: AppSpacing.space32),
-          Text(
-            '메일을 입력해 주세요',
-            style: _stepHeaderStyle(colors),
-          ),
+          Text('메일을 입력해 주세요', style: _stepHeaderStyle(colors)),
           const SizedBox(height: AppSpacing.space56),
           AppTextField(
             controller: controller.emailTextController,
@@ -263,8 +251,9 @@ class SignUpView extends GetView<SignUpController> {
           const Spacer(),
           PrimaryButton(
             text: '확인',
-            onPressed:
-                controller.isCurrentStepValid ? controller.nextStep : null,
+            onPressed: controller.isCurrentStepValid
+                ? controller.nextStep
+                : null,
             isEnabled: controller.isCurrentStepValid,
           ),
           const SizedBox(height: AppSpacing.space48),
@@ -282,10 +271,7 @@ class SignUpView extends GetView<SignUpController> {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           const SizedBox(height: AppSpacing.space32),
-          Text(
-            '비밀번호를 입력해 주세요',
-            style: _stepHeaderStyle(colors),
-          ),
+          Text('비밀번호를 입력해 주세요', style: _stepHeaderStyle(colors)),
           const SizedBox(height: AppSpacing.space56),
           AppTextField(
             controller: controller.passwordTextController,
@@ -303,8 +289,9 @@ class SignUpView extends GetView<SignUpController> {
           const Spacer(),
           PrimaryButton(
             text: '다음',
-            onPressed:
-                controller.isCurrentStepValid ? controller.nextStep : null,
+            onPressed: controller.isCurrentStepValid
+                ? controller.nextStep
+                : null,
             isEnabled: controller.isCurrentStepValid,
           ),
           const SizedBox(height: AppSpacing.space48),
@@ -331,9 +318,9 @@ class SignUpView extends GetView<SignUpController> {
                 // (spec: 05_password_confirm_spec.md — 별도 강조 폰트 스타일 없음)
                 TextSpan(
                   text: '한번 더',
-                  style: _stepHeaderStyle(colors).copyWith(
-                    color: colors.primaryNormal,
-                  ),
+                  style: _stepHeaderStyle(
+                    colors,
+                  ).copyWith(color: colors.primaryNormal),
                 ),
                 const TextSpan(text: ' 입력해 주세요'),
               ],
@@ -408,8 +395,9 @@ class SignUpView extends GetView<SignUpController> {
           const Spacer(),
           PrimaryButton(
             text: '확인',
-            onPressed:
-                controller.isCurrentStepValid ? controller.nextStep : null,
+            onPressed: controller.isCurrentStepValid
+                ? controller.nextStep
+                : null,
             isEnabled: controller.isCurrentStepValid,
           ),
           const SizedBox(height: AppSpacing.space48),

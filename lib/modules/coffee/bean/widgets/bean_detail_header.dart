@@ -62,9 +62,7 @@ class BeanDetailHeader extends StatelessWidget {
           // 이름
           Text(
             bean.name,
-            style: AppTextStyles.title1Bold.copyWith(
-              color: colors.labelStrong,
-            ),
+            style: AppTextStyles.title1Bold.copyWith(color: colors.labelStrong),
           ),
           const SizedBox(height: 8),
           // 설명
@@ -156,11 +154,7 @@ class BeanDetailHeader extends StatelessWidget {
           // 판매 링크가 있으면 탭 가능 표시(구매로 이동)
           if (tappable) ...[
             const SizedBox(width: 6),
-            Icon(
-              Icons.chevron_right,
-              size: 18,
-              color: colors.labelAlternative,
-            ),
+            Icon(Icons.chevron_right, size: 18, color: colors.labelAlternative),
           ],
         ],
       ),

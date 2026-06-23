@@ -29,10 +29,7 @@ class EspressoView extends GetView<CoffeeController> {
             AssetPath.iconArrowBack,
             width: 24,
             height: 24,
-            colorFilter: ColorFilter.mode(
-              colors.labelNormal,
-              BlendMode.srcIn,
-            ),
+            colorFilter: ColorFilter.mode(colors.labelNormal, BlendMode.srcIn),
           ),
           onPressed: () => Get.back(),
         ),
@@ -146,14 +143,10 @@ class EspressoView extends GetView<CoffeeController> {
       margin: const EdgeInsets.only(bottom: 12),
       padding: const EdgeInsets.all(16),
       decoration: BoxDecoration(
-        color: isSelected
-            ? colors.primaryLight
-            : colors.backgroundNormalNormal,
+        color: isSelected ? colors.primaryLight : colors.backgroundNormalNormal,
         borderRadius: AppRadius.lgBorder,
         border: Border.all(
-          color: isSelected
-              ? colors.primaryNormal
-              : colors.lineNormalNeutral,
+          color: isSelected ? colors.primaryNormal : colors.lineNormalNeutral,
           width: isSelected ? 2 : 1,
         ),
       ),
@@ -161,9 +154,7 @@ class EspressoView extends GetView<CoffeeController> {
         children: [
           Icon(
             icon,
-            color: isSelected
-                ? colors.primaryNormal
-                : colors.labelAlternative,
+            color: isSelected ? colors.primaryNormal : colors.labelAlternative,
           ),
           const SizedBox(width: 12),
           Expanded(
@@ -185,8 +176,7 @@ class EspressoView extends GetView<CoffeeController> {
               ],
             ),
           ),
-          if (isSelected)
-            Icon(Icons.check_circle, color: colors.primaryNormal),
+          if (isSelected) Icon(Icons.check_circle, color: colors.primaryNormal),
         ],
       ),
     );

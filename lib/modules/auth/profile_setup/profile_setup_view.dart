@@ -27,10 +27,7 @@ class ProfileSetupView extends GetView<ProfileSetupController> {
             AssetPath.iconArrowBack,
             width: 24,
             height: 24,
-            colorFilter: ColorFilter.mode(
-              colors.labelNormal,
-              BlendMode.srcIn,
-            ),
+            colorFilter: ColorFilter.mode(colors.labelNormal, BlendMode.srcIn),
           ),
           tooltip: '뒤로 가기',
           onPressed: () => Get.back(),

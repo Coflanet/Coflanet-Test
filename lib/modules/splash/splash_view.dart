@@ -40,9 +40,8 @@ class SplashView extends GetView<SplashController> {
         child: Center(
           // 상수 프리로드 실패 시 재시도 UI, 그 외(로딩/정상)에는 로고 표시
           child: Obx(
-            () => controller.config.hasError
-                ? _buildErrorRetry()
-                : _buildLogo(),
+            () =>
+                controller.config.hasError ? _buildErrorRetry() : _buildLogo(),
           ),
         ),
       ),
@@ -102,10 +101,7 @@ class SplashView extends GetView<SplashController> {
               backgroundColor: AppColor.staticLabelWhiteStrong,
               foregroundColor: AppColor.colorGlobalViolet50,
               elevation: 0,
-              padding: const EdgeInsets.symmetric(
-                horizontal: 32,
-                vertical: 14,
-              ),
+              padding: const EdgeInsets.symmetric(horizontal: 32, vertical: 14),
               shape: RoundedRectangleBorder(
                 borderRadius: AppRadius.buttonBorder,
               ),

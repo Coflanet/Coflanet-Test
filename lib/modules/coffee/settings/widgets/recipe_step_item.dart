@@ -58,11 +58,7 @@ class RecipeStepItem extends StatelessWidget {
               ),
             ),
             if (!isLast)
-              Container(
-                width: 1,
-                height: 28,
-                color: colors.lineSolidNormal,
-              ),
+              Container(width: 1, height: 28, color: colors.lineSolidNormal),
           ],
         ),
         const SizedBox(width: 12),

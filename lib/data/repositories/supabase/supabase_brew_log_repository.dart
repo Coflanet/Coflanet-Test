@@ -85,9 +85,7 @@ class SupabaseBrewLogRepository extends SupabaseRepositoryBase
   @override
   Future<void> deleteBrewLog(String logId) async {
     try {
-      await guard(
-        () => db.rpc('delete_brew_log', params: {'p_log_id': logId}),
-      );
+      await guard(() => db.rpc('delete_brew_log', params: {'p_log_id': logId}));
     } catch (e) {
       debugPrint('[BrewLogRepo] deleteBrewLog error: $e');
     }

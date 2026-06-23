@@ -127,10 +127,7 @@ class AppUtil {
       margin: const EdgeInsets.all(16),
       borderRadius: 12,
       duration: const Duration(seconds: 3),
-      icon: Icon(
-        Icons.error_outline,
-        color: AppColor.staticLabelWhiteStrong,
-      ),
+      icon: Icon(Icons.error_outline, color: AppColor.staticLabelWhiteStrong),
     );
   }
 

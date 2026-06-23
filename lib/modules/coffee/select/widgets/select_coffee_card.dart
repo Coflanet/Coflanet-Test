@@ -182,9 +182,7 @@ class SelectCoffeeCard extends StatelessWidget {
         shape: BoxShape.circle,
         color: isSelected ? colors.primaryNormal : AppColor.transparent,
         border: Border.all(
-          color: isSelected
-              ? colors.primaryNormal
-              : colors.interactionInactive,
+          color: isSelected ? colors.primaryNormal : colors.interactionInactive,
           width: 2,
         ),
       ),
@@ -259,9 +257,7 @@ class SelectCoffeeCard extends StatelessWidget {
         shape: BoxShape.circle,
         color: isSelected ? colors.primaryNormal : AppColor.transparent,
         border: Border.all(
-          color: isSelected
-              ? colors.primaryNormal
-              : colors.interactionInactive,
+          color: isSelected ? colors.primaryNormal : colors.interactionInactive,
           width: 2,
         ),
       ),

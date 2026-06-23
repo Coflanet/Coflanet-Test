@@ -89,10 +89,7 @@ class BeanAddButton extends StatelessWidget {
             colors: [base, edge],
             stops: const [0.6, 1.0],
           ),
-          border: Border.all(
-            color: border.withValues(alpha: 0.5),
-            width: 1,
-          ),
+          border: Border.all(color: border.withValues(alpha: 0.5), width: 1),
         ),
         // 아이콘 — 테마 라벨색 (이전 static 라이트 토큰은 다크에서 안 보임)
         child: Icon(Icons.add, color: colors.labelAlternative, size: 24),

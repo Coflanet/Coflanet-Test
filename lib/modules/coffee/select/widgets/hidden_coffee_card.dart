@@ -102,11 +102,7 @@ class HiddenCoffeeCard extends StatelessWidget {
             // 삭제 버튼
             GestureDetector(
               onTap: onDelete,
-              child: Icon(
-                Icons.close,
-                color: colors.labelAssistive,
-                size: 20,
-              ),
+              child: Icon(Icons.close, color: colors.labelAssistive, size: 20),
             ),
           ],
         ),

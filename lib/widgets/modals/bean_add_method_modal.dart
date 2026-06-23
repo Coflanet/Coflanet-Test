@@ -205,11 +205,7 @@ class _MethodCard extends StatelessWidget {
                   color: placeholderColor,
                   borderRadius: AppRadius.lgBorder,
                 ),
-                child: Icon(
-                  Icons.image_outlined,
-                  size: 32,
-                  color: iconColor,
-                ),
+                child: Icon(Icons.image_outlined, size: 32, color: iconColor),
               ),
             ),
             const SizedBox(height: 16),

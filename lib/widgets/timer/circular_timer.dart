@@ -105,10 +105,7 @@ class CircularTimer extends StatelessWidget {
             height: size - strokeWidth * 4,
             decoration: BoxDecoration(
               shape: BoxShape.circle,
-              border: Border.all(
-                color: innerRingColor,
-                width: 1,
-              ),
+              border: Border.all(color: innerRingColor, width: 1),
             ),
           ),
           // Center content

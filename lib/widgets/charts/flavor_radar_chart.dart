@@ -308,7 +308,7 @@ class _FlavorRadarChartPainter extends CustomPainter {
     double startAngle,
   ) {
     final gridPaint = Paint()
-      ..color = gridColor.withValues(alpha:0.3)
+      ..color = gridColor.withValues(alpha: 0.3)
       ..style = PaintingStyle.stroke
       ..strokeWidth = 1;
 
@@ -341,7 +341,7 @@ class _FlavorRadarChartPainter extends CustomPainter {
     double startAngle,
   ) {
     final axisPaint = Paint()
-      ..color = gridColor.withValues(alpha:0.5)
+      ..color = gridColor.withValues(alpha: 0.5)
       ..style = PaintingStyle.stroke
       ..strokeWidth = 1;
 

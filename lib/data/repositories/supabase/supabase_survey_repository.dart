@@ -85,8 +85,9 @@ class SupabaseSurveyRepository extends SupabaseRepositoryBase
       // RPC가 { result_id, recommendations: [...] } Map을 반환할 수 있음
       final recsRaw = await guard(() => db.rpc('get_my_recommendations'));
       debugPrint('[SurveyRepo] get_my_recommendations: $recsRaw');
-      final recsData =
-          recsRaw is Map ? recsRaw['recommendations'] ?? recsRaw : recsRaw;
+      final recsData = recsRaw is Map
+          ? recsRaw['recommendations'] ?? recsRaw
+          : recsRaw;
 
       return _parseServerResult(profileData, recsData);
     } catch (e) {
@@ -200,7 +201,9 @@ class SupabaseSurveyRepository extends SupabaseRepositoryBase
     if (tags is List) {
       for (final t in tags) {
         if (t is Map) {
-          flavorTags.add(t['descriptor'] as String? ?? t['category'] as String? ?? '');
+          flavorTags.add(
+            t['descriptor'] as String? ?? t['category'] as String? ?? '',
+          );
         } else {
           flavorTags.add(t.toString());
         }
@@ -208,14 +211,13 @@ class SupabaseSurveyRepository extends SupabaseRepositoryBase
     }
 
     // match_score (0.0~1.0) → matchPercent (0~100)
-    final matchScore = r['match_score'] ??
+    final matchScore =
+        r['match_score'] ??
         r['matchScore'] ??
         r['match_percent'] ??
         r['matchPercent'];
     final matchPercent = matchScore is num
-        ? (matchScore <= 1.0
-            ? (matchScore * 100).round()
-            : matchScore.round())
+        ? (matchScore <= 1.0 ? (matchScore * 100).round() : matchScore.round())
         : 50;
 
     return CoffeeRecommendationModel(
@@ -228,10 +230,14 @@ class SupabaseSurveyRepository extends SupabaseRepositoryBase
       roastLevel:
           bean['roast_level'] as String? ?? bean['roastLevel'] as String? ?? '',
       description: bean['description'] as String? ?? '',
-      imageUrl: bean['naver_image_url'] as String? ??
-          bean['image_url'] as String? ?? bean['imageUrl'] as String?,
-      originalPrice: _toIntOrNull(bean['naver_lprice']) ??
-          bean['original_price'] as int? ?? bean['originalPrice'] as int?,
+      imageUrl:
+          bean['naver_image_url'] as String? ??
+          bean['image_url'] as String? ??
+          bean['imageUrl'] as String?,
+      originalPrice:
+          _toIntOrNull(bean['naver_lprice']) ??
+          bean['original_price'] as int? ??
+          bean['originalPrice'] as int?,
       discountPrice:
           bean['discount_price'] as int? ?? bean['discountPrice'] as int?,
       discountPercent:
@@ -240,10 +246,11 @@ class SupabaseSurveyRepository extends SupabaseRepositoryBase
       tasteProfile: tasteProfile,
       matchPercent: matchPercent,
       flavorTags: flavorTags,
-      purchaseUrl: bean['naver_link'] as String? ??
-          bean['purchase_url'] as String? ?? bean['purchaseUrl'] as String?,
-      reason:
-          (r['recommendation_reason'] ?? r['reason'])?.toString(),
+      purchaseUrl:
+          bean['naver_link'] as String? ??
+          bean['purchase_url'] as String? ??
+          bean['purchaseUrl'] as String?,
+      reason: (r['recommendation_reason'] ?? r['reason'])?.toString(),
     );
   }
 
@@ -322,10 +329,8 @@ class SupabaseSurveyRepository extends SupabaseRepositoryBase
 
     // Step 4: submit-survey Edge Function (supabase_flutter handles auth)
     final response = await guard(
-      () => db.functions.invoke(
-        'submit-survey',
-        body: {'session_id': sessionId},
-      ),
+      () =>
+          db.functions.invoke('submit-survey', body: {'session_id': sessionId}),
     );
 
     final data = response.data;
@@ -343,7 +348,9 @@ class SupabaseSurveyRepository extends SupabaseRepositoryBase
         ? responseMap['data'] as Map<String, dynamic>
         : responseMap;
     final profileData = <String, dynamic>{
-      ...?payload['taste_profile'] is Map ? payload['taste_profile'] as Map<String, dynamic> : null,
+      ...?payload['taste_profile'] is Map
+          ? payload['taste_profile'] as Map<String, dynamic>
+          : null,
       'coffee_type': payload['coffee_type'],
       'coffee_type_label': payload['coffee_type_label'],
       'coffee_type_description': payload['coffee_type_description'],

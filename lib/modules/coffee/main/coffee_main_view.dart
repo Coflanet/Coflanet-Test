@@ -44,10 +44,7 @@ class CoffeeMainView extends GetView<CoffeeController> {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Text(
-                '어떤 방식으로\n커피를 즐기시겠어요?',
-                style: _screenHeaderStyle(colors),
-              ),
+              Text('어떤 방식으로\n커피를 즐기시겠어요?', style: _screenHeaderStyle(colors)),
 
               const SizedBox(height: 32),
 

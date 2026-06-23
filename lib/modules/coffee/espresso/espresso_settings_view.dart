@@ -73,9 +73,7 @@ class EspressoSettingsView extends GetView<EspressoSettingsController> {
       ),
       title: Text(
         '추출 설정',
-        style: AppTextStyles.headline1Bold.copyWith(
-          color: colors.labelNormal,
-        ),
+        style: AppTextStyles.headline1Bold.copyWith(color: colors.labelNormal),
       ),
       centerTitle: true,
       actions: [

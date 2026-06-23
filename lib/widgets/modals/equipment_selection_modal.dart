@@ -352,9 +352,7 @@ class _EquipmentCard extends StatelessWidget {
             Text(
               equipment.label,
               style: AppTextStyles.body2NormalMedium.copyWith(
-                color: isSelected
-                    ? colors.primaryNormal
-                    : colors.labelNormal,
+                color: isSelected ? colors.primaryNormal : colors.labelNormal,
               ),
               textAlign: TextAlign.center,
               maxLines: 1,

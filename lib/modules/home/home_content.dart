@@ -85,10 +85,8 @@ class HomeContent extends GetView<HomeController> {
                   beans: controller.myBeans,
                   onEditTap: _goToCoffeeTab,
                   onViewAllTap: _goToCoffeeTab,
-                  onBeanTap: (bean) => Get.toNamed(
-                    Routes.beanDetail,
-                    arguments: {'bean': bean},
-                  ),
+                  onBeanTap: (bean) =>
+                      Get.toNamed(Routes.beanDetail, arguments: {'bean': bean}),
                 ),
                 const SizedBox(height: _sectionGap),
                 if (controller.hasTasteProfile) ...[

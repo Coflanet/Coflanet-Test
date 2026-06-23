@@ -60,9 +60,7 @@ class SelectableChip extends StatelessWidget {
         child: Text(
           label,
           style: AppTextStyles.body2NormalMedium.copyWith(
-            color: isSelected
-                ? colors.primaryNormal
-                : colors.labelAlternative,
+            color: isSelected ? colors.primaryNormal : colors.labelAlternative,
           ),
         ),
       ),

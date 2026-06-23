@@ -29,10 +29,7 @@ class TimerCompleteView extends GetView<CoffeeTimerController> {
             AssetPath.iconClose, // Close icon - navigates to Home
             width: 24,
             height: 24,
-            colorFilter: ColorFilter.mode(
-              colors.labelNormal,
-              BlendMode.srcIn,
-            ),
+            colorFilter: ColorFilter.mode(colors.labelNormal, BlendMode.srcIn),
           ),
           onPressed: controller.goToHome,
         ),

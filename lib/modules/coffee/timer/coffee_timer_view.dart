@@ -89,10 +89,7 @@ class CoffeeTimerView extends GetView<CoffeeTimerController> {
           AssetPath.iconArrowBack,
           width: 24,
           height: 24,
-          colorFilter: ColorFilter.mode(
-            colors.labelNormal,
-            BlendMode.srcIn,
-          ),
+          colorFilter: ColorFilter.mode(colors.labelNormal, BlendMode.srcIn),
         ),
         onPressed: () => _showStopConfirmation(),
       ),
@@ -174,9 +171,7 @@ class CoffeeTimerView extends GetView<CoffeeTimerController> {
         // Title
         Text(
           step.title,
-          style: AppTextStyles.title2Bold.copyWith(
-            color: colors.labelNormal,
-          ),
+          style: AppTextStyles.title2Bold.copyWith(color: colors.labelNormal),
           textAlign: TextAlign.center,
         ),
         const SizedBox(height: 8),
@@ -209,9 +204,7 @@ class CoffeeTimerView extends GetView<CoffeeTimerController> {
         // Title
         Text(
           step.title,
-          style: AppTextStyles.title2Bold.copyWith(
-            color: colors.labelNormal,
-          ),
+          style: AppTextStyles.title2Bold.copyWith(color: colors.labelNormal),
           textAlign: TextAlign.center,
         ),
         const SizedBox(height: 8),
@@ -326,9 +319,7 @@ class CoffeeTimerView extends GetView<CoffeeTimerController> {
 
       return Container(
         padding: const EdgeInsets.fromLTRB(24, 12, 24, 16),
-        decoration: BoxDecoration(
-          color: colors.backgroundNormalNormal,
-        ),
+        decoration: BoxDecoration(color: colors.backgroundNormalNormal),
         child: step.isPreparation
             ? _buildPrepNavigationButtons(colors)
             : _buildTimedNavigationButtons(colors),

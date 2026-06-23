@@ -88,11 +88,7 @@ class SearchView extends GetView<SearchController> {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            Icon(
-              Icons.coffee_outlined,
-              size: 48,
-              color: colors.labelAssistive,
-            ),
+            Icon(Icons.coffee_outlined, size: 48, color: colors.labelAssistive),
             const SizedBox(height: 16),
             Text(
               '찾고 싶은 원두를 검색해보세요',
@@ -110,10 +106,8 @@ class SearchView extends GetView<SearchController> {
     return ListView.separated(
       padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
       itemCount: controller.results.length,
-      separatorBuilder: (_, __) => Divider(
-        height: 1,
-        color: colors.lineSolidNormal,
-      ),
+      separatorBuilder: (_, __) =>
+          Divider(height: 1, color: colors.lineSolidNormal),
       itemBuilder: (context, index) =>
           _buildResultTile(colors, controller.results[index]),
     );

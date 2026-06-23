@@ -48,9 +48,11 @@ class SignUpController extends BaseController {
     return switch (currentStep) {
       0 => isRequiredTermsAccepted,
       1 => email.value.isNotEmpty && _validateEmail(email.value) == null,
-      2 => password.value.isNotEmpty && _validatePassword(password.value) == null,
-      3 => confirmPassword.value.isNotEmpty &&
-          _validateConfirmPassword(confirmPassword.value) == null,
+      2 =>
+        password.value.isNotEmpty && _validatePassword(password.value) == null,
+      3 =>
+        confirmPassword.value.isNotEmpty &&
+            _validateConfirmPassword(confirmPassword.value) == null,
       _ => false,
     };
   }
@@ -87,8 +89,9 @@ class SignUpController extends BaseController {
     confirmPasswordTextController.addListener(() {
       confirmPassword.value = confirmPasswordTextController.text;
       if (confirmPassword.value.isNotEmpty) {
-        confirmPasswordError.value =
-            _validateConfirmPassword(confirmPassword.value);
+        confirmPasswordError.value = _validateConfirmPassword(
+          confirmPassword.value,
+        );
       } else {
         confirmPasswordError.value = null;
       }
@@ -120,7 +123,8 @@ class SignUpController extends BaseController {
   }
 
   void _syncAllCheckbox() {
-    termsAll.value = termsService.value &&
+    termsAll.value =
+        termsService.value &&
         termsServiceOptional.value &&
         termsPrivacy.value &&
         termsAge.value;
@@ -194,8 +198,7 @@ class SignUpController extends BaseController {
             message.contains('already exists')) {
           emailError.value = '이미 가입된 이메일입니다';
           _currentStep.value = 1;
-        } else if (message.contains('rate limit') ||
-            message.contains('429')) {
+        } else if (message.contains('rate limit') || message.contains('429')) {
           emailError.value = '요청이 너무 많습니다. 잠시 후 다시 시도해주세요.';
           _currentStep.value = 1;
         } else {

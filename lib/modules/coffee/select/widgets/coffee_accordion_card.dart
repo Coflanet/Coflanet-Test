@@ -187,9 +187,7 @@ class _CoffeeAccordionCardState extends State<CoffeeAccordionCard>
                         ],
                       )
                     : null,
-                color: displayImage != null
-                    ? colors.componentFillStrong
-                    : null,
+                color: displayImage != null ? colors.componentFillStrong : null,
                 borderRadius: BorderRadius.circular(12),
                 image: displayImage != null
                     ? DecorationImage(

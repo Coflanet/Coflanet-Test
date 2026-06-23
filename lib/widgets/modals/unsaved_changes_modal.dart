@@ -156,9 +156,7 @@ class _UnsavedChangesModalState extends State<UnsavedChangesModal>
           // Title - Figma: 18-20px Bold/SemiBold, #1A1A1A, center aligned
           Text(
             widget.title ?? '편집 내용이 저장되지 않았어요',
-            style: AppTextStyles.title2Bold.copyWith(
-              color: colors.labelNormal,
-            ),
+            style: AppTextStyles.title2Bold.copyWith(color: colors.labelNormal),
             textAlign: TextAlign.center,
           ),
           const SizedBox(height: 8),

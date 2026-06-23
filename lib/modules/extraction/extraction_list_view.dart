@@ -65,7 +65,10 @@ class ExtractionListView extends GetView<ExtractionListController> {
                                 )
                               : const SizedBox.shrink();
                         }
-                        return _buildLogItem(controller.brewLogs[index], colors);
+                        return _buildLogItem(
+                          controller.brewLogs[index],
+                          colors,
+                        );
                       },
                       childCount:
                           controller.brewLogs.length +

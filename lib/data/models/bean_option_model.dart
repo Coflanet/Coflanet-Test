@@ -97,10 +97,7 @@ class BeanOptions {
     List<T> parse<T>(String key, T Function(Map<String, dynamic>) fromJson) {
       final list = json[key];
       if (list is List) {
-        return list
-            .whereType<Map<String, dynamic>>()
-            .map(fromJson)
-            .toList();
+        return list.whereType<Map<String, dynamic>>().map(fromJson).toList();
       }
       return <T>[];
     }

@@ -28,10 +28,7 @@ class HandDripView extends GetView<CoffeeController> {
             AssetPath.iconArrowBack,
             width: 24,
             height: 24,
-            colorFilter: ColorFilter.mode(
-              colors.labelNormal,
-              BlendMode.srcIn,
-            ),
+            colorFilter: ColorFilter.mode(colors.labelNormal, BlendMode.srcIn),
           ),
           onPressed: () => Get.back(),
         ),

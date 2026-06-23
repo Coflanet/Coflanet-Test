@@ -263,9 +263,7 @@ class RecipeFormView extends GetView<CoffeeController> {
       child: Text(
         value.isNotEmpty ? value : '선택한 원두의 이름이 자동으로 들어갑니다',
         style: AppTextStyles.body1NormalMedium.copyWith(
-          color: value.isNotEmpty
-              ? colors.labelNormal
-              : colors.labelAssistive,
+          color: value.isNotEmpty ? colors.labelNormal : colors.labelAssistive,
         ),
         maxLines: 1,
         overflow: TextOverflow.ellipsis,
