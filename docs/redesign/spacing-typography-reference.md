@@ -255,7 +255,29 @@ Figma `Semantic/*` 변수 ↔ 코드 `AppColorScheme.light`. 아래는 `get_vari
 | 섹션 간 간격 | 12px 리듬(`gap-[12px]` 다수) | `_sectionGap`=`sm`=12 | ✅(모순 없음) |
 | 다크 색 | §4-1 전부 | `AppColorScheme.dark` | ✅ |
 
-### 6-3. 상품 상세(쇼핑 `184:23579` ↔ `lib/modules/product/product_detail_view.dart`)
+### 6-3. 나머지 화면 검토 (POC 기준) — 마이그레이션 갭
+
+**핵심 결론**: 카드 패턴 토큰 마이그레이션이 **home/마이/상품상세는 완료(하드코딩 0)**, **커피·원두·레시피·온보딩·매칭·인증 등은 미완**.
+
+- 미완 화면들은 `ScreenScaffold`/`CardSection` **위젯은 사용**하지만, 내부 spacing이 **raw 숫자 하드코딩**(`SizedBox(height: 24)`·`EdgeInsets.all(20)`·`SizedBox(height: 16)` 등)으로 `AppSpacing.*` 토큰 미적용.
+- 전체 **433곳 / 69파일** (spacing/radius 리터럴). 주요 모듈(파일당 건수 예):
+
+| 모듈 | 대표 파일(건수) |
+|---|---|
+| coffee/settings | recipe_form_view(32), coffee_settings_view(24), coffee_setting_detail(11) |
+| coffee/select | select_coffee_content(18), coffee_accordion_card(12), select_coffee_card(8) |
+| coffee/bean | bean_edit_view(22), bean_detail_view(8), bean_detail_header(8) |
+| coffee/timer·espresso | coffee_timer_view(15), espresso_view(9), espresso_settings(8) |
+| onboarding | recommendation_card(19), survey_question(9), survey_index(7), multi_rating_item(6) |
+| auth | account_link(10), email_login(7), profile_setup(5) |
+| 기타 | extraction_list(14), search(8), cart(7), profile/* |
+
+- **수치 자체는 POC와 대체로 일치**(좌우 마진 20, 카드 내부 패딩 24, 간격 16/20 = `space20/24/16`) — 값은 맞고 **토큰화만 안 됨**.
+- **⚠️ POC 커피/레시피 시안 주의**(POC `1163:*` 페이지): `Background+Shadow` 컴포넌트·20 마진의 **그림자 카드(구버전 패턴)** 사용 — iyumi Static/Black "그림자 없음" 카드 패턴과 **다름**. 커피/레시피를 iyumi 카드로 재구성할지, POC 구버전 유지할지는 **디자인 결정 필요**.
+
+> **권장 작업**: ① 미완 화면의 raw 숫자 → `AppSpacing.*` 치환(값 동일, 토큰화만). ② 커피/레시피 카드 스타일 방향(iyumi vs POC 구버전) 디자이너 확정 후 통일.
+
+### 6-4. 상품 상세(쇼핑 `184:23579` ↔ `lib/modules/product/product_detail_view.dart`)
 **의도적 디자인 분기** — 쇼핑 상세는 **커머스 레이아웃**(flat 섹션, 좌우 마진 16/24, 리뷰 이미지·2열 추천 그리드·레시피 표), 코드는 동일 정보를 **iyumi 카드로 단순화**("모델에 없는 정보 미표시", commit "C1 본래 해법"). 1:1 픽셀 포트 아님. 측정 정합 지점:
 
 | 항목 | 쇼핑 시안 | 코드 | 비고 |
