@@ -45,6 +45,7 @@ import 'package:coflanet/modules/coffee/select/select_coffee_view.dart';
 import 'package:coflanet/modules/coffee/select/select_coffee_binding.dart';
 import 'package:coflanet/modules/coffee/bean/bean_detail_view.dart';
 import 'package:coflanet/modules/coffee/bean/bean_edit_view.dart';
+import 'package:coflanet/modules/product/product_detail_view.dart';
 import 'package:coflanet/modules/coffee/settings/recipe_form_view.dart';
 
 // Modules - Extraction
@@ -231,6 +232,12 @@ class AppPages {
       name: Routes.beanEdit,
       page: () => const BeanEditView(),
       binding: CoffeeBinding(),
+      transition: Transition.cupertino,
+    ),
+    GetPage(
+      // 인앱 상품 상세 — 전달 모델만 렌더하는 정적 화면이라 binding 불필요
+      name: Routes.productDetail,
+      page: () => const ProductDetailView(),
       transition: Transition.cupertino,
     ),
     GetPage(

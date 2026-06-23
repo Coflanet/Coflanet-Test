@@ -43,8 +43,7 @@ class HomeProductSection extends StatelessWidget {
   /// 좋아요 토글 콜백
   final void Function(String id) onLikeTap;
 
-  /// 상품 카드 탭 콜백 (C1) — 상세/구매 링크 이동. null 이거나 항목에
-  /// purchaseUrl 이 없으면 해당 카드는 비탭.
+  /// 상품 카드 탭 콜백 (C1) — 인앱 상품 상세로 이동. null 이면 비탭.
   final void Function(CoffeeRecommendationModel item)? onItemTap;
 
   /// 더 보기 버튼 탭 콜백 — null 이면 동작 없음 ([백엔드 API 연동 대기])
@@ -88,10 +87,9 @@ class HomeProductSection extends StatelessWidget {
       itemCount: items.length,
       itemBuilder: (context, index) {
         final item = items[index];
-        // 판매 링크가 있을 때만 카드 탭 활성 (A2 매칭 카드와 동일 정책)
-        final url = item.purchaseUrl;
-        final bool tappable =
-            onItemTap != null && url != null && url.isNotEmpty;
+        // 인앱 상품 상세로 이동하므로 purchaseUrl 유무와 무관하게 탭 활성
+        // (구매 링크는 상세 화면 CTA 에서 처리)
+        final bool tappable = onItemTap != null;
         // 카드별 Obx — 해당 카드의 좋아요 상태만 구독
         return Obx(
           () => ProductCard(

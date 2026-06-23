@@ -54,6 +54,9 @@ abstract class Routes {
   static const beanDetail = '/coffee/bean/detail';
   static const beanEdit = '/coffee/bean/edit';
 
+  // === Product Routes ===
+  static const productDetail = '/product/detail';
+
   // === Recipe Routes ===
   static const recipeEdit = '/coffee/recipe/edit';
   static const recipeAdd = '/coffee/recipe/add';

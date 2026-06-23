@@ -10,6 +10,7 @@ import 'package:coflanet/data/models/coffee_item_model.dart';
 import 'package:coflanet/data/models/survey_result_model.dart';
 import 'package:coflanet/data/repositories/repository_interfaces.dart';
 import 'package:coflanet/data/repositories/repository_provider.dart';
+import 'package:coflanet/routes/app_pages.dart';
 
 /// Home Controller — Figma `Home_Item_yes` 화면 데이터 공급
 ///
@@ -173,16 +174,10 @@ class HomeController extends BaseController {
     }
   }
 
-  /// 추천 상품 카드 탭 (C1) — 전용 상품 상세 화면이 없으므로 판매(구매) 링크를
-  /// 외부 브라우저로 연다. 매칭 추천 카드(A2)와 동일 패턴.
-  /// purchaseUrl 이 없으면 호출부에서 비탭 처리되지만, 방어적으로 한 번 더 가드.
-  Future<void> onRecommendationTap(CoffeeRecommendationModel item) async {
-    final url = item.purchaseUrl;
-    if (url == null || url.isEmpty) return;
-    final uri = Uri.tryParse(url);
-    if (uri != null) {
-      await launchUrl(uri, mode: LaunchMode.externalApplication);
-    }
+  /// 추천 상품 카드 탭 (C1) — 인앱 상품 상세로 이동한다 (원두 상세와 동일 인자 패턴).
+  /// 외부 구매(purchaseUrl)는 상세 화면의 "구매하러 가기" CTA 에서 처리한다.
+  void onRecommendationTap(CoffeeRecommendationModel item) {
+    Get.toNamed(Routes.productDetail, arguments: {'product': item});
   }
 
   bool isLiked(String id) => _likedIds.contains(id);
