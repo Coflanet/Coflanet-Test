@@ -134,7 +134,8 @@ class SurveyReasonView extends GetView<SurveyReasonController> {
       decoration: BoxDecoration(color: colors.backgroundNormalNormal),
       child: Obx(
         () => PrimaryButton(
-          text: '원두 취향 찾으러 가기',
+          // Figma: CTA 라벨 "완료"
+          text: '완료',
           onPressed: controller.complete,
           isEnabled: controller.hasSelection,
         ),

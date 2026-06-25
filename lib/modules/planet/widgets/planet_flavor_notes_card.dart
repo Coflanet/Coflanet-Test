@@ -40,11 +40,11 @@ class PlanetFlavorNotesCard extends StatelessWidget {
               _buildFlavorNoteItem(flavor, colors),
               // 마지막 항목 뒤에는 구분선 없음 — 구분선 색은 lineSolidNeutral
               // (계정 컨테이너의 lineNormalNeutral 과 다른 토큰)
-              // indent 72 = 좌패딩(lg) + 아바타(40) + 텍스트갭(sm) — 텍스트 시작선 정렬
+              // indent = 좌패딩(lg) + 아바타(48) + 텍스트갭(sm) — 텍스트 시작선 정렬
               if (index < flavors.length - 1)
                 Divider(
                   height: 1,
-                  indent: AppSpacing.lg + 40 + AppSpacing.sm,
+                  indent: AppSpacing.lg + 48 + AppSpacing.sm,
                   endIndent: AppSpacing.lg,
                   color: colors.lineSolidNeutral,
                 ),
@@ -63,27 +63,26 @@ class PlanetFlavorNotesCard extends StatelessWidget {
       ),
       child: Row(
         children: [
-          // 아로마 이미지 — 로드 실패 시 회색 원 + 아이콘 폴백
-          ClipOval(
+          // 아로마 아바타 — Figma: 48px 원 + componentFillNormal 배경 + 일러스트
+          Container(
+            width: 48,
+            height: 48,
+            clipBehavior: Clip.antiAlias,
+            decoration: BoxDecoration(
+              shape: BoxShape.circle,
+              color: colors.componentFillNormal,
+            ),
             child: Image.asset(
               _flavorImagePath(flavor.title),
-              width: 40,
-              height: 40,
+              width: 48,
+              height: 48,
               fit: BoxFit.cover,
               errorBuilder: (context, error, stackTrace) {
-                return Container(
-                  width: 40,
-                  height: 40,
-                  decoration: BoxDecoration(
-                    shape: BoxShape.circle,
-                    color: colors.componentFillNormal,
-                  ),
-                  child: Center(
-                    child: Icon(
-                      _flavorIcon(flavor.title),
-                      size: 20,
-                      color: colors.labelAlternative,
-                    ),
+                return Center(
+                  child: Icon(
+                    _flavorIcon(flavor.title),
+                    size: 24,
+                    color: colors.labelAlternative,
                   ),
                 );
               },
@@ -111,6 +110,13 @@ class PlanetFlavorNotesCard extends StatelessWidget {
                 ),
               ],
             ),
+          ),
+          // Figma: 행 우측 chevron
+          const SizedBox(width: AppSpacing.sm),
+          Icon(
+            Icons.chevron_right_rounded,
+            size: 24,
+            color: colors.labelAssistive,
           ),
         ],
       ),

@@ -123,9 +123,12 @@ class SignInView extends GetView<SignInController> {
           margin: const EdgeInsets.symmetric(horizontal: 8),
         ),
         TextButton(
-          onPressed: () => Get.toNamed(Routes.emailLogin),
+          // Figma: 하단 링크는 "게스트로 로그인"(익명 로그인은 구현돼 있음)
+          onPressed: controller.isLoading
+              ? null
+              : () => controller.signInWithSocial(SocialLoginType.guest),
           child: Text(
-            '이메일 로그인',
+            '게스트로 로그인',
             style: AppTextStyles.label1NormalMedium.copyWith(
               color: colors.labelAlternative,
             ),
