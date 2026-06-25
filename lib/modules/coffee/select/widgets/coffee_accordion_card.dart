@@ -119,7 +119,8 @@ class _CoffeeAccordionCardState extends State<CoffeeAccordionCard>
         duration: const Duration(milliseconds: 200),
         decoration: BoxDecoration(
           color: colors.surfaceCard, // 카드 (다크: coolNeutral15)
-          borderRadius: BorderRadius.circular(20),
+          // Figma POC 아코디언 카드 = Round/32 (기존 하드코딩 20 → 토큰)
+          borderRadius: AppRadius.roundBorder,
           border: widget.isSelected
               ? Border.all(color: colors.primaryNormal, width: 2)
               : null,

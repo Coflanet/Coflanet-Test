@@ -35,19 +35,21 @@ class SurveyCheckboxItem extends StatelessWidget {
       onTap: onTap,
       child: AnimatedContainer(
         duration: const Duration(milliseconds: 200),
-        padding: const EdgeInsets.all(AppSpacing.space16),
+        // Figma Check Box(937:45574): padding px20/py24, radius 40
+        padding: const EdgeInsets.symmetric(
+          horizontal: AppSpacing.space20,
+          vertical: AppSpacing.space24,
+        ),
         decoration: BoxDecoration(
-          // Figma: 선택됨 = 흰색 배경, 미선택 = 연한 회색 배경
+          // Figma: 선택 = violet 틴트(#fbfaff), 미선택 = component/fill/alternative(0.05)
           color: isSelected
-              ? colors.backgroundNormalNormal
-              : colors.componentFillNormal,
-          borderRadius: AppRadius.lgBorder,
-          border: Border.all(
-            // Figma: 선택됨 = Violet 테두리 2px.
-            // 미선택 = 연한 회색 1px 상시 표시 (다크 검정 배경에서 외곽 확보).
-            color: isSelected ? colors.primaryNormal : colors.lineNormalNeutral,
-            width: isSelected ? 2 : 1,
-          ),
+              ? colors.primaryLight
+              : colors.componentFillAlternative,
+          borderRadius: AppRadius.sectionRadiusBorder,
+          // Figma: 보더는 선택 시에만 1px primary. 미선택은 보더 없음.
+          border: isSelected
+              ? Border.all(color: colors.primaryNormal, width: 1)
+              : null,
         ),
         child: Row(
           children: [
@@ -69,11 +71,9 @@ class SurveyCheckboxItem extends StatelessWidget {
                 children: [
                   Text(
                     label,
-                    // Storyboard: 선택됨 = Violet 텍스트, 미선택 = 검정 텍스트
-                    style: AppTextStyles.body1NormalMedium.copyWith(
-                      color: isSelected
-                          ? colors.primaryNormal
-                          : colors.labelNormal,
+                    // Figma: 선택/미선택 모두 label/neutral — 선택해도 라벨색 불변(체크만 violet)
+                    style: AppTextStyles.label1NormalBold.copyWith(
+                      color: colors.labelNeutral,
                     ),
                   ),
                   if (description != null) ...[
@@ -90,11 +90,12 @@ class SurveyCheckboxItem extends StatelessWidget {
                 ],
               ),
             ),
+            const SizedBox(width: AppSpacing.space8),
 
-            // Checkmark indicator (storyboard: simple checkmark, no box)
+            // Checkmark indicator (Figma: Control/Check 20px, 선택=violet/미선택=회색)
             Icon(
               Icons.check,
-              size: 24,
+              size: 20,
               color: isSelected
                   ? colors.primaryNormal
                   : colors.interactionInactive,

@@ -172,7 +172,8 @@ class PrimaryButton extends StatelessWidget {
           foregroundColor: AppColor.staticLabelWhiteStrong,
           elevation: 0,
           padding: _padding,
-          shape: RoundedRectangleBorder(borderRadius: AppRadius.buttonBorder),
+          // Figma Solid 버튼은 pill(full). 온보딩/하단 CTA 전부 pill 형태와 정합.
+          shape: RoundedRectangleBorder(borderRadius: AppRadius.fullBorder),
           disabledBackgroundColor: colors.interactionDisable,
           disabledForegroundColor: colors.labelDisable,
         ),

@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:coflanet/constants/app_color_scheme.dart';
-import 'package:coflanet/constants/color_constant.dart';
 import 'package:coflanet/constants/radius_constant.dart';
 import 'package:coflanet/constants/spacing_constant.dart';
 import 'package:coflanet/constants/style_constant.dart';
@@ -36,11 +35,11 @@ class SurveyEquipmentGridItem extends StatelessWidget {
         duration: const Duration(milliseconds: 200),
         decoration: BoxDecoration(
           color: isSelected ? colors.primaryLight : colors.componentFillNormal,
-          borderRadius: AppRadius.lgBorder,
-          border: Border.all(
-            color: isSelected ? colors.primaryNormal : AppColor.transparent,
-            width: isSelected ? 2 : 1,
-          ),
+          // Figma 기구 카드: Round/32 + 선택 시에만 1px primary 보더
+          borderRadius: AppRadius.roundBorder,
+          border: isSelected
+              ? Border.all(color: colors.primaryNormal, width: 1)
+              : null,
         ),
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,

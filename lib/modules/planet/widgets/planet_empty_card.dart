@@ -25,11 +25,9 @@ class PlanetEmptyCard extends StatelessWidget {
       children: [
         // 헤드라인 — Figma: Bold, 중앙 정렬
         Text(
-          '내 커피 취향을\n찾아볼까요?',
-          style: AppTextStyles.title3Bold.copyWith(
-            color: colors.labelNormal,
-            height: 1.3,
-          ),
+          // Figma(1341-16217): 단일 줄(강제 줄바꿈 없음)
+          '내 커피 취향을 찾아볼까요?',
+          style: AppTextStyles.title3Bold.copyWith(color: colors.labelNormal),
           textAlign: TextAlign.center,
         ),
         const SizedBox(height: AppSpacing.md),
@@ -46,8 +44,9 @@ class PlanetEmptyCard extends StatelessWidget {
   Widget _buildMascot() {
     return Image.asset(
       AssetPath.charSitting,
-      width: 200,
-      height: 200,
+      // Figma: 마스코트 229px
+      width: 229,
+      height: 229,
       fit: BoxFit.contain,
       errorBuilder: (context, error, stackTrace) {
         return Container(

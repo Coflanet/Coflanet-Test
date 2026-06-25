@@ -46,21 +46,35 @@ class SurveyProgressIndicator extends StatelessWidget {
   Widget build(BuildContext context) {
     final colors = AppColorScheme.of(context);
 
-    return LayoutBuilder(
-      builder: (context, constraints) {
-        return Align(
-          alignment: Alignment.centerLeft,
-          child: AnimatedContainer(
-            duration: const Duration(milliseconds: 300),
-            width: constraints.maxWidth * progress.clamp(0.0, 1.0),
-            height: 4,
-            decoration: BoxDecoration(
-              color: colors.primaryNormal,
-              borderRadius: AppRadius.xxsBorder,
-            ),
-          ),
-        );
-      },
+    // Figma: 전폭 트랙(#F4F4F5) 위에 채움(#9E86FC=primarySecondary)이 올라가는 구조.
+    // 기존엔 트랙 없이 단색 한 줄만 늘어나 시각적으로 달랐음.
+    return SizedBox(
+      height: 4,
+      child: LayoutBuilder(
+        builder: (context, constraints) {
+          return Stack(
+            children: [
+              Container(
+                width: double.infinity,
+                height: 4,
+                decoration: BoxDecoration(
+                  color: colors.backgroundNormalAlternative,
+                  borderRadius: AppRadius.xsBorder,
+                ),
+              ),
+              AnimatedContainer(
+                duration: const Duration(milliseconds: 300),
+                width: constraints.maxWidth * progress.clamp(0.0, 1.0),
+                height: 4,
+                decoration: BoxDecoration(
+                  color: colors.primarySecondary,
+                  borderRadius: AppRadius.xxsBorder,
+                ),
+              ),
+            ],
+          );
+        },
+      ),
     );
   }
 }

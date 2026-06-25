@@ -84,7 +84,7 @@ class PlanetTasteTagRow extends StatelessWidget {
     return Container(
       height: 86, // Figma: 86px (타일 고정 높이 — 시맨틱 spacing 토큰 비대상)
       decoration: BoxDecoration(
-        borderRadius: AppRadius.xlBorder, // 16
+        borderRadius: AppRadius.xxxlBorder, // Figma: 24
         gradient: LinearGradient(
           begin: Alignment.topCenter,
           end: Alignment.bottomCenter,
