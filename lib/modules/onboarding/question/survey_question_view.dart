@@ -4,6 +4,7 @@ import 'package:get/get.dart';
 import 'package:coflanet/constants/app_color_scheme.dart';
 import 'package:coflanet/constants/asset_constant.dart';
 import 'package:coflanet/constants/color_constant.dart';
+import 'package:coflanet/constants/spacing_constant.dart';
 import 'package:coflanet/constants/style_constant.dart';
 import 'package:coflanet/data/models/survey_question_model.dart';
 import 'package:coflanet/modules/onboarding/survey_controller.dart';
@@ -50,13 +51,15 @@ class SurveyQuestionView extends GetView<SurveyController> {
             // AppBar 아래 진행바 — 섹션별 진행률
             Obx(
               () => Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 24),
+                padding: const EdgeInsets.symmetric(
+                  horizontal: AppSpacing.space24,
+                ),
                 child: SurveyProgressIndicator(
                   progress: _calculateSectionProgress(),
                 ),
               ),
             ),
-            const SizedBox(height: 8),
+            const SizedBox(height: AppSpacing.space8),
             Expanded(child: Obx(() => _buildContent(colors))),
             _buildBottomButton(colors),
           ],
@@ -111,17 +114,17 @@ class SurveyQuestionView extends GetView<SurveyController> {
 
     if (isRatingQuestion) {
       return Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 24),
+        padding: const EdgeInsets.symmetric(horizontal: AppSpacing.space24),
         child: Column(
           children: [
-            const SizedBox(height: 24),
+            const SizedBox(height: AppSpacing.space24),
             // 질문 텍스트 (상단)
             Align(
               alignment: Alignment.centerLeft,
               child: Text(question.question, style: _screenHeaderStyle(colors)),
             ),
             if (question.description.isNotEmpty) ...[
-              const SizedBox(height: 8),
+              const SizedBox(height: AppSpacing.space8),
               Align(
                 alignment: Alignment.centerLeft,
                 child: Text(
@@ -146,17 +149,17 @@ class SurveyQuestionView extends GetView<SurveyController> {
 
     // 그 외 질문 유형은 스크롤 레이아웃
     return SingleChildScrollView(
-      padding: const EdgeInsets.symmetric(horizontal: 24),
+      padding: const EdgeInsets.symmetric(horizontal: AppSpacing.space24),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          const SizedBox(height: 24),
+          const SizedBox(height: AppSpacing.space24),
 
           // 질문 텍스트
           Text(question.question, style: _screenHeaderStyle(colors)),
 
           if (question.description.isNotEmpty) ...[
-            const SizedBox(height: 8),
+            const SizedBox(height: AppSpacing.space8),
             Text(
               question.description,
               style: AppTextStyles.body2NormalRegular.copyWith(
@@ -165,12 +168,12 @@ class SurveyQuestionView extends GetView<SurveyController> {
             ),
           ],
 
-          const SizedBox(height: 32),
+          const SizedBox(height: AppSpacing.space32),
 
           // 질문 유형별 옵션 렌더링
           _buildOptionsForType(colors, question),
 
-          const SizedBox(height: 24),
+          const SizedBox(height: AppSpacing.space24),
         ],
       ),
     );
@@ -187,7 +190,7 @@ class SurveyQuestionView extends GetView<SurveyController> {
       final buttonText = '선택했어요';
 
       return Container(
-        padding: const EdgeInsets.all(24),
+        padding: const EdgeInsets.all(AppSpacing.space24),
         decoration: BoxDecoration(
           color: colors.backgroundNormalNormal,
           boxShadow: AppShadows.shadowBlackNormal,
@@ -251,7 +254,7 @@ class SurveyQuestionView extends GetView<SurveyController> {
           children: question.options
               .map(
                 (option) => Padding(
-                  padding: const EdgeInsets.only(bottom: 12),
+                  padding: const EdgeInsets.only(bottom: AppSpacing.space12),
                   child: SurveyCheckboxItem(
                     label: option.label,
                     icon: option.icon,
@@ -271,7 +274,7 @@ class SurveyQuestionView extends GetView<SurveyController> {
           children: question.options
               .map(
                 (option) => Padding(
-                  padding: const EdgeInsets.only(bottom: 12),
+                  padding: const EdgeInsets.only(bottom: AppSpacing.space12),
                   child: SurveyCheckboxItem(
                     label: option.label,
                     icon: option.icon,
@@ -311,7 +314,7 @@ class SurveyQuestionView extends GetView<SurveyController> {
     return Column(
       children: items.map((item) {
         return Padding(
-          padding: const EdgeInsets.only(bottom: 16),
+          padding: const EdgeInsets.only(bottom: AppSpacing.space16),
           child: SurveyMultiRatingItem(
             item: item,
             selectedValue: controller.getMultiRating(item.id),
@@ -347,7 +350,7 @@ class SurveyQuestionView extends GetView<SurveyController> {
         ),
 
         // "잘 모르겠어요" 링크 (그리드 아래, Figma)
-        const SizedBox(height: 20),
+        const SizedBox(height: AppSpacing.space20),
         GestureDetector(
           onTap: () => controller.selectOption('unknown'),
           child: Text(

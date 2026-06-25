@@ -4,6 +4,7 @@ import 'package:get/get.dart';
 import 'package:coflanet/constants/app_color_scheme.dart';
 import 'package:coflanet/constants/asset_constant.dart';
 import 'package:coflanet/constants/color_constant.dart';
+import 'package:coflanet/constants/spacing_constant.dart';
 import 'package:coflanet/constants/style_constant.dart';
 import 'package:coflanet/modules/onboarding/survey_controller.dart';
 import 'package:coflanet/widgets/buttons/primary_button.dart';
@@ -47,11 +48,11 @@ class SurveyIntroView extends GetView<SurveyController> {
       body: SafeArea(
         top: false,
         child: Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 24),
+          padding: const EdgeInsets.symmetric(horizontal: AppSpacing.space24),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              const SizedBox(height: 24),
+              const SizedBox(height: AppSpacing.space24),
 
               // Figma: "[이름]님의 취향을 찾으러 가볼까요?"
               Text(
@@ -59,7 +60,7 @@ class SurveyIntroView extends GetView<SurveyController> {
                 style: _screenHeaderStyle(colors),
               ),
               Text('찾으러 가볼까요?', style: _screenHeaderStyle(colors)),
-              const SizedBox(height: 16),
+              const SizedBox(height: AppSpacing.space16),
 
               // 안내 문구
               Text(
@@ -90,14 +91,14 @@ class SurveyIntroView extends GetView<SurveyController> {
                 text: '취향 찾으러 가기',
                 onPressed: () => controller.startSurvey(),
               ),
-              const SizedBox(height: 12),
+              const SizedBox(height: AppSpacing.space12),
 
               // Figma: "나중에 찾기" 링크
               Center(
                 child: GestureDetector(
                   onTap: () => controller.skipSurvey(),
                   child: Padding(
-                    padding: const EdgeInsets.symmetric(vertical: 8),
+                    padding: const EdgeInsets.symmetric(vertical: AppSpacing.space8),
                     child: Text(
                       '나중에 찾기',
                       style: AppTextStyles.body2NormalMedium.copyWith(

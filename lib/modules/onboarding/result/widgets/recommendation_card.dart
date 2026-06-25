@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:coflanet/constants/app_color_scheme.dart';
 import 'package:coflanet/constants/color_constant.dart';
+import 'package:coflanet/constants/radius_constant.dart';
+import 'package:coflanet/constants/spacing_constant.dart';
 import 'package:coflanet/constants/style_constant.dart';
 import 'package:coflanet/constants/util_constant.dart';
 import 'package:coflanet/data/models/survey_result_model.dart';
@@ -51,11 +53,13 @@ class RecommendationCard extends StatelessWidget {
       onTap: onTap,
       child: AnimatedContainer(
         duration: const Duration(milliseconds: 180),
-        margin: const EdgeInsets.only(bottom: 16),
-        padding: const EdgeInsets.all(24), // Figma: padding 24px
+        margin: const EdgeInsets.only(bottom: AppSpacing.space16),
+        padding: const EdgeInsets.all(AppSpacing.space24), // Figma: padding 24px
         decoration: BoxDecoration(
           color: colors.backgroundNormalNormal,
-          borderRadius: BorderRadius.circular(40), // Figma: border-radius 40px
+          borderRadius: BorderRadius.circular(
+            AppRadius.sectionRadius,
+          ), // Figma: border-radius 40px
           border: Border.all(
             color: colors.primaryNormal, // Figma: 항상 보라 보더
             width: 1,
@@ -72,7 +76,7 @@ class RecommendationCard extends StatelessWidget {
                 _buildMatchBadge(context, matchPercent),
               ],
             ),
-            const SizedBox(height: 16), // Figma: gap 16px
+            const SizedBox(height: AppSpacing.space16), // Figma: gap 16px
             // ── 아이템: 썸네일 + 텍스트 ──
             Row(
               crossAxisAlignment: CrossAxisAlignment.start,
@@ -85,7 +89,7 @@ class RecommendationCard extends StatelessWidget {
                       height: 88,
                       decoration: BoxDecoration(
                         color: colors.backgroundNormalAlternative,
-                        borderRadius: BorderRadius.circular(12),
+                        borderRadius: BorderRadius.circular(AppRadius.lg),
                       ),
                       clipBehavior: Clip.antiAlias,
                       child: rec.imageUrl != null && rec.imageUrl!.isNotEmpty
@@ -107,7 +111,7 @@ class RecommendationCard extends StatelessWidget {
                     Positioned(right: 4, bottom: 4, child: likeButton),
                   ],
                 ),
-                const SizedBox(width: 12),
+                const SizedBox(width: AppSpacing.space12),
                 // 텍스트 컬럼
                 Expanded(
                   child: Column(
@@ -122,35 +126,42 @@ class RecommendationCard extends StatelessWidget {
                         maxLines: 1,
                         overflow: TextOverflow.ellipsis,
                       ),
-                      const SizedBox(height: 4),
+                      const SizedBox(height: AppSpacing.space4),
                       _buildPriceRow(colors, rec),
                     ],
                   ),
                 ),
               ],
             ),
-            const SizedBox(height: 16),
+            const SizedBox(height: AppSpacing.space16),
 
             // ── 커피 프로필 (Figma: 회색 배경, radius 24) ──
             Container(
-              padding: const EdgeInsets.fromLTRB(24, 16, 24, 24),
+              padding: const EdgeInsets.fromLTRB(
+                AppSpacing.space24,
+                AppSpacing.space16,
+                AppSpacing.space24,
+                AppSpacing.space24,
+              ),
               decoration: BoxDecoration(
                 color: colors.componentFillNormal,
-                borderRadius: BorderRadius.circular(24),
+                borderRadius: BorderRadius.circular(AppRadius.xxxl),
               ),
               child: Column(
                 children: [
                   _buildTasteBars(colors, rec.tasteProfile),
                   Container(
                     height: 1,
-                    margin: const EdgeInsets.symmetric(vertical: 16),
+                    margin: const EdgeInsets.symmetric(
+                      vertical: AppSpacing.space16,
+                    ),
                     color: colors.componentFillNormal,
                   ),
                   _buildFlavorTags(colors, rec.flavorTags),
                 ],
               ),
             ),
-            const SizedBox(height: 16),
+            const SizedBox(height: AppSpacing.space16),
 
             // ── 하단: 판매링크 버튼 (Figma: 회색 배경, 보라 텍스트) ──
             // [백엔드 API 연동 대기] 판매 링크 이동 동작
@@ -166,7 +177,7 @@ class RecommendationCard extends StatelessWidget {
     return Container(
       width: 24,
       height: 24,
-      padding: const EdgeInsets.all(2),
+      padding: const EdgeInsets.all(AppSpacing.space2),
       child: Container(
         width: 18,
         height: 18,
@@ -195,7 +206,10 @@ class RecommendationCard extends StatelessWidget {
         : AppColor.colorGlobalBlue50;
 
     return Container(
-      padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
+      padding: const EdgeInsets.symmetric(
+        horizontal: AppSpacing.space8,
+        vertical: AppSpacing.space4,
+      ),
       decoration: BoxDecoration(
         color: badgeBackground,
         borderRadius: BorderRadius.circular(99),
@@ -266,7 +280,7 @@ class RecommendationCard extends StatelessWidget {
                   ),
                 ),
               ),
-              const SizedBox(width: 12),
+              const SizedBox(width: AppSpacing.space12),
               // 게이지 (Figma: flex-grow, 8px, violet 채움)
               Expanded(
                 child: Container(
@@ -287,7 +301,7 @@ class RecommendationCard extends StatelessWidget {
                   ),
                 ),
               ),
-              const SizedBox(width: 12),
+              const SizedBox(width: AppSpacing.space12),
               // 점수 (Figma: 28px, 14px Regular, 5점 환산)
               SizedBox(
                 width: 28,
@@ -315,7 +329,10 @@ class RecommendationCard extends StatelessWidget {
       runSpacing: 4,
       children: tags.map((tag) {
         return Container(
-          padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 6),
+          padding: const EdgeInsets.symmetric(
+            horizontal: AppSpacing.space8,
+            vertical: AppSpacing.space6,
+          ),
           decoration: BoxDecoration(
             color: colors.componentFillNormal,
             borderRadius: BorderRadius.circular(99),
@@ -336,7 +353,10 @@ class RecommendationCard extends StatelessWidget {
   Widget _buildPurchaseButton(AppColorScheme colors) {
     return Container(
       width: double.infinity,
-      padding: const EdgeInsets.symmetric(vertical: 9, horizontal: 20),
+      padding: const EdgeInsets.symmetric(
+        vertical: 9,
+        horizontal: AppSpacing.space20,
+      ),
       decoration: BoxDecoration(
         color: colors.componentFillNormal,
         borderRadius: BorderRadius.circular(99),

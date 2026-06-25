@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:coflanet/constants/color_constant.dart';
 import 'package:coflanet/constants/radius_constant.dart';
+import 'package:coflanet/constants/spacing_constant.dart';
 import 'package:coflanet/constants/style_constant.dart';
 
 /// 설문 결과 상단 보라 그라디언트 배너 — 취향 타입 헤드라인.
@@ -22,8 +23,16 @@ class ResultBanner extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      margin: const EdgeInsets.fromLTRB(20, 8, 20, 0),
-      padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 28),
+      margin: const EdgeInsets.fromLTRB(
+        AppSpacing.space20,
+        AppSpacing.space8,
+        AppSpacing.space20,
+        0,
+      ),
+      padding: const EdgeInsets.symmetric(
+        horizontal: AppSpacing.space24,
+        vertical: AppSpacing.space28,
+      ),
       decoration: BoxDecoration(
         gradient: const LinearGradient(
           begin: Alignment.topLeft,
@@ -43,7 +52,7 @@ class ResultBanner extends StatelessWidget {
               color: AppColor.staticLabelWhiteStrong.withValues(alpha: 0.8),
             ),
           ),
-          const SizedBox(height: 8),
+          const SizedBox(height: AppSpacing.space8),
 
           // 메인 헤드라인 — 2줄 + 이모지 (Figma 20-24px Bold)
           Text.rich(

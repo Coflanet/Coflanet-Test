@@ -4,6 +4,7 @@ import 'package:get/get.dart';
 import 'package:coflanet/constants/app_color_scheme.dart';
 import 'package:coflanet/constants/asset_constant.dart';
 import 'package:coflanet/constants/color_constant.dart';
+import 'package:coflanet/constants/spacing_constant.dart';
 import 'package:coflanet/constants/style_constant.dart';
 import 'package:coflanet/modules/onboarding/reason/survey_reason_controller.dart';
 import 'package:coflanet/modules/onboarding/widgets/survey_checkbox_item.dart';
@@ -39,23 +40,27 @@ class SurveyReasonView extends GetView<SurveyReasonController> {
           children: [
             // Progress bar
             Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 24),
+              padding: const EdgeInsets.symmetric(
+                horizontal: AppSpacing.space24,
+              ),
               child: SurveyProgressIndicator(progress: 1.0),
             ),
-            const SizedBox(height: 8),
+            const SizedBox(height: AppSpacing.space8),
 
             Expanded(
               child: SingleChildScrollView(
-                padding: const EdgeInsets.symmetric(horizontal: 24),
+                padding: const EdgeInsets.symmetric(
+                  horizontal: AppSpacing.space24,
+                ),
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    const SizedBox(height: 24),
+                    const SizedBox(height: AppSpacing.space24),
 
                     // Title
                     Text('커플래닛을 찾게 된', style: _screenHeaderStyle(colors)),
                     Text('이유를 알려주세요.', style: _screenHeaderStyle(colors)),
-                    const SizedBox(height: 8),
+                    const SizedBox(height: AppSpacing.space8),
 
                     // Subtitle
                     Text(
@@ -64,7 +69,7 @@ class SurveyReasonView extends GetView<SurveyReasonController> {
                         color: colors.labelAlternative,
                       ),
                     ),
-                    const SizedBox(height: 32),
+                    const SizedBox(height: AppSpacing.space32),
 
                     // Checkbox options
                     _buildOptions(),
@@ -104,7 +109,7 @@ class SurveyReasonView extends GetView<SurveyReasonController> {
         children: controller.options.map((option) {
           final isSelected = controller.isSelected(option.id);
           return Padding(
-            padding: const EdgeInsets.only(bottom: 12),
+            padding: const EdgeInsets.only(bottom: AppSpacing.space12),
             child: SurveyCheckboxItem(
               label: option.label,
               isSelected: isSelected,
@@ -120,7 +125,12 @@ class SurveyReasonView extends GetView<SurveyReasonController> {
   Widget _buildBottomCTA(AppColorScheme colors) {
     // body 가 SafeArea(top: false) 라 시스템 네비 인셋은 이미 보호됨
     return Container(
-      padding: const EdgeInsets.fromLTRB(24, 16, 24, 34),
+      padding: const EdgeInsets.fromLTRB(
+        AppSpacing.space24,
+        AppSpacing.space16,
+        AppSpacing.space24,
+        34,
+      ),
       decoration: BoxDecoration(color: colors.backgroundNormalNormal),
       child: Obx(
         () => PrimaryButton(

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:coflanet/constants/app_color_scheme.dart';
+import 'package:coflanet/constants/spacing_constant.dart';
 import 'package:coflanet/constants/style_constant.dart';
 
 /// 결과 화면 하단 액션 링크 — "추천 원두 더 보기" 아웃라인 버튼 +
@@ -26,7 +27,12 @@ class ResultBottomLinks extends StatelessWidget {
     final colors = AppColorScheme.of(context);
 
     return Padding(
-      padding: const EdgeInsets.fromLTRB(20, 16, 20, 0),
+      padding: const EdgeInsets.fromLTRB(
+        AppSpacing.space20,
+        AppSpacing.space16,
+        AppSpacing.space20,
+        0,
+      ),
       child: Column(
         children: [
           // "추천 원두 더 보기" — 풀폭 회색 보더 버튼
@@ -35,7 +41,9 @@ class ResultBottomLinks extends StatelessWidget {
             child: OutlinedButton(
               onPressed: onMoreTap,
               style: OutlinedButton.styleFrom(
-                padding: const EdgeInsets.symmetric(vertical: 14),
+                padding: const EdgeInsets.symmetric(
+                  vertical: AppSpacing.space14,
+                ),
                 side: BorderSide(color: colors.lineNormalNeutral),
                 shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(10),
@@ -49,7 +57,7 @@ class ResultBottomLinks extends StatelessWidget {
               ),
             ),
           ),
-          const SizedBox(height: 12),
+          const SizedBox(height: AppSpacing.space12),
 
           // "취향 설문 다시하기" 링크 (밑줄)
           TextButton(

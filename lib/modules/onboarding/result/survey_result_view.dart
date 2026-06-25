@@ -3,6 +3,7 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
 import 'package:coflanet/constants/app_color_scheme.dart';
 import 'package:coflanet/constants/asset_constant.dart';
+import 'package:coflanet/constants/spacing_constant.dart';
 import 'package:coflanet/constants/style_constant.dart';
 import 'package:coflanet/data/models/survey_result_model.dart';
 import 'package:coflanet/modules/onboarding/result/widgets/flavor_description_row.dart';
@@ -76,7 +77,7 @@ class SurveyResultView extends GetView<SurveyController> {
           // ── 구분선 ──
           SliverToBoxAdapter(
             child: Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 20),
+              padding: const EdgeInsets.symmetric(horizontal: AppSpacing.space20),
               child: Divider(height: 1, color: colors.lineNormalNeutral),
             ),
           ),
@@ -112,7 +113,12 @@ class SurveyResultView extends GetView<SurveyController> {
     if (descriptions.isEmpty) return const SizedBox.shrink();
 
     return Padding(
-      padding: const EdgeInsets.fromLTRB(20, 0, 20, 20),
+      padding: const EdgeInsets.fromLTRB(
+        AppSpacing.space20,
+        0,
+        AppSpacing.space20,
+        AppSpacing.space20,
+      ),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: descriptions
@@ -131,7 +137,12 @@ class SurveyResultView extends GetView<SurveyController> {
     if (recommendations.isEmpty) return const SizedBox.shrink();
 
     return Padding(
-      padding: const EdgeInsets.fromLTRB(20, 28, 20, 0),
+      padding: const EdgeInsets.fromLTRB(
+        AppSpacing.space20,
+        AppSpacing.space28,
+        AppSpacing.space20,
+        0,
+      ),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -142,7 +153,7 @@ class SurveyResultView extends GetView<SurveyController> {
             ),
             subtitle: '${controller.userName}님의 취향과 가까운 원두예요 🤗',
           ),
-          const SizedBox(height: 20),
+          const SizedBox(height: AppSpacing.space20),
           ...recommendations.map(
             // 카드 단위 Obx — 해당 카드의 선택 상태만 구독.
             // 좋아요는 슬롯 내부의 별도 Obx 가 구독 (카드 전체 리빌드 방지).
@@ -170,7 +181,12 @@ class SurveyResultView extends GetView<SurveyController> {
     return Obx(() {
       final count = controller.selectedBeanCount;
       return AppBottomBar.primaryButton(
-        padding: const EdgeInsets.fromLTRB(20, 12, 20, 12),
+        padding: const EdgeInsets.fromLTRB(
+          AppSpacing.space20,
+          AppSpacing.space12,
+          AppSpacing.space20,
+          AppSpacing.space12,
+        ),
         text: '총 $count개 원두 리스트 추가',
         isEnabled: count > 0,
         onPressed: count > 0 ? () => controller.completeOnboarding() : null,

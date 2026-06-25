@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:coflanet/constants/app_color_scheme.dart';
 import 'package:coflanet/constants/color_constant.dart';
 import 'package:coflanet/constants/radius_constant.dart';
+import 'package:coflanet/constants/spacing_constant.dart';
 import 'package:coflanet/constants/style_constant.dart';
 
 /// 추출 기구 선택 그리드 셀 — 기구 이미지 placeholder + 라벨.
@@ -60,7 +61,7 @@ class SurveyEquipmentGridItem extends StatelessWidget {
                 size: 24,
               ),
             ),
-            const SizedBox(height: 8),
+            const SizedBox(height: AppSpacing.space8),
             Text(
               label,
               style: AppTextStyles.label1NormalMedium.copyWith(

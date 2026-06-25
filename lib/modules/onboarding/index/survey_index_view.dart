@@ -4,6 +4,8 @@ import 'package:get/get.dart';
 import 'package:coflanet/constants/app_color_scheme.dart';
 import 'package:coflanet/constants/asset_constant.dart';
 import 'package:coflanet/constants/color_constant.dart';
+import 'package:coflanet/constants/radius_constant.dart';
+import 'package:coflanet/constants/spacing_constant.dart';
 import 'package:coflanet/constants/style_constant.dart';
 import 'package:coflanet/core/storage/local_storage.dart';
 import 'package:coflanet/modules/onboarding/survey_controller.dart';
@@ -37,11 +39,11 @@ class SurveyIndexView extends GetView<SurveyController> {
       body: SafeArea(
         top: false,
         child: Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 24),
+          padding: const EdgeInsets.symmetric(horizontal: AppSpacing.space24),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              const SizedBox(height: 24),
+              const SizedBox(height: AppSpacing.space24),
 
               // Badge text
               Text(
@@ -50,12 +52,12 @@ class SurveyIndexView extends GetView<SurveyController> {
                   color: colors.primaryNormal,
                 ),
               ),
-              const SizedBox(height: 8),
+              const SizedBox(height: AppSpacing.space8),
 
               // Main title
               Text('$userName님께', style: _screenHeaderStyle(colors)),
               Text('커피 경험 질문을 드릴게요!', style: _screenHeaderStyle(colors)),
-              const SizedBox(height: 16),
+              const SizedBox(height: AppSpacing.space16),
 
               // Subtitle
               Text(
@@ -70,7 +72,7 @@ class SurveyIndexView extends GetView<SurveyController> {
                   color: colors.labelAlternative,
                 ),
               ),
-              const SizedBox(height: 32),
+              const SizedBox(height: AppSpacing.space32),
 
               // 3-step vertical stepper (Figma: Survey_01.png)
               _buildStepIndicator(colors, 1, '커피 경험 질문', isActive: true),
@@ -145,7 +147,7 @@ class SurveyIndexView extends GetView<SurveyController> {
             ),
           ),
         ),
-        const SizedBox(width: 12),
+        const SizedBox(width: AppSpacing.space12),
         // Label
         Text(
           label,
@@ -180,7 +182,7 @@ class SurveyIndexView extends GetView<SurveyController> {
           backgroundColor: colors.primaryNormal,
           foregroundColor: AppColor.staticLabelWhiteNormal,
           shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(12),
+            borderRadius: BorderRadius.circular(AppRadius.lg),
           ),
           elevation: 0,
         ),

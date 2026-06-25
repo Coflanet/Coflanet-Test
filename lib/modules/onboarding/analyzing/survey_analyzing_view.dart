@@ -4,6 +4,7 @@ import 'package:coflanet/constants/app_color_scheme.dart';
 import 'package:coflanet/constants/asset_constant.dart';
 import 'package:coflanet/constants/color_constant.dart';
 import 'package:coflanet/constants/radius_constant.dart';
+import 'package:coflanet/constants/spacing_constant.dart';
 import 'package:coflanet/constants/style_constant.dart';
 import 'package:coflanet/modules/onboarding/survey_controller.dart';
 
@@ -39,7 +40,7 @@ class SurveyAnalyzingView extends GetView<SurveyController> {
       ),
       body: Center(
         child: Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 24),
+          padding: const EdgeInsets.symmetric(horizontal: AppSpacing.space24),
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
@@ -66,7 +67,7 @@ class SurveyAnalyzingView extends GetView<SurveyController> {
                           size: 64,
                           color: colors.labelAssistive,
                         ),
-                        const SizedBox(height: 8),
+                        const SizedBox(height: AppSpacing.space8),
                         SizedBox(
                           width: 120,
                           child: LinearProgressIndicator(
@@ -82,7 +83,7 @@ class SurveyAnalyzingView extends GetView<SurveyController> {
                 ),
               ),
 
-              const SizedBox(height: 48),
+              const SizedBox(height: AppSpacing.space48),
 
               // Analysis text
               Text(
@@ -144,7 +145,7 @@ class _LoadingDotsState extends State<_LoadingDots>
             final opacity = 0.3 + 0.7 * (1 - (value - 0.5).abs() * 2);
 
             return Container(
-              margin: const EdgeInsets.symmetric(horizontal: 4),
+              margin: const EdgeInsets.symmetric(horizontal: AppSpacing.space4),
               width: 8,
               height: 8,
               decoration: BoxDecoration(

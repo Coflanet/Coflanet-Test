@@ -5,6 +5,7 @@ import 'package:coflanet/constants/app_color_scheme.dart';
 import 'package:coflanet/constants/asset_constant.dart';
 import 'package:coflanet/constants/color_constant.dart';
 import 'package:coflanet/constants/radius_constant.dart';
+import 'package:coflanet/constants/spacing_constant.dart';
 import 'package:coflanet/constants/style_constant.dart';
 import 'package:coflanet/modules/onboarding/survey_controller.dart';
 import 'package:coflanet/widgets/buttons/primary_button.dart';
@@ -61,7 +62,7 @@ class SurveyCompleteView extends GetView<SurveyController> {
         children: [
           Expanded(
             child: Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 24),
+              padding: const EdgeInsets.symmetric(horizontal: AppSpacing.space24),
               child: Column(
                 children: [
                   const Spacer(flex: 2),
@@ -98,7 +99,7 @@ class SurveyCompleteView extends GetView<SurveyController> {
                               size: 64,
                               color: colors.primaryNormal,
                             ),
-                            const SizedBox(height: 8),
+                            const SizedBox(height: AppSpacing.space8),
                             Text(
                               'Mascot',
                               style: AppTextStyles.caption1Regular.copyWith(
@@ -120,7 +121,12 @@ class SurveyCompleteView extends GetView<SurveyController> {
           // Bottom CTA area (BottomSheet_CTA style)
           // SafeArea minimum: 제스처 네비=기존 34px 유지, 3버튼 네비=시스템 바 위로
           Container(
-            padding: const EdgeInsets.fromLTRB(24, 16, 24, 0),
+            padding: const EdgeInsets.fromLTRB(
+              AppSpacing.space24,
+              AppSpacing.space16,
+              AppSpacing.space24,
+              0,
+            ),
             decoration: BoxDecoration(color: colors.backgroundNormalNormal),
             child: SafeArea(
               top: false,

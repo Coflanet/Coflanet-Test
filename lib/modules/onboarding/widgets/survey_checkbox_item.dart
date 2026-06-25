@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:coflanet/constants/app_color_scheme.dart';
 import 'package:coflanet/constants/radius_constant.dart';
+import 'package:coflanet/constants/spacing_constant.dart';
 import 'package:coflanet/constants/style_constant.dart';
 
 /// Survey checkbox item matching storyboard design
@@ -34,7 +35,7 @@ class SurveyCheckboxItem extends StatelessWidget {
       onTap: onTap,
       child: AnimatedContainer(
         duration: const Duration(milliseconds: 200),
-        padding: const EdgeInsets.all(16),
+        padding: const EdgeInsets.all(AppSpacing.space16),
         decoration: BoxDecoration(
           // Figma: 선택됨 = 흰색 배경, 미선택 = 연한 회색 배경
           color: isSelected
@@ -58,7 +59,7 @@ class SurveyCheckboxItem extends StatelessWidget {
                 alignment: Alignment.center,
                 child: Text(icon!, style: AppTextStyles.emojiNormal),
               ),
-              const SizedBox(width: 12),
+              const SizedBox(width: AppSpacing.space12),
             ],
 
             // Label and description
@@ -76,7 +77,7 @@ class SurveyCheckboxItem extends StatelessWidget {
                     ),
                   ),
                   if (description != null) ...[
-                    const SizedBox(height: 4),
+                    const SizedBox(height: AppSpacing.space4),
                     Text(
                       description!,
                       style: AppTextStyles.caption1Regular.copyWith(

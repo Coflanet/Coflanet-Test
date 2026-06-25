@@ -3,6 +3,8 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:coflanet/constants/app_color_scheme.dart';
+import 'package:coflanet/constants/radius_constant.dart';
+import 'package:coflanet/constants/spacing_constant.dart';
 import 'package:coflanet/constants/style_constant.dart';
 import 'package:coflanet/core/base/base_controller.dart';
 import 'package:coflanet/core/services/survey_service.dart';
@@ -522,7 +524,9 @@ class _ErrorDialogState extends State<_ErrorDialog> {
 
     return AlertDialog(
       backgroundColor: colors.backgroundElevatedNormal,
-      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
+      shape: RoundedRectangleBorder(
+        borderRadius: BorderRadius.circular(AppRadius.xl),
+      ),
       title: Text(
         '분석 오류',
         style: AppTextStyles.heading2Bold.copyWith(color: colors.labelNormal),
@@ -539,7 +543,7 @@ class _ErrorDialogState extends State<_ErrorDialog> {
             ),
           ),
           if (widget.errorDetail != null) ...[
-            const SizedBox(height: 12),
+            const SizedBox(height: AppSpacing.space12),
             GestureDetector(
               onTap: () => setState(() => _showDetail = !_showDetail),
               child: Row(
@@ -549,7 +553,7 @@ class _ErrorDialogState extends State<_ErrorDialog> {
                     size: 18,
                     color: colors.labelAssistive,
                   ),
-                  const SizedBox(width: 4),
+                  const SizedBox(width: AppSpacing.space4),
                   Text(
                     '오류 상세보기',
                     style: AppTextStyles.caption1Regular.copyWith(
@@ -560,13 +564,13 @@ class _ErrorDialogState extends State<_ErrorDialog> {
               ),
             ),
             if (_showDetail) ...[
-              const SizedBox(height: 8),
+              const SizedBox(height: AppSpacing.space8),
               Container(
                 width: double.infinity,
-                padding: const EdgeInsets.all(10),
+                padding: const EdgeInsets.all(AppSpacing.space10),
                 decoration: BoxDecoration(
                   color: colors.componentFillNormal,
-                  borderRadius: BorderRadius.circular(8),
+                  borderRadius: BorderRadius.circular(AppRadius.md),
                 ),
                 child: SelectableText(
                   widget.errorDetail!,

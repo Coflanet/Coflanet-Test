@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:coflanet/constants/app_color_scheme.dart';
 import 'package:coflanet/constants/color_constant.dart';
 import 'package:coflanet/constants/radius_constant.dart';
+import 'package:coflanet/constants/spacing_constant.dart';
 import 'package:coflanet/constants/style_constant.dart';
 import 'package:coflanet/data/models/survey_question_model.dart';
 
@@ -34,7 +35,7 @@ class SurveyMultiRatingItem extends StatelessWidget {
     final colors = AppColorScheme.of(context);
 
     return Container(
-      padding: const EdgeInsets.all(16),
+      padding: const EdgeInsets.all(AppSpacing.space16),
       decoration: BoxDecoration(
         color: colors.backgroundNormalNormal,
         borderRadius: AppRadius.lgBorder,
@@ -50,7 +51,7 @@ class SurveyMultiRatingItem extends StatelessWidget {
               color: colors.labelNormal,
             ),
           ),
-          const SizedBox(height: 4),
+          const SizedBox(height: AppSpacing.space4),
 
           // 설명 텍스트
           if (item.description.isNotEmpty) ...[
@@ -60,7 +61,7 @@ class SurveyMultiRatingItem extends StatelessWidget {
                 color: colors.labelAlternative,
               ),
             ),
-            const SizedBox(height: 12),
+            const SizedBox(height: AppSpacing.space12),
           ],
 
           // 레이팅 버튼 행
@@ -78,7 +79,7 @@ class SurveyMultiRatingItem extends StatelessWidget {
 
               // 보통 (hasNeutral 일 때만)
               if (item.hasNeutral) ...[
-                const SizedBox(width: 8),
+                const SizedBox(width: AppSpacing.space8),
                 Expanded(
                   child: _RatingButton(
                     emoji: '😐',
@@ -90,7 +91,7 @@ class SurveyMultiRatingItem extends StatelessWidget {
               ],
 
               // 좋아요
-              const SizedBox(width: 8),
+              const SizedBox(width: AppSpacing.space8),
               Expanded(
                 child: _RatingButton(
                   emoji: '👍',
@@ -129,7 +130,10 @@ class _RatingButton extends StatelessWidget {
       onTap: onTap,
       child: AnimatedContainer(
         duration: const Duration(milliseconds: 150),
-        padding: const EdgeInsets.symmetric(vertical: 12, horizontal: 8),
+        padding: const EdgeInsets.symmetric(
+          vertical: AppSpacing.space12,
+          horizontal: AppSpacing.space8,
+        ),
         decoration: BoxDecoration(
           color: isSelected ? colors.primaryLight : colors.componentFillNormal,
           borderRadius: AppRadius.mdBorder,
@@ -142,7 +146,7 @@ class _RatingButton extends StatelessWidget {
           mainAxisSize: MainAxisSize.min,
           children: [
             Text(emoji, style: const TextStyle(fontSize: 24)),
-            const SizedBox(height: 4),
+            const SizedBox(height: AppSpacing.space4),
             Text(
               label,
               style: AppTextStyles.caption1Medium.copyWith(

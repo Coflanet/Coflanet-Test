@@ -4,6 +4,7 @@ import 'package:get/get.dart';
 import 'package:coflanet/constants/app_color_scheme.dart';
 import 'package:coflanet/constants/asset_constant.dart';
 import 'package:coflanet/constants/color_constant.dart';
+import 'package:coflanet/constants/spacing_constant.dart';
 import 'package:coflanet/constants/style_constant.dart';
 import 'package:coflanet/modules/onboarding/survey_controller.dart';
 import 'package:coflanet/widgets/buttons/primary_button.dart';
@@ -54,15 +55,17 @@ class SurveySectionIntroView extends GetView<SurveyController> {
           children: [
             Expanded(
               child: Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 24),
+                padding: const EdgeInsets.symmetric(
+                  horizontal: AppSpacing.space24,
+                ),
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    const SizedBox(height: 24),
+                    const SizedBox(height: AppSpacing.space24),
 
                     // Main title based on section
                     _buildTitle(colors, sectionNumber),
-                    const SizedBox(height: 16),
+                    const SizedBox(height: AppSpacing.space16),
 
                     // Subtitle
                     Text(
@@ -77,7 +80,7 @@ class SurveySectionIntroView extends GetView<SurveyController> {
                         color: colors.labelAlternative,
                       ),
                     ),
-                    const SizedBox(height: 32),
+                    const SizedBox(height: AppSpacing.space32),
 
                     // Vertical stepper - dynamic based on survey type
                     ..._buildStepper(colors, sectionNumber),
@@ -90,7 +93,12 @@ class SurveySectionIntroView extends GetView<SurveyController> {
 
             // Bottom CTA — body 가 SafeArea(top: false) 라 인셋은 이미 보호됨
             Container(
-              padding: const EdgeInsets.fromLTRB(24, 16, 24, 34),
+              padding: const EdgeInsets.fromLTRB(
+                AppSpacing.space24,
+                AppSpacing.space16,
+                AppSpacing.space24,
+                34,
+              ),
               decoration: BoxDecoration(color: colors.backgroundNormalNormal),
               child: PrimaryButton(
                 text: '다음',
@@ -274,7 +282,7 @@ class SurveySectionIntroView extends GetView<SurveyController> {
                   ),
           ),
         ),
-        const SizedBox(width: 12),
+        const SizedBox(width: AppSpacing.space12),
         // Label text
         Text(
           label,

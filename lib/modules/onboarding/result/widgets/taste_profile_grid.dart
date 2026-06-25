@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:coflanet/constants/app_color_scheme.dart';
 import 'package:coflanet/constants/color_constant.dart';
+import 'package:coflanet/constants/radius_constant.dart';
+import 'package:coflanet/constants/spacing_constant.dart';
 import 'package:coflanet/constants/style_constant.dart';
 import 'package:coflanet/data/models/survey_result_model.dart';
 
@@ -27,7 +29,12 @@ class TasteProfileGrid extends StatelessWidget {
     ];
 
     return Padding(
-      padding: const EdgeInsets.fromLTRB(20, 20, 20, 20),
+      padding: const EdgeInsets.fromLTRB(
+        AppSpacing.space20,
+        AppSpacing.space20,
+        AppSpacing.space20,
+        AppSpacing.space20,
+      ),
       child: Row(
         children: [
           for (int i = 0; i < items.length; i++)
@@ -68,10 +75,13 @@ class TasteProfileGrid extends StatelessWidget {
       children: [
         Expanded(
           child: Container(
-            padding: const EdgeInsets.symmetric(vertical: 16, horizontal: 8),
+            padding: const EdgeInsets.symmetric(
+              vertical: AppSpacing.space16,
+              horizontal: AppSpacing.space8,
+            ),
             decoration: BoxDecoration(
               color: colors.backgroundNormalNormal,
-              borderRadius: BorderRadius.circular(12),
+              borderRadius: BorderRadius.circular(AppRadius.lg),
               boxShadow: [
                 BoxShadow(
                   color: AppColor.colorGlobalCommon0.withValues(alpha: 0.06),
@@ -90,9 +100,9 @@ class TasteProfileGrid extends StatelessWidget {
                     color: colors.labelAlternative,
                   ),
                 ),
-                const SizedBox(height: 8),
+                const SizedBox(height: AppSpacing.space8),
                 Text(emoji, style: const TextStyle(fontSize: 24)),
-                const SizedBox(height: 4),
+                const SizedBox(height: AppSpacing.space4),
                 Text(
                   levelText,
                   style: AppTextStyles.caption2Medium.copyWith(
@@ -108,7 +118,7 @@ class TasteProfileGrid extends StatelessWidget {
           Container(
             width: 1,
             height: 40,
-            margin: const EdgeInsets.symmetric(horizontal: 4),
+            margin: const EdgeInsets.symmetric(horizontal: AppSpacing.space4),
             color: colors.lineNormalNeutral,
           ),
       ],

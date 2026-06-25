@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:coflanet/constants/app_color_scheme.dart';
 import 'package:coflanet/constants/asset_constant.dart';
 import 'package:coflanet/constants/radius_constant.dart';
+import 'package:coflanet/constants/spacing_constant.dart';
 import 'package:coflanet/constants/style_constant.dart';
 import 'package:coflanet/data/models/survey_result_model.dart';
 
@@ -20,8 +21,8 @@ class FlavorDescriptionRow extends StatelessWidget {
     final aromaImage = _getAromaImage(description.name);
 
     return Container(
-      margin: const EdgeInsets.only(bottom: 12),
-      padding: const EdgeInsets.all(16),
+      margin: const EdgeInsets.only(bottom: AppSpacing.space12),
+      padding: const EdgeInsets.all(AppSpacing.space16),
       decoration: BoxDecoration(
         color: colors.backgroundNormalNormal,
         borderRadius: AppRadius.lgBorder,
@@ -62,7 +63,7 @@ class FlavorDescriptionRow extends StatelessWidget {
                   : Text(description.emoji, style: AppTextStyles.emojiMedium),
             ),
           ),
-          const SizedBox(width: 14),
+          const SizedBox(width: AppSpacing.space14),
 
           // 이름 + 설명
           Expanded(
@@ -75,7 +76,7 @@ class FlavorDescriptionRow extends StatelessWidget {
                     color: colors.labelNormal,
                   ),
                 ),
-                const SizedBox(height: 4),
+                const SizedBox(height: AppSpacing.space4),
                 Text(
                   description.description,
                   style: AppTextStyles.caption1Regular.copyWith(
