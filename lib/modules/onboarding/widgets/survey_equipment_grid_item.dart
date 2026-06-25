@@ -33,6 +33,11 @@ class SurveyEquipmentGridItem extends StatelessWidget {
       onTap: onTap,
       child: AnimatedContainer(
         duration: const Duration(milliseconds: 200),
+        // Figma Check Box with img(1841:46867): padding px20/py16, gap8
+        padding: const EdgeInsets.symmetric(
+          horizontal: AppSpacing.space20,
+          vertical: AppSpacing.space16,
+        ),
         decoration: BoxDecoration(
           color: isSelected ? colors.primaryLight : colors.componentFillNormal,
           // Figma 기구 카드: Round/32 + 선택 시에만 1px primary 보더
@@ -42,31 +47,36 @@ class SurveyEquipmentGridItem extends StatelessWidget {
               : null,
         ),
         child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
+          crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
             // 기구 이미지 placeholder — [백엔드 API 연동 대기] 실제 기구 이미지
-            Container(
-              width: 48,
-              height: 48,
-              decoration: BoxDecoration(
-                color: colors.backgroundNormalAlternative,
-                borderRadius: AppRadius.mdBorder,
-              ),
-              child: Icon(
-                Icons.coffee_rounded,
-                color: isSelected
-                    ? colors.primaryNormal
-                    : colors.labelAlternative,
-                size: 24,
+            // Figma: 이미지 영역이 카드 폭을 채우고 라벨은 하단에 위치
+            Expanded(
+              child: Container(
+                alignment: Alignment.center,
+                decoration: BoxDecoration(
+                  color: colors.backgroundNormalAlternative,
+                  borderRadius: AppRadius.xlBorder,
+                ),
+                child: Icon(
+                  Icons.coffee_rounded,
+                  color: isSelected
+                      ? colors.primaryNormal
+                      : colors.labelAlternative,
+                  size: 32,
+                ),
               ),
             ),
             const SizedBox(height: AppSpacing.space8),
             Text(
               label,
-              style: AppTextStyles.label1NormalMedium.copyWith(
+              // Figma: Label/1/Normal SemiBold(14), 선택 시 violet
+              style: AppTextStyles.label1NormalBold.copyWith(
                 color: isSelected ? colors.primaryNormal : colors.labelNormal,
               ),
               textAlign: TextAlign.center,
+              maxLines: 1,
+              overflow: TextOverflow.ellipsis,
             ),
           ],
         ),

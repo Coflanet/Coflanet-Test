@@ -48,15 +48,14 @@ class SurveyQuestionView extends GetView<SurveyController> {
       body: SafeArea(
         child: Column(
           children: [
-            // AppBar 아래 진행바 — 섹션별 진행률
+            // AppBar 아래 진행바 — 전체 설문 진행률(현재/총 질문)
+            // Figma: 인디케이터는 전 화면 단조 증가(섹션 리셋 없음).
             Obx(
               () => Padding(
                 padding: const EdgeInsets.symmetric(
-                  horizontal: AppSpacing.space24,
+                  horizontal: AppSpacing.space20,
                 ),
-                child: SurveyProgressIndicator(
-                  progress: _calculateSectionProgress(),
-                ),
+                child: SurveyProgressIndicator(progress: controller.progress),
               ),
             ),
             const SizedBox(height: AppSpacing.space8),
@@ -114,7 +113,7 @@ class SurveyQuestionView extends GetView<SurveyController> {
 
     if (isRatingQuestion) {
       return Padding(
-        padding: const EdgeInsets.symmetric(horizontal: AppSpacing.space24),
+        padding: const EdgeInsets.symmetric(horizontal: AppSpacing.space20),
         child: Column(
           children: [
             const SizedBox(height: AppSpacing.space24),
@@ -149,7 +148,7 @@ class SurveyQuestionView extends GetView<SurveyController> {
 
     // 그 외 질문 유형은 스크롤 레이아웃
     return SingleChildScrollView(
-      padding: const EdgeInsets.symmetric(horizontal: AppSpacing.space24),
+      padding: const EdgeInsets.symmetric(horizontal: AppSpacing.space20),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -190,7 +189,11 @@ class SurveyQuestionView extends GetView<SurveyController> {
       final buttonText = '선택했어요';
 
       return Container(
-        padding: const EdgeInsets.all(AppSpacing.space24),
+        // Figma BottomSheet_CTA: 좌우 16 패딩 + 풀폭 pill 버튼
+        padding: const EdgeInsets.symmetric(
+          horizontal: AppSpacing.space16,
+          vertical: AppSpacing.space16,
+        ),
         decoration: BoxDecoration(
           color: colors.backgroundNormalNormal,
           boxShadow: AppShadows.shadowBlackNormal,
@@ -202,30 +205,6 @@ class SurveyQuestionView extends GetView<SurveyController> {
         ),
       );
     });
-  }
-
-  /// 현재 섹션 내 진행률 계산
-  /// Standard: Section 1 (0-1), Section 2 (2-5), Section 3 (6-9)
-  /// Lifestyle: Section 1 (0-1), Section 2 (2-5), Section 3 (6-9), Section 4 (10-11)
-  double _calculateSectionProgress() {
-    final step = controller.currentStep;
-    final isLifestyle = controller.surveyType == SurveyType.lifestyle;
-
-    if (step <= 1) {
-      // 섹션 1: step 0-1 (질문 2개)
-      return (step + 1) / 2;
-    } else if (step <= 5) {
-      // 섹션 2: step 2-5 (질문 4개)
-      return (step - 2 + 1) / 4;
-    } else if (step <= 9) {
-      // 섹션 3: step 6-9 (질문 4개)
-      return (step - 6 + 1) / 4;
-    } else if (isLifestyle && step <= 11) {
-      // 섹션 4 (lifestyle 전용): step 10-11 (질문 2개)
-      return (step - 10 + 1) / 2;
-    } else {
-      return 1.0;
-    }
   }
 
   /// 현재 답변에서 선택된 rating 값 추출 (-1/0/1)
@@ -254,7 +233,7 @@ class SurveyQuestionView extends GetView<SurveyController> {
           children: question.options
               .map(
                 (option) => Padding(
-                  padding: const EdgeInsets.only(bottom: AppSpacing.space12),
+                  padding: const EdgeInsets.only(bottom: AppSpacing.space8),
                   child: SurveyCheckboxItem(
                     label: option.label,
                     icon: option.icon,
@@ -274,7 +253,7 @@ class SurveyQuestionView extends GetView<SurveyController> {
           children: question.options
               .map(
                 (option) => Padding(
-                  padding: const EdgeInsets.only(bottom: AppSpacing.space12),
+                  padding: const EdgeInsets.only(bottom: AppSpacing.space8),
                   child: SurveyCheckboxItem(
                     label: option.label,
                     icon: option.icon,
@@ -332,14 +311,14 @@ class SurveyQuestionView extends GetView<SurveyController> {
 
     return Column(
       children: [
-        // 기구 그리드 (5개 옵션)
+        // 기구 그리드 (5개 옵션) — Figma: 정사각 카드(156×156) 2열, 간격 8
         GridView.count(
           crossAxisCount: 2,
           shrinkWrap: true,
           physics: const NeverScrollableScrollPhysics(),
-          mainAxisSpacing: 12,
-          crossAxisSpacing: 12,
-          childAspectRatio: 1.2,
+          mainAxisSpacing: AppSpacing.space8,
+          crossAxisSpacing: AppSpacing.space8,
+          childAspectRatio: 1.0,
           children: question.options.map((option) {
             return SurveyEquipmentGridItem(
               label: option.label,
