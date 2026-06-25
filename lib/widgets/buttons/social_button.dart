@@ -3,6 +3,7 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:coflanet/constants/app_color_scheme.dart';
 import 'package:coflanet/constants/asset_constant.dart';
 import 'package:coflanet/constants/color_constant.dart';
+import 'package:coflanet/constants/spacing_constant.dart';
 import 'package:coflanet/constants/style_constant.dart';
 
 enum SocialButtonType { kakao, naver, apple }
@@ -33,7 +34,8 @@ class SocialButton extends StatelessWidget {
       label: _semanticLabel,
       child: SizedBox(
         width: double.infinity,
-        height: 52,
+        // Figma `Button/Solid` py-12 + content(텍스트 24·아이콘 20) = 48
+        height: AppSpacing.space48,
         child: ElevatedButton(
           onPressed: onPressed,
           style: ElevatedButton.styleFrom(
@@ -60,10 +62,12 @@ class SocialButton extends StatelessWidget {
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
                     _buildIcon(),
-                    const SizedBox(width: 8),
+                    // Figma 버튼 content gap = 6 (space6)
+                    const SizedBox(width: AppSpacing.space6),
                     Text(
                       _buttonText,
-                      style: AppTextStyles.headline2Bold.copyWith(
+                      // Figma `Button/Solid` 라벨: 16·SemiBold(w600)·lh1.5 = body1NormalBold
+                      style: AppTextStyles.body1NormalBold.copyWith(
                         color: _foregroundColor,
                       ),
                     ),
@@ -121,15 +125,16 @@ class SocialButton extends StatelessWidget {
 
   Widget _buildIcon() {
     switch (type) {
+      // Figma `Left Icon` 높이 20
       case SocialButtonType.kakao:
-        return SvgPicture.asset(AssetPath.iconKakao, width: 24, height: 24);
+        return SvgPicture.asset(AssetPath.iconKakao, width: 20, height: 20);
       case SocialButtonType.naver:
-        return SvgPicture.asset(AssetPath.iconNaver, width: 24, height: 24);
+        return SvgPicture.asset(AssetPath.iconNaver, width: 20, height: 20);
       case SocialButtonType.apple:
         return SvgPicture.asset(
           AssetPath.iconApple,
-          width: 24,
-          height: 24,
+          width: 20,
+          height: 20,
           colorFilter: const ColorFilter.mode(
             AppColor.colorGlobalCommon100,
             BlendMode.srcIn,
