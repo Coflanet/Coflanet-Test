@@ -26,7 +26,8 @@ class HomeMakerSection extends StatelessWidget {
         children: [
           Text(
             '커피 메이커가 필요하신가요?',
-            style: AppTextStyles.body1NormalBold.copyWith(
+            // Figma Home 섹션 타이틀: SemiBold 20 = heading2Bold
+            style: AppTextStyles.heading2Bold.copyWith(
               color: colors.labelStrong,
             ),
           ),

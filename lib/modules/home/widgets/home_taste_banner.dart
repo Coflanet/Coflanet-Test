@@ -72,7 +72,8 @@ class HomeTasteBanner extends StatelessWidget {
                     Flexible(
                       child: Text(
                         typeLabel.isNotEmpty ? typeLabel : '나의 커피 취향',
-                        style: AppTextStyles.body1NormalBold.copyWith(
+                        // Figma 취향 라벨(111:16033): SemiBold 18 = headline1Bold
+                        style: AppTextStyles.headline1Bold.copyWith(
                           color: AppColor.staticLabelBlackNormal,
                         ),
                         maxLines: 1,
@@ -114,18 +115,19 @@ class HomeTasteBanner extends StatelessWidget {
   }
 
   Widget _buildChip(String label) {
+    // Figma Chip/Action(113:15685): px8 py6, radius 8, static black @8%, Medium 14
     return Container(
       padding: const EdgeInsets.symmetric(
-        horizontal: AppSpacing.space10,
+        horizontal: AppSpacing.space8,
         vertical: AppSpacing.space6,
       ),
       decoration: BoxDecoration(
-        color: AppColor.colorGlobalCommon100.withValues(alpha: 0.55),
-        borderRadius: AppRadius.fullBorder,
+        color: AppColor.staticBlack.withValues(alpha: 0.08),
+        borderRadius: AppRadius.mdBorder,
       ),
       child: Text(
         label,
-        style: AppTextStyles.caption1Medium.copyWith(
+        style: AppTextStyles.label1NormalMedium.copyWith(
           color: AppColor.staticLabelBlackNormal,
         ),
       ),

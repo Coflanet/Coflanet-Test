@@ -35,8 +35,8 @@ import 'package:coflanet/routes/app_pages.dart';
 class HomeContent extends GetView<HomeController> {
   const HomeContent({super.key});
 
-  /// 최상위 섹션 사이 공통 간격
-  static const double _sectionGap = AppSpacing.sm;
+  /// 최상위 섹션 사이 공통 간격 — Figma Home `Contents`(83:13149) gap 4 = 카드 패턴 sectionGap
+  static const double _sectionGap = AppSpacing.sectionGap;
 
   @override
   Widget build(BuildContext context) {

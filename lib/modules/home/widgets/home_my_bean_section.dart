@@ -35,8 +35,13 @@ class HomeMyBeanSection extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    // Figma subscribe_item_list(83:13151): 보라 카드 radius40, pt32/pb16,
+    // 헤더 px24·리스트 px16, 헤더↔리스트 gap16.
     return Container(
-      padding: const EdgeInsets.all(AppSpacing.md),
+      padding: const EdgeInsets.only(
+        top: AppSpacing.space32,
+        bottom: AppSpacing.space16,
+      ),
       decoration: BoxDecoration(
         // 브랜드 보라 고정 카드 (테마 무관) — raw 팔레트 직접 사용
         color: AppColor.colorGlobalViolet50,
@@ -45,28 +50,42 @@ class HomeMyBeanSection extends StatelessWidget {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              SectionTitle(
-                title: '레시피를 시작해볼까요?',
-                titleStyle: AppTextStyles.body1NormalBold.copyWith(
-                  color: AppColor.colorGlobalCommon100,
-                ),
-              ),
-              GestureDetector(
-                onTap: onEditTap,
-                child: Text(
-                  '편집하기',
-                  style: AppTextStyles.caption1Regular.copyWith(
-                    color: AppColor.colorGlobalCommon100.withValues(alpha: 0.8),
+          Padding(
+            padding: const EdgeInsets.symmetric(
+              horizontal: AppSpacing.space24,
+            ),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                SectionTitle(
+                  title: '레시피를 시작해볼까요?',
+                  // Figma 헤더(83:13153): SemiBold 20 = heading2Bold
+                  titleStyle: AppTextStyles.heading2Bold.copyWith(
+                    color: AppColor.colorGlobalCommon100,
                   ),
                 ),
-              ),
-            ],
+                GestureDetector(
+                  onTap: onEditTap,
+                  child: Text(
+                    '편집하기',
+                    // Figma Button/Text/Assistive(83:13154): SemiBold 16, label/neutral(불투명도 0.88)
+                    style: AppTextStyles.body1NormalBold.copyWith(
+                      color: AppColor.colorGlobalCommon100.withValues(
+                        alpha: 0.88,
+                      ),
+                    ),
+                  ),
+                ),
+              ],
+            ),
           ),
-          const SizedBox(height: AppSpacing.md),
-          if (beans.isNotEmpty) _buildBeanList() else _buildEmpty(),
+          const SizedBox(height: AppSpacing.space16),
+          Padding(
+            padding: const EdgeInsets.symmetric(
+              horizontal: AppSpacing.space16,
+            ),
+            child: beans.isNotEmpty ? _buildBeanList() : _buildEmpty(),
+          ),
         ],
       ),
     );
@@ -85,13 +104,16 @@ class HomeMyBeanSection extends StatelessWidget {
             width: double.infinity,
             padding: const EdgeInsets.symmetric(vertical: AppSpacing.sm),
             decoration: BoxDecoration(
-              color: AppColor.colorGlobalCommon100.withValues(alpha: 0.2),
+              // Figma Button/Solid/Gray(83:13165): inverse/label/assistive
+              // (어두운 반투명) — 보라 카드 위에서 한 단계 가라앉은 pill.
+              color: AppColor.staticBlack.withValues(alpha: 0.2),
               borderRadius: AppRadius.fullBorder,
             ),
             child: Center(
               child: Text(
                 '전체보기',
-                style: AppTextStyles.body2NormalBold.copyWith(
+                // Figma Button/Solid/Gray(83:13165): SemiBold 16 = body1NormalBold
+                style: AppTextStyles.body1NormalBold.copyWith(
                   color: AppColor.colorGlobalCommon100,
                 ),
               ),
@@ -105,20 +127,22 @@ class HomeMyBeanSection extends StatelessWidget {
   /// 단일 원두 카드 — 썸네일 + 브랜드/구독중 뱃지 + 이름. 탭 시 상세로 이동.
   Widget _buildBeanCard(CoffeeItem item) {
     final Widget card = Container(
-      margin: const EdgeInsets.only(bottom: AppSpacing.xs),
+      margin: const EdgeInsets.only(bottom: AppSpacing.sm),
       padding: const EdgeInsets.all(AppSpacing.sm),
       decoration: BoxDecoration(
         color: AppColor.colorGlobalCommon100,
-        borderRadius: AppRadius.xlBorder,
+        // Figma Coffee Card(83:13158): radius 24 = itemRadius
+        borderRadius: AppRadius.itemRadiusBorder,
       ),
       child: Row(
         children: [
+          // Figma Thumbnail(115:16639): 세로형 84×104, inner radius 20
           Container(
-            width: 48,
-            height: 48,
+            width: 56,
+            height: 72,
             decoration: BoxDecoration(
               color: AppColor.colorGlobalCoolNeutral95,
-              borderRadius: AppRadius.mdBorder,
+              borderRadius: AppRadius.xxlBorder,
               image: item.displayImageUrl != null
                   ? DecorationImage(
                       image: NetworkImage(item.displayImageUrl!),
@@ -127,10 +151,10 @@ class HomeMyBeanSection extends StatelessWidget {
                   : null,
             ),
             child: item.displayImageUrl == null
-                ? Icon(Icons.coffee, color: item.color, size: 24)
+                ? Icon(Icons.coffee, color: item.color, size: 28)
                 : null,
           ),
-          const SizedBox(width: AppSpacing.sm),
+          const SizedBox(width: AppSpacing.md),
           Expanded(
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
@@ -142,7 +166,8 @@ class HomeMyBeanSection extends StatelessWidget {
                     Flexible(
                       child: Text(
                         item.brand ?? '브랜드명',
-                        style: AppTextStyles.caption1Regular.copyWith(
+                        // Figma 제조사(52:16183): Regular 13 = label2Regular
+                        style: AppTextStyles.label2Regular.copyWith(
                           color: AppColor.staticLabelBlackAlternative,
                         ),
                         maxLines: 1,
@@ -156,10 +181,11 @@ class HomeMyBeanSection extends StatelessWidget {
                         vertical: AppSpacing.space2,
                       ),
                       decoration: BoxDecoration(
+                        // Figma Content Badge(52:16184): primary @8%, radius 6
                         color: AppColor.colorGlobalViolet50.withValues(
-                          alpha: 0.12,
+                          alpha: 0.08,
                         ),
-                        borderRadius: AppRadius.xsBorder,
+                        borderRadius: AppRadius.smBorder,
                       ),
                       child: Text(
                         '구독중',
@@ -173,7 +199,8 @@ class HomeMyBeanSection extends StatelessWidget {
                 const SizedBox(height: AppSpacing.xxs),
                 Text(
                   item.name,
-                  style: AppTextStyles.body2NormalBold.copyWith(
+                  // Figma 원두명(52:16185): Medium 14 = label1NormalMedium
+                  style: AppTextStyles.label1NormalMedium.copyWith(
                     color: AppColor.staticLabelBlackNormal,
                   ),
                   maxLines: 2,

@@ -24,6 +24,7 @@ class CardSection extends StatelessWidget {
     super.key,
     required this.child,
     this.title,
+    this.titleStyle,
     this.trailing,
     this.padding,
     this.color,
@@ -35,6 +36,9 @@ class CardSection extends StatelessWidget {
 
   /// 카드 상단 타이틀 (없으면 헤더 영역 생략)
   final String? title;
+
+  /// 타이틀 스타일 오버라이드 (기본 body1NormalBold). 색은 labelStrong 자동 적용.
+  final TextStyle? titleStyle;
 
   /// 타이틀 우측 액션 (예: '더 보기')
   final Widget? trailing;
@@ -69,9 +73,8 @@ class CardSection extends StatelessWidget {
                 Expanded(
                   child: Text(
                     title!,
-                    style: AppTextStyles.body1NormalBold.copyWith(
-                      color: colors.labelStrong,
-                    ),
+                    style: (titleStyle ?? AppTextStyles.body1NormalBold)
+                        .copyWith(color: colors.labelStrong),
                   ),
                 ),
                 if (trailing != null) trailing!,

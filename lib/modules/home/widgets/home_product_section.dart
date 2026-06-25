@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:coflanet/constants/spacing_constant.dart';
+import 'package:coflanet/constants/style_constant.dart';
 import 'package:coflanet/data/models/survey_result_model.dart';
 import 'package:coflanet/modules/home/widgets/home_empty_card.dart';
 import 'package:coflanet/modules/home/widgets/home_section_more_button.dart';
@@ -57,6 +58,8 @@ class HomeProductSection extends StatelessWidget {
     // 큰 카드(CardSection) — 카드 안이므로 색은 of(context). 타이틀은 CardSection 소유.
     return CardSection(
       title: title,
+      // Figma Home 섹션 타이틀(83:13256 등): SemiBold 20 = heading2Bold
+      titleStyle: AppTextStyles.heading2Bold,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [

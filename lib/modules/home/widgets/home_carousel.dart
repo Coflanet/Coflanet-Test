@@ -38,12 +38,15 @@ class HomeCarousel extends StatelessWidget {
   /// 배너 탭 콜백 (action_type 분기는 호출부 담당)
   final void Function(BannerModel banner)? onBannerTap;
 
+  /// 배너 카드 종횡비 — Figma Home `banner`(115:15774) 360×203 ≈ 16:9
+  static const double _bannerAspectRatio = 16 / 9;
+
   @override
   Widget build(BuildContext context) {
     final pageCount = banners.isEmpty ? 1 : banners.length;
 
-    return SizedBox(
-      height: 376,
+    return AspectRatio(
+      aspectRatio: _bannerAspectRatio,
       child: PageView.builder(
         controller: pageController,
         itemCount: pageCount,
@@ -112,7 +115,8 @@ class HomeCarousel extends StatelessWidget {
               bottom: AppSpacing.lg,
               child: Text(
                 banner.title,
-                style: AppTextStyles.heading2Bold.copyWith(
+                // Figma banner 타이틀(115:15776): SemiBold 22 = heading1Bold
+                style: AppTextStyles.heading1Bold.copyWith(
                   color: AppColor.colorGlobalCommon100,
                 ),
                 maxLines: 2,
@@ -136,7 +140,8 @@ class HomeCarousel extends StatelessWidget {
                 child: Obx(
                   () => Text(
                     '${currentIndex.value + 1} / $pageCount',
-                    style: AppTextStyles.caption1Medium.copyWith(
+                    // Figma Pagination/Counter(143:14149): SemiBold 13 = label2Bold
+                    style: AppTextStyles.label2Bold.copyWith(
                       color: AppColor.colorGlobalCommon100,
                     ),
                   ),
