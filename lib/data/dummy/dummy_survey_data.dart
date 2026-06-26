@@ -51,7 +51,7 @@ class DummySurveyData {
           id: 'expert',
           label: '전문가',
           icon: '😎',
-          description: '레시피를 조절하며 즐겨요',
+          description: '원두·추출 변수를 깊이 다뤄요',
         ),
       ],
     ),
