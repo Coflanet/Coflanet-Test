@@ -47,8 +47,14 @@ class PlanetAccountSection extends StatelessWidget {
   Widget build(BuildContext context) {
     // 카드 안 — 활성 스킴(of(context))
     final colors = AppColorScheme.of(context);
+    // Figma(1331:16748): 타이틀 없는 셀 전용 카드, 패딩 (24,12),
+    // 표면 background/normal/alternative(#F4F4F5) = surfaceCardStrong.
     return CardSection(
-      title: '설정',
+      color: colors.surfaceCardStrong,
+      padding: const EdgeInsets.symmetric(
+        horizontal: AppSpacing.sectionPaddingHorizontal,
+        vertical: AppSpacing.sm,
+      ),
       child: Column(
         children: [
           // 테마 설정 cell — 현재 모드 라벨 표시 + 선택 모달

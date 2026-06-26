@@ -53,8 +53,13 @@ class MyPlanetContent extends GetView<MyPlanetController> {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             // ===== 1) 취향 프로필 — 큰 카드 =====
-            // 설문 데이터 유무에 따라 빈/채움 상태 자동 전환
+            // 설문 데이터 유무에 따라 빈/채움 상태 자동 전환.
+            // Figma(1331:17593): Contents inset 16 — 박스인박스 패딩.
+            // Figma 톤: 바깥 카드 = background/normal/alternative(#F4F4F5),
+            // 안쪽 태그/향미노트 = white. 가이드의 color 오버라이드 패턴으로 표현.
             CardSection(
+              color: colors.surfaceCardStrong,
+              padding: const EdgeInsets.all(AppSpacing.md),
               child: controller.hasTasteProfile
                   ? _buildFilledContent()
                   : PlanetEmptyCard(onSurveyTap: () => controller.goToSurvey()),
@@ -72,7 +77,9 @@ class MyPlanetContent extends GetView<MyPlanetController> {
             const CardGap(),
 
             // ===== 3) 내 활동 — 큰 카드 =====
+            // Figma 미존재(추출 기록 진입점, 기능 유지) — 톤은 설정 카드와 통일.
             CardSection(
+              color: colors.surfaceCardStrong,
               title: '내 활동',
               child: PlanetTextCell(
                 text: '추출 기록',
@@ -97,7 +104,8 @@ class MyPlanetContent extends GetView<MyPlanetController> {
       children: [
         // 취향 태그 4종 (모델 통째 주입 — null 가드는 위젯 내부)
         PlanetTasteTagRow(profile: controller.surveyResult?.tasteProfile),
-        const SizedBox(height: AppSpacing.lg),
+        // Figma(1341:15101): Contents gap 4 — 태그행과 향미노트 사이
+        const SizedBox(height: AppSpacing.xxs),
         // 향미 노트 리스트 카드 (인셋 CardItem 톤)
         PlanetFlavorNotesCard(flavors: controller.flavorDescriptions),
         const SizedBox(height: AppSpacing.md),

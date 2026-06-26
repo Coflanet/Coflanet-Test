@@ -26,33 +26,41 @@ class PlanetTasteTagRow extends StatelessWidget {
     return '싫음';
   }
 
+  /// 점수 → 강조색 (Figma: 카테고리가 아니라 **레벨**로 색을 정함).
+  /// 좋음=accent/background/blue, 보통=yellow, 싫음=red.
+  static Color _levelColor(int value) {
+    if (value >= 70) return AppColor.accentBackgroundBlue;
+    if (value >= 40) return AppColor.accentBackgroundYellow;
+    return AppColor.accentBackgroundRed;
+  }
+
   @override
   Widget build(BuildContext context) {
     final profile = this.profile;
     if (profile == null) return const SizedBox.shrink();
 
     final colors = AppColorScheme.of(context);
-    // Figma colors — AppColor.tasteTag* 고정 토큰
+    // Figma: 강조색은 점수 레벨(좋음/보통/싫음)에 따라 blue/yellow/red.
     final items = [
       (
         label: '산미',
         level: _levelText(profile.acidity),
-        color: AppColor.tasteTagAcidity,
+        color: _levelColor(profile.acidity),
       ),
       (
         label: '바디감',
         level: _levelText(profile.body),
-        color: AppColor.tasteTagBody,
+        color: _levelColor(profile.body),
       ),
       (
         label: '단맛',
         level: _levelText(profile.sweetness),
-        color: AppColor.tasteTagSweetness,
+        color: _levelColor(profile.sweetness),
       ),
       (
         label: '쓴맛',
         level: _levelText(profile.bitterness),
-        color: AppColor.tasteTagBitterness,
+        color: _levelColor(profile.bitterness),
       ),
     ];
 
@@ -67,8 +75,8 @@ class PlanetTasteTagRow extends StatelessWidget {
               color: items[i].color,
             ),
           ),
-          // 태그 사이 갭
-          if (i < items.length - 1) const SizedBox(width: AppSpacing.xs),
+          // 태그 사이 갭 — Figma: 2px
+          if (i < items.length - 1) const SizedBox(width: AppSpacing.space2),
         ],
       ],
     );
@@ -88,12 +96,12 @@ class PlanetTasteTagRow extends StatelessWidget {
         gradient: LinearGradient(
           begin: Alignment.topCenter,
           end: Alignment.bottomCenter,
-          stops: const [0.0, 0.5, 1.0], // 카드색 50% 까지, 이후 강조색 페이드
-          // 흰 프로필 섹션 위에서 칩으로 분리되도록 인셋 톤(surfaceCardStrong) 기반
+          stops: const [0.0, 0.6, 1.0], // 흰 베이스 60% 까지, 이후 하단 강조색 페이드
+          // Figma: 흰 베이스(background/normal/normal) + 강조색 22% 하단 오버레이.
           colors: [
-            colors.surfaceCardStrong,
-            colors.surfaceCardStrong,
-            color.withValues(alpha: 0.6),
+            colors.surfaceCard,
+            colors.surfaceCard,
+            color.withValues(alpha: 0.22),
           ],
         ),
       ),
@@ -109,10 +117,10 @@ class PlanetTasteTagRow extends StatelessWidget {
             textAlign: TextAlign.center,
           ),
           const SizedBox(height: AppSpacing.xxs),
-          // 레벨 — Figma: 14px, 400 weight
+          // 레벨 — Figma: Label 1/Normal Regular 14px, 400 weight, label/neutral
           Text(
             level,
-            style: AppTextStyles.caption1Regular.copyWith(
+            style: AppTextStyles.label1NormalRegular.copyWith(
               color: colors.labelNeutral,
             ),
             textAlign: TextAlign.center,

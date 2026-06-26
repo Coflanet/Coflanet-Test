@@ -26,11 +26,11 @@ class PlanetFlavorNotesCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final colors = AppColorScheme.of(context);
-    // 프로필 CardSection(흰 카드) 안의 인셋 리스트 → CardItem 톤(surfaceCardStrong)
+    // Figma(2208:17420): 회색 프로필 카드 안의 흰 향미노트 컨테이너, radius 40.
     return Container(
       decoration: BoxDecoration(
-        color: colors.surfaceCardStrong,
-        borderRadius: AppRadius.itemRadiusBorder,
+        color: colors.surfaceCard,
+        borderRadius: AppRadius.sectionRadiusBorder,
       ),
       child: Column(
         children: List.generate(flavors.length, (index) {
@@ -38,15 +38,15 @@ class PlanetFlavorNotesCard extends StatelessWidget {
           return Column(
             children: [
               _buildFlavorNoteItem(flavor, colors),
-              // 마지막 항목 뒤에는 구분선 없음 — 구분선 색은 lineSolidNeutral
-              // (계정 컨테이너의 lineNormalNeutral 과 다른 토큰)
-              // indent = 좌패딩(lg) + 아바타(48) + 텍스트갭(sm) — 텍스트 시작선 정렬
+              // 마지막 항목 뒤에는 구분선 없음.
+              // Figma(2208:17422): 컨테이너 패딩(24) 안에서 풀폭 — 아바타 아래까지 가로지름.
+              // 색은 line/normal/alternative.
               if (index < flavors.length - 1)
                 Divider(
                   height: 1,
-                  indent: AppSpacing.lg + 48 + AppSpacing.sm,
-                  endIndent: AppSpacing.lg,
-                  color: colors.lineSolidNeutral,
+                  indent: AppSpacing.xl,
+                  endIndent: AppSpacing.xl,
+                  color: colors.lineNormalAlternative,
                 ),
             ],
           );
@@ -57,16 +57,17 @@ class PlanetFlavorNotesCard extends StatelessWidget {
 
   Widget _buildFlavorNoteItem(FlavorDescription flavor, AppColorScheme colors) {
     return Padding(
+      // Figma(2208:17421): 컨테이너 px24 / 행 py20
       padding: const EdgeInsets.symmetric(
-        horizontal: AppSpacing.lg,
-        vertical: AppSpacing.md,
+        horizontal: AppSpacing.xl,
+        vertical: AppSpacing.lg,
       ),
       child: Row(
         children: [
           // 아로마 아바타 — Figma: 48px 원 + componentFillNormal 배경 + 일러스트
           Container(
-            width: 48,
-            height: 48,
+            width: AppSpacing.xxxl,
+            height: AppSpacing.xxxl,
             clipBehavior: Clip.antiAlias,
             decoration: BoxDecoration(
               shape: BoxShape.circle,
@@ -74,8 +75,8 @@ class PlanetFlavorNotesCard extends StatelessWidget {
             ),
             child: Image.asset(
               _flavorImagePath(flavor.title),
-              width: 48,
-              height: 48,
+              width: AppSpacing.xxxl,
+              height: AppSpacing.xxxl,
               fit: BoxFit.cover,
               errorBuilder: (context, error, stackTrace) {
                 return Center(
@@ -102,7 +103,8 @@ class PlanetFlavorNotesCard extends StatelessWidget {
                 const SizedBox(height: AppSpacing.space2),
                 Text(
                   flavor.description,
-                  style: AppTextStyles.caption1Regular.copyWith(
+                  // Figma: Label 2/Regular 13px, label/alternative
+                  style: AppTextStyles.label2Regular.copyWith(
                     color: colors.labelAlternative,
                   ),
                   maxLines: 2,
@@ -111,8 +113,8 @@ class PlanetFlavorNotesCard extends StatelessWidget {
               ],
             ),
           ),
-          // Figma: 행 우측 chevron
-          const SizedBox(width: AppSpacing.sm),
+          // Figma: 행 우측 chevron (콘텐츠와 8px 간격)
+          const SizedBox(width: AppSpacing.xs),
           Icon(
             Icons.chevron_right_rounded,
             size: 24,

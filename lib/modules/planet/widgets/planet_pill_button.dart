@@ -26,16 +26,16 @@ class PlanetPillButton extends StatelessWidget {
       onTap: onTap,
       child: Container(
         width: double.infinity,
-        padding: const EdgeInsets.symmetric(
-          vertical: AppSpacing.buttonPaddingV,
-        ),
+        // Figma(1341:15093): py12, h52, component/fill/alternative, pill
+        padding: const EdgeInsets.symmetric(vertical: AppSpacing.sm),
         decoration: BoxDecoration(
           color: colors.componentFillNormal,
           borderRadius: AppRadius.fullBorder, // pill
         ),
         child: Text(
           text,
-          style: AppTextStyles.headline2Bold.copyWith(
+          // Figma: Body 1/Normal Bold 16px, primary/normal
+          style: AppTextStyles.body1NormalBold.copyWith(
             color: colors.primaryNormal,
           ),
           textAlign: TextAlign.center,
