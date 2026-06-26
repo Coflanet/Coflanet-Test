@@ -7,18 +7,16 @@ import 'package:coflanet/constants/style_constant.dart';
 import 'package:coflanet/constants/util_constant.dart';
 import 'package:coflanet/data/models/survey_result_model.dart';
 
-/// 추천 원두 카드 — Figma CSS 사양 1:1 구현.
+/// 추천 원두 카드 — Figma Survey_Result `Preference_Card`(1264:49163) 1:1.
 ///
-/// 구성: 체크박스 + 일치율 뱃지 / 썸네일(88x88) + 이름·가격 /
-/// 커피 프로필(맛바 5축 + 향미 태그) / 판매링크 버튼.
+/// 구조(gap 16): ① Top[체크박스 / 썸네일88+텍스트(일치율 배지·이름·가격)] ②
+/// Coffee Profile 박스(맛바 5축 + 향미칩) ③ 판매링크 버튼.
+/// 카드: 흰 배경 + 1px primary 보더 + radius 40 + padding 24. 그림자 없음.
 ///
 /// 반응성 설계:
 /// - [isSelected] 는 평범한 bool — 호출부에서 카드 단위 Obx 로 주입.
-/// - 좋아요 버튼은 [likeButton] 위젯 슬롯으로 주입 — 호출부에서 별도 Obx 로
-///   감싸 좋아요 토글이 카드 전체를 리빌드하지 않게 한다 (원본 중첩 Obx 보존).
-///
-/// 맛바/향미 태그는 공통 위젯(AppAnimatedTasteBar/FlavorTag)과 디자인이 달라
-/// (정적 바 + 5점 환산 점수 / 무보더 칩) 카드 내부 private 으로 유지한다.
+/// - 좋아요 버튼은 [likeButton] 슬롯으로 주입(Figma 미존재, 기능 유지를 위해
+///   썸네일 오버레이로 잔류) — 호출부에서 별도 Obx 로 감싼다.
 class RecommendationCard extends StatelessWidget {
   const RecommendationCard({
     super.key,
@@ -31,7 +29,7 @@ class RecommendationCard extends StatelessWidget {
   /// 추천 원두 데이터
   final CoffeeRecommendationModel recommendation;
 
-  /// 리스트 추가 선택 여부 (체크박스/보더 강조)
+  /// 리스트 추가 선택 여부 (체크박스 강조)
   final bool isSelected;
 
   /// 카드 탭 — 선택 토글
@@ -51,37 +49,23 @@ class RecommendationCard extends StatelessWidget {
 
     return GestureDetector(
       onTap: onTap,
-      child: AnimatedContainer(
-        duration: const Duration(milliseconds: 180),
-        margin: const EdgeInsets.only(bottom: AppSpacing.space16),
-        padding: const EdgeInsets.all(AppSpacing.space24), // Figma: padding 24px
+      child: Container(
+        padding: const EdgeInsets.all(AppSpacing.space24),
         decoration: BoxDecoration(
           color: colors.backgroundNormalNormal,
-          borderRadius: BorderRadius.circular(
-            AppRadius.sectionRadius,
-          ), // Figma: border-radius 40px
-          border: Border.all(
-            color: colors.primaryNormal, // Figma: 항상 보라 보더
-            width: 1,
-          ),
+          borderRadius: AppRadius.sectionRadiusBorder, // Figma: Round/40
+          border: Border.all(color: colors.primaryNormal),
         ),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            // ── 상단: 체크박스 + 일치율 뱃지 ──
-            Row(
-              children: [
-                _buildCheckbox(colors),
-                const Spacer(),
-                _buildMatchBadge(context, matchPercent),
-              ],
-            ),
-            const SizedBox(height: AppSpacing.space16), // Figma: gap 16px
-            // ── 아이템: 썸네일 + 텍스트 ──
+            // ── Top: 체크박스 + (썸네일 + 텍스트) ──
+            _buildCheckbox(colors),
+            const SizedBox(height: AppSpacing.space8),
             Row(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                // 썸네일 (88x88, radius 12) + 좋아요 토글 오버레이
+                // 썸네일 (88x88, radius 12) + 좋아요 오버레이
                 Stack(
                   children: [
                     Container(
@@ -89,7 +73,7 @@ class RecommendationCard extends StatelessWidget {
                       height: 88,
                       decoration: BoxDecoration(
                         color: colors.backgroundNormalAlternative,
-                        borderRadius: BorderRadius.circular(AppRadius.lg),
+                        borderRadius: AppRadius.lgBorder,
                       ),
                       clipBehavior: Clip.antiAlias,
                       child: rec.imageUrl != null && rec.imageUrl!.isNotEmpty
@@ -112,12 +96,13 @@ class RecommendationCard extends StatelessWidget {
                   ],
                 ),
                 const SizedBox(width: AppSpacing.space12),
-                // 텍스트 컬럼
+                // 텍스트 컬럼: 일치율 배지 / 이름 / 가격
                 Expanded(
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      // 원두 이름 (Figma: 16px Medium)
+                      _buildMatchBadge(matchPercent),
+                      const SizedBox(height: AppSpacing.space2),
                       Text(
                         rec.name,
                         style: AppTextStyles.body1NormalMedium.copyWith(
@@ -135,7 +120,7 @@ class RecommendationCard extends StatelessWidget {
             ),
             const SizedBox(height: AppSpacing.space16),
 
-            // ── 커피 프로필 (Figma: 회색 배경, radius 24) ──
+            // ── Coffee Profile (회색 박스, radius 24) ──
             Container(
               padding: const EdgeInsets.fromLTRB(
                 AppSpacing.space24,
@@ -145,25 +130,21 @@ class RecommendationCard extends StatelessWidget {
               ),
               decoration: BoxDecoration(
                 color: colors.componentFillNormal,
-                borderRadius: BorderRadius.circular(AppRadius.xxxl),
+                borderRadius: AppRadius.xxxlBorder,
               ),
               child: Column(
                 children: [
                   _buildTasteBars(colors, rec.tasteProfile),
-                  Container(
-                    height: 1,
-                    margin: const EdgeInsets.symmetric(
-                      vertical: AppSpacing.space16,
-                    ),
-                    color: colors.componentFillNormal,
-                  ),
+                  const SizedBox(height: AppSpacing.space20),
+                  Container(height: 1, color: colors.lineNormalAlternative),
+                  const SizedBox(height: AppSpacing.space20),
                   _buildFlavorTags(colors, rec.flavorTags),
                 ],
               ),
             ),
             const SizedBox(height: AppSpacing.space16),
 
-            // ── 하단: 판매링크 버튼 (Figma: 회색 배경, 보라 텍스트) ──
+            // ── 판매링크 버튼 ──
             // [백엔드 API 연동 대기] 판매 링크 이동 동작
             _buildPurchaseButton(colors),
           ],
@@ -172,70 +153,61 @@ class RecommendationCard extends StatelessWidget {
     );
   }
 
-  /// Figma 체크박스: 24x24 외곽, 18x18 내부, radius 3px
+  /// Figma Control/Checkbox: 24 컨테이너 / 18 내부 박스 / radius 3
   Widget _buildCheckbox(AppColorScheme colors) {
-    return Container(
+    return SizedBox(
       width: 24,
       height: 24,
-      padding: const EdgeInsets.all(AppSpacing.space2),
-      child: Container(
-        width: 18,
-        height: 18,
-        decoration: BoxDecoration(
-          color: isSelected ? colors.primaryNormal : AppColor.transparent,
-          border: Border.all(color: colors.primaryNormal, width: 1.5),
-          borderRadius: BorderRadius.circular(3),
+      child: Center(
+        child: Container(
+          width: 18,
+          height: 18,
+          decoration: BoxDecoration(
+            color: isSelected ? colors.primaryNormal : AppColor.transparent,
+            border: Border.all(color: colors.primaryNormal, width: 1.5),
+            borderRadius: AppRadius.checkboxInnerBorder,
+          ),
+          child: isSelected
+              ? Icon(Icons.check, size: 12, color: colors.backgroundNormalNormal)
+              : null,
         ),
-        child: isSelected
-            ? Icon(Icons.check, size: 12, color: AppColor.colorGlobalCommon100)
-            : null,
       ),
     );
   }
 
-  /// 일치율 뱃지 — 다크/라이트 분기.
-  /// 다크: 검정 배경 위 윤곽 확보를 위해 배경 Blue50@0.2 + 텍스트 Blue60.
-  /// 라이트: Figma 확정본 그대로 Blue50@0.08 + 텍스트 Blue50.
-  Widget _buildMatchBadge(BuildContext context, int matchPercent) {
-    final isDark = Theme.of(context).brightness == Brightness.dark;
-    final badgeBackground = isDark
-        ? AppColor.colorGlobalBlue50.withValues(alpha: 0.2)
-        : AppColor.colorGlobalBlue50.withValues(alpha: 0.08);
-    final badgeText = isDark
-        ? AppColor.colorGlobalBlue60
-        : AppColor.colorGlobalBlue50;
-
+  /// 일치율 배지 — accent/blue 8% 배경 + accent/blue 텍스트, radius 99, 11 Regular
+  Widget _buildMatchBadge(int matchPercent) {
     return Container(
       padding: const EdgeInsets.symmetric(
         horizontal: AppSpacing.space8,
         vertical: AppSpacing.space4,
       ),
       decoration: BoxDecoration(
-        color: badgeBackground,
-        borderRadius: BorderRadius.circular(99),
+        color: AppColor.accentBackgroundBlue.withValues(alpha: 0.08),
+        borderRadius: AppRadius.fullBorder,
       ),
       child: Text(
         '일치율 $matchPercent%',
         style: AppTextStyles.caption2Regular.copyWith(
-          color: badgeText,
-          fontSize: 11,
+          color: AppColor.accentBackgroundBlue,
         ),
       ),
     );
   }
 
-  /// Figma 가격: "12,000" (16px Bold) + "원" (15px Regular)
+  /// Figma 가격: "12,000" (16 SemiBold) + "원" (15 Regular, label/neutral)
   Widget _buildPriceRow(AppColorScheme colors, CoffeeRecommendationModel rec) {
     final price = rec.discountPrice ?? rec.originalPrice;
     if (price == null) return const SizedBox.shrink();
 
     return Row(
+      crossAxisAlignment: CrossAxisAlignment.baseline,
+      textBaseline: TextBaseline.alphabetic,
       children: [
         Text(
           AppUtil.formatNumberWithComma(price),
           style: AppTextStyles.body1NormalBold.copyWith(
             color: colors.labelNormal,
-            fontWeight: FontWeight.w600,
           ),
         ),
         Text(
@@ -248,9 +220,7 @@ class RecommendationCard extends StatelessWidget {
     );
   }
 
-  /// Figma 맛바: 라벨(40px) + 게이지 + 5점 환산 점수(28px).
-  /// 정적 바(violet70) — AppAnimatedTasteBar 와 트랙색/점수 표기/애니메이션이
-  /// 달라 공통화하지 않는다 (시각 변화 0 원칙).
+  /// Figma 맛바: 라벨(40px, 14 Medium) + 게이지(8px, 5세그먼트 틱) + 점수(28px, 14 Regular).
   Widget _buildTasteBars(AppColorScheme colors, TasteProfileModel profile) {
     double toFiveScale(int value) => (value / 20).clamp(0.0, 5.0);
 
@@ -263,110 +233,134 @@ class RecommendationCard extends StatelessWidget {
     ];
 
     return Column(
-      children: items.map((item) {
-        final fiveScaleValue = toFiveScale(item.$2);
-        return SizedBox(
-          height: 20,
-          child: Row(
-            children: [
-              // 라벨 (Figma: 40px, 14px Medium)
-              SizedBox(
-                width: 40,
-                child: Text(
-                  item.$1,
-                  style: AppTextStyles.label1NormalMedium.copyWith(
-                    color: colors.labelNormal,
-                    fontSize: 14,
-                  ),
-                ),
-              ),
-              const SizedBox(width: AppSpacing.space12),
-              // 게이지 (Figma: flex-grow, 8px, violet 채움)
-              Expanded(
-                child: Container(
-                  height: 8,
-                  decoration: BoxDecoration(
-                    color: colors.componentFillNormal,
-                    borderRadius: BorderRadius.circular(99),
-                  ),
-                  child: FractionallySizedBox(
-                    alignment: Alignment.centerLeft,
-                    widthFactor: item.$2 / 100,
-                    child: Container(
-                      decoration: BoxDecoration(
-                        color: colors.primarySecondary,
-                        borderRadius: BorderRadius.circular(99),
-                      ),
+      children: [
+        for (final item in items)
+          SizedBox(
+            height: 28,
+            child: Row(
+              children: [
+                SizedBox(
+                  width: 40,
+                  child: Text(
+                    item.$1,
+                    style: AppTextStyles.label1NormalMedium.copyWith(
+                      color: colors.labelNormal,
                     ),
                   ),
                 ),
-              ),
-              const SizedBox(width: AppSpacing.space12),
-              // 점수 (Figma: 28px, 14px Regular, 5점 환산)
-              SizedBox(
-                width: 28,
-                child: Text(
-                  fiveScaleValue.toStringAsFixed(1),
-                  style: AppTextStyles.label1NormalRegular.copyWith(
-                    color: colors.labelAlternative,
-                    fontSize: 14,
+                const SizedBox(width: AppSpacing.space12),
+                Expanded(child: _buildGauge(colors, item.$2 / 100)),
+                const SizedBox(width: AppSpacing.space12),
+                SizedBox(
+                  width: 28,
+                  child: Text(
+                    toFiveScale(item.$2).toStringAsFixed(1),
+                    style: AppTextStyles.label1NormalRegular.copyWith(
+                      color: colors.labelAlternative,
+                    ),
+                    textAlign: TextAlign.right,
                   ),
-                  textAlign: TextAlign.right,
                 ),
-              ),
-            ],
-          ),
-        );
-      }).toList(),
-    );
-  }
-
-  /// Figma 향미 태그: 회색 칩 (radius 99, 무보더, h8/v6) —
-  /// FlavorTag.secondary 와 패딩/보더/radius 가 달라 공통화하지 않는다.
-  Widget _buildFlavorTags(AppColorScheme colors, List<String> tags) {
-    return Wrap(
-      spacing: 4,
-      runSpacing: 4,
-      children: tags.map((tag) {
-        return Container(
-          padding: const EdgeInsets.symmetric(
-            horizontal: AppSpacing.space8,
-            vertical: AppSpacing.space6,
-          ),
-          decoration: BoxDecoration(
-            color: colors.componentFillNormal,
-            borderRadius: BorderRadius.circular(99),
-          ),
-          child: Text(
-            tag,
-            style: AppTextStyles.label1NormalMedium.copyWith(
-              color: colors.labelNormal,
-              fontSize: 14,
+              ],
             ),
           ),
-        );
-      }).toList(),
+      ],
     );
   }
 
-  /// Figma 판매링크 버튼: 회색 배경, radius 99, 보라 텍스트
+  /// 게이지 — 트랙 + 채움(primary/secondary) + 5세그먼트 구분 틱(4개) 오버레이.
+  Widget _buildGauge(AppColorScheme colors, double fraction) {
+    final pct = (fraction.clamp(0.0, 1.0) * 100).round();
+    return SizedBox(
+      height: 8,
+      child: ClipRRect(
+        borderRadius: AppRadius.fullBorder,
+        child: Stack(
+          children: [
+            // 트랙
+            Positioned.fill(
+              child: ColoredBox(color: colors.componentFillNormal),
+            ),
+            // 채움 (flex 비율, 라운드 트랙으로 클립) — tight fit 으로 채움 폭 확보
+            Positioned.fill(
+              child: Row(
+                crossAxisAlignment: CrossAxisAlignment.stretch,
+                children: [
+                  if (pct > 0)
+                    Expanded(
+                      flex: pct,
+                      child: ColoredBox(color: colors.primarySecondary),
+                    ),
+                  if (pct < 100)
+                    Expanded(flex: 100 - pct, child: const SizedBox.shrink()),
+                ],
+              ),
+            ),
+            // 5세그먼트 틱 (4개 1px 디바이더)
+            Positioned.fill(
+              child: Row(
+                crossAxisAlignment: CrossAxisAlignment.stretch,
+                children: [
+                  for (int s = 0; s < 5; s++) ...[
+                    if (s > 0)
+                      Container(width: 1, color: colors.lineNormalNeutral),
+                    const Expanded(child: SizedBox.shrink()),
+                  ],
+                ],
+              ),
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+
+  /// Figma 향미칩: component/fill/alternative 배경, radius 8, label/normal 14 Medium.
+  Widget _buildFlavorTags(AppColorScheme colors, List<String> tags) {
+    return Align(
+      alignment: Alignment.centerLeft,
+      child: Wrap(
+        spacing: AppSpacing.space4,
+        runSpacing: AppSpacing.space4,
+        children: tags.map((tag) {
+          return Container(
+            padding: const EdgeInsets.symmetric(
+              horizontal: AppSpacing.space8,
+              vertical: AppSpacing.space6,
+            ),
+            decoration: BoxDecoration(
+              color: colors.componentFillAlternative,
+              borderRadius: AppRadius.mdBorder,
+            ),
+            child: Text(
+              tag,
+              style: AppTextStyles.label1NormalMedium.copyWith(
+                color: colors.labelNormal,
+              ),
+            ),
+          );
+        }).toList(),
+      ),
+    );
+  }
+
+  /// Figma 판매링크 버튼: component/fill 배경, radius 99(pill), primary 텍스트 15 SemiBold.
   Widget _buildPurchaseButton(AppColorScheme colors) {
     return Container(
       width: double.infinity,
       padding: const EdgeInsets.symmetric(
-        vertical: 9,
+        vertical: AppSpacing.space8,
         horizontal: AppSpacing.space20,
       ),
       decoration: BoxDecoration(
         color: colors.componentFillNormal,
-        borderRadius: BorderRadius.circular(99),
+        borderRadius: AppRadius.fullBorder,
       ),
       child: Center(
         child: Text(
           '판매링크 바로가기',
           style: AppTextStyles.body2NormalBold.copyWith(
             color: colors.primaryNormal,
-            fontWeight: FontWeight.w600,
           ),
         ),
       ),

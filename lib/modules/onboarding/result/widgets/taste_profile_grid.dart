@@ -8,9 +8,10 @@ import 'package:coflanet/data/models/survey_result_model.dart';
 
 /// 맛 프로필 4타일 그리드 — 산미/바디감/단맛/쓴맛.
 ///
-/// 값에 따라 이모지/레벨 텍스트 결정:
-/// 70 이상 👍 좋음 / 40 이상 😐 보통 / 미만 👎 싫음.
-/// Figma: 흰 pill 타일 + 옅은 그림자, 타일 사이 세로 구분선.
+/// Figma(Survey_Result `1114:59823` TasteProfile_Row_Body): 흰 타일 4개,
+/// 타일 사이 gap 2, 각 타일 radius 24·px8/py20·gap4, 레벨별 은은한 accent 틴트.
+/// 값에 따라 이모지/레벨: 70↑ 👍 좋음(blue) / 40↑ 😐 보통(yellow) / 미만 👎 싫음(red).
+/// 그림자·세로 구분선 없음(표면/틴트 대비로만 분리).
 class TasteProfileGrid extends StatelessWidget {
   const TasteProfileGrid({super.key, required this.profile});
 
@@ -28,100 +29,94 @@ class TasteProfileGrid extends StatelessWidget {
       ('쓴맛', profile.bitterness),
     ];
 
-    return Padding(
-      padding: const EdgeInsets.fromLTRB(
-        AppSpacing.space20,
-        AppSpacing.space20,
-        AppSpacing.space20,
-        AppSpacing.space20,
-      ),
+    return IntrinsicHeight(
       child: Row(
+        crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
-          for (int i = 0; i < items.length; i++)
+          for (int i = 0; i < items.length; i++) ...[
+            if (i > 0) const SizedBox(width: AppSpacing.space2),
             Expanded(
               child: _buildTile(
                 colors: colors,
                 label: items[i].$1,
                 value: items[i].$2,
-                showDivider: i < items.length - 1,
               ),
             ),
+          ],
         ],
       ),
     );
   }
 
-  /// 개별 타일 — 라벨 + 이모지 + 레벨 텍스트 (+ 우측 세로 구분선)
+  /// 개별 타일 — accent 틴트 흰 타일 + 라벨/이모지/레벨
   Widget _buildTile({
     required AppColorScheme colors,
     required String label,
     required int value,
-    required bool showDivider,
   }) {
     final String emoji;
     final String levelText;
+    final Color accent;
     if (value >= 70) {
       emoji = '👍';
       levelText = '좋음';
+      accent = AppColor.accentBackgroundBlue;
     } else if (value >= 40) {
       emoji = '😐';
       levelText = '보통';
+      accent = AppColor.accentBackgroundYellow;
     } else {
       emoji = '👎';
       levelText = '싫음';
+      accent = AppColor.accentBackgroundRed;
     }
 
-    return Row(
-      children: [
-        Expanded(
-          child: Container(
-            padding: const EdgeInsets.symmetric(
-              vertical: AppSpacing.space16,
-              horizontal: AppSpacing.space8,
+    return Container(
+      padding: const EdgeInsets.symmetric(
+        vertical: AppSpacing.space20,
+        horizontal: AppSpacing.space8,
+      ),
+      decoration: BoxDecoration(
+        // Figma: 흰 타일 + accent 블롭 틴트(22%) — 상단 은은한 틴트가 하단 흰색으로
+        // 페이드하는 그라디언트로 근사.
+        gradient: LinearGradient(
+          begin: Alignment.topCenter,
+          end: Alignment.bottomCenter,
+          stops: const [0.0, 0.5, 1.0],
+          colors: [
+            Color.alphaBlend(
+              accent.withValues(alpha: 0.20),
+              colors.backgroundNormalNormal,
             ),
-            decoration: BoxDecoration(
-              color: colors.backgroundNormalNormal,
-              borderRadius: BorderRadius.circular(AppRadius.lg),
-              boxShadow: [
-                BoxShadow(
-                  color: AppColor.colorGlobalCommon0.withValues(alpha: 0.06),
-                  blurRadius: 8,
-                  offset: const Offset(0, 2),
-                ),
-              ],
-            ),
-            child: Column(
-              mainAxisSize: MainAxisSize.min,
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                Text(
-                  label,
-                  style: AppTextStyles.caption1Medium.copyWith(
-                    color: colors.labelAlternative,
-                  ),
-                ),
-                const SizedBox(height: AppSpacing.space8),
-                Text(emoji, style: const TextStyle(fontSize: 24)),
-                const SizedBox(height: AppSpacing.space4),
-                Text(
-                  levelText,
-                  style: AppTextStyles.caption2Medium.copyWith(
-                    color: colors.labelNeutral,
-                  ),
-                ),
-              ],
-            ),
-          ),
+            colors.backgroundNormalNormal,
+            colors.backgroundNormalNormal,
+          ],
         ),
-        // 타일 사이 세로 구분선 (Figma: 얇은 회색 라인)
-        if (showDivider)
-          Container(
-            width: 1,
-            height: 40,
-            margin: const EdgeInsets.symmetric(horizontal: AppSpacing.space4),
-            color: colors.lineNormalNeutral,
+        borderRadius: AppRadius.xxxlBorder,
+      ),
+      child: Column(
+        mainAxisSize: MainAxisSize.min,
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          Text(
+            label,
+            textAlign: TextAlign.center,
+            style: AppTextStyles.headline2Bold.copyWith(
+              color: colors.labelNormal,
+            ),
           ),
-      ],
+          const SizedBox(height: AppSpacing.space4),
+          Text(emoji, style: AppTextStyles.emojiMedium.copyWith(height: 1.4)),
+          const SizedBox(height: AppSpacing.space4),
+          Text(
+            levelText,
+            textAlign: TextAlign.center,
+            style: AppTextStyles.label1NormalRegular.copyWith(
+              color: colors.labelNeutral,
+            ),
+          ),
+        ],
+      ),
     );
   }
 }

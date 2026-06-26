@@ -118,6 +118,11 @@ class AppRadius {
   static const double checkbox = sm;
   static BorderRadius get checkboxBorder => smBorder;
 
+  /// Checkbox inner box radius (3px) — Figma Control/Checkbox 18px 박스
+  static const double checkboxInner = 3.0;
+  static BorderRadius get checkboxInnerBorder =>
+      BorderRadius.circular(checkboxInner);
+
   /// Avatar radius (full)
   static const double avatar = full;
   static BorderRadius get avatarBorder => fullBorder;

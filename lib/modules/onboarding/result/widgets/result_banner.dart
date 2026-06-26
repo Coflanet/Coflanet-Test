@@ -1,12 +1,14 @@
 import 'package:flutter/material.dart';
-import 'package:coflanet/constants/color_constant.dart';
+import 'package:coflanet/constants/app_color_scheme.dart';
 import 'package:coflanet/constants/radius_constant.dart';
 import 'package:coflanet/constants/spacing_constant.dart';
 import 'package:coflanet/constants/style_constant.dart';
 
-/// 설문 결과 상단 보라 그라디언트 배너 — 취향 타입 헤드라인.
+/// 설문 결과 상단 취향 타입 배너 — Profile 카드 안의 보라 박스.
 ///
-/// Figma: 좌측 정렬, "OOO님은" 캡션 + "진하고 깊은 풍미를\n즐기시네요! ☕" 헤드라인.
+/// Figma(Survey_Result `1114:59817` Title): primary/normal 단색, radius 32,
+/// px24/py32, gap8. 캡션(inverse/label/neutral 16 Regular) + 헤드라인
+/// (inverse/label/normal 24 Bold 2줄 + 이모지). 그라디언트·그림자 없음.
 class ResultBanner extends StatelessWidget {
   const ResultBanner({
     super.key,
@@ -22,50 +24,42 @@ class ResultBanner extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final colors = AppColorScheme.of(context);
+
     return Container(
-      margin: const EdgeInsets.fromLTRB(
-        AppSpacing.space20,
-        AppSpacing.space8,
-        AppSpacing.space20,
-        0,
-      ),
+      width: double.infinity,
       padding: const EdgeInsets.symmetric(
         horizontal: AppSpacing.space24,
-        vertical: AppSpacing.space28,
+        vertical: AppSpacing.space32,
       ),
       decoration: BoxDecoration(
-        gradient: const LinearGradient(
-          begin: Alignment.topLeft,
-          end: Alignment.bottomRight,
-          colors: [AppColor.colorGlobalViolet60, AppColor.colorGlobalViolet50],
-        ),
-        borderRadius: AppRadius.xlBorder,
-        boxShadow: AppShadows.shadowPrimaryStrong,
+        color: colors.primaryNormal,
+        borderRadius: AppRadius.roundBorder,
       ),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          // 사용자 이름 라인 — 반투명 캡션 (Figma 12-14px)
+          // 캡션 — "OOO님은" (inverse/label/neutral, 16 Regular)
           Text(
             '$userName님은',
-            style: AppTextStyles.caption1Medium.copyWith(
-              color: AppColor.staticLabelWhiteStrong.withValues(alpha: 0.8),
+            style: AppTextStyles.body1NormalRegular.copyWith(
+              color: colors.inverseLabelNeutral,
             ),
           ),
           const SizedBox(height: AppSpacing.space8),
 
-          // 메인 헤드라인 — 2줄 + 이모지 (Figma 20-24px Bold)
+          // 헤드라인 — 2줄 + 이모지 (inverse/label/normal, 24 Bold)
           Text.rich(
             TextSpan(
               children: [
                 TextSpan(
                   text: '$description\n즐기시네요!',
-                  style: AppTextStyles.heading1Bold.copyWith(
-                    color: AppColor.staticLabelWhiteStrong,
-                    height: 1.4,
+                  style: AppTextStyles.title3Bold.copyWith(
+                    color: colors.inverseLabelNormal,
+                    height: 1.334,
                   ),
                 ),
-                const TextSpan(text: ' ☕', style: TextStyle(fontSize: 22)),
+                const TextSpan(text: ' ☕'),
               ],
             ),
             textAlign: TextAlign.left,

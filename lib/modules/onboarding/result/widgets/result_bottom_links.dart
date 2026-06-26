@@ -1,10 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:coflanet/constants/app_color_scheme.dart';
+import 'package:coflanet/constants/radius_constant.dart';
 import 'package:coflanet/constants/spacing_constant.dart';
 import 'package:coflanet/constants/style_constant.dart';
 
-/// 결과 화면 하단 액션 링크 — "추천 원두 더 보기" 아웃라인 버튼 +
+/// 결과 화면 Preference_List 하단 — "추천 원두 더 보기" 회색 버튼 +
 /// "취향 설문 다시하기" / "원두 선택 없이 홈으로" 링크.
+///
+/// Figma: 더 보기 = 풀폭 회색 솔리드 버튼. 다시하기 링크는 회색 텍스트.
+/// 홈으로 링크는 Figma 미존재 — 선택 0개 탈출구로 기능 유지(의도 유지).
 class ResultBottomLinks extends StatelessWidget {
   const ResultBottomLinks({
     super.key,
@@ -26,29 +30,20 @@ class ResultBottomLinks extends StatelessWidget {
   Widget build(BuildContext context) {
     final colors = AppColorScheme.of(context);
 
-    return Padding(
-      padding: const EdgeInsets.fromLTRB(
-        AppSpacing.space20,
-        AppSpacing.space16,
-        AppSpacing.space20,
-        0,
-      ),
-      child: Column(
-        children: [
-          // "추천 원두 더 보기" — 풀폭 회색 보더 버튼
-          SizedBox(
+    return Column(
+      children: [
+        // "추천 원두 더 보기" — 풀폭 회색 솔리드 버튼
+        GestureDetector(
+          onTap: onMoreTap,
+          behavior: HitTestBehavior.opaque,
+          child: Container(
             width: double.infinity,
-            child: OutlinedButton(
-              onPressed: onMoreTap,
-              style: OutlinedButton.styleFrom(
-                padding: const EdgeInsets.symmetric(
-                  vertical: AppSpacing.space14,
-                ),
-                side: BorderSide(color: colors.lineNormalNeutral),
-                shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(10),
-                ),
-              ),
+            padding: const EdgeInsets.symmetric(vertical: AppSpacing.space14),
+            decoration: BoxDecoration(
+              color: colors.componentFillStrong,
+              borderRadius: AppRadius.xlBorder,
+            ),
+            child: Center(
               child: Text(
                 '추천 원두 더 보기',
                 style: AppTextStyles.body2NormalMedium.copyWith(
@@ -57,35 +52,34 @@ class ResultBottomLinks extends StatelessWidget {
               ),
             ),
           ),
-          const SizedBox(height: AppSpacing.space12),
+        ),
+        const SizedBox(height: AppSpacing.space16),
 
-          // "취향 설문 다시하기" 링크 (밑줄)
-          TextButton(
-            onPressed: onRetakeTap,
-            child: Text(
-              '취향 설문 다시하기',
-              style: AppTextStyles.body2NormalRegular.copyWith(
-                color: colors.labelAssistive,
-                decoration: TextDecoration.underline,
-                decorationColor: colors.labelAssistive,
-              ),
+        // "취향 설문 다시하기" 링크
+        GestureDetector(
+          onTap: onRetakeTap,
+          behavior: HitTestBehavior.opaque,
+          child: Text(
+            '취향 설문 다시하기',
+            style: AppTextStyles.body2NormalRegular.copyWith(
+              color: colors.labelAlternative,
             ),
           ),
+        ),
+        const SizedBox(height: AppSpacing.space12),
 
-          // "원두 선택 없이 홈으로" 링크 (밑줄) — 선택 없이도 시작 가능한 탈출구
-          TextButton(
-            onPressed: onSkipTap,
-            child: Text(
-              '원두 선택 없이 홈으로',
-              style: AppTextStyles.body2NormalRegular.copyWith(
-                color: colors.labelAssistive,
-                decoration: TextDecoration.underline,
-                decorationColor: colors.labelAssistive,
-              ),
+        // "원두 선택 없이 홈으로" 링크 — 선택 0개 탈출구(의도 유지)
+        GestureDetector(
+          onTap: onSkipTap,
+          behavior: HitTestBehavior.opaque,
+          child: Text(
+            '원두 선택 없이 홈으로',
+            style: AppTextStyles.caption1Regular.copyWith(
+              color: colors.labelAssistive,
             ),
           ),
-        ],
-      ),
+        ),
+      ],
     );
   }
 }
