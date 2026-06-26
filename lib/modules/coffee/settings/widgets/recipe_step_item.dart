@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:coflanet/constants/app_color_scheme.dart';
+import 'package:coflanet/constants/radius_constant.dart';
+import 'package:coflanet/constants/spacing_constant.dart';
+import 'package:coflanet/constants/style_constant.dart';
 
 /// 레시피 진행 스텝 데이터
 class RecipeStep {
@@ -41,17 +44,15 @@ class RecipeStepItem extends StatelessWidget {
               width: 20,
               height: 20,
               decoration: BoxDecoration(
-                // Figma CoolNeutral96 → 시맨틱 보더/트랙
+                // Figma CoolNeutral96(#e1e2e4) — 전 스텝 균일(상태 미구분, Figma 일치)
                 color: colors.lineSolidNormal,
-                borderRadius: BorderRadius.circular(1000),
+                borderRadius: AppRadius.fullBorder,
               ),
               child: Center(
                 child: Text(
                   '${step.number}',
-                  style: TextStyle(
-                    fontFamily: 'Pretendard',
-                    fontSize: 12,
-                    fontWeight: FontWeight.w600,
+                  // Figma: Caption 1/Bold (12/600)
+                  style: AppTextStyles.caption1Bold.copyWith(
                     color: colors.labelAlternative,
                   ),
                 ),
@@ -61,28 +62,22 @@ class RecipeStepItem extends StatelessWidget {
               Container(width: 1, height: 28, color: colors.lineSolidNormal),
           ],
         ),
-        const SizedBox(width: 12),
-        // 스텝 타이틀 — Figma: width 100, 16/w500, rgba(55,56,60,0.61)
+        const SizedBox(width: AppSpacing.space12),
+        // 스텝 타이틀 — Figma: width 100, Body 1/Normal-Medium (16/500)
         SizedBox(
           width: 100,
           child: Text(
             step.title,
-            style: TextStyle(
-              fontFamily: 'Pretendard',
-              fontSize: 16,
-              fontWeight: FontWeight.w500,
+            style: AppTextStyles.body1NormalMedium.copyWith(
               color: colors.labelAlternative,
             ),
           ),
         ),
         const Spacer(),
-        // 스텝 설명 — Figma: 14/w400, rgba(55,56,60,0.35), 우측정렬
+        // 스텝 설명 — Figma: Label 1/Normal-Regular (14/400), 우측정렬
         Text(
           step.description,
-          style: TextStyle(
-            fontFamily: 'Pretendard',
-            fontSize: 14,
-            fontWeight: FontWeight.w400,
+          style: AppTextStyles.label1NormalRegular.copyWith(
             color: colors.labelAssistive,
           ),
           textAlign: TextAlign.right,

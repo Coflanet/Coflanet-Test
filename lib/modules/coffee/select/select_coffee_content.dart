@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:coflanet/constants/app_color_scheme.dart';
 import 'package:coflanet/constants/color_constant.dart';
+import 'package:coflanet/constants/radius_constant.dart';
+import 'package:coflanet/constants/spacing_constant.dart';
 import 'package:coflanet/constants/style_constant.dart';
 import 'package:coflanet/data/models/coffee_item_model.dart';
 import 'package:coflanet/modules/coffee/coffee_controller.dart';
@@ -26,10 +28,11 @@ class SelectCoffeeContent extends GetView<SelectCoffeeController> {
   Widget build(BuildContext context) {
     final colors = AppColorScheme.of(context);
     // Scaffold/SafeArea 는 MainShellView 가 담당.
-    // SizedBox.expand 로 가용 공간 전체 채움. 배경: Figma #F4F4F5
+    // SizedBox.expand 로 가용 공간 전체 채움.
+    // 캔버스: Figma POC 원두목록 = Static/Black (라이트·다크 공통, 카드 밖 검정).
     return SizedBox.expand(
       child: Container(
-        color: colors.backgroundNormalAlternative,
+        color: AppColor.staticBlack,
         child: Obx(() {
           if (controller.isLoading) {
             return Center(
@@ -50,17 +53,20 @@ class SelectCoffeeContent extends GetView<SelectCoffeeController> {
   /// 탭하면 원두 추가 화면으로 진입
   Widget _buildEmptyState(AppColorScheme colors) {
     return Padding(
-      padding: const EdgeInsets.fromLTRB(20, 20, 20, 20),
+      padding: const EdgeInsets.all(AppSpacing.space20),
       child: Column(
         children: [
           GestureDetector(
             onTap: controller.addNewCoffee,
             behavior: HitTestBehavior.opaque,
             child: Container(
-              padding: const EdgeInsets.fromLTRB(20, 24, 20, 24),
+              padding: const EdgeInsets.symmetric(
+                horizontal: AppSpacing.space20,
+                vertical: AppSpacing.space24,
+              ),
               decoration: BoxDecoration(
                 color: colors.primaryNormal, // Figma 보라 #6541F2
-                borderRadius: BorderRadius.circular(24),
+                borderRadius: AppRadius.xxxlBorder,
               ),
               child: Row(
                 children: [
@@ -76,7 +82,7 @@ class SelectCoffeeContent extends GetView<SelectCoffeeController> {
                             height: 1.4,
                           ),
                         ),
-                        const SizedBox(height: 2),
+                        const SizedBox(height: AppSpacing.space2),
                         Text(
                           '레시피를 등록해보세요',
                           style: AppTextStyles.body1NormalBold.copyWith(
@@ -87,7 +93,7 @@ class SelectCoffeeContent extends GetView<SelectCoffeeController> {
                       ],
                     ),
                   ),
-                  const SizedBox(width: 12),
+                  const SizedBox(width: AppSpacing.space12),
                   // 우측 일러스트 자리 — 반투명 박스 + 이미지 아이콘
                   Container(
                     width: 64,
@@ -96,7 +102,7 @@ class SelectCoffeeContent extends GetView<SelectCoffeeController> {
                       color: AppColor.colorGlobalCommon100.withValues(
                         alpha: 0.15,
                       ),
-                      borderRadius: BorderRadius.circular(12),
+                      borderRadius: AppRadius.lgBorder,
                     ),
                     child: Icon(
                       Icons.image_outlined,
@@ -135,7 +141,12 @@ class SelectCoffeeContent extends GetView<SelectCoffeeController> {
   /// 일반 모드 — 아코디언 카드 리스트
   Widget _buildNormalModeList(List<CoffeeItem> items) {
     return ListView.builder(
-      padding: const EdgeInsets.fromLTRB(20, 0, 20, 80),
+      padding: const EdgeInsets.fromLTRB(
+        AppSpacing.space20,
+        0,
+        AppSpacing.space20,
+        AppSpacing.space80,
+      ),
       itemCount: items.length + 1,
       itemBuilder: (context, index) {
         if (index == items.length) {
@@ -161,7 +172,12 @@ class SelectCoffeeContent extends GetView<SelectCoffeeController> {
       children: [
         Expanded(
           child: ReorderableListView.builder(
-            padding: const EdgeInsets.fromLTRB(20, 0, 20, 80),
+            padding: const EdgeInsets.fromLTRB(
+              AppSpacing.space20,
+              0,
+              AppSpacing.space20,
+              AppSpacing.space80,
+            ),
             itemCount: items.length,
             onReorderItem: (oldIndex, newIndex) {
               controller.reorderItems(oldIndex, newIndex);
@@ -170,7 +186,7 @@ class SelectCoffeeContent extends GetView<SelectCoffeeController> {
               return Material(
                 elevation: 4,
                 color: AppColor.transparent,
-                borderRadius: BorderRadius.circular(20),
+                borderRadius: AppRadius.xxlBorder,
                 child: child,
               );
             },
@@ -184,7 +200,7 @@ class SelectCoffeeContent extends GetView<SelectCoffeeController> {
                 final isSelected = controller.isSelectedForEdit(item.id);
 
                 return Padding(
-                  padding: const EdgeInsets.only(bottom: 8),
+                  padding: const EdgeInsets.only(bottom: AppSpacing.space8),
                   child: SizedBox(
                     height: 80,
                     child: Row(
@@ -195,12 +211,12 @@ class SelectCoffeeContent extends GetView<SelectCoffeeController> {
                           onTap: () => controller.toggleEditSelection(item.id),
                           child: _buildEditCheckbox(colors, isSelected),
                         ),
-                        const SizedBox(width: 12),
+                        const SizedBox(width: AppSpacing.space12),
                         // 카드
                         Expanded(
                           child: _buildEditModeCard(colors, item, isSelected),
                         ),
-                        const SizedBox(width: 12),
+                        const SizedBox(width: AppSpacing.space12),
                         // 드래그 핸들
                         ReorderableDragStartListener(
                           index: index,
@@ -220,7 +236,7 @@ class SelectCoffeeContent extends GetView<SelectCoffeeController> {
         ),
         // 추가 버튼 (ReorderableListView 밖)
         Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 20),
+          padding: const EdgeInsets.symmetric(horizontal: AppSpacing.space20),
           child: _buildListAddButton(true),
         ),
       ],
@@ -231,8 +247,10 @@ class SelectCoffeeContent extends GetView<SelectCoffeeController> {
   Widget _buildListAddButton(bool isEditing) {
     return Padding(
       padding: EdgeInsets.only(
-        top: isEditing ? 4 : 8, // Figma: 편집 모드는 더 좁은 간격
-        bottom: isEditing ? 8 : 16,
+        top: isEditing
+            ? AppSpacing.space4
+            : AppSpacing.space8, // Figma: 편집 모드는 더 좁은 간격
+        bottom: isEditing ? AppSpacing.space8 : AppSpacing.space16,
       ),
       child: Center(
         child: BeanAddButton(
@@ -281,10 +299,13 @@ class SelectCoffeeContent extends GetView<SelectCoffeeController> {
       onTap: () => controller.toggleEditSelection(item.id),
       child: Container(
         height: 80,
-        padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
+        padding: const EdgeInsets.symmetric(
+          horizontal: AppSpacing.space16,
+          vertical: AppSpacing.space12,
+        ),
         decoration: BoxDecoration(
           color: colors.surfaceCard, // Figma: #FFFFFF (다크: coolNeutral15)
-          borderRadius: BorderRadius.circular(20),
+          borderRadius: AppRadius.xxlBorder,
           border: isSelected
               ? Border.all(color: colors.primaryNormal, width: 2)
               : null,
@@ -304,7 +325,7 @@ class SelectCoffeeContent extends GetView<SelectCoffeeController> {
               height: 48,
               decoration: BoxDecoration(
                 color: colors.componentFillStrong,
-                borderRadius: BorderRadius.circular(12),
+                borderRadius: AppRadius.lgBorder,
                 image: displayImage != null
                     ? DecorationImage(
                         image: NetworkImage(displayImage),
@@ -316,7 +337,7 @@ class SelectCoffeeContent extends GetView<SelectCoffeeController> {
                   ? Icon(Icons.coffee, color: item.color, size: 24)
                   : null,
             ),
-            const SizedBox(width: 12), // Figma: gap 12px
+            const SizedBox(width: AppSpacing.space12), // Figma: gap 12px
             // 텍스트 — 브랜드 + 이름
             Expanded(
               child: Column(
@@ -331,7 +352,7 @@ class SelectCoffeeContent extends GetView<SelectCoffeeController> {
                     maxLines: 1,
                     overflow: TextOverflow.ellipsis,
                   ),
-                  const SizedBox(height: 4), // Figma: gap 4px
+                  const SizedBox(height: AppSpacing.space4), // Figma: gap 4px
                   Text(
                     item.name,
                     style: AppTextStyles.body2NormalBold.copyWith(
@@ -350,32 +371,35 @@ class SelectCoffeeContent extends GetView<SelectCoffeeController> {
   }
 
   /// 편집 모드 체크박스 — 카드 밖 좌측
-  /// Figma: 24x24 외곽, 18x18 내부, border 1.5px, radius 5px
+  /// Figma: 24x24 외곽(터치 타깃), 18x18 내부, border 1.5px, radius checkbox(6)
   Widget _buildEditCheckbox(AppColorScheme colors, bool isSelected) {
-    return Container(
+    return SizedBox(
       width: 24,
       height: 24,
-      padding: const EdgeInsets.all(3), // Figma: 3px padding
-      child: AnimatedContainer(
-        duration: const Duration(milliseconds: 150),
-        width: 18,
-        height: 18,
-        decoration: BoxDecoration(
-          borderRadius: BorderRadius.circular(5), // Figma: 5px radius
-          color: isSelected ? colors.primaryNormal : AppColor.transparent,
-          border: Border.all(
-            // Figma: rgba(112,115,124,0.22) → 시맨틱 보더
-            color: isSelected ? colors.primaryNormal : colors.lineNormalNormal,
-            width: 1.5, // Figma: 1.5px border
+      child: Center(
+        child: AnimatedContainer(
+          duration: const Duration(milliseconds: 150),
+          width: 18,
+          height: 18,
+          decoration: BoxDecoration(
+            borderRadius: AppRadius.checkboxBorder, // Figma checkbox radius
+            color: isSelected ? colors.primaryNormal : AppColor.transparent,
+            border: Border.all(
+              // Figma: rgba(112,115,124,0.22) → 시맨틱 보더
+              color: isSelected
+                  ? colors.primaryNormal
+                  : colors.lineNormalNormal,
+              width: 1.5, // Figma: 1.5px border
+            ),
           ),
+          child: isSelected
+              ? const Icon(
+                  Icons.check,
+                  size: 12,
+                  color: AppColor.colorGlobalCommon100,
+                )
+              : null,
         ),
-        child: isSelected
-            ? const Icon(
-                Icons.check,
-                size: 12,
-                color: AppColor.colorGlobalCommon100,
-              )
-            : null,
       ),
     );
   }
@@ -388,7 +412,10 @@ class SelectCoffeeContent extends GetView<SelectCoffeeController> {
 
       // 고정 다크 액션 바(순흑 + LiquidGlass 버튼) — 의도된 디자인. 테마 무관.
       return Container(
-        padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 16),
+        padding: const EdgeInsets.symmetric(
+          horizontal: AppSpacing.space20,
+          vertical: AppSpacing.space16,
+        ),
         decoration: const BoxDecoration(
           color: AppColor.colorGlobalCommon0, // 순흑 #000000
         ),
@@ -440,7 +467,7 @@ class SelectCoffeeContent extends GetView<SelectCoffeeController> {
     return Container(
       width: size,
       height: size,
-      padding: const EdgeInsets.all(6), // Figma: padding 6px
+      padding: const EdgeInsets.all(AppSpacing.space6), // Figma: padding 6px
       decoration: BoxDecoration(
         shape: BoxShape.circle,
         // Figma: Fill 레이어 — opacity 0.67 그라데이션

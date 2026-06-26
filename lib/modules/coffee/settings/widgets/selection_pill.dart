@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:coflanet/constants/app_color_scheme.dart';
+import 'package:coflanet/constants/radius_constant.dart';
+import 'package:coflanet/constants/spacing_constant.dart';
+import 'package:coflanet/constants/style_constant.dart';
 
 /// 잔수/진하기 선택 필 — 보라 연배경 + 보라 보더 카드.
 ///
@@ -30,36 +33,30 @@ class SelectionPill extends StatelessWidget {
     return GestureDetector(
       onTap: onTap,
       child: Container(
-        padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 14),
+        padding: const EdgeInsets.all(AppSpacing.space16),
         decoration: BoxDecoration(
           // Figma: Violet95 연배경 / Violet80 보더 → 시맨틱 primary 토큰
           color: colors.primaryLight,
           border: Border.all(color: colors.primarySecondary, width: 1),
-          borderRadius: BorderRadius.circular(24),
+          borderRadius: AppRadius.xxxlBorder,
         ),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.center,
           mainAxisSize: MainAxisSize.min,
           children: [
-            // 메인 텍스트 — Figma: Pretendard 18px/600, #5B35F2
+            // 메인 텍스트 — Figma: Headline 1/Bold (18/600), #5B35F2
             Text(
               mainText,
-              style: TextStyle(
-                fontFamily: 'Pretendard',
-                fontSize: 18,
-                fontWeight: FontWeight.w600,
+              style: AppTextStyles.headline1Bold.copyWith(
                 color: colors.primaryStrong,
               ),
               textAlign: TextAlign.center,
             ),
-            const SizedBox(height: 2),
-            // 서브 텍스트 — Figma: Pretendard 14px/400, rgba(55,56,60,0.61)
+            const SizedBox(height: AppSpacing.space2),
+            // 서브 텍스트 — Figma: Label 1/Normal-Regular (14/400)
             Text(
               subText,
-              style: TextStyle(
-                fontFamily: 'Pretendard',
-                fontSize: 14,
-                fontWeight: FontWeight.w400,
+              style: AppTextStyles.label1NormalRegular.copyWith(
                 color: colors.labelAlternative,
               ),
               textAlign: TextAlign.center,

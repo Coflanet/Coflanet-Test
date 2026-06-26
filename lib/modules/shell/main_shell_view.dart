@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 import 'package:coflanet/constants/app_color_scheme.dart';
 import 'package:coflanet/constants/color_constant.dart';
+import 'package:coflanet/constants/radius_constant.dart';
 import 'package:coflanet/modules/shell/main_shell_controller.dart';
 import 'package:coflanet/modules/shell/widgets/shell_tab_bar.dart';
 import 'package:coflanet/modules/shell/widgets/shell_top_navigation.dart';
@@ -54,6 +56,8 @@ class MainShellView extends GetView<MainShellController> {
               // 그 외 탭은 기존처럼 topPadding + topNavHeight 만큼 콘텐츠를 내림.
               final bool isHomeTab =
                   currentIndex == MainShellController.tabHome;
+              final bool isBeanTab =
+                  currentIndex == MainShellController.tabBean;
               final topInset = isHomeTab ? 0.0 : (topPadding + topNavHeight);
 
               if (currentIndex == MainShellController.tabMy) {
@@ -68,8 +72,28 @@ class MainShellView extends GetView<MainShellController> {
                   ),
                 );
               }
+
+              if (isBeanTab) {
+                // 원두 화면: Static/Black 캔버스(Figma POC 원두목록 = 검정 배경).
+                // ColoredBox 가 top:0 을 덮어 상태바 뒤까지 검정으로 채우고,
+                // AnnotatedRegion 으로 검정 위 상태바 아이콘을 밝게 강제한다.
+                return AnnotatedRegion<SystemUiOverlayStyle>(
+                  value: SystemUiOverlayStyle.light,
+                  child: ColoredBox(
+                    color: AppColor.staticBlack,
+                    child: Padding(
+                      padding: EdgeInsets.only(top: topInset),
+                      child: Padding(
+                        padding: EdgeInsets.only(bottom: bottomInset),
+                        child: _buildCurrentTab(currentIndex),
+                      ),
+                    ),
+                  ),
+                );
+              }
+
               // 콘텐츠 배경 — 홈은 Static/Black 캔버스(라이트·다크 공통, task 4),
-              // 그 외 미마이그레이션 탭은 기존 테마 스킴 배경 유지.
+              // 그 외 미마이그레이션 탭(쇼핑/커뮤니티)은 기존 테마 스킴 배경(둥근 시트) 유지.
               final Color contentBgColor = isHomeTab
                   ? AppColor.staticBlack
                   : colors.backgroundNormalAlternative;
@@ -115,6 +139,12 @@ class MainShellView extends GetView<MainShellController> {
                 return const SizedBox.shrink();
               }
               final bool isEditMode = _isBeanEditMode(currentIndex);
+              // 마이·원두 탭은 Static/Black 캔버스 위 — 상단 네비(카드 밖 크롬)는
+              // 캔버스(다크) 스킴으로 그려 타이틀/버튼이 검정 위에서 사라지지 않게.
+              final bool isDarkNav =
+                  currentIndex == MainShellController.tabMy ||
+                  currentIndex == MainShellController.tabBean;
+              final navColors = isDarkNav ? AppColorScheme.canvas : colors;
               // 타이틀 계산 — 마이탭 userName(RxString) 구독 보존을 위해
               // 반드시 이 Obx 클로저 안에서 동기 평가한다.
               final title = _resolveTitle(currentIndex, isEditMode);
@@ -123,15 +153,13 @@ class MainShellView extends GetView<MainShellController> {
                 title: title,
                 isEditMode: isEditMode,
                 // 편집모드에서만 백버튼 (isEditMode 는 원두 탭 전제 포함)
-                leading: isEditMode ? _buildBackButton(colors) : null,
+                leading: isEditMode ? _buildBackButton(navColors) : null,
                 // 원두 탭에서만 편집/완료 버튼
                 trailing: currentIndex == MainShellController.tabBean
-                    ? _buildEditButton(colors)
+                    ? _buildEditButton(navColors)
                     : null,
               );
-              // 마이 탭은 Static/Black 캔버스 위 — 상단 네비(카드 밖 크롬)도
-              // 캔버스(다크) 스킴으로 그려 타이틀이 검정 위에서 사라지지 않게.
-              if (currentIndex == MainShellController.tabMy) {
+              if (isDarkNav) {
                 return Theme(
                   data: Theme.of(context).copyWith(brightness: Brightness.dark),
                   child: nav,
@@ -250,7 +278,7 @@ class MainShellView extends GetView<MainShellController> {
             vertical: 8,
           ), // Adjusted padding for text visibility
           decoration: BoxDecoration(
-            borderRadius: BorderRadius.circular(99), // Figma: 99px pill
+            borderRadius: AppRadius.fullBorder, // Figma: pill
             // Figma: Tint layer for edit mode (Violet Liquid Glass Primary)
             color: isEditing
                 ? colors.primaryNormal

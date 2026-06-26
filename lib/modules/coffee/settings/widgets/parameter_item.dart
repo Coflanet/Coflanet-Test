@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:coflanet/constants/app_color_scheme.dart';
+import 'package:coflanet/constants/spacing_constant.dart';
+import 'package:coflanet/constants/style_constant.dart';
 
 /// 파라미터 그리드 1칸 — 값 + 라벨 (원두/물 온도/추출 시간/물의 양).
 ///
@@ -30,25 +32,19 @@ class ParameterItem extends StatelessWidget {
       child: Column(
         mainAxisSize: MainAxisSize.min,
         children: [
-          // 값 — Figma: Pretendard 15px/500, rgba(46,47,51,0.88)
+          // 값 — Figma: Body 2/Normal-Medium (15/500), rgba(46,47,51,0.88)
           Text(
             value,
-            style: TextStyle(
-              fontFamily: 'Pretendard',
-              fontSize: 15,
-              fontWeight: FontWeight.w500,
+            style: AppTextStyles.body2NormalMedium.copyWith(
               color: colors.labelNeutral,
             ),
             textAlign: TextAlign.center,
           ),
-          const SizedBox(height: 4),
-          // 라벨 — Figma: Pretendard 14px/400, rgba(55,56,60,0.61)
+          const SizedBox(height: AppSpacing.space4),
+          // 라벨 — Figma: Label 1/Normal-Regular (14/400)
           Text(
             label,
-            style: TextStyle(
-              fontFamily: 'Pretendard',
-              fontSize: 14,
-              fontWeight: FontWeight.w400,
+            style: AppTextStyles.label1NormalRegular.copyWith(
               color: colors.labelAlternative,
             ),
             textAlign: TextAlign.center,

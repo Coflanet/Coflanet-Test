@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:coflanet/constants/app_color_scheme.dart';
 import 'package:coflanet/constants/color_constant.dart';
 import 'package:coflanet/constants/radius_constant.dart';
+import 'package:coflanet/constants/spacing_constant.dart';
 import 'package:coflanet/constants/style_constant.dart';
 import 'package:coflanet/constants/util_constant.dart';
 import 'package:coflanet/data/models/coffee_item_model.dart';
@@ -114,7 +115,7 @@ class _CoffeeAccordionCardState extends State<CoffeeAccordionCard>
   Widget build(BuildContext context) {
     final colors = AppColorScheme.of(context);
     return Padding(
-      padding: const EdgeInsets.only(bottom: 12),
+      padding: const EdgeInsets.only(bottom: AppSpacing.space12),
       child: AnimatedContainer(
         duration: const Duration(milliseconds: 200),
         decoration: BoxDecoration(
@@ -170,7 +171,7 @@ class _CoffeeAccordionCardState extends State<CoffeeAccordionCard>
       onTap: _handleTap,
       behavior: HitTestBehavior.opaque,
       child: Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 20),
+        padding: const EdgeInsets.all(AppSpacing.space20),
         child: Row(
           children: [
             // 썸네일 — Figma: 64x64, radius 12. 네이버 이미지 우선
@@ -189,7 +190,7 @@ class _CoffeeAccordionCardState extends State<CoffeeAccordionCard>
                       )
                     : null,
                 color: displayImage != null ? colors.componentFillStrong : null,
-                borderRadius: BorderRadius.circular(12),
+                borderRadius: AppRadius.lgBorder,
                 image: displayImage != null
                     ? DecorationImage(
                         image: NetworkImage(displayImage),
@@ -201,7 +202,7 @@ class _CoffeeAccordionCardState extends State<CoffeeAccordionCard>
                   ? Icon(Icons.coffee, color: widget.item.color, size: 32)
                   : null,
             ),
-            const SizedBox(width: 16), // Figma: gap 16px
+            const SizedBox(width: AppSpacing.space16), // Figma: gap 16px
             // 텍스트 영역
             Expanded(
               child: Column(
@@ -216,7 +217,7 @@ class _CoffeeAccordionCardState extends State<CoffeeAccordionCard>
                         letterSpacing: 0.0145,
                       ),
                     ),
-                    const SizedBox(height: 6), // Figma: gap 6px
+                    const SizedBox(height: AppSpacing.space6), // Figma: gap 6px
                   ],
                   Text(
                     widget.item.name,
@@ -229,7 +230,7 @@ class _CoffeeAccordionCardState extends State<CoffeeAccordionCard>
                   ),
                   // 네이버 쇼핑 가격 표시
                   if (widget.item.naverLprice != null) ...[
-                    const SizedBox(height: 4),
+                    const SizedBox(height: AppSpacing.space4),
                     Text(
                       AppUtil.changeNumberToWon(widget.item.naverLprice!),
                       style: AppTextStyles.label1NormalMedium.copyWith(
@@ -260,13 +261,18 @@ class _CoffeeAccordionCardState extends State<CoffeeAccordionCard>
   /// 펼침 콘텐츠 — Figma: Contents
   Widget _buildExpandedContent(AppColorScheme colors) {
     return Container(
-      padding: const EdgeInsets.fromLTRB(16, 0, 16, 16),
+      padding: const EdgeInsets.fromLTRB(
+        AppSpacing.space16,
+        0,
+        AppSpacing.space16,
+        AppSpacing.space16,
+      ),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           // 커피 프로필 (맛바 + divider + 향미 태그를 한 컨테이너에)
           _buildCoffeeProfileSection(colors),
-          const SizedBox(height: 16),
+          const SizedBox(height: AppSpacing.space16),
           // 액션 버튼
           _buildActionButtons(colors),
         ],
@@ -283,10 +289,15 @@ class _CoffeeAccordionCardState extends State<CoffeeAccordionCard>
     }
 
     return Container(
-      padding: const EdgeInsets.fromLTRB(24, 16, 24, 24),
+      padding: const EdgeInsets.fromLTRB(
+        AppSpacing.space24,
+        AppSpacing.space16,
+        AppSpacing.space24,
+        AppSpacing.space24,
+      ),
       decoration: BoxDecoration(
         color: colors.componentFillNormal,
-        borderRadius: BorderRadius.circular(24),
+        borderRadius: AppRadius.xxxlBorder,
       ),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -300,18 +311,18 @@ class _CoffeeAccordionCardState extends State<CoffeeAccordionCard>
 
           // ── divider + 향미 태그 ──
           if (widget.item.allFlavorTags.isNotEmpty) ...[
-            const SizedBox(height: 20),
+            const SizedBox(height: AppSpacing.space20),
             Container(height: 1, color: colors.componentFillNormal),
-            const SizedBox(height: 20),
+            const SizedBox(height: AppSpacing.space20),
             // 향미 태그 — FlavorTag 와 보더/패딩/radius 가 달라 공통화하지 않음
             Wrap(
-              spacing: 4,
-              runSpacing: 4,
+              spacing: AppSpacing.space4,
+              runSpacing: AppSpacing.space4,
               children: widget.item.allFlavorTags.map((tag) {
                 return Container(
                   padding: const EdgeInsets.symmetric(
-                    horizontal: 8,
-                    vertical: 6,
+                    horizontal: AppSpacing.space8,
+                    vertical: AppSpacing.space6,
                   ),
                   decoration: BoxDecoration(
                     color: colors.componentFillNormal,
@@ -343,7 +354,9 @@ class _CoffeeAccordionCardState extends State<CoffeeAccordionCard>
             onTap: widget.onDetailPressed,
             child: Container(
               height: 40,
-              padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 9),
+              padding: const EdgeInsets.symmetric(
+                horizontal: AppSpacing.space20,
+              ),
               decoration: BoxDecoration(
                 // Figma: rgba(112, 115, 124, 0.08) → 시맨틱 fill
                 color: colors.componentFillNormal,
@@ -361,14 +374,16 @@ class _CoffeeAccordionCardState extends State<CoffeeAccordionCard>
             ),
           ),
         ),
-        const SizedBox(width: 4), // Figma: gap 4px
+        const SizedBox(width: AppSpacing.space4), // Figma: gap 4px
         // 주 버튼 — 레시피 실행 (보라)
         Expanded(
           child: GestureDetector(
             onTap: widget.onRecipePressed,
             child: Container(
               height: 40,
-              padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 9),
+              padding: const EdgeInsets.symmetric(
+                horizontal: AppSpacing.space20,
+              ),
               decoration: BoxDecoration(
                 color: colors.primaryNormal, // #6541F2
                 borderRadius: AppRadius.fullBorder,
