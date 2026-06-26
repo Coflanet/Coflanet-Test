@@ -4,28 +4,18 @@ import 'package:get/get.dart';
 import 'package:coflanet/constants/app_color_scheme.dart';
 import 'package:coflanet/constants/asset_constant.dart';
 import 'package:coflanet/constants/color_constant.dart';
-import 'package:coflanet/constants/radius_constant.dart';
 import 'package:coflanet/constants/spacing_constant.dart';
 import 'package:coflanet/constants/style_constant.dart';
 import 'package:coflanet/core/storage/local_storage.dart';
 import 'package:coflanet/modules/onboarding/survey_controller.dart';
+import 'package:coflanet/modules/onboarding/widgets/survey_step_indicator.dart';
+import 'package:coflanet/widgets/buttons/primary_button.dart';
 
-/// Survey Index Screen (Figma: Survey_01.png)
-/// Shows vertical stepper with 3 sections before starting survey
-/// "[이름]님께 커피 경험 질문을 드릴게요!"
+/// Survey Index Screen — Figma POC `Survey_index01` (1114:59459 / 1401:19621)
+/// 설문 시작 안내 + 진행 단계 스테퍼. 캔버스 흰색 유지(온보딩 흐름 일관).
+/// 텍스트 블록은 중앙 정렬, 스테퍼는 좌측 정렬(24px 불릿 + 연결선).
 class SurveyIndexView extends GetView<SurveyController> {
   const SurveyIndexView({super.key});
-
-  // Figma 사양: Pretendard SemiBold 22 / lineHeight 1.36 / letterSpacing -0.4268
-  // 색상은 Label/strong (#000000) 토큰 매핑
-  // Auth 카테고리에서 통일한 페이지 헤더 스타일과 동일
-  TextStyle _screenHeaderStyle(AppColorScheme colors) =>
-      AppTextStyles.heading1Bold.copyWith(
-        fontWeight: FontWeight.w600,
-        height: 1.36,
-        letterSpacing: -0.4268,
-        color: colors.labelStrong,
-      );
 
   @override
   Widget build(BuildContext context) {
@@ -38,58 +28,69 @@ class SurveyIndexView extends GetView<SurveyController> {
       appBar: _buildAppBar(colors),
       body: SafeArea(
         top: false,
-        child: Padding(
-          padding: const EdgeInsets.symmetric(horizontal: AppSpacing.space24),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              const SizedBox(height: AppSpacing.space24),
+        child: Column(
+          children: [
+            Expanded(
+              child: Padding(
+                padding: const EdgeInsets.symmetric(
+                  horizontal: AppSpacing.space24,
+                ),
+                child: Column(
+                  children: [
+                    const SizedBox(height: AppSpacing.space16),
 
-              // Badge text
-              Text(
-                '첫번째 취향 조사를 시작할게요!',
-                style: AppTextStyles.caption1Regular.copyWith(
-                  color: colors.primaryNormal,
+                    // Figma 1401:19624 — 중앙 정렬 타이틀 + 보조 문구
+                    Text(
+                      '$userName님께\n커피 경험 질문을 드릴게요!',
+                      textAlign: TextAlign.center,
+                      style: AppTextStyles.heading1Bold.copyWith(
+                        color: colors.labelNormal,
+                      ),
+                    ),
+                    const SizedBox(height: AppSpacing.space8),
+                    Text(
+                      '취향 분석은 이런 단계로 진행돼요.\n예상 소요 시간은 3분 입니다.',
+                      textAlign: TextAlign.center,
+                      style: AppTextStyles.label2Regular.copyWith(
+                        color: colors.labelAlternative,
+                      ),
+                    ),
+
+                    const SizedBox(height: AppSpacing.space40),
+
+                    // Figma 1401:20044 — 진행 단계 스테퍼 (좌측 정렬)
+                    Padding(
+                      padding: const EdgeInsets.symmetric(
+                        horizontal: AppSpacing.space20,
+                      ),
+                      child: SurveyStepIndicator(
+                        colors: colors,
+                        labels: const ['커피 경험 질문', '기본 맛 취향', '특성 향미 취향'],
+                        currentStep: 1,
+                      ),
+                    ),
+
+                    const Spacer(),
+                  ],
                 ),
               ),
-              const SizedBox(height: AppSpacing.space8),
+            ),
 
-              // Main title
-              Text('$userName님께', style: _screenHeaderStyle(colors)),
-              Text('커피 경험 질문을 드릴게요!', style: _screenHeaderStyle(colors)),
-              const SizedBox(height: AppSpacing.space16),
-
-              // Subtitle
-              Text(
-                '취향 분석은 이런 단계로 진행돼요.',
-                style: AppTextStyles.body1NormalRegular.copyWith(
-                  color: colors.labelAlternative,
-                ),
+            // Figma 프레임엔 버튼이 없으나(프로토타입 자동 진행), 라우트 진입 시
+            // 다음 단계로 넘어갈 수단이 필요해 표준 pill 버튼을 유지한다.
+            Padding(
+              padding: const EdgeInsets.fromLTRB(
+                AppSpacing.space24,
+                AppSpacing.space16,
+                AppSpacing.space24,
+                AppSpacing.space24,
               ),
-              Text(
-                '예상 소요 시간은 3분 입니다.',
-                style: AppTextStyles.body1NormalRegular.copyWith(
-                  color: colors.labelAlternative,
-                ),
+              child: PrimaryButton(
+                text: '다음',
+                onPressed: () => controller.startSurvey(),
               ),
-              const SizedBox(height: AppSpacing.space32),
-
-              // 3-step vertical stepper (Figma: Survey_01.png)
-              _buildStepIndicator(colors, 1, '커피 경험 질문', isActive: true),
-              _buildVerticalLine(colors),
-              _buildStepIndicator(colors, 2, '기본 맛 취향', isActive: false),
-              _buildVerticalLine(colors),
-              _buildStepIndicator(colors, 3, '특성 향미 취향', isActive: false),
-
-              const Spacer(),
-
-              // No bottom button - navigate via AppBar or auto-continue
-              // Start button at bottom
-              _buildStartButton(colors),
-
-              const SizedBox(height: 34),
-            ],
-          ),
+            ),
+          ],
         ),
       ),
     );
@@ -111,88 +112,7 @@ class SurveyIndexView extends GetView<SurveyController> {
       centerTitle: true,
       title: Text(
         '취향 분석',
-        style: AppTextStyles.headline2Bold.copyWith(color: colors.labelNormal),
-      ),
-    );
-  }
-
-  /// Build a step indicator row with circle and text (Figma: Survey_01.png)
-  Widget _buildStepIndicator(
-    AppColorScheme colors,
-    int step,
-    String label, {
-    required bool isActive,
-  }) {
-    return Row(
-      children: [
-        // Circle with number
-        Container(
-          width: 32,
-          height: 32,
-          decoration: BoxDecoration(
-            shape: BoxShape.circle,
-            color: isActive ? colors.primaryNormal : AppColor.transparent,
-            border: isActive
-                ? null
-                : Border.all(color: colors.lineNormalNormal, width: 1.5),
-          ),
-          child: Center(
-            child: Text(
-              '$step',
-              style: AppTextStyles.label1NormalBold.copyWith(
-                color: isActive
-                    ? AppColor.staticLabelWhiteNormal
-                    : colors.labelNormal,
-              ),
-            ),
-          ),
-        ),
-        const SizedBox(width: AppSpacing.space12),
-        // Label
-        Text(
-          label,
-          style: AppTextStyles.body1NormalMedium.copyWith(
-            color: isActive ? colors.primaryNormal : colors.labelNormal,
-            fontWeight: isActive ? FontWeight.w600 : FontWeight.w400,
-          ),
-        ),
-      ],
-    );
-  }
-
-  /// Build vertical connecting line between steps
-  Widget _buildVerticalLine(AppColorScheme colors) {
-    return Padding(
-      padding: const EdgeInsets.only(left: 15), // Center under 32px circle
-      child: Container(
-        width: 2,
-        height: 24,
-        color: colors.lineNormalNormal.withValues(alpha: 0.5),
-      ),
-    );
-  }
-
-  Widget _buildStartButton(AppColorScheme colors) {
-    return SizedBox(
-      width: double.infinity,
-      height: 56,
-      child: ElevatedButton(
-        onPressed: () => controller.startSurvey(),
-        style: ElevatedButton.styleFrom(
-          backgroundColor: colors.primaryNormal,
-          foregroundColor: AppColor.staticLabelWhiteNormal,
-          shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(AppRadius.lg),
-          ),
-          elevation: 0,
-        ),
-        child: Text(
-          '다음',
-          style: AppTextStyles.body1NormalMedium.copyWith(
-            color: AppColor.staticLabelWhiteNormal,
-            fontWeight: FontWeight.w600,
-          ),
-        ),
+        style: AppTextStyles.headline2Bold.copyWith(color: colors.labelStrong),
       ),
     );
   }

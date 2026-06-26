@@ -7,25 +7,20 @@ import 'package:coflanet/constants/color_constant.dart';
 import 'package:coflanet/constants/spacing_constant.dart';
 import 'package:coflanet/constants/style_constant.dart';
 import 'package:coflanet/modules/onboarding/survey_controller.dart';
+import 'package:coflanet/modules/onboarding/widgets/survey_step_indicator.dart';
 import 'package:coflanet/widgets/buttons/primary_button.dart';
 
-/// Survey Section Intro View
-/// Shows vertical stepper with intro text before each section starts
+/// Survey Section Intro View — Figma POC `Survey_index02/03` (1751:16928 / 1751:17437)
+/// 각 섹션 시작 전 진행 단계 안내. 좌측 타이틀 + 스테퍼(완료/활성/비활성).
+/// 캔버스 흰색 유지(온보딩 흐름 일관).
 /// Standard: 3 sections (커피 경험, 기본 맛 취향, 특성 향미 취향)
 /// Lifestyle: 4 sections (커피 경험, 라이프스타일, 맛 취향, 감각/성향)
 class SurveySectionIntroView extends GetView<SurveyController> {
   const SurveySectionIntroView({super.key});
 
   // Figma 사양: Pretendard SemiBold 22 / lineHeight 1.36 / letterSpacing -0.4268
-  // 색상은 Label/strong (#000000) 토큰 매핑
-  // Auth 카테고리에서 통일한 페이지 헤더 스타일과 동일
   TextStyle _screenHeaderStyle(AppColorScheme colors) =>
-      AppTextStyles.heading1Bold.copyWith(
-        fontWeight: FontWeight.w600,
-        height: 1.36,
-        letterSpacing: -0.4268,
-        color: colors.labelStrong,
-      );
+      AppTextStyles.heading1Bold.copyWith(color: colors.labelNormal);
 
   /// Check if current survey is lifestyle type
   bool get _isLifestyle => controller.surveyType == SurveyType.lifestyle;
@@ -34,9 +29,6 @@ class SurveySectionIntroView extends GetView<SurveyController> {
   List<String> get _sectionLabels => _isLifestyle
       ? ['커피 경험 질문', '라이프스타일', '맛 취향', '감각/성향']
       : ['커피 경험 질문', '기본 맛 취향', '특성 향미 취향'];
-
-  /// Get estimated time based on survey type
-  String get _estimatedTime => _isLifestyle ? '3분' : '10분';
 
   @override
   Widget build(BuildContext context) {
@@ -48,7 +40,7 @@ class SurveySectionIntroView extends GetView<SurveyController> {
 
     return Scaffold(
       backgroundColor: colors.backgroundNormalNormal,
-      appBar: _buildAppBar(colors, sectionNumber),
+      appBar: _buildAppBar(colors),
       body: SafeArea(
         top: false,
         child: Column(
@@ -61,29 +53,24 @@ class SurveySectionIntroView extends GetView<SurveyController> {
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    const SizedBox(height: AppSpacing.space24),
-
-                    // Main title based on section
-                    _buildTitle(colors, sectionNumber),
                     const SizedBox(height: AppSpacing.space16),
 
-                    // Subtitle
-                    Text(
-                      '취향 분석은 이런 단계로 진행돼요.',
-                      style: AppTextStyles.body1NormalRegular.copyWith(
-                        color: colors.labelAlternative,
-                      ),
-                    ),
-                    Text(
-                      '예상 소요 시간은 $_estimatedTime 입니다.',
-                      style: AppTextStyles.body1NormalRegular.copyWith(
-                        color: colors.labelAlternative,
-                      ),
-                    ),
-                    const SizedBox(height: AppSpacing.space32),
+                    // Main title (좌측 정렬)
+                    _buildTitle(colors, sectionNumber),
 
-                    // Vertical stepper - dynamic based on survey type
-                    ..._buildStepper(colors, sectionNumber),
+                    const SizedBox(height: AppSpacing.space40),
+
+                    // Figma 1401:20044 — 진행 단계 스테퍼
+                    Padding(
+                      padding: const EdgeInsets.symmetric(
+                        horizontal: AppSpacing.space20,
+                      ),
+                      child: SurveyStepIndicator(
+                        colors: colors,
+                        labels: _sectionLabels,
+                        currentStep: sectionNumber,
+                      ),
+                    ),
 
                     const Spacer(),
                   ],
@@ -91,15 +78,15 @@ class SurveySectionIntroView extends GetView<SurveyController> {
               ),
             ),
 
-            // Bottom CTA — body 가 SafeArea(top: false) 라 인셋은 이미 보호됨
-            Container(
+            // Figma 프레임엔 버튼이 없으나 라우트 진입 시 다음 단계로 넘어갈
+            // 수단이 필요해 표준 pill 버튼을 유지한다.
+            Padding(
               padding: const EdgeInsets.fromLTRB(
                 AppSpacing.space24,
                 AppSpacing.space16,
                 AppSpacing.space24,
-                34,
+                AppSpacing.space24,
               ),
-              decoration: BoxDecoration(color: colors.backgroundNormalNormal),
               child: PrimaryButton(
                 text: '다음',
                 onPressed: () => _onNextPressed(sectionNumber),
@@ -111,32 +98,7 @@ class SurveySectionIntroView extends GetView<SurveyController> {
     );
   }
 
-  /// Build stepper widgets dynamically based on survey type
-  List<Widget> _buildStepper(AppColorScheme colors, int currentSection) {
-    final labels = _sectionLabels;
-    final widgets = <Widget>[];
-
-    for (int i = 0; i < labels.length; i++) {
-      final step = i + 1;
-      widgets.add(
-        _buildStepIndicator(
-          colors: colors,
-          step: step,
-          label: labels[i],
-          state: _getStepState(step, currentSection),
-        ),
-      );
-      if (i < labels.length - 1) {
-        widgets.add(
-          _buildVerticalLine(colors, isCompleted: currentSection > step),
-        );
-      }
-    }
-
-    return widgets;
-  }
-
-  PreferredSizeWidget _buildAppBar(AppColorScheme colors, int sectionNumber) {
+  PreferredSizeWidget _buildAppBar(AppColorScheme colors) {
     return AppBar(
       backgroundColor: AppColor.transparent,
       elevation: 0,
@@ -152,7 +114,7 @@ class SurveySectionIntroView extends GetView<SurveyController> {
       centerTitle: true,
       title: Text(
         '취향 분석',
-        style: AppTextStyles.headline2Bold.copyWith(color: colors.labelNormal),
+        style: AppTextStyles.headline2Bold.copyWith(color: colors.labelStrong),
       ),
       actions: [
         // X 닫기 버튼 (건너뛰기)
@@ -176,7 +138,6 @@ class SurveySectionIntroView extends GetView<SurveyController> {
     String line2;
 
     if (_isLifestyle) {
-      // Lifestyle survey titles
       switch (sectionNumber) {
         case 1:
           line1 = '$userName님께';
@@ -199,7 +160,6 @@ class SurveySectionIntroView extends GetView<SurveyController> {
           line2 = '취향을 분석할게요';
       }
     } else {
-      // Standard survey titles
       switch (sectionNumber) {
         case 1:
           line1 = '$userName님께';
@@ -228,96 +188,9 @@ class SurveySectionIntroView extends GetView<SurveyController> {
     );
   }
 
-  /// Determine step state based on current section
-  _StepState _getStepState(int step, int currentSection) {
-    if (step < currentSection) {
-      return _StepState.completed;
-    } else if (step == currentSection) {
-      return _StepState.active;
-    } else {
-      return _StepState.inactive;
-    }
-  }
-
-  /// Build a step indicator row with circle (number/checkmark) and text
-  Widget _buildStepIndicator({
-    required AppColorScheme colors,
-    required int step,
-    required String label,
-    required _StepState state,
-  }) {
-    return Row(
-      children: [
-        // Circle indicator
-        Container(
-          width: 32,
-          height: 32,
-          decoration: BoxDecoration(
-            shape: BoxShape.circle,
-            color: state == _StepState.active
-                ? colors.primaryNormal
-                : AppColor.transparent,
-            border: state != _StepState.active
-                ? Border.all(color: colors.lineNormalNormal, width: 1.5)
-                : null,
-          ),
-          child: Center(
-            child: state == _StepState.completed
-                ? SvgPicture.asset(
-                    AssetPath.iconCheck,
-                    width: 16,
-                    height: 16,
-                    colorFilter: ColorFilter.mode(
-                      colors.labelAssistive,
-                      BlendMode.srcIn,
-                    ),
-                  )
-                : Text(
-                    '$step',
-                    style: AppTextStyles.label1NormalBold.copyWith(
-                      color: state == _StepState.active
-                          ? AppColor.staticLabelWhiteNormal
-                          : colors.labelNormal,
-                    ),
-                  ),
-          ),
-        ),
-        const SizedBox(width: AppSpacing.space12),
-        // Label text
-        Text(
-          label,
-          style: AppTextStyles.body1NormalMedium.copyWith(
-            color: state == _StepState.active
-                ? colors.primaryNormal
-                : colors.labelNormal,
-            fontWeight: state == _StepState.active
-                ? FontWeight.w600
-                : FontWeight.w400,
-          ),
-        ),
-      ],
-    );
-  }
-
-  /// Build vertical connecting line between steps
-  Widget _buildVerticalLine(
-    AppColorScheme colors, {
-    required bool isCompleted,
-  }) {
-    return Padding(
-      padding: const EdgeInsets.only(left: 15), // Center under 32px circle
-      child: Container(
-        width: 2,
-        height: 32,
-        color: colors.lineNormalNormal.withValues(alpha: 0.5),
-      ),
-    );
-  }
-
   /// Handle next button press - navigate to first question of the section
   void _onNextPressed(int sectionNumber) {
     if (_isLifestyle) {
-      // Lifestyle survey section navigation
       switch (sectionNumber) {
         case 1:
           controller.goToStep(0);
@@ -333,7 +206,6 @@ class SurveySectionIntroView extends GetView<SurveyController> {
           break;
       }
     } else {
-      // Standard survey section navigation
       switch (sectionNumber) {
         case 1:
           controller.goToStep(0);
@@ -347,11 +219,4 @@ class SurveySectionIntroView extends GetView<SurveyController> {
       }
     }
   }
-}
-
-/// Step states for the vertical stepper
-enum _StepState {
-  completed, // Gray circle with checkmark
-  active, // Purple filled circle with number
-  inactive, // Purple outline circle with number
 }
