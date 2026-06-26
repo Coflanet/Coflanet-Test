@@ -79,7 +79,11 @@ class SurveyResultView extends GetView<SurveyController> {
           GestureDetector(
             behavior: HitTestBehavior.opaque,
             onTap: () => Get.back(),
-            child: Icon(Icons.chevron_left, color: canvas.labelNormal, size: 28),
+            child: Icon(
+              Icons.chevron_left,
+              color: canvas.labelNormal,
+              size: AppSpacing.space28,
+            ),
           ),
           const SizedBox(width: AppSpacing.xs),
           Expanded(
@@ -182,8 +186,9 @@ class SurveyResultView extends GetView<SurveyController> {
 
           // 더보기 + 링크
           ResultBottomLinks(
-            // [백엔드 API 연동 대기] 추천 원두 전체 목록
-            onMoreTap: () {},
+            // 전체 추천 목록 화면 도입 전 — 온보딩 완료 후 쇼핑 탭으로 보내
+            // 더 많은 원두를 탐색하게 한다(무동작 버튼 제거).
+            onMoreTap: () => controller.viewMoreRecommendations(),
             onRetakeTap: () => controller.startSurvey(),
             // 원두 선택 없이 홈으로 — 선택 0개면 원두 저장 생략
             onSkipTap: () => controller.completeOnboarding(),
@@ -197,6 +202,9 @@ class SurveyResultView extends GetView<SurveyController> {
   Widget _buildBottomCTA() {
     return Obx(() {
       final count = controller.selectedBeanCount;
+      // 선택 0개여도 전진 출구가 있어야 한다(데드엔드 방지). 0개면 '건너뛰고
+      // 시작하기'로 활성, 1개 이상이면 '총 N개 원두 목록 추가'.
+      final hasSelection = count > 0;
       return AppBottomBar(
         backgroundColor: AppColor.staticBlack,
         padding: const EdgeInsets.fromLTRB(
@@ -206,9 +214,8 @@ class SurveyResultView extends GetView<SurveyController> {
           AppSpacing.space12,
         ),
         child: PrimaryButton(
-          text: '총 $count개 원두 목록 추가',
-          isEnabled: count > 0,
-          onPressed: count > 0 ? () => controller.completeOnboarding() : null,
+          text: hasSelection ? '총 $count개 원두 목록 추가' : '건너뛰고 시작하기',
+          onPressed: () => controller.completeOnboarding(),
         ),
       );
     });

@@ -467,7 +467,7 @@ class SurveyController extends BaseController {
 
   /// Complete onboarding and go to main shell (Select Coffee Section)
   /// Per Figma: Survey Result → MainShell Tab 0 (원두)
-  Future<void> completeOnboarding() async {
+  Future<void> completeOnboarding({int initialTab = 0}) async {
     await _prefsRepository.setOnboardingComplete(true);
 
     // Save survey result
@@ -480,9 +480,13 @@ class SurveyController extends BaseController {
       await _surveyRepository.saveSelectedBeanIds(_selectedBeanIds.toList());
     }
 
-    // Navigate to MainShell Tab 0 (원두) per Figma design
-    Get.offAllNamed(Routes.mainShell, arguments: {'initialTab': 0});
+    // Navigate to MainShell (기본 홈 탭). 호출처에서 진입 탭 지정 가능.
+    Get.offAllNamed(Routes.mainShell, arguments: {'initialTab': initialTab});
   }
+
+  /// '추천 원두 더 보기' — 온보딩을 완료하고 쇼핑 탭(3)으로 진입해
+  /// 전체 원두를 탐색하게 한다. (전용 추천목록 화면/백엔드 API 도입 전 대체 동선)
+  Future<void> viewMoreRecommendations() => completeOnboarding(initialTab: 3);
 
   /// Skip survey and go to main shell without saving survey result
   /// User can take survey later from My Planet screen

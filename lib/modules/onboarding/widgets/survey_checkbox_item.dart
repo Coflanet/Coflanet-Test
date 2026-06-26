@@ -56,8 +56,8 @@ class SurveyCheckboxItem extends StatelessWidget {
             // Emoji icon (only when showIcon=true and icon is provided)
             if (showIcon && icon != null) ...[
               Container(
-                width: 40,
-                height: 40,
+                width: AppSpacing.space40,
+                height: AppSpacing.space40,
                 alignment: Alignment.center,
                 child: Text(icon!, style: AppTextStyles.emojiNormal),
               ),
@@ -92,13 +92,18 @@ class SurveyCheckboxItem extends StatelessWidget {
             ),
             const SizedBox(width: AppSpacing.space8),
 
-            // Checkmark indicator (Figma: Control/Check 20px, 선택=violet/미선택=회색)
-            Icon(
-              Icons.check,
-              size: 20,
-              color: isSelected
-                  ? colors.primaryNormal
-                  : colors.interactionInactive,
+            // Checkmark indicator — Figma(937:45574): 선택 시에만 violet 체크.
+            // 미선택 행에 회색 체크를 두면 "이미 선택됨" 거짓 시그널이 되므로
+            // 공간만 유지하고 아이콘은 표시하지 않는다.
+            SizedBox(
+              width: AppSpacing.space20,
+              child: isSelected
+                  ? Icon(
+                      Icons.check,
+                      size: AppSpacing.space20,
+                      color: colors.primaryNormal,
+                    )
+                  : null,
             ),
           ],
         ),
