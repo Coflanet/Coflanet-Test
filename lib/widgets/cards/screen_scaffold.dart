@@ -69,7 +69,7 @@ class ScreenScaffold extends StatelessWidget {
                     child: Icon(
                       Icons.chevron_left,
                       color: canvas.labelNormal,
-                      size: 28,
+                      size: AppSpacing.space28,
                     ),
                   ),
                   const SizedBox(width: AppSpacing.xs),

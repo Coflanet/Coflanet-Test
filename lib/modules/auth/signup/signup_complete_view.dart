@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:coflanet/constants/app_color_scheme.dart';
 import 'package:coflanet/constants/asset_constant.dart';
+import 'package:coflanet/constants/spacing_constant.dart';
 import 'package:coflanet/constants/style_constant.dart';
 import 'package:coflanet/core/storage/local_storage.dart';
 import 'package:coflanet/routes/app_pages.dart';
@@ -23,7 +24,7 @@ class SignUpCompleteView extends StatelessWidget {
       backgroundColor: colors.backgroundNormalNormal,
       body: SafeArea(
         child: Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 24),
+          padding: const EdgeInsets.symmetric(horizontal: AppSpacing.space24),
           child: Column(
             children: [
               const Spacer(flex: 2),
@@ -31,7 +32,7 @@ class SignUpCompleteView extends StatelessWidget {
               // Celebration illustration (182x182 per Figma)
               _buildCelebrationIllustration(colors),
 
-              const SizedBox(height: 40),
+              const SizedBox(height: AppSpacing.space40),
 
               // Welcome text
               _buildWelcomeText(colors, userName),
@@ -41,7 +42,7 @@ class SignUpCompleteView extends StatelessWidget {
               // CTA Button
               _buildCTAButton(),
 
-              const SizedBox(height: 48),
+              const SizedBox(height: AppSpacing.space48),
             ],
           ),
         ),
@@ -76,18 +77,16 @@ class SignUpCompleteView extends StatelessWidget {
       children: [
         Text(
           '$userName님, 환영합니다!',
-          style: AppTextStyles.heading1Bold.copyWith(
-            color: colors.labelNormal,
-            fontSize: 28,
-          ),
+          // title2Bold = 28(Figma 일치) — fontSize 오버라이드 제거.
+          style: AppTextStyles.title2Bold.copyWith(color: colors.labelNormal),
           textAlign: TextAlign.center,
         ),
-        const SizedBox(height: 12),
+        const SizedBox(height: AppSpacing.space12),
         Text(
           '회원가입이 완료되었어요',
+          // body1NormalRegular = 16 — 중복 fontSize 제거.
           style: AppTextStyles.body1NormalRegular.copyWith(
             color: colors.labelAlternative,
-            fontSize: 16,
           ),
           textAlign: TextAlign.center,
         ),

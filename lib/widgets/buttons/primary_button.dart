@@ -86,8 +86,10 @@ class PrimaryButton extends StatelessWidget {
   TextStyle get _textStyle {
     switch (size) {
       case ButtonSize.xl:
-      case ButtonSize.lg:
         return AppTextStyles.headline1Bold;
+      case ButtonSize.lg:
+        // POC 기준 lg(기본) CTA 라벨은 16(body1NormalBold). (이전 18 → 16)
+        return AppTextStyles.body1NormalBold;
       case ButtonSize.md:
         return AppTextStyles.headline2Bold;
       case ButtonSize.sm:
