@@ -49,7 +49,7 @@ class SurveyIndexView extends GetView<SurveyController> {
                     ),
                     const SizedBox(height: AppSpacing.space8),
                     Text(
-                      '취향 분석은 이런 단계로 진행돼요.\n예상 소요 시간은 3분 입니다.',
+                      '취향 분석은 이런 단계로 진행돼요.\n예상 소요 시간은 3분이에요.',
                       textAlign: TextAlign.center,
                       style: AppTextStyles.label2Regular.copyWith(
                         color: colors.labelAlternative,

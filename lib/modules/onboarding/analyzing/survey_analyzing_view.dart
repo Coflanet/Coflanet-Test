@@ -27,19 +27,24 @@ class SurveyAnalyzingView extends GetView<SurveyController> {
       // Figma엔 상단 내비게이션 내용이 없어(분석 중) AppBar 없이 구성.
       body: SafeArea(
         child: Column(
+          crossAxisAlignment: CrossAxisAlignment.center,
           children: [
             const Spacer(flex: 2),
 
             // Figma 1114:59783 — 상단 중앙 안내 텍스트 (22 SemiBold)
+            // width 풀폭 강제 → textAlign.center 가 화면 가로 중앙 정렬을 보장
             Padding(
               padding: const EdgeInsets.symmetric(
                 horizontal: AppSpacing.space16,
               ),
-              child: Text(
-                '${controller.userName}님의\n취향을 분석하고 있어요.',
-                textAlign: TextAlign.center,
-                style: AppTextStyles.heading1Bold.copyWith(
-                  color: colors.labelNormal,
+              child: SizedBox(
+                width: double.infinity,
+                child: Text(
+                  '${controller.userName}님의\n취향을 분석하고 있어요.',
+                  textAlign: TextAlign.center,
+                  style: AppTextStyles.heading1Bold.copyWith(
+                    color: colors.labelNormal,
+                  ),
                 ),
               ),
             ),
