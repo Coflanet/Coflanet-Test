@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:coflanet/constants/app_color_scheme.dart';
+import 'package:coflanet/constants/color_constant.dart';
 import 'package:coflanet/constants/radius_constant.dart';
 import 'package:coflanet/constants/spacing_constant.dart';
 import 'package:coflanet/constants/style_constant.dart';
@@ -27,6 +28,9 @@ class ProductCard extends StatelessWidget {
     this.discountPercent,
     this.price,
     this.onTap,
+    this.rating,
+    this.reviewCount,
+    this.badges = const [],
   });
 
   /// 상품명 (최대 2줄, 말줄임)
@@ -56,6 +60,15 @@ class ProductCard extends StatelessWidget {
   /// 카드 탭 콜백 (상세 이동 등)
   final VoidCallback? onTap;
 
+  /// 평균 별점 (예: 4.86) — null 이면 별점 행 미표시 (홈 추천 카드 등)
+  final double? rating;
+
+  /// 리뷰 수 — [rating] 과 함께 표시
+  final int? reviewCount;
+
+  /// 상태 뱃지 라벨 (예: 'New', 'Best') — 비어 있으면 미표시 (썸네일↔텍스트 사이)
+  final List<String> badges;
+
   @override
   Widget build(BuildContext context) {
     final colors = AppColorScheme.of(context);
@@ -75,6 +88,11 @@ class ProductCard extends StatelessWidget {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
+                  // 상태 뱃지 (Figma Time_Sale New/Best) — 텍스트 블록 최상단
+                  if (badges.isNotEmpty) ...[
+                    _buildBadges(colors),
+                    const SizedBox(height: AppSpacing.space4),
+                  ],
                   // 취향 일치율 (Figma label_best 슬롯 위치)
                   if (matchPercent != null && matchPercent! > 0) ...[
                     _buildSmallTag('취향 $matchPercent%', colors),
@@ -102,6 +120,11 @@ class ProductCard extends StatelessWidget {
                   ),
                   const SizedBox(height: AppSpacing.xxs),
                   _buildPriceBlock(colors),
+                  // 별점 행 (Figma ★4.86 4,538) — rating 있을 때만
+                  if (rating != null) ...[
+                    const SizedBox(height: AppSpacing.space2),
+                    _buildRating(colors),
+                  ],
                 ],
               ),
             ),
@@ -195,6 +218,68 @@ class ProductCard extends StatelessWidget {
             ),
           ),
       ],
+    );
+  }
+
+  /// 별점 행 — 고정 골드 별 + 평점 + 리뷰 수 (Figma ★4.86 4,538).
+  /// 별 색은 테마 무관 고정 골드(raw 팔레트, 평점 시맨틱 토큰 부재).
+  Widget _buildRating(AppColorScheme colors) {
+    return Row(
+      children: [
+        const Icon(
+          Icons.star_rounded,
+          size: AppSpacing.space16,
+          color: AppColor.colorGlobalYellow50,
+        ),
+        const SizedBox(width: AppSpacing.space2),
+        Text(
+          rating!.toStringAsFixed(2),
+          style: AppTextStyles.caption1Bold.copyWith(color: colors.labelNormal),
+        ),
+        if (reviewCount != null) ...[
+          const SizedBox(width: AppSpacing.space2),
+          Text(
+            '${reviewCount!}',
+            style: AppTextStyles.caption1Regular.copyWith(
+              color: colors.labelAssistive,
+            ),
+          ),
+        ],
+      ],
+    );
+  }
+
+  /// 상태 뱃지 행 — New(블루) / Best(보라) 작은 텍스트 칩.
+  Widget _buildBadges(AppColorScheme colors) {
+    return Wrap(
+      spacing: AppSpacing.space4,
+      runSpacing: AppSpacing.space4,
+      children: [
+        for (final badge in badges)
+          _buildBadgeChip(
+            badge,
+            badge.toLowerCase() == 'new'
+                ? colors.statusPositiveBlue
+                : colors.primaryNormal,
+          ),
+      ],
+    );
+  }
+
+  Widget _buildBadgeChip(String label, Color tone) {
+    return Container(
+      padding: const EdgeInsets.symmetric(
+        horizontal: AppSpacing.space6,
+        vertical: AppSpacing.space2,
+      ),
+      decoration: BoxDecoration(
+        color: tone.withValues(alpha: 0.12),
+        borderRadius: AppRadius.xsBorder,
+      ),
+      child: Text(
+        label,
+        style: AppTextStyles.caption2Bold.copyWith(color: tone),
+      ),
     );
   }
 

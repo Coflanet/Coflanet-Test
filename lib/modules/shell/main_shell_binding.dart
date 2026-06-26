@@ -4,6 +4,7 @@ import 'package:coflanet/modules/coffee/coffee_controller.dart';
 import 'package:coflanet/modules/coffee/select/select_coffee_controller.dart';
 import 'package:coflanet/modules/home/home_controller.dart';
 import 'package:coflanet/modules/planet/my_planet_controller.dart';
+import 'package:coflanet/modules/shopping/shopping_controller.dart';
 
 class MainShellBinding extends Bindings {
   @override
@@ -25,5 +26,6 @@ class MainShellBinding extends Bindings {
       fenix: true,
     );
     Get.lazyPut<MyPlanetController>(() => MyPlanetController(), fenix: true);
+    Get.lazyPut<ShoppingController>(() => ShoppingController(), fenix: true);
   }
 }

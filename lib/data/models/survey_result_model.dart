@@ -139,6 +139,8 @@ class CoffeeRecommendationModel {
   final List<String> flavorTags; // 맛 태그
   final String? purchaseUrl; // 판매 링크
   final String? reason; // 추천 사유
+  final double? rating; // 평균 별점 (예: 4.86) — 쇼핑 상품 카드
+  final int? reviewCount; // 리뷰 수 — 쇼핑 상품 카드
 
   const CoffeeRecommendationModel({
     required this.id,
@@ -157,6 +159,8 @@ class CoffeeRecommendationModel {
     this.flavorTags = const [],
     this.purchaseUrl,
     this.reason,
+    this.rating,
+    this.reviewCount,
   });
 
   factory CoffeeRecommendationModel.fromJson(Map<String, dynamic> json) {
@@ -183,6 +187,8 @@ class CoffeeRecommendationModel {
           [],
       purchaseUrl: json['purchaseUrl'] as String?,
       reason: json['reason'] as String?,
+      rating: (json['rating'] as num?)?.toDouble(),
+      reviewCount: json['reviewCount'] as int?,
     );
   }
 
@@ -204,6 +210,8 @@ class CoffeeRecommendationModel {
       'flavorTags': flavorTags,
       if (purchaseUrl != null) 'purchaseUrl': purchaseUrl,
       if (reason != null) 'reason': reason,
+      if (rating != null) 'rating': rating,
+      if (reviewCount != null) 'reviewCount': reviewCount,
     };
   }
 }

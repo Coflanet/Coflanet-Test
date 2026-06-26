@@ -58,6 +58,8 @@ class MainShellView extends GetView<MainShellController> {
                   currentIndex == MainShellController.tabHome;
               final bool isBeanTab =
                   currentIndex == MainShellController.tabBean;
+              final bool isShoppingTab =
+                  currentIndex == MainShellController.tabShopping;
               final topInset = isHomeTab ? 0.0 : (topPadding + topNavHeight);
 
               if (currentIndex == MainShellController.tabMy) {
@@ -73,8 +75,8 @@ class MainShellView extends GetView<MainShellController> {
                 );
               }
 
-              if (isBeanTab) {
-                // 원두 화면: Static/Black 캔버스(Figma POC 원두목록 = 검정 배경).
+              if (isBeanTab || isShoppingTab) {
+                // 원두·쇼핑 화면: Static/Black 캔버스(재디자인 카드 시스템).
                 // ColoredBox 가 top:0 을 덮어 상태바 뒤까지 검정으로 채우고,
                 // AnnotatedRegion 으로 검정 위 상태바 아이콘을 밝게 강제한다.
                 return AnnotatedRegion<SystemUiOverlayStyle>(
@@ -93,7 +95,7 @@ class MainShellView extends GetView<MainShellController> {
               }
 
               // 콘텐츠 배경 — 홈은 Static/Black 캔버스(라이트·다크 공통, task 4),
-              // 그 외 미마이그레이션 탭(쇼핑/커뮤니티)은 기존 테마 스킴 배경(둥근 시트) 유지.
+              // 미마이그레이션 탭(커뮤니티)은 기존 테마 스킴 배경(둥근 시트) 유지.
               final Color contentBgColor = isHomeTab
                   ? AppColor.staticBlack
                   : colors.backgroundNormalAlternative;
@@ -143,7 +145,8 @@ class MainShellView extends GetView<MainShellController> {
               // 캔버스(다크) 스킴으로 그려 타이틀/버튼이 검정 위에서 사라지지 않게.
               final bool isDarkNav =
                   currentIndex == MainShellController.tabMy ||
-                  currentIndex == MainShellController.tabBean;
+                  currentIndex == MainShellController.tabBean ||
+                  currentIndex == MainShellController.tabShopping;
               final navColors = isDarkNav ? AppColorScheme.canvas : colors;
               // 타이틀 계산 — 마이탭 userName(RxString) 구독 보존을 위해
               // 반드시 이 Obx 클로저 안에서 동기 평가한다.
