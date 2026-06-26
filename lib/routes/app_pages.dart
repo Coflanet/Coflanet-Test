@@ -52,6 +52,11 @@ import 'package:coflanet/modules/coffee/settings/recipe_form_view.dart';
 import 'package:coflanet/modules/extraction/extraction_list_view.dart';
 import 'package:coflanet/modules/extraction/extraction_list_binding.dart';
 
+// Modules - Tasting Notes (커피 저널)
+import 'package:coflanet/modules/tasting/tasting_notes_view.dart';
+import 'package:coflanet/modules/tasting/tasting_write_view.dart';
+import 'package:coflanet/modules/tasting/tasting_notes_binding.dart';
+
 // Modules - Matching
 import 'package:coflanet/modules/matching/matching_binding.dart';
 import 'package:coflanet/modules/matching/matching_result_view.dart';
@@ -270,6 +275,20 @@ class AppPages {
       name: Routes.extractionList,
       page: () => const ExtractionListView(),
       binding: ExtractionListBinding(),
+      transition: Transition.cupertino,
+    ),
+
+    // === Tasting Notes (커피 저널) ===
+    GetPage(
+      name: Routes.tastingNotes,
+      page: () => const TastingNotesView(),
+      binding: TastingNotesBinding(),
+      transition: Transition.cupertino,
+    ),
+    GetPage(
+      name: Routes.tastingWrite,
+      page: () => const TastingWriteView(),
+      binding: TastingWriteBinding(),
       transition: Transition.cupertino,
     ),
 

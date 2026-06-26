@@ -64,6 +64,10 @@ abstract class Routes {
   // === Extraction Routes ===
   static const extractionList = '/extraction/list';
 
+  // === Tasting Notes Routes (커피 저널) ===
+  static const tastingNotes = '/tasting/notes';
+  static const tastingWrite = '/tasting/write';
+
   // === Auth (Additional) ===
   static const emailLogin = '/login/email-login';
   static const emailSignUp = '/login/email-sign-up';

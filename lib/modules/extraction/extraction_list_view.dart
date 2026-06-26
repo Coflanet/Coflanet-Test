@@ -3,9 +3,12 @@ import 'package:get/get.dart';
 import 'package:intl/intl.dart';
 import 'package:coflanet/constants/app_color_scheme.dart';
 import 'package:coflanet/constants/color_constant.dart';
+import 'package:coflanet/constants/radius_constant.dart';
+import 'package:coflanet/constants/spacing_constant.dart';
 import 'package:coflanet/constants/style_constant.dart';
 import 'package:coflanet/data/models/brew_log_model.dart';
 import 'package:coflanet/modules/extraction/extraction_list_controller.dart';
+import 'package:coflanet/routes/app_pages.dart';
 
 /// 추출 기록 목록 — 통계 카드 + 무한 스크롤 기록 리스트.
 ///
@@ -21,7 +24,73 @@ class ExtractionListView extends GetView<ExtractionListController> {
     return Scaffold(
       backgroundColor: colors.backgroundNormalAlternative,
       body: SafeArea(
-        child: Obx(() {
+        child: Column(
+          children: [
+            _buildHeader(colors),
+            Expanded(child: _buildBody(colors)),
+          ],
+        ),
+      ),
+    );
+  }
+
+  /// 상단 액션 — 추출 기록 → 커피 저널로 잇는 동선.
+  Widget _buildHeader(AppColorScheme colors) {
+    return Padding(
+      padding: const EdgeInsets.fromLTRB(
+        AppSpacing.headerHorizontalPadding,
+        AppSpacing.md,
+        AppSpacing.headerHorizontalPadding,
+        AppSpacing.xs,
+      ),
+      child: Row(
+        children: [
+          Expanded(
+            child: Text(
+              '추출 기록',
+              style: AppTextStyles.title2Bold.copyWith(
+                color: colors.labelStrong,
+              ),
+            ),
+          ),
+          GestureDetector(
+            behavior: HitTestBehavior.opaque,
+            onTap: () => Get.toNamed(Routes.tastingNotes),
+            child: Container(
+              padding: const EdgeInsets.symmetric(
+                horizontal: AppSpacing.sm,
+                vertical: AppSpacing.xs,
+              ),
+              decoration: BoxDecoration(
+                color: colors.primaryNormal.withValues(alpha: 0.12),
+                borderRadius: AppRadius.fullBorder,
+              ),
+              child: Row(
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  Icon(
+                    Icons.menu_book_rounded,
+                    size: AppSpacing.md,
+                    color: colors.primaryNormal,
+                  ),
+                  const SizedBox(width: AppSpacing.space6),
+                  Text(
+                    '커피 저널',
+                    style: AppTextStyles.label1NormalBold.copyWith(
+                      color: colors.primaryNormal,
+                    ),
+                  ),
+                ],
+              ),
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+
+  Widget _buildBody(AppColorScheme colors) {
+    return Obx(() {
           if (controller.isLoading) {
             return Center(
               child: CircularProgressIndicator(color: colors.primaryNormal),
@@ -79,9 +148,7 @@ class ExtractionListView extends GetView<ExtractionListController> {
               ),
             ),
           );
-        }),
-      ),
-    );
+        });
   }
 
   Widget _buildEmptyState(AppColorScheme colors) {

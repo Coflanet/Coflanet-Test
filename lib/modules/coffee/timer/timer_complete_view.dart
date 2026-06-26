@@ -6,8 +6,10 @@ import 'package:coflanet/constants/asset_constant.dart';
 import 'package:coflanet/constants/color_constant.dart';
 import 'package:coflanet/constants/style_constant.dart';
 import 'package:coflanet/constants/radius_constant.dart';
+import 'package:coflanet/constants/spacing_constant.dart';
 import 'package:coflanet/modules/coffee/timer/coffee_timer_controller.dart';
 import 'package:coflanet/data/models/timer_step_model.dart';
+import 'package:coflanet/routes/app_pages.dart';
 import 'package:coflanet/widgets/buttons/primary_button.dart';
 
 class TimerCompleteView extends GetView<CoffeeTimerController> {
@@ -60,12 +62,50 @@ class TimerCompleteView extends GetView<CoffeeTimerController> {
 
             const Spacer(flex: 3),
 
-            // ─── CTA button ───
+            // ─── CTA buttons ───
             Padding(
-              padding: const EdgeInsets.fromLTRB(24, 0, 24, 24),
-              child: PrimaryButton(
-                text: '완료하기',
-                onPressed: controller.goToHome,
+              padding: const EdgeInsets.only(
+                left: AppSpacing.xl,
+                right: AppSpacing.xl,
+                bottom: AppSpacing.xl,
+              ),
+              child: Column(
+                children: [
+                  // 보조 — 커피 저널에 시음노트 작성
+                  GestureDetector(
+                    behavior: HitTestBehavior.opaque,
+                    onTap: () => Get.toNamed(Routes.tastingWrite),
+                    child: Container(
+                      width: double.infinity,
+                      alignment: Alignment.center,
+                      padding: const EdgeInsets.symmetric(
+                        vertical: AppSpacing.md,
+                      ),
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          Icon(
+                            Icons.edit_note_rounded,
+                            size: AppSpacing.lg,
+                            color: colors.primaryNormal,
+                          ),
+                          const SizedBox(width: AppSpacing.xs),
+                          Text(
+                            '시음노트 작성',
+                            style: AppTextStyles.body1NormalBold.copyWith(
+                              color: colors.primaryNormal,
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+                  ),
+                  const SizedBox(height: AppSpacing.xs),
+                  PrimaryButton(
+                    text: '완료하기',
+                    onPressed: controller.goToHome,
+                  ),
+                ],
               ),
             ),
           ],
