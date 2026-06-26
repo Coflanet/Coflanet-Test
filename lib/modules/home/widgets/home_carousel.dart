@@ -60,14 +60,28 @@ class HomeCarousel extends StatelessWidget {
   }
 
   /// 둥근 이미지 카드 — 타이틀을 카드 내부 하단에 오버레이한다.
-  /// 홈 섹션 카드 기본 베이스: 풀폭(좌우 마진 0) + radius 20.
+  /// 홈 섹션 카드 기본 베이스: 풀폭(좌우 마진 0) + radius 40.
   Widget _buildBannerCard(BannerModel? banner, int pageCount) {
     final hasTitle = banner != null && banner.title.isNotEmpty;
+    final bool hasImage = banner?.imageUrl != null;
+    // 이미지 없는 배너는 서버 bg_color 기반 그라데이션으로 채운다 (Figma 색 배너 대체).
+    final Color baseColor =
+        _bannerColor(banner) ?? AppColor.colorGlobalCoolNeutral90;
     final card = Container(
       decoration: BoxDecoration(
-        color: AppColor.colorGlobalCoolNeutral90,
+        gradient: hasImage
+            ? null
+            : LinearGradient(
+                begin: Alignment.topLeft,
+                end: Alignment.bottomRight,
+                colors: [
+                  baseColor,
+                  Color.lerp(baseColor, AppColor.staticBlack, 0.45) ?? baseColor,
+                ],
+              ),
+        color: hasImage ? AppColor.colorGlobalCoolNeutral90 : null,
         borderRadius: AppRadius.sectionRadiusBorder,
-        image: banner?.imageUrl != null
+        image: hasImage
             ? DecorationImage(
                 image: NetworkImage(banner!.imageUrl!),
                 fit: BoxFit.cover,
@@ -78,41 +92,34 @@ class HomeCarousel extends StatelessWidget {
       child: Stack(
         fit: StackFit.expand,
         children: [
-          // 이미지 없는 배너/placeholder 의 안내 아이콘
-          if (banner?.imageUrl == null)
-            Center(
-              child: Icon(
-                Icons.image_outlined,
-                size: 72,
-                color: AppColor.colorGlobalCommon100.withValues(alpha: 0.4),
-              ),
-            ),
-          // 하단 딤 그라데이션 — 흰색 타이틀 가독성 확보 (타이틀 있을 때만)
-          if (hasTitle)
+          // 하단 딤 그라데이션 — 흰색 타이틀 가독성 확보 (이미지 배너에서만,
+          // 색 배너는 베이스 그라데이션이 이미 대비를 확보).
+          if (hasTitle && hasImage)
             Positioned(
               left: 0,
               right: 0,
               bottom: 0,
               child: Container(
-                height: 160,
+                // Figma Gradient/Solid(115:15798): 하단 113px 딤
+                height: AppSpacing.space80 + AppSpacing.space32,
                 decoration: BoxDecoration(
                   gradient: LinearGradient(
                     begin: Alignment.bottomCenter,
                     end: Alignment.topCenter,
                     colors: [
-                      AppColor.colorGlobalCommon0.withValues(alpha: 0.6),
+                      AppColor.colorGlobalCommon0.withValues(alpha: 0.52),
                       AppColor.colorGlobalCommon0.withValues(alpha: 0.0),
                     ],
                   ),
                 ),
               ),
             ),
-          // 배너 타이틀 — 카드 내부 하단 오버레이
+          // 배너 타이틀 — 카드 내부 하단 오버레이 (Figma left/bottom 24)
           if (hasTitle)
             Positioned(
-              left: AppSpacing.lg,
-              right: AppSpacing.lg,
-              bottom: AppSpacing.lg,
+              left: AppSpacing.xl,
+              right: AppSpacing.xl,
+              bottom: AppSpacing.xl,
               child: Text(
                 banner.title,
                 // Figma banner 타이틀(115:15776): SemiBold 22 = heading1Bold
@@ -123,18 +130,21 @@ class HomeCarousel extends StatelessWidget {
                 overflow: TextOverflow.ellipsis,
               ),
             ),
-          // 페이지 인디케이터 — 우상단 (2개 이상일 때만)
+          // 페이지 인디케이터 — 우상단 (2개 이상일 때만). Figma top/right 24.
           if (pageCount > 1)
             Positioned(
-              top: AppSpacing.md,
-              right: AppSpacing.md,
+              top: AppSpacing.xl,
+              right: AppSpacing.xl,
               child: Container(
                 padding: const EdgeInsets.symmetric(
-                  horizontal: AppSpacing.sm,
-                  vertical: AppSpacing.space6,
+                  horizontal: AppSpacing.space10,
+                  vertical: AppSpacing.space4,
                 ),
                 decoration: BoxDecoration(
-                  color: AppColor.colorGlobalCommon0.withValues(alpha: 0.5),
+                  // Figma Pagination/Counter 배경: cool-neutral/30 @61%
+                  color: AppColor.colorGlobalCoolNeutral30.withValues(
+                    alpha: 0.61,
+                  ),
                   borderRadius: AppRadius.fullBorder,
                 ),
                 child: Obx(
@@ -154,5 +164,15 @@ class HomeCarousel extends StatelessWidget {
 
     if (banner == null || onBannerTap == null) return card;
     return GestureDetector(onTap: () => onBannerTap!(banner), child: card);
+  }
+
+  /// 서버 hex 문자열(`bg_color`) → Color (런타임 데이터 파싱 — 하드코딩 아님).
+  Color? _bannerColor(BannerModel? banner) {
+    final hex = banner?.bgColor?.replaceFirst('#', '');
+    if (hex != null && hex.length == 6) {
+      final value = int.tryParse('FF$hex', radix: 16);
+      if (value != null) return Color(value);
+    }
+    return null;
   }
 }

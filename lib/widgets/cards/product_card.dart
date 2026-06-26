@@ -1,13 +1,17 @@
 import 'package:flutter/material.dart';
 import 'package:coflanet/constants/app_color_scheme.dart';
-import 'package:coflanet/constants/color_constant.dart';
+import 'package:coflanet/constants/radius_constant.dart';
+import 'package:coflanet/constants/spacing_constant.dart';
 import 'package:coflanet/constants/style_constant.dart';
 import 'package:coflanet/constants/util_constant.dart';
 
-/// 상품/추천 카드 — 이미지(1:1) + 좋아요 토글 + 취향 일치율 태그 + 브랜드/이름/가격.
+/// 상품/추천 카드 — Figma `List/Item/Vertical`(83:13268) 1:1 구현.
 ///
-/// 높이 비종속 설계: 셀 높이는 호출부 GridView(childAspectRatio)가 부여하고,
-/// 내부 Expanded/Flexible 구조가 텍스트 영역 오버플로우를 구조적으로 차단한다.
+/// 구조(위→아래, gap 8): 썸네일(1:1, radius 20, 우하단 하트) → 텍스트 블록
+/// (px8, gap4): 취향 일치율 태그 → 브랜드·원산지 → 이름(2줄) → 가격(할인%+가격)
+/// + '구독 할인가'. Figma 카드는 외곽 보더/배경 없이 썸네일과 텍스트만으로
+/// 구성되며(섹션 표면 위에 직접 얹힘), 높이는 호출부 GridView(childAspectRatio)가
+/// 부여하고 내부 Expanded/Flexible 가 오버플로우를 구조적으로 차단한다.
 ///
 /// 좋아요 반응성: [isLiked] 는 평범한 bool — Rx 구독이 필요하면 호출부에서
 /// 카드 단위 Obx 로 감싸 전달한다 (전체 그리드 단일 Obx 금지).
@@ -57,135 +61,137 @@ class ProductCard extends StatelessWidget {
     final colors = AppColorScheme.of(context);
     return GestureDetector(
       onTap: onTap,
-      child: Container(
-        decoration: BoxDecoration(
-          color: colors.surfaceCard,
-          borderRadius: BorderRadius.circular(12),
-          border: Border.all(color: colors.lineNormalNormal),
-        ),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            _buildImage(colors),
-            // Expanded 로 텍스트 영역을 셀 잔여 높이에 가둬 오버플로우를 구조적으로 차단.
-            Expanded(
-              child: Padding(
-                padding: const EdgeInsets.all(8),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    // 취향 일치율
-                    if (matchPercent != null && matchPercent! > 0)
-                      _buildSmallTag('취향 $matchPercent%', colors),
-                    const SizedBox(height: 4),
-                    Text(
-                      subtitle,
-                      style: AppTextStyles.caption1Regular.copyWith(
-                        color: colors.labelAlternative,
+      // Figma 카드: 외곽 보더/배경 없음 — 썸네일 + 텍스트(섹션 표면 위 직접).
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.stretch,
+        children: [
+          _buildImage(colors),
+          // Figma List/Item/Vertical gap = 8 (썸네일↔텍스트)
+          const SizedBox(height: AppSpacing.xs),
+          // 텍스트 블록 — Figma txt: px8, 행 간격 4
+          Expanded(
+            child: Padding(
+              padding: const EdgeInsets.symmetric(horizontal: AppSpacing.xs),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  // 취향 일치율 (Figma label_best 슬롯 위치)
+                  if (matchPercent != null && matchPercent! > 0) ...[
+                    _buildSmallTag('취향 $matchPercent%', colors),
+                    const SizedBox(height: AppSpacing.xxs),
+                  ],
+                  Text(
+                    subtitle,
+                    style: AppTextStyles.caption1Regular.copyWith(
+                      color: colors.labelAlternative,
+                    ),
+                    maxLines: 1,
+                    overflow: TextOverflow.ellipsis,
+                  ),
+                  const SizedBox(height: AppSpacing.space2),
+                  // 이름 — 잔여 높이를 흡수하고 초과 시 말줄임 (가변 데이터 안전)
+                  Flexible(
+                    child: Text(
+                      name,
+                      style: AppTextStyles.caption1Medium.copyWith(
+                        color: colors.labelNormal,
                       ),
-                      maxLines: 1,
+                      maxLines: 2,
                       overflow: TextOverflow.ellipsis,
                     ),
-                    const SizedBox(height: 2),
-                    // 이름 — 잔여 높이를 흡수하고 초과 시 말줄임 (가변 데이터 안전)
-                    Flexible(
-                      child: Text(
-                        name,
-                        style: AppTextStyles.caption1Medium.copyWith(
-                          color: colors.labelNormal,
-                        ),
-                        maxLines: 2,
-                        overflow: TextOverflow.ellipsis,
-                      ),
-                    ),
-                    const SizedBox(height: 4),
-                    _buildPriceRow(colors),
-                  ],
-                ),
+                  ),
+                  const SizedBox(height: AppSpacing.xxs),
+                  _buildPriceBlock(colors),
+                ],
               ),
             ),
-          ],
-        ),
+          ),
+        ],
       ),
     );
   }
 
-  /// 이미지(1:1) + 좋아요 오버레이
+  /// 썸네일(1:1, radius 20) + 우하단 하트 오버레이
   Widget _buildImage(AppColorScheme colors) {
-    return Stack(
-      children: [
-        AspectRatio(
-          aspectRatio: 1,
-          child: Container(
-            decoration: BoxDecoration(
-              color: colors.surfaceCardStrong,
-              borderRadius: const BorderRadius.only(
-                topLeft: Radius.circular(12),
-                topRight: Radius.circular(12),
+    return AspectRatio(
+      aspectRatio: 1,
+      child: Stack(
+        children: [
+          Positioned.fill(
+            child: Container(
+              decoration: BoxDecoration(
+                color: colors.surfaceCardStrong,
+                // Figma thumbnail radius 20
+                borderRadius: AppRadius.xxlBorder,
+                image: imageUrl != null
+                    ? DecorationImage(
+                        image: NetworkImage(imageUrl!),
+                        fit: BoxFit.cover,
+                      )
+                    : null,
               ),
-              image: imageUrl != null
-                  ? DecorationImage(
-                      image: NetworkImage(imageUrl!),
-                      fit: BoxFit.cover,
-                    )
+              child: imageUrl == null
+                  ? Icon(Icons.coffee, size: 48, color: colors.primaryNormal)
                   : null,
             ),
-            child: imageUrl == null
-                ? Icon(Icons.coffee, size: 48, color: colors.primaryNormal)
-                : null,
           ),
-        ),
-        Positioned(
-          right: 8,
-          bottom: 8,
-          child: Semantics(
-            label: isLiked ? '좋아요 취소' : '좋아요',
-            button: true,
-            child: GestureDetector(
-              onTap: onLikeTap,
-              child: Container(
-                width: 32,
-                height: 32,
-                alignment: Alignment.center,
-                decoration: BoxDecoration(
-                  // 이미지 위 오버레이 칩은 항상 밝은 배경을 유지해 좋아요 아이콘 가독성 확보
-                  color: AppColor.colorGlobalCommon100.withValues(alpha: 0.9),
-                  shape: BoxShape.circle,
-                ),
+          // Figma Item/Resource/Heart: 우하단 인셋 8, 24px primary 하트 (배경 없음)
+          Positioned(
+            right: AppSpacing.xs,
+            bottom: AppSpacing.xs,
+            child: Semantics(
+              label: isLiked ? '좋아요 취소' : '좋아요',
+              button: true,
+              child: GestureDetector(
+                behavior: HitTestBehavior.opaque,
+                onTap: onLikeTap,
                 child: Icon(
                   isLiked ? Icons.favorite : Icons.favorite_border,
-                  size: 18,
+                  size: AppSpacing.space24,
                   color: colors.primaryNormal,
                 ),
               ),
             ),
           ),
-        ),
-      ],
+        ],
+      ),
     );
   }
 
-  /// 가격 행 — 할인율 + 가격. 가격 정보 없으면 표시 안 함.
-  Widget _buildPriceRow(AppColorScheme colors) {
+  /// 가격 블록 — 할인%+가격 행 + '구독 할인가' 보조 라벨. 가격 없으면 미표시.
+  Widget _buildPriceBlock(AppColorScheme colors) {
     if (price == null && discountPercent == null) {
       return const SizedBox.shrink();
     }
-    return Row(
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        if (discountPercent != null) ...[
+        Row(
+          children: [
+            if (discountPercent != null) ...[
+              Text(
+                '$discountPercent%',
+                style: AppTextStyles.body2NormalBold.copyWith(
+                  color: colors.primaryNormal,
+                ),
+              ),
+              const SizedBox(width: AppSpacing.space2),
+            ],
+            if (price != null)
+              Text(
+                AppUtil.changeNumberToWon(price),
+                style: AppTextStyles.body2NormalBold.copyWith(
+                  color: colors.labelNormal,
+                ),
+              ),
+          ],
+        ),
+        // Figma: 가격 아래 '구독 할인가' 보조 라벨 (할인 상품일 때)
+        if (discountPercent != null)
           Text(
-            '$discountPercent%',
-            style: AppTextStyles.caption1Medium.copyWith(
-              color: colors.primaryNormal,
-            ),
-          ),
-          const SizedBox(width: 4),
-        ],
-        if (price != null)
-          Text(
-            AppUtil.changeNumberToWon(price),
-            style: AppTextStyles.body2NormalBold.copyWith(
-              color: colors.labelNormal,
+            '구독 할인가',
+            style: AppTextStyles.caption1Regular.copyWith(
+              color: colors.labelAlternative,
             ),
           ),
       ],
@@ -194,10 +200,13 @@ class ProductCard extends StatelessWidget {
 
   Widget _buildSmallTag(String label, AppColorScheme colors) {
     return Container(
-      padding: const EdgeInsets.symmetric(horizontal: 4, vertical: 1),
+      padding: const EdgeInsets.symmetric(
+        horizontal: AppSpacing.xxs,
+        vertical: AppSpacing.space2,
+      ),
       decoration: BoxDecoration(
         color: colors.primaryNormal.withValues(alpha: 0.1),
-        borderRadius: BorderRadius.circular(4),
+        borderRadius: AppRadius.xsBorder,
       ),
       child: Text(
         label,

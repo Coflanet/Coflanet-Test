@@ -28,9 +28,8 @@ class HomeSectionMoreButton extends StatelessWidget {
         onTap: onTap,
         child: Container(
           width: double.infinity,
-          padding: const EdgeInsets.symmetric(
-            vertical: AppSpacing.buttonPaddingV,
-          ),
+          // Figma Button/Solid/Gray(83:13165): h48 = py12, radius 99
+          padding: const EdgeInsets.symmetric(vertical: AppSpacing.sm),
           decoration: BoxDecoration(
             color: colors.componentFillStrong,
             borderRadius: AppRadius.fullBorder,
@@ -38,7 +37,8 @@ class HomeSectionMoreButton extends StatelessWidget {
           child: Center(
             child: Text(
               label,
-              style: AppTextStyles.body2NormalBold.copyWith(
+              // Figma: SemiBold 16 = body1NormalBold
+              style: AppTextStyles.body1NormalBold.copyWith(
                 color: colors.labelStrong,
               ),
             ),

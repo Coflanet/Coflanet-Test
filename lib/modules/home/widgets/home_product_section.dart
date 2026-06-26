@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:coflanet/constants/app_color_scheme.dart';
 import 'package:coflanet/constants/spacing_constant.dart';
 import 'package:coflanet/constants/style_constant.dart';
 import 'package:coflanet/data/models/survey_result_model.dart';
@@ -55,26 +56,52 @@ class HomeProductSection extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    // 큰 카드(CardSection) — 카드 안이므로 색은 of(context). 타이틀은 CardSection 소유.
+    // 큰 카드(CardSection) — 카드 안이므로 색은 of(context).
+    // Figma recommend_item_list(83:13254): pt32/pb16, 타이틀 px24, 그리드 px16,
+    // 타이틀↔그리드 gap24. 섹션 자체 좌우 패딩 0 — 자식이 각자 px 를 가진다.
     return CardSection(
-      title: title,
-      // Figma Home 섹션 타이틀(83:13256 등): SemiBold 20 = heading2Bold
-      titleStyle: AppTextStyles.heading2Bold,
+      padding: const EdgeInsets.only(
+        top: AppSpacing.space32,
+        bottom: AppSpacing.space16,
+      ),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
-          if (items.isNotEmpty)
-            _buildGrid()
-          else
-            HomeEmptyCard(message: emptyMessage),
+          // 타이틀 — Figma title 블록 px24, SemiBold 20 = heading2Bold
+          Padding(
+            padding: const EdgeInsets.symmetric(
+              horizontal: AppSpacing.space24,
+            ),
+            child: Text(
+              title,
+              style: AppTextStyles.heading2Bold.copyWith(
+                color: AppColorScheme.of(context).labelStrong,
+              ),
+            ),
+          ),
+          const SizedBox(height: AppSpacing.space24),
+          // 그리드/빈 상태 — Figma item_list px16
+          Padding(
+            padding: const EdgeInsets.symmetric(
+              horizontal: AppSpacing.space16,
+            ),
+            child: items.isNotEmpty
+                ? _buildGrid()
+                : HomeEmptyCard(message: emptyMessage),
+          ),
           const SizedBox(height: AppSpacing.md),
-          HomeSectionMoreButton(label: moreLabel, onTap: onMoreTap),
+          Padding(
+            padding: const EdgeInsets.symmetric(
+              horizontal: AppSpacing.space16,
+            ),
+            child: HomeSectionMoreButton(label: moreLabel, onTap: onMoreTap),
+          ),
         ],
       ),
     );
   }
 
-  /// 공통 상품 그리드 (2열).
+  /// 공통 상품 그리드 (2열) — Figma item_list gap[24,12] (행 24, 열 12).
   Widget _buildGrid() {
     return GridView.builder(
       shrinkWrap: true,
@@ -82,10 +109,10 @@ class HomeProductSection extends StatelessWidget {
       gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
         crossAxisCount: 2,
         crossAxisSpacing: AppSpacing.sm,
-        mainAxisSpacing: AppSpacing.sm,
-        // 정사각 이미지 + 텍스트(태그/브랜드/이름 2줄/가격) 수용 여유 높이.
+        mainAxisSpacing: AppSpacing.space24,
+        // 정사각 이미지 + 텍스트(태그/브랜드/이름 2줄/가격/구독할인가) 수용 높이.
         // 오버플로우 방지는 ProductCard 내부 Expanded+Flexible 구조가 보장.
-        childAspectRatio: 0.6,
+        childAspectRatio: 0.56,
       ),
       itemCount: items.length,
       itemBuilder: (context, index) {

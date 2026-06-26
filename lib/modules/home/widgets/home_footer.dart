@@ -48,7 +48,7 @@ class HomeFooter extends StatelessWidget {
           ),
           const SizedBox(height: AppSpacing.md),
           Text(
-            '고객센터 (평일 오전 9시 ~ 오후 6시 운영)',
+            '고객센터 (평일 오전 9시 ~ 오후 5시 운영)',
             style: AppTextStyles.caption1Medium.copyWith(
               color: colors.labelAlternative,
             ),
@@ -63,7 +63,7 @@ class HomeFooter extends StatelessWidget {
           ),
           const SizedBox(height: AppSpacing.xxs),
           Text(
-            '고객문의 메일 : help.info@gmail.com',
+            '고객전용 메일 : help.info@gmail.com',
             style: AppTextStyles.caption1Regular.copyWith(
               color: colors.labelAssistive,
             ),

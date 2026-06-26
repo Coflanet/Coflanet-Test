@@ -27,7 +27,9 @@ class DummySurveyRepository implements SurveyRepository {
     if (resultJson != null) {
       return SurveyResultModel.fromJson(resultJson);
     }
-    return null;
+    // 더미 모드 폴백: 설문 미완료(저장 결과 없음)여도 홈이 Figma 처럼 취향 배너·
+    // 추천 그리드가 꽉 차 보이도록 기본 결과(밸런스 러버 + 추천 12종)를 제공한다.
+    return DummySurveyData.generateResult(const {});
   }
 
   @override

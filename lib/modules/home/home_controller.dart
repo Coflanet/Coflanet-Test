@@ -82,7 +82,7 @@ class HomeController extends BaseController {
 
   String get userName {
     final name = _authService.currentUser?.name;
-    return (name != null && name.isNotEmpty) ? name : 'ㅇㅇㅇ';
+    return (name != null && name.isNotEmpty) ? name : '커피러버';
   }
 
   /// 설문 완료 여부 — 노란 배너 표시 조건
@@ -111,13 +111,14 @@ class HomeController extends BaseController {
         _banners.clear();
       }
 
-      // 취향 기반 추천 — 설문 결과의 recommendations 사용
-      _tasteRecommendations.value =
-          _surveyService.surveyResult?.recommendations ?? [];
-
-      // [백엔드 API 연동 대기] 카테고리 / 실시간 인기 전용 API
-      // 현재는 빈 배열 유지 → UI 가 empty 상태 분기 표시
-      _categoryBest.clear();
+      // 취향 기반 추천 — 설문 결과의 recommendations 사용.
+      final recommendations =
+          _surveyService.surveyResult?.recommendations ?? const [];
+      // 취향의 원두 — 일치율 높은 상위 4종 (2×2 그리드, Figma recommend_item_list)
+      _tasteRecommendations.value = recommendations.take(4).toList();
+      // 새로운 맛을 찾아볼까요? — 그 다음 4종으로 다른 셀렉션 구성
+      // (전용 추천 API 연동 시 교체, 그 전까지 추천 풀에서 분할 노출)
+      _categoryBest.value = recommendations.skip(4).take(4).toList();
       _realtimePopular.clear();
     } finally {
       hideLoading();

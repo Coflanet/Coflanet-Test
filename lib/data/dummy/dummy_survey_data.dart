@@ -173,12 +173,14 @@ class DummySurveyData {
     final tastePref = answers[2] ?? [];
 
     String coffeeType;
+    String coffeeTypeLabel;
     String description;
     TasteProfileModel tasteProfile;
     List<FlavorDescriptionModel> flavorDescriptions;
 
     if (tastePref.contains('acidic')) {
       coffeeType = '산미파';
+      coffeeTypeLabel = '시트러스 러버';
       description = '진하고 깊은 풍미를';
       tasteProfile = const TasteProfileModel(
         acidity: 90,
@@ -211,6 +213,7 @@ class DummySurveyData {
       ];
     } else if (tastePref.contains('bitter')) {
       coffeeType = '진한맛파';
+      coffeeTypeLabel = '다크 로스트 러버';
       description = '진하고 깊은 풍미를';
       tasteProfile = const TasteProfileModel(
         acidity: 30,
@@ -243,6 +246,7 @@ class DummySurveyData {
       ];
     } else if (tastePref.contains('sweet')) {
       coffeeType = '달달파';
+      coffeeTypeLabel = '스위트 러버';
       description = '달콤하고 부드러운 커피를';
       tasteProfile = const TasteProfileModel(
         acidity: 40,
@@ -275,6 +279,7 @@ class DummySurveyData {
       ];
     } else {
       coffeeType = '밸런스파';
+      coffeeTypeLabel = '밸런스 러버';
       description = '균형 잡힌 맛을';
       tasteProfile = const TasteProfileModel(
         acidity: 60,
@@ -309,6 +314,7 @@ class DummySurveyData {
 
     return SurveyResultModel(
       coffeeType: coffeeType,
+      coffeeTypeLabel: coffeeTypeLabel,
       coffeeTypeDescription: description,
       tasteProfile: tasteProfile,
       flavorDescriptions: flavorDescriptions,
@@ -447,6 +453,7 @@ class DummySurveyData {
         CoffeeRecommendationModel(
           id: '7',
           name: '코스타리카 따라주',
+          manufacturer: '엘카페커피',
           origin: '코스타리카',
           roastLevel: '미디엄',
           description: '깔끔한 산미와 꿀 같은 단맛',
@@ -465,6 +472,7 @@ class DummySurveyData {
         CoffeeRecommendationModel(
           id: '8',
           name: '파나마 게이샤',
+          manufacturer: '나무사이로',
           origin: '파나마',
           roastLevel: '라이트',
           description: '자스민 향과 복숭아 노트의 프리미엄 원두',
@@ -483,6 +491,7 @@ class DummySurveyData {
         CoffeeRecommendationModel(
           id: '9',
           name: '르완다 킨보',
+          manufacturer: '커피몽타주',
           origin: '르완다',
           roastLevel: '라이트',
           description: '레드베리와 플로럴 노트가 특징',
@@ -501,6 +510,7 @@ class DummySurveyData {
         CoffeeRecommendationModel(
           id: '10',
           name: '에티오피아 시다모',
+          manufacturer: '리브레',
           origin: '에티오피아',
           roastLevel: '라이트',
           description: '블루베리와 레몬 향의 프루티한 맛',
@@ -519,6 +529,7 @@ class DummySurveyData {
         CoffeeRecommendationModel(
           id: '11',
           name: '탄자니아 킬리만자로',
+          manufacturer: '앤트러사이트',
           origin: '탄자니아',
           roastLevel: '미디엄',
           description: '와인 같은 산미와 복합적인 풍미',
@@ -537,6 +548,7 @@ class DummySurveyData {
         CoffeeRecommendationModel(
           id: '12',
           name: '하와이 코나',
+          manufacturer: '빈브라더스',
           origin: '하와이',
           roastLevel: '미디엄',
           description: '부드러운 바디와 버터 같은 질감',

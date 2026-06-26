@@ -8,7 +8,6 @@ import 'package:coflanet/core/services/notification_service.dart';
 import 'package:coflanet/modules/home/home_controller.dart';
 import 'package:coflanet/modules/home/widgets/home_carousel.dart';
 import 'package:coflanet/modules/home/widgets/home_footer.dart';
-import 'package:coflanet/modules/home/widgets/home_maker_section.dart';
 import 'package:coflanet/modules/home/widgets/home_my_bean_section.dart';
 import 'package:coflanet/modules/home/widgets/home_product_section.dart';
 import 'package:coflanet/modules/home/widgets/home_promo_banner.dart';
@@ -27,8 +26,6 @@ import 'package:coflanet/routes/app_pages.dart';
 /// - 상품 섹션 (HomeProductSection) — 취향 추천 (취향 배너 위)
 /// - 프로모 배너 (HomePromoBanner) — 서버 배너(home_promo 슬롯) 있을 때만
 /// - 상품 섹션 (HomeProductSection) — '새로운 맛을 찾아볼까요?'
-/// - 커피 메이커 섹션 (HomeMakerSection)
-/// - 커피 기록 커뮤니티 (HomeCommunitySection)
 /// - 푸터 (HomeFooter)
 ///
 /// 빈 데이터일 때는 카드 구조는 유지하고 안내 텍스트로 [empty] 표시.
@@ -130,9 +127,7 @@ class HomeContent extends GetView<HomeController> {
                   onMoreTap: _goToShoppingTab,
                 ),
                 const SizedBox(height: _sectionGap),
-                HomeMakerSection(userName: controller.userName),
-                const SizedBox(height: _sectionGap),
-                // 커뮤니티 섹션은 커뮤니티 탭 비노출(MVP)에 맞춰 제거.
+                // 커뮤니티/커피 메이커 섹션은 Figma 홈 프레임(256:4567)에 없어 제외.
                 const HomeFooter(),
               ],
             ),

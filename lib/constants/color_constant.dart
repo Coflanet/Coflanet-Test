@@ -485,8 +485,8 @@ class AppColor {
 
   // ===== FIXED ACCENT COLORS (테마 무관 고정색) =====
 
-  /// 홈 취향 설문 배너 노랑 — Figma 시안 고정색 (라이트/다크 공통)
-  static const Color accentTasteBanner = Color(0xFFFFE15A);
+  /// 홈 취향 설문 배너 노랑 — Figma Select/Select(83:13166) accent/background/yellow #FFD52E
+  static const Color accentTasteBanner = colorGlobalYellow60;
 
   /// My 행성 취향 태그 — 산미 (Figma 파스텔 고정색)
   static const Color tasteTagAcidity = Color(0xFFFFAA5C);
