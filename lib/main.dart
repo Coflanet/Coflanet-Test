@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
+import 'package:intl/date_symbol_data_local.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:kakao_flutter_sdk_user/kakao_flutter_sdk_user.dart';
 import 'package:flutter_naver_login/flutter_naver_login.dart';
@@ -23,6 +24,12 @@ import 'package:coflanet/data/repositories/supabase/supabase_repository_base.dar
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
+
+  // 날짜 포맷 로케일 초기화 — 앱 전역에서 DateFormat(_, 'ko')를 쓰므로
+  // (추출 기록·시음노트·util_constant 등) 'ko' 로케일 데이터를 선로드해야
+  // LocaleDataException(Locale data has not been initialized)을 막는다.
+  await initializeDateFormatting('ko', null);
+  await initializeDateFormatting('ko_KR', null);
 
   // Initialize local storage
   await LocalStorage().init();
