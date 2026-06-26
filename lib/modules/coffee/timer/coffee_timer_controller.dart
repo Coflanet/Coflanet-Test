@@ -80,6 +80,13 @@ class CoffeeTimerController extends BaseController {
     return 'Total ${r.waterAmount}ml';
   }
 
+  /// Total water value only (e.g. "210ml") — Total Info pill 용
+  String get totalWaterValue {
+    final r = _recipe.value;
+    if (r == null) return '';
+    return '${r.waterAmount}ml';
+  }
+
   /// Total time label (e.g. "02:30")
   String get totalTimeLabel {
     final r = _recipe.value;

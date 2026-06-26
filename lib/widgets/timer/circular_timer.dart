@@ -1,15 +1,20 @@
 import 'dart:math' as math;
 import 'package:flutter/material.dart';
 import 'package:coflanet/constants/color_constant.dart';
-import 'package:coflanet/constants/radius_constant.dart';
 
 /// Circular progress timer with animated arc
+///
+/// Figma(레시피 타이머)는 연보라로 채워진 원판 위에 회색 트랙 + 보라 진행
+/// 아크(둥근 캡)를 얹은 형태. 글로우/장식 링/끝점 도트는 없다.
 class CircularTimer extends StatelessWidget {
   final double progress; // 0.0 to 1.0
   final double size;
   final double strokeWidth;
   final Color? progressColor;
   final Color? backgroundColor;
+
+  /// 원판 내부 채움색 (Figma: primaryLight 연보라). null 이면 채우지 않음.
+  final Color? fillColor;
   final Widget? child;
   final List<double>? phaseMarkers; // Phase positions (0.0 to 1.0)
 
@@ -23,10 +28,11 @@ class CircularTimer extends StatelessWidget {
   const CircularTimer({
     super.key,
     required this.progress,
-    this.size = 280,
+    this.size = 220,
     this.strokeWidth = 12,
     this.progressColor,
     this.backgroundColor,
+    this.fillColor,
     this.child,
     this.phaseMarkers,
     this.animationDuration = Duration.zero,
@@ -36,17 +42,13 @@ class CircularTimer extends StatelessWidget {
   Widget build(BuildContext context) {
     final isDark = Theme.of(context).brightness == Brightness.dark;
     // 트랙(배경 링) 기본값 — backgroundColor 가 주입되면 그대로 존중하고,
-    // 미주입 시에만 테마 분기. 라이트는 기존값, 다크는 어두운 배경 대비를
-    // 확보하기 위해 더 밝은 중립색을 사용한다.
+    // 미주입 시에만 테마 분기.
     final resolvedTrackColor =
         backgroundColor ??
         (isDark
             ? AppColor.colorGlobalCoolNeutral50.withValues(alpha: 0.45)
             : AppColor.colorGlobalNeutral22.withValues(alpha: 0.3));
-    // 내부 장식 링 보더 — 다크에서 살짝 더 밝게 보강.
-    final innerRingColor = isDark
-        ? AppColor.colorGlobalCoolNeutral40.withValues(alpha: 0.25)
-        : AppColor.colorGlobalNeutral22.withValues(alpha: 0.1);
+    final arcColor = progressColor ?? AppColor.colorGlobalViolet50;
 
     return SizedBox(
       width: size,
@@ -54,22 +56,24 @@ class CircularTimer extends StatelessWidget {
       child: Stack(
         alignment: Alignment.center,
         children: [
-          // Background glow effect
-          Container(
-            width: size * 0.85,
-            height: size * 0.85,
-            decoration: BoxDecoration(
-              shape: BoxShape.circle,
-              boxShadow: [
-                BoxShadow(
-                  color: (progressColor ?? AppColor.colorGlobalOrange50)
-                      .withValues(alpha: 0.15),
-                  blurRadius: 40,
-                  spreadRadius: 10,
-                ),
-              ],
+          // 연보라 원판 + 은은한 보라 그림자 (Figma 원판 채움/그림자)
+          if (fillColor != null)
+            Container(
+              width: size - strokeWidth,
+              height: size - strokeWidth,
+              decoration: BoxDecoration(
+                shape: BoxShape.circle,
+                color: fillColor,
+                boxShadow: [
+                  BoxShadow(
+                    color: arcColor.withValues(alpha: 0.12),
+                    blurRadius: 40,
+                    spreadRadius: 2,
+                    offset: const Offset(0, 8),
+                  ),
+                ],
+              ),
             ),
-          ),
           // Main circular progress — animationDuration 이 있으면 이전 값에서
           // 새 값까지 선형 보간 (1초 틱과 맞물려 연속 스윕)
           if (animationDuration == Duration.zero)
@@ -78,7 +82,7 @@ class CircularTimer extends StatelessWidget {
               painter: _CircularTimerPainter(
                 progress: progress,
                 strokeWidth: strokeWidth,
-                progressColor: progressColor ?? AppColor.colorGlobalOrange50,
+                progressColor: arcColor,
                 backgroundColor: resolvedTrackColor,
                 phaseMarkers: phaseMarkers,
               ),
@@ -93,26 +97,17 @@ class CircularTimer extends StatelessWidget {
                 painter: _CircularTimerPainter(
                   progress: animatedProgress,
                   strokeWidth: strokeWidth,
-                  progressColor: progressColor ?? AppColor.colorGlobalOrange50,
+                  progressColor: arcColor,
                   backgroundColor: resolvedTrackColor,
                   phaseMarkers: phaseMarkers,
                 ),
               ),
             ),
-          // Inner decorative ring
-          Container(
-            width: size - strokeWidth * 4,
-            height: size - strokeWidth * 4,
-            decoration: BoxDecoration(
-              shape: BoxShape.circle,
-              border: Border.all(color: innerRingColor, width: 1),
-            ),
-          ),
           // Center content
           if (child != null)
             SizedBox(
-              width: size - strokeWidth * 6,
-              height: size - strokeWidth * 6,
+              width: size - strokeWidth * 4,
+              height: size - strokeWidth * 4,
               child: child,
             ),
         ],
@@ -150,26 +145,16 @@ class _CircularTimerPainter extends CustomPainter {
 
     canvas.drawCircle(center, radius, backgroundPaint);
 
-    // Progress arc with gradient
+    // Progress arc — Figma 는 단색 보라 + 둥근 캡(그라데이션 없음)
     final rect = Rect.fromCircle(center: center, radius: radius);
-    final gradientPaint = Paint()
+    final progressPaint = Paint()
+      ..color = progressColor
       ..strokeWidth = strokeWidth
       ..style = PaintingStyle.stroke
-      ..strokeCap = StrokeCap.round
-      ..shader = SweepGradient(
-        startAngle: -math.pi / 2,
-        endAngle: 3 * math.pi / 2,
-        colors: [
-          progressColor.withValues(alpha: 0.6),
-          progressColor,
-          progressColor,
-        ],
-        stops: const [0.0, 0.5, 1.0],
-        transform: const GradientRotation(-math.pi / 2),
-      ).createShader(rect);
+      ..strokeCap = StrokeCap.round;
 
     final sweepAngle = 2 * math.pi * progress;
-    canvas.drawArc(rect, -math.pi / 2, sweepAngle, false, gradientPaint);
+    canvas.drawArc(rect, -math.pi / 2, sweepAngle, false, progressPaint);
 
     // Draw phase markers
     if (phaseMarkers != null) {
@@ -195,77 +180,11 @@ class _CircularTimerPainter extends CustomPainter {
         canvas.drawLine(innerPoint, outerPoint, markerPaint);
       }
     }
-
-    // Glowing dot at progress end
-    if (progress > 0) {
-      final endAngle = -math.pi / 2 + sweepAngle;
-      final dotCenter = Offset(
-        center.dx + radius * math.cos(endAngle),
-        center.dy + radius * math.sin(endAngle),
-      );
-
-      // Outer glow
-      final glowPaint = Paint()
-        ..color = progressColor.withValues(alpha: 0.3)
-        ..maskFilter = const MaskFilter.blur(BlurStyle.normal, 8);
-      canvas.drawCircle(dotCenter, strokeWidth / 2 + 4, glowPaint);
-
-      // Inner dot
-      final dotPaint = Paint()
-        ..color = AppColor.colorGlobalCommon100
-        ..style = PaintingStyle.fill;
-      canvas.drawCircle(dotCenter, strokeWidth / 2 - 2, dotPaint);
-    }
   }
 
   @override
   bool shouldRepaint(covariant _CircularTimerPainter oldDelegate) {
     return oldDelegate.progress != progress ||
         oldDelegate.progressColor != progressColor;
-  }
-}
-
-/// Phase indicator widget for showing current brewing phase
-class PhaseIndicator extends StatelessWidget {
-  final int currentPhase;
-  final int totalPhases;
-  final List<String> phaseNames;
-  final List<Color>? phaseColors;
-
-  const PhaseIndicator({
-    super.key,
-    required this.currentPhase,
-    required this.totalPhases,
-    required this.phaseNames,
-    this.phaseColors,
-  });
-
-  @override
-  Widget build(BuildContext context) {
-    return Row(
-      mainAxisAlignment: MainAxisAlignment.center,
-      children: List.generate(totalPhases, (index) {
-        final isActive = index == currentPhase;
-        final isPast = index < currentPhase;
-        final color = phaseColors?[index] ?? AppColor.colorGlobalOrange50;
-
-        return Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 4),
-          child: AnimatedContainer(
-            duration: const Duration(milliseconds: 300),
-            width: isActive ? 24 : 8,
-            height: 8,
-            decoration: BoxDecoration(
-              borderRadius: AppRadius.xsBorder,
-              color: isActive
-                  ? color
-                  : isPast
-                  ? color.withValues(alpha: 0.5)
-                  : AppColor.colorGlobalNeutral30,
-            ),
-          ),
-        );
-      }),
-    );
   }
 }

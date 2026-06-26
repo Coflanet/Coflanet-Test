@@ -29,8 +29,8 @@ class TimerStepIllustration extends StatelessWidget {
       // 실제 일러스트 이미지 사용
       return Image.asset(
         assetPath,
-        width: 280,
-        height: 280,
+        width: 250,
+        height: 250,
         fit: BoxFit.contain,
         errorBuilder: (context, error, stackTrace) {
           // 이미지 로드 실패 시 이모지 fallback
