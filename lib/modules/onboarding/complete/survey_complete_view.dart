@@ -10,19 +10,11 @@ import 'package:coflanet/constants/style_constant.dart';
 import 'package:coflanet/modules/onboarding/survey_controller.dart';
 import 'package:coflanet/widgets/buttons/primary_button.dart';
 
+/// Survey Complete View — Figma POC `Survey_Complete` (1114:59786)
+/// 완료 화면: 상단 중앙 안내 텍스트 + 240×240 마스코트 + 하단 CTA.
+/// 캔버스 흰색 유지(온보딩 흐름 일관).
 class SurveyCompleteView extends GetView<SurveyController> {
   const SurveyCompleteView({super.key});
-
-  // Figma 사양: Pretendard SemiBold 22 / lineHeight 1.36 / letterSpacing -0.4268
-  // 색상은 Label/strong (#000000) 토큰 매핑
-  // Auth 카테고리에서 통일한 페이지 헤더 스타일과 동일
-  TextStyle _screenHeaderStyle(AppColorScheme colors) =>
-      AppTextStyles.heading1Bold.copyWith(
-        fontWeight: FontWeight.w600,
-        height: 1.36,
-        letterSpacing: -0.4268,
-        color: colors.labelStrong,
-      );
 
   @override
   Widget build(BuildContext context) {
@@ -36,11 +28,11 @@ class SurveyCompleteView extends GetView<SurveyController> {
         centerTitle: true,
         title: Text(
           '취향 분석',
-          style: AppTextStyles.headline2Bold.copyWith(
-            color: colors.labelNormal,
-          ),
+          style: AppTextStyles.headline2Bold.copyWith(color: colors.labelStrong),
         ),
-        leading: const SizedBox.shrink(), // 뒤로 가기 버튼 없음 — offNamed로 진입
+        // Figma엔 back/우측 아이콘이 있으나, 완료는 offNamed로 진입하는
+        // 종료 화면이라 뒤로 가기를 숨긴다(이전 화면으로 돌아갈 수 없음).
+        leading: const SizedBox.shrink(),
         actions: [
           IconButton(
             icon: SvgPicture.asset(
@@ -48,7 +40,7 @@ class SurveyCompleteView extends GetView<SurveyController> {
               width: 24,
               height: 24,
               colorFilter: ColorFilter.mode(
-                colors.labelAlternative,
+                colors.labelNormal,
                 BlendMode.srcIn,
               ),
             ),
@@ -58,86 +50,73 @@ class SurveyCompleteView extends GetView<SurveyController> {
           ),
         ],
       ),
-      body: Column(
-        children: [
-          Expanded(
-            child: Padding(
-              padding: const EdgeInsets.symmetric(horizontal: AppSpacing.space24),
-              child: Column(
-                children: [
-                  const Spacer(flex: 2),
+      body: SafeArea(
+        top: false,
+        child: Column(
+          children: [
+            Expanded(
+              child: Padding(
+                padding: const EdgeInsets.symmetric(
+                  horizontal: AppSpacing.space16,
+                ),
+                child: Column(
+                  children: [
+                    const Spacer(flex: 2),
 
-                  // Figma 순서: 안내 텍스트가 일러스트 위에 위치
-                  Text(
-                    '${controller.userName}님의\n커피 취향을 찾았어요!',
-                    textAlign: TextAlign.center,
-                    style: _screenHeaderStyle(colors),
-                  ),
+                    // Figma 1114:59790 — 상단 중앙 안내 텍스트 (22 SemiBold)
+                    Text(
+                      '${controller.userName}님의\n커피 취향을 찾았어요!',
+                      textAlign: TextAlign.center,
+                      style: AppTextStyles.heading1Bold.copyWith(
+                        color: colors.labelNormal,
+                      ),
+                    ),
 
-                  const Spacer(flex: 1),
+                    const SizedBox(height: AppSpacing.space40),
 
-                  // 토끼 일러스트 — 브랜드 아이덴티티 유지
-                  ClipRRect(
-                    borderRadius: AppRadius.fullBorder,
-                    child: Image.asset(
+                    // Figma 1114:59789 — 240×240 마스코트 일러스트
+                    Image.asset(
                       AssetPath.charGift,
-                      width: 200,
-                      height: 200,
+                      width: 240,
+                      height: 240,
                       fit: BoxFit.contain,
                       errorBuilder: (context, error, stackTrace) => Container(
-                        width: 200,
-                        height: 200,
+                        width: 240,
+                        height: 240,
                         decoration: BoxDecoration(
                           color: colors.primaryLight,
-                          borderRadius: AppRadius.fullBorder,
+                          borderRadius: AppRadius.xlBorder,
                         ),
-                        child: Column(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: [
-                            Icon(
-                              Icons.card_giftcard_rounded,
-                              size: 64,
-                              color: colors.primaryNormal,
-                            ),
-                            const SizedBox(height: AppSpacing.space8),
-                            Text(
-                              'Mascot',
-                              style: AppTextStyles.caption1Regular.copyWith(
-                                color: colors.primaryNormal,
-                              ),
-                            ),
-                          ],
+                        child: Icon(
+                          Icons.card_giftcard_rounded,
+                          size: AppSpacing.space48,
+                          color: colors.primaryNormal,
                         ),
                       ),
                     ),
-                  ),
 
-                  const Spacer(flex: 2),
-                ],
+                    const Spacer(flex: 3),
+                  ],
+                ),
               ),
             ),
-          ),
 
-          // Bottom CTA area (BottomSheet_CTA style)
-          // SafeArea minimum: 제스처 네비=기존 34px 유지, 3버튼 네비=시스템 바 위로
-          Container(
-            padding: const EdgeInsets.fromLTRB(
-              AppSpacing.space24,
-              AppSpacing.space16,
-              AppSpacing.space24,
-              0,
-            ),
-            decoration: BoxDecoration(color: colors.backgroundNormalNormal),
-            child: SafeArea(
-              top: false,
-              minimum: const EdgeInsets.only(bottom: 34),
-              child: PrimaryButton(
-                text: '내 취향 커피 만나러 가기',
-                onPressed: () => controller.viewResult(),
+            // Figma 1271:13527 — BottomSheet_CTA (px16, pill 버튼)
+            Padding(
+              padding: const EdgeInsets.symmetric(
+                horizontal: AppSpacing.space16,
+              ),
+              child: SafeArea(
+                top: false,
+                minimum: const EdgeInsets.only(bottom: AppSpacing.space24),
+                child: PrimaryButton(
+                  text: '내 취향 커피 만나러 가기',
+                  onPressed: () => controller.viewResult(),
+                ),
               ),
             ),
-          ),
-        ],
+          ],
+        ),
       ),
     );
   }
