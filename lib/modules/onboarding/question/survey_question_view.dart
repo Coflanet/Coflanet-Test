@@ -322,6 +322,7 @@ class SurveyQuestionView extends GetView<SurveyController> {
           children: question.options.map((option) {
             return SurveyEquipmentGridItem(
               label: option.label,
+              imagePath: _equipmentImage(option.id),
               isSelected: controller.isOptionSelected(option.id),
               onTap: () => controller.selectOption(option.id),
             );
@@ -347,5 +348,21 @@ class SurveyQuestionView extends GetView<SurveyController> {
         ),
       ],
     );
+  }
+}
+
+/// 추출 기구 옵션 id → 일러스트 에셋. 미확보 기구(capsule)는 null → 아이콘 폴백.
+String? _equipmentImage(String id) {
+  switch (id) {
+    case 'espresso':
+      return AssetPath.equipEspressoMachine;
+    case 'auto':
+      return AssetPath.equipAutoMachine;
+    case 'handdrip':
+      return AssetPath.equipHandDrip;
+    case 'coldbrew':
+      return AssetPath.equipColdBrew;
+    default:
+      return null;
   }
 }

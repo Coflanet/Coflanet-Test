@@ -121,6 +121,7 @@ class SelectCoffeeView extends GetView<SelectCoffeeController> {
   Widget _buildEmptyState() {
     return AppEmptyState(
       icon: Icons.coffee_outlined,
+      imagePath: AssetPath.emptyBeans,
       title: '저장된 커피가 없어요',
       description: '자주 마시는 커피를 추가해보세요',
       actionLabel: '커피 추가하기',

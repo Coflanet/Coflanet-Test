@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
 import 'package:coflanet/constants/app_color_scheme.dart';
+import 'package:coflanet/constants/asset_constant.dart';
 import 'package:coflanet/constants/color_constant.dart';
 import 'package:coflanet/constants/radius_constant.dart';
 import 'package:coflanet/constants/spacing_constant.dart';
@@ -156,26 +157,32 @@ class ExtractionListView extends GetView<ExtractionListController> {
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
-          Container(
-            width: 80,
-            height: 80,
-            decoration: const BoxDecoration(
-              shape: BoxShape.circle,
-              // 보라 그라데이션 — 브랜드 고정색 (테마 무관)
-              gradient: LinearGradient(
-                begin: Alignment.topLeft,
-                end: Alignment.bottomRight,
-                colors: [
-                  AppColor.colorGlobalViolet80,
-                  AppColor.colorGlobalViolet50,
-                ],
+          // 빈 상태 일러스트 (흰 배경 임시 — 누끼 추후). 로드 실패 시 보라 원형 폴백.
+          Image.asset(
+            AssetPath.emptyRecords,
+            width: 120,
+            height: 120,
+            fit: BoxFit.contain,
+            errorBuilder: (context, error, stackTrace) => Container(
+              width: 80,
+              height: 80,
+              decoration: const BoxDecoration(
+                shape: BoxShape.circle,
+                gradient: LinearGradient(
+                  begin: Alignment.topLeft,
+                  end: Alignment.bottomRight,
+                  colors: [
+                    AppColor.colorGlobalViolet80,
+                    AppColor.colorGlobalViolet50,
+                  ],
+                ),
               ),
-            ),
-            child: Center(
-              child: Icon(
-                Icons.coffee_rounded,
-                size: 40,
-                color: AppColor.staticLabelWhiteStrong,
+              child: Center(
+                child: Icon(
+                  Icons.coffee_rounded,
+                  size: 40,
+                  color: AppColor.staticLabelWhiteStrong,
+                ),
               ),
             ),
           ),

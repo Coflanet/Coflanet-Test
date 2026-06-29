@@ -36,6 +36,28 @@ class AssetPath {
   // === Timer Step Illustrations ===
   static const String timerStepGrinder = '$_images/timer_step01_grinder.png';
   static const String timerStepPourover = '$_images/timer_step02_pourover.png';
+  static const String timerStepBloom = '$_images/timer_step03_bloom.png';
+  static const String timerStepPour1 = '$_images/timer_step04_pour1.png';
+  // 주: timer_step05_pour2(2차 추출)는 이미지 미확보 — 이모지 폴백 유지.
+  static const String timerStepDrawdown = '$_images/timer_step06_drawdown.png';
+  static const String timerStepEspressoShot =
+      '$_images/timer_step_espresso_shot.png';
+
+  // === 추출 기구(설문) ===
+  static const String equipEspressoMachine =
+      '$_images/equip_espresso_machine.png';
+  static const String equipAutoMachine = '$_images/equip_auto_machine.png';
+  static const String equipHandDrip = '$_images/equip_handdrip.png';
+  // 주: equip_capsule(캡슐 머신)은 이미지 미확보 — 아이콘 폴백 유지.
+  static const String equipColdBrew = '$_images/equip_coldbrew.png';
+
+  // === 기본/폴백 · 빈 상태 ===
+  static const String beanDefault = '$_images/bean_default.png';
+  static const String bannerDefault = '$_images/banner_default.png';
+  static const String emptyBeans = '$_images/empty_beans.png';
+  static const String emptyRecommend = '$_images/empty_recommend.png';
+  static const String emptyRecords = '$_images/empty_records.png';
+  // 주: empty_search(검색 결과 없음)는 이미지 미확보 — 아이콘 폴백 유지.
 
   // === Icons ===
   static const String iconArrowBack = '$_icons/ic_arrow_back.svg';

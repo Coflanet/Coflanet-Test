@@ -50,6 +50,15 @@ class TimerStepIllustration extends StatelessWidget {
         return AssetPath.timerStepGrinder;
       case '예열하기':
         return AssetPath.timerStepPourover;
+      case '뜸 들이기':
+        return AssetPath.timerStepBloom;
+      case '1차 추출':
+        return AssetPath.timerStepPour1;
+      case '추출 완료 대기':
+        return AssetPath.timerStepDrawdown;
+      case '추출 중':
+        return AssetPath.timerStepEspressoShot;
+      // '2차 추출'은 이미지 미확보 — 이모지 폴백.
       default:
         return null;
     }

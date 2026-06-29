@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:coflanet/constants/asset_constant.dart';
 import 'package:coflanet/constants/color_constant.dart';
 import 'package:coflanet/constants/radius_constant.dart';
 import 'package:coflanet/constants/spacing_constant.dart';
@@ -150,8 +151,15 @@ class HomeMyBeanSection extends StatelessWidget {
                     )
                   : null,
             ),
+            clipBehavior: Clip.antiAlias,
+            // 원두 이미지 없을 때 기본 일러스트 (흰 배경 임시 — 누끼 추후).
             child: item.displayImageUrl == null
-                ? Icon(Icons.coffee, color: item.color, size: 28)
+                ? Image.asset(
+                    AssetPath.beanDefault,
+                    fit: BoxFit.cover,
+                    errorBuilder: (context, error, stackTrace) =>
+                        Icon(Icons.coffee, color: item.color, size: 28),
+                  )
                 : null,
           ),
           const SizedBox(width: AppSpacing.md),

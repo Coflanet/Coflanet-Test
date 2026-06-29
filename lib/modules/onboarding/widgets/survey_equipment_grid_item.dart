@@ -14,6 +14,7 @@ class SurveyEquipmentGridItem extends StatelessWidget {
     required this.label,
     required this.isSelected,
     required this.onTap,
+    this.imagePath,
   });
 
   /// 기구 이름
@@ -24,6 +25,9 @@ class SurveyEquipmentGridItem extends StatelessWidget {
 
   /// 탭 콜백
   final VoidCallback onTap;
+
+  /// 기구 일러스트 에셋 경로 — null 이면 아이콘 폴백.
+  final String? imagePath;
 
   @override
   Widget build(BuildContext context) {
@@ -58,13 +62,29 @@ class SurveyEquipmentGridItem extends StatelessWidget {
                   color: colors.backgroundNormalAlternative,
                   borderRadius: AppRadius.xlBorder,
                 ),
-                child: Icon(
-                  Icons.coffee_rounded,
-                  color: isSelected
-                      ? colors.primaryNormal
-                      : colors.labelAlternative,
-                  size: 32,
-                ),
+                clipBehavior: Clip.antiAlias,
+                child: imagePath != null
+                    ? Padding(
+                        padding: const EdgeInsets.all(AppSpacing.space8),
+                        child: Image.asset(
+                          imagePath!,
+                          fit: BoxFit.contain,
+                          errorBuilder: (context, error, stackTrace) => Icon(
+                            Icons.coffee_rounded,
+                            color: isSelected
+                                ? colors.primaryNormal
+                                : colors.labelAlternative,
+                            size: 32,
+                          ),
+                        ),
+                      )
+                    : Icon(
+                        Icons.coffee_rounded,
+                        color: isSelected
+                            ? colors.primaryNormal
+                            : colors.labelAlternative,
+                        size: 32,
+                      ),
               ),
             ),
             const SizedBox(height: AppSpacing.space8),

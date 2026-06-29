@@ -19,6 +19,10 @@ class AppEmptyState extends StatelessWidget {
   /// Icon to display at the top
   final IconData icon;
 
+  /// Optional illustration asset shown instead of the icon circle.
+  /// null 이면 기존 아이콘 원형을 사용한다.
+  final String? imagePath;
+
   /// Main title text
   final String title;
 
@@ -49,6 +53,7 @@ class AppEmptyState extends StatelessWidget {
   const AppEmptyState({
     super.key,
     required this.icon,
+    this.imagePath,
     required this.title,
     this.description,
     this.actionLabel,
@@ -87,6 +92,21 @@ class AppEmptyState extends StatelessWidget {
   }
 
   Widget _buildIconCircle(AppColorScheme colors) {
+    // 일러스트가 있으면 흰 배경 일러스트를 우선 사용 (로드 실패 시 아이콘 폴백).
+    if (imagePath != null) {
+      return Image.asset(
+        imagePath!,
+        width: iconCircleSize,
+        height: iconCircleSize,
+        fit: BoxFit.contain,
+        errorBuilder: (context, error, stackTrace) =>
+            _buildIconCircleFallback(colors),
+      );
+    }
+    return _buildIconCircleFallback(colors);
+  }
+
+  Widget _buildIconCircleFallback(AppColorScheme colors) {
     return Container(
       width: iconCircleSize,
       height: iconCircleSize,

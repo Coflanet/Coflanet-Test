@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
 import 'package:coflanet/constants/app_color_scheme.dart';
+import 'package:coflanet/constants/asset_constant.dart';
 import 'package:coflanet/constants/color_constant.dart';
 import 'package:coflanet/constants/radius_constant.dart';
 import 'package:coflanet/constants/spacing_constant.dart';
@@ -64,18 +65,25 @@ class _EmptyState extends StatelessWidget {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
+          // 빈 상태 일러스트 (흰 배경 임시 — 누끼 추후). 로드 실패 시 아이콘 폴백.
           Center(
-            child: Container(
-              width: AppSpacing.space80,
-              height: AppSpacing.space80,
-              decoration: BoxDecoration(
-                shape: BoxShape.circle,
-                color: colors.primaryLight,
-              ),
-              child: Icon(
-                Icons.menu_book_rounded,
-                size: AppSpacing.space40,
-                color: colors.primaryNormal,
+            child: Image.asset(
+              AssetPath.emptyRecords,
+              width: 120,
+              height: 120,
+              fit: BoxFit.contain,
+              errorBuilder: (context, error, stackTrace) => Container(
+                width: AppSpacing.space80,
+                height: AppSpacing.space80,
+                decoration: BoxDecoration(
+                  shape: BoxShape.circle,
+                  color: colors.primaryLight,
+                ),
+                child: Icon(
+                  Icons.menu_book_rounded,
+                  size: AppSpacing.space40,
+                  color: colors.primaryNormal,
+                ),
               ),
             ),
           ),
