@@ -81,3 +81,8 @@ apple_cert/
 .vscode/
 /google_cert/
 
+# Redesign build/capture artifacts (local only — not source)
+/_apk_*/
+/_captures/
+/_figref/
+

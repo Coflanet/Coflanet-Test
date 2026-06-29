@@ -1,16 +1,16 @@
 # 🤝 로컬 세션 인수인계 (Handoff)
 
 > 이 문서 하나로 이어받을 수 있게 정리했다. 먼저 이걸 읽고 → `00-master-plan.md` → 필요한 task 문서 순으로.
-> 작성 시점 HEAD: **`c7b3732`** · 브랜치 **`claude/magical-cray-8f21va`** · PR **#22**
+> 작성 시점 HEAD: **`5ebefbc`** · 브랜치 **`redesign/magical-cray`** · 리포 **`Coflanet/Coflanet-Test`**
 
 ---
 
 ## 0. 30초 요약
 
-- **무엇**: Coflanet(커피 Flutter 앱) — ① 유저 플로우 검증·수정 ② component_lab 라이브러리 마이그레이션 ③ 스타일 적용 ④ **iyumi 카드형 + Static/Black 배경** ⑤ iyumi docs 참고.
-- **지금까지**: 플로우 결함 대부분 수정 + **Static/Black 카드 디자인 toolkit(토큰·위젯) 구현 완료**. 전부 **CI analyze/test 통과**.
-- **남은 핵심**: toolkit을 **실제 화면에 적용**(검정 캔버스 + 카드화)하는 시각 작업 + 라이브러리 컴포넌트 마이그레이션. → **실기기로 보면서** 진행하는 게 빠르고 안전(원격 봇 세션엔 Flutter가 없어 렌더 확인 불가였음).
-- **첫 명령**: `flutter pub get && dart format . && flutter analyze` (format 부채부터 정리).
+- **무엇**: Coflanet(커피 Flutter 앱) — ① 유저 플로우 검증·수정 ② Figma(POC) 기준 화면 충실도(정합) ③ **iyumi 카드형 + Static/Black 배경** 디자인 시스템 적용 ④ component_lab 라이브러리 마이그레이션(예정).
+- **지금까지**: 주요 화면을 **Figma POC 기준으로 정합**(홈·온보딩 전 단계·타이머·원두/레시피·마이·signin) + **쇼핑 탭 카드 스타일 신규 구현** + **시음노트(커피 저널) 신규 구현** + **4탭 셸**(홈/원두/쇼핑/마이) 확정. `flutter analyze`/`flutter test` 그린.
+- **남은 핵심**: ① **신규 이미지 17컷 누끼(배경제거)·반영**(현재 폴백 아이콘 유지) ② **component_lab 라이브러리 마이그레이션(P2)**.
+- **첫 명령**: `flutter pub get && flutter analyze && flutter test`.
 
 ---
 
@@ -18,31 +18,42 @@
 
 | 항목 | 값 |
 |------|----|
-| 브랜치 | `claude/magical-cray-8f21va` (이걸로 계속 개발) |
-| PR | [#22](https://github.com/PlanewTech/coflanet-app/pull/22) (draft) |
-| HEAD | `c7b3732` |
-| CI `Analyze & Test` | 🟢 통과 (코드 컴파일·테스트 OK) |
-| CI `Format Check` | 🔴 실패 — **기존 dart format 부채**(원격 세션에 dart 없어 못 돌림). **`dart format .` 한 번이면 해소** |
-| 테스트 APK | `.github/workflows/test-build.yml` — **브랜치 push마다 APK 자동 빌드** → Actions run의 `app-release-apk` 아티팩트 |
+| 브랜치 | `redesign/magical-cray` |
+| 리포 | `Coflanet/Coflanet-Test` (origin) |
+| HEAD | `5ebefbc` — `fix(intl): 앱 시작 시 ko 로케일 날짜 포맷 초기화` |
+| 버전 | `0.1.2+1` (pubspec) |
+| `flutter analyze` | 🟢 0 errors (info/warning은 `integration_test/` 스캐폴딩 잔여 25건뿐) |
+| `flutter test` | 🟢 통과 |
+| 테스트 APK | `flutter build apk --release` → key.properties 없으면 **debug 서명으로 폴백**(테스트 빌드). `.github/workflows/test-build.yml`로 push마다 자동 빌드도 가능 |
+| 릴리즈 | 테스트 프리릴리즈 태그 `v0.1.2-test.1`(prerelease, target=`redesign/magical-cray`)로 APK 배포 |
 
-> 봇 세션은 워크플로 디스패치/태그 push 권한이 없어(403) 릴리즈를 못 띄웠고, 대신 push-트리거 빌드 워크플로를 넣어둠. 로컬/사용자는 정식 `Release` 워크플로(`release.yml`, workflow_dispatch)나 `v*` 태그 push로 서명 릴리즈 가능.
+> 정식 서명 릴리즈는 `release.yml`(workflow_dispatch) 또는 `v*` 태그 push로 가능. 본 테스트 APK는 debug 서명이라 배포 검증용이며 스토어 업로드용 아님.
 
 ---
 
-## 2. 이미 끝난 것 (CI analyze 통과)
+## 2. 이미 끝난 것 (analyze/test 그린)
 
-### 플로우 수정
+### Figma(POC) 기준 화면 충실도 — 이번 리디자인 핵심
 | 커밋 | 내용 |
 |------|------|
-| `a45605a` | 홈 보유원두 카드 탭→`beanDetail`(A1) · 원두 상세 가격행 탭→네이버 `naverLink`(B1) · **커뮤니티 탭 숨김(4탭, 쇼핑 유지)** · 홈 장바구니 아이콘 숨김 |
-| `a6dadf9` | 매칭 "자세히 보기" 카드 탭→`purchaseUrl`(A2) |
-| `da86c94` | **ExtractionList(추출 기록) 활성화** — 라우트 등록 + 마이 탭 "추출 기록" 진입점 |
+| `8699412` | signin Figma 충실도 |
+| `8e5741e`·`e56c0f6`·`247495c` | 온보딩 설문 화면 충실도 + CTA pill·진행바 트랙·선택칩/기구카드·마이 보정 |
+| `3196332`·`ad4ae4c`·`0a4ad90` | 온보딩 인트로·인덱스·섹션인트로·분석중·완료·결과 화면 충실도 |
+| `4cf0e60`·`041b906`·`0918b12` | 온보딩 숙련도 옵션 정리·결과 데드엔드 CTA 연결·분석중 중앙정렬 QA |
+| `30cd666`·`09c6ac2` | 홈 Figma 정밀 정합 + 빈 섹션 콘텐츠 채움 |
+| `035a104`·`394447a`·`38c9252` | 원두목록·레시피·타이머·마이 충실도 |
 
-### Static/Black 카드 디자인 toolkit (additive — 기존 화면 영향 0)
+### 신규 화면
 | 커밋 | 내용 |
 |------|------|
-| `a6dadf9` | `AppColor.staticBlack/staticWhite` · `AppColorScheme.canvas`(=dark) · `AppSpacing` 카드 토큰(`screenTopMargin`,`sectionPadding`,`itemPadding`,`cardGap`,`sectionGap`/`itemGap`,`bottomDockAllowance`,`bottomScrollInset(context)`) · `AppRadius.sectionRadius(40)`/`itemRadius(24)` · `lib/widgets/cards/card_section.dart`(CardSection/CardItem/CardGap) |
-| `04a0af4` | `lib/widgets/cards/screen_scaffold.dart`(ScreenScaffold) |
+| `8be2206` | **쇼핑 탭** Figma 기준 카드 스타일 신규 구현(placeholder → 실제 화면) |
+| `8a79a7c` | **시음노트(커피 저널)** 신규 구현 — 타이머 완료/추출 기록 진입 |
+| `d4c0178` | 버튼 lg 라벨·공유 헤더·완료화면 타이포/토큰 정리 |
+| `5ebefbc` | 앱 시작 시 ko 로케일 날짜 포맷 초기화 |
+
+### 디자인 시스템 toolkit / 플로우 (이전 단계)
+- Static/Black 카드 toolkit(`AppColor.staticBlack/White`, `AppColorScheme.canvas`, `AppSpacing` 카드 토큰, `AppRadius.sectionRadius(40)/itemRadius(24)`, `lib/widgets/cards/{card_section,screen_scaffold}.dart`).
+- 플로우: 커뮤니티 탭 숨김(4탭, 쇼핑 유지)·홈 장바구니 숨김·ExtractionList 활성화·하드코딩 간격 토큰화.
 
 ### 문서/스킬
 - `.claude/skills/coflanet-design-guide/` — **카드 디자인 강제 스킬**(다음 세션 자동 발동). 화면 작업 전 반드시 참조.
@@ -67,27 +78,19 @@
 
 ## 4. 다음 할 일 (우선순위)
 
-### P0 — 위생
-- [ ] **`dart format .`** 실행 → Format Check 초록. (원격 세션이 못 한 유일한 것)
+> 아래 두 항목이 이번 테스트 빌드(`v0.1.2-test.1`)에 **미포함**이며 남은 핵심이다.
 
-### P1 — Static/Black 카드 디자인 화면 적용 (핵심, 시각 검증 필요)
-- [ ] 화면을 `ScreenScaffold` + `CardSection`/`CardItem`로 재구성. **`coflanet-design-guide` 스킬**의 규칙·체크리스트 준수.
-- [ ] §3 색 규칙(캔버스=canvas/카드=of(context)) 적용 — 특히 **검정 위 텍스트는 `AppColorScheme.canvas`** 사용.
-- [ ] 배경 검정화 부작용 점검: `04-static-black-theme.md` §5 체크리스트.
-- 권장 순서: 단순/대표 화면(예: 마이, 설정) → 홈 → 원두/추출 → 온보딩.
-- 검증: push → `test-build` APK로 라이트/다크 양쪽 스냅샷 확인.
-
-### P1 — 남은 플로우 결함 (`01a-flow-defects.md`)
-- [ ] B3: 온보딩 결과 "추천 원두 더 보기" 빈 콜백 → 쇼핑/매칭 연결.
-- [ ] C1: 홈 상품 추천 카드 탭 — 쇼핑 페이지 신설 후 연결(또는 `purchaseUrl` 직접). 쇼핑 탭이 현재 placeholder라 **쇼핑(취향 추천) 화면 실제 구현** 필요.
-- [ ] TastingNotes 실구현: `TastingNoteModel` + 저장 + 폼(기존 `FlavorRadarChart`/`FlavorTag`/`AppAnimatedTasteBar` 재사용) + 타이머완료/추출기록 진입.
-- [ ] 홈 재구성: 빈/placeholder 섹션 정리(`reference/iyumi/home-restructure.md` 선례).
+### P1 — 신규 이미지 17컷 누끼·반영 (사용자 작업 대기)
+- [ ] 흰 배경 생성본 17컷의 **누끼(배경 제거)** — 이건 사용자 수작업이라 이번 빌드 미반영.
+- [ ] 누끼 완료분을 `assets/images/`에 배치 + 코드 폴백 아이콘 → 실제 이미지로 교체.
+- 현재 상태: **폴백 아이콘 유지**(빌드/화면은 정상). 명세는 `image-production-list.md`.
 
 ### P2 — 라이브러리 마이그레이션 (`02-library-migration.md`)
 - [ ] component_lab foundation/components를 토큰 매핑(`reference/token-mapping.md`)대로 흡수. 버튼(완전검증)→칩→카드→폼→모달 순. P0 누락 위젯 10종.
+- 별도 작업이라 이번 빌드 제외.
 
-### P2 — 이미지 생성 (`image-production-list.md`)
-- [ ] 타이머 스텝 5종·추출 기구 5종·빈 상태·Static/Black 리워크 — Claude-in-Chrome로 생성 후 `assets/images/`. (§1은 코드 매핑도 필요)
+### 위생 (선택)
+- [ ] `integration_test/` 스캐폴딩 잔여 warning/info 25건 정리(미사용 변수·`avoid_print`). analyze는 이미 0 errors라 빌드엔 영향 없음.
 
 ---
 
